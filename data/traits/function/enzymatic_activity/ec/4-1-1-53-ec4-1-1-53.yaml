@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 synonyms:
@@ -35,4 +35,118 @@ definitions:
       Catalyses: L-phenylalanine + H(+) = 2-phenylethylamine + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phenylalanine decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.53. EC 4.1.1.53 maps to exactly
+    one curated Rhea reaction (RHEA:19717), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-phenylalanine
+    + H(+) = 2-phenylethylamine + CO2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine decarboxylase
+    grounding: EC:4.1.1.53
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 2-phenylethylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:225237
+    description: Formula C8H12N.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine decarboxylase activity
+    grounding: GO:0050174
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0A4P1LYB6
+    node_type: PROTEIN
+    label: AAAD_PSICU
+    grounding: UniProtKB:A0A4P1LYB6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-phenylalanine is a substrate consumed by RHEA:19717 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19718
+      snippet: L-phenylalanine + H(+) => 2-phenylethylamine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:19718 declares side 19717_L as its substrates
+        (rh:substrates); the master reaction RHEA:19717 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:6034195, PMID:16698923, PMID:14466899 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:19717 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19718
+      snippet: L-phenylalanine + H(+) => 2-phenylethylamine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:19718 declares side 19717_L as its substrates
+        (rh:substrates); the master reaction RHEA:19717 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:6034195, PMID:16698923, PMID:14466899 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-phenylethylamine is a product released by RHEA:19717 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19718
+      snippet: L-phenylalanine + H(+) => 2-phenylethylamine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:19718 declares side 19717_R as its products
+        (rh:products); the master reaction RHEA:19717 is undirected. This participant is CHEBI:225237
+        with coefficient 1. Rhea cites PMID:6034195, PMID:16698923, PMID:14466899 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:19717 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19718
+      snippet: L-phenylalanine + H(+) => 2-phenylethylamine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:19718 declares side 19717_R as its products
+        (rh:products); the master reaction RHEA:19717 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:6034195, PMID:16698923, PMID:14466899 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.1.53
+      snippet: EC:4.1.1.53 > GO:phenylalanine decarboxylase activity ; GO:0050174
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050174 is itself a record
+        in this KB.
+  - subject: prot_A0A4P1LYB6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AAAD_PSICU is an exemplar enzyme with EC 4.1.1.53 activity.
+    evidence:
+    - reference: EC:4.1.1.53
+      snippet: DR   A0A4P1LYB6, AAAD_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.1.1.53 cross-references UniProtKB:A0A4P1LYB6 (AAAD_PSICU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

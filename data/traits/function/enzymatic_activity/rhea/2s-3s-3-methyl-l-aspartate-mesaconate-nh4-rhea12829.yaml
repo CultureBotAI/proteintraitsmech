@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.3.1.2
     mapping_source: rhea2ec
@@ -36,4 +36,167 @@ definitions:
       Catalyses the reaction: (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:12829, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12830 (rh:substrates → 12829_L, rh:products → 12829_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12829
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2S,3S)-3-methyl-L-aspartate = mesaconate + NH4(+)'
+  - node_id: sub1
+    label: (2S,3S)-3-methyl-L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:58724
+    description: Formula C5H8NO4.
+  - node_id: prd1
+    label: mesaconate
+    node_type: CHEMICAL
+    grounding: CHEBI:36986
+    description: Formula C5H4O4.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: methylaspartate ammonia-lyase activity
+    grounding: GO:0050096
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: methylaspartate ammonia-lyase
+    grounding: EC:4.3.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q3AEU2
+    node_type: PROTEIN
+    label: MAAL1_CARHZ
+    grounding: UniProtKB:Q3AEU2
+  - node_id: prot_Q3AEJ6
+    node_type: PROTEIN
+    label: MAAL2_CARHZ
+    grounding: UniProtKB:Q3AEJ6
+  - node_id: prot_O66145
+    node_type: PROTEIN
+    label: MAAL_CITAM
+    grounding: UniProtKB:O66145
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S,3S)-3-methyl-L-aspartate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:12830
+      snippet: (2S,3S)-3-methyl-L-aspartate => mesaconate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12830 declares side 12829_L as its substrates
+        (rh:substrates); the master reaction RHEA:12829 is undirected. This participant is CHEBI:58724
+        with coefficient 1. Rhea cites PMID:9385136, PMID:22614383, PMID:1531295, PMID:19670200 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: mesaconate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12830
+      snippet: (2S,3S)-3-methyl-L-aspartate => mesaconate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12830 declares side 12829_R as its products
+        (rh:products); the master reaction RHEA:12829 is undirected. This participant is CHEBI:36986 with
+        coefficient 1. Rhea cites PMID:9385136, PMID:22614383, PMID:1531295, PMID:19670200 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12830
+      snippet: (2S,3S)-3-methyl-L-aspartate => mesaconate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12830 declares side 12829_R as its products
+        (rh:products); the master reaction RHEA:12829 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:9385136, PMID:22614383, PMID:1531295, PMID:19670200 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12829
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050096"/>
+      notes: The rdfs:seeAlso triple on RHEA:12829 in rhea.rdf. GO term GO:0050096 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.3.1.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12829
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.2"/>
+      notes: The rh:ec triple on RHEA:12829 in rhea.rdf. EC 4.3.1.2 is itself a record in this KB.
+  - subject: prot_Q3AEU2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAAL1_CARHZ is an exemplar enzyme carrying EC 4.3.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.1.2
+      snippet: DR   Q3AEU2, MAAL1_CARHZ;  Q3AEJ6, MAAL2_CARHZ;  O66145, MAAL_CITAM ;
+      notes: ExPASy ENZYME entry EC 4.3.1.2 cross-references UniProtKB:Q3AEU2 (MAAL1_CARHZ) as a protein
+        with this activity.
+    - reference: RHEA:12829
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.2"/>
+      notes: Rhea assigns RHEA:12829 to EC 4.3.1.2, and EC 4.3.1.2 maps to exactly one Rhea master reaction
+        (RHEA:12829), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q3AEJ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAAL2_CARHZ is an exemplar enzyme carrying EC 4.3.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.1.2
+      snippet: DR   Q3AEU2, MAAL1_CARHZ;  Q3AEJ6, MAAL2_CARHZ;  O66145, MAAL_CITAM ;
+      notes: ExPASy ENZYME entry EC 4.3.1.2 cross-references UniProtKB:Q3AEJ6 (MAAL2_CARHZ) as a protein
+        with this activity.
+    - reference: RHEA:12829
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.2"/>
+      notes: Rhea assigns RHEA:12829 to EC 4.3.1.2, and EC 4.3.1.2 maps to exactly one Rhea master reaction
+        (RHEA:12829), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O66145
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAAL_CITAM is an exemplar enzyme carrying EC 4.3.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.1.2
+      snippet: DR   Q3AEU2, MAAL1_CARHZ;  Q3AEJ6, MAAL2_CARHZ;  O66145, MAAL_CITAM ;
+      notes: ExPASy ENZYME entry EC 4.3.1.2 cross-references UniProtKB:O66145 (MAAL_CITAM) as a protein
+        with this activity.
+    - reference: RHEA:12829
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.2"/>
+      notes: Rhea assigns RHEA:12829 to EC 4.3.1.2, and EC 4.3.1.2 maps to exactly one Rhea master reaction
+        (RHEA:12829), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

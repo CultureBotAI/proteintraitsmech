@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -43,4 +43,121 @@ definitions:
       Catalyses: deacetylcephalosporin C + acetyl-CoA = cephalosporin C + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of deacetylcephalosporin-C acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.175. EC 2.3.1.175 maps to
+    exactly one curated Rhea reaction (RHEA:23860), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "deacetylcephalosporin
+    C + acetyl-CoA = cephalosporin C + CoA". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: deacetylcephalosporin-C acetyltransferase
+    grounding: EC:2.3.1.175
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: deacetylcephalosporin C
+    node_type: CHEMICAL
+    grounding: CHEBI:58366
+    description: Formula C14H18N3O7S.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: cephalosporin C
+    node_type: CHEMICAL
+    grounding: CHEBI:57511
+    description: Formula C16H20N3O8S.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: deacetylcephalosporin-C acetyltransferase activity
+    grounding: GO:0033813
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P39058
+    node_type: PROTEIN
+    label: CEFG_HAPCH
+    grounding: UniProtKB:P39058
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: deacetylcephalosporin C is a substrate consumed by RHEA:23860 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23861
+      snippet: deacetylcephalosporin C + acetyl-CoA => cephalosporin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:23861 declares side 23860_L as its substrates
+        (rh:substrates); the master reaction RHEA:23860 is undirected. This participant is CHEBI:58366
+        with coefficient 1. Rhea cites PMID:9895280, PMID:7847890, PMID:9421924, PMID:1632779 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:23860 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23861
+      snippet: deacetylcephalosporin C + acetyl-CoA => cephalosporin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:23861 declares side 23860_L as its substrates
+        (rh:substrates); the master reaction RHEA:23860 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:9895280, PMID:7847890, PMID:9421924, PMID:1632779 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cephalosporin C is a product released by RHEA:23860 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23861
+      snippet: deacetylcephalosporin C + acetyl-CoA => cephalosporin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:23861 declares side 23860_R as its products
+        (rh:products); the master reaction RHEA:23860 is undirected. This participant is CHEBI:57511 with
+        coefficient 1. Rhea cites PMID:9895280, PMID:7847890, PMID:9421924, PMID:1632779 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:23860 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23861
+      snippet: deacetylcephalosporin C + acetyl-CoA => cephalosporin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:23861 declares side 23860_R as its products
+        (rh:products); the master reaction RHEA:23860 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:9895280, PMID:7847890, PMID:9421924, PMID:1632779 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.175
+      snippet: EC:2.3.1.175 > GO:deacetylcephalosporin-C acetyltransferase activity ; GO:0033813
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033813 is itself a record
+        in this KB.
+  - subject: prot_P39058
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEFG_HAPCH is an exemplar enzyme with EC 2.3.1.175 activity.
+    evidence:
+    - reference: EC:2.3.1.175
+      snippet: DR   P39058, CEFG_HAPCH ;
+      notes: ExPASy ENZYME entry EC 2.3.1.175 cross-references UniProtKB:P39058 (CEFG_HAPCH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -32,4 +32,134 @@ definitions:
       Catalyses: 3 malonyl-CoA + 3 H(+) = 1,3,5-trihydroxybenzene + 3 CO2 + 3 CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phloroglucinol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.253. EC 2.3.1.253 maps to
+    exactly one curated Rhea reaction (RHEA:50380), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3 malonyl-CoA
+    + 3 H(+) = 1,3,5-trihydroxybenzene + 3 CO2 + 3 CoA". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phloroglucinol synthase
+    grounding: EC:2.3.1.253
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 1,3,5-trihydroxybenzene
+    node_type: CHEMICAL
+    grounding: CHEBI:16204
+    description: Formula C6H6O3.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_Q4K418
+    node_type: PROTEIN
+    label: PHLD_PSEF5
+    grounding: UniProtKB:Q4K418
+  - node_id: prot_Q51725
+    node_type: PROTEIN
+    label: PHLD_PSEFL
+    grounding: UniProtKB:Q51725
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: malonyl-CoA is a substrate consumed by RHEA:50380 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:50381
+      snippet: 3 malonyl-CoA + 3 H(+) => 1,3,5-trihydroxybenzene + 3 CO2 + 3 CoA
+      notes: Rhea's left-to-right directional reaction RHEA:50381 declares side 50380_L as its substrates
+        (rh:substrates); the master reaction RHEA:50380 is undirected. This participant is CHEBI:57384
+        with coefficient 3. Rhea cites PMID:16931521 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:50380 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:50381
+      snippet: 3 malonyl-CoA + 3 H(+) => 1,3,5-trihydroxybenzene + 3 CO2 + 3 CoA
+      notes: Rhea's left-to-right directional reaction RHEA:50381 declares side 50380_L as its substrates
+        (rh:substrates); the master reaction RHEA:50380 is undirected. This participant is CHEBI:15378
+        with coefficient 3. Rhea cites PMID:16931521 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1,3,5-trihydroxybenzene is a product released by RHEA:50380 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50381
+      snippet: 3 malonyl-CoA + 3 H(+) => 1,3,5-trihydroxybenzene + 3 CO2 + 3 CoA
+      notes: Rhea's left-to-right directional reaction RHEA:50381 declares side 50380_R as its products
+        (rh:products); the master reaction RHEA:50380 is undirected. This participant is CHEBI:16204 with
+        coefficient 1. Rhea cites PMID:16931521 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:50380 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:50381
+      snippet: 3 malonyl-CoA + 3 H(+) => 1,3,5-trihydroxybenzene + 3 CO2 + 3 CoA
+      notes: Rhea's left-to-right directional reaction RHEA:50381 declares side 50380_R as its products
+        (rh:products); the master reaction RHEA:50380 is undirected. This participant is CHEBI:16526 with
+        coefficient 3. Rhea cites PMID:16931521 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CoA is a product released by RHEA:50380 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:50381
+      snippet: 3 malonyl-CoA + 3 H(+) => 1,3,5-trihydroxybenzene + 3 CO2 + 3 CoA
+      notes: Rhea's left-to-right directional reaction RHEA:50381 declares side 50380_R as its products
+        (rh:products); the master reaction RHEA:50380 is undirected. This participant is CHEBI:57287 with
+        coefficient 3. Rhea cites PMID:16931521 for this reaction.
+  - subject: prot_Q4K418
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHLD_PSEF5 is an exemplar enzyme with EC 2.3.1.253 activity.
+    evidence:
+    - reference: EC:2.3.1.253
+      snippet: DR   Q4K418, PHLD_PSEF5 ;  Q51725, PHLD_PSEFL ;
+      notes: ExPASy ENZYME entry EC 2.3.1.253 cross-references UniProtKB:Q4K418 (PHLD_PSEF5) as a protein
+        with this activity.
+  - subject: prot_Q51725
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHLD_PSEFL is an exemplar enzyme with EC 2.3.1.253 activity.
+    evidence:
+    - reference: EC:2.3.1.253
+      snippet: DR   Q4K418, PHLD_PSEF5 ;  Q51725, PHLD_PSEFL ;
+      notes: ExPASy ENZYME entry EC 2.3.1.253 cross-references UniProtKB:Q51725 (PHLD_PSEFL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

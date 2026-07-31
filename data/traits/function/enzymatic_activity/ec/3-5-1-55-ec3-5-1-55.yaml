@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -28,4 +28,106 @@ definitions:
       Catalyses: an N-(long-chain-fatty-acyl)-L-glutamate + H2O = a long-chain fatty acid + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of long-chain-fatty-acyl-glutamate deacylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.55. EC 3.5.1.55 maps to exactly
+    one curated Rhea reaction (RHEA:17517), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an N-(long-chain-fatty-acyl)-L-glutamate
+    + H2O = a long-chain fatty acid + L-glutamate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: long-chain-fatty-acyl-glutamate deacylase
+    grounding: EC:3.5.1.55
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an N-(long-chain-fatty-acyl)-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:17583
+    description: Formula C6H6NO5R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a long-chain fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:57560
+    description: Formula CO2R.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: long-chain fatty-acyl-glutamate deacylase activity
+    grounding: GO:0008421
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-(long-chain-fatty-acyl)-L-glutamate is a substrate consumed by RHEA:17517 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17518
+      snippet: an N-(long-chain-fatty-acyl)-L-glutamate + H2O => a long-chain fatty acid + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:17518 declares side 17517_L as its substrates
+        (rh:substrates); the master reaction RHEA:17517 is undirected. This participant is CHEBI:17583
+        with coefficient 1. Rhea cites PMID:7096313 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:17517 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17518
+      snippet: an N-(long-chain-fatty-acyl)-L-glutamate + H2O => a long-chain fatty acid + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:17518 declares side 17517_L as its substrates
+        (rh:substrates); the master reaction RHEA:17517 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7096313 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a long-chain fatty acid is a product released by RHEA:17517 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17518
+      snippet: an N-(long-chain-fatty-acyl)-L-glutamate + H2O => a long-chain fatty acid + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:17518 declares side 17517_R as its products
+        (rh:products); the master reaction RHEA:17517 is undirected. This participant is CHEBI:57560 with
+        coefficient 1. Rhea cites PMID:7096313 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:17517 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17518
+      snippet: an N-(long-chain-fatty-acyl)-L-glutamate + H2O => a long-chain fatty acid + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:17518 declares side 17517_R as its products
+        (rh:products); the master reaction RHEA:17517 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:7096313 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.55
+      snippet: EC:3.5.1.55 > GO:long-chain fatty-acyl-glutamate deacylase activity ; GO:0008421
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008421 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:49000
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: 2-phenylethanol + benzoyl-CoA = phenethyl benzoate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-phenylethanol + benzoyl-CoA = phenethyl benzoate + CoA
+  description: Substrate-to-product chemistry of RHEA:64840, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:64841 (rh:substrates → 64840_L, rh:products → 64840_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-phenylethanol + benzoyl-CoA = phenethyl benzoate + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:64840
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-phenylethanol + benzoyl-CoA = phenethyl benzoate + CoA'
+  - node_id: sub1
+    label: 2-phenylethanol
+    node_type: CHEMICAL
+    grounding: CHEBI:49000
+    description: Formula C8H10O.
+  - node_id: sub2
+    label: benzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57369
+    description: Formula C28H36N7O17P3S.
+  - node_id: prd1
+    label: phenethyl benzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:156233
+    description: Formula C15H14O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-phenylethanol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:64841
+      snippet: 2-phenylethanol + benzoyl-CoA => phenethyl benzoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:64841 declares side 64840_L as its substrates
+        (rh:substrates); the master reaction RHEA:64840 is undirected. This participant is CHEBI:49000
+        with coefficient 1. Rhea cites PMID:15286288 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: benzoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64841
+      snippet: 2-phenylethanol + benzoyl-CoA => phenethyl benzoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:64841 declares side 64840_L as its substrates
+        (rh:substrates); the master reaction RHEA:64840 is undirected. This participant is CHEBI:57369
+        with coefficient 1. Rhea cites PMID:15286288 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phenethyl benzoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:64841
+      snippet: 2-phenylethanol + benzoyl-CoA => phenethyl benzoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:64841 declares side 64840_R as its products
+        (rh:products); the master reaction RHEA:64840 is undirected. This participant is CHEBI:156233
+        with coefficient 1. Rhea cites PMID:15286288 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64841
+      snippet: 2-phenylethanol + benzoyl-CoA => phenethyl benzoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:64841 declares side 64840_R as its products
+        (rh:products); the master reaction RHEA:64840 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:15286288 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.5.5.1
     mapping_source: rhea2ec
@@ -32,4 +32,244 @@ definitions:
       Catalyses the reaction: a ubiquinone + reduced [electron-transfer flavoprotein] = a ubiquinol + oxidized [electron-transfer flavoprotein] + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a ubiquinone + reduced [electron-transfer flavoprotein] = a ubiquinol +
+    oxidized [elect…
+  description: Substrate-to-product chemistry of RHEA:24052, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24053 (rh:substrates → 24052_L, rh:products → 24052_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a ubiquinone + reduced [electron-transfer flavoprotein] = a ubiquinol + oxid…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24052
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a ubiquinone + reduced [electron-transfer flavoprotein] = a ubiquinol + oxidized
+      [electron-transfer flavoprotein] + H(+)'
+  - node_id: sub1
+    label: a ubiquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16389
+    xrefs:
+    - RHEA-COMP:9565
+    description: Rhea compound POLYMER:9565. Formula C9H10O4(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: reduced [electron-transfer flavoprotein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10686
+    description: Rhea compound GENERIC:10686.
+  - node_id: sub2_rp1
+    label: FADH2
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10686 (reduced [electron-transfer
+      flavoprotein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58307
+  - node_id: prd1
+    label: a ubiquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:17976
+    xrefs:
+    - RHEA-COMP:9566
+    description: Rhea compound POLYMER:9566. Formula C9H12O4(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: prd2
+    label: oxidized [electron-transfer flavoprotein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10685
+    description: Rhea compound GENERIC:10685.
+  - node_id: prd2_rp1
+    label: FAD
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10685 (oxidized
+      [electron-transfer flavoprotein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57692
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: electron-transferring-flavoprotein dehydrogenase activity
+    grounding: GO:0004174
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: electron-transferring-flavoprotein dehydrogenase
+    grounding: EC:1.5.5.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P94132
+    node_type: PROTEIN
+    label: ETFD_ACIAD
+    grounding: UniProtKB:P94132
+  - node_id: prot_O22854
+    node_type: PROTEIN
+    label: ETFD_ARATH
+    grounding: UniProtKB:O22854
+  - node_id: prot_Q2KIG0
+    node_type: PROTEIN
+    label: ETFD_BOVIN
+    grounding: UniProtKB:Q2KIG0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a ubiquinone is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24053
+      snippet: a ubiquinone + reduced [electron-transfer flavoprotein] => a ubiquinol + oxidized [electron-transfer
+        flavoprotein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24053 declares side 24052_L as its substrates
+        (rh:substrates); the master reaction RHEA:24052 is undirected. This participant is POLYMER:9565
+        with coefficient 1. Rhea cites PMID:925004, PMID:4052375 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [electron-transfer flavoprotein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24053
+      snippet: a ubiquinone + reduced [electron-transfer flavoprotein] => a ubiquinol + oxidized [electron-transfer
+        flavoprotein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24053 declares side 24052_L as its substrates
+        (rh:substrates); the master reaction RHEA:24052 is undirected. This participant is GENERIC:10686
+        with coefficient 1. Rhea cites PMID:925004, PMID:4052375 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: FADH2 is the reactive part of reduced [electron-transfer flavoprotein].
+    evidence:
+    - reference: RHEA:24052
+      snippet: FADH2
+      notes: Rhea compound GENERIC:10686 (reduced [electron-transfer flavoprotein]) declares rh:reactivePart
+        = FADH2 (CHEBI:58307), formula C27H33N9O15P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a ubiquinol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24053
+      snippet: a ubiquinone + reduced [electron-transfer flavoprotein] => a ubiquinol + oxidized [electron-transfer
+        flavoprotein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24053 declares side 24052_R as its products
+        (rh:products); the master reaction RHEA:24052 is undirected. This participant is POLYMER:9566
+        with coefficient 1. Rhea cites PMID:925004, PMID:4052375 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [electron-transfer flavoprotein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24053
+      snippet: a ubiquinone + reduced [electron-transfer flavoprotein] => a ubiquinol + oxidized [electron-transfer
+        flavoprotein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24053 declares side 24052_R as its products
+        (rh:products); the master reaction RHEA:24052 is undirected. This participant is GENERIC:10685
+        with coefficient 1. Rhea cites PMID:925004, PMID:4052375 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: FAD is the reactive part of oxidized [electron-transfer flavoprotein].
+    evidence:
+    - reference: RHEA:24052
+      snippet: FAD
+      notes: Rhea compound GENERIC:10685 (oxidized [electron-transfer flavoprotein]) declares rh:reactivePart
+        = FAD (CHEBI:57692), formula C27H30N9O15P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24053
+      snippet: a ubiquinone + reduced [electron-transfer flavoprotein] => a ubiquinol + oxidized [electron-transfer
+        flavoprotein] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24053 declares side 24052_R as its products
+        (rh:products); the master reaction RHEA:24052 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:925004, PMID:4052375 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:24052
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004174"/>
+      notes: The rdfs:seeAlso triple on RHEA:24052 in rhea.rdf. GO term GO:0004174 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.5.5.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24052
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.5.1"/>
+      notes: The rh:ec triple on RHEA:24052 in rhea.rdf. EC 1.5.5.1 is itself a record in this KB.
+  - subject: prot_P94132
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ETFD_ACIAD is an exemplar enzyme carrying EC 1.5.5.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.5.5.1
+      snippet: DR   P94132, ETFD_ACIAD ;  O22854, ETFD_ARATH ;  Q2KIG0, ETFD_BOVIN ;
+      notes: ExPASy ENZYME entry EC 1.5.5.1 cross-references UniProtKB:P94132 (ETFD_ACIAD) as a protein
+        with this activity.
+    - reference: RHEA:24052
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.5.1"/>
+      notes: Rhea assigns RHEA:24052 to EC 1.5.5.1, and EC 1.5.5.1 maps to exactly one Rhea master reaction
+        (RHEA:24052), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O22854
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ETFD_ARATH is an exemplar enzyme carrying EC 1.5.5.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.5.5.1
+      snippet: DR   P94132, ETFD_ACIAD ;  O22854, ETFD_ARATH ;  Q2KIG0, ETFD_BOVIN ;
+      notes: ExPASy ENZYME entry EC 1.5.5.1 cross-references UniProtKB:O22854 (ETFD_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:24052
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.5.1"/>
+      notes: Rhea assigns RHEA:24052 to EC 1.5.5.1, and EC 1.5.5.1 maps to exactly one Rhea master reaction
+        (RHEA:24052), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q2KIG0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ETFD_BOVIN is an exemplar enzyme carrying EC 1.5.5.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.5.5.1
+      snippet: DR   P94132, ETFD_ACIAD ;  O22854, ETFD_ARATH ;  Q2KIG0, ETFD_BOVIN ;
+      notes: ExPASy ENZYME entry EC 1.5.5.1 cross-references UniProtKB:Q2KIG0 (ETFD_BOVIN) as a protein
+        with this activity.
+    - reference: RHEA:24052
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.5.1"/>
+      notes: Rhea assigns RHEA:24052 to EC 1.5.5.1, and EC 1.5.5.1 maps to exactly one Rhea master reaction
+        (RHEA:24052), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

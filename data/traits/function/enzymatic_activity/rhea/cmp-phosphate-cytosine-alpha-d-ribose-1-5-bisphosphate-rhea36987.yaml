@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.4.2.57
     mapping_source: rhea2ec
@@ -30,4 +30,106 @@ definitions:
       Catalyses the reaction: CMP + phosphate = cytosine + alpha-D-ribose 1,5-bisphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of CMP + phosphate = cytosine + alpha-D-ribose 1,5-bisphosphate
+  description: Substrate-to-product chemistry of RHEA:36987, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:36988 (rh:substrates → 36987_L, rh:products → 36987_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of CMP + phosphate = cytosine + alpha-D-ribose 1,5-bisphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:36987
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: CMP + phosphate = cytosine + alpha-D-ribose 1,5-bisphosphate'
+  - node_id: sub1
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: cytosine
+    node_type: CHEMICAL
+    grounding: CHEBI:16040
+    description: Formula C4H5N3O.
+  - node_id: prd2
+    label: alpha-D-ribose 1,5-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:68688
+    description: Formula C5H8O11P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: AMP phosphorylase
+    grounding: EC:2.4.2.57
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: CMP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36988
+      snippet: CMP + phosphate => cytosine + alpha-D-ribose 1,5-bisphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36988 declares side 36987_L as its substrates
+        (rh:substrates); the master reaction RHEA:36987 is undirected. This participant is CHEBI:60377
+        with coefficient 1. Rhea cites PMID:17303759, PMID:23065974 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36988
+      snippet: CMP + phosphate => cytosine + alpha-D-ribose 1,5-bisphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36988 declares side 36987_L as its substrates
+        (rh:substrates); the master reaction RHEA:36987 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:17303759, PMID:23065974 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cytosine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36988
+      snippet: CMP + phosphate => cytosine + alpha-D-ribose 1,5-bisphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36988 declares side 36987_R as its products
+        (rh:products); the master reaction RHEA:36987 is undirected. This participant is CHEBI:16040 with
+        coefficient 1. Rhea cites PMID:17303759, PMID:23065974 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: alpha-D-ribose 1,5-bisphosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36988
+      snippet: CMP + phosphate => cytosine + alpha-D-ribose 1,5-bisphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:36988 declares side 36987_R as its products
+        (rh:products); the master reaction RHEA:36987 is undirected. This participant is CHEBI:68688 with
+        coefficient 1. Rhea cites PMID:17303759, PMID:23065974 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.4.2.57; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:36987
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.2.57"/>
+      notes: The rh:ec triple on RHEA:36987 in rhea.rdf. EC 2.4.2.57 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

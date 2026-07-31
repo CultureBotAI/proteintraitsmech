@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 mapped_xrefs:
@@ -38,4 +38,149 @@ definitions:
       Catalyses: dihydroxyacetone + phosphoenolpyruvate = dihydroxyacetone phosphate + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphoenolpyruvate--glycerone phosphotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.121. EC 2.7.1.121 maps to
+    exactly one curated Rhea reaction (RHEA:18381), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dihydroxyacetone
+    + phosphoenolpyruvate = dihydroxyacetone phosphate + pyruvate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoenolpyruvate--glycerone phosphotransferase
+    grounding: EC:2.7.1.121
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dihydroxyacetone
+    node_type: CHEMICAL
+    grounding: CHEBI:16016
+    description: Formula C3H6O3.
+  - node_id: sub2
+    label: phosphoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+    description: Formula C3H2O6P.
+  - node_id: prd1
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoenolpyruvate-glycerone phosphotransferase activity
+    grounding: GO:0047324
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q927E6
+    node_type: PROTEIN
+    label: DHAK1_LISIN
+    grounding: UniProtKB:Q927E6
+  - node_id: prot_Q92EU2
+    node_type: PROTEIN
+    label: DHAK2_LISIN
+    grounding: UniProtKB:Q92EU2
+  - node_id: prot_P76015
+    node_type: PROTEIN
+    label: DHAK_ECOLI
+    grounding: UniProtKB:P76015
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dihydroxyacetone is a substrate consumed by RHEA:18381 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18382
+      snippet: dihydroxyacetone + phosphoenolpyruvate => dihydroxyacetone phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:18382 declares side 18381_L as its substrates
+        (rh:substrates); the master reaction RHEA:18381 is undirected. This participant is CHEBI:16016
+        with coefficient 1. Rhea cites PMID:6368745, PMID:22773791 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphoenolpyruvate is a substrate consumed by RHEA:18381 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18382
+      snippet: dihydroxyacetone + phosphoenolpyruvate => dihydroxyacetone phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:18382 declares side 18381_L as its substrates
+        (rh:substrates); the master reaction RHEA:18381 is undirected. This participant is CHEBI:58702
+        with coefficient 1. Rhea cites PMID:6368745, PMID:22773791 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dihydroxyacetone phosphate is a product released by RHEA:18381 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18382
+      snippet: dihydroxyacetone + phosphoenolpyruvate => dihydroxyacetone phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:18382 declares side 18381_R as its products
+        (rh:products); the master reaction RHEA:18381 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:6368745, PMID:22773791 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:18381 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18382
+      snippet: dihydroxyacetone + phosphoenolpyruvate => dihydroxyacetone phosphate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:18382 declares side 18381_R as its products
+        (rh:products); the master reaction RHEA:18381 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:6368745, PMID:22773791 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.1.121
+      snippet: EC:2.7.1.121 > GO:phosphoenolpyruvate-glycerone phosphotransferase activity ; GO:0047324
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047324 is itself a record
+        in this KB.
+  - subject: prot_Q927E6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHAK1_LISIN is an exemplar enzyme with EC 2.7.1.121 activity.
+    evidence:
+    - reference: EC:2.7.1.121
+      snippet: DR   Q927E6, DHAK1_LISIN;  Q92EU2, DHAK2_LISIN;  P76015, DHAK_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.1.121 cross-references UniProtKB:Q927E6 (DHAK1_LISIN) as a protein
+        with this activity.
+  - subject: prot_Q92EU2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHAK2_LISIN is an exemplar enzyme with EC 2.7.1.121 activity.
+    evidence:
+    - reference: EC:2.7.1.121
+      snippet: DR   Q927E6, DHAK1_LISIN;  Q92EU2, DHAK2_LISIN;  P76015, DHAK_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.1.121 cross-references UniProtKB:Q92EU2 (DHAK2_LISIN) as a protein
+        with this activity.
+  - subject: prot_P76015
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHAK_ECOLI is an exemplar enzyme with EC 2.7.1.121 activity.
+    evidence:
+    - reference: EC:2.7.1.121
+      snippet: DR   Q927E6, DHAK1_LISIN;  Q92EU2, DHAK2_LISIN;  P76015, DHAK_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.1.121 cross-references UniProtKB:P76015 (DHAK_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

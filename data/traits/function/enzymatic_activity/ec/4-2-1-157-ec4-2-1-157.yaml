@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -35,4 +35,103 @@ definitions:
       Catalyses: (R)-2-hydroxy-4-methylpentanoyl-CoA = 4-methylpent-2-enoyl-CoA + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (R)-2-hydroxyisocaproyl-CoA dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.157. EC 4.2.1.157 maps to
+    exactly one curated Rhea reaction (RHEA:46924), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-2-hydroxy-4-methylpentanoyl-CoA
+    = 4-methylpent-2-enoyl-CoA + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (R)-2-hydroxyisocaproyl-CoA dehydratase
+    grounding: EC:4.2.1.157
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-2-hydroxy-4-methylpentanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:87119
+    description: Formula C27H42N7O18P3S.
+  - node_id: prd1
+    label: 4-methylpent-2-enoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:87120
+    description: Formula C27H40N7O17P3S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q5U924
+    node_type: PROTEIN
+    label: HADB_CLODI
+    grounding: UniProtKB:Q5U924
+  - node_id: prot_Q5U923
+    node_type: PROTEIN
+    label: HADC_CLODI
+    grounding: UniProtKB:Q5U923
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-2-hydroxy-4-methylpentanoyl-CoA is a substrate consumed by RHEA:46924 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:46925
+      snippet: (R)-2-hydroxy-4-methylpentanoyl-CoA => 4-methylpent-2-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46925 declares side 46924_L as its substrates
+        (rh:substrates); the master reaction RHEA:46924 is undirected. This participant is CHEBI:87119
+        with coefficient 1. Rhea cites PMID:21366233, PMID:15654892 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-methylpent-2-enoyl-CoA is a product released by RHEA:46924 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46925
+      snippet: (R)-2-hydroxy-4-methylpentanoyl-CoA => 4-methylpent-2-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46925 declares side 46924_R as its products
+        (rh:products); the master reaction RHEA:46924 is undirected. This participant is CHEBI:87120 with
+        coefficient 1. Rhea cites PMID:21366233, PMID:15654892 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:46924 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46925
+      snippet: (R)-2-hydroxy-4-methylpentanoyl-CoA => 4-methylpent-2-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46925 declares side 46924_R as its products
+        (rh:products); the master reaction RHEA:46924 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:21366233, PMID:15654892 for this reaction.
+  - subject: prot_Q5U924
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HADB_CLODI is an exemplar enzyme with EC 4.2.1.157 activity.
+    evidence:
+    - reference: EC:4.2.1.157
+      snippet: DR   Q5U924, HADB_CLODI ;  Q5U923, HADC_CLODI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.157 cross-references UniProtKB:Q5U924 (HADB_CLODI) as a protein
+        with this activity.
+  - subject: prot_Q5U923
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HADC_CLODI is an exemplar enzyme with EC 4.2.1.157 activity.
+    evidence:
+    - reference: EC:4.2.1.157
+      snippet: DR   Q5U924, HADB_CLODI ;  Q5U923, HADC_CLODI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.157 cross-references UniProtKB:Q5U923 (HADC_CLODI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

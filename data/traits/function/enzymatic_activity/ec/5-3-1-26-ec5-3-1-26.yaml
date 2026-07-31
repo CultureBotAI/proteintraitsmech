@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.1.-
 mapped_xrefs:
@@ -38,4 +38,116 @@ definitions:
       Catalyses: aldehydo-D-galactose 6-phosphate = keto-D-tagatose 6-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of galactose-6-phosphate isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.1.26. EC 5.3.1.26 maps to exactly
+    one curated Rhea reaction (RHEA:13033), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "aldehydo-D-galactose
+    6-phosphate = keto-D-tagatose 6-phosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: galactose-6-phosphate isomerase
+    grounding: EC:5.3.1.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: aldehydo-D-galactose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58255
+    description: Formula C6H11O9P.
+  - node_id: prd1
+    label: keto-D-tagatose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:134283
+    description: Formula C6H11O9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: galactose-6-phosphate isomerase activity
+    grounding: GO:0050044
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8E4R5
+    node_type: PROTEIN
+    label: LACA1_STRA3
+    grounding: UniProtKB:Q8E4R5
+  - node_id: prot_Q99YH1
+    node_type: PROTEIN
+    label: LACA1_STRP1
+    grounding: UniProtKB:Q99YH1
+  - node_id: prot_P0DC04
+    node_type: PROTEIN
+    label: LACA1_STRP3
+    grounding: UniProtKB:P0DC04
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: aldehydo-D-galactose 6-phosphate is a substrate consumed by RHEA:13033 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:13034
+      snippet: aldehydo-D-galactose 6-phosphate => keto-D-tagatose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13034 declares side 13033_L as its substrates
+        (rh:substrates); the master reaction RHEA:13033 is undirected. This participant is CHEBI:58255
+        with coefficient 1. Rhea cites PMID:24015281, PMID:1901863 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: keto-D-tagatose 6-phosphate is a product released by RHEA:13033 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13034
+      snippet: aldehydo-D-galactose 6-phosphate => keto-D-tagatose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13034 declares side 13033_R as its products
+        (rh:products); the master reaction RHEA:13033 is undirected. This participant is CHEBI:134283
+        with coefficient 1. Rhea cites PMID:24015281, PMID:1901863 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.1.26
+      snippet: EC:5.3.1.26 > GO:galactose-6-phosphate isomerase activity ; GO:0050044
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050044 is itself a record
+        in this KB.
+  - subject: prot_Q8E4R5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LACA1_STRA3 is an exemplar enzyme with EC 5.3.1.26 activity.
+    evidence:
+    - reference: EC:5.3.1.26
+      snippet: DR   Q8E4R5, LACA1_STRA3;  Q99YH1, LACA1_STRP1;  P0DC04, LACA1_STRP3;
+      notes: ExPASy ENZYME entry EC 5.3.1.26 cross-references UniProtKB:Q8E4R5 (LACA1_STRA3) as a protein
+        with this activity.
+  - subject: prot_Q99YH1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LACA1_STRP1 is an exemplar enzyme with EC 5.3.1.26 activity.
+    evidence:
+    - reference: EC:5.3.1.26
+      snippet: DR   Q8E4R5, LACA1_STRA3;  Q99YH1, LACA1_STRP1;  P0DC04, LACA1_STRP3;
+      notes: ExPASy ENZYME entry EC 5.3.1.26 cross-references UniProtKB:Q99YH1 (LACA1_STRP1) as a protein
+        with this activity.
+  - subject: prot_P0DC04
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LACA1_STRP3 is an exemplar enzyme with EC 5.3.1.26 activity.
+    evidence:
+    - reference: EC:5.3.1.26
+      snippet: DR   Q8E4R5, LACA1_STRA3;  Q99YH1, LACA1_STRP1;  P0DC04, LACA1_STRP3;
+      notes: ExPASy ENZYME entry EC 5.3.1.26 cross-references UniProtKB:P0DC04 (LACA1_STRP3) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.3.-
 synonyms:
@@ -31,4 +31,73 @@ definitions:
       Catalyses: 2-(1,2-epoxy-1,2-dihydrophenyl)acetyl-CoA = 2-oxepin-2(3H)-ylideneacetyl- CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-(1,2-epoxy-1,2-dihydrophenyl)acetyl-CoA isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.3.18. EC 5.3.3.18 maps to exactly
+    one curated Rhea reaction (RHEA:31843), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-(1,2-epoxy-1,2-dihydrophenyl)acetyl-CoA
+    = 2-oxepin-2(3H)-ylideneacetyl- CoA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-(1,2-epoxy-1,2-dihydrophenyl)acetyl-CoA isomerase
+    grounding: EC:5.3.3.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-(1,2-epoxy-1,2-dihydrophenyl)acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:63458
+    description: Formula C29H38N7O18P3S.
+  - node_id: prd1
+    label: 2-oxepin-2(3H)-ylideneacetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:63252
+    description: Formula C29H38N7O18P3S.
+  - node_id: prot_P77467
+    node_type: PROTEIN
+    label: PAAG_ECOLI
+    grounding: UniProtKB:P77467
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-(1,2-epoxy-1,2-dihydrophenyl)acetyl-CoA is a substrate consumed by RHEA:31843 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31844
+      snippet: 2-(1,2-epoxy-1,2-dihydrophenyl)acetyl-CoA => 2-oxepin-2(3H)-ylideneacetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:31844 declares side 31843_L as its substrates
+        (rh:substrates); the master reaction RHEA:31843 is undirected. This participant is CHEBI:63458
+        with coefficient 1. Rhea cites PMID:12846838, PMID:20660314 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-oxepin-2(3H)-ylideneacetyl-CoA is a product released by RHEA:31843 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31844
+      snippet: 2-(1,2-epoxy-1,2-dihydrophenyl)acetyl-CoA => 2-oxepin-2(3H)-ylideneacetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:31844 declares side 31843_R as its products
+        (rh:products); the master reaction RHEA:31843 is undirected. This participant is CHEBI:63252 with
+        coefficient 1. Rhea cites PMID:12846838, PMID:20660314 for this reaction.
+  - subject: prot_P77467
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAAG_ECOLI is an exemplar enzyme with EC 5.3.3.18 activity.
+    evidence:
+    - reference: EC:5.3.3.18
+      snippet: DR   P77467, PAAG_ECOLI ;
+      notes: ExPASy ENZYME entry EC 5.3.3.18 cross-references UniProtKB:P77467 (PAAG_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

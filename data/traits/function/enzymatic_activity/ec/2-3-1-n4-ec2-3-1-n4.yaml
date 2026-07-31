@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 canonical_examples:
@@ -33,4 +33,172 @@ definitions:
       Catalyses: a fatty acyl-[ACP] + a 1-acyl-sn-glycero-3-phosphate = a 1,2-diacyl- sn-glycero-3-phosphate + holo-[ACP]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-acyl-sn-glycerol-3-phosphate acyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.n4. EC 2.3.1.n4 maps to exactly
+    one curated Rhea reaction (RHEA:42296), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a fatty acyl-[ACP]
+    + a 1-acyl-sn-glycero-3-phosphate = a 1,2-diacyl- sn-glycero-3-phosphate + holo-[ACP]". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 1-acyl-sn-glycerol-3-phosphate acyltransferase
+    grounding: EC:2.3.1.n4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a fatty acyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14125
+    description: Rhea compound GENERIC:14125.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-(S-fatty acylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14125 (a fatty acyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138651
+  - node_id: sub2
+    label: a 1-acyl-sn-glycero-3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57970
+    description: Formula C4H6O7PR.
+  - node_id: prd1
+    label: a 1,2-diacyl-sn-glycero-3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58608
+    description: Formula C5H5O8PR2.
+  - node_id: prd2
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: prot_Q8GXU8
+    node_type: PROTEIN
+    label: LPAT1_ARATH
+    grounding: UniProtKB:Q8GXU8
+  - node_id: prot_Q9LLY4
+    node_type: PROTEIN
+    label: LPAT1_BRANA
+    grounding: UniProtKB:Q9LLY4
+  - node_id: prot_A8WXS4
+    node_type: PROTEIN
+    label: MBOA7_CAEBR
+    grounding: UniProtKB:A8WXS4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a fatty acyl-[ACP] is a substrate consumed by RHEA:42296 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42297
+      snippet: a fatty acyl-[ACP] + a 1-acyl-sn-glycero-3-phosphate => a 1,2-diacyl-sn-glycero-3-phosphate
+        + holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:42297 declares side 42296_L as its substrates
+        (rh:substrates); the master reaction RHEA:42296 is undirected. This participant is GENERIC:14125
+        with coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-fatty acylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of a
+      fatty acyl-[ACP].
+    evidence:
+    - reference: RHEA:42296
+      snippet: O-(S-fatty acylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:14125 (a fatty acyl-[ACP]) declares rh:reactivePart = O-(S-fatty acylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:138651).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a 1-acyl-sn-glycero-3-phosphate is a substrate consumed by RHEA:42296 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42297
+      snippet: a fatty acyl-[ACP] + a 1-acyl-sn-glycero-3-phosphate => a 1,2-diacyl-sn-glycero-3-phosphate
+        + holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:42297 declares side 42296_L as its substrates
+        (rh:substrates); the master reaction RHEA:42296 is undirected. This participant is CHEBI:57970
+        with coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 1,2-diacyl-sn-glycero-3-phosphate is a product released by RHEA:42296 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42297
+      snippet: a fatty acyl-[ACP] + a 1-acyl-sn-glycero-3-phosphate => a 1,2-diacyl-sn-glycero-3-phosphate
+        + holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:42297 declares side 42296_R as its products
+        (rh:products); the master reaction RHEA:42296 is undirected. This participant is CHEBI:58608 with
+        coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: holo-[ACP] is a product released by RHEA:42296 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42297
+      snippet: a fatty acyl-[ACP] + a 1-acyl-sn-glycero-3-phosphate => a 1,2-diacyl-sn-glycero-3-phosphate
+        + holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:42297 declares side 42296_R as its products
+        (rh:products); the master reaction RHEA:42296 is undirected. This participant is GENERIC:9685
+        with coefficient 1. Rhea cites PMID:16949372 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:42296
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479).
+  - subject: prot_Q8GXU8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LPAT1_ARATH is an exemplar enzyme with EC 2.3.1.n4 activity.
+    evidence:
+    - reference: EC:2.3.1.n4
+      snippet: DR   Q8GXU8, LPAT1_ARATH;  Q9LLY4, LPAT1_BRANA;  A8WXS4, MBOA7_CAEBR;
+      notes: ExPASy ENZYME entry EC 2.3.1.n4 cross-references UniProtKB:Q8GXU8 (LPAT1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9LLY4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LPAT1_BRANA is an exemplar enzyme with EC 2.3.1.n4 activity.
+    evidence:
+    - reference: EC:2.3.1.n4
+      snippet: DR   Q8GXU8, LPAT1_ARATH;  Q9LLY4, LPAT1_BRANA;  A8WXS4, MBOA7_CAEBR;
+      notes: ExPASy ENZYME entry EC 2.3.1.n4 cross-references UniProtKB:Q9LLY4 (LPAT1_BRANA) as a protein
+        with this activity.
+  - subject: prot_A8WXS4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MBOA7_CAEBR is an exemplar enzyme with EC 2.3.1.n4 activity.
+    evidence:
+    - reference: EC:2.3.1.n4
+      snippet: DR   Q8GXU8, LPAT1_ARATH;  Q9LLY4, LPAT1_BRANA;  A8WXS4, MBOA7_CAEBR;
+      notes: ExPASy ENZYME entry EC 2.3.1.n4 cross-references UniProtKB:A8WXS4 (MBOA7_CAEBR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

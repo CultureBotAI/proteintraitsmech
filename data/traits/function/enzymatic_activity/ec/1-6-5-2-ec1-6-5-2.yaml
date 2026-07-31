@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.6.5.-
 synonyms:
@@ -91,4 +91,281 @@ definitions:
       Catalyses: (1) a quinone + NADH + H(+) = a quinol + NAD(+). (2) a quinone + NADPH + H(+) = a quinol + NADP(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of NAD(P)H dehydrogenase (quinone)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.6.5.2. Rhea assigns 2 curated
+    reactions to EC 1.6.5.2. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "(1) a quinone + NADH + H(+) = a quinol + NAD(+). (2) a quinone
+    + NADPH + H(+) = a quinol + NADP(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: NAD(P)H dehydrogenase (quinone)
+    grounding: EC:1.6.5.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a quinone + NADH + H(+) = a quinol + NAD(+)
+    grounding: RHEA:46160
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a quinone + NADH + H(+) = a quinol + NAD(+)'
+  - node_id: rxn1_sub1
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: rxn1_sub2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn1_sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn1_prd1
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  - node_id: rxn1_prd2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a quinone + NADPH + H(+) = a quinol + NADP(+)
+    grounding: RHEA:46164
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a quinone + NADPH + H(+) = a quinol + NADP(+)'
+  - node_id: rxn2_sub1
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: rxn2_sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2_prd1
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  - node_id: rxn2_prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: NAD(P)H dehydrogenase (quinone) activity
+    grounding: GO:0003955
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P74312
+    node_type: PROTEIN
+    label: ARREH_SYNY3
+    grounding: UniProtKB:P74312
+  - node_id: prot_P0AGE7
+    node_type: PROTEIN
+    label: CHRR_ECO57
+    grounding: UniProtKB:P0AGE7
+  - node_id: prot_P0AGE6
+    node_type: PROTEIN
+    label: CHRR_ECOLI
+    grounding: UniProtKB:P0AGE6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:46160 is one of the 2 curated reactions Rhea assigns to EC 1.6.5.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:46160
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.6.5.2"/>
+      notes: The rh:ec triple on RHEA:46160 in rhea.rdf assigns that reaction to EC 1.6.5.2.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a quinone is a substrate consumed by RHEA:46160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46161
+      snippet: a quinone + NADH + H(+) => a quinol + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46161 declares side 46160_L as its substrates
+        (rh:substrates); the master reaction RHEA:46160 is undirected. This participant is CHEBI:132124
+        with coefficient 1. Rhea cites PMID:10683249, PMID:9485311, PMID:2226388, PMID:7568029 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADH is a substrate consumed by RHEA:46160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46161
+      snippet: a quinone + NADH + H(+) => a quinol + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46161 declares side 46160_L as its substrates
+        (rh:substrates); the master reaction RHEA:46160 is undirected. This participant is CHEBI:57945
+        with coefficient 1. Rhea cites PMID:10683249, PMID:9485311, PMID:2226388, PMID:7568029 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: H(+) is a substrate consumed by RHEA:46160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46161
+      snippet: a quinone + NADH + H(+) => a quinol + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46161 declares side 46160_L as its substrates
+        (rh:substrates); the master reaction RHEA:46160 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:10683249, PMID:9485311, PMID:2226388, PMID:7568029 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a quinol is a product released by RHEA:46160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46161
+      snippet: a quinone + NADH + H(+) => a quinol + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46161 declares side 46160_R as its products
+        (rh:products); the master reaction RHEA:46160 is undirected. This participant is CHEBI:24646 with
+        coefficient 1. Rhea cites PMID:10683249, PMID:9485311, PMID:2226388, PMID:7568029 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NAD(+) is a product released by RHEA:46160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46161
+      snippet: a quinone + NADH + H(+) => a quinol + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46161 declares side 46160_R as its products
+        (rh:products); the master reaction RHEA:46160 is undirected. This participant is CHEBI:57540 with
+        coefficient 1. Rhea cites PMID:10683249, PMID:9485311, PMID:2226388, PMID:7568029 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:46164 is one of the 2 curated reactions Rhea assigns to EC 1.6.5.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:46164
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.6.5.2"/>
+      notes: The rh:ec triple on RHEA:46164 in rhea.rdf assigns that reaction to EC 1.6.5.2.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a quinone is a substrate consumed by RHEA:46164 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46165
+      snippet: a quinone + NADPH + H(+) => a quinol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46165 declares side 46164_L as its substrates
+        (rh:substrates); the master reaction RHEA:46164 is undirected. This participant is CHEBI:132124
+        with coefficient 1. Rhea cites PMID:10683249, PMID:9485311, PMID:2226388, PMID:7568029 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADPH is a substrate consumed by RHEA:46164 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46165
+      snippet: a quinone + NADPH + H(+) => a quinol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46165 declares side 46164_L as its substrates
+        (rh:substrates); the master reaction RHEA:46164 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:10683249, PMID:9485311, PMID:2226388, PMID:7568029 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: H(+) is a substrate consumed by RHEA:46164 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46165
+      snippet: a quinone + NADPH + H(+) => a quinol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46165 declares side 46164_L as its substrates
+        (rh:substrates); the master reaction RHEA:46164 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:10683249, PMID:9485311, PMID:2226388, PMID:7568029 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: a quinol is a product released by RHEA:46164 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46165
+      snippet: a quinone + NADPH + H(+) => a quinol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46165 declares side 46164_R as its products
+        (rh:products); the master reaction RHEA:46164 is undirected. This participant is CHEBI:24646 with
+        coefficient 1. Rhea cites PMID:10683249, PMID:9485311, PMID:2226388, PMID:7568029 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADP(+) is a product released by RHEA:46164 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46165
+      snippet: a quinone + NADPH + H(+) => a quinol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46165 declares side 46164_R as its products
+        (rh:products); the master reaction RHEA:46164 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:10683249, PMID:9485311, PMID:2226388, PMID:7568029 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.6.5.2
+      snippet: EC:1.6.5.2 > GO:NAD(P)H dehydrogenase (quinone) activity ; GO:0003955
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003955 is itself a record
+        in this KB.
+  - subject: prot_P74312
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARREH_SYNY3 is an exemplar enzyme with EC 1.6.5.2 activity.
+    evidence:
+    - reference: EC:1.6.5.2
+      snippet: DR   P74312, ARREH_SYNY3;  P0AGE7, CHRR_ECO57 ;  P0AGE6, CHRR_ECOLI ;
+      notes: ExPASy ENZYME entry EC 1.6.5.2 cross-references UniProtKB:P74312 (ARREH_SYNY3) as a protein
+        with this activity.
+  - subject: prot_P0AGE7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHRR_ECO57 is an exemplar enzyme with EC 1.6.5.2 activity.
+    evidence:
+    - reference: EC:1.6.5.2
+      snippet: DR   P74312, ARREH_SYNY3;  P0AGE7, CHRR_ECO57 ;  P0AGE6, CHRR_ECOLI ;
+      notes: ExPASy ENZYME entry EC 1.6.5.2 cross-references UniProtKB:P0AGE7 (CHRR_ECO57) as a protein
+        with this activity.
+  - subject: prot_P0AGE6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHRR_ECOLI is an exemplar enzyme with EC 1.6.5.2 activity.
+    evidence:
+    - reference: EC:1.6.5.2
+      snippet: DR   P74312, ARREH_SYNY3;  P0AGE7, CHRR_ECO57 ;  P0AGE6, CHRR_ECOLI ;
+      notes: ExPASy ENZYME entry EC 1.6.5.2 cross-references UniProtKB:P0AGE6 (CHRR_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

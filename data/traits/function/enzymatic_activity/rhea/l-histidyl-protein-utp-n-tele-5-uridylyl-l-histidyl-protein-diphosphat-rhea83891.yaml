@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29979
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,125 @@ definitions:
       Catalyses the reaction: L-histidyl-[protein] + UTP = N(tele)-(5'-uridylyl)-L-histidyl-[protein] + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-histidyl-[protein] + UTP = N(tele)-(5'-uridylyl)-L-histidyl-[protein]
+    + diphosphate
+  description: Substrate-to-product chemistry of RHEA:83891, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:83892 (rh:substrates → 83891_L, rh:products → 83891_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-histidyl-[protein] + UTP = N(tele)-(5'-uridylyl)-L-histidyl-[protein] + di…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:83891
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-histidyl-[protein] + UTP = N(tele)-(5''-uridylyl)-L-histidyl-[protein] + diphosphate'
+  - node_id: sub1
+    label: L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9745
+    description: Rhea compound GENERIC:9745.
+  - node_id: sub1_rp1
+    label: L-histidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9745 (L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29979
+  - node_id: sub2
+    label: UTP
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+    description: Formula C9H11N2O15P3.
+  - node_id: prd1
+    label: N(tele)-(5'-uridylyl)-L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:20239
+    description: Rhea compound GENERIC:20239.
+  - node_id: prd1_rp1
+    label: N(tele)-(uridylyl)-L-histidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:20239 (N(tele)-(5'-uridylyl)-L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:233474
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-histidyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:83892
+      snippet: L-histidyl-[protein] + UTP => N(tele)-(5'-uridylyl)-L-histidyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:83892 declares side 83891_L as its substrates
+        (rh:substrates); the master reaction RHEA:83891 is undirected. This participant is GENERIC:9745
+        with coefficient 1. Rhea cites PMID:32966796, PMID:35532216 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-histidine residue is the reactive part of L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:83891
+      snippet: L-histidine residue
+      notes: Rhea compound GENERIC:9745 (L-histidyl-[protein]) declares rh:reactivePart = L-histidine
+        residue (CHEBI:29979), formula C6H7N3O.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83892
+      snippet: L-histidyl-[protein] + UTP => N(tele)-(5'-uridylyl)-L-histidyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:83892 declares side 83891_L as its substrates
+        (rh:substrates); the master reaction RHEA:83891 is undirected. This participant is CHEBI:46398
+        with coefficient 1. Rhea cites PMID:32966796, PMID:35532216 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(tele)-(5'-uridylyl)-L-histidyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:83892
+      snippet: L-histidyl-[protein] + UTP => N(tele)-(5'-uridylyl)-L-histidyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:83892 declares side 83891_R as its products
+        (rh:products); the master reaction RHEA:83891 is undirected. This participant is GENERIC:20239
+        with coefficient 1. Rhea cites PMID:32966796, PMID:35532216 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(tele)-(uridylyl)-L-histidine residue is the reactive part of N(tele)-(5'-uridylyl)-L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:83891
+      snippet: N(tele)-(uridylyl)-L-histidine residue
+      notes: Rhea compound GENERIC:20239 (N(tele)-(5'-uridylyl)-L-histidyl-[protein]) declares rh:reactivePart
+        = N(tele)-(uridylyl)-L-histidine residue (CHEBI:233474), formula C15H17N5O9P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83892
+      snippet: L-histidyl-[protein] + UTP => N(tele)-(5'-uridylyl)-L-histidyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:83892 declares side 83891_R as its products
+        (rh:products); the master reaction RHEA:83891 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:32966796, PMID:35532216 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

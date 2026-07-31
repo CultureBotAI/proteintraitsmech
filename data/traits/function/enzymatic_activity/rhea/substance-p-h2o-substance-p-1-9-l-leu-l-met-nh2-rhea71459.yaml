@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:190692
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,90 @@ definitions:
       Catalyses the reaction: substance P + H2O = substance P(1-9) + L-Leu-L-Met-NH2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of substance P + H2O = substance P(1-9) + L-Leu-L-Met-NH2
+  description: Substrate-to-product chemistry of RHEA:71459, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:71460 (rh:substrates → 71459_L, rh:products → 71459_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of substance P + H2O = substance P(1-9) + L-Leu-L-Met-NH2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:71459
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: substance P + H2O = substance P(1-9) + L-Leu-L-Met-NH2'
+  - node_id: sub1
+    label: substance P
+    node_type: CHEMICAL
+    grounding: CHEBI:190692
+    description: Formula C63H101N18O13S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: substance P(1-9)
+    node_type: CHEMICAL
+    grounding: CHEBI:190693
+    description: Formula C52H79N15O12.
+  - node_id: prd2
+    label: L-Leu-L-Met-NH2
+    node_type: CHEMICAL
+    grounding: CHEBI:190700
+    description: Formula C11H24N3O2S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: substance P is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71460
+      snippet: substance P + H2O => substance P(1-9) + L-Leu-L-Met-NH2
+      notes: Rhea's left-to-right directional reaction RHEA:71460 declares side 71459_L as its substrates
+        (rh:substrates); the master reaction RHEA:71459 is undirected. This participant is CHEBI:190692
+        with coefficient 1. Rhea cites PMID:6208535 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71460
+      snippet: substance P + H2O => substance P(1-9) + L-Leu-L-Met-NH2
+      notes: Rhea's left-to-right directional reaction RHEA:71460 declares side 71459_L as its substrates
+        (rh:substrates); the master reaction RHEA:71459 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:6208535 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: substance P(1-9) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71460
+      snippet: substance P + H2O => substance P(1-9) + L-Leu-L-Met-NH2
+      notes: Rhea's left-to-right directional reaction RHEA:71460 declares side 71459_R as its products
+        (rh:products); the master reaction RHEA:71459 is undirected. This participant is CHEBI:190693
+        with coefficient 1. Rhea cites PMID:6208535 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-Leu-L-Met-NH2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71460
+      snippet: substance P + H2O => substance P(1-9) + L-Leu-L-Met-NH2
+      notes: Rhea's left-to-right directional reaction RHEA:71460 declares side 71459_R as its products
+        (rh:products); the master reaction RHEA:71459 is undirected. This participant is CHEBI:190700
+        with coefficient 1. Rhea cites PMID:6208535 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

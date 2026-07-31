@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 synonyms:
@@ -41,4 +41,153 @@ definitions:
       Catalyses: GDP-alpha-D-perosamine + 2-oxoglutarate = GDP-4-dehydro-alpha-D-rhamnose + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of GDP-perosamine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.102. EC 2.6.1.102 maps to
+    exactly one curated Rhea reaction (RHEA:36779), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "GDP-alpha-D-perosamine
+    + 2-oxoglutarate = GDP-4-dehydro-alpha-D-rhamnose + L-glutamate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: GDP-perosamine synthase
+    grounding: EC:2.6.1.102
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: GDP-alpha-D-perosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:73996
+    description: Formula C16H25N6O14P2.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: GDP-4-dehydro-alpha-D-rhamnose
+    node_type: CHEMICAL
+    grounding: CHEBI:57964
+    description: Formula C16H21N5O15P2.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: GDP-perosamine synthase activity
+    grounding: GO:0102933
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9A9H3
+    node_type: PROTEIN
+    label: GDPPS_CAUVC
+    grounding: UniProtKB:Q9A9H3
+  - node_id: prot_Q7DBF3
+    node_type: PROTEIN
+    label: GDPPS_ECO57
+    grounding: UniProtKB:Q7DBF3
+  - node_id: prot_Q06953
+    node_type: PROTEIN
+    label: GDPPS_VIBCL
+    grounding: UniProtKB:Q06953
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: GDP-alpha-D-perosamine is a substrate consumed by RHEA:36779 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36780
+      snippet: GDP-alpha-D-perosamine + 2-oxoglutarate => GDP-4-dehydro-alpha-D-rhamnose + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:36780 declares side 36779_L as its substrates
+        (rh:substrates); the master reaction RHEA:36779 is undirected. This participant is CHEBI:73996
+        with coefficient 1. Rhea cites PMID:18201574, PMID:11479276, PMID:18795799, PMID:17888872 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:36779 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36780
+      snippet: GDP-alpha-D-perosamine + 2-oxoglutarate => GDP-4-dehydro-alpha-D-rhamnose + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:36780 declares side 36779_L as its substrates
+        (rh:substrates); the master reaction RHEA:36779 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:18201574, PMID:11479276, PMID:18795799, PMID:17888872 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: GDP-4-dehydro-alpha-D-rhamnose is a product released by RHEA:36779 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36780
+      snippet: GDP-alpha-D-perosamine + 2-oxoglutarate => GDP-4-dehydro-alpha-D-rhamnose + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:36780 declares side 36779_R as its products
+        (rh:products); the master reaction RHEA:36779 is undirected. This participant is CHEBI:57964 with
+        coefficient 1. Rhea cites PMID:18201574, PMID:11479276, PMID:18795799, PMID:17888872 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:36779 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36780
+      snippet: GDP-alpha-D-perosamine + 2-oxoglutarate => GDP-4-dehydro-alpha-D-rhamnose + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:36780 declares side 36779_R as its products
+        (rh:products); the master reaction RHEA:36779 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:18201574, PMID:11479276, PMID:18795799, PMID:17888872 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.6.1.102
+      snippet: EC:2.6.1.102 > GO:GDP-perosamine synthase activity ; GO:0102933
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102933 is itself a record
+        in this KB.
+  - subject: prot_Q9A9H3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GDPPS_CAUVC is an exemplar enzyme with EC 2.6.1.102 activity.
+    evidence:
+    - reference: EC:2.6.1.102
+      snippet: DR   Q9A9H3, GDPPS_CAUVC;  Q7DBF3, GDPPS_ECO57;  Q06953, GDPPS_VIBCL;
+      notes: ExPASy ENZYME entry EC 2.6.1.102 cross-references UniProtKB:Q9A9H3 (GDPPS_CAUVC) as a protein
+        with this activity.
+  - subject: prot_Q7DBF3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GDPPS_ECO57 is an exemplar enzyme with EC 2.6.1.102 activity.
+    evidence:
+    - reference: EC:2.6.1.102
+      snippet: DR   Q9A9H3, GDPPS_CAUVC;  Q7DBF3, GDPPS_ECO57;  Q06953, GDPPS_VIBCL;
+      notes: ExPASy ENZYME entry EC 2.6.1.102 cross-references UniProtKB:Q7DBF3 (GDPPS_ECO57) as a protein
+        with this activity.
+  - subject: prot_Q06953
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GDPPS_VIBCL is an exemplar enzyme with EC 2.6.1.102 activity.
+    evidence:
+    - reference: EC:2.6.1.102
+      snippet: DR   Q9A9H3, GDPPS_CAUVC;  Q7DBF3, GDPPS_ECO57;  Q06953, GDPPS_VIBCL;
+      notes: ExPASy ENZYME entry EC 2.6.1.102 cross-references UniProtKB:Q06953 (GDPPS_VIBCL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

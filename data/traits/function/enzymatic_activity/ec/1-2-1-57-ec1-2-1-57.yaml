@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.2.1.-
 mapped_xrefs:
@@ -27,4 +27,265 @@ definitions:
       Catalyses: (1) butanal + NAD(+) + CoA = butanoyl-CoA + NADH + H(+). (2) butanal + NADP(+) + CoA = butanoyl-CoA + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of butanal dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.2.1.57. Rhea assigns 2 curated
+    reactions to EC 1.2.1.57. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) butanal + NAD(+) + CoA = butanoyl-CoA + NADH + H(+).
+    (2) butanal + NADP(+) + CoA = butanoyl-CoA + NADPH + H(+)". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: butanal dehydrogenase
+    grounding: EC:1.2.1.57
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of butanal + NAD(+) + CoA = butanoyl-CoA + NADH + H(+)
+    grounding: RHEA:22968
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: butanal + NAD(+) + CoA = butanoyl-CoA + NADH + H(+)'
+  - node_id: rxn1_sub1
+    label: butanal
+    node_type: CHEMICAL
+    grounding: CHEBI:15743
+    description: Formula C4H8O.
+  - node_id: rxn1_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn1_sub3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: rxn1_prd1
+    label: butanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57371
+    description: Formula C25H38N7O17P3S.
+  - node_id: rxn1_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of butanal + NADP(+) + CoA = butanoyl-CoA + NADPH + H(+)
+    grounding: RHEA:22972
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: butanal + NADP(+) + CoA = butanoyl-CoA + NADPH + H(+)'
+  - node_id: rxn2_sub1
+    label: butanal
+    node_type: CHEMICAL
+    grounding: CHEBI:15743
+    description: Formula C4H8O.
+  - node_id: rxn2_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn2_sub3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: rxn2_prd1
+    label: butanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57371
+    description: Formula C25H38N7O17P3S.
+  - node_id: rxn2_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: butanal dehydrogenase [NAD(P)+] activity
+    grounding: GO:0047759
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:22968 is one of the 2 curated reactions Rhea assigns to EC 1.2.1.57; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:22968
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.2.1.57"/>
+      notes: The rh:ec triple on RHEA:22968 in rhea.rdf assigns that reaction to EC 1.2.1.57.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: butanal is a substrate consumed by RHEA:22968 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22969
+      snippet: butanal + NAD(+) + CoA => butanoyl-CoA + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22969 declares side 22968_L as its substrates
+        (rh:substrates); the master reaction RHEA:22968 is undirected. This participant is CHEBI:15743
+        with coefficient 1. Rhea cites PMID:23614353 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NAD(+) is a substrate consumed by RHEA:22968 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22969
+      snippet: butanal + NAD(+) + CoA => butanoyl-CoA + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22969 declares side 22968_L as its substrates
+        (rh:substrates); the master reaction RHEA:22968 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:23614353 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: CoA is a substrate consumed by RHEA:22968 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22969
+      snippet: butanal + NAD(+) + CoA => butanoyl-CoA + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22969 declares side 22968_L as its substrates
+        (rh:substrates); the master reaction RHEA:22968 is undirected. This participant is CHEBI:57287
+        with coefficient 1. Rhea cites PMID:23614353 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: butanoyl-CoA is a product released by RHEA:22968 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22969
+      snippet: butanal + NAD(+) + CoA => butanoyl-CoA + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22969 declares side 22968_R as its products
+        (rh:products); the master reaction RHEA:22968 is undirected. This participant is CHEBI:57371 with
+        coefficient 1. Rhea cites PMID:23614353 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADH is a product released by RHEA:22968 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22969
+      snippet: butanal + NAD(+) + CoA => butanoyl-CoA + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22969 declares side 22968_R as its products
+        (rh:products); the master reaction RHEA:22968 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:23614353 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:22968 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22969
+      snippet: butanal + NAD(+) + CoA => butanoyl-CoA + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22969 declares side 22968_R as its products
+        (rh:products); the master reaction RHEA:22968 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:23614353 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:22972 is one of the 2 curated reactions Rhea assigns to EC 1.2.1.57; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:22972
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.2.1.57"/>
+      notes: The rh:ec triple on RHEA:22972 in rhea.rdf assigns that reaction to EC 1.2.1.57.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: butanal is a substrate consumed by RHEA:22972 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22973
+      snippet: butanal + NADP(+) + CoA => butanoyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22973 declares side 22972_L as its substrates
+        (rh:substrates); the master reaction RHEA:22972 is undirected. This participant is CHEBI:15743
+        with coefficient 1. Rhea cites PMID:3384801 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADP(+) is a substrate consumed by RHEA:22972 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22973
+      snippet: butanal + NADP(+) + CoA => butanoyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22973 declares side 22972_L as its substrates
+        (rh:substrates); the master reaction RHEA:22972 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:3384801 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: CoA is a substrate consumed by RHEA:22972 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22973
+      snippet: butanal + NADP(+) + CoA => butanoyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22973 declares side 22972_L as its substrates
+        (rh:substrates); the master reaction RHEA:22972 is undirected. This participant is CHEBI:57287
+        with coefficient 1. Rhea cites PMID:3384801 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: butanoyl-CoA is a product released by RHEA:22972 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22973
+      snippet: butanal + NADP(+) + CoA => butanoyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22973 declares side 22972_R as its products
+        (rh:products); the master reaction RHEA:22972 is undirected. This participant is CHEBI:57371 with
+        coefficient 1. Rhea cites PMID:3384801 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADPH is a product released by RHEA:22972 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22973
+      snippet: butanal + NADP(+) + CoA => butanoyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22973 declares side 22972_R as its products
+        (rh:products); the master reaction RHEA:22972 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:3384801 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:22972 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22973
+      snippet: butanal + NADP(+) + CoA => butanoyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22973 declares side 22972_R as its products
+        (rh:products); the master reaction RHEA:22972 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:3384801 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.2.1.57
+      snippet: EC:1.2.1.57 > GO:butanal dehydrogenase [NAD(P)+] activity ; GO:0047759
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047759 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

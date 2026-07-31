@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78497
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,155 @@ definitions:
       Catalyses the reaction: L-alanyl-tRNA(Thr) + H2O = tRNA(Thr) + L-alanine + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-alanyl-tRNA(Thr) + H2O = tRNA(Thr) + L-alanine + H(+)
+  description: Substrate-to-product chemistry of RHEA:17793, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17794 (rh:substrates → 17793_L, rh:products → 17793_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-alanyl-tRNA(Thr) + H2O = tRNA(Thr) + L-alanine + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17793
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-alanyl-tRNA(Thr) + H2O = tRNA(Thr) + L-alanine + H(+)'
+  - node_id: sub1
+    label: L-alanyl-tRNA(Thr)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:14576
+    description: Rhea compound GENERIC:14576.
+  - node_id: sub1_rp1
+    label: 3'-(L-alanyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14576 (L-alanyl-tRNA(Thr));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78497
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: tRNA(Thr)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9670
+    description: Rhea compound GENERIC:9670.
+  - node_id: prd1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9670 (tRNA(Thr));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: Ala-tRNA(Thr) deacylase activity
+    grounding: GO:0106105
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-alanyl-tRNA(Thr) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17794
+      snippet: L-alanyl-tRNA(Thr) + H2O => tRNA(Thr) + L-alanine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17794 declares side 17793_L as its substrates
+        (rh:substrates); the master reaction RHEA:17793 is undirected. This participant is GENERIC:14576
+        with coefficient 1. Rhea cites PMID:29410408 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-alanyl)adenylyl group is the reactive part of L-alanyl-tRNA(Thr).
+    evidence:
+    - reference: RHEA:17793
+      snippet: 3'-(L-alanyl)adenylyl group
+      notes: Rhea compound GENERIC:14576 (L-alanyl-tRNA(Thr)) declares rh:reactivePart = 3'-(L-alanyl)adenylyl
+        group (CHEBI:78497), formula C13H18N6O7P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17794
+      snippet: L-alanyl-tRNA(Thr) + H2O => tRNA(Thr) + L-alanine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17794 declares side 17793_L as its substrates
+        (rh:substrates); the master reaction RHEA:17793 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:29410408 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tRNA(Thr) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17794
+      snippet: L-alanyl-tRNA(Thr) + H2O => tRNA(Thr) + L-alanine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17794 declares side 17793_R as its products
+        (rh:products); the master reaction RHEA:17793 is undirected. This participant is GENERIC:9670
+        with coefficient 1. Rhea cites PMID:29410408 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: AMP 3'-end residue is the reactive part of tRNA(Thr).
+    evidence:
+    - reference: RHEA:17793
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9670 (tRNA(Thr)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-alanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17794
+      snippet: L-alanyl-tRNA(Thr) + H2O => tRNA(Thr) + L-alanine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17794 declares side 17793_R as its products
+        (rh:products); the master reaction RHEA:17793 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:29410408 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17794
+      snippet: L-alanyl-tRNA(Thr) + H2O => tRNA(Thr) + L-alanine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17794 declares side 17793_R as its products
+        (rh:products); the master reaction RHEA:17793 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29410408 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17793
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0106105"/>
+      notes: The rdfs:seeAlso triple on RHEA:17793 in rhea.rdf. GO term GO:0106105 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

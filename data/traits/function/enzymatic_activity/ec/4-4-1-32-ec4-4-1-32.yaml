@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.4.1.-
 mapped_xrefs:
@@ -23,4 +23,113 @@ definitions:
       Catalyses: phycocyanobilin-L-cysteinyl(84)-[C-phycocyanin alpha-subunit] = apo-L- cysteinyl(84)-[C-phycocyanin alpha-subunit] + (2R,3E)-phycocyanobilin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of C-phycocyanin alpha-cysteine-84 phycocyanobilin lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.4.1.32. EC 4.4.1.32 maps to exactly
+    one curated Rhea reaction (RHEA:45524), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "phycocyanobilin-L-cysteinyl(84)-[C-phycocyanin
+    alpha-subunit] = apo-L- cysteinyl(84)-[C-phycocyanin alpha-subunit] + (2R,3E)-phycocyanobilin". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: C-phycocyanin alpha-cysteine-84 phycocyanobilin lyase
+    grounding: EC:4.4.1.32
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: phycocyanobilin-L-cysteinyl(84)-[C-phycocyanin alpha-subunit]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11251
+    description: Rhea compound GENERIC:11251.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: S-3-[(2R)-phycocyanobilin]-L-cysteine residue at position 84
+    description: The reacting group Rhea names inside the generic participant GENERIC:11251 (phycocyanobilin-L-cysteinyl(84)-[C-phycocyanin
+      alpha-subunit]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85280
+  - node_id: prd1
+    label: apo-L-cysteinyl(84)-[C-phycocyanin alpha-subunit]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11252
+    description: Rhea compound GENERIC:11252.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue at position 84
+    description: The reacting group Rhea names inside the generic participant GENERIC:11252 (apo-L-cysteinyl(84)-[C-phycocyanin
+      alpha-subunit]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd2
+    label: (2R,3E)-phycocyanobilin
+    node_type: CHEMICAL
+    grounding: CHEBI:85275
+    description: Formula C33H36N4O6.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: phycocyanobilin-L-cysteinyl(84)-[C-phycocyanin alpha-subunit] is a substrate consumed
+      by RHEA:45524 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45525
+      snippet: phycocyanobilin-L-cysteinyl(84)-[C-phycocyanin alpha-subunit] => apo-L-cysteinyl(84)-[C-phycocyanin
+        alpha-subunit] + (2R,3E)-phycocyanobilin
+      notes: Rhea's left-to-right directional reaction RHEA:45525 declares side 45524_L as its substrates
+        (rh:substrates); the master reaction RHEA:45524 is undirected. This participant is GENERIC:11251
+        with coefficient 1. Rhea cites PMID:8132596, PMID:7524727, PMID:1495995 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: S-3-[(2R)-phycocyanobilin]-L-cysteine residue is the reactive part of phycocyanobilin-L-cysteinyl(84)-[C-phycocyanin
+      alpha-subunit].
+    evidence:
+    - reference: RHEA:45524
+      snippet: S-3-[(2R)-phycocyanobilin]-L-cysteine residue
+      notes: Rhea compound GENERIC:11251 (phycocyanobilin-L-cysteinyl(84)-[C-phycocyanin alpha-subunit])
+        declares rh:reactivePart at position 84 = S-3-[(2R)-phycocyanobilin]-L-cysteine residue (CHEBI:85280).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: apo-L-cysteinyl(84)-[C-phycocyanin alpha-subunit] is a product released by RHEA:45524
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45525
+      snippet: phycocyanobilin-L-cysteinyl(84)-[C-phycocyanin alpha-subunit] => apo-L-cysteinyl(84)-[C-phycocyanin
+        alpha-subunit] + (2R,3E)-phycocyanobilin
+      notes: Rhea's left-to-right directional reaction RHEA:45525 declares side 45524_R as its products
+        (rh:products); the master reaction RHEA:45524 is undirected. This participant is GENERIC:11252
+        with coefficient 1. Rhea cites PMID:8132596, PMID:7524727, PMID:1495995 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of apo-L-cysteinyl(84)-[C-phycocyanin alpha-subunit].
+    evidence:
+    - reference: RHEA:45524
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:11252 (apo-L-cysteinyl(84)-[C-phycocyanin alpha-subunit]) declares
+        rh:reactivePart at position 84 = L-cysteine residue (CHEBI:29950).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (2R,3E)-phycocyanobilin is a product released by RHEA:45524 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45525
+      snippet: phycocyanobilin-L-cysteinyl(84)-[C-phycocyanin alpha-subunit] => apo-L-cysteinyl(84)-[C-phycocyanin
+        alpha-subunit] + (2R,3E)-phycocyanobilin
+      notes: Rhea's left-to-right directional reaction RHEA:45525 declares side 45524_R as its products
+        (rh:products); the master reaction RHEA:45524 is undirected. This participant is CHEBI:85275 with
+        coefficient 1. Rhea cites PMID:8132596, PMID:7524727, PMID:1495995 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

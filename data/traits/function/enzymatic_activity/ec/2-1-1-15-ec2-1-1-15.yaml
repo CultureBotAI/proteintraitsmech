@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 mapped_xrefs:
@@ -30,4 +30,122 @@ definitions:
       Catalyses: a fatty acid + S-adenosyl-L-methionine = a fatty acid methyl ester + S-adenosyl-L-homocysteine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fatty-acid O-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.15. EC 2.1.1.15 maps to exactly
+    one curated Rhea reaction (RHEA:23012), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a fatty acid
+    + S-adenosyl-L-methionine = a fatty acid methyl ester + S-adenosyl-L-homocysteine". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fatty-acid O-methyltransferase
+    grounding: EC:2.1.1.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+    description: Formula CO2R.
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: a fatty acid methyl ester
+    node_type: CHEMICAL
+    grounding: CHEBI:4986
+    description: Formula C2H3O2R.
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: fatty acid O-methyltransferase activity
+    grounding: GO:0030733
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9RMN9
+    node_type: PROTEIN
+    label: MTF2_MYCS2
+    grounding: UniProtKB:Q9RMN9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a fatty acid is a substrate consumed by RHEA:23012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23013
+      snippet: a fatty acid + S-adenosyl-L-methionine => a fatty acid methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:23013 declares side 23012_L as its substrates
+        (rh:substrates); the master reaction RHEA:23012 is undirected. This participant is CHEBI:28868
+        with coefficient 1. Rhea cites PMID:4984625 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:23012 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23013
+      snippet: a fatty acid + S-adenosyl-L-methionine => a fatty acid methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:23013 declares side 23012_L as its substrates
+        (rh:substrates); the master reaction RHEA:23012 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:4984625 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a fatty acid methyl ester is a product released by RHEA:23012 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23013
+      snippet: a fatty acid + S-adenosyl-L-methionine => a fatty acid methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:23013 declares side 23012_R as its products
+        (rh:products); the master reaction RHEA:23012 is undirected. This participant is CHEBI:4986 with
+        coefficient 1. Rhea cites PMID:4984625 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:23012 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23013
+      snippet: a fatty acid + S-adenosyl-L-methionine => a fatty acid methyl ester + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:23013 declares side 23012_R as its products
+        (rh:products); the master reaction RHEA:23012 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:4984625 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.1.1.15
+      snippet: EC:2.1.1.15 > GO:fatty acid O-methyltransferase activity ; GO:0030733
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0030733 is itself a record
+        in this KB.
+  - subject: prot_Q9RMN9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTF2_MYCS2 is an exemplar enzyme with EC 2.1.1.15 activity.
+    evidence:
+    - reference: EC:2.1.1.15
+      snippet: DR   Q9RMN9, MTF2_MYCS2 ;
+      notes: ExPASy ENZYME entry EC 2.1.1.15 cross-references UniProtKB:Q9RMN9 (MTF2_MYCS2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

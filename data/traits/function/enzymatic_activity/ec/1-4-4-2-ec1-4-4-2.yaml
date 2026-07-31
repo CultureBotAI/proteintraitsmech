@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.4.4.-
 synonyms:
@@ -49,4 +49,205 @@ definitions:
       Catalyses: N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage complex H protein] + glycine + H(+) = N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine- cleavage complex H protein] + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glycine dehydrogenase (aminomethyl-transferring)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.4.4.2. EC 1.4.4.2 maps to exactly
+    one curated Rhea reaction (RHEA:24304), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage
+    complex H protein] + glycine + H(+) = N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine- cleavage
+    complex H protein] + CO2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glycine dehydrogenase (aminomethyl-transferring)
+    grounding: EC:1.4.4.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage complex H protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10494
+    description: Rhea compound GENERIC:10494.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: N(6)-[(R)-lipoyl]-L-lysine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10494 (N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage
+      complex H protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83099
+  - node_id: sub2
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+    description: Formula C2H5NO2.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine-cleavage complex H protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10495
+    description: Rhea compound GENERIC:10495.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10495 (N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine-cleavage
+      complex H protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83143
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glycine dehydrogenase (decarboxylating) activity
+    grounding: GO:0004375
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q94B78
+    node_type: PROTEIN
+    label: GCSP1_ARATH
+    grounding: UniProtKB:Q94B78
+  - node_id: prot_Q486J6
+    node_type: PROTEIN
+    label: GCSP1_COLP3
+    grounding: UniProtKB:Q486J6
+  - node_id: prot_Q9I137
+    node_type: PROTEIN
+    label: GCSP1_PSEAE
+    grounding: UniProtKB:Q9I137
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage complex H protein] is a substrate consumed
+      by RHEA:24304 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24305
+      snippet: N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage complex H protein] + glycine + H(+) => N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine-cleavage
+        complex H protein] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:24305 declares side 24304_L as its substrates
+        (rh:substrates); the master reaction RHEA:24304 is undirected. This participant is GENERIC:10494
+        with coefficient 1. Rhea cites PMID:10966480, PMID:15642479, PMID:7440563 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(6)-[(R)-lipoyl]-L-lysine residue is the reactive part of N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage
+      complex H protein].
+    evidence:
+    - reference: RHEA:24304
+      snippet: N(6)-[(R)-lipoyl]-L-lysine residue
+      notes: Rhea compound GENERIC:10494 (N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage complex H protein])
+        declares rh:reactivePart = N(6)-[(R)-lipoyl]-L-lysine residue (CHEBI:83099).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: glycine is a substrate consumed by RHEA:24304 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24305
+      snippet: N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage complex H protein] + glycine + H(+) => N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine-cleavage
+        complex H protein] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:24305 declares side 24304_L as its substrates
+        (rh:substrates); the master reaction RHEA:24304 is undirected. This participant is CHEBI:57305
+        with coefficient 1. Rhea cites PMID:10966480, PMID:15642479, PMID:7440563 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:24304 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24305
+      snippet: N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage complex H protein] + glycine + H(+) => N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine-cleavage
+        complex H protein] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:24305 declares side 24304_L as its substrates
+        (rh:substrates); the master reaction RHEA:24304 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:10966480, PMID:15642479, PMID:7440563 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine-cleavage complex H protein]
+      is a product released by RHEA:24304 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24305
+      snippet: N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage complex H protein] + glycine + H(+) => N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine-cleavage
+        complex H protein] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:24305 declares side 24304_R as its products
+        (rh:products); the master reaction RHEA:24304 is undirected. This participant is GENERIC:10495
+        with coefficient 1. Rhea cites PMID:10966480, PMID:15642479, PMID:7440563 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysine residue is the reactive part of N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine-cleavage
+      complex H protein].
+    evidence:
+    - reference: RHEA:24304
+      snippet: N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysine residue
+      notes: Rhea compound GENERIC:10495 (N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine-cleavage
+        complex H protein]) declares rh:reactivePart = N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysine
+        residue (CHEBI:83143).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:24304 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24305
+      snippet: N(6)-[(R)-lipoyl]-L-lysyl-[glycine-cleavage complex H protein] + glycine + H(+) => N(6)-[(R)-S(8)-aminomethyldihydrolipoyl]-L-lysyl-[glycine-cleavage
+        complex H protein] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:24305 declares side 24304_R as its products
+        (rh:products); the master reaction RHEA:24304 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:10966480, PMID:15642479, PMID:7440563 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.4.4.2
+      snippet: EC:1.4.4.2 > GO:glycine dehydrogenase (decarboxylating) activity ; GO:0004375
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004375 is itself a record
+        in this KB.
+  - subject: prot_Q94B78
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCSP1_ARATH is an exemplar enzyme with EC 1.4.4.2 activity.
+    evidence:
+    - reference: EC:1.4.4.2
+      snippet: DR   Q94B78, GCSP1_ARATH;  Q486J6, GCSP1_COLP3;  Q9I137, GCSP1_PSEAE;
+      notes: ExPASy ENZYME entry EC 1.4.4.2 cross-references UniProtKB:Q94B78 (GCSP1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q486J6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCSP1_COLP3 is an exemplar enzyme with EC 1.4.4.2 activity.
+    evidence:
+    - reference: EC:1.4.4.2
+      snippet: DR   Q94B78, GCSP1_ARATH;  Q486J6, GCSP1_COLP3;  Q9I137, GCSP1_PSEAE;
+      notes: ExPASy ENZYME entry EC 1.4.4.2 cross-references UniProtKB:Q486J6 (GCSP1_COLP3) as a protein
+        with this activity.
+  - subject: prot_Q9I137
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCSP1_PSEAE is an exemplar enzyme with EC 1.4.4.2 activity.
+    evidence:
+    - reference: EC:1.4.4.2
+      snippet: DR   Q94B78, GCSP1_ARATH;  Q486J6, GCSP1_COLP3;  Q9I137, GCSP1_PSEAE;
+      notes: ExPASy ENZYME entry EC 1.4.4.2 cross-references UniProtKB:Q9I137 (GCSP1_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

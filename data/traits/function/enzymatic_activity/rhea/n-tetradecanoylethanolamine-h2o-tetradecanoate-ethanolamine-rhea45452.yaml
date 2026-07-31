@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:85262
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,107 @@ definitions:
       Catalyses the reaction: N-tetradecanoylethanolamine + H2O = tetradecanoate + ethanolamine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-tetradecanoylethanolamine + H2O = tetradecanoate + ethanolamine
+  description: Substrate-to-product chemistry of RHEA:45452, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:45453 (rh:substrates → 45452_L, rh:products → 45452_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-tetradecanoylethanolamine + H2O = tetradecanoate + ethanolamine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:45452
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-tetradecanoylethanolamine + H2O = tetradecanoate + ethanolamine'
+  - node_id: sub1
+    label: N-tetradecanoylethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:85262
+    description: Formula C16H33NO2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: tetradecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30807
+    description: Formula C14H27O2.
+  - node_id: prd2
+    label: ethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57603
+    description: Formula C2H8NO.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-(long-chain-acyl)ethanolamine deacylase activity
+    grounding: GO:0047412
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-tetradecanoylethanolamine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45453
+      snippet: N-tetradecanoylethanolamine + H2O => tetradecanoate + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:45453 declares side 45452_L as its substrates
+        (rh:substrates); the master reaction RHEA:45452 is undirected. This participant is CHEBI:85262
+        with coefficient 1. Rhea cites PMID:12824167, PMID:15655246 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45453
+      snippet: N-tetradecanoylethanolamine + H2O => tetradecanoate + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:45453 declares side 45452_L as its substrates
+        (rh:substrates); the master reaction RHEA:45452 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12824167, PMID:15655246 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tetradecanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45453
+      snippet: N-tetradecanoylethanolamine + H2O => tetradecanoate + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:45453 declares side 45452_R as its products
+        (rh:products); the master reaction RHEA:45452 is undirected. This participant is CHEBI:30807 with
+        coefficient 1. Rhea cites PMID:12824167, PMID:15655246 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ethanolamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45453
+      snippet: N-tetradecanoylethanolamine + H2O => tetradecanoate + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:45453 declares side 45452_R as its products
+        (rh:products); the master reaction RHEA:45452 is undirected. This participant is CHEBI:57603 with
+        coefficient 1. Rhea cites PMID:12824167, PMID:15655246 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:45452
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047412"/>
+      notes: The rdfs:seeAlso triple on RHEA:45452 in rhea.rdf. GO term GO:0047412 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

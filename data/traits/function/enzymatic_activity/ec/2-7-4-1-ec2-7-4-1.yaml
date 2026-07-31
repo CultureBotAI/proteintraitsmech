@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 synonyms:
@@ -43,4 +43,154 @@ definitions:
       Catalyses: [phosphate](n) + ATP = [phosphate](n+1) + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ATP-polyphosphate phosphotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.1. EC 2.7.4.1 maps to exactly
+    one curated Rhea reaction (RHEA:19573), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[phosphate](n)
+    + ATP = [phosphate](n+1) + ADP". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ATP-polyphosphate phosphotransferase
+    grounding: EC:2.7.4.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[phosphate](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:16838
+    xrefs:
+    - RHEA-COMP:9859
+    description: Rhea compound POLYMER:9859. Formula HO(O3P)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: '[phosphate](n+1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:16838
+    xrefs:
+    - RHEA-COMP:14280
+    description: Rhea compound POLYMER:14280. Formula HO(O3P)<i><sub>n+1</sub></i>.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: polyphosphate kinase activity
+    grounding: GO:0008976
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8NM65
+    node_type: PROTEIN
+    label: PK21B_CORGL
+    grounding: UniProtKB:Q8NM65
+  - node_id: prot_P58991
+    node_type: PROTEIN
+    label: PPK11_CHLTE
+    grounding: UniProtKB:P58991
+  - node_id: prot_O68984
+    node_type: PROTEIN
+    label: PPK12_CHLTE
+    grounding: UniProtKB:O68984
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[phosphate](n) is a substrate consumed by RHEA:19573 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:19574
+      snippet: '[phosphate](n) + ATP => [phosphate](n+1) + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:19574 declares side 19573_L as its substrates
+        (rh:substrates); the master reaction RHEA:19573 is undirected. This participant is POLYMER:9859
+        with coefficient 1. Rhea cites PMID:17545325, PMID:10224002, PMID:26576296, PMID:19001261 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:19573 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19574
+      snippet: '[phosphate](n) + ATP => [phosphate](n+1) + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:19574 declares side 19573_L as its substrates
+        (rh:substrates); the master reaction RHEA:19573 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:17545325, PMID:10224002, PMID:26576296, PMID:19001261 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[phosphate](n+1) is a product released by RHEA:19573 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:19574
+      snippet: '[phosphate](n) + ATP => [phosphate](n+1) + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:19574 declares side 19573_R as its products
+        (rh:products); the master reaction RHEA:19573 is undirected. This participant is POLYMER:14280
+        with coefficient 1. Rhea cites PMID:17545325, PMID:10224002, PMID:26576296, PMID:19001261 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:19573 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19574
+      snippet: '[phosphate](n) + ATP => [phosphate](n+1) + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:19574 declares side 19573_R as its products
+        (rh:products); the master reaction RHEA:19573 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:17545325, PMID:10224002, PMID:26576296, PMID:19001261 for
+        this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.4.1
+      snippet: EC:2.7.4.1 > GO:polyphosphate kinase activity ; GO:0008976
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008976 is itself a record
+        in this KB.
+  - subject: prot_Q8NM65
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PK21B_CORGL is an exemplar enzyme with EC 2.7.4.1 activity.
+    evidence:
+    - reference: EC:2.7.4.1
+      snippet: DR   Q8NM65, PK21B_CORGL;  P58991, PPK11_CHLTE;  O68984, PPK12_CHLTE;
+      notes: ExPASy ENZYME entry EC 2.7.4.1 cross-references UniProtKB:Q8NM65 (PK21B_CORGL) as a protein
+        with this activity.
+  - subject: prot_P58991
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PPK11_CHLTE is an exemplar enzyme with EC 2.7.4.1 activity.
+    evidence:
+    - reference: EC:2.7.4.1
+      snippet: DR   Q8NM65, PK21B_CORGL;  P58991, PPK11_CHLTE;  O68984, PPK12_CHLTE;
+      notes: ExPASy ENZYME entry EC 2.7.4.1 cross-references UniProtKB:P58991 (PPK11_CHLTE) as a protein
+        with this activity.
+  - subject: prot_O68984
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PPK12_CHLTE is an exemplar enzyme with EC 2.7.4.1 activity.
+    evidence:
+    - reference: EC:2.7.4.1
+      snippet: DR   Q8NM65, PK21B_CORGL;  P58991, PPK11_CHLTE;  O68984, PPK12_CHLTE;
+      notes: ExPASy ENZYME entry EC 2.7.4.1 cross-references UniProtKB:O68984 (PPK12_CHLTE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -28,4 +28,231 @@ definitions:
       Catalyses: L-lysyl-[peptidyl-carrier protein] + 2 (3R)-3-isocyanylbutanoyl-[ACP] + 2 NADPH = (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol + holo- [peptidyl-carrier protein] + 2 holo-[ACP] + 2 NADP(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isonitrile lipopeptide synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.329. EC 2.3.1.329 maps to
+    exactly one curated Rhea reaction (RHEA:82171), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-lysyl-[peptidyl-carrier
+    protein] + 2 (3R)-3-isocyanylbutanoyl-[ACP] + 2 NADPH = (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol
+    + holo- [peptidyl-carrier protein] + 2 holo-[ACP] + 2 NADP(+)". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: isonitrile lipopeptide synthase
+    grounding: EC:2.3.1.329
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-lysyl-[peptidyl-carrier protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:19819
+    description: Rhea compound GENERIC:19819.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-[S-(L-lysyl)pantetheine-4'-phosphoryl]-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:19819 (L-lysyl-[peptidyl-carrier
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:192518
+  - node_id: sub2
+    label: (3R)-3-isocyanylbutanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18456
+    description: Rhea compound GENERIC:18456.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: O-[S-((3R)-3-isocyanoylbutenoyl)pantetheine-4'-phosphoryl]-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:18456 ((3R)-3-isocyanylbutanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:194102
+  - node_id: sub3
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd1
+    label: (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:194108
+    description: Formula C16H26N4O3.
+  - node_id: prd2
+    label: holo-[peptidyl-carrier protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11480
+    description: Rhea compound GENERIC:11480.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11480 (holo-[peptidyl-carrier
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: prd3
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: prd3_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: prd4
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prot_P0DX16
+    node_type: PROTEIN
+    label: INLPA_STRC4
+    grounding: UniProtKB:P0DX16
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-lysyl-[peptidyl-carrier protein] is a substrate consumed by RHEA:82171 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:82172
+      snippet: L-lysyl-[peptidyl-carrier protein] + 2 (3R)-3-isocyanylbutanoyl-[ACP] + 2 NADPH => (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol
+        + holo-[peptidyl-carrier protein] + 2 holo-[ACP] + 2 NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82172 declares side 82171_L as its substrates
+        (rh:substrates); the master reaction RHEA:82171 is undirected. This participant is GENERIC:19819
+        with coefficient 1. Rhea cites PMID:29906336, PMID:28634299 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-[S-(L-lysyl)pantetheine-4'-phosphoryl]-L-serine residue is the reactive part of L-lysyl-[peptidyl-carrier
+      protein].
+    evidence:
+    - reference: RHEA:82171
+      snippet: O-[S-(L-lysyl)pantetheine-4'-phosphoryl]-L-serine residue
+      notes: Rhea compound GENERIC:19819 (L-lysyl-[peptidyl-carrier protein]) declares rh:reactivePart
+        = O-[S-(L-lysyl)pantetheine-4'-phosphoryl]-L-serine residue (CHEBI:192518).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (3R)-3-isocyanylbutanoyl-[ACP] is a substrate consumed by RHEA:82171 (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:82172
+      snippet: L-lysyl-[peptidyl-carrier protein] + 2 (3R)-3-isocyanylbutanoyl-[ACP] + 2 NADPH => (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol
+        + holo-[peptidyl-carrier protein] + 2 holo-[ACP] + 2 NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82172 declares side 82171_L as its substrates
+        (rh:substrates); the master reaction RHEA:82171 is undirected. This participant is GENERIC:18456
+        with coefficient 2. Rhea cites PMID:29906336, PMID:28634299 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: O-[S-((3R)-3-isocyanoylbutenoyl)pantetheine-4'-phosphoryl]-L-serine residue is the reactive
+      part of (3R)-3-isocyanylbutanoyl-[ACP].
+    evidence:
+    - reference: RHEA:82171
+      snippet: O-[S-((3R)-3-isocyanoylbutenoyl)pantetheine-4'-phosphoryl]-L-serine residue
+      notes: Rhea compound GENERIC:18456 ((3R)-3-isocyanylbutanoyl-[ACP]) declares rh:reactivePart = O-[S-((3R)-3-isocyanoylbutenoyl)pantetheine-4'-phosphoryl]-L-serine
+        residue (CHEBI:194102).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: NADPH is a substrate consumed by RHEA:82171 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:82172
+      snippet: L-lysyl-[peptidyl-carrier protein] + 2 (3R)-3-isocyanylbutanoyl-[ACP] + 2 NADPH => (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol
+        + holo-[peptidyl-carrier protein] + 2 holo-[ACP] + 2 NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82172 declares side 82171_L as its substrates
+        (rh:substrates); the master reaction RHEA:82171 is undirected. This participant is CHEBI:57783
+        with coefficient 2. Rhea cites PMID:29906336, PMID:28634299 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol is a product released by RHEA:82171
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82172
+      snippet: L-lysyl-[peptidyl-carrier protein] + 2 (3R)-3-isocyanylbutanoyl-[ACP] + 2 NADPH => (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol
+        + holo-[peptidyl-carrier protein] + 2 holo-[ACP] + 2 NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82172 declares side 82171_R as its products
+        (rh:products); the master reaction RHEA:82171 is undirected. This participant is CHEBI:194108
+        with coefficient 1. Rhea cites PMID:29906336, PMID:28634299 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: holo-[peptidyl-carrier protein] is a product released by RHEA:82171 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82172
+      snippet: L-lysyl-[peptidyl-carrier protein] + 2 (3R)-3-isocyanylbutanoyl-[ACP] + 2 NADPH => (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol
+        + holo-[peptidyl-carrier protein] + 2 holo-[ACP] + 2 NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82172 declares side 82171_R as its products
+        (rh:products); the master reaction RHEA:82171 is undirected. This participant is GENERIC:11480
+        with coefficient 1. Rhea cites PMID:29906336, PMID:28634299 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[peptidyl-carrier
+      protein].
+    evidence:
+    - reference: RHEA:82171
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:11480 (holo-[peptidyl-carrier protein]) declares rh:reactivePart =
+        O-(pantetheine-4'-phosphoryl)-L-serine residue (CHEBI:64479).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: holo-[ACP] is a product released by RHEA:82171 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:82172
+      snippet: L-lysyl-[peptidyl-carrier protein] + 2 (3R)-3-isocyanylbutanoyl-[ACP] + 2 NADPH => (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol
+        + holo-[peptidyl-carrier protein] + 2 holo-[ACP] + 2 NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82172 declares side 82171_R as its products
+        (rh:products); the master reaction RHEA:82171 is undirected. This participant is GENERIC:9685
+        with coefficient 2. Rhea cites PMID:29906336, PMID:28634299 for this reaction.
+  - subject: prd3_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd3
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:82171
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: NADP(+) is a product released by RHEA:82171 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:82172
+      snippet: L-lysyl-[peptidyl-carrier protein] + 2 (3R)-3-isocyanylbutanoyl-[ACP] + 2 NADPH => (2S)-2,6-bis[(3R)-3-isocyanobutanamido]hexan-1-ol
+        + holo-[peptidyl-carrier protein] + 2 holo-[ACP] + 2 NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82172 declares side 82171_R as its products
+        (rh:products); the master reaction RHEA:82171 is undirected. This participant is CHEBI:58349 with
+        coefficient 2. Rhea cites PMID:29906336, PMID:28634299 for this reaction.
+  - subject: prot_P0DX16
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INLPA_STRC4 is an exemplar enzyme with EC 2.3.1.329 activity.
+    evidence:
+    - reference: EC:2.3.1.329
+      snippet: DR   P0DX16, INLPA_STRC4;
+      notes: ExPASy ENZYME entry EC 2.3.1.329 cross-references UniProtKB:P0DX16 (INLPA_STRC4) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

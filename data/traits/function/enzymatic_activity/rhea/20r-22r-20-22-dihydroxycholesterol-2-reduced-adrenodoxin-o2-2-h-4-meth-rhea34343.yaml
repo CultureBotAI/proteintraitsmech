@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:1294
     role: SUBSTRATE_OR_PRODUCT
@@ -41,4 +41,204 @@ definitions:
       Catalyses the reaction: (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+) = 4-methylpentanal + pregnenolone + 2 oxidized [adrenodoxin] + 2 H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2
+    H(+) = 4-methyl…
+  description: Substrate-to-product chemistry of RHEA:34343, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34344 (rh:substrates → 34343_L, rh:products → 34343_R), and Rhea
+    curates the reverse direction too. 4 substrates, 4 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+)…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34343
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+) = 4-methylpentanal
+      + pregnenolone + 2 oxidized [adrenodoxin] + 2 H2O'
+  - node_id: sub1
+    label: (20R,22R)-20,22-dihydroxycholesterol
+    node_type: CHEMICAL
+    grounding: CHEBI:1294
+    description: Formula C27H46O3.
+  - node_id: sub2
+    label: reduced [adrenodoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9998
+    description: Rhea compound GENERIC:9998.
+  - node_id: sub2_rp1
+    label: '[2Fe-2S](1+)'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9998 (reduced [adrenodoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 4-methylpentanal
+    node_type: CHEMICAL
+    grounding: CHEBI:17998
+    description: Formula C6H12O.
+  - node_id: prd2
+    label: pregnenolone
+    node_type: CHEMICAL
+    grounding: CHEBI:16581
+    description: Formula C21H32O2.
+  - node_id: prd3
+    label: oxidized [adrenodoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9999
+    description: Rhea compound GENERIC:9999.
+  - node_id: prd3_rp1
+    label: '[2Fe-2S](2+)'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9999 (oxidized [adrenodoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd4
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (20R,22R)-20,22-dihydroxycholesterol is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34344
+      snippet: (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+) => 4-methylpentanal
+        + pregnenolone + 2 oxidized [adrenodoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34344 declares side 34343_L as its substrates
+        (rh:substrates); the master reaction RHEA:34343 is undirected. This participant is CHEBI:1294
+        with coefficient 1. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [adrenodoxin] is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:34344
+      snippet: (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+) => 4-methylpentanal
+        + pregnenolone + 2 oxidized [adrenodoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34344 declares side 34343_L as its substrates
+        (rh:substrates); the master reaction RHEA:34343 is undirected. This participant is GENERIC:9998
+        with coefficient 2. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [adrenodoxin].'
+    evidence:
+    - reference: RHEA:34343
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:9998 (reduced [adrenodoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738), formula Fe2S2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34344
+      snippet: (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+) => 4-methylpentanal
+        + pregnenolone + 2 oxidized [adrenodoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34344 declares side 34343_L as its substrates
+        (rh:substrates); the master reaction RHEA:34343 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:34344
+      snippet: (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+) => 4-methylpentanal
+        + pregnenolone + 2 oxidized [adrenodoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34344 declares side 34343_L as its substrates
+        (rh:substrates); the master reaction RHEA:34343 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-methylpentanal is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34344
+      snippet: (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+) => 4-methylpentanal
+        + pregnenolone + 2 oxidized [adrenodoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34344 declares side 34343_R as its products
+        (rh:products); the master reaction RHEA:34343 is undirected. This participant is CHEBI:17998 with
+        coefficient 1. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pregnenolone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34344
+      snippet: (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+) => 4-methylpentanal
+        + pregnenolone + 2 oxidized [adrenodoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34344 declares side 34343_R as its products
+        (rh:products); the master reaction RHEA:34343 is undirected. This participant is CHEBI:16581 with
+        coefficient 1. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: oxidized [adrenodoxin] is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:34344
+      snippet: (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+) => 4-methylpentanal
+        + pregnenolone + 2 oxidized [adrenodoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34344 declares side 34343_R as its products
+        (rh:products); the master reaction RHEA:34343 is undirected. This participant is GENERIC:9999
+        with coefficient 2. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this
+        reaction.
+  - subject: prd3_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd3
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [adrenodoxin].'
+    evidence:
+    - reference: RHEA:34343
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:9999 (oxidized [adrenodoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737), formula Fe2S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H2O is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:34344
+      snippet: (20R,22R)-20,22-dihydroxycholesterol + 2 reduced [adrenodoxin] + O2 + 2 H(+) => 4-methylpentanal
+        + pregnenolone + 2 oxidized [adrenodoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34344 declares side 34343_R as its products
+        (rh:products); the master reaction RHEA:34343 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

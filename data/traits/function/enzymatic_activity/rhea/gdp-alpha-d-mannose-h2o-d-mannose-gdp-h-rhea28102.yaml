@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57527
     role: SUBSTRATE_OR_PRODUCT
@@ -33,4 +33,128 @@ definitions:
       Catalyses the reaction: GDP-alpha-D-mannose + H2O = D-mannose + GDP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of GDP-alpha-D-mannose + H2O = D-mannose + GDP + H(+)
+  description: Substrate-to-product chemistry of RHEA:28102, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28103 (rh:substrates → 28102_L, rh:products → 28102_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of GDP-alpha-D-mannose + H2O = D-mannose + GDP + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28102
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: GDP-alpha-D-mannose + H2O = D-mannose + GDP + H(+)'
+  - node_id: sub1
+    label: GDP-alpha-D-mannose
+    node_type: CHEMICAL
+    grounding: CHEBI:57527
+    description: Formula C16H23N5O16P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-mannose
+    node_type: CHEMICAL
+    grounding: CHEBI:4208
+    description: Formula C6H12O6.
+  - node_id: prd2
+    label: GDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+    description: Formula C10H12N5O11P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: GDP-mannose mannosyl hydrolase activity
+    grounding: GO:0008727
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: GDP-alpha-D-mannose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28103
+      snippet: GDP-alpha-D-mannose + H2O => D-mannose + GDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28103 declares side 28102_L as its substrates
+        (rh:substrates); the master reaction RHEA:28102 is undirected. This participant is CHEBI:57527
+        with coefficient 1. Rhea cites PMID:16981689, PMID:10913267, PMID:11926828, PMID:12196023 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28103
+      snippet: GDP-alpha-D-mannose + H2O => D-mannose + GDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28103 declares side 28102_L as its substrates
+        (rh:substrates); the master reaction RHEA:28102 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16981689, PMID:10913267, PMID:11926828, PMID:12196023 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-mannose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28103
+      snippet: GDP-alpha-D-mannose + H2O => D-mannose + GDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28103 declares side 28102_R as its products
+        (rh:products); the master reaction RHEA:28102 is undirected. This participant is CHEBI:4208 with
+        coefficient 1. Rhea cites PMID:16981689, PMID:10913267, PMID:11926828, PMID:12196023 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: GDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28103
+      snippet: GDP-alpha-D-mannose + H2O => D-mannose + GDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28103 declares side 28102_R as its products
+        (rh:products); the master reaction RHEA:28102 is undirected. This participant is CHEBI:58189 with
+        coefficient 1. Rhea cites PMID:16981689, PMID:10913267, PMID:11926828, PMID:12196023 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28103
+      snippet: GDP-alpha-D-mannose + H2O => D-mannose + GDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28103 declares side 28102_R as its products
+        (rh:products); the master reaction RHEA:28102 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:16981689, PMID:10913267, PMID:11926828, PMID:12196023 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:28102
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008727"/>
+      notes: The rdfs:seeAlso triple on RHEA:28102 in rhea.rdf. GO term GO:0008727 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

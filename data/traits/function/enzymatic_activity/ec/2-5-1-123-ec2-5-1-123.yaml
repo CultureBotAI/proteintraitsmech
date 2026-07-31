@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 mapped_xrefs:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: flaviolin + (2E)-geranyl diphosphate = 3-linalylflaviolin + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of flaviolin linalyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.123. EC 2.5.1.123 maps to
+    exactly one curated Rhea reaction (RHEA:17449), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "flaviolin
+    + (2E)-geranyl diphosphate = 3-linalylflaviolin + diphosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: flaviolin linalyltransferase
+    grounding: EC:2.5.1.123
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: flaviolin
+    node_type: CHEMICAL
+    grounding: CHEBI:58696
+    description: Formula C10H5O5.
+  - node_id: sub2
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: 3-linalylflaviolin
+    node_type: CHEMICAL
+    grounding: CHEBI:78347
+    description: Formula C20H21O5.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A2AXG5
+    node_type: PROTEIN
+    label: FNQ26_STRVG
+    grounding: UniProtKB:A2AXG5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: flaviolin is a substrate consumed by RHEA:17449 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17450
+      snippet: flaviolin + (2E)-geranyl diphosphate => 3-linalylflaviolin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17450 declares side 17449_L as its substrates
+        (rh:substrates); the master reaction RHEA:17449 is undirected. This participant is CHEBI:58696
+        with coefficient 1. Rhea cites PMID:17543953 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:17449 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17450
+      snippet: flaviolin + (2E)-geranyl diphosphate => 3-linalylflaviolin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17450 declares side 17449_L as its substrates
+        (rh:substrates); the master reaction RHEA:17449 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:17543953 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-linalylflaviolin is a product released by RHEA:17449 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17450
+      snippet: flaviolin + (2E)-geranyl diphosphate => 3-linalylflaviolin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17450 declares side 17449_R as its products
+        (rh:products); the master reaction RHEA:17449 is undirected. This participant is CHEBI:78347 with
+        coefficient 1. Rhea cites PMID:17543953 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:17449 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17450
+      snippet: flaviolin + (2E)-geranyl diphosphate => 3-linalylflaviolin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17450 declares side 17449_R as its products
+        (rh:products); the master reaction RHEA:17449 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:17543953 for this reaction.
+  - subject: prot_A2AXG5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FNQ26_STRVG is an exemplar enzyme with EC 2.5.1.123 activity.
+    evidence:
+    - reference: EC:2.5.1.123
+      snippet: DR   A2AXG5, FNQ26_STRVG;
+      notes: ExPASy ENZYME entry EC 2.5.1.123 cross-references UniProtKB:A2AXG5 (FNQ26_STRVG) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

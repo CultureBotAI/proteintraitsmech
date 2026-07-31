@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57483
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,109 @@ definitions:
       Catalyses the reaction: D-sedoheptulose 7-phosphate + ATP = D-sedoheptulose 1,7-bisphosphate + ADP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-sedoheptulose 7-phosphate + ATP = D-sedoheptulose 1,7-bisphosphate +
+    ADP + H(+)
+  description: Substrate-to-product chemistry of RHEA:31443, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:31444 (rh:substrates → 31443_L, rh:products → 31443_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-sedoheptulose 7-phosphate + ATP = D-sedoheptulose 1,7-bisphosphate + ADP +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:31443
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-sedoheptulose 7-phosphate + ATP = D-sedoheptulose 1,7-bisphosphate + ADP + H(+)'
+  - node_id: sub1
+    label: D-sedoheptulose 7-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57483
+    description: Formula C7H13O10P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: D-sedoheptulose 1,7-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58335
+    description: Formula C7H12O13P2.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-sedoheptulose 7-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31444
+      snippet: D-sedoheptulose 7-phosphate + ATP => D-sedoheptulose 1,7-bisphosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31444 declares side 31443_L as its substrates
+        (rh:substrates); the master reaction RHEA:31443 is undirected. This participant is CHEBI:57483
+        with coefficient 1. Rhea cites PMID:19756045 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31444
+      snippet: D-sedoheptulose 7-phosphate + ATP => D-sedoheptulose 1,7-bisphosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31444 declares side 31443_L as its substrates
+        (rh:substrates); the master reaction RHEA:31443 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:19756045 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-sedoheptulose 1,7-bisphosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31444
+      snippet: D-sedoheptulose 7-phosphate + ATP => D-sedoheptulose 1,7-bisphosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31444 declares side 31443_R as its products
+        (rh:products); the master reaction RHEA:31443 is undirected. This participant is CHEBI:58335 with
+        coefficient 1. Rhea cites PMID:19756045 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31444
+      snippet: D-sedoheptulose 7-phosphate + ATP => D-sedoheptulose 1,7-bisphosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31444 declares side 31443_R as its products
+        (rh:products); the master reaction RHEA:31443 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:19756045 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31444
+      snippet: D-sedoheptulose 7-phosphate + ATP => D-sedoheptulose 1,7-bisphosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31444 declares side 31443_R as its products
+        (rh:products); the master reaction RHEA:31443 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19756045 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

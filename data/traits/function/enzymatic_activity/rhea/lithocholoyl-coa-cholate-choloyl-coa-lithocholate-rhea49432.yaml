@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.8.3.25
     mapping_source: rhea2ec
@@ -28,4 +28,106 @@ definitions:
       Catalyses the reaction: lithocholoyl-CoA + cholate = choloyl-CoA + lithocholate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lithocholoyl-CoA + cholate = choloyl-CoA + lithocholate
+  description: Substrate-to-product chemistry of RHEA:49432, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:49433 (rh:substrates → 49432_L, rh:products → 49432_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of lithocholoyl-CoA + cholate = choloyl-CoA + lithocholate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:49432
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: lithocholoyl-CoA + cholate = choloyl-CoA + lithocholate'
+  - node_id: sub1
+    label: lithocholoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:87438
+    description: Formula C45H70N7O18P3S.
+  - node_id: sub2
+    label: cholate
+    node_type: CHEMICAL
+    grounding: CHEBI:29747
+    description: Formula C24H39O5.
+  - node_id: prd1
+    label: choloyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57373
+    description: Formula C45H70N7O20P3S.
+  - node_id: prd2
+    label: lithocholate
+    node_type: CHEMICAL
+    grounding: CHEBI:29744
+    description: Formula C24H39O3.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: bile acid CoA-transferase
+    grounding: EC:2.8.3.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: lithocholoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49433
+      snippet: lithocholoyl-CoA + cholate => choloyl-CoA + lithocholate
+      notes: Rhea's left-to-right directional reaction RHEA:49433 declares side 49432_L as its substrates
+        (rh:substrates); the master reaction RHEA:49432 is undirected. This participant is CHEBI:87438
+        with coefficient 1. Rhea cites PMID:22021638 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: cholate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49433
+      snippet: lithocholoyl-CoA + cholate => choloyl-CoA + lithocholate
+      notes: Rhea's left-to-right directional reaction RHEA:49433 declares side 49432_L as its substrates
+        (rh:substrates); the master reaction RHEA:49432 is undirected. This participant is CHEBI:29747
+        with coefficient 1. Rhea cites PMID:22021638 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: choloyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49433
+      snippet: lithocholoyl-CoA + cholate => choloyl-CoA + lithocholate
+      notes: Rhea's left-to-right directional reaction RHEA:49433 declares side 49432_R as its products
+        (rh:products); the master reaction RHEA:49432 is undirected. This participant is CHEBI:57373 with
+        coefficient 1. Rhea cites PMID:22021638 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: lithocholate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49433
+      snippet: lithocholoyl-CoA + cholate => choloyl-CoA + lithocholate
+      notes: Rhea's left-to-right directional reaction RHEA:49433 declares side 49432_R as its products
+        (rh:products); the master reaction RHEA:49432 is undirected. This participant is CHEBI:29744 with
+        coefficient 1. Rhea cites PMID:22021638 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.8.3.25; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:49432
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.25"/>
+      notes: The rh:ec triple on RHEA:49432 in rhea.rdf. EC 2.8.3.25 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

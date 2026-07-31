@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 mapped_xrefs:
@@ -36,4 +36,82 @@ definitions:
       Catalyses: Hydrolysis of proteins with broad specificity for peptide bonds, and a preference for a large uncharged residue in P1. Hydrolyzes peptide amides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of subtilisin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.62. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of proteins with broad specificity for peptide bonds, and a preference for a large uncharged residue
+    in P1. Hydrolyzes peptide amides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: subtilisin
+    grounding: EC:3.4.21.62
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: serine-type endopeptidase activity
+    grounding: GO:0004252
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P09230
+    node_type: PROTEIN
+    label: AEP_YARLI
+    grounding: UniProtKB:P09230
+  - node_id: prot_A0A509AKI1
+    node_type: PROTEIN
+    label: PIMM2_PLABA
+    grounding: UniProtKB:A0A509AKI1
+  - node_id: prot_A0A509AM03
+    node_type: PROTEIN
+    label: SUB1_PLABA
+    grounding: UniProtKB:A0A509AM03
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.21.62
+      snippet: EC:3.4.21.62 > GO:serine-type endopeptidase activity ; GO:0004252
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004252 is itself a record
+        in this KB.
+  - subject: prot_P09230
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AEP_YARLI is an exemplar enzyme with EC 3.4.21.62 activity.
+    evidence:
+    - reference: EC:3.4.21.62
+      snippet: DR   P09230, AEP_YARLI  ;  A0A509AKI1, PIMM2_PLABA;  A0A509AM03, SUB1_PLABA ;
+      notes: ExPASy ENZYME entry EC 3.4.21.62 cross-references UniProtKB:P09230 (AEP_YARLI) as a protein
+        with this activity.
+  - subject: prot_A0A509AKI1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PIMM2_PLABA is an exemplar enzyme with EC 3.4.21.62 activity.
+    evidence:
+    - reference: EC:3.4.21.62
+      snippet: DR   P09230, AEP_YARLI  ;  A0A509AKI1, PIMM2_PLABA;  A0A509AM03, SUB1_PLABA ;
+      notes: ExPASy ENZYME entry EC 3.4.21.62 cross-references UniProtKB:A0A509AKI1 (PIMM2_PLABA) as a
+        protein with this activity.
+  - subject: prot_A0A509AM03
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SUB1_PLABA is an exemplar enzyme with EC 3.4.21.62 activity.
+    evidence:
+    - reference: EC:3.4.21.62
+      snippet: DR   P09230, AEP_YARLI  ;  A0A509AKI1, PIMM2_PLABA;  A0A509AM03, SUB1_PLABA ;
+      notes: ExPASy ENZYME entry EC 3.4.21.62 cross-references UniProtKB:A0A509AM03 (SUB1_PLABA) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

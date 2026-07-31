@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57286
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: acetoacetyl-CoA + (R)-carnitine = O-3-oxobutanoyl-(R)-carnitine + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetoacetyl-CoA + (R)-carnitine = O-3-oxobutanoyl-(R)-carnitine + CoA
+  description: Substrate-to-product chemistry of RHEA:44996, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:44997 (rh:substrates → 44996_L, rh:products → 44996_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of acetoacetyl-CoA + (R)-carnitine = O-3-oxobutanoyl-(R)-carnitine + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:44996
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: acetoacetyl-CoA + (R)-carnitine = O-3-oxobutanoyl-(R)-carnitine + CoA'
+  - node_id: sub1
+    label: acetoacetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57286
+    description: Formula C25H36N7O18P3S.
+  - node_id: sub2
+    label: (R)-carnitine
+    node_type: CHEMICAL
+    grounding: CHEBI:16347
+    description: Formula C7H15NO3.
+  - node_id: prd1
+    label: O-3-oxobutanoyl-(R)-carnitine
+    node_type: CHEMICAL
+    grounding: CHEBI:84841
+    description: Formula C11H19NO5.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acetoacetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44997
+      snippet: acetoacetyl-CoA + (R)-carnitine => O-3-oxobutanoyl-(R)-carnitine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44997 declares side 44996_L as its substrates
+        (rh:substrates); the master reaction RHEA:44996 is undirected. This participant is CHEBI:57286
+        with coefficient 1. Rhea cites PMID:23485643 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (R)-carnitine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44997
+      snippet: acetoacetyl-CoA + (R)-carnitine => O-3-oxobutanoyl-(R)-carnitine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44997 declares side 44996_L as its substrates
+        (rh:substrates); the master reaction RHEA:44996 is undirected. This participant is CHEBI:16347
+        with coefficient 1. Rhea cites PMID:23485643 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-3-oxobutanoyl-(R)-carnitine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:44997
+      snippet: acetoacetyl-CoA + (R)-carnitine => O-3-oxobutanoyl-(R)-carnitine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44997 declares side 44996_R as its products
+        (rh:products); the master reaction RHEA:44996 is undirected. This participant is CHEBI:84841 with
+        coefficient 1. Rhea cites PMID:23485643 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44997
+      snippet: acetoacetyl-CoA + (R)-carnitine => O-3-oxobutanoyl-(R)-carnitine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44997 declares side 44996_R as its products
+        (rh:products); the master reaction RHEA:44996 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:23485643 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 mapped_xrefs:
@@ -23,4 +23,155 @@ definitions:
       Catalyses: methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5,6,7,8-tetrahydrofolate = Co(I)-[methoxylated-aromatic- compound-specific corrinoid protein] + (6S)-5-methyl-5,6,7,8- tetrahydrofolate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [methyl-Co(III) methoxylated-aromatic-compound-specific corrinoid
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.385. EC 2.1.1.385 maps to
+    exactly one curated Rhea reaction (RHEA:75871), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "methyl-Co(III)-[methoxylated-aromatic-compound-specific
+    corrinoid protein] + (6S)-5,6,7,8-tetrahydrofolate = Co(I)-[methoxylated-aromatic- compound-specific
+    corrinoid protein] + (6S)-5-methyl-5,6,7,8- tetrahydrofolate + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[methyl-Co(III) methoxylated-aromatic-compound-specific corrinoid'
+    grounding: EC:2.1.1.385
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18102
+    description: Rhea compound GENERIC:18102.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: methyl-Co(III)
+    description: The reacting group Rhea names inside the generic participant GENERIC:18102 (methyl-Co(III)-[methoxylated-aromatic-compound-specific
+      corrinoid protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85035
+  - node_id: sub2
+    label: (6S)-5,6,7,8-tetrahydrofolate
+    node_type: CHEMICAL
+    grounding: CHEBI:57453
+    description: Formula C19H21N7O6.
+  - node_id: prd1
+    label: Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18101
+    description: Rhea compound GENERIC:18101.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: Co(+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:18101 (Co(I)-[methoxylated-aromatic-compound-specific
+      corrinoid protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85033
+  - node_id: prd2
+    label: (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+    node_type: CHEMICAL
+    grounding: CHEBI:18608
+    description: Formula C20H23N7O6.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein] is a substrate
+      consumed by RHEA:75871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75872
+      snippet: methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5,6,7,8-tetrahydrofolate
+        => Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75872 declares side 75871_L as its substrates
+        (rh:substrates); the master reaction RHEA:75871 is undirected. This participant is GENERIC:18102
+        with coefficient 1. Rhea cites PMID:18631365, PMID:11344134, PMID:9654069 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: methyl-Co(III) is the reactive part of methyl-Co(III)-[methoxylated-aromatic-compound-specific
+      corrinoid protein].
+    evidence:
+    - reference: RHEA:75871
+      snippet: methyl-Co(III)
+      notes: Rhea compound GENERIC:18102 (methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid
+        protein]) declares rh:reactivePart = methyl-Co(III) (CHEBI:85035).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (6S)-5,6,7,8-tetrahydrofolate is a substrate consumed by RHEA:75871 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:75872
+      snippet: methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5,6,7,8-tetrahydrofolate
+        => Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75872 declares side 75871_L as its substrates
+        (rh:substrates); the master reaction RHEA:75871 is undirected. This participant is CHEBI:57453
+        with coefficient 1. Rhea cites PMID:18631365, PMID:11344134, PMID:9654069 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein] is a product released
+      by RHEA:75871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75872
+      snippet: methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5,6,7,8-tetrahydrofolate
+        => Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75872 declares side 75871_R as its products
+        (rh:products); the master reaction RHEA:75871 is undirected. This participant is GENERIC:18101
+        with coefficient 1. Rhea cites PMID:18631365, PMID:11344134, PMID:9654069 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Co(+) is the reactive part of Co(I)-[methoxylated-aromatic-compound-specific corrinoid
+      protein].
+    evidence:
+    - reference: RHEA:75871
+      snippet: Co(+)
+      notes: Rhea compound GENERIC:18101 (Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein])
+        declares rh:reactivePart = Co(+) (CHEBI:85033).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (6S)-5-methyl-5,6,7,8-tetrahydrofolate is a product released by RHEA:75871 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:75872
+      snippet: methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5,6,7,8-tetrahydrofolate
+        => Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75872 declares side 75871_R as its products
+        (rh:products); the master reaction RHEA:75871 is undirected. This participant is CHEBI:18608 with
+        coefficient 1. Rhea cites PMID:18631365, PMID:11344134, PMID:9654069 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:75871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75872
+      snippet: methyl-Co(III)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5,6,7,8-tetrahydrofolate
+        => Co(I)-[methoxylated-aromatic-compound-specific corrinoid protein] + (6S)-5-methyl-5,6,7,8-tetrahydrofolate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75872 declares side 75871_R as its products
+        (rh:products); the master reaction RHEA:75871 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18631365, PMID:11344134, PMID:9654069 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

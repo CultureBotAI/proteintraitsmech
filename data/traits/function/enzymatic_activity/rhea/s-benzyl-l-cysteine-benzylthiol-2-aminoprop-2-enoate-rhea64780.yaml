@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:145803
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,76 @@ definitions:
       Catalyses the reaction: S-benzyl-L-cysteine = benzylthiol + 2-aminoprop-2-enoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-benzyl-L-cysteine = benzylthiol + 2-aminoprop-2-enoate
+  description: Substrate-to-product chemistry of RHEA:64780, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:64781 (rh:substrates → 64780_L, rh:products → 64780_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of S-benzyl-L-cysteine = benzylthiol + 2-aminoprop-2-enoate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:64780
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: S-benzyl-L-cysteine = benzylthiol + 2-aminoprop-2-enoate'
+  - node_id: sub1
+    label: S-benzyl-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:145803
+    description: Formula C10H13NO2S.
+  - node_id: prd1
+    label: benzylthiol
+    node_type: CHEMICAL
+    grounding: CHEBI:137674
+    description: Formula C7H8S.
+  - node_id: prd2
+    label: 2-aminoprop-2-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:76565
+    description: Formula C3H5NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: S-benzyl-L-cysteine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:64781
+      snippet: S-benzyl-L-cysteine => benzylthiol + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:64781 declares side 64780_L as its substrates
+        (rh:substrates); the master reaction RHEA:64780 is undirected. This participant is CHEBI:145803
+        with coefficient 1. Rhea cites PMID:17191898 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: benzylthiol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64781
+      snippet: S-benzyl-L-cysteine => benzylthiol + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:64781 declares side 64780_R as its products
+        (rh:products); the master reaction RHEA:64780 is undirected. This participant is CHEBI:137674
+        with coefficient 1. Rhea cites PMID:17191898 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 2-aminoprop-2-enoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:64781
+      snippet: S-benzyl-L-cysteine => benzylthiol + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:64781 declares side 64780_R as its products
+        (rh:products); the master reaction RHEA:64780 is undirected. This participant is CHEBI:76565 with
+        coefficient 1. Rhea cites PMID:17191898 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

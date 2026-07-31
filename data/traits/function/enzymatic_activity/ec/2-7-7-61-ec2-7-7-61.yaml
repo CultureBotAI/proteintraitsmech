@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -45,4 +45,187 @@ definitions:
       Catalyses: apo-[citrate lyase ACP] + 2'-(5''-triphospho-alpha-D-ribosyl)- 3'-dephospho-CoA = holo-[citrate lyase ACP] + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of citrate lyase holo-[acyl-carrier protein] synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.61. EC 2.7.7.61 maps to exactly
+    one curated Rhea reaction (RHEA:16333), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "apo-[citrate
+    lyase ACP] + 2''-(5''''-triphospho-alpha-D-ribosyl)- 3''-dephospho-CoA = holo-[citrate lyase ACP]
+    + diphosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: citrate lyase holo-[acyl-carrier protein] synthase
+    grounding: EC:2.7.7.61
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: apo-[citrate lyase ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10157
+    description: Rhea compound GENERIC:10157.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10157 (apo-[citrate
+      lyase ACP]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: sub2
+    label: 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:61378
+    description: Formula C26H40N7O26P5S.
+  - node_id: prd1
+    label: holo-[citrate lyase ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10158
+    description: Rhea compound GENERIC:10158.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-[2'-(5-phosphoribosyl)-3'-dephospho-CoA]-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10158 (holo-[citrate
+      lyase ACP]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82683
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: holo-citrate lyase synthase activity
+    grounding: GO:0050519
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P44458
+    node_type: PROTEIN
+    label: CITXG_HAEIN
+    grounding: UniProtKB:P44458
+  - node_id: prot_O53080
+    node_type: PROTEIN
+    label: CITXG_LEUMC
+    grounding: UniProtKB:O53080
+  - node_id: prot_Q9RLT3
+    node_type: PROTEIN
+    label: CITXG_WEIPA
+    grounding: UniProtKB:Q9RLT3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: apo-[citrate lyase ACP] is a substrate consumed by RHEA:16333 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16334
+      snippet: apo-[citrate lyase ACP] + 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA => holo-[citrate
+        lyase ACP] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:16334 declares side 16333_L as its substrates
+        (rh:substrates); the master reaction RHEA:16333 is undirected. This participant is GENERIC:10157
+        with coefficient 1. Rhea cites PMID:11042274, PMID:10924139 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of apo-[citrate lyase ACP].
+    evidence:
+    - reference: RHEA:16333
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:10157 (apo-[citrate lyase ACP]) declares rh:reactivePart = L-serine
+        residue (CHEBI:29999).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA is a substrate consumed by RHEA:16333
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16334
+      snippet: apo-[citrate lyase ACP] + 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA => holo-[citrate
+        lyase ACP] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:16334 declares side 16333_L as its substrates
+        (rh:substrates); the master reaction RHEA:16333 is undirected. This participant is CHEBI:61378
+        with coefficient 1. Rhea cites PMID:11042274, PMID:10924139 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: holo-[citrate lyase ACP] is a product released by RHEA:16333 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16334
+      snippet: apo-[citrate lyase ACP] + 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA => holo-[citrate
+        lyase ACP] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:16334 declares side 16333_R as its products
+        (rh:products); the master reaction RHEA:16333 is undirected. This participant is GENERIC:10158
+        with coefficient 1. Rhea cites PMID:11042274, PMID:10924139 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[2'-(5-phosphoribosyl)-3'-dephospho-CoA]-L-serine residue is the reactive part of holo-[citrate
+      lyase ACP].
+    evidence:
+    - reference: RHEA:16333
+      snippet: O-[2'-(5-phosphoribosyl)-3'-dephospho-CoA]-L-serine residue
+      notes: Rhea compound GENERIC:10158 (holo-[citrate lyase ACP]) declares rh:reactivePart = O-[2'-(5-phosphoribosyl)-3'-dephospho-CoA]-L-serine
+        residue (CHEBI:82683).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:16333 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16334
+      snippet: apo-[citrate lyase ACP] + 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA => holo-[citrate
+        lyase ACP] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:16334 declares side 16333_R as its products
+        (rh:products); the master reaction RHEA:16333 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:11042274, PMID:10924139 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.7.61
+      snippet: EC:2.7.7.61 > GO:holo-citrate lyase synthase activity ; GO:0050519
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050519 is itself a record
+        in this KB.
+  - subject: prot_P44458
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CITXG_HAEIN is an exemplar enzyme with EC 2.7.7.61 activity.
+    evidence:
+    - reference: EC:2.7.7.61
+      snippet: DR   P44458, CITXG_HAEIN;  O53080, CITXG_LEUMC;  Q9RLT3, CITXG_WEIPA;
+      notes: ExPASy ENZYME entry EC 2.7.7.61 cross-references UniProtKB:P44458 (CITXG_HAEIN) as a protein
+        with this activity.
+  - subject: prot_O53080
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CITXG_LEUMC is an exemplar enzyme with EC 2.7.7.61 activity.
+    evidence:
+    - reference: EC:2.7.7.61
+      snippet: DR   P44458, CITXG_HAEIN;  O53080, CITXG_LEUMC;  Q9RLT3, CITXG_WEIPA;
+      notes: ExPASy ENZYME entry EC 2.7.7.61 cross-references UniProtKB:O53080 (CITXG_LEUMC) as a protein
+        with this activity.
+  - subject: prot_Q9RLT3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CITXG_WEIPA is an exemplar enzyme with EC 2.7.7.61 activity.
+    evidence:
+    - reference: EC:2.7.7.61
+      snippet: DR   P44458, CITXG_HAEIN;  O53080, CITXG_LEUMC;  Q9RLT3, CITXG_WEIPA;
+      notes: ExPASy ENZYME entry EC 2.7.7.61 cross-references UniProtKB:Q9RLT3 (CITXG_WEIPA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

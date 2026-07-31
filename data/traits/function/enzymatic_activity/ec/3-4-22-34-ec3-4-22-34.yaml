@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -47,4 +47,81 @@ definitions:
       Catalyses: Hydrolysis of proteins and small molecule substrates at -Asn-|- Xaa- bonds
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of legumain
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.34. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of proteins and small molecule substrates at -Asn-|- Xaa- bonds".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: legumain
+    grounding: EC:3.4.22.34
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cysteine-type endopeptidase activity
+    grounding: GO:0004197
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P80527
+    node_type: PROTEIN
+    label: HGLB1_FASHE
+    grounding: UniProtKB:P80527
+  - node_id: prot_P80530
+    node_type: PROTEIN
+    label: HGLB2_FASHE
+    grounding: UniProtKB:P80530
+  - node_id: prot_P42665
+    node_type: PROTEIN
+    label: HGLB_SCHJA
+    grounding: UniProtKB:P42665
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.22.34
+      snippet: EC:3.4.22.34 > GO:cysteine-type endopeptidase activity ; GO:0004197
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004197 is itself a record
+        in this KB.
+  - subject: prot_P80527
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGLB1_FASHE is an exemplar enzyme with EC 3.4.22.34 activity.
+    evidence:
+    - reference: EC:3.4.22.34
+      snippet: DR   P80527, HGLB1_FASHE;  P80530, HGLB2_FASHE;  P42665, HGLB_SCHJA ;
+      notes: ExPASy ENZYME entry EC 3.4.22.34 cross-references UniProtKB:P80527 (HGLB1_FASHE) as a protein
+        with this activity.
+  - subject: prot_P80530
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGLB2_FASHE is an exemplar enzyme with EC 3.4.22.34 activity.
+    evidence:
+    - reference: EC:3.4.22.34
+      snippet: DR   P80527, HGLB1_FASHE;  P80530, HGLB2_FASHE;  P42665, HGLB_SCHJA ;
+      notes: ExPASy ENZYME entry EC 3.4.22.34 cross-references UniProtKB:P80530 (HGLB2_FASHE) as a protein
+        with this activity.
+  - subject: prot_P42665
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGLB_SCHJA is an exemplar enzyme with EC 3.4.22.34 activity.
+    evidence:
+    - reference: EC:3.4.22.34
+      snippet: DR   P80527, HGLB1_FASHE;  P80530, HGLB2_FASHE;  P42665, HGLB_SCHJA ;
+      notes: ExPASy ENZYME entry EC 3.4.22.34 cross-references UniProtKB:P42665 (HGLB_SCHJA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

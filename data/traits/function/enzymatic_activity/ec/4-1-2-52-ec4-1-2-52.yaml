@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -45,4 +45,117 @@ definitions:
       Catalyses: 4-hydroxy-2-oxoheptanedioate = succinate semialdehyde + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-hydroxy-2-oxoheptanedioate aldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.52. EC 4.1.2.52 maps to exactly
+    one curated Rhea reaction (RHEA:25788), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-hydroxy-2-oxoheptanedioate
+    = succinate semialdehyde + pyruvate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxy-2-oxoheptanedioate aldolase
+    grounding: EC:4.1.2.52
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-hydroxy-2-oxoheptanedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:73036
+    description: Formula C7H8O6.
+  - node_id: prd1
+    label: succinate semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:57706
+    description: Formula C4H5O3.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prot_A8A876
+    node_type: PROTEIN
+    label: HPCH_ECOHS
+    grounding: UniProtKB:A8A876
+  - node_id: prot_B1IS70
+    node_type: PROTEIN
+    label: HPCH_ECOLC
+    grounding: UniProtKB:B1IS70
+  - node_id: prot_Q47098
+    node_type: PROTEIN
+    label: HPCH_ECOLX
+    grounding: UniProtKB:Q47098
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-hydroxy-2-oxoheptanedioate is a substrate consumed by RHEA:25788 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25789
+      snippet: 4-hydroxy-2-oxoheptanedioate => succinate semialdehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:25789 declares side 25788_L as its substrates
+        (rh:substrates); the master reaction RHEA:25788 is undirected. This participant is CHEBI:73036
+        with coefficient 1. Rhea cites PMID:15996099, PMID:20364820 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: succinate semialdehyde is a product released by RHEA:25788 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25789
+      snippet: 4-hydroxy-2-oxoheptanedioate => succinate semialdehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:25789 declares side 25788_R as its products
+        (rh:products); the master reaction RHEA:25788 is undirected. This participant is CHEBI:57706 with
+        coefficient 1. Rhea cites PMID:15996099, PMID:20364820 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:25788 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25789
+      snippet: 4-hydroxy-2-oxoheptanedioate => succinate semialdehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:25789 declares side 25788_R as its products
+        (rh:products); the master reaction RHEA:25788 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:15996099, PMID:20364820 for this reaction.
+  - subject: prot_A8A876
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPCH_ECOHS is an exemplar enzyme with EC 4.1.2.52 activity.
+    evidence:
+    - reference: EC:4.1.2.52
+      snippet: DR   A8A876, HPCH_ECOHS ;  B1IS70, HPCH_ECOLC ;  Q47098, HPCH_ECOLX ;
+      notes: ExPASy ENZYME entry EC 4.1.2.52 cross-references UniProtKB:A8A876 (HPCH_ECOHS) as a protein
+        with this activity.
+  - subject: prot_B1IS70
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPCH_ECOLC is an exemplar enzyme with EC 4.1.2.52 activity.
+    evidence:
+    - reference: EC:4.1.2.52
+      snippet: DR   A8A876, HPCH_ECOHS ;  B1IS70, HPCH_ECOLC ;  Q47098, HPCH_ECOLX ;
+      notes: ExPASy ENZYME entry EC 4.1.2.52 cross-references UniProtKB:B1IS70 (HPCH_ECOLC) as a protein
+        with this activity.
+  - subject: prot_Q47098
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPCH_ECOLX is an exemplar enzyme with EC 4.1.2.52 activity.
+    evidence:
+    - reference: EC:4.1.2.52
+      snippet: DR   A8A876, HPCH_ECOHS ;  B1IS70, HPCH_ECOLC ;  Q47098, HPCH_ECOLX ;
+      notes: ExPASy ENZYME entry EC 4.1.2.52 cross-references UniProtKB:Q47098 (HPCH_ECOLX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

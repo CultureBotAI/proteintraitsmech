@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.158
     mapping_source: rhea2ec
@@ -28,4 +28,110 @@ definitions:
       Catalyses the reaction: (2E,6E,10E)-geranylgeranyl diphosphate = (-)-spiroviolene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E,10E)-geranylgeranyl diphosphate = (-)-spiroviolene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:53620, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:53621 (rh:substrates → 53620_L, rh:products → 53620_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E,10E)-geranylgeranyl diphosphate = (-)-spiroviolene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:53620
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E,10E)-geranylgeranyl diphosphate = (-)-spiroviolene + diphosphate'
+  - node_id: sub1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: (-)-spiroviolene
+    node_type: CHEMICAL
+    grounding: CHEBI:137523
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-spiroviolene synthase
+    grounding: EC:4.2.3.158
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P0DPK6
+    node_type: PROTEIN
+    label: SPVIS_STRVB
+    grounding: UniProtKB:P0DPK6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:53621
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => (-)-spiroviolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53621 declares side 53620_L as its substrates
+        (rh:substrates); the master reaction RHEA:53620 is undirected. This participant is CHEBI:58756
+        with coefficient 1. Rhea cites PMID:33084237, PMID:28146322 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-spiroviolene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53621
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => (-)-spiroviolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53621 declares side 53620_R as its products
+        (rh:products); the master reaction RHEA:53620 is undirected. This participant is CHEBI:137523
+        with coefficient 1. Rhea cites PMID:33084237, PMID:28146322 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53621
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => (-)-spiroviolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53621 declares side 53620_R as its products
+        (rh:products); the master reaction RHEA:53620 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:33084237, PMID:28146322 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.158; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:53620
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.158"/>
+      notes: The rh:ec triple on RHEA:53620 in rhea.rdf. EC 4.2.3.158 is itself a record in this KB.
+  - subject: prot_P0DPK6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SPVIS_STRVB is an exemplar enzyme carrying EC 4.2.3.158, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.158
+      snippet: DR   P0DPK6, SPVIS_STRVB;
+      notes: ExPASy ENZYME entry EC 4.2.3.158 cross-references UniProtKB:P0DPK6 (SPVIS_STRVB) as a protein
+        with this activity.
+    - reference: RHEA:53620
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.158"/>
+      notes: Rhea assigns RHEA:53620 to EC 4.2.3.158, and EC 4.2.3.158 maps to exactly one Rhea master
+        reaction (RHEA:53620), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

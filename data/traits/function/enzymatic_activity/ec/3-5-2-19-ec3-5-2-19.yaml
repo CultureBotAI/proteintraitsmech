@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.2.-
 mapped_xrefs:
@@ -34,4 +34,184 @@ definitions:
       Catalyses: streptothricin F + H2O = streptothricin F acid
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of streptothricin hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.2.19. Rhea assigns 2 curated
+    reactions to EC 3.5.2.19. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "streptothricin F + H2O = streptothricin F acid". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: streptothricin hydrolase
+    grounding: EC:3.5.2.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of streptothricin F + H2O = streptothricin F acid
+    grounding: RHEA:28138
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: streptothricin F + H2O = streptothricin F acid'
+  - node_id: rxn1_sub1
+    label: streptothricin F
+    node_type: CHEMICAL
+    grounding: CHEBI:60822
+    description: Formula C19H37N8O8.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: streptothricin F acid
+    node_type: CHEMICAL
+    grounding: CHEBI:60838
+    description: Formula C19H39N8O9.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of streptothricin D + H2O = streptothricin D acid
+    grounding: RHEA:28142
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: streptothricin D + H2O = streptothricin D acid'
+  - node_id: rxn2_sub1
+    label: streptothricin D
+    node_type: CHEMICAL
+    grounding: CHEBI:60829
+    description: Formula C31H63N12O10.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: streptothricin D acid
+    node_type: CHEMICAL
+    grounding: CHEBI:60839
+    description: Formula C31H65N12O11.
+  - node_id: prot_Q1MW86
+    node_type: PROTEIN
+    label: STTH1_STRNR
+    grounding: UniProtKB:Q1MW86
+  - node_id: prot_C5NU54
+    node_type: PROTEIN
+    label: STTH2_STRNR
+    grounding: UniProtKB:C5NU54
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:28138 is one of the 2 curated reactions Rhea assigns to EC 3.5.2.19; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:28138
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.2.19"/>
+      notes: The rh:ec triple on RHEA:28138 in rhea.rdf assigns that reaction to EC 3.5.2.19.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: streptothricin F is a substrate consumed by RHEA:28138 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28139
+      snippet: streptothricin F + H2O => streptothricin F acid
+      notes: Rhea's left-to-right directional reaction RHEA:28139 declares side 28138_L as its substrates
+        (rh:substrates); the master reaction RHEA:28138 is undirected. This participant is CHEBI:60822
+        with coefficient 1. Rhea cites PMID:19897889, PMID:16641084 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:28138 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28139
+      snippet: streptothricin F + H2O => streptothricin F acid
+      notes: Rhea's left-to-right directional reaction RHEA:28139 declares side 28138_L as its substrates
+        (rh:substrates); the master reaction RHEA:28138 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19897889, PMID:16641084 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: streptothricin F acid is a product released by RHEA:28138 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28139
+      snippet: streptothricin F + H2O => streptothricin F acid
+      notes: Rhea's left-to-right directional reaction RHEA:28139 declares side 28138_R as its products
+        (rh:products); the master reaction RHEA:28138 is undirected. This participant is CHEBI:60838 with
+        coefficient 1. Rhea cites PMID:19897889, PMID:16641084 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:28142 is one of the 2 curated reactions Rhea assigns to EC 3.5.2.19; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:28142
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.2.19"/>
+      notes: The rh:ec triple on RHEA:28142 in rhea.rdf assigns that reaction to EC 3.5.2.19.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: streptothricin D is a substrate consumed by RHEA:28142 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28143
+      snippet: streptothricin D + H2O => streptothricin D acid
+      notes: Rhea's left-to-right directional reaction RHEA:28143 declares side 28142_L as its substrates
+        (rh:substrates); the master reaction RHEA:28142 is undirected. This participant is CHEBI:60829
+        with coefficient 1. Rhea cites PMID:19897889, PMID:16641084 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:28142 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28143
+      snippet: streptothricin D + H2O => streptothricin D acid
+      notes: Rhea's left-to-right directional reaction RHEA:28143 declares side 28142_L as its substrates
+        (rh:substrates); the master reaction RHEA:28142 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19897889, PMID:16641084 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: streptothricin D acid is a product released by RHEA:28142 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28143
+      snippet: streptothricin D + H2O => streptothricin D acid
+      notes: Rhea's left-to-right directional reaction RHEA:28143 declares side 28142_R as its products
+        (rh:products); the master reaction RHEA:28142 is undirected. This participant is CHEBI:60839 with
+        coefficient 1. Rhea cites PMID:19897889, PMID:16641084 for this reaction.
+  - subject: prot_Q1MW86
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STTH1_STRNR is an exemplar enzyme with EC 3.5.2.19 activity.
+    evidence:
+    - reference: EC:3.5.2.19
+      snippet: DR   Q1MW86, STTH1_STRNR;  C5NU54, STTH2_STRNR;
+      notes: ExPASy ENZYME entry EC 3.5.2.19 cross-references UniProtKB:Q1MW86 (STTH1_STRNR) as a protein
+        with this activity.
+  - subject: prot_C5NU54
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STTH2_STRNR is an exemplar enzyme with EC 3.5.2.19 activity.
+    evidence:
+    - reference: EC:3.5.2.19
+      snippet: DR   Q1MW86, STTH1_STRNR;  C5NU54, STTH2_STRNR;
+      notes: ExPASy ENZYME entry EC 3.5.2.19 cross-references UniProtKB:C5NU54 (STTH2_STRNR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

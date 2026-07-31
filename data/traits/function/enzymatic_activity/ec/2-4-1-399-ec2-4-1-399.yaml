@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -28,4 +28,107 @@ definitions:
       Catalyses: (R)-3-phenyllactate + UDP-alpha-D-glucose = (R)-3-phenyllactyl-beta-D- glucose + UDP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phenyllactate glucosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.399. EC 2.4.1.399 maps to
+    exactly one curated Rhea reaction (RHEA:85407), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-3-phenyllactate
+    + UDP-alpha-D-glucose = (R)-3-phenyllactyl-beta-D- glucose + UDP". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phenyllactate glucosyltransferase
+    grounding: EC:2.4.1.399
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-3-phenyllactate
+    node_type: CHEMICAL
+    grounding: CHEBI:11009
+    description: Formula C9H9O3.
+  - node_id: sub2
+    label: UDP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:58885
+    description: Formula C15H22N2O17P2.
+  - node_id: prd1
+    label: (R)-3-phenyllactyl-beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:234340
+    description: Formula C15H20O8.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: prot_A0A3B6XRM0
+    node_type: PROTEIN
+    label: PUGT1_ATRBE
+    grounding: UniProtKB:A0A3B6XRM0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-3-phenyllactate is a substrate consumed by RHEA:85407 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:85408
+      snippet: (R)-3-phenyllactate + UDP-alpha-D-glucose => (R)-3-phenyllactyl-beta-D-glucose + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:85408 declares side 85407_L as its substrates
+        (rh:substrates); the master reaction RHEA:85407 is undirected. This participant is CHEBI:11009
+        with coefficient 1. Rhea cites PMID:31705812 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-glucose is a substrate consumed by RHEA:85407 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:85408
+      snippet: (R)-3-phenyllactate + UDP-alpha-D-glucose => (R)-3-phenyllactyl-beta-D-glucose + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:85408 declares side 85407_L as its substrates
+        (rh:substrates); the master reaction RHEA:85407 is undirected. This participant is CHEBI:58885
+        with coefficient 1. Rhea cites PMID:31705812 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R)-3-phenyllactyl-beta-D-glucose is a product released by RHEA:85407 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:85408
+      snippet: (R)-3-phenyllactate + UDP-alpha-D-glucose => (R)-3-phenyllactyl-beta-D-glucose + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:85408 declares side 85407_R as its products
+        (rh:products); the master reaction RHEA:85407 is undirected. This participant is CHEBI:234340
+        with coefficient 1. Rhea cites PMID:31705812 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by RHEA:85407 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85408
+      snippet: (R)-3-phenyllactate + UDP-alpha-D-glucose => (R)-3-phenyllactyl-beta-D-glucose + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:85408 declares side 85407_R as its products
+        (rh:products); the master reaction RHEA:85407 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:31705812 for this reaction.
+  - subject: prot_A0A3B6XRM0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PUGT1_ATRBE is an exemplar enzyme with EC 2.4.1.399 activity.
+    evidence:
+    - reference: EC:2.4.1.399
+      snippet: DR   A0A3B6XRM0, PUGT1_ATRBE;
+      notes: ExPASy ENZYME entry EC 2.4.1.399 cross-references UniProtKB:A0A3B6XRM0 (PUGT1_ATRBE) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

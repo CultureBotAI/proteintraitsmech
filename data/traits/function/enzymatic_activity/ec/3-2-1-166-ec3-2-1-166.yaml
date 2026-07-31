@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -41,4 +41,81 @@ definitions:
       Catalyses: endohydrolysis of (1->4)-beta-D-glycosidic bonds of heparan sulfate chains in heparan sulfate proteoglycan
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of heparanase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.166. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "endohydrolysis
+    of (1->4)-beta-D-glycosidic bonds of heparan sulfate chains in heparan sulfate proteoglycan".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: heparanase
+    grounding: EC:3.2.1.166
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: heparanase activity
+    grounding: GO:0030305
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9MYY0
+    node_type: PROTEIN
+    label: HPSE_BOVIN
+    grounding: UniProtKB:Q9MYY0
+  - node_id: prot_Q90YK5
+    node_type: PROTEIN
+    label: HPSE_CHICK
+    grounding: UniProtKB:Q90YK5
+  - node_id: prot_Q9Y251
+    node_type: PROTEIN
+    label: HPSE_HUMAN
+    grounding: UniProtKB:Q9Y251
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.166
+      snippet: EC:3.2.1.166 > GO:heparanase activity ; GO:0030305
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0030305 is itself a record
+        in this KB.
+  - subject: prot_Q9MYY0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPSE_BOVIN is an exemplar enzyme with EC 3.2.1.166 activity.
+    evidence:
+    - reference: EC:3.2.1.166
+      snippet: DR   Q9MYY0, HPSE_BOVIN ;  Q90YK5, HPSE_CHICK ;  Q9Y251, HPSE_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.2.1.166 cross-references UniProtKB:Q9MYY0 (HPSE_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q90YK5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPSE_CHICK is an exemplar enzyme with EC 3.2.1.166 activity.
+    evidence:
+    - reference: EC:3.2.1.166
+      snippet: DR   Q9MYY0, HPSE_BOVIN ;  Q90YK5, HPSE_CHICK ;  Q9Y251, HPSE_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.2.1.166 cross-references UniProtKB:Q90YK5 (HPSE_CHICK) as a protein
+        with this activity.
+  - subject: prot_Q9Y251
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPSE_HUMAN is an exemplar enzyme with EC 3.2.1.166 activity.
+    evidence:
+    - reference: EC:3.2.1.166
+      snippet: DR   Q9MYY0, HPSE_BOVIN ;  Q90YK5, HPSE_CHICK ;  Q9Y251, HPSE_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.2.1.166 cross-references UniProtKB:Q9Y251 (HPSE_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

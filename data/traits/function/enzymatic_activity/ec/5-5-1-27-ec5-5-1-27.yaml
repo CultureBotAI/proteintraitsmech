@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 mapped_xrefs:
@@ -30,4 +30,173 @@ definitions:
       Catalyses: (1) D-galactaro-1,4-lactone = 5-dehydro-4-deoxy-D-glucarate + H(+). (2) D-glucaro-1,4-lactone = 5-dehydro-4-deoxy-D-glucarate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-galactarolactone cycloisomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.27. Rhea assigns 2 curated
+    reactions to EC 5.5.1.27. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) D-galactaro-1,4-lactone = 5-dehydro-4-deoxy-D-glucarate
+    + H(+). (2) D-glucaro-1,4-lactone = 5-dehydro-4-deoxy-D-glucarate + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-galactarolactone cycloisomerase
+    grounding: EC:5.5.1.27
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of D-galactaro-1,4-lactone = 5-dehydro-4-deoxy-D-glucarate + H(+)
+    grounding: RHEA:45600
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: D-galactaro-1,4-lactone = 5-dehydro-4-deoxy-D-glucarate + H(+)'
+  - node_id: rxn1_sub1
+    label: D-galactaro-1,4-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:85317
+    description: Formula C6H7O7.
+  - node_id: rxn1_prd1
+    label: 5-dehydro-4-deoxy-D-glucarate
+    node_type: CHEMICAL
+    grounding: CHEBI:42819
+    description: Formula C6H6O7.
+  - node_id: rxn1_prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of D-glucaro-1,4-lactone = 5-dehydro-4-deoxy-D-glucarate + H(+)
+    grounding: RHEA:45604
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: D-glucaro-1,4-lactone = 5-dehydro-4-deoxy-D-glucarate + H(+)'
+  - node_id: rxn2_sub1
+    label: D-glucaro-1,4-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:85336
+    description: Formula C6H7O7.
+  - node_id: rxn2_prd1
+    label: 5-dehydro-4-deoxy-D-glucarate
+    node_type: CHEMICAL
+    grounding: CHEBI:42819
+    description: Formula C6H6O7.
+  - node_id: rxn2_prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A9CEQ8
+    node_type: PROTEIN
+    label: GCI_AGRFC
+    grounding: UniProtKB:A9CEQ8
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:45600 is one of the 2 curated reactions Rhea assigns to EC 5.5.1.27; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:45600
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.27"/>
+      notes: The rh:ec triple on RHEA:45600 in rhea.rdf assigns that reaction to EC 5.5.1.27.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: D-galactaro-1,4-lactone is a substrate consumed by RHEA:45600 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45601
+      snippet: D-galactaro-1,4-lactone => 5-dehydro-4-deoxy-D-glucarate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45601 declares side 45600_L as its substrates
+        (rh:substrates); the master reaction RHEA:45600 is undirected. This participant is CHEBI:85317
+        with coefficient 1. Rhea cites PMID:24450804, PMID:26750482, PMID:22493433 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 5-dehydro-4-deoxy-D-glucarate is a product released by RHEA:45600 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45601
+      snippet: D-galactaro-1,4-lactone => 5-dehydro-4-deoxy-D-glucarate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45601 declares side 45600_R as its products
+        (rh:products); the master reaction RHEA:45600 is undirected. This participant is CHEBI:42819 with
+        coefficient 1. Rhea cites PMID:24450804, PMID:26750482, PMID:22493433 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H(+) is a product released by RHEA:45600 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45601
+      snippet: D-galactaro-1,4-lactone => 5-dehydro-4-deoxy-D-glucarate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45601 declares side 45600_R as its products
+        (rh:products); the master reaction RHEA:45600 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:24450804, PMID:26750482, PMID:22493433 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:45604 is one of the 2 curated reactions Rhea assigns to EC 5.5.1.27; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:45604
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.27"/>
+      notes: The rh:ec triple on RHEA:45604 in rhea.rdf assigns that reaction to EC 5.5.1.27.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: D-glucaro-1,4-lactone is a substrate consumed by RHEA:45604 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45605
+      snippet: D-glucaro-1,4-lactone => 5-dehydro-4-deoxy-D-glucarate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45605 declares side 45604_L as its substrates
+        (rh:substrates); the master reaction RHEA:45604 is undirected. This participant is CHEBI:85336
+        with coefficient 1. Rhea cites PMID:24450804, PMID:22493433 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 5-dehydro-4-deoxy-D-glucarate is a product released by RHEA:45604 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45605
+      snippet: D-glucaro-1,4-lactone => 5-dehydro-4-deoxy-D-glucarate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45605 declares side 45604_R as its products
+        (rh:products); the master reaction RHEA:45604 is undirected. This participant is CHEBI:42819 with
+        coefficient 1. Rhea cites PMID:24450804, PMID:22493433 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H(+) is a product released by RHEA:45604 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45605
+      snippet: D-glucaro-1,4-lactone => 5-dehydro-4-deoxy-D-glucarate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:45605 declares side 45604_R as its products
+        (rh:products); the master reaction RHEA:45604 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:24450804, PMID:22493433 for this reaction.
+  - subject: prot_A9CEQ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCI_AGRFC is an exemplar enzyme with EC 5.5.1.27 activity.
+    evidence:
+    - reference: EC:5.5.1.27
+      snippet: DR   A9CEQ8, GCI_AGRFC  ;
+      notes: ExPASy ENZYME entry EC 5.5.1.27 cross-references UniProtKB:A9CEQ8 (GCI_AGRFC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.3.-
 mapped_xrefs:
@@ -40,4 +40,249 @@ definitions:
       Catalyses: 3-hydroxy-3-methylglutarate + succinyl-CoA = (3S)-3-hydroxy-3- methylglutaryl-CoA + succinate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of succinate--hydroxymethylglutarate CoA-transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.3.13. Rhea assigns 2 curated
+    reactions to EC 2.8.3.13. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "3-hydroxy-3-methylglutarate + succinyl-CoA = (3S)-3-hydroxy-3-
+    methylglutaryl-CoA + succinate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: succinate--hydroxymethylglutarate CoA-transferase
+    grounding: EC:2.8.3.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 3-hydroxy-3-methylglutarate + succinyl-CoA = (3S)-3-hydroxy-3-methylglutaryl…
+    grounding: RHEA:12284
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 3-hydroxy-3-methylglutarate + succinyl-CoA = (3S)-3-hydroxy-3-methylglutaryl-CoA
+      + succinate'
+  - node_id: rxn1_sub1
+    label: 3-hydroxy-3-methylglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:17325
+    description: Formula C6H8O5.
+  - node_id: rxn1_sub2
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: rxn1_prd1
+    label: (3S)-3-hydroxy-3-methylglutaryl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:43074
+    description: Formula C27H39N7O20P3S.
+  - node_id: rxn1_prd2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 3-hydroxy-3-methylglutarate + malonyl-CoA = (3S)-3-hydroxy-3-methylglutaryl-…
+    grounding: RHEA:24948
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 3-hydroxy-3-methylglutarate + malonyl-CoA = (3S)-3-hydroxy-3-methylglutaryl-CoA
+      + malonate'
+  - node_id: rxn2_sub1
+    label: 3-hydroxy-3-methylglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:17325
+    description: Formula C6H8O5.
+  - node_id: rxn2_sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: rxn2_prd1
+    label: (3S)-3-hydroxy-3-methylglutaryl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:43074
+    description: Formula C27H39N7O20P3S.
+  - node_id: rxn2_prd2
+    label: malonate
+    node_type: CHEMICAL
+    grounding: CHEBI:15792
+    description: Formula C3H2O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: succinate-hydroxymethylglutarate CoA-transferase activity
+    grounding: GO:0047369
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9HAC7
+    node_type: PROTEIN
+    label: SUCHY_HUMAN
+    grounding: UniProtKB:Q9HAC7
+  - node_id: prot_Q7TNE1
+    node_type: PROTEIN
+    label: SUCHY_MOUSE
+    grounding: UniProtKB:Q7TNE1
+  - node_id: prot_Q68FU4
+    node_type: PROTEIN
+    label: SUCHY_RAT
+    grounding: UniProtKB:Q68FU4
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:12284 is one of the 2 curated reactions Rhea assigns to EC 2.8.3.13; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:12284
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.13"/>
+      notes: The rh:ec triple on RHEA:12284 in rhea.rdf assigns that reaction to EC 2.8.3.13.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 3-hydroxy-3-methylglutarate is a substrate consumed by RHEA:12284 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12285
+      snippet: 3-hydroxy-3-methylglutarate + succinyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:12285 declares side 12284_L as its substrates
+        (rh:substrates); the master reaction RHEA:12284 is undirected. This participant is CHEBI:17325
+        with coefficient 1. Rhea cites PMID:23893049, PMID:6946836 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: succinyl-CoA is a substrate consumed by RHEA:12284 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12285
+      snippet: 3-hydroxy-3-methylglutarate + succinyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:12285 declares side 12284_L as its substrates
+        (rh:substrates); the master reaction RHEA:12284 is undirected. This participant is CHEBI:57292
+        with coefficient 1. Rhea cites PMID:23893049, PMID:6946836 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (3S)-3-hydroxy-3-methylglutaryl-CoA is a product released by RHEA:12284 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:12285
+      snippet: 3-hydroxy-3-methylglutarate + succinyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:12285 declares side 12284_R as its products
+        (rh:products); the master reaction RHEA:12284 is undirected. This participant is CHEBI:43074 with
+        coefficient 1. Rhea cites PMID:23893049, PMID:6946836 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: succinate is a product released by RHEA:12284 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12285
+      snippet: 3-hydroxy-3-methylglutarate + succinyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:12285 declares side 12284_R as its products
+        (rh:products); the master reaction RHEA:12284 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:23893049, PMID:6946836 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:24948 is one of the 2 curated reactions Rhea assigns to EC 2.8.3.13; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24948
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.13"/>
+      notes: The rh:ec triple on RHEA:24948 in rhea.rdf assigns that reaction to EC 2.8.3.13.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 3-hydroxy-3-methylglutarate is a substrate consumed by RHEA:24948 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24949
+      snippet: 3-hydroxy-3-methylglutarate + malonyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + malonate
+      notes: Rhea's left-to-right directional reaction RHEA:24949 declares side 24948_L as its substrates
+        (rh:substrates); the master reaction RHEA:24948 is undirected. This participant is CHEBI:17325
+        with coefficient 1. Rhea cites PMID:6946836 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: malonyl-CoA is a substrate consumed by RHEA:24948 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24949
+      snippet: 3-hydroxy-3-methylglutarate + malonyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + malonate
+      notes: Rhea's left-to-right directional reaction RHEA:24949 declares side 24948_L as its substrates
+        (rh:substrates); the master reaction RHEA:24948 is undirected. This participant is CHEBI:57384
+        with coefficient 1. Rhea cites PMID:6946836 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (3S)-3-hydroxy-3-methylglutaryl-CoA is a product released by RHEA:24948 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24949
+      snippet: 3-hydroxy-3-methylglutarate + malonyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + malonate
+      notes: Rhea's left-to-right directional reaction RHEA:24949 declares side 24948_R as its products
+        (rh:products); the master reaction RHEA:24948 is undirected. This participant is CHEBI:43074 with
+        coefficient 1. Rhea cites PMID:6946836 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: malonate is a product released by RHEA:24948 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24949
+      snippet: 3-hydroxy-3-methylglutarate + malonyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + malonate
+      notes: Rhea's left-to-right directional reaction RHEA:24949 declares side 24948_R as its products
+        (rh:products); the master reaction RHEA:24948 is undirected. This participant is CHEBI:15792 with
+        coefficient 1. Rhea cites PMID:6946836 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.3.13
+      snippet: EC:2.8.3.13 > GO:succinate-hydroxymethylglutarate CoA-transferase activity ; GO:0047369
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047369 is itself a record
+        in this KB.
+  - subject: prot_Q9HAC7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SUCHY_HUMAN is an exemplar enzyme with EC 2.8.3.13 activity.
+    evidence:
+    - reference: EC:2.8.3.13
+      snippet: DR   Q9HAC7, SUCHY_HUMAN;  Q7TNE1, SUCHY_MOUSE;  Q68FU4, SUCHY_RAT  ;
+      notes: ExPASy ENZYME entry EC 2.8.3.13 cross-references UniProtKB:Q9HAC7 (SUCHY_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q7TNE1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SUCHY_MOUSE is an exemplar enzyme with EC 2.8.3.13 activity.
+    evidence:
+    - reference: EC:2.8.3.13
+      snippet: DR   Q9HAC7, SUCHY_HUMAN;  Q7TNE1, SUCHY_MOUSE;  Q68FU4, SUCHY_RAT  ;
+      notes: ExPASy ENZYME entry EC 2.8.3.13 cross-references UniProtKB:Q7TNE1 (SUCHY_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q68FU4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SUCHY_RAT is an exemplar enzyme with EC 2.8.3.13 activity.
+    evidence:
+    - reference: EC:2.8.3.13
+      snippet: DR   Q9HAC7, SUCHY_HUMAN;  Q7TNE1, SUCHY_MOUSE;  Q68FU4, SUCHY_RAT  ;
+      notes: ExPASy ENZYME entry EC 2.8.3.13 cross-references UniProtKB:Q68FU4 (SUCHY_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

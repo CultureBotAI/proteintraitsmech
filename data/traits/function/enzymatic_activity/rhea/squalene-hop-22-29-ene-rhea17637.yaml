@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.99.17
     mapping_source: rhea2ec
@@ -30,4 +30,150 @@ definitions:
       Catalyses the reaction: squalene = hop-22(29)-ene
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of squalene = hop-22(29)-ene
+  description: Substrate-to-product chemistry of RHEA:17637, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17638 (rh:substrates → 17637_L, rh:products → 17637_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of squalene = hop-22(29)-ene
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17637
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: squalene = hop-22(29)-ene'
+  - node_id: sub1
+    label: squalene
+    node_type: CHEMICAL
+    grounding: CHEBI:15440
+    description: Formula C30H50.
+  - node_id: prd1
+    label: hop-22(29)-ene
+    node_type: CHEMICAL
+    grounding: CHEBI:4648
+    description: Formula C30H50.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: squalene-hopene cyclase activity
+    grounding: GO:0051007
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: squalene--hopene cyclase
+    grounding: EC:5.4.99.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_B6K412
+    node_type: PROTEIN
+    label: SHC1_SCHJY
+    grounding: UniProtKB:B6K412
+  - node_id: prot_P33247
+    node_type: PROTEIN
+    label: SQHC_ALIAD
+    grounding: UniProtKB:P33247
+  - node_id: prot_P54924
+    node_type: PROTEIN
+    label: SQHC_BRADU
+    grounding: UniProtKB:P54924
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: squalene is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17638
+      snippet: squalene => hop-22(29)-ene
+      notes: Rhea's left-to-right directional reaction RHEA:17638 declares side 17637_L as its substrates
+        (rh:substrates); the master reaction RHEA:17637 is undirected. This participant is CHEBI:15440
+        with coefficient 1. Rhea cites PMID:21531832, PMID:37416896, PMID:9931258, PMID:23485581 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hop-22(29)-ene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17638
+      snippet: squalene => hop-22(29)-ene
+      notes: Rhea's left-to-right directional reaction RHEA:17638 declares side 17637_R as its products
+        (rh:products); the master reaction RHEA:17637 is undirected. This participant is CHEBI:4648 with
+        coefficient 1. Rhea cites PMID:21531832, PMID:37416896, PMID:9931258, PMID:23485581 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17637
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0051007"/>
+      notes: The rdfs:seeAlso triple on RHEA:17637 in rhea.rdf. GO term GO:0051007 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.99.17; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17637
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.17"/>
+      notes: The rh:ec triple on RHEA:17637 in rhea.rdf. EC 5.4.99.17 is itself a record in this KB.
+  - subject: prot_B6K412
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SHC1_SCHJY is an exemplar enzyme carrying EC 5.4.99.17, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.17
+      snippet: DR   B6K412, SHC1_SCHJY ;  P33247, SQHC_ALIAD ;  P54924, SQHC_BRADU ;
+      notes: ExPASy ENZYME entry EC 5.4.99.17 cross-references UniProtKB:B6K412 (SHC1_SCHJY) as a protein
+        with this activity.
+    - reference: RHEA:17637
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.17"/>
+      notes: Rhea assigns RHEA:17637 to EC 5.4.99.17, and EC 5.4.99.17 maps to exactly one Rhea master
+        reaction (RHEA:17637), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P33247
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQHC_ALIAD is an exemplar enzyme carrying EC 5.4.99.17, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.17
+      snippet: DR   B6K412, SHC1_SCHJY ;  P33247, SQHC_ALIAD ;  P54924, SQHC_BRADU ;
+      notes: ExPASy ENZYME entry EC 5.4.99.17 cross-references UniProtKB:P33247 (SQHC_ALIAD) as a protein
+        with this activity.
+    - reference: RHEA:17637
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.17"/>
+      notes: Rhea assigns RHEA:17637 to EC 5.4.99.17, and EC 5.4.99.17 maps to exactly one Rhea master
+        reaction (RHEA:17637), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P54924
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQHC_BRADU is an exemplar enzyme carrying EC 5.4.99.17, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.17
+      snippet: DR   B6K412, SHC1_SCHJY ;  P33247, SQHC_ALIAD ;  P54924, SQHC_BRADU ;
+      notes: ExPASy ENZYME entry EC 5.4.99.17 cross-references UniProtKB:P54924 (SQHC_BRADU) as a protein
+        with this activity.
+    - reference: RHEA:17637
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.17"/>
+      notes: Rhea assigns RHEA:17637 to EC 5.4.99.17, and EC 5.4.99.17 maps to exactly one Rhea master
+        reaction (RHEA:17637), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

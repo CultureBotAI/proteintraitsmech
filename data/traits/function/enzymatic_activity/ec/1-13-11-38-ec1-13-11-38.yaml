@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -35,4 +35,120 @@ definitions:
       Catalyses: 1-hydroxy-2-naphthoate + O2 = (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-hydroxy-2-naphthoate 1,2-dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.38. EC 1.13.11.38 maps to
+    exactly one curated Rhea reaction (RHEA:14749), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "1-hydroxy-2-naphthoate
+    + O2 = (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H(+)". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 1-hydroxy-2-naphthoate 1,2-dioxygenase
+    grounding: EC:1.13.11.38
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 1-hydroxy-2-naphthoate
+    node_type: CHEMICAL
+    grounding: CHEBI:15992
+    description: Formula C11H7O3.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58794
+    description: Formula C11H6O5.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 1-hydroxy-2-naphthoate 1,2-dioxygenase activity
+    grounding: GO:0018582
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O24721
+    node_type: PROTEIN
+    label: PHDI_NOCSK
+    grounding: UniProtKB:O24721
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-hydroxy-2-naphthoate is a substrate consumed by RHEA:14749 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14750
+      snippet: 1-hydroxy-2-naphthoate + O2 => (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14750 declares side 14749_L as its substrates
+        (rh:substrates); the master reaction RHEA:14749 is undirected. This participant is CHEBI:15992
+        with coefficient 1. Rhea cites PMID:6833175 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:14749 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14750
+      snippet: 1-hydroxy-2-naphthoate + O2 => (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14750 declares side 14749_L as its substrates
+        (rh:substrates); the master reaction RHEA:14749 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:6833175 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate is a product released by RHEA:14749 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14750
+      snippet: 1-hydroxy-2-naphthoate + O2 => (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14750 declares side 14749_R as its products
+        (rh:products); the master reaction RHEA:14749 is undirected. This participant is CHEBI:58794 with
+        coefficient 1. Rhea cites PMID:6833175 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:14749 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14750
+      snippet: 1-hydroxy-2-naphthoate + O2 => (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14750 declares side 14749_R as its products
+        (rh:products); the master reaction RHEA:14749 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:6833175 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.38
+      snippet: EC:1.13.11.38 > GO:1-hydroxy-2-naphthoate 1,2-dioxygenase activity ; GO:0018582
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018582 is itself a record
+        in this KB.
+  - subject: prot_O24721
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHDI_NOCSK is an exemplar enzyme with EC 1.13.11.38 activity.
+    evidence:
+    - reference: EC:1.13.11.38
+      snippet: DR   O24721, PHDI_NOCSK ;
+      notes: ExPASy ENZYME entry EC 1.13.11.38 cross-references UniProtKB:O24721 (PHDI_NOCSK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 synonyms:
@@ -41,4 +41,148 @@ definitions:
       Catalyses: 3,4-dihydroxyphthalate + H(+) = 3,4-dihydroxybenzoate + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3,4-dihydroxyphthalate decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.69. EC 4.1.1.69 maps to exactly
+    one curated Rhea reaction (RHEA:18601), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3,4-dihydroxyphthalate
+    + H(+) = 3,4-dihydroxybenzoate + CO2". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3,4-dihydroxyphthalate decarboxylase
+    grounding: EC:4.1.1.69
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3,4-dihydroxyphthalate
+    node_type: CHEMICAL
+    grounding: CHEBI:58137
+    description: Formula C8H4O6.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 3,4-dihydroxybenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:36241
+    description: Formula C7H5O4.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3,4-dihydroxyphthalate decarboxylase activity
+    grounding: GO:0047556
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9AGK2
+    node_type: PROTEIN
+    label: DHPDC_ARTKE
+    grounding: UniProtKB:Q9AGK2
+  - node_id: prot_Q0RWC9
+    node_type: PROTEIN
+    label: DHPDC_RHOJR
+    grounding: UniProtKB:Q0RWC9
+  - node_id: prot_Q93UV7
+    node_type: PROTEIN
+    label: DHPDC_TERSD
+    grounding: UniProtKB:Q93UV7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3,4-dihydroxyphthalate is a substrate consumed by RHEA:18601 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18602
+      snippet: 3,4-dihydroxyphthalate + H(+) => 3,4-dihydroxybenzoate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:18602 declares side 18601_L as its substrates
+        (rh:substrates); the master reaction RHEA:18601 is undirected. This participant is CHEBI:58137
+        with coefficient 1. Rhea cites PMID:7085570 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:18601 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18602
+      snippet: 3,4-dihydroxyphthalate + H(+) => 3,4-dihydroxybenzoate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:18602 declares side 18601_L as its substrates
+        (rh:substrates); the master reaction RHEA:18601 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:7085570 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3,4-dihydroxybenzoate is a product released by RHEA:18601 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18602
+      snippet: 3,4-dihydroxyphthalate + H(+) => 3,4-dihydroxybenzoate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:18602 declares side 18601_R as its products
+        (rh:products); the master reaction RHEA:18601 is undirected. This participant is CHEBI:36241 with
+        coefficient 1. Rhea cites PMID:7085570 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:18601 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18602
+      snippet: 3,4-dihydroxyphthalate + H(+) => 3,4-dihydroxybenzoate + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:18602 declares side 18601_R as its products
+        (rh:products); the master reaction RHEA:18601 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:7085570 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.1.69
+      snippet: EC:4.1.1.69 > GO:3,4-dihydroxyphthalate decarboxylase activity ; GO:0047556
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047556 is itself a record
+        in this KB.
+  - subject: prot_Q9AGK2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHPDC_ARTKE is an exemplar enzyme with EC 4.1.1.69 activity.
+    evidence:
+    - reference: EC:4.1.1.69
+      snippet: DR   Q9AGK2, DHPDC_ARTKE;  Q0RWC9, DHPDC_RHOJR;  Q93UV7, DHPDC_TERSD;
+      notes: ExPASy ENZYME entry EC 4.1.1.69 cross-references UniProtKB:Q9AGK2 (DHPDC_ARTKE) as a protein
+        with this activity.
+  - subject: prot_Q0RWC9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHPDC_RHOJR is an exemplar enzyme with EC 4.1.1.69 activity.
+    evidence:
+    - reference: EC:4.1.1.69
+      snippet: DR   Q9AGK2, DHPDC_ARTKE;  Q0RWC9, DHPDC_RHOJR;  Q93UV7, DHPDC_TERSD;
+      notes: ExPASy ENZYME entry EC 4.1.1.69 cross-references UniProtKB:Q0RWC9 (DHPDC_RHOJR) as a protein
+        with this activity.
+  - subject: prot_Q93UV7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHPDC_TERSD is an exemplar enzyme with EC 4.1.1.69 activity.
+    evidence:
+    - reference: EC:4.1.1.69
+      snippet: DR   Q9AGK2, DHPDC_ARTKE;  Q0RWC9, DHPDC_RHOJR;  Q93UV7, DHPDC_TERSD;
+      notes: ExPASy ENZYME entry EC 4.1.1.69 cross-references UniProtKB:Q93UV7 (DHPDC_TERSD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

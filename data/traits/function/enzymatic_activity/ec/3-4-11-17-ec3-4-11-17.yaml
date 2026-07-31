@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.11.-
 synonyms:
@@ -39,4 +39,170 @@ definitions:
       Catalyses: an N-terminal L-tryptophanyl-L-alpha-aminoacyl-[peptide] + H2O = an N-terminal L-alpha-aminoacyl-[peptide] + L-tryptophan
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tryptophanyl aminopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.11.17. EC 3.4.11.17 maps to
+    exactly one curated Rhea reaction (RHEA:72999), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an N-terminal
+    L-tryptophanyl-L-alpha-aminoacyl-[peptide] + H2O = an N-terminal L-alpha-aminoacyl-[peptide] + L-tryptophan".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tryptophanyl aminopeptidase
+    grounding: EC:3.4.11.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an N-terminal L-tryptophanyl-L-alpha-aminoacyl-[peptide]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18174
+    description: Rhea compound GENERIC:18174.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: N-terminal L-tryptophanyl peptide
+    description: The reacting group Rhea names inside the generic participant GENERIC:18174 (an N-terminal
+      L-tryptophanyl-L-alpha-aminoacyl-[peptide]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:192694
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: an N-terminal L-alpha-aminoacyl-[peptide]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9780
+    description: Rhea compound GENERIC:9780.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N-terminal L-alpha-amino-acid residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9780 (an N-terminal
+      L-alpha-aminoacyl-[peptide]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78597
+  - node_id: prd2
+    label: L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:57912
+    description: Formula C11H12N2O2.
+  - node_id: prot_Q4WYG3
+    node_type: PROTEIN
+    label: 7DMAW_ASPFU
+    grounding: UniProtKB:Q4WYG3
+  - node_id: prot_Q4WB07
+    node_type: PROTEIN
+    label: CDNPT_ASPFU
+    grounding: UniProtKB:Q4WB07
+  - node_id: prot_D1D8L6
+    node_type: PROTEIN
+    label: CDNTP_ASPFM
+    grounding: UniProtKB:D1D8L6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-terminal L-tryptophanyl-L-alpha-aminoacyl-[peptide] is a substrate consumed by RHEA:72999
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73000
+      snippet: an N-terminal L-tryptophanyl-L-alpha-aminoacyl-[peptide] + H2O => an N-terminal L-alpha-aminoacyl-[peptide]
+        + L-tryptophan
+      notes: Rhea's left-to-right directional reaction RHEA:73000 declares side 72999_L as its substrates
+        (rh:substrates); the master reaction RHEA:72999 is undirected. This participant is GENERIC:18174
+        with coefficient 1. Rhea cites PMID:18635009 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N-terminal L-tryptophanyl peptide is the reactive part of an N-terminal L-tryptophanyl-L-alpha-aminoacyl-[peptide].
+    evidence:
+    - reference: RHEA:72999
+      snippet: N-terminal L-tryptophanyl peptide
+      notes: Rhea compound GENERIC:18174 (an N-terminal L-tryptophanyl-L-alpha-aminoacyl-[peptide]) declares
+        rh:reactivePart = N-terminal L-tryptophanyl peptide (CHEBI:192694).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:72999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73000
+      snippet: an N-terminal L-tryptophanyl-L-alpha-aminoacyl-[peptide] + H2O => an N-terminal L-alpha-aminoacyl-[peptide]
+        + L-tryptophan
+      notes: Rhea's left-to-right directional reaction RHEA:73000 declares side 72999_L as its substrates
+        (rh:substrates); the master reaction RHEA:72999 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18635009 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N-terminal L-alpha-aminoacyl-[peptide] is a product released by RHEA:72999 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:73000
+      snippet: an N-terminal L-tryptophanyl-L-alpha-aminoacyl-[peptide] + H2O => an N-terminal L-alpha-aminoacyl-[peptide]
+        + L-tryptophan
+      notes: Rhea's left-to-right directional reaction RHEA:73000 declares side 72999_R as its products
+        (rh:products); the master reaction RHEA:72999 is undirected. This participant is GENERIC:9780
+        with coefficient 1. Rhea cites PMID:18635009 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N-terminal L-alpha-amino-acid residue is the reactive part of an N-terminal L-alpha-aminoacyl-[peptide].
+    evidence:
+    - reference: RHEA:72999
+      snippet: N-terminal L-alpha-amino-acid residue
+      notes: Rhea compound GENERIC:9780 (an N-terminal L-alpha-aminoacyl-[peptide]) declares rh:reactivePart
+        = N-terminal L-alpha-amino-acid residue (CHEBI:78597).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-tryptophan is a product released by RHEA:72999 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73000
+      snippet: an N-terminal L-tryptophanyl-L-alpha-aminoacyl-[peptide] + H2O => an N-terminal L-alpha-aminoacyl-[peptide]
+        + L-tryptophan
+      notes: Rhea's left-to-right directional reaction RHEA:73000 declares side 72999_R as its products
+        (rh:products); the master reaction RHEA:72999 is undirected. This participant is CHEBI:57912 with
+        coefficient 1. Rhea cites PMID:18635009 for this reaction.
+  - subject: prot_Q4WYG3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 7DMAW_ASPFU is an exemplar enzyme with EC 3.4.11.17 activity.
+    evidence:
+    - reference: EC:3.4.11.17
+      snippet: DR   Q4WYG3, 7DMAW_ASPFU;  Q4WB07, CDNPT_ASPFU;  D1D8L6, CDNTP_ASPFM;
+      notes: ExPASy ENZYME entry EC 3.4.11.17 cross-references UniProtKB:Q4WYG3 (7DMAW_ASPFU) as a protein
+        with this activity.
+  - subject: prot_Q4WB07
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CDNPT_ASPFU is an exemplar enzyme with EC 3.4.11.17 activity.
+    evidence:
+    - reference: EC:3.4.11.17
+      snippet: DR   Q4WYG3, 7DMAW_ASPFU;  Q4WB07, CDNPT_ASPFU;  D1D8L6, CDNTP_ASPFM;
+      notes: ExPASy ENZYME entry EC 3.4.11.17 cross-references UniProtKB:Q4WB07 (CDNPT_ASPFU) as a protein
+        with this activity.
+  - subject: prot_D1D8L6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CDNTP_ASPFM is an exemplar enzyme with EC 3.4.11.17 activity.
+    evidence:
+    - reference: EC:3.4.11.17
+      snippet: DR   Q4WYG3, 7DMAW_ASPFU;  Q4WB07, CDNPT_ASPFU;  D1D8L6, CDNTP_ASPFM;
+      notes: ExPASy ENZYME entry EC 3.4.11.17 cross-references UniProtKB:D1D8L6 (CDNTP_ASPFM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

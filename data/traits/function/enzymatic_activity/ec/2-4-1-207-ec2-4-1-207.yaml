@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -41,4 +41,83 @@ definitions:
       Catalyses: breaks a beta-(1->4) bond in the backbone of a xyloglucan and transfers the xyloglucanyl segment on to O-4 of the non-reducing terminal glucose residue of an acceptor, which can be a xyloglucan or an oligosaccharide of xyloglucan
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of xyloglucan:xyloglucosyl transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.207. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "breaks
+    a beta-(1->4) bond in the backbone of a xyloglucan and transfers the xyloglucanyl segment on to O-4
+    of the non-reducing terminal glucose residue of an acceptor, which can be a xyloglucan or an oligosaccharide
+    of xyloglucan".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: xyloglucan:xyloglucosyl transferase
+    grounding: EC:2.4.1.207
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: xyloglucan:xyloglucosyl transferase activity
+    grounding: GO:0016762
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9ZVK1
+    node_type: PROTEIN
+    label: XTH10_ARATH
+    grounding: UniProtKB:Q9ZVK1
+  - node_id: prot_Q9SMP1
+    node_type: PROTEIN
+    label: XTH11_ARATH
+    grounding: UniProtKB:Q9SMP1
+  - node_id: prot_Q9FKL9
+    node_type: PROTEIN
+    label: XTH12_ARATH
+    grounding: UniProtKB:Q9FKL9
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.207
+      snippet: EC:2.4.1.207 > GO:xyloglucan:xyloglucosyl transferase activity ; GO:0016762
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016762 is itself a record
+        in this KB.
+  - subject: prot_Q9ZVK1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XTH10_ARATH is an exemplar enzyme with EC 2.4.1.207 activity.
+    evidence:
+    - reference: EC:2.4.1.207
+      snippet: DR   Q9ZVK1, XTH10_ARATH;  Q9SMP1, XTH11_ARATH;  Q9FKL9, XTH12_ARATH;
+      notes: ExPASy ENZYME entry EC 2.4.1.207 cross-references UniProtKB:Q9ZVK1 (XTH10_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9SMP1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XTH11_ARATH is an exemplar enzyme with EC 2.4.1.207 activity.
+    evidence:
+    - reference: EC:2.4.1.207
+      snippet: DR   Q9ZVK1, XTH10_ARATH;  Q9SMP1, XTH11_ARATH;  Q9FKL9, XTH12_ARATH;
+      notes: ExPASy ENZYME entry EC 2.4.1.207 cross-references UniProtKB:Q9SMP1 (XTH11_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9FKL9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XTH12_ARATH is an exemplar enzyme with EC 2.4.1.207 activity.
+    evidence:
+    - reference: EC:2.4.1.207
+      snippet: DR   Q9ZVK1, XTH10_ARATH;  Q9SMP1, XTH11_ARATH;  Q9FKL9, XTH12_ARATH;
+      notes: ExPASy ENZYME entry EC 2.4.1.207 cross-references UniProtKB:Q9FKL9 (XTH12_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

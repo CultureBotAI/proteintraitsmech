@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.2.-
 synonyms:
@@ -39,4 +39,82 @@ definitions:
       Catalyses: S-ubiquitinyl-[E1 ubiquitin-activating enzyme]-L-cysteine + [acceptor protein]-N-terminal-amino acid = [E1 ubiquitin-activating enzyme]-L- cysteine + N-terminal-ubiquitinyl-[acceptor protein]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-terminal E2 ubiquitin-conjugating enzyme
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.2.25. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "S-ubiquitinyl-[E1
+    ubiquitin-activating enzyme]-L-cysteine + [acceptor protein]-N-terminal-amino acid = [E1 ubiquitin-activating
+    enzyme]-L- cysteine + N-terminal-ubiquitinyl-[acceptor protein]".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-terminal E2 ubiquitin-conjugating enzyme
+    grounding: EC:2.3.2.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ubiquitin conjugating enzyme activity
+    grounding: GO:0061631
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q4VBH4
+    node_type: PROTEIN
+    label: UB2WA_DANRE
+    grounding: UniProtKB:Q4VBH4
+  - node_id: prot_Q1JPX4
+    node_type: PROTEIN
+    label: UB2WB_DANRE
+    grounding: UniProtKB:Q1JPX4
+  - node_id: prot_A6H795
+    node_type: PROTEIN
+    label: UBE2W_BOVIN
+    grounding: UniProtKB:A6H795
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.2.25
+      snippet: EC:2.3.2.25 > GO:ubiquitin conjugating enzyme activity ; GO:0061631
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0061631 is itself a record
+        in this KB.
+  - subject: prot_Q4VBH4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UB2WA_DANRE is an exemplar enzyme with EC 2.3.2.25 activity.
+    evidence:
+    - reference: EC:2.3.2.25
+      snippet: DR   Q4VBH4, UB2WA_DANRE;  Q1JPX4, UB2WB_DANRE;  A6H795, UBE2W_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.3.2.25 cross-references UniProtKB:Q4VBH4 (UB2WA_DANRE) as a protein
+        with this activity.
+  - subject: prot_Q1JPX4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UB2WB_DANRE is an exemplar enzyme with EC 2.3.2.25 activity.
+    evidence:
+    - reference: EC:2.3.2.25
+      snippet: DR   Q4VBH4, UB2WA_DANRE;  Q1JPX4, UB2WB_DANRE;  A6H795, UBE2W_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.3.2.25 cross-references UniProtKB:Q1JPX4 (UB2WB_DANRE) as a protein
+        with this activity.
+  - subject: prot_A6H795
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UBE2W_BOVIN is an exemplar enzyme with EC 2.3.2.25 activity.
+    evidence:
+    - reference: EC:2.3.2.25
+      snippet: DR   Q4VBH4, UB2WA_DANRE;  Q1JPX4, UB2WB_DANRE;  A6H795, UBE2W_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.3.2.25 cross-references UniProtKB:A6H795 (UBE2W_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

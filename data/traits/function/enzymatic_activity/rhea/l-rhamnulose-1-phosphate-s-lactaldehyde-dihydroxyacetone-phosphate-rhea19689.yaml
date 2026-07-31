@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.2.19
     mapping_source: rhea2ec
@@ -28,4 +28,167 @@ definitions:
       Catalyses the reaction: L-rhamnulose 1-phosphate = (S)-lactaldehyde + dihydroxyacetone phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-rhamnulose 1-phosphate = (S)-lactaldehyde + dihydroxyacetone phosphate
+  description: Substrate-to-product chemistry of RHEA:19689, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:19690 (rh:substrates → 19689_L, rh:products → 19689_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-rhamnulose 1-phosphate = (S)-lactaldehyde + dihydroxyacetone phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:19689
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-rhamnulose 1-phosphate = (S)-lactaldehyde + dihydroxyacetone phosphate'
+  - node_id: sub1
+    label: L-rhamnulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58313
+    description: Formula C6H11O8P.
+  - node_id: prd1
+    label: (S)-lactaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:18041
+    description: Formula C3H6O2.
+  - node_id: prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: rhamnulose-1-phosphate aldolase activity
+    grounding: GO:0008994
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: rhamnulose-1-phosphate aldolase
+    grounding: EC:4.1.2.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8A1A0
+    node_type: PROTEIN
+    label: RHAD_BACTN
+    grounding: UniProtKB:Q8A1A0
+  - node_id: prot_A8AL31
+    node_type: PROTEIN
+    label: RHAD_CITK8
+    grounding: UniProtKB:A8AL31
+  - node_id: prot_A7ML62
+    node_type: PROTEIN
+    label: RHAD_CROS8
+    grounding: UniProtKB:A7ML62
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-rhamnulose 1-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19690
+      snippet: L-rhamnulose 1-phosphate => (S)-lactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19690 declares side 19689_L as its substrates
+        (rh:substrates); the master reaction RHEA:19689 is undirected. This participant is CHEBI:58313
+        with coefficient 1. Rhea cites PMID:18085797, PMID:12962479 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-lactaldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19690
+      snippet: L-rhamnulose 1-phosphate => (S)-lactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19690 declares side 19689_R as its products
+        (rh:products); the master reaction RHEA:19689 is undirected. This participant is CHEBI:18041 with
+        coefficient 1. Rhea cites PMID:18085797, PMID:12962479 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dihydroxyacetone phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19690
+      snippet: L-rhamnulose 1-phosphate => (S)-lactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19690 declares side 19689_R as its products
+        (rh:products); the master reaction RHEA:19689 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:18085797, PMID:12962479 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:19689
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008994"/>
+      notes: The rdfs:seeAlso triple on RHEA:19689 in rhea.rdf. GO term GO:0008994 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.2.19; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:19689
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.19"/>
+      notes: The rh:ec triple on RHEA:19689 in rhea.rdf. EC 4.1.2.19 is itself a record in this KB.
+  - subject: prot_Q8A1A0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHAD_BACTN is an exemplar enzyme carrying EC 4.1.2.19, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.19
+      snippet: DR   Q8A1A0, RHAD_BACTN ;  A8AL31, RHAD_CITK8 ;  A7ML62, RHAD_CROS8 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.19 cross-references UniProtKB:Q8A1A0 (RHAD_BACTN) as a protein
+        with this activity.
+    - reference: RHEA:19689
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.19"/>
+      notes: Rhea assigns RHEA:19689 to EC 4.1.2.19, and EC 4.1.2.19 maps to exactly one Rhea master reaction
+        (RHEA:19689), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A8AL31
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHAD_CITK8 is an exemplar enzyme carrying EC 4.1.2.19, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.19
+      snippet: DR   Q8A1A0, RHAD_BACTN ;  A8AL31, RHAD_CITK8 ;  A7ML62, RHAD_CROS8 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.19 cross-references UniProtKB:A8AL31 (RHAD_CITK8) as a protein
+        with this activity.
+    - reference: RHEA:19689
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.19"/>
+      notes: Rhea assigns RHEA:19689 to EC 4.1.2.19, and EC 4.1.2.19 maps to exactly one Rhea master reaction
+        (RHEA:19689), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A7ML62
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHAD_CROS8 is an exemplar enzyme carrying EC 4.1.2.19, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.19
+      snippet: DR   Q8A1A0, RHAD_BACTN ;  A8AL31, RHAD_CITK8 ;  A7ML62, RHAD_CROS8 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.19 cross-references UniProtKB:A7ML62 (RHAD_CROS8) as a protein
+        with this activity.
+    - reference: RHEA:19689
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.19"/>
+      notes: Rhea assigns RHEA:19689 to EC 4.1.2.19, and EC 4.1.2.19 maps to exactly one Rhea master reaction
+        (RHEA:19689), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.2.9
     mapping_source: rhea2ec
@@ -34,4 +34,169 @@ definitions:
       Catalyses the reaction: phosphoenolpyruvate + H(+) = 3-phosphonopyruvate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphoenolpyruvate + H(+) = 3-phosphonopyruvate
+  description: Substrate-to-product chemistry of RHEA:17013, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17014 (rh:substrates → 17013_L, rh:products → 17013_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of phosphoenolpyruvate + H(+) = 3-phosphonopyruvate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17013
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: phosphoenolpyruvate + H(+) = 3-phosphonopyruvate'
+  - node_id: sub1
+    label: phosphoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+    description: Formula C3H2O6P.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 3-phosphonopyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:71402
+    description: Formula C3H3O6P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoenolpyruvate mutase activity
+    grounding: GO:0050188
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoenolpyruvate mutase
+    grounding: EC:5.4.2.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P96074
+    node_type: PROTEIN
+    label: FOM1_STRWE
+    grounding: UniProtKB:P96074
+  - node_id: prot_P56839
+    node_type: PROTEIN
+    label: PEPM_MYTED
+    grounding: UniProtKB:P56839
+  - node_id: prot_P29247
+    node_type: PROTEIN
+    label: PEPM_STRHY
+    grounding: UniProtKB:P29247
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: phosphoenolpyruvate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17014
+      snippet: phosphoenolpyruvate + H(+) => 3-phosphonopyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:17014 declares side 17013_L as its substrates
+        (rh:substrates); the master reaction RHEA:17013 is undirected. This participant is CHEBI:58702
+        with coefficient 1. Rhea cites PMID:2121271, PMID:10571990, PMID:10378273, PMID:12162742 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17014
+      snippet: phosphoenolpyruvate + H(+) => 3-phosphonopyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:17014 declares side 17013_L as its substrates
+        (rh:substrates); the master reaction RHEA:17013 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:2121271, PMID:10571990, PMID:10378273, PMID:12162742 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-phosphonopyruvate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17014
+      snippet: phosphoenolpyruvate + H(+) => 3-phosphonopyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:17014 declares side 17013_R as its products
+        (rh:products); the master reaction RHEA:17013 is undirected. This participant is CHEBI:71402 with
+        coefficient 1. Rhea cites PMID:2121271, PMID:10571990, PMID:10378273, PMID:12162742 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17013
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050188"/>
+      notes: The rdfs:seeAlso triple on RHEA:17013 in rhea.rdf. GO term GO:0050188 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.2.9; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17013
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.9"/>
+      notes: The rh:ec triple on RHEA:17013 in rhea.rdf. EC 5.4.2.9 is itself a record in this KB.
+  - subject: prot_P96074
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FOM1_STRWE is an exemplar enzyme carrying EC 5.4.2.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.2.9
+      snippet: DR   P96074, FOM1_STRWE ;  P56839, PEPM_MYTED ;  P29247, PEPM_STRHY ;
+      notes: ExPASy ENZYME entry EC 5.4.2.9 cross-references UniProtKB:P96074 (FOM1_STRWE) as a protein
+        with this activity.
+    - reference: RHEA:17013
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.9"/>
+      notes: Rhea assigns RHEA:17013 to EC 5.4.2.9, and EC 5.4.2.9 maps to exactly one Rhea master reaction
+        (RHEA:17013), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P56839
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPM_MYTED is an exemplar enzyme carrying EC 5.4.2.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.2.9
+      snippet: DR   P96074, FOM1_STRWE ;  P56839, PEPM_MYTED ;  P29247, PEPM_STRHY ;
+      notes: ExPASy ENZYME entry EC 5.4.2.9 cross-references UniProtKB:P56839 (PEPM_MYTED) as a protein
+        with this activity.
+    - reference: RHEA:17013
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.9"/>
+      notes: Rhea assigns RHEA:17013 to EC 5.4.2.9, and EC 5.4.2.9 maps to exactly one Rhea master reaction
+        (RHEA:17013), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P29247
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPM_STRHY is an exemplar enzyme carrying EC 5.4.2.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.2.9
+      snippet: DR   P96074, FOM1_STRWE ;  P56839, PEPM_MYTED ;  P29247, PEPM_STRHY ;
+      notes: ExPASy ENZYME entry EC 5.4.2.9 cross-references UniProtKB:P29247 (PEPM_STRHY) as a protein
+        with this activity.
+    - reference: RHEA:17013
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.9"/>
+      notes: Rhea assigns RHEA:17013 to EC 5.4.2.9, and EC 5.4.2.9 maps to exactly one Rhea master reaction
+        (RHEA:17013), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.15.-
 mapped_xrefs:
@@ -32,4 +32,226 @@ definitions:
       Catalyses: a 1,1-dimethyl-3-phenylurea + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) = a 1-methyl-3-phenylurea + formaldehyde + 2 oxidized [2Fe-2S]- [ferredoxin] + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N,N-dimethyl phenylurea N-demethylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.15.38. EC 1.14.15.38 maps to
+    exactly one curated Rhea reaction (RHEA:65768), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 1,1-dimethyl-3-phenylurea
+    + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) = a 1-methyl-3-phenylurea + formaldehyde + 2 oxidized
+    [2Fe-2S]- [ferredoxin] + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N,N-dimethyl phenylurea N-demethylase
+    grounding: EC:1.14.15.38
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 1,1-dimethyl-3-phenylurea
+    node_type: CHEMICAL
+    grounding: CHEBI:157693
+    description: Formula C9H10N2OR2.
+  - node_id: sub2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](1+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: a 1-methyl-3-phenylurea
+    node_type: CHEMICAL
+    grounding: CHEBI:157694
+    description: Formula C8H8N2OR2.
+  - node_id: prd2
+    label: formaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:16842
+    description: Formula CH2O.
+  - node_id: prd3
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: prd3_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](2+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd4
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_S5RR11
+    node_type: PROTEIN
+    label: PDMA_SPHYB
+    grounding: UniProtKB:S5RR11
+  - node_id: prot_S5SC42
+    node_type: PROTEIN
+    label: PDMB_SPHYB
+    grounding: UniProtKB:S5SC42
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 1,1-dimethyl-3-phenylurea is a substrate consumed by RHEA:65768 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:65769
+      snippet: a 1,1-dimethyl-3-phenylurea + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => a 1-methyl-3-phenylurea
+        + formaldehyde + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:65769 declares side 65768_L as its substrates
+        (rh:substrates); the master reaction RHEA:65768 is undirected. This participant is CHEBI:157693
+        with coefficient 1. Rhea cites PMID:24123738 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [2Fe-2S]-[ferredoxin] is a substrate consumed by RHEA:65768 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:65769
+      snippet: a 1,1-dimethyl-3-phenylurea + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => a 1-methyl-3-phenylurea
+        + formaldehyde + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:65769 declares side 65768_L as its substrates
+        (rh:substrates); the master reaction RHEA:65768 is undirected. This participant is GENERIC:10001
+        with coefficient 2. Rhea cites PMID:24123738 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:65768
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:65768 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65769
+      snippet: a 1,1-dimethyl-3-phenylurea + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => a 1-methyl-3-phenylurea
+        + formaldehyde + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:65769 declares side 65768_L as its substrates
+        (rh:substrates); the master reaction RHEA:65768 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:24123738 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by RHEA:65768 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:65769
+      snippet: a 1,1-dimethyl-3-phenylurea + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => a 1-methyl-3-phenylurea
+        + formaldehyde + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:65769 declares side 65768_L as its substrates
+        (rh:substrates); the master reaction RHEA:65768 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:24123738 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 1-methyl-3-phenylurea is a product released by RHEA:65768 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:65769
+      snippet: a 1,1-dimethyl-3-phenylurea + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => a 1-methyl-3-phenylurea
+        + formaldehyde + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:65769 declares side 65768_R as its products
+        (rh:products); the master reaction RHEA:65768 is undirected. This participant is CHEBI:157694
+        with coefficient 1. Rhea cites PMID:24123738 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: formaldehyde is a product released by RHEA:65768 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65769
+      snippet: a 1,1-dimethyl-3-phenylurea + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => a 1-methyl-3-phenylurea
+        + formaldehyde + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:65769 declares side 65768_R as its products
+        (rh:products); the master reaction RHEA:65768 is undirected. This participant is CHEBI:16842 with
+        coefficient 1. Rhea cites PMID:24123738 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: oxidized [2Fe-2S]-[ferredoxin] is a product released by RHEA:65768 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:65769
+      snippet: a 1,1-dimethyl-3-phenylurea + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => a 1-methyl-3-phenylurea
+        + formaldehyde + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:65769 declares side 65768_R as its products
+        (rh:products); the master reaction RHEA:65768 is undirected. This participant is GENERIC:10000
+        with coefficient 2. Rhea cites PMID:24123738 for this reaction.
+  - subject: prd3_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd3
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:65768
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H2O is a product released by RHEA:65768 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65769
+      snippet: a 1,1-dimethyl-3-phenylurea + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => a 1-methyl-3-phenylurea
+        + formaldehyde + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:65769 declares side 65768_R as its products
+        (rh:products); the master reaction RHEA:65768 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:24123738 for this reaction.
+  - subject: prot_S5RR11
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDMA_SPHYB is an exemplar enzyme with EC 1.14.15.38 activity.
+    evidence:
+    - reference: EC:1.14.15.38
+      snippet: DR   S5RR11, PDMA_SPHYB ;  S5SC42, PDMB_SPHYB ;
+      notes: ExPASy ENZYME entry EC 1.14.15.38 cross-references UniProtKB:S5RR11 (PDMA_SPHYB) as a protein
+        with this activity.
+  - subject: prot_S5SC42
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDMB_SPHYB is an exemplar enzyme with EC 1.14.15.38 activity.
+    evidence:
+    - reference: EC:1.14.15.38
+      snippet: DR   S5RR11, PDMA_SPHYB ;  S5SC42, PDMB_SPHYB ;
+      notes: ExPASy ENZYME entry EC 1.14.15.38 cross-references UniProtKB:S5SC42 (PDMB_SPHYB) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

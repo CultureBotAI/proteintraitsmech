@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.3.-
 mapped_xrefs:
@@ -38,4 +38,115 @@ definitions:
       Catalyses: UDP-beta-L-arabinopyranose = UDP-alpha-D-xylose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-arabinose 4-epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.3.5. EC 5.1.3.5 maps to exactly
+    one curated Rhea reaction (RHEA:11320), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "UDP-beta-L-arabinopyranose
+    = UDP-alpha-D-xylose". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-arabinose 4-epimerase
+    grounding: EC:5.1.3.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: UDP-beta-L-arabinopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:61457
+    description: Formula C14H20N2O16P2.
+  - node_id: prd1
+    label: UDP-alpha-D-xylose
+    node_type: CHEMICAL
+    grounding: CHEBI:57632
+    description: Formula C14H20N2O16P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-arabinose 4-epimerase activity
+    grounding: GO:0050373
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9SA77
+    node_type: PROTEIN
+    label: ARAE1_ARATH
+    grounding: UniProtKB:Q9SA77
+  - node_id: prot_Q8H930
+    node_type: PROTEIN
+    label: ARAE1_ORYSJ
+    grounding: UniProtKB:Q8H930
+  - node_id: prot_O64749
+    node_type: PROTEIN
+    label: ARAE2_ARATH
+    grounding: UniProtKB:O64749
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UDP-beta-L-arabinopyranose is a substrate consumed by RHEA:11320 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11321
+      snippet: UDP-beta-L-arabinopyranose => UDP-alpha-D-xylose
+      notes: Rhea's left-to-right directional reaction RHEA:11321 declares side 11320_L as its substrates
+        (rh:substrates); the master reaction RHEA:11320 is undirected. This participant is CHEBI:61457
+        with coefficient 1. Rhea cites PMID:19754426, PMID:12566589, PMID:13821949 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UDP-alpha-D-xylose is a product released by RHEA:11320 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11321
+      snippet: UDP-beta-L-arabinopyranose => UDP-alpha-D-xylose
+      notes: Rhea's left-to-right directional reaction RHEA:11321 declares side 11320_R as its products
+        (rh:products); the master reaction RHEA:11320 is undirected. This participant is CHEBI:57632 with
+        coefficient 1. Rhea cites PMID:19754426, PMID:12566589, PMID:13821949 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.3.5
+      snippet: EC:5.1.3.5 > GO:UDP-arabinose 4-epimerase activity ; GO:0050373
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050373 is itself a record
+        in this KB.
+  - subject: prot_Q9SA77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAE1_ARATH is an exemplar enzyme with EC 5.1.3.5 activity.
+    evidence:
+    - reference: EC:5.1.3.5
+      snippet: DR   Q9SA77, ARAE1_ARATH;  Q8H930, ARAE1_ORYSJ;  O64749, ARAE2_ARATH;
+      notes: ExPASy ENZYME entry EC 5.1.3.5 cross-references UniProtKB:Q9SA77 (ARAE1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q8H930
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAE1_ORYSJ is an exemplar enzyme with EC 5.1.3.5 activity.
+    evidence:
+    - reference: EC:5.1.3.5
+      snippet: DR   Q9SA77, ARAE1_ARATH;  Q8H930, ARAE1_ORYSJ;  O64749, ARAE2_ARATH;
+      notes: ExPASy ENZYME entry EC 5.1.3.5 cross-references UniProtKB:Q8H930 (ARAE1_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_O64749
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAE2_ARATH is an exemplar enzyme with EC 5.1.3.5 activity.
+    evidence:
+    - reference: EC:5.1.3.5
+      snippet: DR   Q9SA77, ARAE1_ARATH;  Q8H930, ARAE1_ORYSJ;  O64749, ARAE2_ARATH;
+      notes: ExPASy ENZYME entry EC 5.1.3.5 cross-references UniProtKB:O64749 (ARAE2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:74269
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,129 @@ definitions:
       Catalyses the reaction: a guanosine in miRNA + S-adenosyl-L-methionine = an N(7)-methylguanosine in miRNA + S-adenosyl-L-homocysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a guanosine in miRNA + S-adenosyl-L-methionine = an N(7)-methylguanosine
+    in miRNA + S-a…
+  description: Substrate-to-product chemistry of RHEA:60512, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:60513 (rh:substrates → 60512_L, rh:products → 60512_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a guanosine in miRNA + S-adenosyl-L-methionine = an N(7)-methylguanosine in…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:60512
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a guanosine in miRNA + S-adenosyl-L-methionine = an N(7)-methylguanosine in miRNA
+      + S-adenosyl-L-homocysteine'
+  - node_id: sub1
+    label: a guanosine in miRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15588
+    description: Rhea compound GENERIC:15588.
+  - node_id: sub1_rp1
+    label: GMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15588 (a guanosine
+      in miRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74269
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: an N(7)-methylguanosine in miRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15587
+    description: Rhea compound GENERIC:15587.
+  - node_id: prd1_rp1
+    label: N(7)-methylguanosine 5'-phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15587 (an N(7)-methylguanosine
+      in miRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74480
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a guanosine in miRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60513
+      snippet: a guanosine in miRNA + S-adenosyl-L-methionine => an N(7)-methylguanosine in miRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:60513 declares side 60512_L as its substrates
+        (rh:substrates); the master reaction RHEA:60512 is undirected. This participant is GENERIC:15588
+        with coefficient 1. Rhea cites PMID:31031083 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: GMP residue is the reactive part of a guanosine in miRNA.
+    evidence:
+    - reference: RHEA:60512
+      snippet: GMP residue
+      notes: Rhea compound GENERIC:15588 (a guanosine in miRNA) declares rh:reactivePart = GMP residue
+        (CHEBI:74269), formula C10H11N5O7P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60513
+      snippet: a guanosine in miRNA + S-adenosyl-L-methionine => an N(7)-methylguanosine in miRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:60513 declares side 60512_L as its substrates
+        (rh:substrates); the master reaction RHEA:60512 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:31031083 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N(7)-methylguanosine in miRNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:60513
+      snippet: a guanosine in miRNA + S-adenosyl-L-methionine => an N(7)-methylguanosine in miRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:60513 declares side 60512_R as its products
+        (rh:products); the master reaction RHEA:60512 is undirected. This participant is GENERIC:15587
+        with coefficient 1. Rhea cites PMID:31031083 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(7)-methylguanosine 5'-phosphate residue is the reactive part of an N(7)-methylguanosine
+      in miRNA.
+    evidence:
+    - reference: RHEA:60512
+      snippet: N(7)-methylguanosine 5'-phosphate residue
+      notes: Rhea compound GENERIC:15587 (an N(7)-methylguanosine in miRNA) declares rh:reactivePart =
+        N(7)-methylguanosine 5'-phosphate residue (CHEBI:74480), formula C11H14N5O7P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60513
+      snippet: a guanosine in miRNA + S-adenosyl-L-methionine => an N(7)-methylguanosine in miRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:60513 declares side 60512_R as its products
+        (rh:products); the master reaction RHEA:60512 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:31031083 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.8.4.2
     mapping_source: rhea2ec
@@ -28,4 +28,181 @@ definitions:
       Catalyses the reaction: mycothiol + arsenate = arseno-mycothiol + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mycothiol + arsenate = arseno-mycothiol + H2O
+  description: Substrate-to-product chemistry of RHEA:27349, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:27350 (rh:substrates → 27349_L, rh:products → 27349_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of mycothiol + arsenate = arseno-mycothiol + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:27349
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: mycothiol + arsenate = arseno-mycothiol + H2O'
+  - node_id: sub1
+    label: mycothiol
+    node_type: CHEMICAL
+    grounding: CHEBI:16768
+    description: Formula C17H30N2O12S.
+  - node_id: sub2
+    label: arsenate
+    node_type: CHEMICAL
+    grounding: CHEBI:48597
+    description: Formula AsHO4.
+  - node_id: prd1
+    label: arseno-mycothiol
+    node_type: CHEMICAL
+    grounding: CHEBI:59655
+    description: Formula C17H29AsN2O15S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: mycothiol-arsenate ligase activity
+    grounding: GO:0102100
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: arsenate-mycothiol transferase
+    grounding: EC:2.8.4.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P0DKS6
+    node_type: PROTEIN
+    label: ARSC1_CORGK
+    grounding: UniProtKB:P0DKS6
+  - node_id: prot_P0DKS5
+    node_type: PROTEIN
+    label: ARSC1_CORGL
+    grounding: UniProtKB:P0DKS5
+  - node_id: prot_P0DKS8
+    node_type: PROTEIN
+    label: ARSC2_CORGK
+    grounding: UniProtKB:P0DKS8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: mycothiol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27350
+      snippet: mycothiol + arsenate => arseno-mycothiol + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:27350 declares side 27349_L as its substrates
+        (rh:substrates); the master reaction RHEA:27349 is undirected. This participant is CHEBI:16768
+        with coefficient 1. Rhea cites PMID:19286650 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: arsenate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27350
+      snippet: mycothiol + arsenate => arseno-mycothiol + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:27350 declares side 27349_L as its substrates
+        (rh:substrates); the master reaction RHEA:27349 is undirected. This participant is CHEBI:48597
+        with coefficient 1. Rhea cites PMID:19286650 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: arseno-mycothiol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27350
+      snippet: mycothiol + arsenate => arseno-mycothiol + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:27350 declares side 27349_R as its products
+        (rh:products); the master reaction RHEA:27349 is undirected. This participant is CHEBI:59655 with
+        coefficient 1. Rhea cites PMID:19286650 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27350
+      snippet: mycothiol + arsenate => arseno-mycothiol + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:27350 declares side 27349_R as its products
+        (rh:products); the master reaction RHEA:27349 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:19286650 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:27349
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102100"/>
+      notes: The rdfs:seeAlso triple on RHEA:27349 in rhea.rdf. GO term GO:0102100 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.8.4.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:27349
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.4.2"/>
+      notes: The rh:ec triple on RHEA:27349 in rhea.rdf. EC 2.8.4.2 is itself a record in this KB.
+  - subject: prot_P0DKS6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSC1_CORGK is an exemplar enzyme carrying EC 2.8.4.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.8.4.2
+      snippet: DR   P0DKS6, ARSC1_CORGK;  P0DKS5, ARSC1_CORGL;  P0DKS8, ARSC2_CORGK;
+      notes: ExPASy ENZYME entry EC 2.8.4.2 cross-references UniProtKB:P0DKS6 (ARSC1_CORGK) as a protein
+        with this activity.
+    - reference: RHEA:27349
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.4.2"/>
+      notes: Rhea assigns RHEA:27349 to EC 2.8.4.2, and EC 2.8.4.2 maps to exactly one Rhea master reaction
+        (RHEA:27349), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P0DKS5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSC1_CORGL is an exemplar enzyme carrying EC 2.8.4.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.8.4.2
+      snippet: DR   P0DKS6, ARSC1_CORGK;  P0DKS5, ARSC1_CORGL;  P0DKS8, ARSC2_CORGK;
+      notes: ExPASy ENZYME entry EC 2.8.4.2 cross-references UniProtKB:P0DKS5 (ARSC1_CORGL) as a protein
+        with this activity.
+    - reference: RHEA:27349
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.4.2"/>
+      notes: Rhea assigns RHEA:27349 to EC 2.8.4.2, and EC 2.8.4.2 maps to exactly one Rhea master reaction
+        (RHEA:27349), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P0DKS8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSC2_CORGK is an exemplar enzyme carrying EC 2.8.4.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.8.4.2
+      snippet: DR   P0DKS6, ARSC1_CORGK;  P0DKS5, ARSC1_CORGL;  P0DKS8, ARSC2_CORGK;
+      notes: ExPASy ENZYME entry EC 2.8.4.2 cross-references UniProtKB:P0DKS8 (ARSC2_CORGK) as a protein
+        with this activity.
+    - reference: RHEA:27349
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.4.2"/>
+      notes: Rhea assigns RHEA:27349 to EC 2.8.4.2, and EC 2.8.4.2 maps to exactly one Rhea master reaction
+        (RHEA:27349), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

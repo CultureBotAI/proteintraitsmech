@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -38,4 +38,131 @@ definitions:
       Catalyses: D-glucarate = 5-dehydro-4-deoxy-D-glucarate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucarate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.40. EC 4.2.1.40 maps to exactly
+    one curated Rhea reaction (RHEA:14573), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-glucarate =
+    5-dehydro-4-deoxy-D-glucarate + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glucarate dehydratase
+    grounding: EC:4.2.1.40
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-glucarate
+    node_type: CHEMICAL
+    grounding: CHEBI:30612
+    description: Formula C6H8O8.
+  - node_id: prd1
+    label: 5-dehydro-4-deoxy-D-glucarate
+    node_type: CHEMICAL
+    grounding: CHEBI:42819
+    description: Formula C6H6O7.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glucarate dehydratase activity
+    grounding: GO:0008872
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q6FFQ2
+    node_type: PROTEIN
+    label: GUDD_ACIAD
+    grounding: UniProtKB:Q6FFQ2
+  - node_id: prot_P42238
+    node_type: PROTEIN
+    label: GUDD_BACSU
+    grounding: UniProtKB:P42238
+  - node_id: prot_P0AES3
+    node_type: PROTEIN
+    label: GUDD_ECO57
+    grounding: UniProtKB:P0AES3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-glucarate is a substrate consumed by RHEA:14573 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14574
+      snippet: D-glucarate => 5-dehydro-4-deoxy-D-glucarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:14574 declares side 14573_L as its substrates
+        (rh:substrates); the master reaction RHEA:14573 is undirected. This participant is CHEBI:30612
+        with coefficient 1. Rhea cites PMID:18364348 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-dehydro-4-deoxy-D-glucarate is a product released by RHEA:14573 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14574
+      snippet: D-glucarate => 5-dehydro-4-deoxy-D-glucarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:14574 declares side 14573_R as its products
+        (rh:products); the master reaction RHEA:14573 is undirected. This participant is CHEBI:42819 with
+        coefficient 1. Rhea cites PMID:18364348 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:14573 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14574
+      snippet: D-glucarate => 5-dehydro-4-deoxy-D-glucarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:14574 declares side 14573_R as its products
+        (rh:products); the master reaction RHEA:14573 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:18364348 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.40
+      snippet: EC:4.2.1.40 > GO:glucarate dehydratase activity ; GO:0008872
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008872 is itself a record
+        in this KB.
+  - subject: prot_Q6FFQ2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GUDD_ACIAD is an exemplar enzyme with EC 4.2.1.40 activity.
+    evidence:
+    - reference: EC:4.2.1.40
+      snippet: DR   Q6FFQ2, GUDD_ACIAD ;  P42238, GUDD_BACSU ;  P0AES3, GUDD_ECO57 ;
+      notes: ExPASy ENZYME entry EC 4.2.1.40 cross-references UniProtKB:Q6FFQ2 (GUDD_ACIAD) as a protein
+        with this activity.
+  - subject: prot_P42238
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GUDD_BACSU is an exemplar enzyme with EC 4.2.1.40 activity.
+    evidence:
+    - reference: EC:4.2.1.40
+      snippet: DR   Q6FFQ2, GUDD_ACIAD ;  P42238, GUDD_BACSU ;  P0AES3, GUDD_ECO57 ;
+      notes: ExPASy ENZYME entry EC 4.2.1.40 cross-references UniProtKB:P42238 (GUDD_BACSU) as a protein
+        with this activity.
+  - subject: prot_P0AES3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GUDD_ECO57 is an exemplar enzyme with EC 4.2.1.40 activity.
+    evidence:
+    - reference: EC:4.2.1.40
+      snippet: DR   Q6FFQ2, GUDD_ACIAD ;  P42238, GUDD_BACSU ;  P0AES3, GUDD_ECO57 ;
+      notes: ExPASy ENZYME entry EC 4.2.1.40 cross-references UniProtKB:P0AES3 (GUDD_ECO57) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

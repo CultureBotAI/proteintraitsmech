@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,119 @@ definitions:
       Catalyses: (+)-copalyl diphosphate = neoabietadiene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of neoabietadiene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.132. EC 4.2.3.132 maps to
+    exactly one curated Rhea reaction (RHEA:33987), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(+)-copalyl
+    diphosphate = neoabietadiene + diphosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: neoabietadiene synthase
+    grounding: EC:4.2.3.132
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (+)-copalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58635
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: neoabietadiene
+    node_type: CHEMICAL
+    grounding: CHEBI:29651
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_H8ZM70
+    node_type: PROTEIN
+    label: LAS_ABIBA
+    grounding: UniProtKB:H8ZM70
+  - node_id: prot_M4HXU6
+    node_type: PROTEIN
+    label: TPSD1_PINBN
+    grounding: UniProtKB:M4HXU6
+  - node_id: prot_M4HY05
+    node_type: PROTEIN
+    label: TPSD1_PINCO
+    grounding: UniProtKB:M4HY05
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (+)-copalyl diphosphate is a substrate consumed by RHEA:33987 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33988
+      snippet: (+)-copalyl diphosphate => neoabietadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33988 declares side 33987_L as its substrates
+        (rh:substrates); the master reaction RHEA:33987 is undirected. This participant is CHEBI:58635
+        with coefficient 1. Rhea cites PMID:22337889, PMID:23370714, PMID:11112547, PMID:16497345 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: neoabietadiene is a product released by RHEA:33987 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33988
+      snippet: (+)-copalyl diphosphate => neoabietadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33988 declares side 33987_R as its products
+        (rh:products); the master reaction RHEA:33987 is undirected. This participant is CHEBI:29651 with
+        coefficient 1. Rhea cites PMID:22337889, PMID:23370714, PMID:11112547, PMID:16497345 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:33987 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33988
+      snippet: (+)-copalyl diphosphate => neoabietadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33988 declares side 33987_R as its products
+        (rh:products); the master reaction RHEA:33987 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:22337889, PMID:23370714, PMID:11112547, PMID:16497345 for this
+        reaction.
+  - subject: prot_H8ZM70
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LAS_ABIBA is an exemplar enzyme with EC 4.2.3.132 activity.
+    evidence:
+    - reference: EC:4.2.3.132
+      snippet: DR   H8ZM70, LAS_ABIBA  ;  M4HXU6, TPSD1_PINBN;  M4HY05, TPSD1_PINCO;
+      notes: ExPASy ENZYME entry EC 4.2.3.132 cross-references UniProtKB:H8ZM70 (LAS_ABIBA) as a protein
+        with this activity.
+  - subject: prot_M4HXU6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPSD1_PINBN is an exemplar enzyme with EC 4.2.3.132 activity.
+    evidence:
+    - reference: EC:4.2.3.132
+      snippet: DR   H8ZM70, LAS_ABIBA  ;  M4HXU6, TPSD1_PINBN;  M4HY05, TPSD1_PINCO;
+      notes: ExPASy ENZYME entry EC 4.2.3.132 cross-references UniProtKB:M4HXU6 (TPSD1_PINBN) as a protein
+        with this activity.
+  - subject: prot_M4HY05
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPSD1_PINCO is an exemplar enzyme with EC 4.2.3.132 activity.
+    evidence:
+    - reference: EC:4.2.3.132
+      snippet: DR   H8ZM70, LAS_ABIBA  ;  M4HXU6, TPSD1_PINBN;  M4HY05, TPSD1_PINCO;
+      notes: ExPASy ENZYME entry EC 4.2.3.132 cross-references UniProtKB:M4HY05 (TPSD1_PINCO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78517
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,141 @@ definitions:
       Catalyses the reaction: L-cysteinyl-tRNA(Cys) + acetyl-CoA = N-acetyl-L-cysteinyl-tRNA(Cys) + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-cysteinyl-tRNA(Cys) + acetyl-CoA = N-acetyl-L-cysteinyl-tRNA(Cys) + CoA
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:82067, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:82068 (rh:substrates → 82067_L, rh:products → 82067_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-cysteinyl-tRNA(Cys) + acetyl-CoA = N-acetyl-L-cysteinyl-tRNA(Cys) + CoA +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:82067
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-cysteinyl-tRNA(Cys) + acetyl-CoA = N-acetyl-L-cysteinyl-tRNA(Cys) + CoA + H(+)'
+  - node_id: sub1
+    label: L-cysteinyl-tRNA(Cys)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9679
+    description: Rhea compound GENERIC:9679.
+  - node_id: sub1_rp1
+    label: 3'-(L-cysteinyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9679 (L-cysteinyl-tRNA(Cys));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78517
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: N-acetyl-L-cysteinyl-tRNA(Cys)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19804
+    description: Rhea compound GENERIC:19804.
+  - node_id: prd1_rp1
+    label: 3'-(N-acetyl-L-cysteinyl)adenylyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19804 (N-acetyl-L-cysteinyl-tRNA(Cys));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:232069
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cysteinyl-tRNA(Cys) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82068
+      snippet: L-cysteinyl-tRNA(Cys) + acetyl-CoA => N-acetyl-L-cysteinyl-tRNA(Cys) + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82068 declares side 82067_L as its substrates
+        (rh:substrates); the master reaction RHEA:82067 is undirected. This participant is GENERIC:9679
+        with coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-cysteinyl)adenylyl group is the reactive part of L-cysteinyl-tRNA(Cys).
+    evidence:
+    - reference: RHEA:82067
+      snippet: 3'-(L-cysteinyl)adenylyl group
+      notes: Rhea compound GENERIC:9679 (L-cysteinyl-tRNA(Cys)) declares rh:reactivePart = 3'-(L-cysteinyl)adenylyl
+        group (CHEBI:78517), formula C13H18N6O7PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82068
+      snippet: L-cysteinyl-tRNA(Cys) + acetyl-CoA => N-acetyl-L-cysteinyl-tRNA(Cys) + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82068 declares side 82067_L as its substrates
+        (rh:substrates); the master reaction RHEA:82067 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-L-cysteinyl-tRNA(Cys) is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:82068
+      snippet: L-cysteinyl-tRNA(Cys) + acetyl-CoA => N-acetyl-L-cysteinyl-tRNA(Cys) + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82068 declares side 82067_R as its products
+        (rh:products); the master reaction RHEA:82067 is undirected. This participant is GENERIC:19804
+        with coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(N-acetyl-L-cysteinyl)adenylyl residue is the reactive part of N-acetyl-L-cysteinyl-tRNA(Cys).
+    evidence:
+    - reference: RHEA:82067
+      snippet: 3'-(N-acetyl-L-cysteinyl)adenylyl residue
+      notes: Rhea compound GENERIC:19804 (N-acetyl-L-cysteinyl-tRNA(Cys)) declares rh:reactivePart = 3'-(N-acetyl-L-cysteinyl)adenylyl
+        residue (CHEBI:232069), formula C15H19N6O8PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82068
+      snippet: L-cysteinyl-tRNA(Cys) + acetyl-CoA => N-acetyl-L-cysteinyl-tRNA(Cys) + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82068 declares side 82067_R as its products
+        (rh:products); the master reaction RHEA:82067 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82068
+      snippet: L-cysteinyl-tRNA(Cys) + acetyl-CoA => N-acetyl-L-cysteinyl-tRNA(Cys) + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82068 declares side 82067_R as its products
+        (rh:products); the master reaction RHEA:82067 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29777131 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

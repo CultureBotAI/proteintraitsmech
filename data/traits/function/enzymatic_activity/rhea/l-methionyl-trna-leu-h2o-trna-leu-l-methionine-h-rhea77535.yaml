@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78530
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,139 @@ definitions:
       Catalyses the reaction: L-methionyl-tRNA(Leu) + H2O = tRNA(Leu) + L-methionine + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-methionyl-tRNA(Leu) + H2O = tRNA(Leu) + L-methionine + H(+)
+  description: Substrate-to-product chemistry of RHEA:77535, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77536 (rh:substrates → 77535_L, rh:products → 77535_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-methionyl-tRNA(Leu) + H2O = tRNA(Leu) + L-methionine + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77535
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-methionyl-tRNA(Leu) + H2O = tRNA(Leu) + L-methionine + H(+)'
+  - node_id: sub1
+    label: L-methionyl-tRNA(Leu)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18931
+    description: Rhea compound GENERIC:18931.
+  - node_id: sub1_rp1
+    label: 3'-(L-methionyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18931 (L-methionyl-tRNA(Leu));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78530
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: tRNA(Leu)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9613
+    description: Rhea compound GENERIC:9613.
+  - node_id: prd1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9613 (tRNA(Leu));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd2
+    label: L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+    description: Formula C5H11NO2S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-methionyl-tRNA(Leu) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77536
+      snippet: L-methionyl-tRNA(Leu) + H2O => tRNA(Leu) + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77536 declares side 77535_L as its substrates
+        (rh:substrates); the master reaction RHEA:77535 is undirected. This participant is GENERIC:18931
+        with coefficient 1. Rhea cites PMID:25051973 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-methionyl)adenylyl group is the reactive part of L-methionyl-tRNA(Leu).
+    evidence:
+    - reference: RHEA:77535
+      snippet: 3'-(L-methionyl)adenylyl group
+      notes: Rhea compound GENERIC:18931 (L-methionyl-tRNA(Leu)) declares rh:reactivePart = 3'-(L-methionyl)adenylyl
+        group (CHEBI:78530), formula C15H22N6O7PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77536
+      snippet: L-methionyl-tRNA(Leu) + H2O => tRNA(Leu) + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77536 declares side 77535_L as its substrates
+        (rh:substrates); the master reaction RHEA:77535 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:25051973 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tRNA(Leu) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77536
+      snippet: L-methionyl-tRNA(Leu) + H2O => tRNA(Leu) + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77536 declares side 77535_R as its products
+        (rh:products); the master reaction RHEA:77535 is undirected. This participant is GENERIC:9613
+        with coefficient 1. Rhea cites PMID:25051973 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: AMP 3'-end residue is the reactive part of tRNA(Leu).
+    evidence:
+    - reference: RHEA:77535
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9613 (tRNA(Leu)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-methionine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77536
+      snippet: L-methionyl-tRNA(Leu) + H2O => tRNA(Leu) + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77536 declares side 77535_R as its products
+        (rh:products); the master reaction RHEA:77535 is undirected. This participant is CHEBI:57844 with
+        coefficient 1. Rhea cites PMID:25051973 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77536
+      snippet: L-methionyl-tRNA(Leu) + H2O => tRNA(Leu) + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77536 declares side 77535_R as its products
+        (rh:products); the master reaction RHEA:77535 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:25051973 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

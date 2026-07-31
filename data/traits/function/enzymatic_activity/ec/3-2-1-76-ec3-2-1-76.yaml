@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -36,4 +36,81 @@ definitions:
       Catalyses: Hydrolysis of unsulfated alpha-L-iduronosidic linkages in dermatan sulfate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-iduronidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.76. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of unsulfated alpha-L-iduronosidic linkages in dermatan sulfate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-iduronidase
+    grounding: EC:3.2.1.76
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-iduronidase activity
+    grounding: GO:0003940
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q01634
+    node_type: PROTEIN
+    label: IDUA_CANLF
+    grounding: UniProtKB:Q01634
+  - node_id: prot_Q9VKJ8
+    node_type: PROTEIN
+    label: IDUA_DROME
+    grounding: UniProtKB:Q9VKJ8
+  - node_id: prot_P35475
+    node_type: PROTEIN
+    label: IDUA_HUMAN
+    grounding: UniProtKB:P35475
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.76
+      snippet: EC:3.2.1.76 > GO:L-iduronidase activity ; GO:0003940
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003940 is itself a record
+        in this KB.
+  - subject: prot_Q01634
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IDUA_CANLF is an exemplar enzyme with EC 3.2.1.76 activity.
+    evidence:
+    - reference: EC:3.2.1.76
+      snippet: DR   Q01634, IDUA_CANLF ;  Q9VKJ8, IDUA_DROME ;  P35475, IDUA_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.2.1.76 cross-references UniProtKB:Q01634 (IDUA_CANLF) as a protein
+        with this activity.
+  - subject: prot_Q9VKJ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IDUA_DROME is an exemplar enzyme with EC 3.2.1.76 activity.
+    evidence:
+    - reference: EC:3.2.1.76
+      snippet: DR   Q01634, IDUA_CANLF ;  Q9VKJ8, IDUA_DROME ;  P35475, IDUA_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.2.1.76 cross-references UniProtKB:Q9VKJ8 (IDUA_DROME) as a protein
+        with this activity.
+  - subject: prot_P35475
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IDUA_HUMAN is an exemplar enzyme with EC 3.2.1.76 activity.
+    evidence:
+    - reference: EC:3.2.1.76
+      snippet: DR   Q01634, IDUA_CANLF ;  Q9VKJ8, IDUA_DROME ;  P35475, IDUA_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.2.1.76 cross-references UniProtKB:P35475 (IDUA_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

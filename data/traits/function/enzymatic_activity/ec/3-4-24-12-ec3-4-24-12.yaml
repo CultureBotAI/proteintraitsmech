@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -34,4 +34,52 @@ definitions:
       Catalyses: Hydrolysis of proteins of the fertilization envelope and dimethylcasein
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of envelysin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.12. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of proteins of the fertilization envelope and dimethylcasein".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: envelysin
+    grounding: EC:3.4.24.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P91953
+    node_type: PROTEIN
+    label: HE_HEMPU
+    grounding: UniProtKB:P91953
+  - node_id: prot_P22757
+    node_type: PROTEIN
+    label: HE_PARLI
+    grounding: UniProtKB:P22757
+  edges:
+  - subject: prot_P91953
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HE_HEMPU is an exemplar enzyme with EC 3.4.24.12 activity.
+    evidence:
+    - reference: EC:3.4.24.12
+      snippet: DR   P91953, HE_HEMPU   ;  P22757, HE_PARLI   ;
+      notes: ExPASy ENZYME entry EC 3.4.24.12 cross-references UniProtKB:P91953 (HE_HEMPU) as a protein
+        with this activity.
+  - subject: prot_P22757
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HE_PARLI is an exemplar enzyme with EC 3.4.24.12 activity.
+    evidence:
+    - reference: EC:3.4.24.12
+      snippet: DR   P91953, HE_HEMPU   ;  P22757, HE_PARLI   ;
+      notes: ExPASy ENZYME entry EC 3.4.24.12 cross-references UniProtKB:P22757 (HE_PARLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

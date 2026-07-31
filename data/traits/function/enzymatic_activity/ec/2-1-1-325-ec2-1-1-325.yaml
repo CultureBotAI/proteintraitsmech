@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 synonyms:
@@ -45,4 +45,254 @@ definitions:
       Catalyses: (1) (2E,6E)-farnesoate + S-adenosyl-L-methionine = methyl (2E,6E)- farnesoate + S-adenosyl-L-homocysteine. (2) juvenile hormone III carboxylate + S-adenosyl-L-methionine = juvenile hormone III + S-adenosyl-L-homocysteine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of juvenile hormone-III synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.325. Rhea assigns 2 curated
+    reactions to EC 2.1.1.325. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (2E,6E)-farnesoate + S-adenosyl-L-methionine = methyl
+    (2E,6E)- farnesoate + S-adenosyl-L-homocysteine. (2) juvenile hormone III carboxylate + S-adenosyl-L-methionine
+    = juvenile hormone III + S-adenosyl-L-homocysteine". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: juvenile hormone-III synthase
+    grounding: EC:2.1.1.325
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (2E,6E)-farnesoate + S-adenosyl-L-methionine = methyl (2E,6E)-farnesoate + S…
+    grounding: RHEA:43700
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (2E,6E)-farnesoate + S-adenosyl-L-methionine = methyl (2E,6E)-farnesoate
+      + S-adenosyl-L-homocysteine'
+  - node_id: rxn1_sub1
+    label: (2E,6E)-farnesoate
+    node_type: CHEMICAL
+    grounding: CHEBI:83276
+    description: Formula C15H23O2.
+  - node_id: rxn1_sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: rxn1_prd1
+    label: methyl (2E,6E)-farnesoate
+    node_type: CHEMICAL
+    grounding: CHEBI:80535
+    description: Formula C16H26O2.
+  - node_id: rxn1_prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of juvenile hormone III carboxylate + S-adenosyl-L-methionine = juvenile hormon…
+    grounding: RHEA:43720
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: juvenile hormone III carboxylate + S-adenosyl-L-methionine = juvenile hormone
+      III + S-adenosyl-L-homocysteine'
+  - node_id: rxn2_sub1
+    label: juvenile hormone III carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:83274
+    description: Formula C15H23O3.
+  - node_id: rxn2_sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: rxn2_prd1
+    label: juvenile hormone III
+    node_type: CHEMICAL
+    grounding: CHEBI:27493
+    description: Formula C16H26O3.
+  - node_id: rxn2_prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: farnesoic acid O-methyltransferase activity
+    grounding: GO:0019010
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9FYC4
+    node_type: PROTEIN
+    label: FAMT_ARATH
+    grounding: UniProtKB:Q9FYC4
+  - node_id: prot_Q767F1
+    node_type: PROTEIN
+    label: JHAMT_BOMMO
+    grounding: UniProtKB:Q767F1
+  - node_id: prot_Q9VJK8
+    node_type: PROTEIN
+    label: JHAMT_DROME
+    grounding: UniProtKB:Q9VJK8
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:43700 is one of the 2 curated reactions Rhea assigns to EC 2.1.1.325; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:43700
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.325"/>
+      notes: The rh:ec triple on RHEA:43700 in rhea.rdf assigns that reaction to EC 2.1.1.325.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (2E,6E)-farnesoate is a substrate consumed by RHEA:43700 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43701
+      snippet: (2E,6E)-farnesoate + S-adenosyl-L-methionine => methyl (2E,6E)-farnesoate + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:43701 declares side 43700_L as its substrates
+        (rh:substrates); the master reaction RHEA:43700 is undirected. This participant is CHEBI:83276
+        with coefficient 1. Rhea cites PMID:14530389, PMID:18549957 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:43700 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43701
+      snippet: (2E,6E)-farnesoate + S-adenosyl-L-methionine => methyl (2E,6E)-farnesoate + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:43701 declares side 43700_L as its substrates
+        (rh:substrates); the master reaction RHEA:43700 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:14530389, PMID:18549957 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: methyl (2E,6E)-farnesoate is a product released by RHEA:43700 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43701
+      snippet: (2E,6E)-farnesoate + S-adenosyl-L-methionine => methyl (2E,6E)-farnesoate + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:43701 declares side 43700_R as its products
+        (rh:products); the master reaction RHEA:43700 is undirected. This participant is CHEBI:80535 with
+        coefficient 1. Rhea cites PMID:14530389, PMID:18549957 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:43700 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43701
+      snippet: (2E,6E)-farnesoate + S-adenosyl-L-methionine => methyl (2E,6E)-farnesoate + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:43701 declares side 43700_R as its products
+        (rh:products); the master reaction RHEA:43700 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:14530389, PMID:18549957 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:43720 is one of the 2 curated reactions Rhea assigns to EC 2.1.1.325; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:43720
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.325"/>
+      notes: The rh:ec triple on RHEA:43720 in rhea.rdf assigns that reaction to EC 2.1.1.325.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: juvenile hormone III carboxylate is a substrate consumed by RHEA:43720 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:43721
+      snippet: juvenile hormone III carboxylate + S-adenosyl-L-methionine => juvenile hormone III + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:43721 declares side 43720_L as its substrates
+        (rh:substrates); the master reaction RHEA:43720 is undirected. This participant is CHEBI:83274
+        with coefficient 1. Rhea cites PMID:21195763, PMID:14530389, PMID:18549957 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:43720 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43721
+      snippet: juvenile hormone III carboxylate + S-adenosyl-L-methionine => juvenile hormone III + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:43721 declares side 43720_L as its substrates
+        (rh:substrates); the master reaction RHEA:43720 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:21195763, PMID:14530389, PMID:18549957 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: juvenile hormone III is a product released by RHEA:43720 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43721
+      snippet: juvenile hormone III carboxylate + S-adenosyl-L-methionine => juvenile hormone III + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:43721 declares side 43720_R as its products
+        (rh:products); the master reaction RHEA:43720 is undirected. This participant is CHEBI:27493 with
+        coefficient 1. Rhea cites PMID:21195763, PMID:14530389, PMID:18549957 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:43720 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43721
+      snippet: juvenile hormone III carboxylate + S-adenosyl-L-methionine => juvenile hormone III + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:43721 declares side 43720_R as its products
+        (rh:products); the master reaction RHEA:43720 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:21195763, PMID:14530389, PMID:18549957 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.1.1.325
+      snippet: EC:2.1.1.325 > GO:farnesoic acid O-methyltransferase activity ; GO:0019010
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0019010 is itself a record
+        in this KB.
+  - subject: prot_Q9FYC4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAMT_ARATH is an exemplar enzyme with EC 2.1.1.325 activity.
+    evidence:
+    - reference: EC:2.1.1.325
+      snippet: DR   Q9FYC4, FAMT_ARATH ;  Q767F1, JHAMT_BOMMO;  Q9VJK8, JHAMT_DROME;
+      notes: ExPASy ENZYME entry EC 2.1.1.325 cross-references UniProtKB:Q9FYC4 (FAMT_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q767F1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: JHAMT_BOMMO is an exemplar enzyme with EC 2.1.1.325 activity.
+    evidence:
+    - reference: EC:2.1.1.325
+      snippet: DR   Q9FYC4, FAMT_ARATH ;  Q767F1, JHAMT_BOMMO;  Q9VJK8, JHAMT_DROME;
+      notes: ExPASy ENZYME entry EC 2.1.1.325 cross-references UniProtKB:Q767F1 (JHAMT_BOMMO) as a protein
+        with this activity.
+  - subject: prot_Q9VJK8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: JHAMT_DROME is an exemplar enzyme with EC 2.1.1.325 activity.
+    evidence:
+    - reference: EC:2.1.1.325
+      snippet: DR   Q9FYC4, FAMT_ARATH ;  Q767F1, JHAMT_BOMMO;  Q9VJK8, JHAMT_DROME;
+      notes: ExPASy ENZYME entry EC 2.1.1.325 cross-references UniProtKB:Q9VJK8 (JHAMT_DROME) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

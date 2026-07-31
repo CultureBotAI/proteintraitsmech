@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,116 @@ definitions:
       Catalyses: ent-copalyl diphosphate = ent-beyerene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ent-beyerene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.229. EC 4.2.3.229 maps to
+    exactly one curated Rhea reaction (RHEA:79011), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "ent-copalyl
+    diphosphate = ent-beyerene + diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ent-beyerene synthase
+    grounding: EC:4.2.3.229
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: ent-copalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58553
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: ent-beyerene
+    node_type: CHEMICAL
+    grounding: CHEBI:229601
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A5A8G0
+    node_type: PROTEIN
+    label: CPSKS_PHYPA
+    grounding: UniProtKB:A5A8G0
+  - node_id: prot_Q0JA81
+    node_type: PROTEIN
+    label: KSL2_ORYSJ
+    grounding: UniProtKB:Q0JA81
+  - node_id: prot_B9SIM3
+    node_type: PROTEIN
+    label: KSL4_RICCO
+    grounding: UniProtKB:B9SIM3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ent-copalyl diphosphate is a substrate consumed by RHEA:79011 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79012
+      snippet: ent-copalyl diphosphate => ent-beyerene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:79012 declares side 79011_L as its substrates
+        (rh:substrates); the master reaction RHEA:79011 is undirected. This participant is CHEBI:58553
+        with coefficient 1. Rhea cites PMID:26248039, PMID:25824047, PMID:24810014 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ent-beyerene is a product released by RHEA:79011 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79012
+      snippet: ent-copalyl diphosphate => ent-beyerene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:79012 declares side 79011_R as its products
+        (rh:products); the master reaction RHEA:79011 is undirected. This participant is CHEBI:229601
+        with coefficient 1. Rhea cites PMID:26248039, PMID:25824047, PMID:24810014 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:79011 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79012
+      snippet: ent-copalyl diphosphate => ent-beyerene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:79012 declares side 79011_R as its products
+        (rh:products); the master reaction RHEA:79011 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:26248039, PMID:25824047, PMID:24810014 for this reaction.
+  - subject: prot_A5A8G0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPSKS_PHYPA is an exemplar enzyme with EC 4.2.3.229 activity.
+    evidence:
+    - reference: EC:4.2.3.229
+      snippet: DR   A5A8G0, CPSKS_PHYPA;  Q0JA81, KSL2_ORYSJ ;  B9SIM3, KSL4_RICCO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.229 cross-references UniProtKB:A5A8G0 (CPSKS_PHYPA) as a protein
+        with this activity.
+  - subject: prot_Q0JA81
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KSL2_ORYSJ is an exemplar enzyme with EC 4.2.3.229 activity.
+    evidence:
+    - reference: EC:4.2.3.229
+      snippet: DR   A5A8G0, CPSKS_PHYPA;  Q0JA81, KSL2_ORYSJ ;  B9SIM3, KSL4_RICCO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.229 cross-references UniProtKB:Q0JA81 (KSL2_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_B9SIM3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KSL4_RICCO is an exemplar enzyme with EC 4.2.3.229 activity.
+    evidence:
+    - reference: EC:4.2.3.229
+      snippet: DR   A5A8G0, CPSKS_PHYPA;  Q0JA81, KSL2_ORYSJ ;  B9SIM3, KSL4_RICCO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.229 cross-references UniProtKB:B9SIM3 (KSL4_RICCO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.2.27
     mapping_source: rhea2ec
@@ -28,4 +28,91 @@ definitions:
       Catalyses the reaction: sphing-4-enine 1-phosphate = (2E)-hexadecenal + phosphoethanolamine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sphing-4-enine 1-phosphate = (2E)-hexadecenal + phosphoethanolamine
+  description: Substrate-to-product chemistry of RHEA:33507, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33508 (rh:substrates → 33507_L, rh:products → 33507_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of sphing-4-enine 1-phosphate = (2E)-hexadecenal + phosphoethanolamine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33507
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: sphing-4-enine 1-phosphate = (2E)-hexadecenal + phosphoethanolamine'
+  - node_id: sub1
+    label: sphing-4-enine 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:60119
+    description: Formula C18H37NO5P.
+  - node_id: prd1
+    label: (2E)-hexadecenal
+    node_type: CHEMICAL
+    grounding: CHEBI:17585
+    description: Formula C16H30O.
+  - node_id: prd2
+    label: phosphoethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58190
+    description: Formula C2H7NO4P.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: sphinganine-1-phosphate aldolase
+    grounding: EC:4.1.2.27
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sphing-4-enine 1-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33508
+      snippet: sphing-4-enine 1-phosphate => (2E)-hexadecenal + phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:33508 declares side 33507_L as its substrates
+        (rh:substrates); the master reaction RHEA:33507 is undirected. This participant is CHEBI:60119
+        with coefficient 1. Rhea cites PMID:9334171, PMID:31916624 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E)-hexadecenal is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33508
+      snippet: sphing-4-enine 1-phosphate => (2E)-hexadecenal + phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:33508 declares side 33507_R as its products
+        (rh:products); the master reaction RHEA:33507 is undirected. This participant is CHEBI:17585 with
+        coefficient 1. Rhea cites PMID:9334171, PMID:31916624 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphoethanolamine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33508
+      snippet: sphing-4-enine 1-phosphate => (2E)-hexadecenal + phosphoethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:33508 declares side 33507_R as its products
+        (rh:products); the master reaction RHEA:33507 is undirected. This participant is CHEBI:58190 with
+        coefficient 1. Rhea cites PMID:9334171, PMID:31916624 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.2.27; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:33507
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.27"/>
+      notes: The rh:ec triple on RHEA:33507 in rhea.rdf. EC 4.1.2.27 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

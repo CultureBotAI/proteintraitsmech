@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -43,4 +43,149 @@ definitions:
       Catalyses: N-succinyl-L-glutamate + H2O = L-glutamate + succinate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of succinylglutamate desuccinylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.96. EC 3.5.1.96 maps to exactly
+    one curated Rhea reaction (RHEA:15169), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-succinyl-L-glutamate
+    + H2O = L-glutamate + succinate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: succinylglutamate desuccinylase
+    grounding: EC:3.5.1.96
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-succinyl-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58763
+    description: Formula C9H10NO7.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prd2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: succinylglutamate desuccinylase activity
+    grounding: GO:0009017
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q6FCP8
+    node_type: PROTEIN
+    label: ASTE_ACIAD
+    grounding: UniProtKB:Q6FCP8
+  - node_id: prot_B7GVV1
+    node_type: PROTEIN
+    label: ASTE_ACIB3
+    grounding: UniProtKB:B7GVV1
+  - node_id: prot_B7IA88
+    node_type: PROTEIN
+    label: ASTE_ACIB5
+    grounding: UniProtKB:B7IA88
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-succinyl-L-glutamate is a substrate consumed by RHEA:15169 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15170
+      snippet: N-succinyl-L-glutamate + H2O => L-glutamate + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:15170 declares side 15169_L as its substrates
+        (rh:substrates); the master reaction RHEA:15169 is undirected. This participant is CHEBI:58763
+        with coefficient 1. Rhea cites PMID:3534538, PMID:2865249, PMID:9696779, PMID:9393691 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:15169 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15170
+      snippet: N-succinyl-L-glutamate + H2O => L-glutamate + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:15170 declares side 15169_L as its substrates
+        (rh:substrates); the master reaction RHEA:15169 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:3534538, PMID:2865249, PMID:9696779, PMID:9393691 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-glutamate is a product released by RHEA:15169 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15170
+      snippet: N-succinyl-L-glutamate + H2O => L-glutamate + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:15170 declares side 15169_R as its products
+        (rh:products); the master reaction RHEA:15169 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:3534538, PMID:2865249, PMID:9696779, PMID:9393691 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinate is a product released by RHEA:15169 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15170
+      snippet: N-succinyl-L-glutamate + H2O => L-glutamate + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:15170 declares side 15169_R as its products
+        (rh:products); the master reaction RHEA:15169 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:3534538, PMID:2865249, PMID:9696779, PMID:9393691 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.96
+      snippet: EC:3.5.1.96 > GO:succinylglutamate desuccinylase activity ; GO:0009017
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0009017 is itself a record
+        in this KB.
+  - subject: prot_Q6FCP8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASTE_ACIAD is an exemplar enzyme with EC 3.5.1.96 activity.
+    evidence:
+    - reference: EC:3.5.1.96
+      snippet: DR   Q6FCP8, ASTE_ACIAD ;  B7GVV1, ASTE_ACIB3 ;  B7IA88, ASTE_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 3.5.1.96 cross-references UniProtKB:Q6FCP8 (ASTE_ACIAD) as a protein
+        with this activity.
+  - subject: prot_B7GVV1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASTE_ACIB3 is an exemplar enzyme with EC 3.5.1.96 activity.
+    evidence:
+    - reference: EC:3.5.1.96
+      snippet: DR   Q6FCP8, ASTE_ACIAD ;  B7GVV1, ASTE_ACIB3 ;  B7IA88, ASTE_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 3.5.1.96 cross-references UniProtKB:B7GVV1 (ASTE_ACIB3) as a protein
+        with this activity.
+  - subject: prot_B7IA88
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASTE_ACIB5 is an exemplar enzyme with EC 3.5.1.96 activity.
+    evidence:
+    - reference: EC:3.5.1.96
+      snippet: DR   Q6FCP8, ASTE_ACIAD ;  B7GVV1, ASTE_ACIB3 ;  B7IA88, ASTE_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 3.5.1.96 cross-references UniProtKB:B7IA88 (ASTE_ACIB5) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

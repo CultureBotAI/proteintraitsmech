@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.2.-
 mapped_xrefs:
@@ -28,4 +28,88 @@ definitions:
       Catalyses: gamma-L-glutamyl-butirosin B = butirosin B + 5-oxo-L-proline
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gamma-L-glutamyl-butirosin B gamma-glutamyl cyclotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.2.6. EC 4.3.2.6 maps to exactly
+    one curated Rhea reaction (RHEA:33995), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "gamma-L-glutamyl-butirosin
+    B = butirosin B + 5-oxo-L-proline". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-L-glutamyl-butirosin B gamma-glutamyl cyclotransferase
+    grounding: EC:4.3.2.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: gamma-L-glutamyl-butirosin B
+    node_type: CHEMICAL
+    grounding: CHEBI:65086
+    description: Formula C26H51N6O15.
+  - node_id: prd1
+    label: butirosin B
+    node_type: CHEMICAL
+    grounding: CHEBI:65085
+    description: Formula C21H45N5O12.
+  - node_id: prd2
+    label: 5-oxo-L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:58402
+    description: Formula C5H6NO3.
+  - node_id: prot_Q4H4F0
+    node_type: PROTEIN
+    label: BTRG_NIACI
+    grounding: UniProtKB:Q4H4F0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: gamma-L-glutamyl-butirosin B is a substrate consumed by RHEA:33995 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33996
+      snippet: gamma-L-glutamyl-butirosin B => butirosin B + 5-oxo-L-proline
+      notes: Rhea's left-to-right directional reaction RHEA:33996 declares side 33995_L as its substrates
+        (rh:substrates); the master reaction RHEA:33995 is undirected. This participant is CHEBI:65086
+        with coefficient 1. Rhea cites PMID:17462573 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: butirosin B is a product released by RHEA:33995 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33996
+      snippet: gamma-L-glutamyl-butirosin B => butirosin B + 5-oxo-L-proline
+      notes: Rhea's left-to-right directional reaction RHEA:33996 declares side 33995_R as its products
+        (rh:products); the master reaction RHEA:33995 is undirected. This participant is CHEBI:65085 with
+        coefficient 1. Rhea cites PMID:17462573 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 5-oxo-L-proline is a product released by RHEA:33995 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33996
+      snippet: gamma-L-glutamyl-butirosin B => butirosin B + 5-oxo-L-proline
+      notes: Rhea's left-to-right directional reaction RHEA:33996 declares side 33995_R as its products
+        (rh:products); the master reaction RHEA:33995 is undirected. This participant is CHEBI:58402 with
+        coefficient 1. Rhea cites PMID:17462573 for this reaction.
+  - subject: prot_Q4H4F0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BTRG_NIACI is an exemplar enzyme with EC 4.3.2.6 activity.
+    evidence:
+    - reference: EC:4.3.2.6
+      snippet: DR   Q4H4F0, BTRG_NIACI ;
+      notes: ExPASy ENZYME entry EC 4.3.2.6 cross-references UniProtKB:Q4H4F0 (BTRG_NIACI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

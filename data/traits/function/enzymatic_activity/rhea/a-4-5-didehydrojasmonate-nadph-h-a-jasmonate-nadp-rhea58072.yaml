@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:142502
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,107 @@ definitions:
       Catalyses the reaction: a 4,5-didehydrojasmonate + NADPH + H(+) = a jasmonate + NADP(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 4,5-didehydrojasmonate + NADPH + H(+) = a jasmonate + NADP(+)
+  description: Substrate-to-product chemistry of RHEA:58072, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58073 (rh:substrates → 58072_L, rh:products → 58072_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 4,5-didehydrojasmonate + NADPH + H(+) = a jasmonate + NADP(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58072
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 4,5-didehydrojasmonate + NADPH + H(+) = a jasmonate + NADP(+)'
+  - node_id: sub1
+    label: a 4,5-didehydrojasmonate
+    node_type: CHEMICAL
+    grounding: CHEBI:142502
+    description: Formula C12H15O3.
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: a jasmonate
+    node_type: CHEMICAL
+    grounding: CHEBI:136184
+    description: Formula C12H17O3.
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 4,5-didehydrojasmonate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58073
+      snippet: a 4,5-didehydrojasmonate + NADPH + H(+) => a jasmonate + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58073 declares side 58072_L as its substrates
+        (rh:substrates); the master reaction RHEA:58072 is undirected. This participant is CHEBI:142502
+        with coefficient 1. Rhea cites PMID:29291349 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58073
+      snippet: a 4,5-didehydrojasmonate + NADPH + H(+) => a jasmonate + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58073 declares side 58072_L as its substrates
+        (rh:substrates); the master reaction RHEA:58072 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:29291349 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58073
+      snippet: a 4,5-didehydrojasmonate + NADPH + H(+) => a jasmonate + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58073 declares side 58072_L as its substrates
+        (rh:substrates); the master reaction RHEA:58072 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:29291349 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a jasmonate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58073
+      snippet: a 4,5-didehydrojasmonate + NADPH + H(+) => a jasmonate + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58073 declares side 58072_R as its products
+        (rh:products); the master reaction RHEA:58072 is undirected. This participant is CHEBI:136184
+        with coefficient 1. Rhea cites PMID:29291349 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58073
+      snippet: a 4,5-didehydrojasmonate + NADPH + H(+) => a jasmonate + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58073 declares side 58072_R as its products
+        (rh:products); the master reaction RHEA:58072 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:29291349 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

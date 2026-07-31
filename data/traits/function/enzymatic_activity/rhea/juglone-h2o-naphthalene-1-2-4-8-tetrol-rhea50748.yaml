@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:15794
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,75 @@ definitions:
       Catalyses the reaction: juglone + H2O = naphthalene-1,2,4,8-tetrol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of juglone + H2O = naphthalene-1,2,4,8-tetrol
+  description: Substrate-to-product chemistry of RHEA:50748, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50749 (rh:substrates → 50748_L, rh:products → 50748_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of juglone + H2O = naphthalene-1,2,4,8-tetrol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50748
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: juglone + H2O = naphthalene-1,2,4,8-tetrol'
+  - node_id: sub1
+    label: juglone
+    node_type: CHEMICAL
+    grounding: CHEBI:15794
+    description: Formula C10H6O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: naphthalene-1,2,4,8-tetrol
+    node_type: CHEMICAL
+    grounding: CHEBI:133723
+    description: Formula C10H8O4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: juglone is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50749
+      snippet: juglone + H2O => naphthalene-1,2,4,8-tetrol
+      notes: Rhea's left-to-right directional reaction RHEA:50749 declares side 50748_L as its substrates
+        (rh:substrates); the master reaction RHEA:50748 is undirected. This participant is CHEBI:15794
+        with coefficient 1. Rhea cites PMID:4041238 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50749
+      snippet: juglone + H2O => naphthalene-1,2,4,8-tetrol
+      notes: Rhea's left-to-right directional reaction RHEA:50749 declares side 50748_L as its substrates
+        (rh:substrates); the master reaction RHEA:50748 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4041238 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: naphthalene-1,2,4,8-tetrol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50749
+      snippet: juglone + H2O => naphthalene-1,2,4,8-tetrol
+      notes: Rhea's left-to-right directional reaction RHEA:50749 declares side 50748_R as its products
+        (rh:products); the master reaction RHEA:50748 is undirected. This participant is CHEBI:133723
+        with coefficient 1. Rhea cites PMID:4041238 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

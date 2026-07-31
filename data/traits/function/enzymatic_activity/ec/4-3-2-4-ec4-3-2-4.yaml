@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.2.-
 mapped_xrefs:
@@ -23,4 +23,39 @@ definitions:
       Catalyses: DNA 4,6-diamino-5-formamidopyrimidine = DNA adenine + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of purine imidazole-ring cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.2.4. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "DNA 4,6-diamino-5-formamidopyrimidine
+    = DNA adenine + H2O".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: purine imidazole-ring cyclase
+    grounding: EC:4.3.2.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: purine imidazole-ring cyclase activity
+    grounding: GO:0050230
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.3.2.4
+      snippet: EC:4.3.2.4 > GO:purine imidazole-ring cyclase activity ; GO:0050230
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050230 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

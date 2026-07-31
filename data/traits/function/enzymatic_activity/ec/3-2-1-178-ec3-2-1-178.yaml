@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -38,4 +38,66 @@ definitions:
       Catalyses: Hydrolysis of beta-D-galactopyranose-(1->4)-alpha-L-galactopyranose-6- sulfate linkages in porphyran
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-porphyranase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.178. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of beta-D-galactopyranose-(1->4)-alpha-L-galactopyranose-6- sulfate linkages in porphyran".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-porphyranase
+    grounding: EC:3.2.1.178
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_B5CY96
+    node_type: PROTEIN
+    label: PORA_PHOPM
+    grounding: UniProtKB:B5CY96
+  - node_id: prot_D7GXG0
+    node_type: PROTEIN
+    label: PORA_ZOBGA
+    grounding: UniProtKB:D7GXG0
+  - node_id: prot_B5CY92
+    node_type: PROTEIN
+    label: PORB_PHOPM
+    grounding: UniProtKB:B5CY92
+  edges:
+  - subject: prot_B5CY96
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PORA_PHOPM is an exemplar enzyme with EC 3.2.1.178 activity.
+    evidence:
+    - reference: EC:3.2.1.178
+      snippet: DR   B5CY96, PORA_PHOPM ;  D7GXG0, PORA_ZOBGA ;  B5CY92, PORB_PHOPM ;
+      notes: ExPASy ENZYME entry EC 3.2.1.178 cross-references UniProtKB:B5CY96 (PORA_PHOPM) as a protein
+        with this activity.
+  - subject: prot_D7GXG0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PORA_ZOBGA is an exemplar enzyme with EC 3.2.1.178 activity.
+    evidence:
+    - reference: EC:3.2.1.178
+      snippet: DR   B5CY96, PORA_PHOPM ;  D7GXG0, PORA_ZOBGA ;  B5CY92, PORB_PHOPM ;
+      notes: ExPASy ENZYME entry EC 3.2.1.178 cross-references UniProtKB:D7GXG0 (PORA_ZOBGA) as a protein
+        with this activity.
+  - subject: prot_B5CY92
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PORB_PHOPM is an exemplar enzyme with EC 3.2.1.178 activity.
+    evidence:
+    - reference: EC:3.2.1.178
+      snippet: DR   B5CY96, PORA_PHOPM ;  D7GXG0, PORA_ZOBGA ;  B5CY92, PORB_PHOPM ;
+      notes: ExPASy ENZYME entry EC 3.2.1.178 cross-references UniProtKB:B5CY92 (PORB_PHOPM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

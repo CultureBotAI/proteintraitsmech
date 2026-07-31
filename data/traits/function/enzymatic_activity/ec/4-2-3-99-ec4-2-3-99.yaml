@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -28,4 +28,90 @@ definitions:
       Catalyses: 9alpha-copalyl diphosphate = (12E)-9alpha-labda-8(17),12,14-triene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of labdatriene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.99. EC 4.2.3.99 maps to exactly
+    one curated Rhea reaction (RHEA:32151), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "9alpha-copalyl
+    diphosphate = (12E)-9alpha-labda-8(17),12,14-triene + diphosphate". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: labdatriene synthase
+    grounding: EC:4.2.3.99
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 9alpha-copalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58622
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: (12E)-9alpha-labda-8(17),12,14-triene
+    node_type: CHEMICAL
+    grounding: CHEBI:63707
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q2QQJ5
+    node_type: PROTEIN
+    label: KSL10_ORYSJ
+    grounding: UniProtKB:Q2QQJ5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 9alpha-copalyl diphosphate is a substrate consumed by RHEA:32151 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32152
+      snippet: 9alpha-copalyl diphosphate => (12E)-9alpha-labda-8(17),12,14-triene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32152 declares side 32151_L as its substrates
+        (rh:substrates); the master reaction RHEA:32151 is undirected. This participant is CHEBI:58622
+        with coefficient 1. Rhea cites PMID:21323642 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (12E)-9alpha-labda-8(17),12,14-triene is a product released by RHEA:32151 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:32152
+      snippet: 9alpha-copalyl diphosphate => (12E)-9alpha-labda-8(17),12,14-triene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32152 declares side 32151_R as its products
+        (rh:products); the master reaction RHEA:32151 is undirected. This participant is CHEBI:63707 with
+        coefficient 1. Rhea cites PMID:21323642 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:32151 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32152
+      snippet: 9alpha-copalyl diphosphate => (12E)-9alpha-labda-8(17),12,14-triene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32152 declares side 32151_R as its products
+        (rh:products); the master reaction RHEA:32151 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21323642 for this reaction.
+  - subject: prot_Q2QQJ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KSL10_ORYSJ is an exemplar enzyme with EC 4.2.3.99 activity.
+    evidence:
+    - reference: EC:4.2.3.99
+      snippet: DR   Q2QQJ5, KSL10_ORYSJ;
+      notes: ExPASy ENZYME entry EC 4.2.3.99 cross-references UniProtKB:Q2QQJ5 (KSL10_ORYSJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

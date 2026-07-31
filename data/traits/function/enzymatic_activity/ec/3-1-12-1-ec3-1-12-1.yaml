@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.12.-
 synonyms:
@@ -36,4 +36,66 @@ definitions:
       Catalyses: exonucleolytic cleavage in the 5'- to 3'-direction to yield nucleoside 3'-phosphates
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5' to 3' exodeoxyribonuclease (nucleoside 3'-phosphate-forming)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.12.1. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "exonucleolytic
+    cleavage in the 5''- to 3''-direction to yield nucleoside 3''-phosphates".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 5' to 3' exodeoxyribonuclease (nucleoside 3'-phosphate-forming)
+    grounding: EC:3.1.12.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q9YCL9
+    node_type: PROTEIN
+    label: CAS4_AERPE
+    grounding: UniProtKB:Q9YCL9
+  - node_id: prot_A0Q5Y6
+    node_type: PROTEIN
+    label: CAS4_FRATN
+    grounding: UniProtKB:A0Q5Y6
+  - node_id: prot_D4GQN9
+    node_type: PROTEIN
+    label: CAS4_HALVD
+    grounding: UniProtKB:D4GQN9
+  edges:
+  - subject: prot_Q9YCL9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAS4_AERPE is an exemplar enzyme with EC 3.1.12.1 activity.
+    evidence:
+    - reference: EC:3.1.12.1
+      snippet: DR   Q9YCL9, CAS4_AERPE ;  A0Q5Y6, CAS4_FRATN ;  D4GQN9, CAS4_HALVD ;
+      notes: ExPASy ENZYME entry EC 3.1.12.1 cross-references UniProtKB:Q9YCL9 (CAS4_AERPE) as a protein
+        with this activity.
+  - subject: prot_A0Q5Y6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAS4_FRATN is an exemplar enzyme with EC 3.1.12.1 activity.
+    evidence:
+    - reference: EC:3.1.12.1
+      snippet: DR   Q9YCL9, CAS4_AERPE ;  A0Q5Y6, CAS4_FRATN ;  D4GQN9, CAS4_HALVD ;
+      notes: ExPASy ENZYME entry EC 3.1.12.1 cross-references UniProtKB:A0Q5Y6 (CAS4_FRATN) as a protein
+        with this activity.
+  - subject: prot_D4GQN9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAS4_HALVD is an exemplar enzyme with EC 3.1.12.1 activity.
+    evidence:
+    - reference: EC:3.1.12.1
+      snippet: DR   Q9YCL9, CAS4_AERPE ;  A0Q5Y6, CAS4_FRATN ;  D4GQN9, CAS4_HALVD ;
+      notes: ExPASy ENZYME entry EC 3.1.12.1 cross-references UniProtKB:D4GQN9 (CAS4_HALVD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

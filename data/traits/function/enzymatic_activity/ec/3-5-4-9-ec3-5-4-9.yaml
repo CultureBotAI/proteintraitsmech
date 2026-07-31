@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.4.-
 mapped_xrefs:
@@ -38,4 +38,148 @@ definitions:
       Catalyses: (6R)-5,10-methenyltetrahydrofolate + H2O = (6R)-10-formyltetrahydrofolate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of methenyltetrahydrofolate cyclohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.4.9. EC 3.5.4.9 maps to exactly
+    one curated Rhea reaction (RHEA:23700), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(6R)-5,10-methenyltetrahydrofolate
+    + H2O = (6R)-10-formyltetrahydrofolate + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: methenyltetrahydrofolate cyclohydrolase
+    grounding: EC:3.5.4.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (6R)-5,10-methenyltetrahydrofolate
+    node_type: CHEMICAL
+    grounding: CHEBI:57455
+    description: Formula C20H20N7O6.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (6R)-10-formyltetrahydrofolate
+    node_type: CHEMICAL
+    grounding: CHEBI:195366
+    description: Formula C20H21N7O7.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: methenyltetrahydrofolate cyclohydrolase activity
+    grounding: GO:0004477
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O96553
+    node_type: PROTEIN
+    label: C1TC_DROME
+    grounding: UniProtKB:O96553
+  - node_id: prot_P11586
+    node_type: PROTEIN
+    label: C1TC_HUMAN
+    grounding: UniProtKB:P11586
+  - node_id: prot_Q922D8
+    node_type: PROTEIN
+    label: C1TC_MOUSE
+    grounding: UniProtKB:Q922D8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (6R)-5,10-methenyltetrahydrofolate is a substrate consumed by RHEA:23700 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:23701
+      snippet: (6R)-5,10-methenyltetrahydrofolate + H2O => (6R)-10-formyltetrahydrofolate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23701 declares side 23700_L as its substrates
+        (rh:substrates); the master reaction RHEA:23700 is undirected. This participant is CHEBI:57455
+        with coefficient 1. Rhea cites PMID:13672973 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:23700 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23701
+      snippet: (6R)-5,10-methenyltetrahydrofolate + H2O => (6R)-10-formyltetrahydrofolate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23701 declares side 23700_L as its substrates
+        (rh:substrates); the master reaction RHEA:23700 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:13672973 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (6R)-10-formyltetrahydrofolate is a product released by RHEA:23700 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23701
+      snippet: (6R)-5,10-methenyltetrahydrofolate + H2O => (6R)-10-formyltetrahydrofolate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23701 declares side 23700_R as its products
+        (rh:products); the master reaction RHEA:23700 is undirected. This participant is CHEBI:195366
+        with coefficient 1. Rhea cites PMID:13672973 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:23700 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23701
+      snippet: (6R)-5,10-methenyltetrahydrofolate + H2O => (6R)-10-formyltetrahydrofolate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23701 declares side 23700_R as its products
+        (rh:products); the master reaction RHEA:23700 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:13672973 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.4.9
+      snippet: EC:3.5.4.9 > GO:methenyltetrahydrofolate cyclohydrolase activity ; GO:0004477
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004477 is itself a record
+        in this KB.
+  - subject: prot_O96553
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C1TC_DROME is an exemplar enzyme with EC 3.5.4.9 activity.
+    evidence:
+    - reference: EC:3.5.4.9
+      snippet: DR   O96553, C1TC_DROME ;  P11586, C1TC_HUMAN ;  Q922D8, C1TC_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.5.4.9 cross-references UniProtKB:O96553 (C1TC_DROME) as a protein
+        with this activity.
+  - subject: prot_P11586
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C1TC_HUMAN is an exemplar enzyme with EC 3.5.4.9 activity.
+    evidence:
+    - reference: EC:3.5.4.9
+      snippet: DR   O96553, C1TC_DROME ;  P11586, C1TC_HUMAN ;  Q922D8, C1TC_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.5.4.9 cross-references UniProtKB:P11586 (C1TC_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q922D8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C1TC_MOUSE is an exemplar enzyme with EC 3.5.4.9 activity.
+    evidence:
+    - reference: EC:3.5.4.9
+      snippet: DR   O96553, C1TC_DROME ;  P11586, C1TC_HUMAN ;  Q922D8, C1TC_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.5.4.9 cross-references UniProtKB:Q922D8 (C1TC_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

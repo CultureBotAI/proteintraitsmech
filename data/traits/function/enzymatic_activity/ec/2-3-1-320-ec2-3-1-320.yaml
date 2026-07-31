@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -37,4 +37,120 @@ definitions:
       Catalyses: baccatin III + (3R)-3-amino-3-phenylpropanoyl-CoA = 3'-N-debenzoyl- 2'-deoxytaxol + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of taxoid C-13 O-(3-amino-3-phenylpropanoyl)transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.320. EC 2.3.1.320 maps to
+    exactly one curated Rhea reaction (RHEA:42488), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "baccatin
+    III + (3R)-3-amino-3-phenylpropanoyl-CoA = 3''-N-debenzoyl- 2''-deoxytaxol + CoA". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: taxoid C-13 O-(3-amino-3-phenylpropanoyl)transferase
+    grounding: EC:2.3.1.320
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: baccatin III
+    node_type: CHEMICAL
+    grounding: CHEBI:32898
+    description: Formula C31H38O11.
+  - node_id: sub2
+    label: (3R)-3-amino-3-phenylpropanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:79188
+    description: Formula C30H42N8O17P3S.
+  - node_id: prd1
+    label: 3'-N-debenzoyl-2'-deoxytaxol
+    node_type: CHEMICAL
+    grounding: CHEBI:79186
+    description: Formula C40H48NO12.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_L7RYA3
+    node_type: PROTEIN
+    label: BAPT_TAXCH
+    grounding: UniProtKB:L7RYA3
+  - node_id: prot_Q8H2B5
+    node_type: PROTEIN
+    label: BAPT_TAXCU
+    grounding: UniProtKB:Q8H2B5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: baccatin III is a substrate consumed by RHEA:42488 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42489
+      snippet: baccatin III + (3R)-3-amino-3-phenylpropanoyl-CoA => 3'-N-debenzoyl-2'-deoxytaxol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:42489 declares side 42488_L as its substrates
+        (rh:substrates); the master reaction RHEA:42488 is undirected. This participant is CHEBI:32898
+        with coefficient 1. Rhea cites PMID:16137660, PMID:12089320, PMID:12232048 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (3R)-3-amino-3-phenylpropanoyl-CoA is a substrate consumed by RHEA:42488 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42489
+      snippet: baccatin III + (3R)-3-amino-3-phenylpropanoyl-CoA => 3'-N-debenzoyl-2'-deoxytaxol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:42489 declares side 42488_L as its substrates
+        (rh:substrates); the master reaction RHEA:42488 is undirected. This participant is CHEBI:79188
+        with coefficient 1. Rhea cites PMID:16137660, PMID:12089320, PMID:12232048 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3'-N-debenzoyl-2'-deoxytaxol is a product released by RHEA:42488 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42489
+      snippet: baccatin III + (3R)-3-amino-3-phenylpropanoyl-CoA => 3'-N-debenzoyl-2'-deoxytaxol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:42489 declares side 42488_R as its products
+        (rh:products); the master reaction RHEA:42488 is undirected. This participant is CHEBI:79186 with
+        coefficient 1. Rhea cites PMID:16137660, PMID:12089320, PMID:12232048 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:42488 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42489
+      snippet: baccatin III + (3R)-3-amino-3-phenylpropanoyl-CoA => 3'-N-debenzoyl-2'-deoxytaxol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:42489 declares side 42488_R as its products
+        (rh:products); the master reaction RHEA:42488 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:16137660, PMID:12089320, PMID:12232048 for this reaction.
+  - subject: prot_L7RYA3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BAPT_TAXCH is an exemplar enzyme with EC 2.3.1.320 activity.
+    evidence:
+    - reference: EC:2.3.1.320
+      snippet: DR   L7RYA3, BAPT_TAXCH ;  Q8H2B5, BAPT_TAXCU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.320 cross-references UniProtKB:L7RYA3 (BAPT_TAXCH) as a protein
+        with this activity.
+  - subject: prot_Q8H2B5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BAPT_TAXCU is an exemplar enzyme with EC 2.3.1.320 activity.
+    evidence:
+    - reference: EC:2.3.1.320
+      snippet: DR   L7RYA3, BAPT_TAXCH ;  Q8H2B5, BAPT_TAXCU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.320 cross-references UniProtKB:Q8H2B5 (BAPT_TAXCU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

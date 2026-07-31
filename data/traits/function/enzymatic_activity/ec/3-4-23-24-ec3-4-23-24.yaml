@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 synonyms:
@@ -36,4 +36,67 @@ definitions:
       Catalyses: Preferential cleavage at the carboxyl of hydrophobic amino acids, but fails to cleave 15-Leu-|-Tyr-16, 16-Tyr-|-Leu-17 and 24-Phe-|-Phe-25 of insulin B chain. Activates trypsinogen, and degrades keratin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of candidapepsin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.24. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Preferential
+    cleavage at the carboxyl of hydrophobic amino acids, but fails to cleave 15-Leu-|-Tyr-16, 16-Tyr-|-Leu-17
+    and 24-Phe-|-Phe-25 of insulin B chain. Activates trypsinogen, and degrades keratin".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: candidapepsin
+    grounding: EC:3.4.23.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q5A651
+    node_type: PROTEIN
+    label: CAR10_CANAL
+    grounding: UniProtKB:Q5A651
+  - node_id: prot_P0CY27
+    node_type: PROTEIN
+    label: CARP1_CANAL
+    grounding: UniProtKB:P0CY27
+  - node_id: prot_C4YSF6
+    node_type: PROTEIN
+    label: CARP1_CANAW
+    grounding: UniProtKB:C4YSF6
+  edges:
+  - subject: prot_Q5A651
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAR10_CANAL is an exemplar enzyme with EC 3.4.23.24 activity.
+    evidence:
+    - reference: EC:3.4.23.24
+      snippet: DR   Q5A651, CAR10_CANAL;  P0CY27, CARP1_CANAL;  C4YSF6, CARP1_CANAW;
+      notes: ExPASy ENZYME entry EC 3.4.23.24 cross-references UniProtKB:Q5A651 (CAR10_CANAL) as a protein
+        with this activity.
+  - subject: prot_P0CY27
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CARP1_CANAL is an exemplar enzyme with EC 3.4.23.24 activity.
+    evidence:
+    - reference: EC:3.4.23.24
+      snippet: DR   Q5A651, CAR10_CANAL;  P0CY27, CARP1_CANAL;  C4YSF6, CARP1_CANAW;
+      notes: ExPASy ENZYME entry EC 3.4.23.24 cross-references UniProtKB:P0CY27 (CARP1_CANAL) as a protein
+        with this activity.
+  - subject: prot_C4YSF6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CARP1_CANAW is an exemplar enzyme with EC 3.4.23.24 activity.
+    evidence:
+    - reference: EC:3.4.23.24
+      snippet: DR   Q5A651, CAR10_CANAL;  P0CY27, CARP1_CANAL;  C4YSF6, CARP1_CANAW;
+      notes: ExPASy ENZYME entry EC 3.4.23.24 cross-references UniProtKB:C4YSF6 (CARP1_CANAW) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

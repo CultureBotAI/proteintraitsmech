@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -41,4 +41,191 @@ definitions:
       Catalyses: N(pros)-phospho-L-histidyl-[protein] + N-acetyl-D-glucosamine(out) = N-acetyl-D-glucosamine 6-phosphate(in) + L-histidyl-[protein]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-N(pi)-phosphohistidine--N-acetyl-D-glucosamine
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.193. EC 2.7.1.193 maps to
+    exactly one curated Rhea reaction (RHEA:49240), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N(pros)-phospho-L-histidyl-[protein]
+    + N-acetyl-D-glucosamine(out) = N-acetyl-D-glucosamine 6-phosphate(in) + L-histidyl-[protein]". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-N(pi)-phosphohistidine--N-acetyl-D-glucosamine
+    grounding: EC:2.7.1.193
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N(pros)-phospho-L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9746
+    description: Rhea compound GENERIC:9746.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: N(pros)-phospho-L-histidine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64837
+  - node_id: sub2
+    label: N-acetyl-D-glucosamine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+    description: Formula C8H15NO6.
+  - node_id: prd1
+    label: N-acetyl-D-glucosamine 6-phosphate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57513
+    description: Formula C8H14NO9P.
+  - node_id: prd2
+    label: L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9745
+    description: Rhea compound GENERIC:9745.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: L-histidine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9745 (L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29979
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-N(PI)-phosphohistidine-N-acetylglucosamine phosphotransferase system transporter activity
+    grounding: GO:0022880
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P09323
+    node_type: PROTEIN
+    label: PTW3C_ECOLI
+    grounding: UniProtKB:P09323
+  - node_id: prot_P45604
+    node_type: PROTEIN
+    label: PTW3C_KLEPN
+    grounding: UniProtKB:P45604
+  - node_id: prot_Q9S2H6
+    node_type: PROTEIN
+    label: PTWB_STRCO
+    grounding: UniProtKB:Q9S2H6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(pros)-phospho-L-histidyl-[protein] is a substrate consumed by RHEA:49240 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49241
+      snippet: N(pros)-phospho-L-histidyl-[protein] + N-acetyl-D-glucosamine(out) => N-acetyl-D-glucosamine
+        6-phosphate(in) + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:49241 declares side 49240_L as its substrates
+        (rh:substrates); the master reaction RHEA:49240 is undirected. This participant is GENERIC:9746
+        with coefficient 1. Rhea cites PMID:3056518, PMID:4919472, PMID:19617367, PMID:284790 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(pros)-phospho-L-histidine residue is the reactive part of N(pros)-phospho-L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:49240
+      snippet: N(pros)-phospho-L-histidine residue
+      notes: Rhea compound GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]) declares rh:reactivePart
+        = N(pros)-phospho-L-histidine residue (CHEBI:64837).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: N-acetyl-D-glucosamine is a substrate consumed by RHEA:49240 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49241
+      snippet: N(pros)-phospho-L-histidyl-[protein] + N-acetyl-D-glucosamine(out) => N-acetyl-D-glucosamine
+        6-phosphate(in) + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:49241 declares side 49240_L as its substrates
+        (rh:substrates); the master reaction RHEA:49240 is undirected. This participant is CHEBI:506227
+        with coefficient 1. Rhea cites PMID:3056518, PMID:4919472, PMID:19617367, PMID:284790 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-D-glucosamine 6-phosphate is a product released by RHEA:49240 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49241
+      snippet: N(pros)-phospho-L-histidyl-[protein] + N-acetyl-D-glucosamine(out) => N-acetyl-D-glucosamine
+        6-phosphate(in) + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:49241 declares side 49240_R as its products
+        (rh:products); the master reaction RHEA:49240 is undirected. This participant is CHEBI:57513 with
+        coefficient 1. Rhea cites PMID:3056518, PMID:4919472, PMID:19617367, PMID:284790 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-histidyl-[protein] is a product released by RHEA:49240 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49241
+      snippet: N(pros)-phospho-L-histidyl-[protein] + N-acetyl-D-glucosamine(out) => N-acetyl-D-glucosamine
+        6-phosphate(in) + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:49241 declares side 49240_R as its products
+        (rh:products); the master reaction RHEA:49240 is undirected. This participant is GENERIC:9745
+        with coefficient 1. Rhea cites PMID:3056518, PMID:4919472, PMID:19617367, PMID:284790 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-histidine residue is the reactive part of L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:49240
+      snippet: L-histidine residue
+      notes: Rhea compound GENERIC:9745 (L-histidyl-[protein]) declares rh:reactivePart = L-histidine
+        residue (CHEBI:29979).
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.1.193
+      snippet: EC:2.7.1.193 > GO:protein-N(PI)-phosphohistidine-N-acetylglucosamine phosphotransferase
+        system transporter activity ; GO:0022880
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0022880 is itself a record
+        in this KB.
+  - subject: prot_P09323
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTW3C_ECOLI is an exemplar enzyme with EC 2.7.1.193 activity.
+    evidence:
+    - reference: EC:2.7.1.193
+      snippet: DR   P09323, PTW3C_ECOLI;  P45604, PTW3C_KLEPN;  Q9S2H6, PTWB_STRCO ;
+      notes: ExPASy ENZYME entry EC 2.7.1.193 cross-references UniProtKB:P09323 (PTW3C_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P45604
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTW3C_KLEPN is an exemplar enzyme with EC 2.7.1.193 activity.
+    evidence:
+    - reference: EC:2.7.1.193
+      snippet: DR   P09323, PTW3C_ECOLI;  P45604, PTW3C_KLEPN;  Q9S2H6, PTWB_STRCO ;
+      notes: ExPASy ENZYME entry EC 2.7.1.193 cross-references UniProtKB:P45604 (PTW3C_KLEPN) as a protein
+        with this activity.
+  - subject: prot_Q9S2H6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTWB_STRCO is an exemplar enzyme with EC 2.7.1.193 activity.
+    evidence:
+    - reference: EC:2.7.1.193
+      snippet: DR   P09323, PTW3C_ECOLI;  P45604, PTW3C_KLEPN;  Q9S2H6, PTWB_STRCO ;
+      notes: ExPASy ENZYME entry EC 2.7.1.193 cross-references UniProtKB:Q9S2H6 (PTWB_STRCO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

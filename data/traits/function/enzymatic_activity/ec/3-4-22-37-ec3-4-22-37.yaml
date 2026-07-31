@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -40,4 +40,66 @@ definitions:
       Catalyses: Hydrolysis of proteins and small molecule substrates, with a preference for Arg in P1
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gingipain R
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.37. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of proteins and small molecule substrates, with a preference for Arg in P1".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gingipain R
+    grounding: EC:3.4.22.37
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_B2RM93
+    node_type: PROTEIN
+    label: CPG1_PORG3
+    grounding: UniProtKB:B2RM93
+  - node_id: prot_P28784
+    node_type: PROTEIN
+    label: CPG1_PORGN
+    grounding: UniProtKB:P28784
+  - node_id: prot_B2RKU0
+    node_type: PROTEIN
+    label: CPG2_PORG3
+    grounding: UniProtKB:B2RKU0
+  edges:
+  - subject: prot_B2RM93
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPG1_PORG3 is an exemplar enzyme with EC 3.4.22.37 activity.
+    evidence:
+    - reference: EC:3.4.22.37
+      snippet: DR   B2RM93, CPG1_PORG3 ;  P28784, CPG1_PORGN ;  B2RKU0, CPG2_PORG3 ;
+      notes: ExPASy ENZYME entry EC 3.4.22.37 cross-references UniProtKB:B2RM93 (CPG1_PORG3) as a protein
+        with this activity.
+  - subject: prot_P28784
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPG1_PORGN is an exemplar enzyme with EC 3.4.22.37 activity.
+    evidence:
+    - reference: EC:3.4.22.37
+      snippet: DR   B2RM93, CPG1_PORG3 ;  P28784, CPG1_PORGN ;  B2RKU0, CPG2_PORG3 ;
+      notes: ExPASy ENZYME entry EC 3.4.22.37 cross-references UniProtKB:P28784 (CPG1_PORGN) as a protein
+        with this activity.
+  - subject: prot_B2RKU0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPG2_PORG3 is an exemplar enzyme with EC 3.4.22.37 activity.
+    evidence:
+    - reference: EC:3.4.22.37
+      snippet: DR   B2RM93, CPG1_PORG3 ;  P28784, CPG1_PORGN ;  B2RKU0, CPG2_PORG3 ;
+      notes: ExPASy ENZYME entry EC 3.4.22.37 cross-references UniProtKB:B2RKU0 (CPG2_PORG3) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

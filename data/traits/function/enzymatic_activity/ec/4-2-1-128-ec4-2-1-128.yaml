@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -30,4 +30,104 @@ definitions:
       Catalyses: lupan-3beta,20-diol = (S)-2,3-epoxysqualene + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lupan-3beta,20-diol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.128. EC 4.2.1.128 maps to
+    exactly one curated Rhea reaction (RHEA:31351), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "lupan-3beta,20-diol
+    = (S)-2,3-epoxysqualene + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lupan-3beta,20-diol synthase
+    grounding: EC:4.2.1.128
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: lupan-3beta,20-diol
+    node_type: CHEMICAL
+    grounding: CHEBI:62735
+    description: Formula C30H52O2.
+  - node_id: prd1
+    label: (S)-2,3-epoxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:15441
+    description: Formula C30H50O.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: lupan-3beta,20-diol synthase activity
+    grounding: GO:0102245
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9C5M3
+    node_type: PROTEIN
+    label: LUP1_ARATH
+    grounding: UniProtKB:Q9C5M3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: lupan-3beta,20-diol is a substrate consumed by RHEA:31351 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31352
+      snippet: lupan-3beta,20-diol => (S)-2,3-epoxysqualene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31352 declares side 31351_L as its substrates
+        (rh:substrates); the master reaction RHEA:31351 is undirected. This participant is CHEBI:62735
+        with coefficient 1. Rhea cites PMID:10930257, PMID:17107079 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-2,3-epoxysqualene is a product released by RHEA:31351 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31352
+      snippet: lupan-3beta,20-diol => (S)-2,3-epoxysqualene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31352 declares side 31351_R as its products
+        (rh:products); the master reaction RHEA:31351 is undirected. This participant is CHEBI:15441 with
+        coefficient 1. Rhea cites PMID:10930257, PMID:17107079 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:31351 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31352
+      snippet: lupan-3beta,20-diol => (S)-2,3-epoxysqualene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31352 declares side 31351_R as its products
+        (rh:products); the master reaction RHEA:31351 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:10930257, PMID:17107079 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.128
+      snippet: EC:4.2.1.128 > GO:lupan-3beta,20-diol synthase activity ; GO:0102245
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102245 is itself a record
+        in this KB.
+  - subject: prot_Q9C5M3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LUP1_ARATH is an exemplar enzyme with EC 4.2.1.128 activity.
+    evidence:
+    - reference: EC:4.2.1.128
+      snippet: DR   Q9C5M3, LUP1_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.128 cross-references UniProtKB:Q9C5M3 (LUP1_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

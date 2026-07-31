@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58570
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,172 @@ definitions:
       Catalyses the reaction: D-tyrosine + tRNA(Tyr) + ATP = D-tyrosyl-tRNA(Tyr) + AMP + diphosphate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-tyrosine + tRNA(Tyr) + ATP = D-tyrosyl-tRNA(Tyr) + AMP + diphosphate
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:57448, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57449 (rh:substrates → 57448_L, rh:products → 57448_R), and Rhea
+    curates the reverse direction too. 3 substrates, 4 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-tyrosine + tRNA(Tyr) + ATP = D-tyrosyl-tRNA(Tyr) + AMP + diphosphate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57448
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-tyrosine + tRNA(Tyr) + ATP = D-tyrosyl-tRNA(Tyr) + AMP + diphosphate + H(+)'
+  - node_id: sub1
+    label: D-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58570
+    description: Formula C9H11NO3.
+  - node_id: sub2
+    label: tRNA(Tyr)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9707
+    description: Rhea compound GENERIC:9707.
+  - node_id: sub2_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9707 (tRNA(Tyr));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: D-tyrosyl-tRNA(Tyr)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9872
+    description: Rhea compound GENERIC:9872.
+  - node_id: prd1_rp1
+    label: 3-O-adenylyl-D-tyrosine group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9872 (D-tyrosyl-tRNA(Tyr));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78723
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-tyrosine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57449
+      snippet: D-tyrosine + tRNA(Tyr) + ATP => D-tyrosyl-tRNA(Tyr) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57449 declares side 57448_L as its substrates
+        (rh:substrates); the master reaction RHEA:57448 is undirected. This participant is CHEBI:58570
+        with coefficient 1. Rhea cites PMID:4292198 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: tRNA(Tyr) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57449
+      snippet: D-tyrosine + tRNA(Tyr) + ATP => D-tyrosyl-tRNA(Tyr) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57449 declares side 57448_L as its substrates
+        (rh:substrates); the master reaction RHEA:57448 is undirected. This participant is GENERIC:9707
+        with coefficient 1. Rhea cites PMID:4292198 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: AMP 3'-end residue is the reactive part of tRNA(Tyr).
+    evidence:
+    - reference: RHEA:57448
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9707 (tRNA(Tyr)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57449
+      snippet: D-tyrosine + tRNA(Tyr) + ATP => D-tyrosyl-tRNA(Tyr) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57449 declares side 57448_L as its substrates
+        (rh:substrates); the master reaction RHEA:57448 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:4292198 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-tyrosyl-tRNA(Tyr) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57449
+      snippet: D-tyrosine + tRNA(Tyr) + ATP => D-tyrosyl-tRNA(Tyr) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57449 declares side 57448_R as its products
+        (rh:products); the master reaction RHEA:57448 is undirected. This participant is GENERIC:9872
+        with coefficient 1. Rhea cites PMID:4292198 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3-O-adenylyl-D-tyrosine group is the reactive part of D-tyrosyl-tRNA(Tyr).
+    evidence:
+    - reference: RHEA:57448
+      snippet: 3-O-adenylyl-D-tyrosine group
+      notes: Rhea compound GENERIC:9872 (D-tyrosyl-tRNA(Tyr)) declares rh:reactivePart = 3-O-adenylyl-D-tyrosine
+        group (CHEBI:78723), formula C19H21N6O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57449
+      snippet: D-tyrosine + tRNA(Tyr) + ATP => D-tyrosyl-tRNA(Tyr) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57449 declares side 57448_R as its products
+        (rh:products); the master reaction RHEA:57448 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:4292198 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57449
+      snippet: D-tyrosine + tRNA(Tyr) + ATP => D-tyrosyl-tRNA(Tyr) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57449 declares side 57448_R as its products
+        (rh:products); the master reaction RHEA:57448 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:4292198 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57449
+      snippet: D-tyrosine + tRNA(Tyr) + ATP => D-tyrosyl-tRNA(Tyr) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57449 declares side 57448_R as its products
+        (rh:products); the master reaction RHEA:57448 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4292198 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

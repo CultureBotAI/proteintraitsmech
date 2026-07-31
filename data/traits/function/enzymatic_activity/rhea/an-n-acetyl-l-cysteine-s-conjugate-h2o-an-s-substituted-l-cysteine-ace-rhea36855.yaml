@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.14
     mapping_source: rhea2ec
@@ -48,4 +48,141 @@ definitions:
       Catalyses the reaction: an N-acetyl-L-cysteine-S-conjugate + H2O = an S-substituted L-cysteine + acetate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an N-acetyl-L-cysteine-S-conjugate + H2O = an S-substituted L-cysteine
+    + acetate
+  description: Substrate-to-product chemistry of RHEA:36855, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:36856 (rh:substrates → 36855_L, rh:products → 36855_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an N-acetyl-L-cysteine-S-conjugate + H2O = an S-substituted L-cysteine + ace…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:36855
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an N-acetyl-L-cysteine-S-conjugate + H2O = an S-substituted L-cysteine + acetate'
+  - node_id: sub1
+    label: an N-acetyl-L-cysteine-S-conjugate
+    node_type: CHEMICAL
+    grounding: CHEBI:58718
+    description: Formula C5H7NO3SR.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: an S-substituted L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58717
+    description: Formula C3H6NO2SR.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aminoacylase activity
+    grounding: GO:0004046
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: N-acyl-aromatic-L-amino acid amidohydrolase
+    grounding: EC:3.5.1.114
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: ec2
+    node_type: MOLECULAR_FUNCTION
+    label: N-acyl-aliphatic-L-amino acid amidohydrolase
+    grounding: EC:3.5.1.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-acetyl-L-cysteine-S-conjugate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36856
+      snippet: an N-acetyl-L-cysteine-S-conjugate + H2O => an S-substituted L-cysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:36856 declares side 36855_L as its substrates
+        (rh:substrates); the master reaction RHEA:36855 is undirected. This participant is CHEBI:58718
+        with coefficient 1. Rhea cites PMID:19362172, PMID:3355856, PMID:2318199, PMID:12933810 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36856
+      snippet: an N-acetyl-L-cysteine-S-conjugate + H2O => an S-substituted L-cysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:36856 declares side 36855_L as its substrates
+        (rh:substrates); the master reaction RHEA:36855 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19362172, PMID:3355856, PMID:2318199, PMID:12933810 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an S-substituted L-cysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36856
+      snippet: an N-acetyl-L-cysteine-S-conjugate + H2O => an S-substituted L-cysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:36856 declares side 36855_R as its products
+        (rh:products); the master reaction RHEA:36855 is undirected. This participant is CHEBI:58717 with
+        coefficient 1. Rhea cites PMID:19362172, PMID:3355856, PMID:2318199, PMID:12933810 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36856
+      snippet: an N-acetyl-L-cysteine-S-conjugate + H2O => an S-substituted L-cysteine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:36856 declares side 36855_R as its products
+        (rh:products); the master reaction RHEA:36855 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:19362172, PMID:3355856, PMID:2318199, PMID:12933810 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:36855
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004046"/>
+      notes: The rdfs:seeAlso triple on RHEA:36855 in rhea.rdf. GO term GO:0004046 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.114; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:36855
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.114"/>
+      notes: The rh:ec triple on RHEA:36855 in rhea.rdf. EC 3.5.1.114 is itself a record in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec2
+    description: Rhea assigns this reaction to EC 3.5.1.14; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:36855
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.14"/>
+      notes: The rh:ec triple on RHEA:36855 in rhea.rdf. EC 3.5.1.14 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

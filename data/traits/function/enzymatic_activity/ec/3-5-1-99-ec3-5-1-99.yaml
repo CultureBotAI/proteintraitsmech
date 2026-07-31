@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -45,4 +45,252 @@ definitions:
       Catalyses: (1) N-(5Z,8Z,11Z,14Z-eicosatetraenoyl)-ethanolamine + H2O = ethanolamine + (5Z,8Z,11Z,14Z)-eicosatetraenoate. (2) (9Z)-octadecenamide + H2O = (9Z)-octadecenoate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fatty acid amide hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.99. Rhea assigns 2 curated
+    reactions to EC 3.5.1.99. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) N-(5Z,8Z,11Z,14Z-eicosatetraenoyl)-ethanolamine + H2O
+    = ethanolamine + (5Z,8Z,11Z,14Z)-eicosatetraenoate. (2) (9Z)-octadecenamide + H2O = (9Z)-octadecenoate
+    + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fatty acid amide hydrolase
+    grounding: EC:3.5.1.99
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of N-(5Z,8Z,11Z,14Z-eicosatetraenoyl)-ethanolamine + H2O = ethanolamine + (5Z,8…
+    grounding: RHEA:26136
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: N-(5Z,8Z,11Z,14Z-eicosatetraenoyl)-ethanolamine + H2O = ethanolamine +
+      (5Z,8Z,11Z,14Z)-eicosatetraenoate'
+  - node_id: rxn1_sub1
+    label: N-(5Z,8Z,11Z,14Z-eicosatetraenoyl)-ethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:2700
+    description: Formula C22H37NO2.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: ethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57603
+    description: Formula C2H8NO.
+  - node_id: rxn1_prd2
+    label: (5Z,8Z,11Z,14Z)-eicosatetraenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:32395
+    description: Formula C20H31O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (9Z)-octadecenamide + H2O = (9Z)-octadecenoate + NH4(+)
+    grounding: RHEA:26506
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (9Z)-octadecenamide + H2O = (9Z)-octadecenoate + NH4(+)'
+  - node_id: rxn2_sub1
+    label: (9Z)-octadecenamide
+    node_type: CHEMICAL
+    grounding: CHEBI:116314
+    description: Formula C18H35NO.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: (9Z)-octadecenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30823
+    description: Formula C18H33O2.
+  - node_id: rxn2_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: fatty acid amide hydrolase activity
+    grounding: GO:0017064
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q17449
+    node_type: PROTEIN
+    label: FAAH1_CAEEL
+    grounding: UniProtKB:Q17449
+  - node_id: prot_O00519
+    node_type: PROTEIN
+    label: FAAH1_HUMAN
+    grounding: UniProtKB:O00519
+  - node_id: prot_O08914
+    node_type: PROTEIN
+    label: FAAH1_MOUSE
+    grounding: UniProtKB:O08914
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:26136 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.99; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:26136
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.99"/>
+      notes: The rh:ec triple on RHEA:26136 in rhea.rdf assigns that reaction to EC 3.5.1.99.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: N-(5Z,8Z,11Z,14Z-eicosatetraenoyl)-ethanolamine is a substrate consumed by RHEA:26136
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26137
+      snippet: N-(5Z,8Z,11Z,14Z-eicosatetraenoyl)-ethanolamine + H2O => ethanolamine + (5Z,8Z,11Z,14Z)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:26137 declares side 26136_L as its substrates
+        (rh:substrates); the master reaction RHEA:26136 is undirected. This participant is CHEBI:2700
+        with coefficient 1. Rhea cites PMID:8900284, PMID:9122178, PMID:17015445, PMID:12459591 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:26136 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26137
+      snippet: N-(5Z,8Z,11Z,14Z-eicosatetraenoyl)-ethanolamine + H2O => ethanolamine + (5Z,8Z,11Z,14Z)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:26137 declares side 26136_L as its substrates
+        (rh:substrates); the master reaction RHEA:26136 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:8900284, PMID:9122178, PMID:17015445, PMID:12459591 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: ethanolamine is a product released by RHEA:26136 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26137
+      snippet: N-(5Z,8Z,11Z,14Z-eicosatetraenoyl)-ethanolamine + H2O => ethanolamine + (5Z,8Z,11Z,14Z)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:26137 declares side 26136_R as its products
+        (rh:products); the master reaction RHEA:26136 is undirected. This participant is CHEBI:57603 with
+        coefficient 1. Rhea cites PMID:8900284, PMID:9122178, PMID:17015445, PMID:12459591 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: (5Z,8Z,11Z,14Z)-eicosatetraenoate is a product released by RHEA:26136 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:26137
+      snippet: N-(5Z,8Z,11Z,14Z-eicosatetraenoyl)-ethanolamine + H2O => ethanolamine + (5Z,8Z,11Z,14Z)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:26137 declares side 26136_R as its products
+        (rh:products); the master reaction RHEA:26136 is undirected. This participant is CHEBI:32395 with
+        coefficient 1. Rhea cites PMID:8900284, PMID:9122178, PMID:17015445, PMID:12459591 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:26506 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.99; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:26506
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.99"/>
+      notes: The rh:ec triple on RHEA:26506 in rhea.rdf assigns that reaction to EC 3.5.1.99.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (9Z)-octadecenamide is a substrate consumed by RHEA:26506 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26507
+      snippet: (9Z)-octadecenamide + H2O => (9Z)-octadecenoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26507 declares side 26506_L as its substrates
+        (rh:substrates); the master reaction RHEA:26506 is undirected. This participant is CHEBI:116314
+        with coefficient 1. Rhea cites PMID:11128635, PMID:9122178, PMID:17015445, PMID:9299394 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:26506 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26507
+      snippet: (9Z)-octadecenamide + H2O => (9Z)-octadecenoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26507 declares side 26506_L as its substrates
+        (rh:substrates); the master reaction RHEA:26506 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11128635, PMID:9122178, PMID:17015445, PMID:9299394 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (9Z)-octadecenoate is a product released by RHEA:26506 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26507
+      snippet: (9Z)-octadecenamide + H2O => (9Z)-octadecenoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26507 declares side 26506_R as its products
+        (rh:products); the master reaction RHEA:26506 is undirected. This participant is CHEBI:30823 with
+        coefficient 1. Rhea cites PMID:11128635, PMID:9122178, PMID:17015445, PMID:9299394 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NH4(+) is a product released by RHEA:26506 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26507
+      snippet: (9Z)-octadecenamide + H2O => (9Z)-octadecenoate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26507 declares side 26506_R as its products
+        (rh:products); the master reaction RHEA:26506 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:11128635, PMID:9122178, PMID:17015445, PMID:9299394 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.99
+      snippet: EC:3.5.1.99 > GO:fatty acid amide hydrolase activity ; GO:0017064
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0017064 is itself a record
+        in this KB.
+  - subject: prot_Q17449
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAAH1_CAEEL is an exemplar enzyme with EC 3.5.1.99 activity.
+    evidence:
+    - reference: EC:3.5.1.99
+      snippet: DR   Q17449, FAAH1_CAEEL;  O00519, FAAH1_HUMAN;  O08914, FAAH1_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.5.1.99 cross-references UniProtKB:Q17449 (FAAH1_CAEEL) as a protein
+        with this activity.
+  - subject: prot_O00519
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAAH1_HUMAN is an exemplar enzyme with EC 3.5.1.99 activity.
+    evidence:
+    - reference: EC:3.5.1.99
+      snippet: DR   Q17449, FAAH1_CAEEL;  O00519, FAAH1_HUMAN;  O08914, FAAH1_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.5.1.99 cross-references UniProtKB:O00519 (FAAH1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_O08914
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAAH1_MOUSE is an exemplar enzyme with EC 3.5.1.99 activity.
+    evidence:
+    - reference: EC:3.5.1.99
+      snippet: DR   Q17449, FAAH1_CAEEL;  O00519, FAAH1_HUMAN;  O08914, FAAH1_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.5.1.99 cross-references UniProtKB:O08914 (FAAH1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

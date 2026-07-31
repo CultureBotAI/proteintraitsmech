@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.99.62
     mapping_source: rhea2ec
@@ -24,4 +24,91 @@ definitions:
       Catalyses the reaction: beta-D-allofuranose = beta-D-allopyranose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-D-allofuranose = beta-D-allopyranose
+  description: Substrate-to-product chemistry of RHEA:25609, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:25610 (rh:substrates → 25609_L, rh:products → 25609_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of beta-D-allofuranose = beta-D-allopyranose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:25609
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: beta-D-allofuranose = beta-D-allopyranose'
+  - node_id: sub1
+    label: beta-D-allofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:50256
+    description: Formula C6H12O6.
+  - node_id: prd1
+    label: beta-D-allopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:40656
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: D-ribose pyranase activity
+    grounding: GO:0062193
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: D-ribose pyranase
+    grounding: EC:5.4.99.62
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: beta-D-allofuranose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25610
+      snippet: beta-D-allofuranose => beta-D-allopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:25610 declares side 25609_L as its substrates
+        (rh:substrates); the master reaction RHEA:25609 is undirected. This participant is CHEBI:50256
+        with coefficient 1. Rhea cites PMID:15060078 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-allopyranose is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25610
+      snippet: beta-D-allofuranose => beta-D-allopyranose
+      notes: Rhea's left-to-right directional reaction RHEA:25610 declares side 25609_R as its products
+        (rh:products); the master reaction RHEA:25609 is undirected. This participant is CHEBI:40656 with
+        coefficient 1. Rhea cites PMID:15060078 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:25609
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0062193"/>
+      notes: The rdfs:seeAlso triple on RHEA:25609 in rhea.rdf. GO term GO:0062193 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.99.62; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:25609
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.62"/>
+      notes: The rh:ec triple on RHEA:25609 in rhea.rdf. EC 5.4.99.62 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

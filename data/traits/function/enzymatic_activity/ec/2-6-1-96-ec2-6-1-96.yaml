@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 synonyms:
@@ -49,4 +49,246 @@ definitions:
       Catalyses: (1) 4-aminobutanoate + pyruvate = succinate semialdehyde + L-alanine. (2) 4-aminobutanoate + glyoxylate = succinate semialdehyde + glycine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-aminobutyrate--pyruvate transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.96. Rhea assigns 2 curated
+    reactions to EC 2.6.1.96. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 4-aminobutanoate + pyruvate = succinate semialdehyde
+    + L-alanine. (2) 4-aminobutanoate + glyoxylate = succinate semialdehyde + glycine". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-aminobutyrate--pyruvate transaminase
+    grounding: EC:2.6.1.96
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 4-aminobutanoate + pyruvate = succinate semialdehyde + L-alanine
+    grounding: RHEA:32263
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 4-aminobutanoate + pyruvate = succinate semialdehyde + L-alanine'
+  - node_id: rxn1_sub1
+    label: 4-aminobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:59888
+    description: Formula C4H9NO2.
+  - node_id: rxn1_sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: rxn1_prd1
+    label: succinate semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:57706
+    description: Formula C4H5O3.
+  - node_id: rxn1_prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 4-aminobutanoate + glyoxylate = succinate semialdehyde + glycine
+    grounding: RHEA:32267
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 4-aminobutanoate + glyoxylate = succinate semialdehyde + glycine'
+  - node_id: rxn2_sub1
+    label: 4-aminobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:59888
+    description: Formula C4H9NO2.
+  - node_id: rxn2_sub2
+    label: glyoxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:36655
+    description: Formula C2HO3.
+  - node_id: rxn2_prd1
+    label: succinate semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:57706
+    description: Formula C4H5O3.
+  - node_id: rxn2_prd2
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+    description: Formula C2H5NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 4-aminobutyrate:pyruvate transaminase activity
+    grounding: GO:0034387
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q01K11
+    node_type: PROTEIN
+    label: GATP1_ORYSI
+    grounding: UniProtKB:Q01K11
+  - node_id: prot_Q7XN11
+    node_type: PROTEIN
+    label: GATP1_ORYSJ
+    grounding: UniProtKB:Q7XN11
+  - node_id: prot_Q84P54
+    node_type: PROTEIN
+    label: GATP1_SOLLC
+    grounding: UniProtKB:Q84P54
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:32263 is one of the 2 curated reactions Rhea assigns to EC 2.6.1.96; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:32263
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.96"/>
+      notes: The rh:ec triple on RHEA:32263 in rhea.rdf assigns that reaction to EC 2.6.1.96.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 4-aminobutanoate is a substrate consumed by RHEA:32263 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32264
+      snippet: 4-aminobutanoate + pyruvate => succinate semialdehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:32264 declares side 32263_L as its substrates
+        (rh:substrates); the master reaction RHEA:32263 is undirected. This participant is CHEBI:59888
+        with coefficient 1. Rhea cites PMID:19470656, PMID:12859897, PMID:19264755 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: pyruvate is a substrate consumed by RHEA:32263 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32264
+      snippet: 4-aminobutanoate + pyruvate => succinate semialdehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:32264 declares side 32263_L as its substrates
+        (rh:substrates); the master reaction RHEA:32263 is undirected. This participant is CHEBI:15361
+        with coefficient 1. Rhea cites PMID:19470656, PMID:12859897, PMID:19264755 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: succinate semialdehyde is a product released by RHEA:32263 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32264
+      snippet: 4-aminobutanoate + pyruvate => succinate semialdehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:32264 declares side 32263_R as its products
+        (rh:products); the master reaction RHEA:32263 is undirected. This participant is CHEBI:57706 with
+        coefficient 1. Rhea cites PMID:19470656, PMID:12859897, PMID:19264755 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: L-alanine is a product released by RHEA:32263 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32264
+      snippet: 4-aminobutanoate + pyruvate => succinate semialdehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:32264 declares side 32263_R as its products
+        (rh:products); the master reaction RHEA:32263 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:19470656, PMID:12859897, PMID:19264755 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:32267 is one of the 2 curated reactions Rhea assigns to EC 2.6.1.96; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:32267
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.96"/>
+      notes: The rh:ec triple on RHEA:32267 in rhea.rdf assigns that reaction to EC 2.6.1.96.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 4-aminobutanoate is a substrate consumed by RHEA:32267 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32268
+      snippet: 4-aminobutanoate + glyoxylate => succinate semialdehyde + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:32268 declares side 32267_L as its substrates
+        (rh:substrates); the master reaction RHEA:32267 is undirected. This participant is CHEBI:59888
+        with coefficient 1. Rhea cites PMID:19470656, PMID:19264755 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: glyoxylate is a substrate consumed by RHEA:32267 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32268
+      snippet: 4-aminobutanoate + glyoxylate => succinate semialdehyde + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:32268 declares side 32267_L as its substrates
+        (rh:substrates); the master reaction RHEA:32267 is undirected. This participant is CHEBI:36655
+        with coefficient 1. Rhea cites PMID:19470656, PMID:19264755 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: succinate semialdehyde is a product released by RHEA:32267 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32268
+      snippet: 4-aminobutanoate + glyoxylate => succinate semialdehyde + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:32268 declares side 32267_R as its products
+        (rh:products); the master reaction RHEA:32267 is undirected. This participant is CHEBI:57706 with
+        coefficient 1. Rhea cites PMID:19470656, PMID:19264755 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: glycine is a product released by RHEA:32267 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32268
+      snippet: 4-aminobutanoate + glyoxylate => succinate semialdehyde + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:32268 declares side 32267_R as its products
+        (rh:products); the master reaction RHEA:32267 is undirected. This participant is CHEBI:57305 with
+        coefficient 1. Rhea cites PMID:19470656, PMID:19264755 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.6.1.96
+      snippet: EC:2.6.1.96 > GO:4-aminobutyrate:pyruvate transaminase activity ; GO:0034387
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0034387 is itself a record
+        in this KB.
+  - subject: prot_Q01K11
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GATP1_ORYSI is an exemplar enzyme with EC 2.6.1.96 activity.
+    evidence:
+    - reference: EC:2.6.1.96
+      snippet: DR   Q01K11, GATP1_ORYSI;  Q7XN11, GATP1_ORYSJ;  Q84P54, GATP1_SOLLC;
+      notes: ExPASy ENZYME entry EC 2.6.1.96 cross-references UniProtKB:Q01K11 (GATP1_ORYSI) as a protein
+        with this activity.
+  - subject: prot_Q7XN11
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GATP1_ORYSJ is an exemplar enzyme with EC 2.6.1.96 activity.
+    evidence:
+    - reference: EC:2.6.1.96
+      snippet: DR   Q01K11, GATP1_ORYSI;  Q7XN11, GATP1_ORYSJ;  Q84P54, GATP1_SOLLC;
+      notes: ExPASy ENZYME entry EC 2.6.1.96 cross-references UniProtKB:Q7XN11 (GATP1_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_Q84P54
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GATP1_SOLLC is an exemplar enzyme with EC 2.6.1.96 activity.
+    evidence:
+    - reference: EC:2.6.1.96
+      snippet: DR   Q01K11, GATP1_ORYSI;  Q7XN11, GATP1_ORYSJ;  Q84P54, GATP1_SOLLC;
+      notes: ExPASy ENZYME entry EC 2.6.1.96 cross-references UniProtKB:Q84P54 (GATP1_SOLLC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

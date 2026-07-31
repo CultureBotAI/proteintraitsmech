@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -25,4 +25,89 @@ definitions:
       Catalyses: (R)-octopamine = (4-hydroxyphenyl)acetaldehyde + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of octopamine dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.87. EC 4.2.1.87 maps to exactly
+    one curated Rhea reaction (RHEA:18173), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-octopamine
+    = (4-hydroxyphenyl)acetaldehyde + NH4(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: octopamine dehydratase
+    grounding: EC:4.2.1.87
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-octopamine
+    node_type: CHEMICAL
+    grounding: CHEBI:141486
+    description: Formula C8H12NO2.
+  - node_id: prd1
+    label: (4-hydroxyphenyl)acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15621
+    description: Formula C8H8O2.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: octopamine dehydratase activity
+    grounding: GO:0050202
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-octopamine is a substrate consumed by RHEA:18173 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18174
+      snippet: (R)-octopamine => (4-hydroxyphenyl)acetaldehyde + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18174 declares side 18173_L as its substrates
+        (rh:substrates); the master reaction RHEA:18173 is undirected. This participant is CHEBI:141486
+        with coefficient 1. Rhea cites PMID:24654910, PMID:3034855 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (4-hydroxyphenyl)acetaldehyde is a product released by RHEA:18173 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18174
+      snippet: (R)-octopamine => (4-hydroxyphenyl)acetaldehyde + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18174 declares side 18173_R as its products
+        (rh:products); the master reaction RHEA:18173 is undirected. This participant is CHEBI:15621 with
+        coefficient 1. Rhea cites PMID:24654910, PMID:3034855 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:18173 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18174
+      snippet: (R)-octopamine => (4-hydroxyphenyl)acetaldehyde + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18174 declares side 18173_R as its products
+        (rh:products); the master reaction RHEA:18173 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:24654910, PMID:3034855 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.87
+      snippet: EC:4.2.1.87 > GO:octopamine dehydratase activity ; GO:0050202
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050202 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

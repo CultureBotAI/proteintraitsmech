@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:194314
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,99 @@ definitions:
       Catalyses the reaction: N(alpha)-formyl-L-methionyl-L-leucyl-L-phenylalanine + H2O = L-leucyl-L-phenylalanine + N(alpha)-formyl-L-methionine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(alpha)-formyl-L-methionyl-L-leucyl-L-phenylalanine + H2O = L-leucyl-L-phenylalanine
+    +…
+  description: Substrate-to-product chemistry of RHEA:83443, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:83444 (rh:substrates → 83443_L, rh:products → 83443_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N(alpha)-formyl-L-methionyl-L-leucyl-L-phenylalanine + H2O = L-leucyl-L-phen…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:83443
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N(alpha)-formyl-L-methionyl-L-leucyl-L-phenylalanine + H2O = L-leucyl-L-phenylalanine
+      + N(alpha)-formyl-L-methionine'
+  - node_id: sub1
+    label: N(alpha)-formyl-L-methionyl-L-leucyl-L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:194314
+    description: Formula C21H30N3O5S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-leucyl-L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:233080
+    description: Formula C15H22N2O3.
+  - node_id: prd2
+    label: N(alpha)-formyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:57809
+    description: Formula C6H10NO3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(alpha)-formyl-L-methionyl-L-leucyl-L-phenylalanine is a substrate consumed by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83444
+      snippet: N(alpha)-formyl-L-methionyl-L-leucyl-L-phenylalanine + H2O => L-leucyl-L-phenylalanine
+        + N(alpha)-formyl-L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:83444 declares side 83443_L as its substrates
+        (rh:substrates); the master reaction RHEA:83443 is undirected. This participant is CHEBI:194314
+        with coefficient 1. Rhea cites PMID:15938642, PMID:1547272 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83444
+      snippet: N(alpha)-formyl-L-methionyl-L-leucyl-L-phenylalanine + H2O => L-leucyl-L-phenylalanine
+        + N(alpha)-formyl-L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:83444 declares side 83443_L as its substrates
+        (rh:substrates); the master reaction RHEA:83443 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15938642, PMID:1547272 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-leucyl-L-phenylalanine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:83444
+      snippet: N(alpha)-formyl-L-methionyl-L-leucyl-L-phenylalanine + H2O => L-leucyl-L-phenylalanine
+        + N(alpha)-formyl-L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:83444 declares side 83443_R as its products
+        (rh:products); the master reaction RHEA:83443 is undirected. This participant is CHEBI:233080
+        with coefficient 1. Rhea cites PMID:15938642, PMID:1547272 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: N(alpha)-formyl-L-methionine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:83444
+      snippet: N(alpha)-formyl-L-methionyl-L-leucyl-L-phenylalanine + H2O => L-leucyl-L-phenylalanine
+        + N(alpha)-formyl-L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:83444 declares side 83443_R as its products
+        (rh:products); the master reaction RHEA:83443 is undirected. This participant is CHEBI:57809 with
+        coefficient 1. Rhea cites PMID:15938642, PMID:1547272 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

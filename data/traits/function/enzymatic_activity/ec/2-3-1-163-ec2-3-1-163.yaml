@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: 10-deacetyltaxuyunnanin C + acetyl-CoA = taxuyunnanin C + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 10-hydroxytaxane O-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.163. EC 2.3.1.163 maps to
+    exactly one curated Rhea reaction (RHEA:18837), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "10-deacetyltaxuyunnanin
+    C + acetyl-CoA = taxuyunnanin C + CoA". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 10-hydroxytaxane O-acetyltransferase
+    grounding: EC:2.3.1.163
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 10-deacetyltaxuyunnanin C
+    node_type: CHEMICAL
+    grounding: CHEBI:11302
+    description: Formula C26H38O7.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: taxuyunnanin C
+    node_type: CHEMICAL
+    grounding: CHEBI:15208
+    description: Formula C28H40O8.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 10-hydroxytaxane O-acetyltransferase activity
+    grounding: GO:0050639
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 10-deacetyltaxuyunnanin C is a substrate consumed by RHEA:18837 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18838
+      snippet: 10-deacetyltaxuyunnanin C + acetyl-CoA => taxuyunnanin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18838 declares side 18837_L as its substrates
+        (rh:substrates); the master reaction RHEA:18837 is undirected. This participant is CHEBI:11302
+        with coefficient 1. Rhea cites PMID:10192963 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:18837 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18838
+      snippet: 10-deacetyltaxuyunnanin C + acetyl-CoA => taxuyunnanin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18838 declares side 18837_L as its substrates
+        (rh:substrates); the master reaction RHEA:18837 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:10192963 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: taxuyunnanin C is a product released by RHEA:18837 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18838
+      snippet: 10-deacetyltaxuyunnanin C + acetyl-CoA => taxuyunnanin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18838 declares side 18837_R as its products
+        (rh:products); the master reaction RHEA:18837 is undirected. This participant is CHEBI:15208 with
+        coefficient 1. Rhea cites PMID:10192963 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:18837 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18838
+      snippet: 10-deacetyltaxuyunnanin C + acetyl-CoA => taxuyunnanin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18838 declares side 18837_R as its products
+        (rh:products); the master reaction RHEA:18837 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:10192963 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.163
+      snippet: EC:2.3.1.163 > GO:10-hydroxytaxane O-acetyltransferase activity ; GO:0050639
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050639 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

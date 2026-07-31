@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -28,4 +28,92 @@ definitions:
       Catalyses: ent-8alpha-hydroxylabd-13-en-15-yl diphosphate = (2E,6E,10E)- geranylgeranyl diphosphate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ent-8alpha-hydroxylabd-13-en-15-yl diphosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.173. EC 4.2.1.173 maps to
+    exactly one curated Rhea reaction (RHEA:54648), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "ent-8alpha-hydroxylabd-13-en-15-yl
+    diphosphate = (2E,6E,10E)- geranylgeranyl diphosphate + H2O". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ent-8alpha-hydroxylabd-13-en-15-yl diphosphate synthase
+    grounding: EC:4.2.1.173
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: ent-8alpha-hydroxylabd-13-en-15-yl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:138223
+    description: Formula C20H35O8P2.
+  - node_id: prd1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_A0A0U2D9C5
+    node_type: PROTEIN
+    label: CPS4_SALMI
+    grounding: UniProtKB:A0A0U2D9C5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ent-8alpha-hydroxylabd-13-en-15-yl diphosphate is a substrate consumed by RHEA:54648
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54649
+      snippet: ent-8alpha-hydroxylabd-13-en-15-yl diphosphate => (2E,6E,10E)-geranylgeranyl diphosphate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:54649 declares side 54648_L as its substrates
+        (rh:substrates); the master reaction RHEA:54648 is undirected. This participant is CHEBI:138223
+        with coefficient 1. Rhea cites PMID:26077765 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a product released by RHEA:54648 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54649
+      snippet: ent-8alpha-hydroxylabd-13-en-15-yl diphosphate => (2E,6E,10E)-geranylgeranyl diphosphate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:54649 declares side 54648_R as its products
+        (rh:products); the master reaction RHEA:54648 is undirected. This participant is CHEBI:58756 with
+        coefficient 1. Rhea cites PMID:26077765 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:54648 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54649
+      snippet: ent-8alpha-hydroxylabd-13-en-15-yl diphosphate => (2E,6E,10E)-geranylgeranyl diphosphate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:54649 declares side 54648_R as its products
+        (rh:products); the master reaction RHEA:54648 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:26077765 for this reaction.
+  - subject: prot_A0A0U2D9C5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPS4_SALMI is an exemplar enzyme with EC 4.2.1.173 activity.
+    evidence:
+    - reference: EC:4.2.1.173
+      snippet: DR   A0A0U2D9C5, CPS4_SALMI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.173 cross-references UniProtKB:A0A0U2D9C5 (CPS4_SALMI) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

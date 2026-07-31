@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.4.1.253
     mapping_source: rhea2ec
@@ -28,4 +28,122 @@ definitions:
       Catalyses the reaction: baicalein + UDP-alpha-D-glucuronate = baicalin + UDP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of baicalein + UDP-alpha-D-glucuronate = baicalin + UDP
+  description: Substrate-to-product chemistry of RHEA:28314, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28315 (rh:substrates → 28314_L, rh:products → 28314_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of baicalein + UDP-alpha-D-glucuronate = baicalin + UDP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28314
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: baicalein + UDP-alpha-D-glucuronate = baicalin + UDP'
+  - node_id: sub1
+    label: baicalein
+    node_type: CHEMICAL
+    grounding: CHEBI:78324
+    description: Formula C15H9O5.
+  - node_id: sub2
+    label: UDP-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58052
+    description: Formula C15H19N2O18P2.
+  - node_id: prd1
+    label: baicalin
+    node_type: CHEMICAL
+    grounding: CHEBI:61283
+    description: Formula C21H17O11.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: baicalein 7-O-glucuronosyltransferase activity
+    grounding: GO:0102159
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: baicalein 7-O-glucuronosyltransferase
+    grounding: EC:2.4.1.253
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: baicalein is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28315
+      snippet: baicalein + UDP-alpha-D-glucuronate => baicalin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28315 declares side 28314_L as its substrates
+        (rh:substrates); the master reaction RHEA:28314 is undirected. This participant is CHEBI:78324
+        with coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-glucuronate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28315
+      snippet: baicalein + UDP-alpha-D-glucuronate => baicalin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28315 declares side 28314_L as its substrates
+        (rh:substrates); the master reaction RHEA:28314 is undirected. This participant is CHEBI:58052
+        with coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: baicalin is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28315
+      snippet: baicalein + UDP-alpha-D-glucuronate => baicalin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28315 declares side 28314_R as its products
+        (rh:products); the master reaction RHEA:28314 is undirected. This participant is CHEBI:61283 with
+        coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28315
+      snippet: baicalein + UDP-alpha-D-glucuronate => baicalin + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:28315 declares side 28314_R as its products
+        (rh:products); the master reaction RHEA:28314 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:10724177 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:28314
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102159"/>
+      notes: The rdfs:seeAlso triple on RHEA:28314 in rhea.rdf. GO term GO:0102159 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.4.1.253; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28314
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.253"/>
+      notes: The rh:ec triple on RHEA:28314 in rhea.rdf. EC 2.4.1.253 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

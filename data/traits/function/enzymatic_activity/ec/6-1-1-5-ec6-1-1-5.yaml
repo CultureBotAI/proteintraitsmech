@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.1.1.-
 synonyms:
@@ -43,4 +43,215 @@ definitions:
       Catalyses: tRNA(Ile) + L-isoleucine + ATP = L-isoleucyl-tRNA(Ile) + AMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isoleucine--tRNA ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.1.1.5. EC 6.1.1.5 maps to exactly
+    one curated Rhea reaction (RHEA:11060), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "tRNA(Ile) + L-isoleucine
+    + ATP = L-isoleucyl-tRNA(Ile) + AMP + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: isoleucine--tRNA ligase
+    grounding: EC:6.1.1.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: tRNA(Ile)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9666
+    description: Rhea compound GENERIC:9666.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9666 (tRNA(Ile));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-isoleucine
+    node_type: CHEMICAL
+    grounding: CHEBI:58045
+    description: Formula C6H13NO2.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-isoleucyl-tRNA(Ile)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9695
+    description: Rhea compound GENERIC:9695.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 3'-(L-isoleucyl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9695 (L-isoleucyl-tRNA(Ile));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78528
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: isoleucine-tRNA ligase activity
+    grounding: GO:0004822
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P84178
+    node_type: PROTEIN
+    label: SY1_BADPO
+    grounding: UniProtKB:P84178
+  - node_id: prot_Q81WE4
+    node_type: PROTEIN
+    label: SYI1_BACAN
+    grounding: UniProtKB:Q81WE4
+  - node_id: prot_Q732H4
+    node_type: PROTEIN
+    label: SYI1_BACC1
+    grounding: UniProtKB:Q732H4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Ile) is a substrate consumed by RHEA:11060 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11061
+      snippet: tRNA(Ile) + L-isoleucine + ATP => L-isoleucyl-tRNA(Ile) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11061 declares side 11060_L as its substrates
+        (rh:substrates); the master reaction RHEA:11060 is undirected. This participant is GENERIC:9666
+        with coefficient 1. Rhea cites PMID:13792726, PMID:9822629, PMID:8052601, PMID:12060739 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Ile).
+    evidence:
+    - reference: RHEA:11060
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9666 (tRNA(Ile)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-isoleucine is a substrate consumed by RHEA:11060 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11061
+      snippet: tRNA(Ile) + L-isoleucine + ATP => L-isoleucyl-tRNA(Ile) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11061 declares side 11060_L as its substrates
+        (rh:substrates); the master reaction RHEA:11060 is undirected. This participant is CHEBI:58045
+        with coefficient 1. Rhea cites PMID:13792726, PMID:9822629, PMID:8052601, PMID:12060739 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:11060 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11061
+      snippet: tRNA(Ile) + L-isoleucine + ATP => L-isoleucyl-tRNA(Ile) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11061 declares side 11060_L as its substrates
+        (rh:substrates); the master reaction RHEA:11060 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:13792726, PMID:9822629, PMID:8052601, PMID:12060739 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-isoleucyl-tRNA(Ile) is a product released by RHEA:11060 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11061
+      snippet: tRNA(Ile) + L-isoleucine + ATP => L-isoleucyl-tRNA(Ile) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11061 declares side 11060_R as its products
+        (rh:products); the master reaction RHEA:11060 is undirected. This participant is GENERIC:9695
+        with coefficient 1. Rhea cites PMID:13792726, PMID:9822629, PMID:8052601, PMID:12060739 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-isoleucyl)adenylyl group is the reactive part of L-isoleucyl-tRNA(Ile).
+    evidence:
+    - reference: RHEA:11060
+      snippet: 3'-(L-isoleucyl)adenylyl group
+      notes: Rhea compound GENERIC:9695 (L-isoleucyl-tRNA(Ile)) declares rh:reactivePart = 3'-(L-isoleucyl)adenylyl
+        group (CHEBI:78528).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:11060 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11061
+      snippet: tRNA(Ile) + L-isoleucine + ATP => L-isoleucyl-tRNA(Ile) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11061 declares side 11060_R as its products
+        (rh:products); the master reaction RHEA:11060 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:13792726, PMID:9822629, PMID:8052601, PMID:12060739 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:11060 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11061
+      snippet: tRNA(Ile) + L-isoleucine + ATP => L-isoleucyl-tRNA(Ile) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11061 declares side 11060_R as its products
+        (rh:products); the master reaction RHEA:11060 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:13792726, PMID:9822629, PMID:8052601, PMID:12060739 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.1.1.5
+      snippet: EC:6.1.1.5 > GO:isoleucine-tRNA ligase activity ; GO:0004822
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004822 is itself a record
+        in this KB.
+  - subject: prot_P84178
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SY1_BADPO is an exemplar enzyme with EC 6.1.1.5 activity.
+    evidence:
+    - reference: EC:6.1.1.5
+      snippet: DR   P84178, SY1_BADPO  ;  Q81WE4, SYI1_BACAN ;  Q732H4, SYI1_BACC1 ;
+      notes: ExPASy ENZYME entry EC 6.1.1.5 cross-references UniProtKB:P84178 (SY1_BADPO) as a protein
+        with this activity.
+  - subject: prot_Q81WE4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYI1_BACAN is an exemplar enzyme with EC 6.1.1.5 activity.
+    evidence:
+    - reference: EC:6.1.1.5
+      snippet: DR   P84178, SY1_BADPO  ;  Q81WE4, SYI1_BACAN ;  Q732H4, SYI1_BACC1 ;
+      notes: ExPASy ENZYME entry EC 6.1.1.5 cross-references UniProtKB:Q81WE4 (SYI1_BACAN) as a protein
+        with this activity.
+  - subject: prot_Q732H4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYI1_BACC1 is an exemplar enzyme with EC 6.1.1.5 activity.
+    evidence:
+    - reference: EC:6.1.1.5
+      snippet: DR   P84178, SY1_BADPO  ;  Q81WE4, SYI1_BACAN ;  Q732H4, SYI1_BACC1 ;
+      notes: ExPASy ENZYME entry EC 6.1.1.5 cross-references UniProtKB:Q732H4 (SYI1_BACC1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.2.1.-
 synonyms:
@@ -49,4 +49,151 @@ definitions:
       Catalyses: [protein]-peptidylproline (omega=180) = [protein]-peptidylproline (omega=0)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptidylprolyl isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.2.1.8. EC 5.2.1.8 maps to exactly
+    one curated Rhea reaction (RHEA:16237), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[protein]-peptidylproline
+    (omega=180) = [protein]-peptidylproline (omega=0)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptidylprolyl isomerase
+    grounding: EC:5.2.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[protein]-peptidylproline (omega=180)'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10748
+    description: Rhea compound GENERIC:10748.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: peptidylproline (omega=180) residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10748 ([protein]-peptidylproline
+      (omega=180)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83834
+  - node_id: prd1
+    label: '[protein]-peptidylproline (omega=0)'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10747
+    description: Rhea compound GENERIC:10747.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: peptidylproline (omega=0) residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10747 ([protein]-peptidylproline
+      (omega=0)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83833
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-prolyl cis-trans isomerase activity
+    grounding: GO:0003755
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8A1P7
+    node_type: PROTEIN
+    label: BAMJ_BACTN
+    grounding: UniProtKB:Q8A1P7
+  - node_id: prot_B2RH82
+    node_type: PROTEIN
+    label: BAMJ_PORG3
+    grounding: UniProtKB:B2RH82
+  - node_id: prot_Q5XAQ1
+    node_type: PROTEIN
+    label: BPPI_STRP6
+    grounding: UniProtKB:Q5XAQ1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[protein]-peptidylproline (omega=180) is a substrate consumed by RHEA:16237 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:16238
+      snippet: '[protein]-peptidylproline (omega=180) => [protein]-peptidylproline (omega=0)'
+      notes: Rhea's left-to-right directional reaction RHEA:16238 declares side 16237_L as its substrates
+        (rh:substrates); the master reaction RHEA:16237 is undirected. This participant is GENERIC:10748
+        with coefficient 1. Rhea cites PMID:3882150, PMID:6395866, PMID:2644542, PMID:2492638 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: peptidylproline (omega=180) residue is the reactive part of [protein]-peptidylproline
+      (omega=180).
+    evidence:
+    - reference: RHEA:16237
+      snippet: peptidylproline (omega=180) residue
+      notes: Rhea compound GENERIC:10748 ([protein]-peptidylproline (omega=180)) declares rh:reactivePart
+        = peptidylproline (omega=180) residue (CHEBI:83834).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[protein]-peptidylproline (omega=0) is a product released by RHEA:16237 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:16238
+      snippet: '[protein]-peptidylproline (omega=180) => [protein]-peptidylproline (omega=0)'
+      notes: Rhea's left-to-right directional reaction RHEA:16238 declares side 16237_R as its products
+        (rh:products); the master reaction RHEA:16237 is undirected. This participant is GENERIC:10747
+        with coefficient 1. Rhea cites PMID:3882150, PMID:6395866, PMID:2644542, PMID:2492638 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: peptidylproline (omega=0) residue is the reactive part of [protein]-peptidylproline (omega=0).
+    evidence:
+    - reference: RHEA:16237
+      snippet: peptidylproline (omega=0) residue
+      notes: Rhea compound GENERIC:10747 ([protein]-peptidylproline (omega=0)) declares rh:reactivePart
+        = peptidylproline (omega=0) residue (CHEBI:83833).
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.2.1.8
+      snippet: EC:5.2.1.8 > GO:peptidyl-prolyl cis-trans isomerase activity ; GO:0003755
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003755 is itself a record
+        in this KB.
+  - subject: prot_Q8A1P7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BAMJ_BACTN is an exemplar enzyme with EC 5.2.1.8 activity.
+    evidence:
+    - reference: EC:5.2.1.8
+      snippet: DR   Q8A1P7, BAMJ_BACTN ;  B2RH82, BAMJ_PORG3 ;  Q5XAQ1, BPPI_STRP6 ;
+      notes: ExPASy ENZYME entry EC 5.2.1.8 cross-references UniProtKB:Q8A1P7 (BAMJ_BACTN) as a protein
+        with this activity.
+  - subject: prot_B2RH82
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BAMJ_PORG3 is an exemplar enzyme with EC 5.2.1.8 activity.
+    evidence:
+    - reference: EC:5.2.1.8
+      snippet: DR   Q8A1P7, BAMJ_BACTN ;  B2RH82, BAMJ_PORG3 ;  Q5XAQ1, BPPI_STRP6 ;
+      notes: ExPASy ENZYME entry EC 5.2.1.8 cross-references UniProtKB:B2RH82 (BAMJ_PORG3) as a protein
+        with this activity.
+  - subject: prot_Q5XAQ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BPPI_STRP6 is an exemplar enzyme with EC 5.2.1.8 activity.
+    evidence:
+    - reference: EC:5.2.1.8
+      snippet: DR   Q8A1P7, BAMJ_BACTN ;  B2RH82, BAMJ_PORG3 ;  Q5XAQ1, BPPI_STRP6 ;
+      notes: ExPASy ENZYME entry EC 5.2.1.8 cross-references UniProtKB:Q5XAQ1 (BPPI_STRP6) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

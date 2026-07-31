@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.3.-
 mapped_xrefs:
@@ -28,4 +28,72 @@ definitions:
       Catalyses: L-glutamate = 3-aminopentanedioate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glutamate 2,3-aminomutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.3.9. EC 5.4.3.9 maps to exactly
+    one curated Rhea reaction (RHEA:34239), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-glutamate =
+    3-aminopentanedioate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glutamate 2,3-aminomutase
+    grounding: EC:5.4.3.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prd1
+    label: 3-aminopentanedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:66948
+    description: Formula C5H8NO4.
+  - node_id: prot_Q185C5
+    node_type: PROTEIN
+    label: EAM_CLOD6
+    grounding: UniProtKB:Q185C5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-glutamate is a substrate consumed by RHEA:34239 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34240
+      snippet: L-glutamate => 3-aminopentanedioate
+      notes: Rhea's left-to-right directional reaction RHEA:34240 declares side 34239_L as its substrates
+        (rh:substrates); the master reaction RHEA:34239 is undirected. This participant is CHEBI:29985
+        with coefficient 1. Rhea cites PMID:17222594 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-aminopentanedioate is a product released by RHEA:34239 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34240
+      snippet: L-glutamate => 3-aminopentanedioate
+      notes: Rhea's left-to-right directional reaction RHEA:34240 declares side 34239_R as its products
+        (rh:products); the master reaction RHEA:34239 is undirected. This participant is CHEBI:66948 with
+        coefficient 1. Rhea cites PMID:17222594 for this reaction.
+  - subject: prot_Q185C5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EAM_CLOD6 is an exemplar enzyme with EC 5.4.3.9 activity.
+    evidence:
+    - reference: EC:5.4.3.9
+      snippet: DR   Q185C5, EAM_CLOD6  ;
+      notes: ExPASy ENZYME entry EC 5.4.3.9 cross-references UniProtKB:Q185C5 (EAM_CLOD6) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

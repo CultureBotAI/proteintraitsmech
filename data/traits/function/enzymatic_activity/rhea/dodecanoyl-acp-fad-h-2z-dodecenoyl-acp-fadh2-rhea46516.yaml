@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:65264
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,141 @@ definitions:
       Catalyses the reaction: dodecanoyl-[ACP] + FAD + H(+) = (2Z)-dodecenoyl-[ACP] + FADH2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dodecanoyl-[ACP] + FAD + H(+) = (2Z)-dodecenoyl-[ACP] + FADH2
+  description: Substrate-to-product chemistry of RHEA:46516, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:46517 (rh:substrates → 46516_L, rh:products → 46516_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dodecanoyl-[ACP] + FAD + H(+) = (2Z)-dodecenoyl-[ACP] + FADH2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:46516
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dodecanoyl-[ACP] + FAD + H(+) = (2Z)-dodecenoyl-[ACP] + FADH2'
+  - node_id: sub1
+    label: dodecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9644
+    description: Rhea compound GENERIC:9644.
+  - node_id: sub1_rp1
+    label: dodecanoyl-pantetheine-4-phosphoryl-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9644 (dodecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65264
+  - node_id: sub2
+    label: FAD
+    node_type: CHEMICAL
+    grounding: CHEBI:57692
+    description: Formula C27H30N9O15P2.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: (2Z)-dodecenoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:20731
+    description: Rhea compound GENERIC:20731.
+  - node_id: prd1_rp1
+    label: O-[S-(2Z)-dodecenoylpantetheine-4'-phosphoryl]-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:20731 ((2Z)-dodecenoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:235419
+  - node_id: prd2
+    label: FADH2
+    node_type: CHEMICAL
+    grounding: CHEBI:58307
+    description: Formula C27H33N9O15P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dodecanoyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46517
+      snippet: dodecanoyl-[ACP] + FAD + H(+) => (2Z)-dodecenoyl-[ACP] + FADH2
+      notes: Rhea's left-to-right directional reaction RHEA:46517 declares side 46516_L as its substrates
+        (rh:substrates); the master reaction RHEA:46516 is undirected. This participant is GENERIC:9644
+        with coefficient 1. Rhea cites PMID:25849397, PMID:16461464 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: dodecanoyl-pantetheine-4-phosphoryl-serine residue is the reactive part of dodecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:46516
+      snippet: dodecanoyl-pantetheine-4-phosphoryl-serine residue
+      notes: Rhea compound GENERIC:9644 (dodecanoyl-[ACP]) declares rh:reactivePart = dodecanoyl-pantetheine-4-phosphoryl-serine
+        residue (CHEBI:65264), formula C26H47N3O9PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: FAD is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46517
+      snippet: dodecanoyl-[ACP] + FAD + H(+) => (2Z)-dodecenoyl-[ACP] + FADH2
+      notes: Rhea's left-to-right directional reaction RHEA:46517 declares side 46516_L as its substrates
+        (rh:substrates); the master reaction RHEA:46516 is undirected. This participant is CHEBI:57692
+        with coefficient 1. Rhea cites PMID:25849397, PMID:16461464 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46517
+      snippet: dodecanoyl-[ACP] + FAD + H(+) => (2Z)-dodecenoyl-[ACP] + FADH2
+      notes: Rhea's left-to-right directional reaction RHEA:46517 declares side 46516_L as its substrates
+        (rh:substrates); the master reaction RHEA:46516 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:25849397, PMID:16461464 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2Z)-dodecenoyl-[ACP] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46517
+      snippet: dodecanoyl-[ACP] + FAD + H(+) => (2Z)-dodecenoyl-[ACP] + FADH2
+      notes: Rhea's left-to-right directional reaction RHEA:46517 declares side 46516_R as its products
+        (rh:products); the master reaction RHEA:46516 is undirected. This participant is GENERIC:20731
+        with coefficient 1. Rhea cites PMID:25849397, PMID:16461464 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[S-(2Z)-dodecenoylpantetheine-4'-phosphoryl]-L-serine residue is the reactive part
+      of (2Z)-dodecenoyl-[ACP].
+    evidence:
+    - reference: RHEA:46516
+      snippet: O-[S-(2Z)-dodecenoylpantetheine-4'-phosphoryl]-L-serine residue
+      notes: Rhea compound GENERIC:20731 ((2Z)-dodecenoyl-[ACP]) declares rh:reactivePart = O-[S-(2Z)-dodecenoylpantetheine-4'-phosphoryl]-L-serine
+        residue (CHEBI:235419), formula C26H45N3O9PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: FADH2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46517
+      snippet: dodecanoyl-[ACP] + FAD + H(+) => (2Z)-dodecenoyl-[ACP] + FADH2
+      notes: Rhea's left-to-right directional reaction RHEA:46517 declares side 46516_R as its products
+        (rh:products); the master reaction RHEA:46516 is undirected. This participant is CHEBI:58307 with
+        coefficient 1. Rhea cites PMID:25849397, PMID:16461464 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

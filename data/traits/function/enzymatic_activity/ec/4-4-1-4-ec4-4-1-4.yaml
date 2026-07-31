@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.4.1.-
 synonyms:
@@ -51,4 +51,282 @@ definitions:
       Catalyses: an S-alkyl-L-cysteine S-oxide = an S-alkyl sulfenate + 2-aminoprop-2- enoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alliin lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.4.1.4. Rhea assigns 3 curated
+    reactions to EC 4.4.1.4. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "an S-alkyl-L-cysteine S-oxide = an S-alkyl sulfenate + 2-aminoprop-2-
+    enoate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alliin lyase
+    grounding: EC:4.4.1.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an S-alkyl-L-cysteine S-oxide = an S-alkyl sulfenate + 2-aminoprop-2-enoate
+    grounding: RHEA:20141
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an S-alkyl-L-cysteine S-oxide = an S-alkyl sulfenate + 2-aminoprop-2-enoate'
+  - node_id: rxn1_sub1
+    label: an S-alkyl-L-cysteine S-oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:142409
+    description: Formula C3H6NO3SR.
+  - node_id: rxn1_prd1
+    label: an S-alkyl sulfenate
+    node_type: CHEMICAL
+    grounding: CHEBI:22326
+    description: Formula HOSR.
+  - node_id: rxn1_prd2
+    label: 2-aminoprop-2-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:76565
+    description: Formula C3H5NO2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of alliin = allylsulfenate + 2-aminoprop-2-enoate
+    grounding: RHEA:54688
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: alliin = allylsulfenate + 2-aminoprop-2-enoate'
+  - node_id: rxn2_sub1
+    label: alliin
+    node_type: CHEMICAL
+    grounding: CHEBI:132987
+    description: Formula C6H11NO3S.
+  - node_id: rxn2_prd1
+    label: allylsulfenate
+    node_type: CHEMICAL
+    grounding: CHEBI:138314
+    description: Formula C3H6OS.
+  - node_id: rxn2_prd2
+    label: 2-aminoprop-2-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:76565
+    description: Formula C3H5NO2.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of S-1-propenyl-L-cysteine sulfoxide = (E)-prop-1-en-1-SO-peroxol + 2-aminoprop…
+    grounding: RHEA:69348
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: S-1-propenyl-L-cysteine sulfoxide = (E)-prop-1-en-1-SO-peroxol + 2-aminoprop-2-enoate'
+  - node_id: rxn3_sub1
+    label: S-1-propenyl-L-cysteine sulfoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:183319
+    description: Formula C6H11NO3S.
+  - node_id: rxn3_prd1
+    label: (E)-prop-1-en-1-SO-peroxol
+    node_type: CHEMICAL
+    grounding: CHEBI:183057
+    description: Formula C3H6OS.
+  - node_id: rxn3_prd2
+    label: 2-aminoprop-2-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:76565
+    description: Formula C3H5NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alliin lyase activity
+    grounding: GO:0047654
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q01594
+    node_type: PROTEIN
+    label: ALLN1_ALLSA
+    grounding: UniProtKB:Q01594
+  - node_id: prot_Q41233
+    node_type: PROTEIN
+    label: ALLN2_ALLSA
+    grounding: UniProtKB:Q41233
+  - node_id: prot_P31757
+    node_type: PROTEIN
+    label: ALLN_ALLCE
+    grounding: UniProtKB:P31757
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:20141 is one of the 3 curated reactions Rhea assigns to EC 4.4.1.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:20141
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.4"/>
+      notes: The rh:ec triple on RHEA:20141 in rhea.rdf assigns that reaction to EC 4.4.1.4.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: an S-alkyl-L-cysteine S-oxide is a substrate consumed by RHEA:20141 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20142
+      snippet: an S-alkyl-L-cysteine S-oxide => an S-alkyl sulfenate + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:20142 declares side 20141_L as its substrates
+        (rh:substrates); the master reaction RHEA:20141 is undirected. This participant is CHEBI:142409
+        with coefficient 1. Rhea cites PMID:17174334, PMID:12051663 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: an S-alkyl sulfenate is a product released by RHEA:20141 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20142
+      snippet: an S-alkyl-L-cysteine S-oxide => an S-alkyl sulfenate + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:20142 declares side 20141_R as its products
+        (rh:products); the master reaction RHEA:20141 is undirected. This participant is CHEBI:22326 with
+        coefficient 1. Rhea cites PMID:17174334, PMID:12051663 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: 2-aminoprop-2-enoate is a product released by RHEA:20141 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20142
+      snippet: an S-alkyl-L-cysteine S-oxide => an S-alkyl sulfenate + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:20142 declares side 20141_R as its products
+        (rh:products); the master reaction RHEA:20141 is undirected. This participant is CHEBI:76565 with
+        coefficient 1. Rhea cites PMID:17174334, PMID:12051663 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:54688 is one of the 3 curated reactions Rhea assigns to EC 4.4.1.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:54688
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.4"/>
+      notes: The rh:ec triple on RHEA:54688 in rhea.rdf assigns that reaction to EC 4.4.1.4.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: alliin is a substrate consumed by RHEA:54688 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54689
+      snippet: alliin => allylsulfenate + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:54689 declares side 54688_L as its substrates
+        (rh:substrates); the master reaction RHEA:54688 is undirected. This participant is CHEBI:132987
+        with coefficient 1. Rhea cites PMID:17174334, PMID:12051663 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: allylsulfenate is a product released by RHEA:54688 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54689
+      snippet: alliin => allylsulfenate + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:54689 declares side 54688_R as its products
+        (rh:products); the master reaction RHEA:54688 is undirected. This participant is CHEBI:138314
+        with coefficient 1. Rhea cites PMID:17174334, PMID:12051663 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: 2-aminoprop-2-enoate is a product released by RHEA:54688 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54689
+      snippet: alliin => allylsulfenate + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:54689 declares side 54688_R as its products
+        (rh:products); the master reaction RHEA:54688 is undirected. This participant is CHEBI:76565 with
+        coefficient 1. Rhea cites PMID:17174334, PMID:12051663 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:69348 is one of the 3 curated reactions Rhea assigns to EC 4.4.1.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:69348
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.4"/>
+      notes: The rh:ec triple on RHEA:69348 in rhea.rdf assigns that reaction to EC 4.4.1.4.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: S-1-propenyl-L-cysteine sulfoxide is a substrate consumed by RHEA:69348 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:69349
+      snippet: S-1-propenyl-L-cysteine sulfoxide => (E)-prop-1-en-1-SO-peroxol + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:69349 declares side 69348_L as its substrates
+        (rh:substrates); the master reaction RHEA:69348 is undirected. This participant is CHEBI:183319
+        with coefficient 1. Rhea cites PMID:12384686 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: (E)-prop-1-en-1-SO-peroxol is a product released by RHEA:69348 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69349
+      snippet: S-1-propenyl-L-cysteine sulfoxide => (E)-prop-1-en-1-SO-peroxol + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:69349 declares side 69348_R as its products
+        (rh:products); the master reaction RHEA:69348 is undirected. This participant is CHEBI:183057
+        with coefficient 1. Rhea cites PMID:12384686 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: 2-aminoprop-2-enoate is a product released by RHEA:69348 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69349
+      snippet: S-1-propenyl-L-cysteine sulfoxide => (E)-prop-1-en-1-SO-peroxol + 2-aminoprop-2-enoate
+      notes: Rhea's left-to-right directional reaction RHEA:69349 declares side 69348_R as its products
+        (rh:products); the master reaction RHEA:69348 is undirected. This participant is CHEBI:76565 with
+        coefficient 1. Rhea cites PMID:12384686 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.4.1.4
+      snippet: EC:4.4.1.4 > GO:alliin lyase activity ; GO:0047654
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047654 is itself a record
+        in this KB.
+  - subject: prot_Q01594
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALLN1_ALLSA is an exemplar enzyme with EC 4.4.1.4 activity.
+    evidence:
+    - reference: EC:4.4.1.4
+      snippet: DR   Q01594, ALLN1_ALLSA;  Q41233, ALLN2_ALLSA;  P31757, ALLN_ALLCE ;
+      notes: ExPASy ENZYME entry EC 4.4.1.4 cross-references UniProtKB:Q01594 (ALLN1_ALLSA) as a protein
+        with this activity.
+  - subject: prot_Q41233
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALLN2_ALLSA is an exemplar enzyme with EC 4.4.1.4 activity.
+    evidence:
+    - reference: EC:4.4.1.4
+      snippet: DR   Q01594, ALLN1_ALLSA;  Q41233, ALLN2_ALLSA;  P31757, ALLN_ALLCE ;
+      notes: ExPASy ENZYME entry EC 4.4.1.4 cross-references UniProtKB:Q41233 (ALLN2_ALLSA) as a protein
+        with this activity.
+  - subject: prot_P31757
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALLN_ALLCE is an exemplar enzyme with EC 4.4.1.4 activity.
+    evidence:
+    - reference: EC:4.4.1.4
+      snippet: DR   Q01594, ALLN1_ALLSA;  Q41233, ALLN2_ALLSA;  P31757, ALLN_ALLCE ;
+      notes: ExPASy ENZYME entry EC 4.4.1.4 cross-references UniProtKB:P31757 (ALLN_ALLCE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

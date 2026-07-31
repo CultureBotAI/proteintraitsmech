@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.20.2.1
     mapping_source: rhea2ec
@@ -38,4 +38,179 @@ definitions:
       Catalyses the reaction: arsenite + 2 Fe(III)-[cytochrome c] + H2O = arsenate + 2 Fe(II)-[cytochrome c] + 3 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of arsenite + 2 Fe(III)-[cytochrome c] + H2O = arsenate + 2 Fe(II)-[cytochrome
+    c] + 3 H(+)
+  description: Substrate-to-product chemistry of RHEA:59484, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59485 (rh:substrates → 59484_L, rh:products → 59484_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of arsenite + 2 Fe(III)-[cytochrome c] + H2O = arsenate + 2 Fe(II)-[cytochrome…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59484
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: arsenite + 2 Fe(III)-[cytochrome c] + H2O = arsenate + 2 Fe(II)-[cytochrome c] +
+      3 H(+)'
+  - node_id: sub1
+    label: arsenite
+    node_type: CHEMICAL
+    grounding: CHEBI:29242
+    description: Formula AsH2O3.
+  - node_id: sub2
+    label: Fe(III)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14399
+    description: Rhea compound GENERIC:14399.
+  - node_id: sub2_rp1
+    label: Fe(3+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14399 (Fe(III)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: arsenate
+    node_type: CHEMICAL
+    grounding: CHEBI:48597
+    description: Formula AsHO4.
+  - node_id: prd2
+    label: Fe(II)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10350
+    description: Rhea compound GENERIC:10350.
+  - node_id: prd2_rp1
+    label: Fe(2+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10350 (Fe(II)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: arsenate reductase (cytochrome c)
+    grounding: EC:1.20.2.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: arsenite is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59485
+      snippet: arsenite + 2 Fe(III)-[cytochrome c] + H2O => arsenate + 2 Fe(II)-[cytochrome c] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59485 declares side 59484_L as its substrates
+        (rh:substrates); the master reaction RHEA:59484 is undirected. This participant is CHEBI:29242
+        with coefficient 1. Rhea cites PMID:17306216, PMID:15178476, PMID:20421652, PMID:19525272 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: Fe(III)-[cytochrome c] is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:59485
+      snippet: arsenite + 2 Fe(III)-[cytochrome c] + H2O => arsenate + 2 Fe(II)-[cytochrome c] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59485 declares side 59484_L as its substrates
+        (rh:substrates); the master reaction RHEA:59484 is undirected. This participant is GENERIC:14399
+        with coefficient 2. Rhea cites PMID:17306216, PMID:15178476, PMID:20421652, PMID:19525272 for
+        this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c].
+    evidence:
+    - reference: RHEA:59484
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:14399 (Fe(III)-[cytochrome c]) declares rh:reactivePart = Fe(3+) (CHEBI:29034),
+        formula Fe.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59485
+      snippet: arsenite + 2 Fe(III)-[cytochrome c] + H2O => arsenate + 2 Fe(II)-[cytochrome c] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59485 declares side 59484_L as its substrates
+        (rh:substrates); the master reaction RHEA:59484 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17306216, PMID:15178476, PMID:20421652, PMID:19525272 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: arsenate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59485
+      snippet: arsenite + 2 Fe(III)-[cytochrome c] + H2O => arsenate + 2 Fe(II)-[cytochrome c] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59485 declares side 59484_R as its products
+        (rh:products); the master reaction RHEA:59484 is undirected. This participant is CHEBI:48597 with
+        coefficient 1. Rhea cites PMID:17306216, PMID:15178476, PMID:20421652, PMID:19525272 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Fe(II)-[cytochrome c] is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:59485
+      snippet: arsenite + 2 Fe(III)-[cytochrome c] + H2O => arsenate + 2 Fe(II)-[cytochrome c] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59485 declares side 59484_R as its products
+        (rh:products); the master reaction RHEA:59484 is undirected. This participant is GENERIC:10350
+        with coefficient 2. Rhea cites PMID:17306216, PMID:15178476, PMID:20421652, PMID:19525272 for
+        this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: Fe(2+) is the reactive part of Fe(II)-[cytochrome c].
+    evidence:
+    - reference: RHEA:59484
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:10350 (Fe(II)-[cytochrome c]) declares rh:reactivePart = Fe(2+) (CHEBI:29033),
+        formula Fe.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:59485
+      snippet: arsenite + 2 Fe(III)-[cytochrome c] + H2O => arsenate + 2 Fe(II)-[cytochrome c] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:59485 declares side 59484_R as its products
+        (rh:products); the master reaction RHEA:59484 is undirected. This participant is CHEBI:15378 with
+        coefficient 3. Rhea cites PMID:17306216, PMID:15178476, PMID:20421652, PMID:19525272 for this
+        reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.20.2.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:59484
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.20.2.1"/>
+      notes: The rh:ec triple on RHEA:59484 in rhea.rdf. EC 1.20.2.1 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

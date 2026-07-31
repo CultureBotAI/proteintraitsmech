@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:71965
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: UDP-3-oxo-alpha-D-glucose + L-glutamine = UDP-alpha-D-kanosamine + 2-oxoglutaramate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-3-oxo-alpha-D-glucose + L-glutamine = UDP-alpha-D-kanosamine + 2-oxoglutaramate
+  description: Substrate-to-product chemistry of RHEA:35775, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:35776 (rh:substrates → 35775_L, rh:products → 35775_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of UDP-3-oxo-alpha-D-glucose + L-glutamine = UDP-alpha-D-kanosamine + 2-oxoglut…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:35775
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: UDP-3-oxo-alpha-D-glucose + L-glutamine = UDP-alpha-D-kanosamine + 2-oxoglutaramate'
+  - node_id: sub1
+    label: UDP-3-oxo-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:71965
+    description: Formula C15H20N2O17P2.
+  - node_id: sub2
+    label: L-glutamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58359
+    description: Formula C5H10N2O3.
+  - node_id: prd1
+    label: UDP-alpha-D-kanosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:71964
+    description: Formula C15H24N3O16P2.
+  - node_id: prd2
+    label: 2-oxoglutaramate
+    node_type: CHEMICAL
+    grounding: CHEBI:16769
+    description: Formula C5H6NO4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UDP-3-oxo-alpha-D-glucose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35776
+      snippet: UDP-3-oxo-alpha-D-glucose + L-glutamine => UDP-alpha-D-kanosamine + 2-oxoglutaramate
+      notes: Rhea's left-to-right directional reaction RHEA:35776 declares side 35775_L as its substrates
+        (rh:substrates); the master reaction RHEA:35775 is undirected. This participant is CHEBI:71965
+        with coefficient 1. Rhea cites PMID:21081954 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-glutamine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35776
+      snippet: UDP-3-oxo-alpha-D-glucose + L-glutamine => UDP-alpha-D-kanosamine + 2-oxoglutaramate
+      notes: Rhea's left-to-right directional reaction RHEA:35776 declares side 35775_L as its substrates
+        (rh:substrates); the master reaction RHEA:35775 is undirected. This participant is CHEBI:58359
+        with coefficient 1. Rhea cites PMID:21081954 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UDP-alpha-D-kanosamine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35776
+      snippet: UDP-3-oxo-alpha-D-glucose + L-glutamine => UDP-alpha-D-kanosamine + 2-oxoglutaramate
+      notes: Rhea's left-to-right directional reaction RHEA:35776 declares side 35775_R as its products
+        (rh:products); the master reaction RHEA:35775 is undirected. This participant is CHEBI:71964 with
+        coefficient 1. Rhea cites PMID:21081954 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 2-oxoglutaramate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35776
+      snippet: UDP-3-oxo-alpha-D-glucose + L-glutamine => UDP-alpha-D-kanosamine + 2-oxoglutaramate
+      notes: Rhea's left-to-right directional reaction RHEA:35776 declares side 35775_R as its products
+        (rh:products); the master reaction RHEA:35775 is undirected. This participant is CHEBI:16769 with
+        coefficient 1. Rhea cites PMID:21081954 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

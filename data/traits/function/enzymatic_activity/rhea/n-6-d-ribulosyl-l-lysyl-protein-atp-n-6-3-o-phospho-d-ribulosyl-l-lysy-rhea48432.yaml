@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.1.172
     mapping_source: rhea2ec
@@ -34,4 +34,177 @@ definitions:
       Catalyses the reaction: N(6)-D-ribulosyl-L-lysyl-[protein] + ATP = N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein] + ADP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(6)-D-ribulosyl-L-lysyl-[protein] + ATP = N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[prot…
+  description: Substrate-to-product chemistry of RHEA:48432, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48433 (rh:substrates → 48432_L, rh:products → 48432_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N(6)-D-ribulosyl-L-lysyl-[protein] + ATP = N(6)-(3-O-phospho-D-ribulosyl)-L-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48432
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N(6)-D-ribulosyl-L-lysyl-[protein] + ATP = N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein]
+      + ADP + H(+)'
+  - node_id: sub1
+    label: N(6)-D-ribulosyl-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12103
+    description: Rhea compound GENERIC:12103.
+  - node_id: sub1_rp1
+    label: N(6)-D-ribulosyl-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12103 (N(6)-D-ribulosyl-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90418
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12104
+    description: Rhea compound GENERIC:12104.
+  - node_id: prd1_rp1
+    label: N(6)-(3-O-phospho-D-ribulosyl)-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12104 (N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90420
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-ribulosamine 3-kinase activity
+    grounding: GO:0102193
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: protein-ribulosamine 3-kinase
+    grounding: EC:2.7.1.172
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(6)-D-ribulosyl-L-lysyl-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:48433
+      snippet: N(6)-D-ribulosyl-L-lysyl-[protein] + ATP => N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein]
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48433 declares side 48432_L as its substrates
+        (rh:substrates); the master reaction RHEA:48432 is undirected. This participant is GENERIC:12103
+        with coefficient 1. Rhea cites PMID:18637789, PMID:14633848, PMID:15705060 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(6)-D-ribulosyl-L-lysine residue is the reactive part of N(6)-D-ribulosyl-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:48432
+      snippet: N(6)-D-ribulosyl-L-lysine residue
+      notes: Rhea compound GENERIC:12103 (N(6)-D-ribulosyl-L-lysyl-[protein]) declares rh:reactivePart
+        = N(6)-D-ribulosyl-L-lysine residue (CHEBI:90418), formula C11H21N2O5.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48433
+      snippet: N(6)-D-ribulosyl-L-lysyl-[protein] + ATP => N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein]
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48433 declares side 48432_L as its substrates
+        (rh:substrates); the master reaction RHEA:48432 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:18637789, PMID:14633848, PMID:15705060 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein] is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48433
+      snippet: N(6)-D-ribulosyl-L-lysyl-[protein] + ATP => N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein]
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48433 declares side 48432_R as its products
+        (rh:products); the master reaction RHEA:48432 is undirected. This participant is GENERIC:12104
+        with coefficient 1. Rhea cites PMID:18637789, PMID:14633848, PMID:15705060 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-(3-O-phospho-D-ribulosyl)-L-lysine residue is the reactive part of N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:48432
+      snippet: N(6)-(3-O-phospho-D-ribulosyl)-L-lysine residue
+      notes: Rhea compound GENERIC:12104 (N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein]) declares rh:reactivePart
+        = N(6)-(3-O-phospho-D-ribulosyl)-L-lysine residue (CHEBI:90420), formula C11H20N2O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48433
+      snippet: N(6)-D-ribulosyl-L-lysyl-[protein] + ATP => N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein]
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48433 declares side 48432_R as its products
+        (rh:products); the master reaction RHEA:48432 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:18637789, PMID:14633848, PMID:15705060 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48433
+      snippet: N(6)-D-ribulosyl-L-lysyl-[protein] + ATP => N(6)-(3-O-phospho-D-ribulosyl)-L-lysyl-[protein]
+        + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:48433 declares side 48432_R as its products
+        (rh:products); the master reaction RHEA:48432 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18637789, PMID:14633848, PMID:15705060 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:48432
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102193"/>
+      notes: The rdfs:seeAlso triple on RHEA:48432 in rhea.rdf. GO term GO:0102193 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.1.172; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:48432
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.172"/>
+      notes: The rh:ec triple on RHEA:48432 in rhea.rdf. EC 2.7.1.172 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

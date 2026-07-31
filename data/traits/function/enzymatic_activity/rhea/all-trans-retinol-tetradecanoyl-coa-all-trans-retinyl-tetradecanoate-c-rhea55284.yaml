@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17336
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,110 @@ definitions:
       Catalyses the reaction: all-trans-retinol + tetradecanoyl-CoA = all-trans-retinyl tetradecanoate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of all-trans-retinol + tetradecanoyl-CoA = all-trans-retinyl tetradecanoate
+    + CoA
+  description: Substrate-to-product chemistry of RHEA:55284, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:55285 (rh:substrates → 55284_L, rh:products → 55284_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of all-trans-retinol + tetradecanoyl-CoA = all-trans-retinyl tetradecanoate + C…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:55284
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: all-trans-retinol + tetradecanoyl-CoA = all-trans-retinyl tetradecanoate + CoA'
+  - node_id: sub1
+    label: all-trans-retinol
+    node_type: CHEMICAL
+    grounding: CHEBI:17336
+    description: Formula C20H30O.
+  - node_id: sub2
+    label: tetradecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57385
+    description: Formula C35H58N7O17P3S.
+  - node_id: prd1
+    label: all-trans-retinyl tetradecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:138718
+    description: Formula C34H56O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: retinol O-fatty-acyltransferase activity
+    grounding: GO:0050252
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-retinol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:55285
+      snippet: all-trans-retinol + tetradecanoyl-CoA => all-trans-retinyl tetradecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55285 declares side 55284_L as its substrates
+        (rh:substrates); the master reaction RHEA:55284 is undirected. This participant is CHEBI:17336
+        with coefficient 1. Rhea cites PMID:28096191 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: tetradecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:55285
+      snippet: all-trans-retinol + tetradecanoyl-CoA => all-trans-retinyl tetradecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55285 declares side 55284_L as its substrates
+        (rh:substrates); the master reaction RHEA:55284 is undirected. This participant is CHEBI:57385
+        with coefficient 1. Rhea cites PMID:28096191 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: all-trans-retinyl tetradecanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:55285
+      snippet: all-trans-retinol + tetradecanoyl-CoA => all-trans-retinyl tetradecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55285 declares side 55284_R as its products
+        (rh:products); the master reaction RHEA:55284 is undirected. This participant is CHEBI:138718
+        with coefficient 1. Rhea cites PMID:28096191 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55285
+      snippet: all-trans-retinol + tetradecanoyl-CoA => all-trans-retinyl tetradecanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:55285 declares side 55284_R as its products
+        (rh:products); the master reaction RHEA:55284 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:28096191 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:55284
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050252"/>
+      notes: The rdfs:seeAlso triple on RHEA:55284 in rhea.rdf. GO term GO:0050252 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

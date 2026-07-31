@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -45,4 +45,291 @@ definitions:
       Catalyses: an NDP-alpha-D-glucose + D-glucose = alpha,alpha-trehalose + a ribonucleoside 5'-diphosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha,alpha-trehalose synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.245. Rhea assigns 2 curated
+    reactions to EC 2.4.1.245. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "an NDP-alpha-D-glucose + D-glucose = alpha,alpha-trehalose
+    + a ribonucleoside 5''-diphosphate + H(+)". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alpha,alpha-trehalose synthase
+    grounding: EC:2.4.1.245
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of ADP-alpha-D-glucose + D-glucose = alpha,alpha-trehalose + ADP + H(+)
+    grounding: RHEA:25408
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: ADP-alpha-D-glucose + D-glucose = alpha,alpha-trehalose + ADP + H(+)'
+  - node_id: rxn1_sub1
+    label: ADP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:57498
+    description: Formula C16H23N5O15P2.
+  - node_id: rxn1_sub2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: rxn1_prd1
+    label: alpha,alpha-trehalose
+    node_type: CHEMICAL
+    grounding: CHEBI:16551
+    description: Formula C12H22O11.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an NDP-alpha-D-glucose + D-glucose = alpha,alpha-trehalose + a ribonucleosid…
+    grounding: RHEA:47416
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an NDP-alpha-D-glucose + D-glucose = alpha,alpha-trehalose + a ribonucleoside
+      5''-diphosphate + H(+)'
+  - node_id: rxn2_sub1
+    label: an NDP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:76533
+    description: Formula C11H19O15P2R.
+  - node_id: rxn2_sub2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: rxn2_prd1
+    label: alpha,alpha-trehalose
+    node_type: CHEMICAL
+    grounding: CHEBI:16551
+    description: Formula C12H22O11.
+  - node_id: rxn2_prd2
+    label: a ribonucleoside 5'-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57930
+    description: Formula C5H8O10P2R.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: trehalose synthase activity
+    grounding: GO:0102986
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9HH00
+    node_type: PROTEIN
+    label: TRET_PYRFU
+    grounding: UniProtKB:Q9HH00
+  - node_id: prot_O58762
+    node_type: PROTEIN
+    label: TRET_PYRHO
+    grounding: UniProtKB:O58762
+  - node_id: prot_Q1ARU5
+    node_type: PROTEIN
+    label: TRET_RUBXD
+    grounding: UniProtKB:Q1ARU5
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:25408 is one of the 2 curated reactions Rhea assigns to EC 2.4.1.245; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:25408
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.245"/>
+      notes: The rh:ec triple on RHEA:25408 in rhea.rdf assigns that reaction to EC 2.4.1.245.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: ADP-alpha-D-glucose is a substrate consumed by RHEA:25408 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25409
+      snippet: ADP-alpha-D-glucose + D-glucose => alpha,alpha-trehalose + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25409 declares side 25408_L as its substrates
+        (rh:substrates); the master reaction RHEA:25408 is undirected. This participant is CHEBI:57498
+        with coefficient 1. Rhea cites PMID:15364950 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: D-glucose is a substrate consumed by RHEA:25408 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25409
+      snippet: ADP-alpha-D-glucose + D-glucose => alpha,alpha-trehalose + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25409 declares side 25408_L as its substrates
+        (rh:substrates); the master reaction RHEA:25408 is undirected. This participant is CHEBI:4167
+        with coefficient 1. Rhea cites PMID:15364950 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: alpha,alpha-trehalose is a product released by RHEA:25408 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25409
+      snippet: ADP-alpha-D-glucose + D-glucose => alpha,alpha-trehalose + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25409 declares side 25408_R as its products
+        (rh:products); the master reaction RHEA:25408 is undirected. This participant is CHEBI:16551 with
+        coefficient 1. Rhea cites PMID:15364950 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:25408 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25409
+      snippet: ADP-alpha-D-glucose + D-glucose => alpha,alpha-trehalose + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25409 declares side 25408_R as its products
+        (rh:products); the master reaction RHEA:25408 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:15364950 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:25408 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25409
+      snippet: ADP-alpha-D-glucose + D-glucose => alpha,alpha-trehalose + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25409 declares side 25408_R as its products
+        (rh:products); the master reaction RHEA:25408 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15364950 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:47416 is one of the 2 curated reactions Rhea assigns to EC 2.4.1.245; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:47416
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.245"/>
+      notes: The rh:ec triple on RHEA:47416 in rhea.rdf assigns that reaction to EC 2.4.1.245.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: an NDP-alpha-D-glucose is a substrate consumed by RHEA:47416 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47417
+      snippet: an NDP-alpha-D-glucose + D-glucose => alpha,alpha-trehalose + a ribonucleoside 5'-diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47417 declares side 47416_L as its substrates
+        (rh:substrates); the master reaction RHEA:47416 is undirected. This participant is CHEBI:76533
+        with coefficient 1. Rhea cites PMID:15737605, PMID:20888836, PMID:18483808, PMID:15364950 for
+        this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: D-glucose is a substrate consumed by RHEA:47416 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47417
+      snippet: an NDP-alpha-D-glucose + D-glucose => alpha,alpha-trehalose + a ribonucleoside 5'-diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47417 declares side 47416_L as its substrates
+        (rh:substrates); the master reaction RHEA:47416 is undirected. This participant is CHEBI:4167
+        with coefficient 1. Rhea cites PMID:15737605, PMID:20888836, PMID:18483808, PMID:15364950 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: alpha,alpha-trehalose is a product released by RHEA:47416 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47417
+      snippet: an NDP-alpha-D-glucose + D-glucose => alpha,alpha-trehalose + a ribonucleoside 5'-diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47417 declares side 47416_R as its products
+        (rh:products); the master reaction RHEA:47416 is undirected. This participant is CHEBI:16551 with
+        coefficient 1. Rhea cites PMID:15737605, PMID:20888836, PMID:18483808, PMID:15364950 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: a ribonucleoside 5'-diphosphate is a product released by RHEA:47416 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47417
+      snippet: an NDP-alpha-D-glucose + D-glucose => alpha,alpha-trehalose + a ribonucleoside 5'-diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47417 declares side 47416_R as its products
+        (rh:products); the master reaction RHEA:47416 is undirected. This participant is CHEBI:57930 with
+        coefficient 1. Rhea cites PMID:15737605, PMID:20888836, PMID:18483808, PMID:15364950 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:47416 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47417
+      snippet: an NDP-alpha-D-glucose + D-glucose => alpha,alpha-trehalose + a ribonucleoside 5'-diphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:47417 declares side 47416_R as its products
+        (rh:products); the master reaction RHEA:47416 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15737605, PMID:20888836, PMID:18483808, PMID:15364950 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.245
+      snippet: EC:2.4.1.245 > GO:trehalose synthase activity ; GO:0102986
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102986 is itself a record
+        in this KB.
+  - subject: prot_Q9HH00
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TRET_PYRFU is an exemplar enzyme with EC 2.4.1.245 activity.
+    evidence:
+    - reference: EC:2.4.1.245
+      snippet: DR   Q9HH00, TRET_PYRFU ;  O58762, TRET_PYRHO ;  Q1ARU5, TRET_RUBXD ;
+      notes: ExPASy ENZYME entry EC 2.4.1.245 cross-references UniProtKB:Q9HH00 (TRET_PYRFU) as a protein
+        with this activity.
+  - subject: prot_O58762
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TRET_PYRHO is an exemplar enzyme with EC 2.4.1.245 activity.
+    evidence:
+    - reference: EC:2.4.1.245
+      snippet: DR   Q9HH00, TRET_PYRFU ;  O58762, TRET_PYRHO ;  Q1ARU5, TRET_RUBXD ;
+      notes: ExPASy ENZYME entry EC 2.4.1.245 cross-references UniProtKB:O58762 (TRET_PYRHO) as a protein
+        with this activity.
+  - subject: prot_Q1ARU5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TRET_RUBXD is an exemplar enzyme with EC 2.4.1.245 activity.
+    evidence:
+    - reference: EC:2.4.1.245
+      snippet: DR   Q9HH00, TRET_PYRFU ;  O58762, TRET_PYRHO ;  Q1ARU5, TRET_RUBXD ;
+      notes: ExPASy ENZYME entry EC 2.4.1.245 cross-references UniProtKB:Q1ARU5 (TRET_RUBXD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

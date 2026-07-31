@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 mapped_xrefs:
@@ -36,4 +36,135 @@ definitions:
       Catalyses: vanillin + L-alanine = vanillylamine + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of vanillin aminotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.119. EC 2.6.1.119 maps to
+    exactly one curated Rhea reaction (RHEA:63828), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "vanillin
+    + L-alanine = vanillylamine + pyruvate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: vanillin aminotransferase
+    grounding: EC:2.6.1.119
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: vanillin
+    node_type: CHEMICAL
+    grounding: CHEBI:18346
+    description: Formula C8H8O3.
+  - node_id: sub2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: prd1
+    label: vanillylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:149596
+    description: Formula C8H12NO2.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prot_E1AQY3
+    node_type: PROTEIN
+    label: PAMT_CAPAN
+    grounding: UniProtKB:E1AQY3
+  - node_id: prot_O82521
+    node_type: PROTEIN
+    label: PAMT_CAPCH
+    grounding: UniProtKB:O82521
+  - node_id: prot_D6R3B6
+    node_type: PROTEIN
+    label: PAMT_CAPFR
+    grounding: UniProtKB:D6R3B6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: vanillin is a substrate consumed by RHEA:63828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63829
+      snippet: vanillin + L-alanine => vanillylamine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:63829 declares side 63828_L as its substrates
+        (rh:substrates); the master reaction RHEA:63828 is undirected. This participant is CHEBI:18346
+        with coefficient 1. Rhea cites PMID:22921003, PMID:19473323, PMID:17999078, PMID:24712445 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-alanine is a substrate consumed by RHEA:63828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63829
+      snippet: vanillin + L-alanine => vanillylamine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:63829 declares side 63828_L as its substrates
+        (rh:substrates); the master reaction RHEA:63828 is undirected. This participant is CHEBI:57972
+        with coefficient 1. Rhea cites PMID:22921003, PMID:19473323, PMID:17999078, PMID:24712445 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: vanillylamine is a product released by RHEA:63828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63829
+      snippet: vanillin + L-alanine => vanillylamine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:63829 declares side 63828_R as its products
+        (rh:products); the master reaction RHEA:63828 is undirected. This participant is CHEBI:149596
+        with coefficient 1. Rhea cites PMID:22921003, PMID:19473323, PMID:17999078, PMID:24712445 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:63828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63829
+      snippet: vanillin + L-alanine => vanillylamine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:63829 declares side 63828_R as its products
+        (rh:products); the master reaction RHEA:63828 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:22921003, PMID:19473323, PMID:17999078, PMID:24712445 for this
+        reaction.
+  - subject: prot_E1AQY3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAMT_CAPAN is an exemplar enzyme with EC 2.6.1.119 activity.
+    evidence:
+    - reference: EC:2.6.1.119
+      snippet: DR   E1AQY3, PAMT_CAPAN ;  O82521, PAMT_CAPCH ;  D6R3B6, PAMT_CAPFR ;
+      notes: ExPASy ENZYME entry EC 2.6.1.119 cross-references UniProtKB:E1AQY3 (PAMT_CAPAN) as a protein
+        with this activity.
+  - subject: prot_O82521
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAMT_CAPCH is an exemplar enzyme with EC 2.6.1.119 activity.
+    evidence:
+    - reference: EC:2.6.1.119
+      snippet: DR   E1AQY3, PAMT_CAPAN ;  O82521, PAMT_CAPCH ;  D6R3B6, PAMT_CAPFR ;
+      notes: ExPASy ENZYME entry EC 2.6.1.119 cross-references UniProtKB:O82521 (PAMT_CAPCH) as a protein
+        with this activity.
+  - subject: prot_D6R3B6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAMT_CAPFR is an exemplar enzyme with EC 2.6.1.119 activity.
+    evidence:
+    - reference: EC:2.6.1.119
+      snippet: DR   E1AQY3, PAMT_CAPAN ;  O82521, PAMT_CAPCH ;  D6R3B6, PAMT_CAPFR ;
+      notes: ExPASy ENZYME entry EC 2.6.1.119 cross-references UniProtKB:D6R3B6 (PAMT_CAPFR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

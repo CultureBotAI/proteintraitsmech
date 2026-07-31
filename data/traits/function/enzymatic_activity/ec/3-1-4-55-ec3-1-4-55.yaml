@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.4.-
 mapped_xrefs:
@@ -30,4 +30,125 @@ definitions:
       Catalyses: alpha-D-ribose 1,2-cyclic phosphate 5-phosphate + H2O = alpha-D-ribose 1,5-bisphosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphoribosyl 1,2-cyclic phosphate phosphodiesterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.4.55. EC 3.1.4.55 maps to exactly
+    one curated Rhea reaction (RHEA:34795), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "alpha-D-ribose
+    1,2-cyclic phosphate 5-phosphate + H2O = alpha-D-ribose 1,5-bisphosphate + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoribosyl 1,2-cyclic phosphate phosphodiesterase
+    grounding: EC:3.1.4.55
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: alpha-D-ribose 1,2-cyclic phosphate 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:68687
+    description: Formula C5H7O10P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: alpha-D-ribose 1,5-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:68688
+    description: Formula C5H8O11P2.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoribosyl 1,2-cyclic phosphate phosphodiesterase activity
+    grounding: GO:0103043
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P16692
+    node_type: PROTEIN
+    label: PHNP_ECOLI
+    grounding: UniProtKB:P16692
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: alpha-D-ribose 1,2-cyclic phosphate 5-phosphate is a substrate consumed by RHEA:34795
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34796
+      snippet: alpha-D-ribose 1,2-cyclic phosphate 5-phosphate + H2O => alpha-D-ribose 1,5-bisphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34796 declares side 34795_L as its substrates
+        (rh:substrates); the master reaction RHEA:34795 is undirected. This participant is CHEBI:68687
+        with coefficient 1. Rhea cites PMID:21341651, PMID:21830807, PMID:19366688 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:34795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34796
+      snippet: alpha-D-ribose 1,2-cyclic phosphate 5-phosphate + H2O => alpha-D-ribose 1,5-bisphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34796 declares side 34795_L as its substrates
+        (rh:substrates); the master reaction RHEA:34795 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21341651, PMID:21830807, PMID:19366688 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-ribose 1,5-bisphosphate is a product released by RHEA:34795 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34796
+      snippet: alpha-D-ribose 1,2-cyclic phosphate 5-phosphate + H2O => alpha-D-ribose 1,5-bisphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34796 declares side 34795_R as its products
+        (rh:products); the master reaction RHEA:34795 is undirected. This participant is CHEBI:68688 with
+        coefficient 1. Rhea cites PMID:21341651, PMID:21830807, PMID:19366688 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:34795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34796
+      snippet: alpha-D-ribose 1,2-cyclic phosphate 5-phosphate + H2O => alpha-D-ribose 1,5-bisphosphate
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34796 declares side 34795_R as its products
+        (rh:products); the master reaction RHEA:34795 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21341651, PMID:21830807, PMID:19366688 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.4.55
+      snippet: EC:3.1.4.55 > GO:phosphoribosyl 1,2-cyclic phosphate phosphodiesterase activity ; GO:0103043
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0103043 is itself a record
+        in this KB.
+  - subject: prot_P16692
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHNP_ECOLI is an exemplar enzyme with EC 3.1.4.55 activity.
+    evidence:
+    - reference: EC:3.1.4.55
+      snippet: DR   P16692, PHNP_ECOLI ;
+      notes: ExPASy ENZYME entry EC 3.1.4.55 cross-references UniProtKB:P16692 (PHNP_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

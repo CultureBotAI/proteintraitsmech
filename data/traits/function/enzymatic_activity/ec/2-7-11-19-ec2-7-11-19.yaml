@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.11.-
 synonyms:
@@ -49,4 +49,81 @@ definitions:
       Catalyses: 2 ATP + phosphorylase b = 2 ADP + phosphorylase a
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphorylase kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.11.19. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "2 ATP +
+    phosphorylase b = 2 ADP + phosphorylase a".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphorylase kinase
+    grounding: EC:2.7.11.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphorylase kinase activity
+    grounding: GO:0004689
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q16816
+    node_type: PROTEIN
+    label: PHKG1_HUMAN
+    grounding: UniProtKB:Q16816
+  - node_id: prot_P07934
+    node_type: PROTEIN
+    label: PHKG1_MOUSE
+    grounding: UniProtKB:P07934
+  - node_id: prot_P00518
+    node_type: PROTEIN
+    label: PHKG1_RABIT
+    grounding: UniProtKB:P00518
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.11.19
+      snippet: EC:2.7.11.19 > GO:phosphorylase kinase activity ; GO:0004689
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004689 is itself a record
+        in this KB.
+  - subject: prot_Q16816
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHKG1_HUMAN is an exemplar enzyme with EC 2.7.11.19 activity.
+    evidence:
+    - reference: EC:2.7.11.19
+      snippet: DR   Q16816, PHKG1_HUMAN;  P07934, PHKG1_MOUSE;  P00518, PHKG1_RABIT;
+      notes: ExPASy ENZYME entry EC 2.7.11.19 cross-references UniProtKB:Q16816 (PHKG1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P07934
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHKG1_MOUSE is an exemplar enzyme with EC 2.7.11.19 activity.
+    evidence:
+    - reference: EC:2.7.11.19
+      snippet: DR   Q16816, PHKG1_HUMAN;  P07934, PHKG1_MOUSE;  P00518, PHKG1_RABIT;
+      notes: ExPASy ENZYME entry EC 2.7.11.19 cross-references UniProtKB:P07934 (PHKG1_MOUSE) as a protein
+        with this activity.
+  - subject: prot_P00518
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHKG1_RABIT is an exemplar enzyme with EC 2.7.11.19 activity.
+    evidence:
+    - reference: EC:2.7.11.19
+      snippet: DR   Q16816, PHKG1_HUMAN;  P07934, PHKG1_MOUSE;  P00518, PHKG1_RABIT;
+      notes: ExPASy ENZYME entry EC 2.7.11.19 cross-references UniProtKB:P00518 (PHKG1_RABIT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

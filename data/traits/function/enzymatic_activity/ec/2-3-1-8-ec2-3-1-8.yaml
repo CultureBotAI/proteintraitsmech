@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -45,4 +45,146 @@ definitions:
       Catalyses: acetyl-CoA + phosphate = acetyl phosphate + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphate acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.8. EC 2.3.1.8 maps to exactly
+    one curated Rhea reaction (RHEA:19521), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "acetyl-CoA +
+    phosphate = acetyl phosphate + CoA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphate acetyltransferase
+    grounding: EC:2.3.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: acetyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:22191
+    description: Formula C2H3O5P.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphate acetyltransferase activity
+    grounding: GO:0008959
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P77218
+    node_type: PROTEIN
+    label: EUTD_ECOLI
+    grounding: UniProtKB:P77218
+  - node_id: prot_P41790
+    node_type: PROTEIN
+    label: EUTD_SALTY
+    grounding: UniProtKB:P41790
+  - node_id: prot_O52593
+    node_type: PROTEIN
+    label: PTAS_ACET2
+    grounding: UniProtKB:O52593
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acetyl-CoA is a substrate consumed by RHEA:19521 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19522
+      snippet: acetyl-CoA + phosphate => acetyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:19522 declares side 19521_L as its substrates
+        (rh:substrates); the master reaction RHEA:19521 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:10074080 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:19521 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19522
+      snippet: acetyl-CoA + phosphate => acetyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:19522 declares side 19521_L as its substrates
+        (rh:substrates); the master reaction RHEA:19521 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:10074080 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: acetyl phosphate is a product released by RHEA:19521 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19522
+      snippet: acetyl-CoA + phosphate => acetyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:19522 declares side 19521_R as its products
+        (rh:products); the master reaction RHEA:19521 is undirected. This participant is CHEBI:22191 with
+        coefficient 1. Rhea cites PMID:10074080 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:19521 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19522
+      snippet: acetyl-CoA + phosphate => acetyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:19522 declares side 19521_R as its products
+        (rh:products); the master reaction RHEA:19521 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:10074080 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.8
+      snippet: EC:2.3.1.8 > GO:phosphate acetyltransferase activity ; GO:0008959
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008959 is itself a record
+        in this KB.
+  - subject: prot_P77218
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EUTD_ECOLI is an exemplar enzyme with EC 2.3.1.8 activity.
+    evidence:
+    - reference: EC:2.3.1.8
+      snippet: DR   P77218, EUTD_ECOLI ;  P41790, EUTD_SALTY ;  O52593, PTAS_ACET2 ;
+      notes: ExPASy ENZYME entry EC 2.3.1.8 cross-references UniProtKB:P77218 (EUTD_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P41790
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EUTD_SALTY is an exemplar enzyme with EC 2.3.1.8 activity.
+    evidence:
+    - reference: EC:2.3.1.8
+      snippet: DR   P77218, EUTD_ECOLI ;  P41790, EUTD_SALTY ;  O52593, PTAS_ACET2 ;
+      notes: ExPASy ENZYME entry EC 2.3.1.8 cross-references UniProtKB:P41790 (EUTD_SALTY) as a protein
+        with this activity.
+  - subject: prot_O52593
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTAS_ACET2 is an exemplar enzyme with EC 2.3.1.8 activity.
+    evidence:
+    - reference: EC:2.3.1.8
+      snippet: DR   P77218, EUTD_ECOLI ;  P41790, EUTD_SALTY ;  O52593, PTAS_ACET2 ;
+      notes: ExPASy ENZYME entry EC 2.3.1.8 cross-references UniProtKB:O52593 (PTAS_ACET2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

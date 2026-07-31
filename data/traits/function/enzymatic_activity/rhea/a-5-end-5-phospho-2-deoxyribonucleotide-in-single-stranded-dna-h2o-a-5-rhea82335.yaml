@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:136412
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,135 @@ definitions:
       Catalyses the reaction: a 5'-end 5'-phospho-2'-deoxyribonucleotide in single-stranded DNA + H2O = a 5'-end 5'-dephospho-2'-deoxyribonucleotide in single-stranded DNA + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 5'-end 5'-phospho-2'-deoxyribonucleotide in single-stranded DNA + H2O
+    = a 5'-end 5'-d…
+  description: Substrate-to-product chemistry of RHEA:82335, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:82336 (rh:substrates → 82335_L, rh:products → 82335_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 5'-end 5'-phospho-2'-deoxyribonucleotide in single-stranded DNA + H2O = a…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:82335
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 5''-end 5''-phospho-2''-deoxyribonucleotide in single-stranded DNA + H2O = a 5''-end
+      5''-dephospho-2''-deoxyribonucleotide in single-stranded DNA + phosphate'
+  - node_id: sub1
+    label: a 5'-end 5'-phospho-2'-deoxyribonucleotide in single-stranded DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19868
+    description: Rhea compound GENERIC:19868.
+  - node_id: sub1_rp1
+    label: 5'-phosphate 2'-deoxynucleoside residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19868 (a 5'-end
+      5'-phospho-2'-deoxyribonucleotide in single-stranded DNA); no position on any specific protein sequence
+      is asserted.
+    grounding: CHEBI:136412
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 5'-end 5'-dephospho-2'-deoxyribonucleotide in single-stranded DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19869
+    description: Rhea compound GENERIC:19869.
+  - node_id: prd1_rp1
+    label: 5'-end 2'-deoxyribonucleoside
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19869 (a 5'-end
+      5'-dephospho-2'-deoxyribonucleotide in single-stranded DNA); no position on any specific protein
+      sequence is asserted.
+    grounding: CHEBI:136416
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 5'-end 5'-phospho-2'-deoxyribonucleotide in single-stranded DNA is a substrate consumed
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82336
+      snippet: a 5'-end 5'-phospho-2'-deoxyribonucleotide in single-stranded DNA + H2O => a 5'-end 5'-dephospho-2'-deoxyribonucleotide
+        in single-stranded DNA + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:82336 declares side 82335_L as its substrates
+        (rh:substrates); the master reaction RHEA:82335 is undirected. This participant is GENERIC:19868
+        with coefficient 1. Rhea cites PMID:38537643 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 5'-phosphate 2'-deoxynucleoside residue is the reactive part of a 5'-end 5'-phospho-2'-deoxyribonucleotide
+      in single-stranded DNA.
+    evidence:
+    - reference: RHEA:82335
+      snippet: 5'-phosphate 2'-deoxynucleoside residue
+      notes: Rhea compound GENERIC:19868 (a 5'-end 5'-phospho-2'-deoxyribonucleotide in single-stranded
+        DNA) declares rh:reactivePart = 5'-phosphate 2'-deoxynucleoside residue (CHEBI:136412), formula
+        C5H7O6PR.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82336
+      snippet: a 5'-end 5'-phospho-2'-deoxyribonucleotide in single-stranded DNA + H2O => a 5'-end 5'-dephospho-2'-deoxyribonucleotide
+        in single-stranded DNA + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:82336 declares side 82335_L as its substrates
+        (rh:substrates); the master reaction RHEA:82335 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:38537643 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 5'-end 5'-dephospho-2'-deoxyribonucleotide in single-stranded DNA is a product released
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82336
+      snippet: a 5'-end 5'-phospho-2'-deoxyribonucleotide in single-stranded DNA + H2O => a 5'-end 5'-dephospho-2'-deoxyribonucleotide
+        in single-stranded DNA + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:82336 declares side 82335_R as its products
+        (rh:products); the master reaction RHEA:82335 is undirected. This participant is GENERIC:19869
+        with coefficient 1. Rhea cites PMID:38537643 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 5'-end 2'-deoxyribonucleoside is the reactive part of a 5'-end 5'-dephospho-2'-deoxyribonucleotide
+      in single-stranded DNA.
+    evidence:
+    - reference: RHEA:82335
+      snippet: 5'-end 2'-deoxyribonucleoside
+      notes: Rhea compound GENERIC:19869 (a 5'-end 5'-dephospho-2'-deoxyribonucleotide in single-stranded
+        DNA) declares rh:reactivePart = 5'-end 2'-deoxyribonucleoside (CHEBI:136416), formula C5H8O3R.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82336
+      snippet: a 5'-end 5'-phospho-2'-deoxyribonucleotide in single-stranded DNA + H2O => a 5'-end 5'-dephospho-2'-deoxyribonucleotide
+        in single-stranded DNA + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:82336 declares side 82335_R as its products
+        (rh:products); the master reaction RHEA:82335 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:38537643 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

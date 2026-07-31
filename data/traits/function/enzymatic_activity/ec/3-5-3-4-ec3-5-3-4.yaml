@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.3.-
 synonyms:
@@ -41,4 +41,146 @@ definitions:
       Catalyses: allantoate + H2O = (S)-ureidoglycolate + urea
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of allantoicase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.3.4. EC 3.5.3.4 maps to exactly
+    one curated Rhea reaction (RHEA:11016), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "allantoate +
+    H2O = (S)-ureidoglycolate + urea". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: allantoicase
+    grounding: EC:3.5.3.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: allantoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17536
+    description: Formula C4H7N4O4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (S)-ureidoglycolate
+    node_type: CHEMICAL
+    grounding: CHEBI:57296
+    description: Formula C3H5N2O4.
+  - node_id: prd2
+    label: urea
+    node_type: CHEMICAL
+    grounding: CHEBI:16199
+    description: Formula CH4N2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: allantoicase activity
+    grounding: GO:0004037
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q62JH0
+    node_type: PROTEIN
+    label: ALLC1_BURMA
+    grounding: UniProtKB:Q62JH0
+  - node_id: prot_Q63T53
+    node_type: PROTEIN
+    label: ALLC1_BURPS
+    grounding: UniProtKB:Q63T53
+  - node_id: prot_Q62H14
+    node_type: PROTEIN
+    label: ALLC2_BURMA
+    grounding: UniProtKB:Q62H14
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: allantoate is a substrate consumed by RHEA:11016 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11017
+      snippet: allantoate + H2O => (S)-ureidoglycolate + urea
+      notes: Rhea's left-to-right directional reaction RHEA:11017 declares side 11016_L as its substrates
+        (rh:substrates); the master reaction RHEA:11016 is undirected. This participant is CHEBI:17536
+        with coefficient 1. Rhea cites PMID:4314237, PMID:15020593, PMID:15229895 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:11016 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11017
+      snippet: allantoate + H2O => (S)-ureidoglycolate + urea
+      notes: Rhea's left-to-right directional reaction RHEA:11017 declares side 11016_L as its substrates
+        (rh:substrates); the master reaction RHEA:11016 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4314237, PMID:15020593, PMID:15229895 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-ureidoglycolate is a product released by RHEA:11016 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11017
+      snippet: allantoate + H2O => (S)-ureidoglycolate + urea
+      notes: Rhea's left-to-right directional reaction RHEA:11017 declares side 11016_R as its products
+        (rh:products); the master reaction RHEA:11016 is undirected. This participant is CHEBI:57296 with
+        coefficient 1. Rhea cites PMID:4314237, PMID:15020593, PMID:15229895 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: urea is a product released by RHEA:11016 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11017
+      snippet: allantoate + H2O => (S)-ureidoglycolate + urea
+      notes: Rhea's left-to-right directional reaction RHEA:11017 declares side 11016_R as its products
+        (rh:products); the master reaction RHEA:11016 is undirected. This participant is CHEBI:16199 with
+        coefficient 1. Rhea cites PMID:4314237, PMID:15020593, PMID:15229895 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.3.4
+      snippet: EC:3.5.3.4 > GO:allantoicase activity ; GO:0004037
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004037 is itself a record
+        in this KB.
+  - subject: prot_Q62JH0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALLC1_BURMA is an exemplar enzyme with EC 3.5.3.4 activity.
+    evidence:
+    - reference: EC:3.5.3.4
+      snippet: DR   Q62JH0, ALLC1_BURMA;  Q63T53, ALLC1_BURPS;  Q62H14, ALLC2_BURMA;
+      notes: ExPASy ENZYME entry EC 3.5.3.4 cross-references UniProtKB:Q62JH0 (ALLC1_BURMA) as a protein
+        with this activity.
+  - subject: prot_Q63T53
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALLC1_BURPS is an exemplar enzyme with EC 3.5.3.4 activity.
+    evidence:
+    - reference: EC:3.5.3.4
+      snippet: DR   Q62JH0, ALLC1_BURMA;  Q63T53, ALLC1_BURPS;  Q62H14, ALLC2_BURMA;
+      notes: ExPASy ENZYME entry EC 3.5.3.4 cross-references UniProtKB:Q63T53 (ALLC1_BURPS) as a protein
+        with this activity.
+  - subject: prot_Q62H14
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALLC2_BURMA is an exemplar enzyme with EC 3.5.3.4 activity.
+    evidence:
+    - reference: EC:3.5.3.4
+      snippet: DR   Q62JH0, ALLC1_BURMA;  Q63T53, ALLC1_BURPS;  Q62H14, ALLC2_BURMA;
+      notes: ExPASy ENZYME entry EC 3.5.3.4 cross-references UniProtKB:Q62H14 (ALLC2_BURMA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

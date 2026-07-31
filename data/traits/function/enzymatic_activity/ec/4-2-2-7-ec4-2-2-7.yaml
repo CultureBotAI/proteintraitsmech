@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -41,4 +41,83 @@ definitions:
       Catalyses: Eliminative cleavage of polysaccharides containing (1->4)-linked D-glucuronate or L-iduronate residues and (1->4)-alpha-linked 2-sulfoamino-2-deoxy-6-sulfo-D-glucose residues to give oligosaccharides with terminal 4-deoxy-alpha-D-gluc-4-enuronosyl groups at their non- reducing ends
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of heparin lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.7. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Eliminative
+    cleavage of polysaccharides containing (1->4)-linked D-glucuronate or L-iduronate residues and (1->4)-alpha-linked
+    2-sulfoamino-2-deoxy-6-sulfo-D-glucose residues to give oligosaccharides with terminal 4-deoxy-alpha-D-gluc-4-enuronosyl
+    groups at their non- reducing ends".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: heparin lyase
+    grounding: EC:4.2.2.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: heparin lyase activity
+    grounding: GO:0047488
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P83054
+    node_type: PROTEIN
+    label: HEP1_BACSE
+    grounding: UniProtKB:P83054
+  - node_id: prot_Q05819
+    node_type: PROTEIN
+    label: HEP1_PEDHE
+    grounding: UniProtKB:Q05819
+  - node_id: prot_C6XZB6
+    node_type: PROTEIN
+    label: HEPB_PEDHD
+    grounding: UniProtKB:C6XZB6
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.7
+      snippet: EC:4.2.2.7 > GO:heparin lyase activity ; GO:0047488
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047488 is itself a record
+        in this KB.
+  - subject: prot_P83054
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HEP1_BACSE is an exemplar enzyme with EC 4.2.2.7 activity.
+    evidence:
+    - reference: EC:4.2.2.7
+      snippet: DR   P83054, HEP1_BACSE ;  Q05819, HEP1_PEDHE ;  C6XZB6, HEPB_PEDHD ;
+      notes: ExPASy ENZYME entry EC 4.2.2.7 cross-references UniProtKB:P83054 (HEP1_BACSE) as a protein
+        with this activity.
+  - subject: prot_Q05819
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HEP1_PEDHE is an exemplar enzyme with EC 4.2.2.7 activity.
+    evidence:
+    - reference: EC:4.2.2.7
+      snippet: DR   P83054, HEP1_BACSE ;  Q05819, HEP1_PEDHE ;  C6XZB6, HEPB_PEDHD ;
+      notes: ExPASy ENZYME entry EC 4.2.2.7 cross-references UniProtKB:Q05819 (HEP1_PEDHE) as a protein
+        with this activity.
+  - subject: prot_C6XZB6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HEPB_PEDHD is an exemplar enzyme with EC 4.2.2.7 activity.
+    evidence:
+    - reference: EC:4.2.2.7
+      snippet: DR   P83054, HEP1_BACSE ;  Q05819, HEP1_PEDHE ;  C6XZB6, HEPB_PEDHD ;
+      notes: ExPASy ENZYME entry EC 4.2.2.7 cross-references UniProtKB:C6XZB6 (HEPB_PEDHD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

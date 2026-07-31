@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 mapped_xrefs:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: neamine + 5-phospho-alpha-D-ribose 1-diphosphate = 5''-phosphoribostamycin + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of neamine phosphoribosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.49. EC 2.4.2.49 maps to exactly
+    one curated Rhea reaction (RHEA:34043), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "neamine + 5-phospho-alpha-D-ribose
+    1-diphosphate = 5''''-phosphoribostamycin + diphosphate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: neamine phosphoribosyltransferase
+    grounding: EC:2.4.2.49
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: neamine
+    node_type: CHEMICAL
+    grounding: CHEBI:65076
+    description: Formula C12H30N4O6.
+  - node_id: sub2
+    label: 5-phospho-alpha-D-ribose 1-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58017
+    description: Formula C5H8O14P3.
+  - node_id: prd1
+    label: 5''-phosphoribostamycin
+    node_type: CHEMICAL
+    grounding: CHEBI:65082
+    description: Formula C17H37N4O13P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q4H4F7
+    node_type: PROTEIN
+    label: BTRL_NIACI
+    grounding: UniProtKB:Q4H4F7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: neamine is a substrate consumed by RHEA:34043 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34044
+      snippet: neamine + 5-phospho-alpha-D-ribose 1-diphosphate => 5''-phosphoribostamycin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34044 declares side 34043_L as its substrates
+        (rh:substrates); the master reaction RHEA:34043 is undirected. This participant is CHEBI:65076
+        with coefficient 1. Rhea cites PMID:17482823 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 5-phospho-alpha-D-ribose 1-diphosphate is a substrate consumed by RHEA:34043 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34044
+      snippet: neamine + 5-phospho-alpha-D-ribose 1-diphosphate => 5''-phosphoribostamycin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34044 declares side 34043_L as its substrates
+        (rh:substrates); the master reaction RHEA:34043 is undirected. This participant is CHEBI:58017
+        with coefficient 1. Rhea cites PMID:17482823 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5''-phosphoribostamycin is a product released by RHEA:34043 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34044
+      snippet: neamine + 5-phospho-alpha-D-ribose 1-diphosphate => 5''-phosphoribostamycin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34044 declares side 34043_R as its products
+        (rh:products); the master reaction RHEA:34043 is undirected. This participant is CHEBI:65082 with
+        coefficient 1. Rhea cites PMID:17482823 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:34043 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34044
+      snippet: neamine + 5-phospho-alpha-D-ribose 1-diphosphate => 5''-phosphoribostamycin + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34044 declares side 34043_R as its products
+        (rh:products); the master reaction RHEA:34043 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:17482823 for this reaction.
+  - subject: prot_Q4H4F7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BTRL_NIACI is an exemplar enzyme with EC 2.4.2.49 activity.
+    evidence:
+    - reference: EC:2.4.2.49
+      snippet: DR   Q4H4F7, BTRL_NIACI ;
+      notes: ExPASy ENZYME entry EC 2.4.2.49 cross-references UniProtKB:Q4H4F7 (BTRL_NIACI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

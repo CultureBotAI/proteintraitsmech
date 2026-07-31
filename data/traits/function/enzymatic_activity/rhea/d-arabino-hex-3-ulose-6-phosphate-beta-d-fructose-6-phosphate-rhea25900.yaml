@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.1.27
     mapping_source: rhea2ec
@@ -28,4 +28,151 @@ definitions:
       Catalyses the reaction: D-arabino-hex-3-ulose 6-phosphate = beta-D-fructose 6-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-arabino-hex-3-ulose 6-phosphate = beta-D-fructose 6-phosphate
+  description: Substrate-to-product chemistry of RHEA:25900, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:25901 (rh:substrates → 25900_L, rh:products → 25900_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-arabino-hex-3-ulose 6-phosphate = beta-D-fructose 6-phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:25900
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-arabino-hex-3-ulose 6-phosphate = beta-D-fructose 6-phosphate'
+  - node_id: sub1
+    label: D-arabino-hex-3-ulose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58542
+    description: Formula C6H11O9P.
+  - node_id: prd1
+    label: beta-D-fructose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57634
+    description: Formula C6H11O9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 6-phospho-3-hexuloisomerase activity
+    grounding: GO:0043800
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 6-phospho-3-hexuloisomerase
+    grounding: EC:5.3.1.27
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P42404
+    node_type: PROTEIN
+    label: PHI_BACSU
+    grounding: UniProtKB:P42404
+  - node_id: prot_Q9S0X3
+    node_type: PROTEIN
+    label: PHI_METAM
+    grounding: UniProtKB:Q9S0X3
+  - node_id: prot_Q58644
+    node_type: PROTEIN
+    label: PHI_METJA
+    grounding: UniProtKB:Q58644
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-arabino-hex-3-ulose 6-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:25901
+      snippet: D-arabino-hex-3-ulose 6-phosphate => beta-D-fructose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25901 declares side 25900_L as its substrates
+        (rh:substrates); the master reaction RHEA:25900 is undirected. This participant is CHEBI:58542
+        with coefficient 1. Rhea cites PMID:421983, PMID:11468398, PMID:11839305 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-fructose 6-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25901
+      snippet: D-arabino-hex-3-ulose 6-phosphate => beta-D-fructose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25901 declares side 25900_R as its products
+        (rh:products); the master reaction RHEA:25900 is undirected. This participant is CHEBI:57634 with
+        coefficient 1. Rhea cites PMID:421983, PMID:11468398, PMID:11839305 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:25900
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0043800"/>
+      notes: The rdfs:seeAlso triple on RHEA:25900 in rhea.rdf. GO term GO:0043800 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.1.27; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:25900
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.27"/>
+      notes: The rh:ec triple on RHEA:25900 in rhea.rdf. EC 5.3.1.27 is itself a record in this KB.
+  - subject: prot_P42404
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHI_BACSU is an exemplar enzyme carrying EC 5.3.1.27, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.27
+      snippet: DR   P42404, PHI_BACSU  ;  Q9S0X3, PHI_METAM  ;  Q58644, PHI_METJA  ;
+      notes: ExPASy ENZYME entry EC 5.3.1.27 cross-references UniProtKB:P42404 (PHI_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:25900
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.27"/>
+      notes: Rhea assigns RHEA:25900 to EC 5.3.1.27, and EC 5.3.1.27 maps to exactly one Rhea master reaction
+        (RHEA:25900), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9S0X3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHI_METAM is an exemplar enzyme carrying EC 5.3.1.27, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.27
+      snippet: DR   P42404, PHI_BACSU  ;  Q9S0X3, PHI_METAM  ;  Q58644, PHI_METJA  ;
+      notes: ExPASy ENZYME entry EC 5.3.1.27 cross-references UniProtKB:Q9S0X3 (PHI_METAM) as a protein
+        with this activity.
+    - reference: RHEA:25900
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.27"/>
+      notes: Rhea assigns RHEA:25900 to EC 5.3.1.27, and EC 5.3.1.27 maps to exactly one Rhea master reaction
+        (RHEA:25900), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q58644
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHI_METJA is an exemplar enzyme carrying EC 5.3.1.27, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.27
+      snippet: DR   P42404, PHI_BACSU  ;  Q9S0X3, PHI_METAM  ;  Q58644, PHI_METJA  ;
+      notes: ExPASy ENZYME entry EC 5.3.1.27 cross-references UniProtKB:Q58644 (PHI_METJA) as a protein
+        with this activity.
+    - reference: RHEA:25900
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.27"/>
+      notes: Rhea assigns RHEA:25900 to EC 5.3.1.27, and EC 5.3.1.27 maps to exactly one Rhea master reaction
+        (RHEA:25900), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

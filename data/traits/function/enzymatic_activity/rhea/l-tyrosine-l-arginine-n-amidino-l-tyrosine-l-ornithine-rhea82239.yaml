@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.1.4.4
     mapping_source: rhea2ec
@@ -28,4 +28,106 @@ definitions:
       Catalyses the reaction: L-tyrosine + L-arginine = N-amidino-L-tyrosine + L-ornithine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-tyrosine + L-arginine = N-amidino-L-tyrosine + L-ornithine
+  description: Substrate-to-product chemistry of RHEA:82239, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:82240 (rh:substrates → 82239_L, rh:products → 82239_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-tyrosine + L-arginine = N-amidino-L-tyrosine + L-ornithine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:82239
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-tyrosine + L-arginine = N-amidino-L-tyrosine + L-ornithine'
+  - node_id: sub1
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+    description: Formula C9H11NO3.
+  - node_id: sub2
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: prd1
+    label: N-amidino-L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:232124
+    description: Formula C10H13N3O3.
+  - node_id: prd2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: valine amidinotransferase
+    grounding: EC:2.1.4.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tyrosine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82240
+      snippet: L-tyrosine + L-arginine => N-amidino-L-tyrosine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82240 declares side 82239_L as its substrates
+        (rh:substrates); the master reaction RHEA:82239 is undirected. This participant is CHEBI:58315
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-arginine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82240
+      snippet: L-tyrosine + L-arginine => N-amidino-L-tyrosine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82240 declares side 82239_L as its substrates
+        (rh:substrates); the master reaction RHEA:82239 is undirected. This participant is CHEBI:32682
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-amidino-L-tyrosine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82240
+      snippet: L-tyrosine + L-arginine => N-amidino-L-tyrosine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82240 declares side 82239_R as its products
+        (rh:products); the master reaction RHEA:82239 is undirected. This participant is CHEBI:232124
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-ornithine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82240
+      snippet: L-tyrosine + L-arginine => N-amidino-L-tyrosine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82240 declares side 82239_R as its products
+        (rh:products); the master reaction RHEA:82239 is undirected. This participant is CHEBI:46911 with
+        coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.1.4.4; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:82239
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.4.4"/>
+      notes: The rh:ec triple on RHEA:82239 in rhea.rdf. EC 2.1.4.4 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

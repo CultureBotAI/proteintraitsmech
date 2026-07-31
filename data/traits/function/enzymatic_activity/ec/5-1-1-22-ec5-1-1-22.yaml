@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.1.-
 mapped_xrefs:
@@ -34,4 +34,152 @@ definitions:
       Catalyses: (1) trans-4-hydroxy-L-proline betaine = cis-4-hydroxy-D-proline betaine. (2) L-proline betaine = D-proline betaine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-hydroxyproline betaine 2-epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.1.22. Rhea assigns 2 curated
+    reactions to EC 5.1.1.22. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) trans-4-hydroxy-L-proline betaine = cis-4-hydroxy-D-proline
+    betaine. (2) L-proline betaine = D-proline betaine". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-hydroxyproline betaine 2-epimerase
+    grounding: EC:5.1.1.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of trans-4-hydroxy-L-proline betaine = cis-4-hydroxy-D-proline betaine
+    grounding: RHEA:47544
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: trans-4-hydroxy-L-proline betaine = cis-4-hydroxy-D-proline betaine'
+  - node_id: rxn1_sub1
+    label: trans-4-hydroxy-L-proline betaine
+    node_type: CHEMICAL
+    grounding: CHEBI:85533
+    description: Formula C7H13NO3.
+  - node_id: rxn1_prd1
+    label: cis-4-hydroxy-D-proline betaine
+    node_type: CHEMICAL
+    grounding: CHEBI:85534
+    description: Formula C7H13NO3.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-proline betaine = D-proline betaine
+    grounding: RHEA:51884
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-proline betaine = D-proline betaine'
+  - node_id: rxn2_sub1
+    label: L-proline betaine
+    node_type: CHEMICAL
+    grounding: CHEBI:35280
+    description: Formula C7H13NO2.
+  - node_id: rxn2_prd1
+    label: D-proline betaine
+    node_type: CHEMICAL
+    grounding: CHEBI:134398
+    description: Formula C7H13NO2.
+  - node_id: prot_A1B198
+    node_type: PROTEIN
+    label: HPBD_PARDP
+    grounding: UniProtKB:A1B198
+  - node_id: prot_Q0FPQ4
+    node_type: PROTEIN
+    label: HPBD_SALBH
+    grounding: UniProtKB:Q0FPQ4
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:47544 is one of the 2 curated reactions Rhea assigns to EC 5.1.1.22; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:47544
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.22"/>
+      notes: The rh:ec triple on RHEA:47544 in rhea.rdf assigns that reaction to EC 5.1.1.22.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: trans-4-hydroxy-L-proline betaine is a substrate consumed by RHEA:47544 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:47545
+      snippet: trans-4-hydroxy-L-proline betaine => cis-4-hydroxy-D-proline betaine
+      notes: Rhea's left-to-right directional reaction RHEA:47545 declares side 47544_L as its substrates
+        (rh:substrates); the master reaction RHEA:47544 is undirected. This participant is CHEBI:85533
+        with coefficient 1. Rhea cites PMID:24056934, PMID:24520058 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: cis-4-hydroxy-D-proline betaine is a product released by RHEA:47544 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47545
+      snippet: trans-4-hydroxy-L-proline betaine => cis-4-hydroxy-D-proline betaine
+      notes: Rhea's left-to-right directional reaction RHEA:47545 declares side 47544_R as its products
+        (rh:products); the master reaction RHEA:47544 is undirected. This participant is CHEBI:85534 with
+        coefficient 1. Rhea cites PMID:24056934, PMID:24520058 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:51884 is one of the 2 curated reactions Rhea assigns to EC 5.1.1.22; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:51884
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.22"/>
+      notes: The rh:ec triple on RHEA:51884 in rhea.rdf assigns that reaction to EC 5.1.1.22.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: L-proline betaine is a substrate consumed by RHEA:51884 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51885
+      snippet: L-proline betaine => D-proline betaine
+      notes: Rhea's left-to-right directional reaction RHEA:51885 declares side 51884_L as its substrates
+        (rh:substrates); the master reaction RHEA:51884 is undirected. This participant is CHEBI:35280
+        with coefficient 1. Rhea cites PMID:24056934, PMID:24520058 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: D-proline betaine is a product released by RHEA:51884 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51885
+      snippet: L-proline betaine => D-proline betaine
+      notes: Rhea's left-to-right directional reaction RHEA:51885 declares side 51884_R as its products
+        (rh:products); the master reaction RHEA:51884 is undirected. This participant is CHEBI:134398
+        with coefficient 1. Rhea cites PMID:24056934, PMID:24520058 for this reaction.
+  - subject: prot_A1B198
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPBD_PARDP is an exemplar enzyme with EC 5.1.1.22 activity.
+    evidence:
+    - reference: EC:5.1.1.22
+      snippet: DR   A1B198, HPBD_PARDP ;  Q0FPQ4, HPBD_SALBH ;
+      notes: ExPASy ENZYME entry EC 5.1.1.22 cross-references UniProtKB:A1B198 (HPBD_PARDP) as a protein
+        with this activity.
+  - subject: prot_Q0FPQ4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPBD_SALBH is an exemplar enzyme with EC 5.1.1.22 activity.
+    evidence:
+    - reference: EC:5.1.1.22
+      snippet: DR   A1B198, HPBD_PARDP ;  Q0FPQ4, HPBD_SALBH ;
+      notes: ExPASy ENZYME entry EC 5.1.1.22 cross-references UniProtKB:Q0FPQ4 (HPBD_SALBH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

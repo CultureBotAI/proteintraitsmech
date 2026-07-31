@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.1.188
     mapping_source: rhea2ec
@@ -30,4 +30,146 @@ definitions:
       Catalyses the reaction: avenacoside B + H2O = 26-desgluco-avenacoside B + D-glucose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of avenacoside B + H2O = 26-desgluco-avenacoside B + D-glucose
+  description: Substrate-to-product chemistry of RHEA:38911, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:38912 (rh:substrates → 38911_L, rh:products → 38911_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of avenacoside B + H2O = 26-desgluco-avenacoside B + D-glucose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:38911
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: avenacoside B + H2O = 26-desgluco-avenacoside B + D-glucose'
+  - node_id: sub1
+    label: avenacoside B
+    node_type: CHEMICAL
+    grounding: CHEBI:2938
+    description: Formula C57H92O28.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 26-desgluco-avenacoside B
+    node_type: CHEMICAL
+    grounding: CHEBI:75931
+    description: Formula C51H82O23.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: avenacosidase
+    grounding: EC:3.2.1.188
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q38786
+    node_type: PROTEIN
+    label: AVCO1_AVESA
+    grounding: UniProtKB:Q38786
+  - node_id: prot_Q9ZP27
+    node_type: PROTEIN
+    label: AVCO2_AVESA
+    grounding: UniProtKB:Q9ZP27
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: avenacoside B is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38912
+      snippet: avenacoside B + H2O => 26-desgluco-avenacoside B + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:38912 declares side 38911_L as its substrates
+        (rh:substrates); the master reaction RHEA:38911 is undirected. This participant is CHEBI:2938
+        with coefficient 1. Rhea cites PMID:8013661, PMID:8000004 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38912
+      snippet: avenacoside B + H2O => 26-desgluco-avenacoside B + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:38912 declares side 38911_L as its substrates
+        (rh:substrates); the master reaction RHEA:38911 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:8013661, PMID:8000004 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 26-desgluco-avenacoside B is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38912
+      snippet: avenacoside B + H2O => 26-desgluco-avenacoside B + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:38912 declares side 38911_R as its products
+        (rh:products); the master reaction RHEA:38911 is undirected. This participant is CHEBI:75931 with
+        coefficient 1. Rhea cites PMID:8013661, PMID:8000004 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38912
+      snippet: avenacoside B + H2O => 26-desgluco-avenacoside B + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:38912 declares side 38911_R as its products
+        (rh:products); the master reaction RHEA:38911 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:8013661, PMID:8000004 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.1.188; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:38911
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.188"/>
+      notes: The rh:ec triple on RHEA:38911 in rhea.rdf. EC 3.2.1.188 is itself a record in this KB.
+  - subject: prot_Q38786
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AVCO1_AVESA is an exemplar enzyme carrying EC 3.2.1.188, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.188
+      snippet: DR   Q38786, AVCO1_AVESA;  Q9ZP27, AVCO2_AVESA;
+      notes: ExPASy ENZYME entry EC 3.2.1.188 cross-references UniProtKB:Q38786 (AVCO1_AVESA) as a protein
+        with this activity.
+    - reference: RHEA:38911
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.188"/>
+      notes: Rhea assigns RHEA:38911 to EC 3.2.1.188, and EC 3.2.1.188 maps to exactly one Rhea master
+        reaction (RHEA:38911), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9ZP27
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AVCO2_AVESA is an exemplar enzyme carrying EC 3.2.1.188, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.188
+      snippet: DR   Q38786, AVCO1_AVESA;  Q9ZP27, AVCO2_AVESA;
+      notes: ExPASy ENZYME entry EC 3.2.1.188 cross-references UniProtKB:Q9ZP27 (AVCO2_AVESA) as a protein
+        with this activity.
+    - reference: RHEA:38911
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.188"/>
+      notes: Rhea assigns RHEA:38911 to EC 3.2.1.188, and EC 3.2.1.188 maps to exactly one Rhea master
+        reaction (RHEA:38911), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

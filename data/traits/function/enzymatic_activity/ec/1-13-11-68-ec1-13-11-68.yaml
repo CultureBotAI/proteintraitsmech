@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 mapped_xrefs:
@@ -34,4 +34,134 @@ definitions:
       Catalyses: 9-cis-beta-carotene + O2 = 9-cis-10'-apo-beta-carotenal + beta-ionone
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 9-cis-beta-carotene 9',10'-cleaving dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.68. EC 1.13.11.68 maps to
+    exactly one curated Rhea reaction (RHEA:34399), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "9-cis-beta-carotene
+    + O2 = 9-cis-10''-apo-beta-carotenal + beta-ionone". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 9-cis-beta-carotene 9',10'-cleaving dioxygenase
+    grounding: EC:1.13.11.68
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 9-cis-beta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:67188
+    description: Formula C40H56.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 9-cis-10'-apo-beta-carotenal
+    node_type: CHEMICAL
+    grounding: CHEBI:67192
+    description: Formula C27H36O.
+  - node_id: prd2
+    label: beta-ionone
+    node_type: CHEMICAL
+    grounding: CHEBI:32325
+    description: Formula C13H20O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 9-cis-beta-carotene 9',10'-cleavage oxygenase activity
+    grounding: GO:0102395
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q7XJM2
+    node_type: PROTEIN
+    label: CCD7_ARATH
+    grounding: UniProtKB:Q7XJM2
+  - node_id: prot_Q7XU29
+    node_type: PROTEIN
+    label: CCD7_ORYSJ
+    grounding: UniProtKB:Q7XU29
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 9-cis-beta-carotene is a substrate consumed by RHEA:34399 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34400
+      snippet: 9-cis-beta-carotene + O2 => 9-cis-10'-apo-beta-carotenal + beta-ionone
+      notes: Rhea's left-to-right directional reaction RHEA:34400 declares side 34399_L as its substrates
+        (rh:substrates); the master reaction RHEA:34399 is undirected. This participant is CHEBI:67188
+        with coefficient 1. Rhea cites PMID:22422982, PMID:15268852 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:34399 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34400
+      snippet: 9-cis-beta-carotene + O2 => 9-cis-10'-apo-beta-carotenal + beta-ionone
+      notes: Rhea's left-to-right directional reaction RHEA:34400 declares side 34399_L as its substrates
+        (rh:substrates); the master reaction RHEA:34399 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:22422982, PMID:15268852 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 9-cis-10'-apo-beta-carotenal is a product released by RHEA:34399 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34400
+      snippet: 9-cis-beta-carotene + O2 => 9-cis-10'-apo-beta-carotenal + beta-ionone
+      notes: Rhea's left-to-right directional reaction RHEA:34400 declares side 34399_R as its products
+        (rh:products); the master reaction RHEA:34399 is undirected. This participant is CHEBI:67192 with
+        coefficient 1. Rhea cites PMID:22422982, PMID:15268852 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: beta-ionone is a product released by RHEA:34399 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34400
+      snippet: 9-cis-beta-carotene + O2 => 9-cis-10'-apo-beta-carotenal + beta-ionone
+      notes: Rhea's left-to-right directional reaction RHEA:34400 declares side 34399_R as its products
+        (rh:products); the master reaction RHEA:34399 is undirected. This participant is CHEBI:32325 with
+        coefficient 1. Rhea cites PMID:22422982, PMID:15268852 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.68
+      snippet: EC:1.13.11.68 > GO:9-cis-beta-carotene 9',10'-cleavage oxygenase activity ; GO:0102395
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102395 is itself a record
+        in this KB.
+  - subject: prot_Q7XJM2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCD7_ARATH is an exemplar enzyme with EC 1.13.11.68 activity.
+    evidence:
+    - reference: EC:1.13.11.68
+      snippet: DR   Q7XJM2, CCD7_ARATH ;  Q7XU29, CCD7_ORYSJ ;
+      notes: ExPASy ENZYME entry EC 1.13.11.68 cross-references UniProtKB:Q7XJM2 (CCD7_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q7XU29
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCD7_ORYSJ is an exemplar enzyme with EC 1.13.11.68 activity.
+    evidence:
+    - reference: EC:1.13.11.68
+      snippet: DR   Q7XJM2, CCD7_ARATH ;  Q7XU29, CCD7_ORYSJ ;
+      notes: ExPASy ENZYME entry EC 1.13.11.68 cross-references UniProtKB:Q7XU29 (CCD7_ORYSJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:16113
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,123 @@ definitions:
       Catalyses the reaction: cholesterol + NAD(+) = cholest-5-en-3-one + NADH + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cholesterol + NAD(+) = cholest-5-en-3-one + NADH + H(+)
+  description: Substrate-to-product chemistry of RHEA:35459, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:35460 (rh:substrates → 35459_L, rh:products → 35459_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of cholesterol + NAD(+) = cholest-5-en-3-one + NADH + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:35459
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: cholesterol + NAD(+) = cholest-5-en-3-one + NADH + H(+)'
+  - node_id: sub1
+    label: cholesterol
+    node_type: CHEMICAL
+    grounding: CHEBI:16113
+    description: Formula C27H46O.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: cholest-5-en-3-one
+    node_type: CHEMICAL
+    grounding: CHEBI:63906
+    description: Formula C27H44O.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cholesterol dehydrogenase (NAD+) activity
+    grounding: GO:0102294
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cholesterol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35460
+      snippet: cholesterol + NAD(+) => cholest-5-en-3-one + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35460 declares side 35459_L as its substrates
+        (rh:substrates); the master reaction RHEA:35459 is undirected. This participant is CHEBI:16113
+        with coefficient 1. Rhea cites PMID:21257778, PMID:18495818, PMID:17630785 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35460
+      snippet: cholesterol + NAD(+) => cholest-5-en-3-one + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35460 declares side 35459_L as its substrates
+        (rh:substrates); the master reaction RHEA:35459 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:21257778, PMID:18495818, PMID:17630785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cholest-5-en-3-one is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35460
+      snippet: cholesterol + NAD(+) => cholest-5-en-3-one + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35460 declares side 35459_R as its products
+        (rh:products); the master reaction RHEA:35459 is undirected. This participant is CHEBI:63906 with
+        coefficient 1. Rhea cites PMID:21257778, PMID:18495818, PMID:17630785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35460
+      snippet: cholesterol + NAD(+) => cholest-5-en-3-one + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35460 declares side 35459_R as its products
+        (rh:products); the master reaction RHEA:35459 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:21257778, PMID:18495818, PMID:17630785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35460
+      snippet: cholesterol + NAD(+) => cholest-5-en-3-one + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35460 declares side 35459_R as its products
+        (rh:products); the master reaction RHEA:35459 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21257778, PMID:18495818, PMID:17630785 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:35459
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102294"/>
+      notes: The rdfs:seeAlso triple on RHEA:35459 in rhea.rdf. GO term GO:0102294 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

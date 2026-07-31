@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -43,4 +43,205 @@ definitions:
       Catalyses: N-terminal glycyl-[protein] + tetradecanoyl-CoA = N-tetradecanoylglycyl- [protein] + CoA + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glycylpeptide N-tetradecanoyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.97. EC 2.3.1.97 maps to exactly
+    one curated Rhea reaction (RHEA:15521), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-terminal glycyl-[protein]
+    + tetradecanoyl-CoA = N-tetradecanoylglycyl- [protein] + CoA + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glycylpeptide N-tetradecanoyltransferase
+    grounding: EC:2.3.1.97
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-terminal glycyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12666
+    description: Rhea compound GENERIC:12666.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: a N-terminal Gly residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12666 (N-terminal
+      glycyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64723
+  - node_id: sub2
+    label: tetradecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57385
+    description: Formula C35H58N7O17P3S.
+  - node_id: prd1
+    label: N-tetradecanoylglycyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12667
+    description: Rhea compound GENERIC:12667.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N-terminal N-tetradecanoylglycyl residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12667 (N-tetradecanoylglycyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:133050
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glycylpeptide N-tetradecanoyltransferase activity
+    grounding: GO:0004379
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9LTR9
+    node_type: PROTEIN
+    label: NMT1_ARATH
+    grounding: UniProtKB:Q9LTR9
+  - node_id: prot_P31717
+    node_type: PROTEIN
+    label: NMT1_BOVIN
+    grounding: UniProtKB:P31717
+  - node_id: prot_P30419
+    node_type: PROTEIN
+    label: NMT1_HUMAN
+    grounding: UniProtKB:P30419
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-terminal glycyl-[protein] is a substrate consumed by RHEA:15521 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15522
+      snippet: N-terminal glycyl-[protein] + tetradecanoyl-CoA => N-tetradecanoylglycyl-[protein] + CoA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15522 declares side 15521_L as its substrates
+        (rh:substrates); the master reaction RHEA:15521 is undirected. This participant is GENERIC:12666
+        with coefficient 1. Rhea cites PMID:22865860, PMID:9778369, PMID:2033063, PMID:21698528 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: a N-terminal Gly residue is the reactive part of N-terminal glycyl-[protein].
+    evidence:
+    - reference: RHEA:15521
+      snippet: a N-terminal Gly residue
+      notes: Rhea compound GENERIC:12666 (N-terminal glycyl-[protein]) declares rh:reactivePart = a N-terminal
+        Gly residue (CHEBI:64723).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: tetradecanoyl-CoA is a substrate consumed by RHEA:15521 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15522
+      snippet: N-terminal glycyl-[protein] + tetradecanoyl-CoA => N-tetradecanoylglycyl-[protein] + CoA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15522 declares side 15521_L as its substrates
+        (rh:substrates); the master reaction RHEA:15521 is undirected. This participant is CHEBI:57385
+        with coefficient 1. Rhea cites PMID:22865860, PMID:9778369, PMID:2033063, PMID:21698528 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-tetradecanoylglycyl-[protein] is a product released by RHEA:15521 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15522
+      snippet: N-terminal glycyl-[protein] + tetradecanoyl-CoA => N-tetradecanoylglycyl-[protein] + CoA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15522 declares side 15521_R as its products
+        (rh:products); the master reaction RHEA:15521 is undirected. This participant is GENERIC:12667
+        with coefficient 1. Rhea cites PMID:22865860, PMID:9778369, PMID:2033063, PMID:21698528 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N-terminal N-tetradecanoylglycyl residue is the reactive part of N-tetradecanoylglycyl-[protein].
+    evidence:
+    - reference: RHEA:15521
+      snippet: N-terminal N-tetradecanoylglycyl residue
+      notes: Rhea compound GENERIC:12667 (N-tetradecanoylglycyl-[protein]) declares rh:reactivePart =
+        N-terminal N-tetradecanoylglycyl residue (CHEBI:133050).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:15521 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15522
+      snippet: N-terminal glycyl-[protein] + tetradecanoyl-CoA => N-tetradecanoylglycyl-[protein] + CoA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15522 declares side 15521_R as its products
+        (rh:products); the master reaction RHEA:15521 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:22865860, PMID:9778369, PMID:2033063, PMID:21698528 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:15521 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15522
+      snippet: N-terminal glycyl-[protein] + tetradecanoyl-CoA => N-tetradecanoylglycyl-[protein] + CoA
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15522 declares side 15521_R as its products
+        (rh:products); the master reaction RHEA:15521 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:22865860, PMID:9778369, PMID:2033063, PMID:21698528 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.97
+      snippet: EC:2.3.1.97 > GO:glycylpeptide N-tetradecanoyltransferase activity ; GO:0004379
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004379 is itself a record
+        in this KB.
+  - subject: prot_Q9LTR9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NMT1_ARATH is an exemplar enzyme with EC 2.3.1.97 activity.
+    evidence:
+    - reference: EC:2.3.1.97
+      snippet: DR   Q9LTR9, NMT1_ARATH ;  P31717, NMT1_BOVIN ;  P30419, NMT1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 2.3.1.97 cross-references UniProtKB:Q9LTR9 (NMT1_ARATH) as a protein
+        with this activity.
+  - subject: prot_P31717
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NMT1_BOVIN is an exemplar enzyme with EC 2.3.1.97 activity.
+    evidence:
+    - reference: EC:2.3.1.97
+      snippet: DR   Q9LTR9, NMT1_ARATH ;  P31717, NMT1_BOVIN ;  P30419, NMT1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 2.3.1.97 cross-references UniProtKB:P31717 (NMT1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P30419
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NMT1_HUMAN is an exemplar enzyme with EC 2.3.1.97 activity.
+    evidence:
+    - reference: EC:2.3.1.97
+      snippet: DR   Q9LTR9, NMT1_ARATH ;  P31717, NMT1_BOVIN ;  P30419, NMT1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 2.3.1.97 cross-references UniProtKB:P30419 (NMT1_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

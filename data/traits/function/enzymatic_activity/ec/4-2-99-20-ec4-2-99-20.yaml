@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.99.-
 synonyms:
@@ -45,4 +45,137 @@ definitions:
       Catalyses: 5-enolpyruvoyl-6-hydroxy-2-succinyl-cyclohex-3-ene-1-carboxylate = (1R,6R)-6-hydroxy-2-succinyl-cyclohexa-2,4-diene-1-carboxylate + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-succinyl-6-hydroxy-2,4-cyclohexadiene-1-carboxylate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.99.20. EC 4.2.99.20 maps to
+    exactly one curated Rhea reaction (RHEA:25597), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "5-enolpyruvoyl-6-hydroxy-2-succinyl-cyclohex-3-ene-1-carboxylate
+    = (1R,6R)-6-hydroxy-2-succinyl-cyclohexa-2,4-diene-1-carboxylate + pyruvate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-succinyl-6-hydroxy-2,4-cyclohexadiene-1-carboxylate synthase
+    grounding: EC:4.2.99.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 5-enolpyruvoyl-6-hydroxy-2-succinyl-cyclohex-3-ene-1-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:58818
+    description: Formula C14H13O9.
+  - node_id: prd1
+    label: (1R,6R)-6-hydroxy-2-succinyl-cyclohexa-2,4-diene-1-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:58689
+    description: Formula C11H10O6.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-succinyl-6-hydroxy-2,4-cyclohexadiene-1-carboxylate synthase activity
+    grounding: GO:0070205
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P23974
+    node_type: PROTEIN
+    label: MENH_BACSU
+    grounding: UniProtKB:P23974
+  - node_id: prot_A8ADX0
+    node_type: PROTEIN
+    label: MENH_CITK8
+    grounding: UniProtKB:A8ADX0
+  - node_id: prot_A7MHU5
+    node_type: PROTEIN
+    label: MENH_CROS8
+    grounding: UniProtKB:A7MHU5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-enolpyruvoyl-6-hydroxy-2-succinyl-cyclohex-3-ene-1-carboxylate is a substrate consumed
+      by RHEA:25597 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25598
+      snippet: 5-enolpyruvoyl-6-hydroxy-2-succinyl-cyclohex-3-ene-1-carboxylate => (1R,6R)-6-hydroxy-2-succinyl-cyclohexa-2,4-diene-1-carboxylate
+        + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:25598 declares side 25597_L as its substrates
+        (rh:substrates); the master reaction RHEA:25597 is undirected. This participant is CHEBI:58818
+        with coefficient 1. Rhea cites PMID:18284213 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (1R,6R)-6-hydroxy-2-succinyl-cyclohexa-2,4-diene-1-carboxylate is a product released
+      by RHEA:25597 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25598
+      snippet: 5-enolpyruvoyl-6-hydroxy-2-succinyl-cyclohex-3-ene-1-carboxylate => (1R,6R)-6-hydroxy-2-succinyl-cyclohexa-2,4-diene-1-carboxylate
+        + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:25598 declares side 25597_R as its products
+        (rh:products); the master reaction RHEA:25597 is undirected. This participant is CHEBI:58689 with
+        coefficient 1. Rhea cites PMID:18284213 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:25597 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25598
+      snippet: 5-enolpyruvoyl-6-hydroxy-2-succinyl-cyclohex-3-ene-1-carboxylate => (1R,6R)-6-hydroxy-2-succinyl-cyclohexa-2,4-diene-1-carboxylate
+        + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:25598 declares side 25597_R as its products
+        (rh:products); the master reaction RHEA:25597 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:18284213 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.99.20
+      snippet: EC:4.2.99.20 > GO:2-succinyl-6-hydroxy-2,4-cyclohexadiene-1-carboxylate synthase activity
+        ; GO:0070205
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0070205 is itself a record
+        in this KB.
+  - subject: prot_P23974
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MENH_BACSU is an exemplar enzyme with EC 4.2.99.20 activity.
+    evidence:
+    - reference: EC:4.2.99.20
+      snippet: DR   P23974, MENH_BACSU ;  A8ADX0, MENH_CITK8 ;  A7MHU5, MENH_CROS8 ;
+      notes: ExPASy ENZYME entry EC 4.2.99.20 cross-references UniProtKB:P23974 (MENH_BACSU) as a protein
+        with this activity.
+  - subject: prot_A8ADX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MENH_CITK8 is an exemplar enzyme with EC 4.2.99.20 activity.
+    evidence:
+    - reference: EC:4.2.99.20
+      snippet: DR   P23974, MENH_BACSU ;  A8ADX0, MENH_CITK8 ;  A7MHU5, MENH_CROS8 ;
+      notes: ExPASy ENZYME entry EC 4.2.99.20 cross-references UniProtKB:A8ADX0 (MENH_CITK8) as a protein
+        with this activity.
+  - subject: prot_A7MHU5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MENH_CROS8 is an exemplar enzyme with EC 4.2.99.20 activity.
+    evidence:
+    - reference: EC:4.2.99.20
+      snippet: DR   P23974, MENH_BACSU ;  A8ADX0, MENH_CITK8 ;  A7MHU5, MENH_CROS8 ;
+      notes: ExPASy ENZYME entry EC 4.2.99.20 cross-references UniProtKB:A7MHU5 (MENH_CROS8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

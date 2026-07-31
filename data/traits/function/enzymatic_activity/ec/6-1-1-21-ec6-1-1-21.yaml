@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.1.1.-
 synonyms:
@@ -43,4 +43,231 @@ definitions:
       Catalyses: tRNA(His) + L-histidine + ATP = L-histidyl-tRNA(His) + AMP + diphosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of histidine--tRNA ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.1.1.21. EC 6.1.1.21 maps to exactly
+    one curated Rhea reaction (RHEA:17313), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "tRNA(His) + L-histidine
+    + ATP = L-histidyl-tRNA(His) + AMP + diphosphate + H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: histidine--tRNA ligase
+    grounding: EC:6.1.1.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: tRNA(His)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9665
+    description: Rhea compound GENERIC:9665.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9665 (tRNA(His));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57595
+    description: Formula C6H9N3O2.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-histidyl-tRNA(His)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9689
+    description: Rhea compound GENERIC:9689.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 3'-(L-histidyl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9689 (L-histidyl-tRNA(His));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78527
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: histidine-tRNA ligase activity
+    grounding: GO:0004821
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q2KI84
+    node_type: PROTEIN
+    label: HARS1_BOVIN
+    grounding: UniProtKB:Q2KI84
+  - node_id: prot_E9QI36
+    node_type: PROTEIN
+    label: HARS1_DANRE
+    grounding: UniProtKB:E9QI36
+  - node_id: prot_P12081
+    node_type: PROTEIN
+    label: HARS1_HUMAN
+    grounding: UniProtKB:P12081
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(His) is a substrate consumed by RHEA:17313 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17314
+      snippet: tRNA(His) + L-histidine + ATP => L-histidyl-tRNA(His) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17314 declares side 17313_L as its substrates
+        (rh:substrates); the master reaction RHEA:17313 is undirected. This participant is GENERIC:9665
+        with coefficient 1. Rhea cites PMID:29235198, PMID:6035970, PMID:10966471, PMID:21464306 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(His).
+    evidence:
+    - reference: RHEA:17313
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9665 (tRNA(His)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-histidine is a substrate consumed by RHEA:17313 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17314
+      snippet: tRNA(His) + L-histidine + ATP => L-histidyl-tRNA(His) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17314 declares side 17313_L as its substrates
+        (rh:substrates); the master reaction RHEA:17313 is undirected. This participant is CHEBI:57595
+        with coefficient 1. Rhea cites PMID:29235198, PMID:6035970, PMID:10966471, PMID:21464306 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:17313 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17314
+      snippet: tRNA(His) + L-histidine + ATP => L-histidyl-tRNA(His) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17314 declares side 17313_L as its substrates
+        (rh:substrates); the master reaction RHEA:17313 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:29235198, PMID:6035970, PMID:10966471, PMID:21464306 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-histidyl-tRNA(His) is a product released by RHEA:17313 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17314
+      snippet: tRNA(His) + L-histidine + ATP => L-histidyl-tRNA(His) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17314 declares side 17313_R as its products
+        (rh:products); the master reaction RHEA:17313 is undirected. This participant is GENERIC:9689
+        with coefficient 1. Rhea cites PMID:29235198, PMID:6035970, PMID:10966471, PMID:21464306 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-histidyl)adenylyl group is the reactive part of L-histidyl-tRNA(His).
+    evidence:
+    - reference: RHEA:17313
+      snippet: 3'-(L-histidyl)adenylyl group
+      notes: Rhea compound GENERIC:9689 (L-histidyl-tRNA(His)) declares rh:reactivePart = 3'-(L-histidyl)adenylyl
+        group (CHEBI:78527).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:17313 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17314
+      snippet: tRNA(His) + L-histidine + ATP => L-histidyl-tRNA(His) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17314 declares side 17313_R as its products
+        (rh:products); the master reaction RHEA:17313 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:29235198, PMID:6035970, PMID:10966471, PMID:21464306 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:17313 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17314
+      snippet: tRNA(His) + L-histidine + ATP => L-histidyl-tRNA(His) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17314 declares side 17313_R as its products
+        (rh:products); the master reaction RHEA:17313 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:29235198, PMID:6035970, PMID:10966471, PMID:21464306 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:17313 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17314
+      snippet: tRNA(His) + L-histidine + ATP => L-histidyl-tRNA(His) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17314 declares side 17313_R as its products
+        (rh:products); the master reaction RHEA:17313 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29235198, PMID:6035970, PMID:10966471, PMID:21464306 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.1.1.21
+      snippet: EC:6.1.1.21 > GO:histidine-tRNA ligase activity ; GO:0004821
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004821 is itself a record
+        in this KB.
+  - subject: prot_Q2KI84
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HARS1_BOVIN is an exemplar enzyme with EC 6.1.1.21 activity.
+    evidence:
+    - reference: EC:6.1.1.21
+      snippet: DR   Q2KI84, HARS1_BOVIN;  E9QI36, HARS1_DANRE;  P12081, HARS1_HUMAN;
+      notes: ExPASy ENZYME entry EC 6.1.1.21 cross-references UniProtKB:Q2KI84 (HARS1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_E9QI36
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HARS1_DANRE is an exemplar enzyme with EC 6.1.1.21 activity.
+    evidence:
+    - reference: EC:6.1.1.21
+      snippet: DR   Q2KI84, HARS1_BOVIN;  E9QI36, HARS1_DANRE;  P12081, HARS1_HUMAN;
+      notes: ExPASy ENZYME entry EC 6.1.1.21 cross-references UniProtKB:E9QI36 (HARS1_DANRE) as a protein
+        with this activity.
+  - subject: prot_P12081
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HARS1_HUMAN is an exemplar enzyme with EC 6.1.1.21 activity.
+    evidence:
+    - reference: EC:6.1.1.21
+      snippet: DR   Q2KI84, HARS1_BOVIN;  E9QI36, HARS1_DANRE;  P12081, HARS1_HUMAN;
+      notes: ExPASy ENZYME entry EC 6.1.1.21 cross-references UniProtKB:P12081 (HARS1_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

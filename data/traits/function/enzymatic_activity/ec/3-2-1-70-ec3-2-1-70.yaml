@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -41,4 +41,81 @@ definitions:
       Catalyses: Hydrolysis of (1->6)-alpha-D-glucosidic linkages in (1->6)-alpha-D- glucans and derived oligosaccharides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucan 1,6-alpha-glucosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.70. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of (1->6)-alpha-D-glucosidic linkages in (1->6)-alpha-D- glucans and derived oligosaccharides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glucan 1,6-alpha-glucosidase
+    grounding: EC:3.2.1.70
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glucan 1,6-alpha-glucosidase activity
+    grounding: GO:0043896
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q59905
+    node_type: PROTEIN
+    label: DEXB_STREQ
+    grounding: UniProtKB:Q59905
+  - node_id: prot_Q99040
+    node_type: PROTEIN
+    label: DEXB_STRMU
+    grounding: UniProtKB:Q99040
+  - node_id: prot_Q54796
+    node_type: PROTEIN
+    label: DEXB_STRPN
+    grounding: UniProtKB:Q54796
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.70
+      snippet: EC:3.2.1.70 > GO:glucan 1,6-alpha-glucosidase activity ; GO:0043896
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043896 is itself a record
+        in this KB.
+  - subject: prot_Q59905
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DEXB_STREQ is an exemplar enzyme with EC 3.2.1.70 activity.
+    evidence:
+    - reference: EC:3.2.1.70
+      snippet: DR   Q59905, DEXB_STREQ ;  Q99040, DEXB_STRMU ;  Q54796, DEXB_STRPN ;
+      notes: ExPASy ENZYME entry EC 3.2.1.70 cross-references UniProtKB:Q59905 (DEXB_STREQ) as a protein
+        with this activity.
+  - subject: prot_Q99040
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DEXB_STRMU is an exemplar enzyme with EC 3.2.1.70 activity.
+    evidence:
+    - reference: EC:3.2.1.70
+      snippet: DR   Q59905, DEXB_STREQ ;  Q99040, DEXB_STRMU ;  Q54796, DEXB_STRPN ;
+      notes: ExPASy ENZYME entry EC 3.2.1.70 cross-references UniProtKB:Q99040 (DEXB_STRMU) as a protein
+        with this activity.
+  - subject: prot_Q54796
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DEXB_STRPN is an exemplar enzyme with EC 3.2.1.70 activity.
+    evidence:
+    - reference: EC:3.2.1.70
+      snippet: DR   Q59905, DEXB_STREQ ;  Q99040, DEXB_STRMU ;  Q54796, DEXB_STRPN ;
+      notes: ExPASy ENZYME entry EC 3.2.1.70 cross-references UniProtKB:Q54796 (DEXB_STRPN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

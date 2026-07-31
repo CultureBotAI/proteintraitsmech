@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.26.-
 synonyms:
@@ -38,4 +38,67 @@ definitions:
       Catalyses: Hydrolyzes the peptide bond -P2-(S-farnesyl or geranylgeranyl)C-P1'-P2'-P3'-COOH where P1' and P2' are amino acids with aliphatic sidechains and P3' is any C-terminal residue
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of intramembrane prenyl-peptidase Rce1
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.26.1. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolyzes
+    the peptide bond -P2-(S-farnesyl or geranylgeranyl)C-P1''-P2''-P3''-COOH where P1'' and P2'' are amino
+    acids with aliphatic sidechains and P3'' is any C-terminal residue".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: intramembrane prenyl-peptidase Rce1
+    grounding: EC:3.4.26.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q8GW19
+    node_type: PROTEIN
+    label: FACE2_ARATH
+    grounding: UniProtKB:Q8GW19
+  - node_id: prot_A6H7A0
+    node_type: PROTEIN
+    label: FACE2_BOVIN
+    grounding: UniProtKB:A6H7A0
+  - node_id: prot_G5EEP3
+    node_type: PROTEIN
+    label: FACE2_CAEEL
+    grounding: UniProtKB:G5EEP3
+  edges:
+  - subject: prot_Q8GW19
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FACE2_ARATH is an exemplar enzyme with EC 3.4.26.1 activity.
+    evidence:
+    - reference: EC:3.4.26.1
+      snippet: DR   Q8GW19, FACE2_ARATH;  A6H7A0, FACE2_BOVIN;  G5EEP3, FACE2_CAEEL;
+      notes: ExPASy ENZYME entry EC 3.4.26.1 cross-references UniProtKB:Q8GW19 (FACE2_ARATH) as a protein
+        with this activity.
+  - subject: prot_A6H7A0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FACE2_BOVIN is an exemplar enzyme with EC 3.4.26.1 activity.
+    evidence:
+    - reference: EC:3.4.26.1
+      snippet: DR   Q8GW19, FACE2_ARATH;  A6H7A0, FACE2_BOVIN;  G5EEP3, FACE2_CAEEL;
+      notes: ExPASy ENZYME entry EC 3.4.26.1 cross-references UniProtKB:A6H7A0 (FACE2_BOVIN) as a protein
+        with this activity.
+  - subject: prot_G5EEP3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FACE2_CAEEL is an exemplar enzyme with EC 3.4.26.1 activity.
+    evidence:
+    - reference: EC:3.4.26.1
+      snippet: DR   Q8GW19, FACE2_ARATH;  A6H7A0, FACE2_BOVIN;  G5EEP3, FACE2_CAEEL;
+      notes: ExPASy ENZYME entry EC 3.4.26.1 cross-references UniProtKB:G5EEP3 (FACE2_CAEEL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

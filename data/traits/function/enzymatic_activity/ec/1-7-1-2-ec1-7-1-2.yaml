@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.7.1.-
 synonyms:
@@ -55,4 +55,310 @@ definitions:
       Catalyses: (1) nitrite + NADP(+) + H2O = nitrate + NADPH + H(+). (2) nitrite + NAD(+) + H2O = nitrate + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nitrate reductase [NAD(P)H]
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.7.1.2. Rhea assigns 2 curated
+    reactions to EC 1.7.1.2. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "(1) nitrite + NADP(+) + H2O = nitrate + NADPH + H(+). (2) nitrite
+    + NAD(+) + H2O = nitrate + NADH + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nitrate reductase [NAD(P)H]
+    grounding: EC:1.7.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of nitrite + NAD(+) + H2O = nitrate + NADH + H(+)
+    grounding: RHEA:17913
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: nitrite + NAD(+) + H2O = nitrate + NADH + H(+)'
+  - node_id: rxn1_sub1
+    label: nitrite
+    node_type: CHEMICAL
+    grounding: CHEBI:16301
+    description: Formula NO2.
+  - node_id: rxn1_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn1_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: nitrate
+    node_type: CHEMICAL
+    grounding: CHEBI:17632
+    description: Formula NO3.
+  - node_id: rxn1_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of nitrite + NADP(+) + H2O = nitrate + NADPH + H(+)
+    grounding: RHEA:19061
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: nitrite + NADP(+) + H2O = nitrate + NADPH + H(+)'
+  - node_id: rxn2_sub1
+    label: nitrite
+    node_type: CHEMICAL
+    grounding: CHEBI:16301
+    description: Formula NO2.
+  - node_id: rxn2_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn2_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: nitrate
+    node_type: CHEMICAL
+    grounding: CHEBI:17632
+    description: Formula NO3.
+  - node_id: rxn2_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: nitrate reductase [NAD(P)H] activity
+    grounding: GO:0050463
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P39871
+    node_type: PROTEIN
+    label: NIA2_MAIZE
+    grounding: UniProtKB:P39871
+  - node_id: prot_P27968
+    node_type: PROTEIN
+    label: NIA7_HORVU
+    grounding: UniProtKB:P27968
+  - node_id: prot_P27783
+    node_type: PROTEIN
+    label: NIA_BETPN
+    grounding: UniProtKB:P27783
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:17913 is one of the 2 curated reactions Rhea assigns to EC 1.7.1.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:17913
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.7.1.2"/>
+      notes: The rh:ec triple on RHEA:17913 in rhea.rdf assigns that reaction to EC 1.7.1.2.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: nitrite is a substrate consumed by RHEA:17913 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17914
+      snippet: nitrite + NAD(+) + H2O => nitrate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17914 declares side 17913_L as its substrates
+        (rh:substrates); the master reaction RHEA:17913 is undirected. This participant is CHEBI:16301
+        with coefficient 1. Rhea cites PMID:6273405, PMID:8534676, PMID:16660347, PMID:11356830 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NAD(+) is a substrate consumed by RHEA:17913 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17914
+      snippet: nitrite + NAD(+) + H2O => nitrate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17914 declares side 17913_L as its substrates
+        (rh:substrates); the master reaction RHEA:17913 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:6273405, PMID:8534676, PMID:16660347, PMID:11356830 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: H2O is a substrate consumed by RHEA:17913 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17914
+      snippet: nitrite + NAD(+) + H2O => nitrate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17914 declares side 17913_L as its substrates
+        (rh:substrates); the master reaction RHEA:17913 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:6273405, PMID:8534676, PMID:16660347, PMID:11356830 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: nitrate is a product released by RHEA:17913 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17914
+      snippet: nitrite + NAD(+) + H2O => nitrate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17914 declares side 17913_R as its products
+        (rh:products); the master reaction RHEA:17913 is undirected. This participant is CHEBI:17632 with
+        coefficient 1. Rhea cites PMID:6273405, PMID:8534676, PMID:16660347, PMID:11356830 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADH is a product released by RHEA:17913 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17914
+      snippet: nitrite + NAD(+) + H2O => nitrate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17914 declares side 17913_R as its products
+        (rh:products); the master reaction RHEA:17913 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:6273405, PMID:8534676, PMID:16660347, PMID:11356830 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:17913 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17914
+      snippet: nitrite + NAD(+) + H2O => nitrate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17914 declares side 17913_R as its products
+        (rh:products); the master reaction RHEA:17913 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:6273405, PMID:8534676, PMID:16660347, PMID:11356830 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:19061 is one of the 2 curated reactions Rhea assigns to EC 1.7.1.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:19061
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.7.1.2"/>
+      notes: The rh:ec triple on RHEA:19061 in rhea.rdf assigns that reaction to EC 1.7.1.2.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: nitrite is a substrate consumed by RHEA:19061 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19062
+      snippet: nitrite + NADP(+) + H2O => nitrate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19062 declares side 19061_L as its substrates
+        (rh:substrates); the master reaction RHEA:19061 is undirected. This participant is CHEBI:16301
+        with coefficient 1. Rhea cites PMID:8534676, PMID:11289301, PMID:15772287 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADP(+) is a substrate consumed by RHEA:19061 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19062
+      snippet: nitrite + NADP(+) + H2O => nitrate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19062 declares side 19061_L as its substrates
+        (rh:substrates); the master reaction RHEA:19061 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:8534676, PMID:11289301, PMID:15772287 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: H2O is a substrate consumed by RHEA:19061 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19062
+      snippet: nitrite + NADP(+) + H2O => nitrate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19062 declares side 19061_L as its substrates
+        (rh:substrates); the master reaction RHEA:19061 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:8534676, PMID:11289301, PMID:15772287 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: nitrate is a product released by RHEA:19061 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19062
+      snippet: nitrite + NADP(+) + H2O => nitrate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19062 declares side 19061_R as its products
+        (rh:products); the master reaction RHEA:19061 is undirected. This participant is CHEBI:17632 with
+        coefficient 1. Rhea cites PMID:8534676, PMID:11289301, PMID:15772287 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADPH is a product released by RHEA:19061 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19062
+      snippet: nitrite + NADP(+) + H2O => nitrate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19062 declares side 19061_R as its products
+        (rh:products); the master reaction RHEA:19061 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:8534676, PMID:11289301, PMID:15772287 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:19061 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19062
+      snippet: nitrite + NADP(+) + H2O => nitrate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19062 declares side 19061_R as its products
+        (rh:products); the master reaction RHEA:19061 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8534676, PMID:11289301, PMID:15772287 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.7.1.2
+      snippet: EC:1.7.1.2 > GO:nitrate reductase [NAD(P)H] activity ; GO:0050463
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050463 is itself a record
+        in this KB.
+  - subject: prot_P39871
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NIA2_MAIZE is an exemplar enzyme with EC 1.7.1.2 activity.
+    evidence:
+    - reference: EC:1.7.1.2
+      snippet: DR   P39871, NIA2_MAIZE ;  P27968, NIA7_HORVU ;  P27783, NIA_BETPN  ;
+      notes: ExPASy ENZYME entry EC 1.7.1.2 cross-references UniProtKB:P39871 (NIA2_MAIZE) as a protein
+        with this activity.
+  - subject: prot_P27968
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NIA7_HORVU is an exemplar enzyme with EC 1.7.1.2 activity.
+    evidence:
+    - reference: EC:1.7.1.2
+      snippet: DR   P39871, NIA2_MAIZE ;  P27968, NIA7_HORVU ;  P27783, NIA_BETPN  ;
+      notes: ExPASy ENZYME entry EC 1.7.1.2 cross-references UniProtKB:P27968 (NIA7_HORVU) as a protein
+        with this activity.
+  - subject: prot_P27783
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NIA_BETPN is an exemplar enzyme with EC 1.7.1.2 activity.
+    evidence:
+    - reference: EC:1.7.1.2
+      snippet: DR   P39871, NIA2_MAIZE ;  P27968, NIA7_HORVU ;  P27783, NIA_BETPN  ;
+      notes: ExPASy ENZYME entry EC 1.7.1.2 cross-references UniProtKB:P27783 (NIA_BETPN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (18 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

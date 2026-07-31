@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -47,4 +47,81 @@ definitions:
       Catalyses: Hydrolysis of (1->4)-beta-D-glucosidic linkages in beta-D-glucans containing (1->3)- and (1->4)-bonds
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of licheninase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.73. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of (1->4)-beta-D-glucosidic linkages in beta-D-glucans containing (1->3)- and (1->4)-bonds".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: licheninase
+    grounding: EC:3.2.1.73
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: licheninase activity
+    grounding: GO:0042972
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P12257
+    node_type: PROTEIN
+    label: GUB2_HORVU
+    grounding: UniProtKB:P12257
+  - node_id: prot_A3DBX3
+    node_type: PROTEIN
+    label: GUB_ACET2
+    grounding: UniProtKB:A3DBX3
+  - node_id: prot_Q84C00
+    node_type: PROTEIN
+    label: GUB_ACETH
+    grounding: UniProtKB:Q84C00
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.73
+      snippet: EC:3.2.1.73 > GO:licheninase activity ; GO:0042972
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0042972 is itself a record
+        in this KB.
+  - subject: prot_P12257
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GUB2_HORVU is an exemplar enzyme with EC 3.2.1.73 activity.
+    evidence:
+    - reference: EC:3.2.1.73
+      snippet: DR   P12257, GUB2_HORVU ;  A3DBX3, GUB_ACET2  ;  Q84C00, GUB_ACETH  ;
+      notes: ExPASy ENZYME entry EC 3.2.1.73 cross-references UniProtKB:P12257 (GUB2_HORVU) as a protein
+        with this activity.
+  - subject: prot_A3DBX3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GUB_ACET2 is an exemplar enzyme with EC 3.2.1.73 activity.
+    evidence:
+    - reference: EC:3.2.1.73
+      snippet: DR   P12257, GUB2_HORVU ;  A3DBX3, GUB_ACET2  ;  Q84C00, GUB_ACETH  ;
+      notes: ExPASy ENZYME entry EC 3.2.1.73 cross-references UniProtKB:A3DBX3 (GUB_ACET2) as a protein
+        with this activity.
+  - subject: prot_Q84C00
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GUB_ACETH is an exemplar enzyme with EC 3.2.1.73 activity.
+    evidence:
+    - reference: EC:3.2.1.73
+      snippet: DR   P12257, GUB2_HORVU ;  A3DBX3, GUB_ACET2  ;  Q84C00, GUB_ACETH  ;
+      notes: ExPASy ENZYME entry EC 3.2.1.73 cross-references UniProtKB:Q84C00 (GUB_ACETH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

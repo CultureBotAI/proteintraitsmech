@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.13.1.-
 mapped_xrefs:
@@ -36,4 +36,132 @@ definitions:
       Catalyses: S-inosyl-L-homocysteine + H2O = L-homocysteine + inosine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-inosyl-L-homocysteine hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.13.1.9. EC 3.13.1.9 maps to exactly
+    one curated Rhea reaction (RHEA:59828), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "S-inosyl-L-homocysteine
+    + H2O = L-homocysteine + inosine". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: S-inosyl-L-homocysteine hydrolase
+    grounding: EC:3.13.1.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: S-inosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57985
+    description: Formula C14H19N5O6S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58199
+    description: Formula C4H9NO2S.
+  - node_id: prd2
+    label: inosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17596
+    description: Formula C10H12N4O5.
+  - node_id: prot_Q8TRA5
+    node_type: PROTEIN
+    label: SIHH_METAC
+    grounding: UniProtKB:Q8TRA5
+  - node_id: prot_Q58783
+    node_type: PROTEIN
+    label: SIHH_METJA
+    grounding: UniProtKB:Q58783
+  - node_id: prot_P58855
+    node_type: PROTEIN
+    label: SIHH_METKA
+    grounding: UniProtKB:P58855
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: S-inosyl-L-homocysteine is a substrate consumed by RHEA:59828 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59829
+      snippet: S-inosyl-L-homocysteine + H2O => L-homocysteine + inosine
+      notes: Rhea's left-to-right directional reaction RHEA:59829 declares side 59828_L as its substrates
+        (rh:substrates); the master reaction RHEA:59828 is undirected. This participant is CHEBI:57985
+        with coefficient 1. Rhea cites PMID:25917907 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:59828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59829
+      snippet: S-inosyl-L-homocysteine + H2O => L-homocysteine + inosine
+      notes: Rhea's left-to-right directional reaction RHEA:59829 declares side 59828_L as its substrates
+        (rh:substrates); the master reaction RHEA:59828 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:25917907 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-homocysteine is a product released by RHEA:59828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59829
+      snippet: S-inosyl-L-homocysteine + H2O => L-homocysteine + inosine
+      notes: Rhea's left-to-right directional reaction RHEA:59829 declares side 59828_R as its products
+        (rh:products); the master reaction RHEA:59828 is undirected. This participant is CHEBI:58199 with
+        coefficient 1. Rhea cites PMID:25917907 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: inosine is a product released by RHEA:59828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59829
+      snippet: S-inosyl-L-homocysteine + H2O => L-homocysteine + inosine
+      notes: Rhea's left-to-right directional reaction RHEA:59829 declares side 59828_R as its products
+        (rh:products); the master reaction RHEA:59828 is undirected. This participant is CHEBI:17596 with
+        coefficient 1. Rhea cites PMID:25917907 for this reaction.
+  - subject: prot_Q8TRA5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SIHH_METAC is an exemplar enzyme with EC 3.13.1.9 activity.
+    evidence:
+    - reference: EC:3.13.1.9
+      snippet: DR   Q8TRA5, SIHH_METAC ;  Q58783, SIHH_METJA ;  P58855, SIHH_METKA ;
+      notes: ExPASy ENZYME entry EC 3.13.1.9 cross-references UniProtKB:Q8TRA5 (SIHH_METAC) as a protein
+        with this activity.
+  - subject: prot_Q58783
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SIHH_METJA is an exemplar enzyme with EC 3.13.1.9 activity.
+    evidence:
+    - reference: EC:3.13.1.9
+      snippet: DR   Q8TRA5, SIHH_METAC ;  Q58783, SIHH_METJA ;  P58855, SIHH_METKA ;
+      notes: ExPASy ENZYME entry EC 3.13.1.9 cross-references UniProtKB:Q58783 (SIHH_METJA) as a protein
+        with this activity.
+  - subject: prot_P58855
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SIHH_METKA is an exemplar enzyme with EC 3.13.1.9 activity.
+    evidence:
+    - reference: EC:3.13.1.9
+      snippet: DR   Q8TRA5, SIHH_METAC ;  Q58783, SIHH_METJA ;  P58855, SIHH_METKA ;
+      notes: ExPASy ENZYME entry EC 3.13.1.9 cross-references UniProtKB:P58855 (SIHH_METKA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

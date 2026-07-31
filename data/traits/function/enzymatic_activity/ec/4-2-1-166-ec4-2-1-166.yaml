@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -28,4 +28,73 @@ definitions:
       Catalyses: phosphinomethylmalate = phosphinomethylisomalate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphinomethylmalate isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.166. EC 4.2.1.166 maps to
+    exactly one curated Rhea reaction (RHEA:49504), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "phosphinomethylmalate
+    = phosphinomethylisomalate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphinomethylmalate isomerase
+    grounding: EC:4.2.1.166
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: phosphinomethylmalate
+    node_type: CHEMICAL
+    grounding: CHEBI:91181
+    description: Formula C5H6O7P.
+  - node_id: prd1
+    label: phosphinomethylisomalate
+    node_type: CHEMICAL
+    grounding: CHEBI:131650
+    description: Formula C5H6O7P.
+  - node_id: prot_D9XF46
+    node_type: PROTEIN
+    label: PMI_STRVT
+    grounding: UniProtKB:D9XF46
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: phosphinomethylmalate is a substrate consumed by RHEA:49504 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49505
+      snippet: phosphinomethylmalate => phosphinomethylisomalate
+      notes: Rhea's left-to-right directional reaction RHEA:49505 declares side 49504_L as its substrates
+        (rh:substrates); the master reaction RHEA:49504 is undirected. This participant is CHEBI:91181
+        with coefficient 1. Rhea cites PMID:11472937 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phosphinomethylisomalate is a product released by RHEA:49504 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49505
+      snippet: phosphinomethylmalate => phosphinomethylisomalate
+      notes: Rhea's left-to-right directional reaction RHEA:49505 declares side 49504_R as its products
+        (rh:products); the master reaction RHEA:49504 is undirected. This participant is CHEBI:131650
+        with coefficient 1. Rhea cites PMID:11472937 for this reaction.
+  - subject: prot_D9XF46
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PMI_STRVT is an exemplar enzyme with EC 4.2.1.166 activity.
+    evidence:
+    - reference: EC:4.2.1.166
+      snippet: DR   D9XF46, PMI_STRVT  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.166 cross-references UniProtKB:D9XF46 (PMI_STRVT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

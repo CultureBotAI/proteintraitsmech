@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.3.-
 mapped_xrefs:
@@ -23,4 +23,58 @@ definitions:
       Catalyses: L-phenylalanine = (S)-3-amino-3-phenylpropanoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phenylalanine aminomutase (D-beta-phenylalanine forming)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.3.11. EC 5.4.3.11 maps to exactly
+    one curated Rhea reaction (RHEA:34527), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-phenylalanine
+    = (S)-3-amino-3-phenylpropanoate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine aminomutase (D-beta-phenylalanine forming)
+    grounding: EC:5.4.3.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: prd1
+    label: (S)-3-amino-3-phenylpropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:68506
+    description: Formula C9H11NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-phenylalanine is a substrate consumed by RHEA:34527 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34528
+      snippet: L-phenylalanine => (S)-3-amino-3-phenylpropanoate
+      notes: Rhea's left-to-right directional reaction RHEA:34528 declares side 34527_L as its substrates
+        (rh:substrates); the master reaction RHEA:34527 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:21561099 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-3-amino-3-phenylpropanoate is a product released by RHEA:34527 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34528
+      snippet: L-phenylalanine => (S)-3-amino-3-phenylpropanoate
+      notes: Rhea's left-to-right directional reaction RHEA:34528 declares side 34527_R as its products
+        (rh:products); the master reaction RHEA:34527 is undirected. This participant is CHEBI:68506 with
+        coefficient 1. Rhea cites PMID:21561099 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -38,4 +38,205 @@ definitions:
       Catalyses: N-terminal L-alanyl-[ribosomal protein uS5] + acetyl-CoA = N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal protein uS5] + CoA + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [ribosomal protein uS5]-alanine N-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.267. EC 2.3.1.267 maps to
+    exactly one curated Rhea reaction (RHEA:43752), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-terminal
+    L-alanyl-[ribosomal protein uS5] + acetyl-CoA = N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal protein
+    uS5] + CoA + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[ribosomal protein uS5]-alanine N-acetyltransferase'
+    grounding: EC:2.3.1.267
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-terminal L-alanyl-[ribosomal protein uS5]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10672
+    description: Rhea compound GENERIC:10672.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: N-terminal L-alanine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10672 (N-terminal
+      L-alanyl-[ribosomal protein uS5]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64718
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal protein uS5]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10673
+    description: Rhea compound GENERIC:10673.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N-terminal N(alpha)-acetyl-L-alanine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10673 (N-terminal
+      N(alpha)-acetyl-L-alanyl-[ribosomal protein uS5]); no position on any specific protein sequence
+      is asserted.
+    grounding: CHEBI:83683
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-N-terminal-alanine acetyltransferase activity
+    grounding: GO:0008999
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0A949
+    node_type: PROTEIN
+    label: RIMJ_ECO57
+    grounding: UniProtKB:P0A949
+  - node_id: prot_P0A948
+    node_type: PROTEIN
+    label: RIMJ_ECOLI
+    grounding: UniProtKB:P0A948
+  - node_id: prot_Q9I2H6
+    node_type: PROTEIN
+    label: RIMJ_PSEAE
+    grounding: UniProtKB:Q9I2H6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-terminal L-alanyl-[ribosomal protein uS5] is a substrate consumed by RHEA:43752 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:43753
+      snippet: N-terminal L-alanyl-[ribosomal protein uS5] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal
+        protein uS5] + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43753 declares side 43752_L as its substrates
+        (rh:substrates); the master reaction RHEA:43752 is undirected. This participant is GENERIC:10672
+        with coefficient 1. Rhea cites PMID:2828880, PMID:22649682 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N-terminal L-alanine residue is the reactive part of N-terminal L-alanyl-[ribosomal protein
+      uS5].
+    evidence:
+    - reference: RHEA:43752
+      snippet: N-terminal L-alanine residue
+      notes: Rhea compound GENERIC:10672 (N-terminal L-alanyl-[ribosomal protein uS5]) declares rh:reactivePart
+        = N-terminal L-alanine residue (CHEBI:64718).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:43752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43753
+      snippet: N-terminal L-alanyl-[ribosomal protein uS5] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal
+        protein uS5] + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43753 declares side 43752_L as its substrates
+        (rh:substrates); the master reaction RHEA:43752 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:2828880, PMID:22649682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal protein uS5] is a product released by
+      RHEA:43752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43753
+      snippet: N-terminal L-alanyl-[ribosomal protein uS5] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal
+        protein uS5] + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43753 declares side 43752_R as its products
+        (rh:products); the master reaction RHEA:43752 is undirected. This participant is GENERIC:10673
+        with coefficient 1. Rhea cites PMID:2828880, PMID:22649682 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N-terminal N(alpha)-acetyl-L-alanine residue is the reactive part of N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal
+      protein uS5].
+    evidence:
+    - reference: RHEA:43752
+      snippet: N-terminal N(alpha)-acetyl-L-alanine residue
+      notes: Rhea compound GENERIC:10673 (N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal protein uS5])
+        declares rh:reactivePart = N-terminal N(alpha)-acetyl-L-alanine residue (CHEBI:83683).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:43752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43753
+      snippet: N-terminal L-alanyl-[ribosomal protein uS5] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal
+        protein uS5] + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43753 declares side 43752_R as its products
+        (rh:products); the master reaction RHEA:43752 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:2828880, PMID:22649682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:43752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43753
+      snippet: N-terminal L-alanyl-[ribosomal protein uS5] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alanyl-[ribosomal
+        protein uS5] + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43753 declares side 43752_R as its products
+        (rh:products); the master reaction RHEA:43752 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:2828880, PMID:22649682 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.267
+      snippet: EC:2.3.1.267 > GO:protein-N-terminal-alanine acetyltransferase activity ; GO:0008999
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008999 is itself a record
+        in this KB.
+  - subject: prot_P0A949
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIMJ_ECO57 is an exemplar enzyme with EC 2.3.1.267 activity.
+    evidence:
+    - reference: EC:2.3.1.267
+      snippet: DR   P0A949, RIMJ_ECO57 ;  P0A948, RIMJ_ECOLI ;  Q9I2H6, RIMJ_PSEAE ;
+      notes: ExPASy ENZYME entry EC 2.3.1.267 cross-references UniProtKB:P0A949 (RIMJ_ECO57) as a protein
+        with this activity.
+  - subject: prot_P0A948
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIMJ_ECOLI is an exemplar enzyme with EC 2.3.1.267 activity.
+    evidence:
+    - reference: EC:2.3.1.267
+      snippet: DR   P0A949, RIMJ_ECO57 ;  P0A948, RIMJ_ECOLI ;  Q9I2H6, RIMJ_PSEAE ;
+      notes: ExPASy ENZYME entry EC 2.3.1.267 cross-references UniProtKB:P0A948 (RIMJ_ECOLI) as a protein
+        with this activity.
+  - subject: prot_Q9I2H6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIMJ_PSEAE is an exemplar enzyme with EC 2.3.1.267 activity.
+    evidence:
+    - reference: EC:2.3.1.267
+      snippet: DR   P0A949, RIMJ_ECO57 ;  P0A948, RIMJ_ECOLI ;  Q9I2H6, RIMJ_PSEAE ;
+      notes: ExPASy ENZYME entry EC 2.3.1.267 cross-references UniProtKB:Q9I2H6 (RIMJ_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

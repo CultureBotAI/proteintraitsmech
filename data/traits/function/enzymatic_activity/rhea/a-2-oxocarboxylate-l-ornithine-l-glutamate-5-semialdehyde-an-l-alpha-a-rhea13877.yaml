@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.6.1.13
     mapping_source: rhea2ec
@@ -30,4 +30,126 @@ definitions:
       Catalyses the reaction: a 2-oxocarboxylate + L-ornithine = L-glutamate 5-semialdehyde + an L-alpha-amino acid
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 2-oxocarboxylate + L-ornithine = L-glutamate 5-semialdehyde + an L-alpha-amino
+    acid
+  description: Substrate-to-product chemistry of RHEA:13877, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:13878 (rh:substrates → 13877_L, rh:products → 13877_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2-oxocarboxylate + L-ornithine = L-glutamate 5-semialdehyde + an L-alpha-a…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:13877
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 2-oxocarboxylate + L-ornithine = L-glutamate 5-semialdehyde + an L-alpha-amino
+      acid'
+  - node_id: sub1
+    label: a 2-oxocarboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:35179
+    description: Formula C2O3R.
+  - node_id: sub2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: prd1
+    label: L-glutamate 5-semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58066
+    description: Formula C5H9NO3.
+  - node_id: prd2
+    label: an L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+    description: Formula C2H4NO2R.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-ornithine transaminase activity
+    grounding: GO:0004587
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: ornithine aminotransferase
+    grounding: EC:2.6.1.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2-oxocarboxylate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13878
+      snippet: a 2-oxocarboxylate + L-ornithine => L-glutamate 5-semialdehyde + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:13878 declares side 13877_L as its substrates
+        (rh:substrates); the master reaction RHEA:13877 is undirected. This participant is CHEBI:35179
+        with coefficient 1. Rhea cites PMID:24912400, PMID:9576796 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-ornithine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13878
+      snippet: a 2-oxocarboxylate + L-ornithine => L-glutamate 5-semialdehyde + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:13878 declares side 13877_L as its substrates
+        (rh:substrates); the master reaction RHEA:13877 is undirected. This participant is CHEBI:46911
+        with coefficient 1. Rhea cites PMID:24912400, PMID:9576796 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-glutamate 5-semialdehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13878
+      snippet: a 2-oxocarboxylate + L-ornithine => L-glutamate 5-semialdehyde + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:13878 declares side 13877_R as its products
+        (rh:products); the master reaction RHEA:13877 is undirected. This participant is CHEBI:58066 with
+        coefficient 1. Rhea cites PMID:24912400, PMID:9576796 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: an L-alpha-amino acid is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13878
+      snippet: a 2-oxocarboxylate + L-ornithine => L-glutamate 5-semialdehyde + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:13878 declares side 13877_R as its products
+        (rh:products); the master reaction RHEA:13877 is undirected. This participant is CHEBI:59869 with
+        coefficient 1. Rhea cites PMID:24912400, PMID:9576796 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:13877
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004587"/>
+      notes: The rdfs:seeAlso triple on RHEA:13877 in rhea.rdf. GO term GO:0004587 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.6.1.13; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:13877
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.13"/>
+      notes: The rh:ec triple on RHEA:13877 in rhea.rdf. EC 2.6.1.13 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

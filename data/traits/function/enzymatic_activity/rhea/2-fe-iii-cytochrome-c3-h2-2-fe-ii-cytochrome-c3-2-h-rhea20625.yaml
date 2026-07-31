@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.12.2.1
     mapping_source: rhea2ec
@@ -38,4 +38,218 @@ definitions:
       Catalyses the reaction: 2 Fe(III)-[cytochrome c3] + H2 = 2 Fe(II)-[cytochrome c3] + 2 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 Fe(III)-[cytochrome c3] + H2 = 2 Fe(II)-[cytochrome c3] + 2 H(+)
+  description: Substrate-to-product chemistry of RHEA:20625, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20626 (rh:substrates → 20625_L, rh:products → 20625_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 Fe(III)-[cytochrome c3] + H2 = 2 Fe(II)-[cytochrome c3] + 2 H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20625
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 Fe(III)-[cytochrome c3] + H2 = 2 Fe(II)-[cytochrome c3] + 2 H(+)'
+  - node_id: sub1
+    label: Fe(III)-[cytochrome c3]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11576
+    description: Rhea compound GENERIC:11576.
+  - node_id: sub1_rp1
+    label: Fe(3+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11576 (Fe(III)-[cytochrome
+      c3]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: sub2
+    label: H2
+    node_type: CHEMICAL
+    grounding: CHEBI:18276
+    description: Formula H2.
+  - node_id: prd1
+    label: Fe(II)-[cytochrome c3]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11577
+    description: Rhea compound GENERIC:11577.
+  - node_id: prd1_rp1
+    label: Fe(2+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11577 (Fe(II)-[cytochrome
+      c3]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cytochrome-c3 hydrogenase activity
+    grounding: GO:0047806
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: cytochrome-c3 hydrogenase
+    grounding: EC:1.12.2.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P80509
+    node_type: PROTEIN
+    label: HC3L_ACIFR
+    grounding: UniProtKB:P80509
+  - node_id: prot_P80510
+    node_type: PROTEIN
+    label: HC3S_ACIFR
+    grounding: UniProtKB:P80510
+  - node_id: prot_P12944
+    node_type: PROTEIN
+    label: PHNL_MEGGA
+    grounding: UniProtKB:P12944
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(III)-[cytochrome c3] is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:20626
+      snippet: 2 Fe(III)-[cytochrome c3] + H2 => 2 Fe(II)-[cytochrome c3] + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20626 declares side 20625_L as its substrates
+        (rh:substrates); the master reaction RHEA:20625 is undirected. This participant is GENERIC:11576
+        with coefficient 2. Rhea cites PMID:13745271, PMID:4364940, PMID:10378275, PMID:3546297 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c3].
+    evidence:
+    - reference: RHEA:20625
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:11576 (Fe(III)-[cytochrome c3]) declares rh:reactivePart = Fe(3+) (CHEBI:29034),
+        formula Fe.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20626
+      snippet: 2 Fe(III)-[cytochrome c3] + H2 => 2 Fe(II)-[cytochrome c3] + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20626 declares side 20625_L as its substrates
+        (rh:substrates); the master reaction RHEA:20625 is undirected. This participant is CHEBI:18276
+        with coefficient 1. Rhea cites PMID:13745271, PMID:4364940, PMID:10378275, PMID:3546297 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Fe(II)-[cytochrome c3] is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:20626
+      snippet: 2 Fe(III)-[cytochrome c3] + H2 => 2 Fe(II)-[cytochrome c3] + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20626 declares side 20625_R as its products
+        (rh:products); the master reaction RHEA:20625 is undirected. This participant is GENERIC:11577
+        with coefficient 2. Rhea cites PMID:13745271, PMID:4364940, PMID:10378275, PMID:3546297 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Fe(2+) is the reactive part of Fe(II)-[cytochrome c3].
+    evidence:
+    - reference: RHEA:20625
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:11577 (Fe(II)-[cytochrome c3]) declares rh:reactivePart = Fe(2+) (CHEBI:29033),
+        formula Fe.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:20626
+      snippet: 2 Fe(III)-[cytochrome c3] + H2 => 2 Fe(II)-[cytochrome c3] + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20626 declares side 20625_R as its products
+        (rh:products); the master reaction RHEA:20625 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:13745271, PMID:4364940, PMID:10378275, PMID:3546297 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:20625
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047806"/>
+      notes: The rdfs:seeAlso triple on RHEA:20625 in rhea.rdf. GO term GO:0047806 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.12.2.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:20625
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.12.2.1"/>
+      notes: The rh:ec triple on RHEA:20625 in rhea.rdf. EC 1.12.2.1 is itself a record in this KB.
+  - subject: prot_P80509
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HC3L_ACIFR is an exemplar enzyme carrying EC 1.12.2.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.12.2.1
+      snippet: DR   P80509, HC3L_ACIFR ;  P80510, HC3S_ACIFR ;  P12944, PHNL_MEGGA ;
+      notes: ExPASy ENZYME entry EC 1.12.2.1 cross-references UniProtKB:P80509 (HC3L_ACIFR) as a protein
+        with this activity.
+    - reference: RHEA:20625
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.12.2.1"/>
+      notes: Rhea assigns RHEA:20625 to EC 1.12.2.1, and EC 1.12.2.1 maps to exactly one Rhea master reaction
+        (RHEA:20625), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P80510
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HC3S_ACIFR is an exemplar enzyme carrying EC 1.12.2.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.12.2.1
+      snippet: DR   P80509, HC3L_ACIFR ;  P80510, HC3S_ACIFR ;  P12944, PHNL_MEGGA ;
+      notes: ExPASy ENZYME entry EC 1.12.2.1 cross-references UniProtKB:P80510 (HC3S_ACIFR) as a protein
+        with this activity.
+    - reference: RHEA:20625
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.12.2.1"/>
+      notes: Rhea assigns RHEA:20625 to EC 1.12.2.1, and EC 1.12.2.1 maps to exactly one Rhea master reaction
+        (RHEA:20625), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P12944
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHNL_MEGGA is an exemplar enzyme carrying EC 1.12.2.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.12.2.1
+      snippet: DR   P80509, HC3L_ACIFR ;  P80510, HC3S_ACIFR ;  P12944, PHNL_MEGGA ;
+      notes: ExPASy ENZYME entry EC 1.12.2.1 cross-references UniProtKB:P12944 (PHNL_MEGGA) as a protein
+        with this activity.
+    - reference: RHEA:20625
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.12.2.1"/>
+      notes: Rhea assigns RHEA:20625 to EC 1.12.2.1, and EC 1.12.2.1 maps to exactly one Rhea master reaction
+        (RHEA:20625), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

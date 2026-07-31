@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -31,4 +31,120 @@ definitions:
       Catalyses: levoglucosan + NAD(+) = 3-dehydrolevoglucosan + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of levoglucosan dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.425. EC 1.1.1.425 maps to
+    exactly one curated Rhea reaction (RHEA:62392), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "levoglucosan
+    + NAD(+) = 3-dehydrolevoglucosan + NADH + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: levoglucosan dehydrogenase
+    grounding: EC:1.1.1.425
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: levoglucosan
+    node_type: CHEMICAL
+    grounding: CHEBI:30997
+    description: Formula C6H10O5.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: 3-dehydrolevoglucosan
+    node_type: CHEMICAL
+    grounding: CHEBI:144894
+    description: Formula C6H8O5.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_F0M433
+    node_type: PROTEIN
+    label: LGDH_PSEPM
+    grounding: UniProtKB:F0M433
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: levoglucosan is a substrate consumed by RHEA:62392 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62393
+      snippet: levoglucosan + NAD(+) => 3-dehydrolevoglucosan + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62393 declares side 62392_L as its substrates
+        (rh:substrates); the master reaction RHEA:62392 is undirected. This participant is CHEBI:30997
+        with coefficient 1. Rhea cites PMID:30224354, PMID:7765713 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:62392 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62393
+      snippet: levoglucosan + NAD(+) => 3-dehydrolevoglucosan + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62393 declares side 62392_L as its substrates
+        (rh:substrates); the master reaction RHEA:62392 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:30224354, PMID:7765713 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-dehydrolevoglucosan is a product released by RHEA:62392 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62393
+      snippet: levoglucosan + NAD(+) => 3-dehydrolevoglucosan + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62393 declares side 62392_R as its products
+        (rh:products); the master reaction RHEA:62392 is undirected. This participant is CHEBI:144894
+        with coefficient 1. Rhea cites PMID:30224354, PMID:7765713 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by RHEA:62392 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62393
+      snippet: levoglucosan + NAD(+) => 3-dehydrolevoglucosan + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62393 declares side 62392_R as its products
+        (rh:products); the master reaction RHEA:62392 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:30224354, PMID:7765713 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:62392 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62393
+      snippet: levoglucosan + NAD(+) => 3-dehydrolevoglucosan + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62393 declares side 62392_R as its products
+        (rh:products); the master reaction RHEA:62392 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:30224354, PMID:7765713 for this reaction.
+  - subject: prot_F0M433
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LGDH_PSEPM is an exemplar enzyme with EC 1.1.1.425 activity.
+    evidence:
+    - reference: EC:1.1.1.425
+      snippet: DR   F0M433, LGDH_PSEPM ;
+      notes: ExPASy ENZYME entry EC 1.1.1.425 cross-references UniProtKB:F0M433 (LGDH_PSEPM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

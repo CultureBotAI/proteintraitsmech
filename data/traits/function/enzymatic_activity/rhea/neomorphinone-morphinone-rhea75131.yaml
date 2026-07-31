@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.3.24
     mapping_source: rhea2ec
@@ -24,4 +24,73 @@ definitions:
       Catalyses the reaction: neomorphinone = morphinone
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of neomorphinone = morphinone
+  description: Substrate-to-product chemistry of RHEA:75131, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:75132 (rh:substrates → 75131_L, rh:products → 75131_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of neomorphinone = morphinone
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:75131
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: neomorphinone = morphinone'
+  - node_id: sub1
+    label: neomorphinone
+    node_type: CHEMICAL
+    grounding: CHEBI:194188
+    description: Formula C17H18NO3.
+  - node_id: prd1
+    label: morphinone
+    node_type: CHEMICAL
+    grounding: CHEBI:57728
+    description: Formula C17H18NO3.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: neopinone isomerase
+    grounding: EC:5.3.3.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: neomorphinone is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75132
+      snippet: neomorphinone => morphinone
+      notes: Rhea's left-to-right directional reaction RHEA:75132 declares side 75131_L as its substrates
+        (rh:substrates); the master reaction RHEA:75131 is undirected. This participant is CHEBI:194188
+        with coefficient 1. Rhea cites PMID:30886433 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: morphinone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75132
+      snippet: neomorphinone => morphinone
+      notes: Rhea's left-to-right directional reaction RHEA:75132 declares side 75131_R as its products
+        (rh:products); the master reaction RHEA:75131 is undirected. This participant is CHEBI:57728 with
+        coefficient 1. Rhea cites PMID:30886433 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.3.24; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:75131
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.24"/>
+      notes: The rh:ec triple on RHEA:75131 in rhea.rdf. EC 5.3.3.24 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

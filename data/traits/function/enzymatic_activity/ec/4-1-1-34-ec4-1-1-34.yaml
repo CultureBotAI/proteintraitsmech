@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 synonyms:
@@ -43,4 +43,147 @@ definitions:
       Catalyses: 3-dehydro-L-gulonate + H(+) = L-xylulose + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dehydro-L-gulonate decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.34. EC 4.1.1.34 maps to exactly
+    one curated Rhea reaction (RHEA:11084), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-dehydro-L-gulonate
+    + H(+) = L-xylulose + CO2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dehydro-L-gulonate decarboxylase
+    grounding: EC:4.1.1.34
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-dehydro-L-gulonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57655
+    description: Formula C6H9O7.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: L-xylulose
+    node_type: CHEMICAL
+    grounding: CHEBI:17399
+    description: Formula C5H10O5.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dehydro-L-gulonate decarboxylase activity
+    grounding: GO:0047842
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q2HJH3
+    node_type: PROTEIN
+    label: BKGD_BOVIN
+    grounding: UniProtKB:Q2HJH3
+  - node_id: prot_Q9H0W9
+    node_type: PROTEIN
+    label: BKGD_HUMAN
+    grounding: UniProtKB:Q9H0W9
+  - node_id: prot_Q91V76
+    node_type: PROTEIN
+    label: BKGD_MOUSE
+    grounding: UniProtKB:Q91V76
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-dehydro-L-gulonate is a substrate consumed by RHEA:11084 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11085
+      snippet: 3-dehydro-L-gulonate + H(+) => L-xylulose + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:11085 declares side 11084_L as its substrates
+        (rh:substrates); the master reaction RHEA:11084 is undirected. This participant is CHEBI:57655
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:11084 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11085
+      snippet: 3-dehydro-L-gulonate + H(+) => L-xylulose + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:11085 declares side 11084_L as its substrates
+        (rh:substrates); the master reaction RHEA:11084 is undirected. This participant is CHEBI:15378
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-xylulose is a product released by RHEA:11084 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11085
+      snippet: 3-dehydro-L-gulonate + H(+) => L-xylulose + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:11085 declares side 11084_R as its products
+        (rh:products); the master reaction RHEA:11084 is undirected. This participant is CHEBI:17399 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:11084 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11085
+      snippet: 3-dehydro-L-gulonate + H(+) => L-xylulose + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:11085 declares side 11084_R as its products
+        (rh:products); the master reaction RHEA:11084 is undirected. This participant is CHEBI:16526 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.1.34
+      snippet: EC:4.1.1.34 > GO:dehydro-L-gulonate decarboxylase activity ; GO:0047842
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047842 is itself a record
+        in this KB.
+  - subject: prot_Q2HJH3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BKGD_BOVIN is an exemplar enzyme with EC 4.1.1.34 activity.
+    evidence:
+    - reference: EC:4.1.1.34
+      snippet: DR   Q2HJH3, BKGD_BOVIN ;  Q9H0W9, BKGD_HUMAN ;  Q91V76, BKGD_MOUSE ;
+      notes: ExPASy ENZYME entry EC 4.1.1.34 cross-references UniProtKB:Q2HJH3 (BKGD_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q9H0W9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BKGD_HUMAN is an exemplar enzyme with EC 4.1.1.34 activity.
+    evidence:
+    - reference: EC:4.1.1.34
+      snippet: DR   Q2HJH3, BKGD_BOVIN ;  Q9H0W9, BKGD_HUMAN ;  Q91V76, BKGD_MOUSE ;
+      notes: ExPASy ENZYME entry EC 4.1.1.34 cross-references UniProtKB:Q9H0W9 (BKGD_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q91V76
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BKGD_MOUSE is an exemplar enzyme with EC 4.1.1.34 activity.
+    evidence:
+    - reference: EC:4.1.1.34
+      snippet: DR   Q2HJH3, BKGD_BOVIN ;  Q9H0W9, BKGD_HUMAN ;  Q91V76, BKGD_MOUSE ;
+      notes: ExPASy ENZYME entry EC 4.1.1.34 cross-references UniProtKB:Q91V76 (BKGD_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

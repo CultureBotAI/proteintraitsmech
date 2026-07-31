@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -41,4 +41,175 @@ definitions:
       Catalyses: N,N'-diacetylchitobiose(out) + N(pros)-phospho-L-histidyl-[protein] = diacetylchitobiose-6'-phosphate(in) + L-histidyl-[protein]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-N(pi)-phosphohistidine--N,N'-diacetylchitobiose
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.196. EC 2.7.1.196 maps to
+    exactly one curated Rhea reaction (RHEA:33423), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N,N''-diacetylchitobiose(out)
+    + N(pros)-phospho-L-histidyl-[protein] = diacetylchitobiose-6''-phosphate(in) + L-histidyl-[protein]".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-N(pi)-phosphohistidine--N,N'-diacetylchitobiose
+    grounding: EC:2.7.1.196
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N,N'-diacetylchitobiose (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:28681
+    description: Formula C16H28N2O11.
+  - node_id: sub2
+    label: N(pros)-phospho-L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9746
+    description: Rhea compound GENERIC:9746.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: N(pros)-phospho-L-histidine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64837
+  - node_id: prd1
+    label: diacetylchitobiose-6'-phosphate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:64883
+    description: Formula C16H27N2O14P.
+  - node_id: prd2
+    label: L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9745
+    description: Rhea compound GENERIC:9745.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: L-histidine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9745 (L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29979
+  - node_id: prot_P69830
+    node_type: PROTEIN
+    label: PTQB_ECO57
+    grounding: UniProtKB:P69830
+  - node_id: prot_P69796
+    node_type: PROTEIN
+    label: PTQB_ECOL6
+    grounding: UniProtKB:P69796
+  - node_id: prot_P69795
+    node_type: PROTEIN
+    label: PTQB_ECOLI
+    grounding: UniProtKB:P69795
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N,N'-diacetylchitobiose is a substrate consumed by RHEA:33423 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33424
+      snippet: N,N'-diacetylchitobiose(out) + N(pros)-phospho-L-histidyl-[protein] => diacetylchitobiose-6'-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:33424 declares side 33423_L as its substrates
+        (rh:substrates); the master reaction RHEA:33423 is undirected. This participant is CHEBI:28681
+        with coefficient 1. Rhea cites PMID:2092358, PMID:10913117, PMID:10913119, PMID:10913118 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: N(pros)-phospho-L-histidyl-[protein] is a substrate consumed by RHEA:33423 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33424
+      snippet: N,N'-diacetylchitobiose(out) + N(pros)-phospho-L-histidyl-[protein] => diacetylchitobiose-6'-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:33424 declares side 33423_L as its substrates
+        (rh:substrates); the master reaction RHEA:33423 is undirected. This participant is GENERIC:9746
+        with coefficient 1. Rhea cites PMID:2092358, PMID:10913117, PMID:10913119, PMID:10913118 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: N(pros)-phospho-L-histidine residue is the reactive part of N(pros)-phospho-L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:33423
+      snippet: N(pros)-phospho-L-histidine residue
+      notes: Rhea compound GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]) declares rh:reactivePart
+        = N(pros)-phospho-L-histidine residue (CHEBI:64837).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: diacetylchitobiose-6'-phosphate is a product released by RHEA:33423 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33424
+      snippet: N,N'-diacetylchitobiose(out) + N(pros)-phospho-L-histidyl-[protein] => diacetylchitobiose-6'-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:33424 declares side 33423_R as its products
+        (rh:products); the master reaction RHEA:33423 is undirected. This participant is CHEBI:64883 with
+        coefficient 1. Rhea cites PMID:2092358, PMID:10913117, PMID:10913119, PMID:10913118 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-histidyl-[protein] is a product released by RHEA:33423 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33424
+      snippet: N,N'-diacetylchitobiose(out) + N(pros)-phospho-L-histidyl-[protein] => diacetylchitobiose-6'-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:33424 declares side 33423_R as its products
+        (rh:products); the master reaction RHEA:33423 is undirected. This participant is GENERIC:9745
+        with coefficient 1. Rhea cites PMID:2092358, PMID:10913117, PMID:10913119, PMID:10913118 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-histidine residue is the reactive part of L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:33423
+      snippet: L-histidine residue
+      notes: Rhea compound GENERIC:9745 (L-histidyl-[protein]) declares rh:reactivePart = L-histidine
+        residue (CHEBI:29979).
+  - subject: prot_P69830
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTQB_ECO57 is an exemplar enzyme with EC 2.7.1.196 activity.
+    evidence:
+    - reference: EC:2.7.1.196
+      snippet: DR   P69830, PTQB_ECO57 ;  P69796, PTQB_ECOL6 ;  P69795, PTQB_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.1.196 cross-references UniProtKB:P69830 (PTQB_ECO57) as a protein
+        with this activity.
+  - subject: prot_P69796
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTQB_ECOL6 is an exemplar enzyme with EC 2.7.1.196 activity.
+    evidence:
+    - reference: EC:2.7.1.196
+      snippet: DR   P69830, PTQB_ECO57 ;  P69796, PTQB_ECOL6 ;  P69795, PTQB_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.1.196 cross-references UniProtKB:P69796 (PTQB_ECOL6) as a protein
+        with this activity.
+  - subject: prot_P69795
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTQB_ECOLI is an exemplar enzyme with EC 2.7.1.196 activity.
+    evidence:
+    - reference: EC:2.7.1.196
+      snippet: DR   P69830, PTQB_ECO57 ;  P69796, PTQB_ECOL6 ;  P69795, PTQB_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.1.196 cross-references UniProtKB:P69795 (PTQB_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.99.40
     mapping_source: rhea2ec
@@ -24,4 +24,150 @@ definitions:
       Catalyses the reaction: (S)-2,3-epoxysqualene = alpha-amyrin
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (S)-2,3-epoxysqualene = alpha-amyrin
+  description: Substrate-to-product chemistry of RHEA:31387, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:31388 (rh:substrates → 31387_L, rh:products → 31387_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (S)-2,3-epoxysqualene = alpha-amyrin
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:31387
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (S)-2,3-epoxysqualene = alpha-amyrin'
+  - node_id: sub1
+    label: (S)-2,3-epoxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:15441
+    description: Formula C30H50O.
+  - node_id: prd1
+    label: alpha-amyrin
+    node_type: CHEMICAL
+    grounding: CHEBI:10213
+    description: Formula C30H50O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-amyrin synthase activity
+    grounding: GO:0042561
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-amyrin synthase
+    grounding: EC:5.4.99.40
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9LRH7
+    node_type: PROTEIN
+    label: ABAMS_PEA
+    grounding: UniProtKB:Q9LRH7
+  - node_id: prot_E7DN64
+    node_type: PROTEIN
+    label: DAMS_SOLLC
+    grounding: UniProtKB:E7DN64
+  - node_id: prot_Q8RWT0
+    node_type: PROTEIN
+    label: LUP2_ARATH
+    grounding: UniProtKB:Q8RWT0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-2,3-epoxysqualene is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31388
+      snippet: (S)-2,3-epoxysqualene => alpha-amyrin
+      notes: Rhea's left-to-right directional reaction RHEA:31388 declares side 31387_L as its substrates
+        (rh:substrates); the master reaction RHEA:31387 is undirected. This participant is CHEBI:15441
+        with coefficient 1. Rhea cites PMID:10848960 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-amyrin is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31388
+      snippet: (S)-2,3-epoxysqualene => alpha-amyrin
+      notes: Rhea's left-to-right directional reaction RHEA:31388 declares side 31387_R as its products
+        (rh:products); the master reaction RHEA:31387 is undirected. This participant is CHEBI:10213 with
+        coefficient 1. Rhea cites PMID:10848960 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:31387
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0042561"/>
+      notes: The rdfs:seeAlso triple on RHEA:31387 in rhea.rdf. GO term GO:0042561 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.99.40; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:31387
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.40"/>
+      notes: The rh:ec triple on RHEA:31387 in rhea.rdf. EC 5.4.99.40 is itself a record in this KB.
+  - subject: prot_Q9LRH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ABAMS_PEA is an exemplar enzyme carrying EC 5.4.99.40, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.40
+      snippet: DR   Q9LRH7, ABAMS_PEA  ;  E7DN64, DAMS_SOLLC ;  Q8RWT0, LUP2_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.4.99.40 cross-references UniProtKB:Q9LRH7 (ABAMS_PEA) as a protein
+        with this activity.
+    - reference: RHEA:31387
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.40"/>
+      notes: Rhea assigns RHEA:31387 to EC 5.4.99.40, and EC 5.4.99.40 maps to exactly one Rhea master
+        reaction (RHEA:31387), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_E7DN64
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DAMS_SOLLC is an exemplar enzyme carrying EC 5.4.99.40, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.40
+      snippet: DR   Q9LRH7, ABAMS_PEA  ;  E7DN64, DAMS_SOLLC ;  Q8RWT0, LUP2_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.4.99.40 cross-references UniProtKB:E7DN64 (DAMS_SOLLC) as a protein
+        with this activity.
+    - reference: RHEA:31387
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.40"/>
+      notes: Rhea assigns RHEA:31387 to EC 5.4.99.40, and EC 5.4.99.40 maps to exactly one Rhea master
+        reaction (RHEA:31387), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q8RWT0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LUP2_ARATH is an exemplar enzyme carrying EC 5.4.99.40, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.40
+      snippet: DR   Q9LRH7, ABAMS_PEA  ;  E7DN64, DAMS_SOLLC ;  Q8RWT0, LUP2_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.4.99.40 cross-references UniProtKB:Q8RWT0 (LUP2_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:31387
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.40"/>
+      notes: Rhea assigns RHEA:31387 to EC 5.4.99.40, and EC 5.4.99.40 maps to exactly one Rhea master
+        reaction (RHEA:31387), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

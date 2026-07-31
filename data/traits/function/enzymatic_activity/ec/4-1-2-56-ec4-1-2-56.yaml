@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 mapped_xrefs:
@@ -32,4 +32,107 @@ definitions:
       Catalyses: 2-amino-4,5-dihydroxy-6-oxo-7-(phosphooxy)heptanoate = L-aspartate 4-semialdehyde + dihydroxyacetone phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-amino-4,5-dihydroxy-6-oxo-7-(phosphonooxy)heptanoate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.56. EC 4.1.2.56 maps to exactly
+    one curated Rhea reaction (RHEA:26313), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-amino-4,5-dihydroxy-6-oxo-7-(phosphooxy)heptanoate
+    = L-aspartate 4-semialdehyde + dihydroxyacetone phosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-amino-4,5-dihydroxy-6-oxo-7-(phosphonooxy)heptanoate synthase
+    grounding: EC:4.1.2.56
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-amino-4,5-dihydroxy-6-oxo-7-(phosphooxy)heptanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58898
+    description: Formula C7H12NO9P.
+  - node_id: prd1
+    label: L-aspartate 4-semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:537519
+    description: Formula C4H7NO3.
+  - node_id: prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: prot_B1VTI8
+    node_type: PROTEIN
+    label: GRII_STRGG
+    grounding: UniProtKB:B1VTI8
+  - node_id: prot_A0JC77
+    node_type: PROTEIN
+    label: GRII_STRGR
+    grounding: UniProtKB:A0JC77
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-amino-4,5-dihydroxy-6-oxo-7-(phosphooxy)heptanoate is a substrate consumed by RHEA:26313
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26314
+      snippet: 2-amino-4,5-dihydroxy-6-oxo-7-(phosphooxy)heptanoate => L-aspartate 4-semialdehyde + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26314 declares side 26313_L as its substrates
+        (rh:substrates); the master reaction RHEA:26313 is undirected. This participant is CHEBI:58898
+        with coefficient 1. Rhea cites PMID:17003031 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-aspartate 4-semialdehyde is a product released by RHEA:26313 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26314
+      snippet: 2-amino-4,5-dihydroxy-6-oxo-7-(phosphooxy)heptanoate => L-aspartate 4-semialdehyde + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26314 declares side 26313_R as its products
+        (rh:products); the master reaction RHEA:26313 is undirected. This participant is CHEBI:537519
+        with coefficient 1. Rhea cites PMID:17003031 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dihydroxyacetone phosphate is a product released by RHEA:26313 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26314
+      snippet: 2-amino-4,5-dihydroxy-6-oxo-7-(phosphooxy)heptanoate => L-aspartate 4-semialdehyde + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26314 declares side 26313_R as its products
+        (rh:products); the master reaction RHEA:26313 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:17003031 for this reaction.
+  - subject: prot_B1VTI8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GRII_STRGG is an exemplar enzyme with EC 4.1.2.56 activity.
+    evidence:
+    - reference: EC:4.1.2.56
+      snippet: DR   B1VTI8, GRII_STRGG ;  A0JC77, GRII_STRGR ;
+      notes: ExPASy ENZYME entry EC 4.1.2.56 cross-references UniProtKB:B1VTI8 (GRII_STRGG) as a protein
+        with this activity.
+  - subject: prot_A0JC77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GRII_STRGR is an exemplar enzyme with EC 4.1.2.56 activity.
+    evidence:
+    - reference: EC:4.1.2.56
+      snippet: DR   B1VTI8, GRII_STRGG ;  A0JC77, GRII_STRGR ;
+      notes: ExPASy ENZYME entry EC 4.1.2.56 cross-references UniProtKB:A0JC77 (GRII_STRGR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 mapped_xrefs:
@@ -36,4 +36,172 @@ definitions:
       Catalyses: [amino-group carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate + H2O = [amino-group carrier protein]-C-terminal-L-glutamate + L-ornithine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [amino group carrier protein]-ornithine hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.132. EC 3.5.1.132 maps to
+    exactly one curated Rhea reaction (RHEA:52676), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[amino-group
+    carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate + H2O = [amino-group carrier protein]-C-terminal-L-glutamate
+    + L-ornithine". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[amino group carrier protein]-ornithine hydrolase'
+    grounding: EC:3.5.1.132
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[amino-group carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13328
+    description: Rhea compound GENERIC:13328.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: C-terminal-gamma-(L-ornithyl)-L-glutamyl residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13328 ([amino-group
+      carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate); no position on any specific protein
+      sequence is asserted.
+    grounding: CHEBI:136763
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: '[amino-group carrier protein]-C-terminal-L-glutamate'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9693
+    description: Rhea compound GENERIC:9693.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: C-terminal-L-glutamyl residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9693 ([amino-group
+      carrier protein]-C-terminal-L-glutamate); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78525
+  - node_id: prd2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: prot_Q9YBY3
+    node_type: PROTEIN
+    label: LYSK_AERPE
+    grounding: UniProtKB:Q9YBY3
+  - node_id: prot_Q9V1I3
+    node_type: PROTEIN
+    label: LYSK_PYRAB
+    grounding: UniProtKB:Q9V1I3
+  - node_id: prot_Q8ZUG2
+    node_type: PROTEIN
+    label: LYSK_PYRAE
+    grounding: UniProtKB:Q8ZUG2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[amino-group carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate is a substrate
+      consumed by RHEA:52676 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:52677
+      snippet: '[amino-group carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate + H2O => [amino-group
+        carrier protein]-C-terminal-L-glutamate + L-ornithine'
+      notes: Rhea's left-to-right directional reaction RHEA:52677 declares side 52676_L as its substrates
+        (rh:substrates); the master reaction RHEA:52676 is undirected. This participant is GENERIC:13328
+        with coefficient 1. Rhea cites PMID:23434852, PMID:19620981 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: C-terminal-gamma-(L-ornithyl)-L-glutamyl residue is the reactive part of [amino-group
+      carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate.
+    evidence:
+    - reference: RHEA:52676
+      snippet: C-terminal-gamma-(L-ornithyl)-L-glutamyl residue
+      notes: Rhea compound GENERIC:13328 ([amino-group carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate)
+        declares rh:reactivePart = C-terminal-gamma-(L-ornithyl)-L-glutamyl residue (CHEBI:136763).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:52676 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52677
+      snippet: '[amino-group carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate + H2O => [amino-group
+        carrier protein]-C-terminal-L-glutamate + L-ornithine'
+      notes: Rhea's left-to-right directional reaction RHEA:52677 declares side 52676_L as its substrates
+        (rh:substrates); the master reaction RHEA:52676 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:23434852, PMID:19620981 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[amino-group carrier protein]-C-terminal-L-glutamate is a product released by RHEA:52676
+      (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:52677
+      snippet: '[amino-group carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate + H2O => [amino-group
+        carrier protein]-C-terminal-L-glutamate + L-ornithine'
+      notes: Rhea's left-to-right directional reaction RHEA:52677 declares side 52676_R as its products
+        (rh:products); the master reaction RHEA:52676 is undirected. This participant is GENERIC:9693
+        with coefficient 1. Rhea cites PMID:23434852, PMID:19620981 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: C-terminal-L-glutamyl residue is the reactive part of [amino-group carrier protein]-C-terminal-L-glutamate.
+    evidence:
+    - reference: RHEA:52676
+      snippet: C-terminal-L-glutamyl residue
+      notes: Rhea compound GENERIC:9693 ([amino-group carrier protein]-C-terminal-L-glutamate) declares
+        rh:reactivePart = C-terminal-L-glutamyl residue (CHEBI:78525).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-ornithine is a product released by RHEA:52676 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52677
+      snippet: '[amino-group carrier protein]-C-terminal-gamma-(L-ornithyl)-L-glutamate + H2O => [amino-group
+        carrier protein]-C-terminal-L-glutamate + L-ornithine'
+      notes: Rhea's left-to-right directional reaction RHEA:52677 declares side 52676_R as its products
+        (rh:products); the master reaction RHEA:52676 is undirected. This participant is CHEBI:46911 with
+        coefficient 1. Rhea cites PMID:23434852, PMID:19620981 for this reaction.
+  - subject: prot_Q9YBY3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSK_AERPE is an exemplar enzyme with EC 3.5.1.132 activity.
+    evidence:
+    - reference: EC:3.5.1.132
+      snippet: DR   Q9YBY3, LYSK_AERPE ;  Q9V1I3, LYSK_PYRAB ;  Q8ZUG2, LYSK_PYRAE ;
+      notes: ExPASy ENZYME entry EC 3.5.1.132 cross-references UniProtKB:Q9YBY3 (LYSK_AERPE) as a protein
+        with this activity.
+  - subject: prot_Q9V1I3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSK_PYRAB is an exemplar enzyme with EC 3.5.1.132 activity.
+    evidence:
+    - reference: EC:3.5.1.132
+      snippet: DR   Q9YBY3, LYSK_AERPE ;  Q9V1I3, LYSK_PYRAB ;  Q8ZUG2, LYSK_PYRAE ;
+      notes: ExPASy ENZYME entry EC 3.5.1.132 cross-references UniProtKB:Q9V1I3 (LYSK_PYRAB) as a protein
+        with this activity.
+  - subject: prot_Q8ZUG2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSK_PYRAE is an exemplar enzyme with EC 3.5.1.132 activity.
+    evidence:
+    - reference: EC:3.5.1.132
+      snippet: DR   Q9YBY3, LYSK_AERPE ;  Q9V1I3, LYSK_PYRAB ;  Q8ZUG2, LYSK_PYRAE ;
+      notes: ExPASy ENZYME entry EC 3.5.1.132 cross-references UniProtKB:Q8ZUG2 (LYSK_PYRAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

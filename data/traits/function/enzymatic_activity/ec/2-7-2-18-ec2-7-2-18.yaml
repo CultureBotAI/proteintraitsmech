@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.2.-
 mapped_xrefs:
@@ -23,4 +23,90 @@ definitions:
       Catalyses: a fatty acid + ATP = a fatty acyl phosphate + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fatty acid kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.2.18. EC 2.7.2.18 maps to exactly
+    one curated Rhea reaction (RHEA:60168), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a fatty acid
+    + ATP = a fatty acyl phosphate + ADP". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fatty acid kinase
+    grounding: EC:2.7.2.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+    description: Formula CO2R.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: a fatty acyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:177921
+    description: Formula CO5PR.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a fatty acid is a substrate consumed by RHEA:60168 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60169
+      snippet: a fatty acid + ATP => a fatty acyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:60169 declares side 60168_L as its substrates
+        (rh:substrates); the master reaction RHEA:60168 is undirected. This participant is CHEBI:28868
+        with coefficient 1. Rhea cites PMID:25002480, PMID:24673884, PMID:26774272 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:60168 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60169
+      snippet: a fatty acid + ATP => a fatty acyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:60169 declares side 60168_L as its substrates
+        (rh:substrates); the master reaction RHEA:60168 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:25002480, PMID:24673884, PMID:26774272 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a fatty acyl phosphate is a product released by RHEA:60168 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60169
+      snippet: a fatty acid + ATP => a fatty acyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:60169 declares side 60168_R as its products
+        (rh:products); the master reaction RHEA:60168 is undirected. This participant is CHEBI:177921
+        with coefficient 1. Rhea cites PMID:25002480, PMID:24673884, PMID:26774272 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:60168 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60169
+      snippet: a fatty acid + ATP => a fatty acyl phosphate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:60169 declares side 60168_R as its products
+        (rh:products); the master reaction RHEA:60168 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:25002480, PMID:24673884, PMID:26774272 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

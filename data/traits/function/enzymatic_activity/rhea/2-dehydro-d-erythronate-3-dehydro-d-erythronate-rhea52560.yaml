@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.1.35
     mapping_source: rhea2ec
@@ -24,4 +24,75 @@ definitions:
       Catalyses the reaction: 2-dehydro-D-erythronate = 3-dehydro-D-erythronate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-dehydro-D-erythronate = 3-dehydro-D-erythronate
+  description: Substrate-to-product chemistry of RHEA:52560, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:52561 (rh:substrates → 52560_L, rh:products → 52560_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-dehydro-D-erythronate = 3-dehydro-D-erythronate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:52560
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-dehydro-D-erythronate = 3-dehydro-D-erythronate'
+  - node_id: sub1
+    label: 2-dehydro-D-erythronate
+    node_type: CHEMICAL
+    grounding: CHEBI:136668
+    description: Formula C4H5O5.
+  - node_id: prd1
+    label: 3-dehydro-D-erythronate
+    node_type: CHEMICAL
+    grounding: CHEBI:57958
+    description: Formula C4H5O5.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2-dehydrotetronate isomerase
+    grounding: EC:5.3.1.35
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-dehydro-D-erythronate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52561
+      snippet: 2-dehydro-D-erythronate => 3-dehydro-D-erythronate
+      notes: Rhea's left-to-right directional reaction RHEA:52561 declares side 52560_L as its substrates
+        (rh:substrates); the master reaction RHEA:52560 is undirected. This participant is CHEBI:136668
+        with coefficient 1. Rhea cites PMID:27402745 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-dehydro-D-erythronate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52561
+      snippet: 2-dehydro-D-erythronate => 3-dehydro-D-erythronate
+      notes: Rhea's left-to-right directional reaction RHEA:52561 declares side 52560_R as its products
+        (rh:products); the master reaction RHEA:52560 is undirected. This participant is CHEBI:57958 with
+        coefficient 1. Rhea cites PMID:27402745 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.1.35; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:52560
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.35"/>
+      notes: The rh:ec triple on RHEA:52560 in rhea.rdf. EC 5.3.1.35 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

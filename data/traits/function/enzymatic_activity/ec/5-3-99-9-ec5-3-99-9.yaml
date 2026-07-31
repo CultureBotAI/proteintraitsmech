@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.99.-
 synonyms:
@@ -37,4 +37,102 @@ definitions:
       Catalyses: all-trans-violaxanthin = all-trans-neoxanthin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of neoxanthin synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.99.9. EC 5.3.99.9 maps to exactly
+    one curated Rhea reaction (RHEA:10128), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "all-trans-violaxanthin
+    = all-trans-neoxanthin". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: neoxanthin synthase
+    grounding: EC:5.3.99.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: all-trans-violaxanthin
+    node_type: CHEMICAL
+    grounding: CHEBI:35288
+    description: Formula C40H56O4.
+  - node_id: prd1
+    label: all-trans-neoxanthin
+    node_type: CHEMICAL
+    grounding: CHEBI:32446
+    description: Formula C40H56O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: neoxanthin synthase activity
+    grounding: GO:0034020
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_K4C9E2
+    node_type: PROTEIN
+    label: NSY_SOLLC
+    grounding: UniProtKB:K4C9E2
+  - node_id: prot_Q9M424
+    node_type: PROTEIN
+    label: NXS_SOLTU
+    grounding: UniProtKB:Q9M424
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-violaxanthin is a substrate consumed by RHEA:10128 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10129
+      snippet: all-trans-violaxanthin => all-trans-neoxanthin
+      notes: Rhea's left-to-right directional reaction RHEA:10129 declares side 10128_L as its substrates
+        (rh:substrates); the master reaction RHEA:10128 is undirected. This participant is CHEBI:35288
+        with coefficient 1. Rhea cites PMID:11029576, PMID:11094161 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: all-trans-neoxanthin is a product released by RHEA:10128 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10129
+      snippet: all-trans-violaxanthin => all-trans-neoxanthin
+      notes: Rhea's left-to-right directional reaction RHEA:10129 declares side 10128_R as its products
+        (rh:products); the master reaction RHEA:10128 is undirected. This participant is CHEBI:32446 with
+        coefficient 1. Rhea cites PMID:11029576, PMID:11094161 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.99.9
+      snippet: EC:5.3.99.9 > GO:neoxanthin synthase activity ; GO:0034020
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0034020 is itself a record
+        in this KB.
+  - subject: prot_K4C9E2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NSY_SOLLC is an exemplar enzyme with EC 5.3.99.9 activity.
+    evidence:
+    - reference: EC:5.3.99.9
+      snippet: DR   K4C9E2, NSY_SOLLC  ;  Q9M424, NXS_SOLTU  ;
+      notes: ExPASy ENZYME entry EC 5.3.99.9 cross-references UniProtKB:K4C9E2 (NSY_SOLLC) as a protein
+        with this activity.
+  - subject: prot_Q9M424
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NXS_SOLTU is an exemplar enzyme with EC 5.3.99.9 activity.
+    evidence:
+    - reference: EC:5.3.99.9
+      snippet: DR   K4C9E2, NSY_SOLLC  ;  Q9M424, NXS_SOLTU  ;
+      notes: ExPASy ENZYME entry EC 5.3.99.9 cross-references UniProtKB:Q9M424 (NXS_SOLTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

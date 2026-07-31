@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 synonyms:
@@ -36,4 +36,66 @@ definitions:
       Catalyses: Similar to pepsin, but also cleaves on either side of Asp and at Lys-|-Arg
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nepenthesin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.12. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Similar
+    to pepsin, but also cleaves on either side of Asp and at Lys-|-Arg".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nepenthesin
+    grounding: EC:3.4.23.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P69476
+    node_type: PROTEIN
+    label: NEP1_NEPDI
+    grounding: UniProtKB:P69476
+  - node_id: prot_Q766C3
+    node_type: PROTEIN
+    label: NEP1_NEPGR
+    grounding: UniProtKB:Q766C3
+  - node_id: prot_P69477
+    node_type: PROTEIN
+    label: NEP2_NEPDI
+    grounding: UniProtKB:P69477
+  edges:
+  - subject: prot_P69476
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEP1_NEPDI is an exemplar enzyme with EC 3.4.23.12 activity.
+    evidence:
+    - reference: EC:3.4.23.12
+      snippet: DR   P69476, NEP1_NEPDI ;  Q766C3, NEP1_NEPGR ;  P69477, NEP2_NEPDI ;
+      notes: ExPASy ENZYME entry EC 3.4.23.12 cross-references UniProtKB:P69476 (NEP1_NEPDI) as a protein
+        with this activity.
+  - subject: prot_Q766C3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEP1_NEPGR is an exemplar enzyme with EC 3.4.23.12 activity.
+    evidence:
+    - reference: EC:3.4.23.12
+      snippet: DR   P69476, NEP1_NEPDI ;  Q766C3, NEP1_NEPGR ;  P69477, NEP2_NEPDI ;
+      notes: ExPASy ENZYME entry EC 3.4.23.12 cross-references UniProtKB:Q766C3 (NEP1_NEPGR) as a protein
+        with this activity.
+  - subject: prot_P69477
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEP2_NEPDI is an exemplar enzyme with EC 3.4.23.12 activity.
+    evidence:
+    - reference: EC:3.4.23.12
+      snippet: DR   P69476, NEP1_NEPDI ;  Q766C3, NEP1_NEPGR ;  P69477, NEP2_NEPDI ;
+      notes: ExPASy ENZYME entry EC 3.4.23.12 cross-references UniProtKB:P69477 (NEP2_NEPDI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

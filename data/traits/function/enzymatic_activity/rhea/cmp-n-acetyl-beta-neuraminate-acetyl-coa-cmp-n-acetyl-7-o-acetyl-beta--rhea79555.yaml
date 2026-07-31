@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57812
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,98 @@ definitions:
       Catalyses the reaction: CMP-N-acetyl-beta-neuraminate + acetyl-CoA = CMP-N-acetyl-7-O-acetyl-beta-neuraminate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of CMP-N-acetyl-beta-neuraminate + acetyl-CoA = CMP-N-acetyl-7-O-acetyl-beta-neuraminate
+    +…
+  description: Substrate-to-product chemistry of RHEA:79555, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79556 (rh:substrates → 79555_L, rh:products → 79555_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of CMP-N-acetyl-beta-neuraminate + acetyl-CoA = CMP-N-acetyl-7-O-acetyl-beta-ne…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79555
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: CMP-N-acetyl-beta-neuraminate + acetyl-CoA = CMP-N-acetyl-7-O-acetyl-beta-neuraminate
+      + CoA'
+  - node_id: sub1
+    label: CMP-N-acetyl-beta-neuraminate
+    node_type: CHEMICAL
+    grounding: CHEBI:57812
+    description: Formula C20H29N4O16P.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: CMP-N-acetyl-7-O-acetyl-beta-neuraminate
+    node_type: CHEMICAL
+    grounding: CHEBI:229976
+    description: Formula C22H31N4O17P.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: CMP-N-acetyl-beta-neuraminate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79556
+      snippet: CMP-N-acetyl-beta-neuraminate + acetyl-CoA => CMP-N-acetyl-7-O-acetyl-beta-neuraminate
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:79556 declares side 79555_L as its substrates
+        (rh:substrates); the master reaction RHEA:79555 is undirected. This participant is CHEBI:57812
+        with coefficient 1. Rhea cites PMID:18677580, PMID:26169044 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79556
+      snippet: CMP-N-acetyl-beta-neuraminate + acetyl-CoA => CMP-N-acetyl-7-O-acetyl-beta-neuraminate
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:79556 declares side 79555_L as its substrates
+        (rh:substrates); the master reaction RHEA:79555 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:18677580, PMID:26169044 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: CMP-N-acetyl-7-O-acetyl-beta-neuraminate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79556
+      snippet: CMP-N-acetyl-beta-neuraminate + acetyl-CoA => CMP-N-acetyl-7-O-acetyl-beta-neuraminate
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:79556 declares side 79555_R as its products
+        (rh:products); the master reaction RHEA:79555 is undirected. This participant is CHEBI:229976
+        with coefficient 1. Rhea cites PMID:18677580, PMID:26169044 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79556
+      snippet: CMP-N-acetyl-beta-neuraminate + acetyl-CoA => CMP-N-acetyl-7-O-acetyl-beta-neuraminate
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:79556 declares side 79555_R as its products
+        (rh:products); the master reaction RHEA:79555 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:18677580, PMID:26169044 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

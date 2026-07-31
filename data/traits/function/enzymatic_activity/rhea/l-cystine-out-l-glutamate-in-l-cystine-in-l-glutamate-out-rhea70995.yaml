@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:35491
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,95 @@ definitions:
       Catalyses the reaction: L-cystine(out) + L-glutamate(in) = L-cystine(in) + L-glutamate(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-cystine(out) + L-glutamate(in) = L-cystine(in) + L-glutamate(out)
+  description: 'Substrate-to-product chemistry of RHEA:70995, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:70996 (rh:substrates → 70995_L, rh:products → 70995_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of L-cystine(out) + L-glutamate(in) = L-cystine(in) + L-glutamate(out)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:70995
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-cystine(out) + L-glutamate(in) = L-cystine(in) + L-glutamate(out)'
+  - node_id: sub1
+    label: L-cystine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:35491
+    description: Formula C6H12N2O4S2.
+  - node_id: sub2
+    label: L-glutamate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prd1
+    label: L-cystine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:35491
+    description: Formula C6H12N2O4S2.
+  - node_id: prd2
+    label: L-glutamate (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cystine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70996
+      snippet: L-cystine(out) + L-glutamate(in) => L-cystine(in) + L-glutamate(out)
+      notes: Rhea's left-to-right directional reaction RHEA:70996 declares side 70995_L as its substrates
+        (rh:substrates); the master reaction RHEA:70995 is undirected. This participant is CHEBI:35491
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:10206947, PMID:34120018 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-glutamate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70996
+      snippet: L-cystine(out) + L-glutamate(in) => L-cystine(in) + L-glutamate(out)
+      notes: Rhea's left-to-right directional reaction RHEA:70996 declares side 70995_L as its substrates
+        (rh:substrates); the master reaction RHEA:70995 is undirected. This participant is CHEBI:29985
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:10206947,
+        PMID:34120018 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-cystine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70996
+      snippet: L-cystine(out) + L-glutamate(in) => L-cystine(in) + L-glutamate(out)
+      notes: Rhea's left-to-right directional reaction RHEA:70996 declares side 70995_R as its products
+        (rh:products); the master reaction RHEA:70995 is undirected. This participant is CHEBI:35491 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:10206947,
+        PMID:34120018 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70996
+      snippet: L-cystine(out) + L-glutamate(in) => L-cystine(in) + L-glutamate(out)
+      notes: Rhea's left-to-right directional reaction RHEA:70996 declares side 70995_R as its products
+        (rh:products); the master reaction RHEA:70995 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:10206947,
+        PMID:34120018 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

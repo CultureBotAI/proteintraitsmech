@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:30011
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,141 @@ definitions:
       Catalyses the reaction: L-glutaminyl-[protein] + histamine = 5-histaminyl-L-glutamyl-[protein] + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-glutaminyl-[protein] + histamine = 5-histaminyl-L-glutamyl-[protein]
+    + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:66564, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:66565 (rh:substrates → 66564_L, rh:products → 66564_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-glutaminyl-[protein] + histamine = 5-histaminyl-L-glutamyl-[protein] + NH4…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:66564
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-glutaminyl-[protein] + histamine = 5-histaminyl-L-glutamyl-[protein] + NH4(+)'
+  - node_id: sub1
+    label: L-glutaminyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10207
+    description: Rhea compound GENERIC:10207.
+  - node_id: sub1_rp1
+    label: L-glutamine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10207 (L-glutaminyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:30011
+  - node_id: sub2
+    label: histamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58432
+    description: Formula C5H10N3.
+  - node_id: prd1
+    label: 5-histaminyl-L-glutamyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17056
+    description: Rhea compound GENERIC:17056.
+  - node_id: prd1_rp1
+    label: N-[2-(1H-imidazol-4-yl)ethyl]-L-glutamine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17056 (5-histaminyl-L-glutamyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:167179
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: peptide histaminyltransferase activity
+    grounding: GO:0120299
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-glutaminyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66565
+      snippet: L-glutaminyl-[protein] + histamine => 5-histaminyl-L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:66565 declares side 66564_L as its substrates
+        (rh:substrates); the master reaction RHEA:66564 is undirected. This participant is GENERIC:10207
+        with coefficient 1. Rhea cites PMID:23797785, PMID:23022564 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-glutamine residue is the reactive part of L-glutaminyl-[protein].
+    evidence:
+    - reference: RHEA:66564
+      snippet: L-glutamine residue
+      notes: Rhea compound GENERIC:10207 (L-glutaminyl-[protein]) declares rh:reactivePart = L-glutamine
+        residue (CHEBI:30011), formula C5H8N2O2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: histamine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66565
+      snippet: L-glutaminyl-[protein] + histamine => 5-histaminyl-L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:66565 declares side 66564_L as its substrates
+        (rh:substrates); the master reaction RHEA:66564 is undirected. This participant is CHEBI:58432
+        with coefficient 1. Rhea cites PMID:23797785, PMID:23022564 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-histaminyl-L-glutamyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:66565
+      snippet: L-glutaminyl-[protein] + histamine => 5-histaminyl-L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:66565 declares side 66564_R as its products
+        (rh:products); the master reaction RHEA:66564 is undirected. This participant is GENERIC:17056
+        with coefficient 1. Rhea cites PMID:23797785, PMID:23022564 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N-[2-(1H-imidazol-4-yl)ethyl]-L-glutamine residue is the reactive part of 5-histaminyl-L-glutamyl-[protein].
+    evidence:
+    - reference: RHEA:66564
+      snippet: N-[2-(1H-imidazol-4-yl)ethyl]-L-glutamine residue
+      notes: Rhea compound GENERIC:17056 (5-histaminyl-L-glutamyl-[protein]) declares rh:reactivePart
+        = N-[2-(1H-imidazol-4-yl)ethyl]-L-glutamine residue (CHEBI:167179), formula C10H14N4O2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66565
+      snippet: L-glutaminyl-[protein] + histamine => 5-histaminyl-L-glutamyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:66565 declares side 66564_R as its products
+        (rh:products); the master reaction RHEA:66564 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:23797785, PMID:23022564 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:66564
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0120299"/>
+      notes: The rdfs:seeAlso triple on RHEA:66564 in rhea.rdf. GO term GO:0120299 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

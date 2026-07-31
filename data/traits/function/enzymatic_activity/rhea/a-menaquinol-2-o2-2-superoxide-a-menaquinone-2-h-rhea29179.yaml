@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:18151
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,112 @@ definitions:
       Catalyses the reaction: a menaquinol + 2 O2 = 2 superoxide + a menaquinone + 2 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a menaquinol + 2 O2 = 2 superoxide + a menaquinone + 2 H(+)
+  description: Substrate-to-product chemistry of RHEA:29179, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:29180 (rh:substrates → 29179_L, rh:products → 29179_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a menaquinol + 2 O2 = 2 superoxide + a menaquinone + 2 H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:29179
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a menaquinol + 2 O2 = 2 superoxide + a menaquinone + 2 H(+)'
+  - node_id: sub1
+    label: a menaquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:18151
+    xrefs:
+    - RHEA-COMP:9539
+    description: Rhea compound POLYMER:9539. Formula C11H10O2(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: superoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:18421
+    description: Formula O2.
+  - node_id: prd2
+    label: a menaquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16374
+    xrefs:
+    - RHEA-COMP:9537
+    description: Rhea compound POLYMER:9537. Formula C11H8O2(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a menaquinol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29180
+      snippet: a menaquinol + 2 O2 => 2 superoxide + a menaquinone + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29180 declares side 29179_L as its substrates
+        (rh:substrates); the master reaction RHEA:29179 is undirected. This participant is POLYMER:9539
+        with coefficient 1. Rhea cites PMID:15613473 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:29180
+      snippet: a menaquinol + 2 O2 => 2 superoxide + a menaquinone + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29180 declares side 29179_L as its substrates
+        (rh:substrates); the master reaction RHEA:29179 is undirected. This participant is CHEBI:15379
+        with coefficient 2. Rhea cites PMID:15613473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: superoxide is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:29180
+      snippet: a menaquinol + 2 O2 => 2 superoxide + a menaquinone + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29180 declares side 29179_R as its products
+        (rh:products); the master reaction RHEA:29179 is undirected. This participant is CHEBI:18421 with
+        coefficient 2. Rhea cites PMID:15613473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a menaquinone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29180
+      snippet: a menaquinol + 2 O2 => 2 superoxide + a menaquinone + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29180 declares side 29179_R as its products
+        (rh:products); the master reaction RHEA:29179 is undirected. This participant is POLYMER:9537
+        with coefficient 1. Rhea cites PMID:15613473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:29180
+      snippet: a menaquinol + 2 O2 => 2 superoxide + a menaquinone + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29180 declares side 29179_R as its products
+        (rh:products); the master reaction RHEA:29179 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:15613473 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

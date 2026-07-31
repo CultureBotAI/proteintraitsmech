@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -28,4 +28,104 @@ definitions:
       Catalyses: 17,18-epoxy-17-hydroxycur-19-ene + acetyl-CoA = diaboline + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (19E)-17,18-epoxy-17-hydroxycur-19-ene N-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.326. EC 2.3.1.326 maps to
+    exactly one curated Rhea reaction (RHEA:80915), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "17,18-epoxy-17-hydroxycur-19-ene
+    + acetyl-CoA = diaboline + CoA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (19E)-17,18-epoxy-17-hydroxycur-19-ene N-acetyltransferase
+    grounding: EC:2.3.1.326
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 17,18-epoxy-17-hydroxycur-19-ene
+    node_type: CHEMICAL
+    grounding: CHEBI:231746
+    description: Formula C19H23N2O2.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: diaboline
+    node_type: CHEMICAL
+    grounding: CHEBI:231747
+    description: Formula C21H25N2O3.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_P0DXG0
+    node_type: PROTEIN
+    label: AT_STRYX
+    grounding: UniProtKB:P0DXG0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 17,18-epoxy-17-hydroxycur-19-ene is a substrate consumed by RHEA:80915 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:80916
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + acetyl-CoA => diaboline + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80916 declares side 80915_L as its substrates
+        (rh:substrates); the master reaction RHEA:80915 is undirected. This participant is CHEBI:231746
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:80915 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80916
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + acetyl-CoA => diaboline + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80916 declares side 80915_L as its substrates
+        (rh:substrates); the master reaction RHEA:80915 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: diaboline is a product released by RHEA:80915 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80916
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + acetyl-CoA => diaboline + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80916 declares side 80915_R as its products
+        (rh:products); the master reaction RHEA:80915 is undirected. This participant is CHEBI:231747
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:80915 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80916
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + acetyl-CoA => diaboline + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80916 declares side 80915_R as its products
+        (rh:products); the master reaction RHEA:80915 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: prot_P0DXG0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AT_STRYX is an exemplar enzyme with EC 2.3.1.326 activity.
+    evidence:
+    - reference: EC:2.3.1.326
+      snippet: DR   P0DXG0, AT_STRYX   ;
+      notes: ExPASy ENZYME entry EC 2.3.1.326 cross-references UniProtKB:P0DXG0 (AT_STRYX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

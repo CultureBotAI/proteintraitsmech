@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.109
     mapping_source: rhea2ec
@@ -28,4 +28,172 @@ definitions:
       Catalyses the reaction: 5-(methylsulfanyl)-D-ribulose 1-phosphate = 5-methylsulfanyl-2,3-dioxopentyl phosphate + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-(methylsulfanyl)-D-ribulose 1-phosphate = 5-methylsulfanyl-2,3-dioxopentyl
+    phosphate…
+  description: Substrate-to-product chemistry of RHEA:15549, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:15550 (rh:substrates → 15549_L, rh:products → 15549_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-(methylsulfanyl)-D-ribulose 1-phosphate = 5-methylsulfanyl-2,3-dioxopentyl…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:15549
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-(methylsulfanyl)-D-ribulose 1-phosphate = 5-methylsulfanyl-2,3-dioxopentyl phosphate
+      + H2O'
+  - node_id: sub1
+    label: 5-(methylsulfanyl)-D-ribulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58548
+    description: Formula C6H11O7PS.
+  - node_id: prd1
+    label: 5-methylsulfanyl-2,3-dioxopentyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58828
+    description: Formula C6H9O6PS.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: methylthioribulose 1-phosphate dehydratase activity
+    grounding: GO:0046570
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: methylthioribulose 1-phosphate dehydratase
+    grounding: EC:4.2.1.109
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_E0CSI1
+    node_type: PROTEIN
+    label: MTBC1_VITVI
+    grounding: UniProtKB:E0CSI1
+  - node_id: prot_E0CTF3
+    node_type: PROTEIN
+    label: MTBC2_VITVI
+    grounding: UniProtKB:E0CTF3
+  - node_id: prot_Q9FN41
+    node_type: PROTEIN
+    label: MTBC_ARATH
+    grounding: UniProtKB:Q9FN41
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-(methylsulfanyl)-D-ribulose 1-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:15550
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => 5-methylsulfanyl-2,3-dioxopentyl phosphate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:15550 declares side 15549_L as its substrates
+        (rh:substrates); the master reaction RHEA:15549 is undirected. This participant is CHEBI:58548
+        with coefficient 1. Rhea cites PMID:2838472, PMID:7852397 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-methylsulfanyl-2,3-dioxopentyl phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:15550
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => 5-methylsulfanyl-2,3-dioxopentyl phosphate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:15550 declares side 15549_R as its products
+        (rh:products); the master reaction RHEA:15549 is undirected. This participant is CHEBI:58828 with
+        coefficient 1. Rhea cites PMID:2838472, PMID:7852397 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15550
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => 5-methylsulfanyl-2,3-dioxopentyl phosphate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:15550 declares side 15549_R as its products
+        (rh:products); the master reaction RHEA:15549 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:2838472, PMID:7852397 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:15549
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0046570"/>
+      notes: The rdfs:seeAlso triple on RHEA:15549 in rhea.rdf. GO term GO:0046570 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.109; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:15549
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.109"/>
+      notes: The rh:ec triple on RHEA:15549 in rhea.rdf. EC 4.2.1.109 is itself a record in this KB.
+  - subject: prot_E0CSI1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTBC1_VITVI is an exemplar enzyme carrying EC 4.2.1.109, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.109
+      snippet: DR   E0CSI1, MTBC1_VITVI;  E0CTF3, MTBC2_VITVI;  Q9FN41, MTBC_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.109 cross-references UniProtKB:E0CSI1 (MTBC1_VITVI) as a protein
+        with this activity.
+    - reference: RHEA:15549
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.109"/>
+      notes: Rhea assigns RHEA:15549 to EC 4.2.1.109, and EC 4.2.1.109 maps to exactly one Rhea master
+        reaction (RHEA:15549), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_E0CTF3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTBC2_VITVI is an exemplar enzyme carrying EC 4.2.1.109, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.109
+      snippet: DR   E0CSI1, MTBC1_VITVI;  E0CTF3, MTBC2_VITVI;  Q9FN41, MTBC_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.109 cross-references UniProtKB:E0CTF3 (MTBC2_VITVI) as a protein
+        with this activity.
+    - reference: RHEA:15549
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.109"/>
+      notes: Rhea assigns RHEA:15549 to EC 4.2.1.109, and EC 4.2.1.109 maps to exactly one Rhea master
+        reaction (RHEA:15549), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9FN41
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTBC_ARATH is an exemplar enzyme carrying EC 4.2.1.109, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.109
+      snippet: DR   E0CSI1, MTBC1_VITVI;  E0CTF3, MTBC2_VITVI;  Q9FN41, MTBC_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.109 cross-references UniProtKB:Q9FN41 (MTBC_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:15549
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.109"/>
+      notes: Rhea assigns RHEA:15549 to EC 4.2.1.109, and EC 4.2.1.109 maps to exactly one Rhea master
+        reaction (RHEA:15549), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

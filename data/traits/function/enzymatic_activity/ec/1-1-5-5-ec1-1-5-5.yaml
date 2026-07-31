@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.5.-
 synonyms:
@@ -51,4 +51,138 @@ definitions:
       Catalyses: ethanol + a ubiquinone = a ubiquinol + acetaldehyde
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alcohol dehydrogenase (quinone)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.5.5. EC 1.1.5.5 maps to exactly
+    one curated Rhea reaction (RHEA:26442), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "ethanol + a ubiquinone
+    = a ubiquinol + acetaldehyde". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alcohol dehydrogenase (quinone)
+    grounding: EC:1.1.5.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: ethanol
+    node_type: CHEMICAL
+    grounding: CHEBI:16236
+    description: Formula C2H6O.
+  - node_id: sub2
+    label: a ubiquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16389
+    xrefs:
+    - RHEA-COMP:9565
+    description: Rhea compound POLYMER:9565. Formula C9H10O4(C5H8)<i><sub>n</sub></i>.
+  - node_id: prd1
+    label: a ubiquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:17976
+    xrefs:
+    - RHEA-COMP:9566
+    description: Rhea compound POLYMER:9566. Formula C9H12O4(C5H8)<i><sub>n</sub></i>.
+  - node_id: prd2
+    label: acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15343
+    description: Formula C2H4O.
+  - node_id: prot_P18278
+    node_type: PROTEIN
+    label: ADHA_ACEAC
+    grounding: UniProtKB:P18278
+  - node_id: prot_O05542
+    node_type: PROTEIN
+    label: ADHA_GLUOX
+    grounding: UniProtKB:O05542
+  - node_id: prot_P28036
+    node_type: PROTEIN
+    label: ADHA_GLUPO
+    grounding: UniProtKB:P28036
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ethanol is a substrate consumed by RHEA:26442 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26443
+      snippet: ethanol + a ubiquinone => a ubiquinol + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:26443 declares side 26442_L as its substrates
+        (rh:substrates); the master reaction RHEA:26442 is undirected. This participant is CHEBI:16236
+        with coefficient 1. Rhea cites PMID:18838797, PMID:1663645, PMID:18321602, PMID:8617755 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a ubiquinone is a substrate consumed by RHEA:26442 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26443
+      snippet: ethanol + a ubiquinone => a ubiquinol + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:26443 declares side 26442_L as its substrates
+        (rh:substrates); the master reaction RHEA:26442 is undirected. This participant is POLYMER:9565
+        with coefficient 1. Rhea cites PMID:18838797, PMID:1663645, PMID:18321602, PMID:8617755 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a ubiquinol is a product released by RHEA:26442 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26443
+      snippet: ethanol + a ubiquinone => a ubiquinol + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:26443 declares side 26442_R as its products
+        (rh:products); the master reaction RHEA:26442 is undirected. This participant is POLYMER:9566
+        with coefficient 1. Rhea cites PMID:18838797, PMID:1663645, PMID:18321602, PMID:8617755 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetaldehyde is a product released by RHEA:26442 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26443
+      snippet: ethanol + a ubiquinone => a ubiquinol + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:26443 declares side 26442_R as its products
+        (rh:products); the master reaction RHEA:26442 is undirected. This participant is CHEBI:15343 with
+        coefficient 1. Rhea cites PMID:18838797, PMID:1663645, PMID:18321602, PMID:8617755 for this reaction.
+  - subject: prot_P18278
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADHA_ACEAC is an exemplar enzyme with EC 1.1.5.5 activity.
+    evidence:
+    - reference: EC:1.1.5.5
+      snippet: DR   P18278, ADHA_ACEAC ;  O05542, ADHA_GLUOX ;  P28036, ADHA_GLUPO ;
+      notes: ExPASy ENZYME entry EC 1.1.5.5 cross-references UniProtKB:P18278 (ADHA_ACEAC) as a protein
+        with this activity.
+  - subject: prot_O05542
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADHA_GLUOX is an exemplar enzyme with EC 1.1.5.5 activity.
+    evidence:
+    - reference: EC:1.1.5.5
+      snippet: DR   P18278, ADHA_ACEAC ;  O05542, ADHA_GLUOX ;  P28036, ADHA_GLUPO ;
+      notes: ExPASy ENZYME entry EC 1.1.5.5 cross-references UniProtKB:O05542 (ADHA_GLUOX) as a protein
+        with this activity.
+  - subject: prot_P28036
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADHA_GLUPO is an exemplar enzyme with EC 1.1.5.5 activity.
+    evidence:
+    - reference: EC:1.1.5.5
+      snippet: DR   P18278, ADHA_ACEAC ;  O05542, ADHA_GLUOX ;  P28036, ADHA_GLUPO ;
+      notes: ExPASy ENZYME entry EC 1.1.5.5 cross-references UniProtKB:P28036 (ADHA_GLUPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

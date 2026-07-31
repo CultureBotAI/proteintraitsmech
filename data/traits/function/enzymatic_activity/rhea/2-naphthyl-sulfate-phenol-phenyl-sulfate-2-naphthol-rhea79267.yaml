@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:167170
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,107 @@ definitions:
       Catalyses the reaction: 2-naphthyl sulfate + phenol = phenyl sulfate + 2-naphthol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-naphthyl sulfate + phenol = phenyl sulfate + 2-naphthol
+  description: Substrate-to-product chemistry of RHEA:79267, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79268 (rh:substrates → 79267_L, rh:products → 79267_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-naphthyl sulfate + phenol = phenyl sulfate + 2-naphthol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79267
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-naphthyl sulfate + phenol = phenyl sulfate + 2-naphthol'
+  - node_id: sub1
+    label: 2-naphthyl sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:167170
+    description: Formula C10H7O4S.
+  - node_id: sub2
+    label: phenol
+    node_type: CHEMICAL
+    grounding: CHEBI:15882
+    description: Formula C6H6O.
+  - node_id: prd1
+    label: phenyl sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:85289
+    description: Formula C6H5O4S.
+  - node_id: prd2
+    label: 2-naphthol
+    node_type: CHEMICAL
+    grounding: CHEBI:10432
+    description: Formula C10H8O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: arylsulfate sulfotransferase activity
+    grounding: GO:0047686
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-naphthyl sulfate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79268
+      snippet: 2-naphthyl sulfate + phenol => phenyl sulfate + 2-naphthol
+      notes: Rhea's left-to-right directional reaction RHEA:79268 declares side 79267_L as its substrates
+        (rh:substrates); the master reaction RHEA:79267 is undirected. This participant is CHEBI:167170
+        with coefficient 1. Rhea cites PMID:10600454 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phenol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79268
+      snippet: 2-naphthyl sulfate + phenol => phenyl sulfate + 2-naphthol
+      notes: Rhea's left-to-right directional reaction RHEA:79268 declares side 79267_L as its substrates
+        (rh:substrates); the master reaction RHEA:79267 is undirected. This participant is CHEBI:15882
+        with coefficient 1. Rhea cites PMID:10600454 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phenyl sulfate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79268
+      snippet: 2-naphthyl sulfate + phenol => phenyl sulfate + 2-naphthol
+      notes: Rhea's left-to-right directional reaction RHEA:79268 declares side 79267_R as its products
+        (rh:products); the master reaction RHEA:79267 is undirected. This participant is CHEBI:85289 with
+        coefficient 1. Rhea cites PMID:10600454 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 2-naphthol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79268
+      snippet: 2-naphthyl sulfate + phenol => phenyl sulfate + 2-naphthol
+      notes: Rhea's left-to-right directional reaction RHEA:79268 declares side 79267_R as its products
+        (rh:products); the master reaction RHEA:79267 is undirected. This participant is CHEBI:10432 with
+        coefficient 1. Rhea cites PMID:10600454 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:79267
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047686"/>
+      notes: The rdfs:seeAlso triple on RHEA:79267 in rhea.rdf. GO term GO:0047686 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

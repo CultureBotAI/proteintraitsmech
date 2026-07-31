@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:15666
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,61 @@ definitions:
       Catalyses the reaction: (E)-4-hydroxyphenylacetaldehyde oxime = (Z)-(4-hydroxyphenyl)acetaldehyde oxime
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (E)-4-hydroxyphenylacetaldehyde oxime = (Z)-(4-hydroxyphenyl)acetaldehyde
+    oxime
+  description: Substrate-to-product chemistry of RHEA:50724, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50725 (rh:substrates → 50724_L, rh:products → 50724_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (E)-4-hydroxyphenylacetaldehyde oxime = (Z)-(4-hydroxyphenyl)acetaldehyde ox…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50724
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (E)-4-hydroxyphenylacetaldehyde oxime = (Z)-(4-hydroxyphenyl)acetaldehyde oxime'
+  - node_id: sub1
+    label: (E)-4-hydroxyphenylacetaldehyde oxime
+    node_type: CHEMICAL
+    grounding: CHEBI:15666
+    description: Formula C8H9NO2.
+  - node_id: prd1
+    label: (Z)-(4-hydroxyphenyl)acetaldehyde oxime
+    node_type: CHEMICAL
+    grounding: CHEBI:15667
+    description: Formula C8H9NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (E)-4-hydroxyphenylacetaldehyde oxime is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:50725
+      snippet: (E)-4-hydroxyphenylacetaldehyde oxime => (Z)-(4-hydroxyphenyl)acetaldehyde oxime
+      notes: Rhea's left-to-right directional reaction RHEA:50725 declares side 50724_L as its substrates
+        (rh:substrates); the master reaction RHEA:50724 is undirected. This participant is CHEBI:15666
+        with coefficient 1. Rhea cites PMID:15665094, PMID:12114576, PMID:26361733 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (Z)-(4-hydroxyphenyl)acetaldehyde oxime is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:50725
+      snippet: (E)-4-hydroxyphenylacetaldehyde oxime => (Z)-(4-hydroxyphenyl)acetaldehyde oxime
+      notes: Rhea's left-to-right directional reaction RHEA:50725 declares side 50724_R as its products
+        (rh:products); the master reaction RHEA:50724 is undirected. This participant is CHEBI:15667 with
+        coefficient 1. Rhea cites PMID:15665094, PMID:12114576, PMID:26361733 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

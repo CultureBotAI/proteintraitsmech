@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 mapped_xrefs:
@@ -36,4 +36,132 @@ definitions:
       Catalyses: siroheme + 2 H(+) = 12,18-didecarboxysiroheme + 2 CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of siroheme decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.111. EC 4.1.1.111 maps to
+    exactly one curated Rhea reaction (RHEA:19093), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "siroheme
+    + 2 H(+) = 12,18-didecarboxysiroheme + 2 CO2". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: siroheme decarboxylase
+    grounding: EC:4.1.1.111
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: siroheme
+    node_type: CHEMICAL
+    grounding: CHEBI:60052
+    description: Formula C42H36FeN4O16.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 12,18-didecarboxysiroheme
+    node_type: CHEMICAL
+    grounding: CHEBI:140497
+    description: Formula C40H38FeN4O12.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prot_B8J364
+    node_type: PROTEIN
+    label: AHBA_DESDA
+    grounding: UniProtKB:B8J364
+  - node_id: prot_Q46CH6
+    node_type: PROTEIN
+    label: AHBA_METBF
+    grounding: UniProtKB:Q46CH6
+  - node_id: prot_Q72DS5
+    node_type: PROTEIN
+    label: AHBA_NITV2
+    grounding: UniProtKB:Q72DS5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: siroheme is a substrate consumed by RHEA:19093 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19094
+      snippet: siroheme + 2 H(+) => 12,18-didecarboxysiroheme + 2 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:19094 declares side 19093_L as its substrates
+        (rh:substrates); the master reaction RHEA:19093 is undirected. This participant is CHEBI:60052
+        with coefficient 1. Rhea cites PMID:24669201, PMID:24865947, PMID:21969545 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:19093 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:19094
+      snippet: siroheme + 2 H(+) => 12,18-didecarboxysiroheme + 2 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:19094 declares side 19093_L as its substrates
+        (rh:substrates); the master reaction RHEA:19093 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:24669201, PMID:24865947, PMID:21969545 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 12,18-didecarboxysiroheme is a product released by RHEA:19093 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19094
+      snippet: siroheme + 2 H(+) => 12,18-didecarboxysiroheme + 2 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:19094 declares side 19093_R as its products
+        (rh:products); the master reaction RHEA:19093 is undirected. This participant is CHEBI:140497
+        with coefficient 1. Rhea cites PMID:24669201, PMID:24865947, PMID:21969545 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:19093 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:19094
+      snippet: siroheme + 2 H(+) => 12,18-didecarboxysiroheme + 2 CO2
+      notes: Rhea's left-to-right directional reaction RHEA:19094 declares side 19093_R as its products
+        (rh:products); the master reaction RHEA:19093 is undirected. This participant is CHEBI:16526 with
+        coefficient 2. Rhea cites PMID:24669201, PMID:24865947, PMID:21969545 for this reaction.
+  - subject: prot_B8J364
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHBA_DESDA is an exemplar enzyme with EC 4.1.1.111 activity.
+    evidence:
+    - reference: EC:4.1.1.111
+      snippet: DR   B8J364, AHBA_DESDA ;  Q46CH6, AHBA_METBF ;  Q72DS5, AHBA_NITV2 ;
+      notes: ExPASy ENZYME entry EC 4.1.1.111 cross-references UniProtKB:B8J364 (AHBA_DESDA) as a protein
+        with this activity.
+  - subject: prot_Q46CH6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHBA_METBF is an exemplar enzyme with EC 4.1.1.111 activity.
+    evidence:
+    - reference: EC:4.1.1.111
+      snippet: DR   B8J364, AHBA_DESDA ;  Q46CH6, AHBA_METBF ;  Q72DS5, AHBA_NITV2 ;
+      notes: ExPASy ENZYME entry EC 4.1.1.111 cross-references UniProtKB:Q46CH6 (AHBA_METBF) as a protein
+        with this activity.
+  - subject: prot_Q72DS5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHBA_NITV2 is an exemplar enzyme with EC 4.1.1.111 activity.
+    evidence:
+    - reference: EC:4.1.1.111
+      snippet: DR   B8J364, AHBA_DESDA ;  Q46CH6, AHBA_METBF ;  Q72DS5, AHBA_NITV2 ;
+      notes: ExPASy ENZYME entry EC 4.1.1.111 cross-references UniProtKB:Q72DS5 (AHBA_NITV2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.59
     mapping_source: rhea2ec
@@ -28,4 +28,151 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate = (E)-gamma-bisabolene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate = (E)-gamma-bisabolene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:28298, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28299 (rh:substrates → 28298_L, rh:products → 28298_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate = (E)-gamma-bisabolene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28298
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate = (E)-gamma-bisabolene + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (E)-gamma-bisabolene
+    node_type: CHEMICAL
+    grounding: CHEBI:49239
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (E)-gamma-bisabolene synthase
+    grounding: EC:4.2.3.59
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_G5CV54
+    node_type: PROTEIN
+    label: TPS14_SOLLC
+    grounding: UniProtKB:G5CV54
+  - node_id: prot_Q4QSN4
+    node_type: PROTEIN
+    label: TPSBS_PSEMZ
+    grounding: UniProtKB:Q4QSN4
+  - node_id: prot_G8H5M9
+    node_type: PROTEIN
+    label: TS14A_SOLHA
+    grounding: UniProtKB:G8H5M9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:28299
+      snippet: (2E,6E)-farnesyl diphosphate => (E)-gamma-bisabolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28299 declares side 28298_L as its substrates
+        (rh:substrates); the master reaction RHEA:28298 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:21818683, PMID:15921711 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (E)-gamma-bisabolene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28299
+      snippet: (2E,6E)-farnesyl diphosphate => (E)-gamma-bisabolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28299 declares side 28298_R as its products
+        (rh:products); the master reaction RHEA:28298 is undirected. This participant is CHEBI:49239 with
+        coefficient 1. Rhea cites PMID:21818683, PMID:15921711 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28299
+      snippet: (2E,6E)-farnesyl diphosphate => (E)-gamma-bisabolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28299 declares side 28298_R as its products
+        (rh:products); the master reaction RHEA:28298 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21818683, PMID:15921711 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.59; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28298
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.59"/>
+      notes: The rh:ec triple on RHEA:28298 in rhea.rdf. EC 4.2.3.59 is itself a record in this KB.
+  - subject: prot_G5CV54
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS14_SOLLC is an exemplar enzyme carrying EC 4.2.3.59, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.59
+      snippet: DR   G5CV54, TPS14_SOLLC;  Q4QSN4, TPSBS_PSEMZ;  G8H5M9, TS14A_SOLHA;
+      notes: ExPASy ENZYME entry EC 4.2.3.59 cross-references UniProtKB:G5CV54 (TPS14_SOLLC) as a protein
+        with this activity.
+    - reference: RHEA:28298
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.59"/>
+      notes: Rhea assigns RHEA:28298 to EC 4.2.3.59, and EC 4.2.3.59 maps to exactly one Rhea master reaction
+        (RHEA:28298), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q4QSN4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPSBS_PSEMZ is an exemplar enzyme carrying EC 4.2.3.59, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.59
+      snippet: DR   G5CV54, TPS14_SOLLC;  Q4QSN4, TPSBS_PSEMZ;  G8H5M9, TS14A_SOLHA;
+      notes: ExPASy ENZYME entry EC 4.2.3.59 cross-references UniProtKB:Q4QSN4 (TPSBS_PSEMZ) as a protein
+        with this activity.
+    - reference: RHEA:28298
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.59"/>
+      notes: Rhea assigns RHEA:28298 to EC 4.2.3.59, and EC 4.2.3.59 maps to exactly one Rhea master reaction
+        (RHEA:28298), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_G8H5M9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TS14A_SOLHA is an exemplar enzyme carrying EC 4.2.3.59, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.59
+      snippet: DR   G5CV54, TPS14_SOLLC;  Q4QSN4, TPSBS_PSEMZ;  G8H5M9, TS14A_SOLHA;
+      notes: ExPASy ENZYME entry EC 4.2.3.59 cross-references UniProtKB:G8H5M9 (TS14A_SOLHA) as a protein
+        with this activity.
+    - reference: RHEA:28298
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.59"/>
+      notes: Rhea assigns RHEA:28298 to EC 4.2.3.59, and EC 4.2.3.59 maps to exactly one Rhea master reaction
+        (RHEA:28298), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

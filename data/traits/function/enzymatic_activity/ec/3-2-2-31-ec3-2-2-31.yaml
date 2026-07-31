@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 synonyms:
@@ -39,4 +39,82 @@ definitions:
       Catalyses: Hydrolyzes free adenine bases from 7,8-dihydro-8-oxoguanine:adenine mismatched double-stranded DNA, leaving an apurinic site
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of adenine glycosylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.31. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolyzes
+    free adenine bases from 7,8-dihydro-8-oxoguanine:adenine mismatched double-stranded DNA, leaving an
+    apurinic site".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: adenine glycosylase
+    grounding: EC:3.2.2.31
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: purine-specific mismatch base pair DNA N-glycosylase activity
+    grounding: GO:0000701
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_F4JRF4
+    node_type: PROTEIN
+    label: MUTYH_ARATH
+    grounding: UniProtKB:F4JRF4
+  - node_id: prot_Q9UIF7
+    node_type: PROTEIN
+    label: MUTYH_HUMAN
+    grounding: UniProtKB:Q9UIF7
+  - node_id: prot_Q99P21
+    node_type: PROTEIN
+    label: MUTYH_MOUSE
+    grounding: UniProtKB:Q99P21
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.2.31
+      snippet: EC:3.2.2.31 > GO:purine-specific mismatch base pair DNA N-glycosylase activity ; GO:0000701
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0000701 is itself a record
+        in this KB.
+  - subject: prot_F4JRF4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MUTYH_ARATH is an exemplar enzyme with EC 3.2.2.31 activity.
+    evidence:
+    - reference: EC:3.2.2.31
+      snippet: DR   F4JRF4, MUTYH_ARATH;  Q9UIF7, MUTYH_HUMAN;  Q99P21, MUTYH_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.2.2.31 cross-references UniProtKB:F4JRF4 (MUTYH_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9UIF7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MUTYH_HUMAN is an exemplar enzyme with EC 3.2.2.31 activity.
+    evidence:
+    - reference: EC:3.2.2.31
+      snippet: DR   F4JRF4, MUTYH_ARATH;  Q9UIF7, MUTYH_HUMAN;  Q99P21, MUTYH_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.2.2.31 cross-references UniProtKB:Q9UIF7 (MUTYH_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q99P21
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MUTYH_MOUSE is an exemplar enzyme with EC 3.2.2.31 activity.
+    evidence:
+    - reference: EC:3.2.2.31
+      snippet: DR   F4JRF4, MUTYH_ARATH;  Q9UIF7, MUTYH_HUMAN;  Q99P21, MUTYH_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.2.2.31 cross-references UniProtKB:Q99P21 (MUTYH_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

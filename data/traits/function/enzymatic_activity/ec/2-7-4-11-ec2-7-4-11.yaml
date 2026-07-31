@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 mapped_xrefs:
@@ -25,4 +25,107 @@ definitions:
       Catalyses: dAMP + ATP = dADP + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (deoxy)adenylate kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.11. EC 2.7.4.11 maps to exactly
+    one curated Rhea reaction (RHEA:23100), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dAMP + ATP =
+    dADP + ADP". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (deoxy)adenylate kinase
+    grounding: EC:2.7.4.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dAMP
+    node_type: CHEMICAL
+    grounding: CHEBI:58245
+    description: Formula C10H12N5O6P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: dADP
+    node_type: CHEMICAL
+    grounding: CHEBI:57667
+    description: Formula C10H12N5O9P2.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dAMP kinase activity
+    grounding: GO:0047506
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dAMP is a substrate consumed by RHEA:23100 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23101
+      snippet: dAMP + ATP => dADP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:23101 declares side 23100_L as its substrates
+        (rh:substrates); the master reaction RHEA:23100 is undirected. This participant is CHEBI:58245
+        with coefficient 1. Rhea cites PMID:5862227, PMID:6031130, PMID:23416111, PMID:10215863 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:23100 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23101
+      snippet: dAMP + ATP => dADP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:23101 declares side 23100_L as its substrates
+        (rh:substrates); the master reaction RHEA:23100 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:5862227, PMID:6031130, PMID:23416111, PMID:10215863 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dADP is a product released by RHEA:23100 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23101
+      snippet: dAMP + ATP => dADP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:23101 declares side 23100_R as its products
+        (rh:products); the master reaction RHEA:23100 is undirected. This participant is CHEBI:57667 with
+        coefficient 1. Rhea cites PMID:5862227, PMID:6031130, PMID:23416111, PMID:10215863 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:23100 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23101
+      snippet: dAMP + ATP => dADP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:23101 declares side 23100_R as its products
+        (rh:products); the master reaction RHEA:23100 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:5862227, PMID:6031130, PMID:23416111, PMID:10215863 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.4.11
+      snippet: EC:2.7.4.11 > GO:dAMP kinase activity ; GO:0047506
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047506 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

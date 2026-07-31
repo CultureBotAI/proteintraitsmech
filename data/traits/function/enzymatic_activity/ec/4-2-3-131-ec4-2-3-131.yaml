@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -38,4 +38,131 @@ definitions:
       Catalyses: (+)-copalyl diphosphate = miltiradiene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of miltiradiene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.131. EC 4.2.3.131 maps to
+    exactly one curated Rhea reaction (RHEA:33983), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(+)-copalyl
+    diphosphate = miltiradiene + diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: miltiradiene synthase
+    grounding: EC:4.2.3.131
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (+)-copalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58635
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: miltiradiene
+    node_type: CHEMICAL
+    grounding: CHEBI:65037
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: miltiradiene synthase activity
+    grounding: GO:0062205
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0A075FBG7
+    node_type: PROTEIN
+    label: ELS_MARVU
+    grounding: UniProtKB:A0A075FBG7
+  - node_id: prot_A0A1W6QDI7
+    node_type: PROTEIN
+    label: KSL1_ISORU
+    grounding: UniProtKB:A0A1W6QDI7
+  - node_id: prot_C8XPS0
+    node_type: PROTEIN
+    label: KSL1_SALMI
+    grounding: UniProtKB:C8XPS0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (+)-copalyl diphosphate is a substrate consumed by RHEA:33983 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33984
+      snippet: (+)-copalyl diphosphate => miltiradiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33984 declares side 33983_L as its substrates
+        (rh:substrates); the master reaction RHEA:33983 is undirected. This participant is CHEBI:58635
+        with coefficient 1. Rhea cites PMID:19905026, PMID:22027823, PMID:24569175 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: miltiradiene is a product released by RHEA:33983 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33984
+      snippet: (+)-copalyl diphosphate => miltiradiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33984 declares side 33983_R as its products
+        (rh:products); the master reaction RHEA:33983 is undirected. This participant is CHEBI:65037 with
+        coefficient 1. Rhea cites PMID:19905026, PMID:22027823, PMID:24569175 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:33983 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33984
+      snippet: (+)-copalyl diphosphate => miltiradiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33984 declares side 33983_R as its products
+        (rh:products); the master reaction RHEA:33983 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:19905026, PMID:22027823, PMID:24569175 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.131
+      snippet: EC:4.2.3.131 > GO:miltiradiene synthase activity ; GO:0062205
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0062205 is itself a record
+        in this KB.
+  - subject: prot_A0A075FBG7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ELS_MARVU is an exemplar enzyme with EC 4.2.3.131 activity.
+    evidence:
+    - reference: EC:4.2.3.131
+      snippet: DR   A0A075FBG7, ELS_MARVU  ;  A0A1W6QDI7, KSL1_ISORU ;  C8XPS0, KSL1_SALMI ;
+      notes: ExPASy ENZYME entry EC 4.2.3.131 cross-references UniProtKB:A0A075FBG7 (ELS_MARVU) as a protein
+        with this activity.
+  - subject: prot_A0A1W6QDI7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KSL1_ISORU is an exemplar enzyme with EC 4.2.3.131 activity.
+    evidence:
+    - reference: EC:4.2.3.131
+      snippet: DR   A0A075FBG7, ELS_MARVU  ;  A0A1W6QDI7, KSL1_ISORU ;  C8XPS0, KSL1_SALMI ;
+      notes: ExPASy ENZYME entry EC 4.2.3.131 cross-references UniProtKB:A0A1W6QDI7 (KSL1_ISORU) as a
+        protein with this activity.
+  - subject: prot_C8XPS0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KSL1_SALMI is an exemplar enzyme with EC 4.2.3.131 activity.
+    evidence:
+    - reference: EC:4.2.3.131
+      snippet: DR   A0A075FBG7, ELS_MARVU  ;  A0A1W6QDI7, KSL1_ISORU ;  C8XPS0, KSL1_SALMI ;
+      notes: ExPASy ENZYME entry EC 4.2.3.131 cross-references UniProtKB:C8XPS0 (KSL1_SALMI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

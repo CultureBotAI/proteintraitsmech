@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -39,4 +39,134 @@ definitions:
       Catalyses: taxa-4(20),11-dien-5alpha-ol + acetyl-CoA = taxa-4(20),11-dien-5alpha-yl acetate + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of taxadien-5alpha-ol O-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.162. EC 2.3.1.162 maps to
+    exactly one curated Rhea reaction (RHEA:22028), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "taxa-4(20),11-dien-5alpha-ol
+    + acetyl-CoA = taxa-4(20),11-dien-5alpha-yl acetate + CoA". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: taxadien-5alpha-ol O-acetyltransferase
+    grounding: EC:2.3.1.162
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: taxa-4(20),11-dien-5alpha-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:30038
+    description: Formula C20H32O.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: taxa-4(20),11-dien-5alpha-yl acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30042
+    description: Formula C22H34O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: taxadien-5-alpha-ol O-acetyltransferase activity
+    grounding: GO:0050638
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8S9G6
+    node_type: PROTEIN
+    label: T5AT_TAXCH
+    grounding: UniProtKB:Q8S9G6
+  - node_id: prot_Q9M6F0
+    node_type: PROTEIN
+    label: T5AT_TAXCU
+    grounding: UniProtKB:Q9M6F0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: taxa-4(20),11-dien-5alpha-ol is a substrate consumed by RHEA:22028 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22029
+      snippet: taxa-4(20),11-dien-5alpha-ol + acetyl-CoA => taxa-4(20),11-dien-5alpha-yl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:22029 declares side 22028_L as its substrates
+        (rh:substrates); the master reaction RHEA:22028 is undirected. This participant is CHEBI:30038
+        with coefficient 1. Rhea cites PMID:10666320, PMID:11524108, PMID:15369823 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:22028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22029
+      snippet: taxa-4(20),11-dien-5alpha-ol + acetyl-CoA => taxa-4(20),11-dien-5alpha-yl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:22029 declares side 22028_L as its substrates
+        (rh:substrates); the master reaction RHEA:22028 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:10666320, PMID:11524108, PMID:15369823 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: taxa-4(20),11-dien-5alpha-yl acetate is a product released by RHEA:22028 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:22029
+      snippet: taxa-4(20),11-dien-5alpha-ol + acetyl-CoA => taxa-4(20),11-dien-5alpha-yl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:22029 declares side 22028_R as its products
+        (rh:products); the master reaction RHEA:22028 is undirected. This participant is CHEBI:30042 with
+        coefficient 1. Rhea cites PMID:10666320, PMID:11524108, PMID:15369823 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:22028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22029
+      snippet: taxa-4(20),11-dien-5alpha-ol + acetyl-CoA => taxa-4(20),11-dien-5alpha-yl acetate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:22029 declares side 22028_R as its products
+        (rh:products); the master reaction RHEA:22028 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:10666320, PMID:11524108, PMID:15369823 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.162
+      snippet: EC:2.3.1.162 > GO:taxadien-5-alpha-ol O-acetyltransferase activity ; GO:0050638
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050638 is itself a record
+        in this KB.
+  - subject: prot_Q8S9G6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: T5AT_TAXCH is an exemplar enzyme with EC 2.3.1.162 activity.
+    evidence:
+    - reference: EC:2.3.1.162
+      snippet: DR   Q8S9G6, T5AT_TAXCH ;  Q9M6F0, T5AT_TAXCU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.162 cross-references UniProtKB:Q8S9G6 (T5AT_TAXCH) as a protein
+        with this activity.
+  - subject: prot_Q9M6F0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: T5AT_TAXCU is an exemplar enzyme with EC 2.3.1.162 activity.
+    evidence:
+    - reference: EC:2.3.1.162
+      snippet: DR   Q8S9G6, T5AT_TAXCH ;  Q9M6F0, T5AT_TAXCU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.162 cross-references UniProtKB:Q9M6F0 (T5AT_TAXCU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

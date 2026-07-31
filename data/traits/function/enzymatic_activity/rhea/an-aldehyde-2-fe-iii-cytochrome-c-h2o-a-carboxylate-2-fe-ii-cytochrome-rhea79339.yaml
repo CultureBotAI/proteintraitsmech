@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17478
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,164 @@ definitions:
       Catalyses the reaction: an aldehyde + 2 Fe(III)-[cytochrome c] + H2O = a carboxylate + 2 Fe(II)-[cytochrome c] + 3 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an aldehyde + 2 Fe(III)-[cytochrome c] + H2O = a carboxylate + 2 Fe(II)-[cytochrome
+    c]…
+  description: Substrate-to-product chemistry of RHEA:79339, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79340 (rh:substrates → 79339_L, rh:products → 79339_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an aldehyde + 2 Fe(III)-[cytochrome c] + H2O = a carboxylate + 2 Fe(II)-[cyt…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79339
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an aldehyde + 2 Fe(III)-[cytochrome c] + H2O = a carboxylate + 2 Fe(II)-[cytochrome
+      c] + 3 H(+)'
+  - node_id: sub1
+    label: an aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+    description: Formula CHOR.
+  - node_id: sub2
+    label: Fe(III)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14399
+    description: Rhea compound GENERIC:14399.
+  - node_id: sub2_rp1
+    label: Fe(3+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14399 (Fe(III)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: prd2
+    label: Fe(II)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10350
+    description: Rhea compound GENERIC:10350.
+  - node_id: prd2_rp1
+    label: Fe(2+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10350 (Fe(II)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an aldehyde is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79340
+      snippet: an aldehyde + 2 Fe(III)-[cytochrome c] + H2O => a carboxylate + 2 Fe(II)-[cytochrome c]
+        + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79340 declares side 79339_L as its substrates
+        (rh:substrates); the master reaction RHEA:79339 is undirected. This participant is CHEBI:17478
+        with coefficient 1. Rhea cites PMID:28655819 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: Fe(III)-[cytochrome c] is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:79340
+      snippet: an aldehyde + 2 Fe(III)-[cytochrome c] + H2O => a carboxylate + 2 Fe(II)-[cytochrome c]
+        + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79340 declares side 79339_L as its substrates
+        (rh:substrates); the master reaction RHEA:79339 is undirected. This participant is GENERIC:14399
+        with coefficient 2. Rhea cites PMID:28655819 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c].
+    evidence:
+    - reference: RHEA:79339
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:14399 (Fe(III)-[cytochrome c]) declares rh:reactivePart = Fe(3+) (CHEBI:29034),
+        formula Fe.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79340
+      snippet: an aldehyde + 2 Fe(III)-[cytochrome c] + H2O => a carboxylate + 2 Fe(II)-[cytochrome c]
+        + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79340 declares side 79339_L as its substrates
+        (rh:substrates); the master reaction RHEA:79339 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:28655819 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a carboxylate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79340
+      snippet: an aldehyde + 2 Fe(III)-[cytochrome c] + H2O => a carboxylate + 2 Fe(II)-[cytochrome c]
+        + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79340 declares side 79339_R as its products
+        (rh:products); the master reaction RHEA:79339 is undirected. This participant is CHEBI:29067 with
+        coefficient 1. Rhea cites PMID:28655819 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Fe(II)-[cytochrome c] is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:79340
+      snippet: an aldehyde + 2 Fe(III)-[cytochrome c] + H2O => a carboxylate + 2 Fe(II)-[cytochrome c]
+        + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79340 declares side 79339_R as its products
+        (rh:products); the master reaction RHEA:79339 is undirected. This participant is GENERIC:10350
+        with coefficient 2. Rhea cites PMID:28655819 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: Fe(2+) is the reactive part of Fe(II)-[cytochrome c].
+    evidence:
+    - reference: RHEA:79339
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:10350 (Fe(II)-[cytochrome c]) declares rh:reactivePart = Fe(2+) (CHEBI:29033),
+        formula Fe.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:79340
+      snippet: an aldehyde + 2 Fe(III)-[cytochrome c] + H2O => a carboxylate + 2 Fe(II)-[cytochrome c]
+        + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79340 declares side 79339_R as its products
+        (rh:products); the master reaction RHEA:79339 is undirected. This participant is CHEBI:15378 with
+        coefficient 3. Rhea cites PMID:28655819 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

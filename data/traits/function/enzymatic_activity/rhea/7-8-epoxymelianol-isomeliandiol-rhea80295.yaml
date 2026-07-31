@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:231452
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,59 @@ definitions:
       Catalyses the reaction: 7,8-epoxymelianol = isomeliandiol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 7,8-epoxymelianol = isomeliandiol
+  description: Substrate-to-product chemistry of RHEA:80295, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80296 (rh:substrates → 80295_L, rh:products → 80295_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 7,8-epoxymelianol = isomeliandiol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80295
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 7,8-epoxymelianol = isomeliandiol'
+  - node_id: sub1
+    label: 7,8-epoxymelianol
+    node_type: CHEMICAL
+    grounding: CHEBI:231452
+    description: Formula C30H48O5.
+  - node_id: prd1
+    label: isomeliandiol
+    node_type: CHEMICAL
+    grounding: CHEBI:231453
+    description: Formula C30H48O5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 7,8-epoxymelianol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80296
+      snippet: 7,8-epoxymelianol => isomeliandiol
+      notes: Rhea's left-to-right directional reaction RHEA:80296 declares side 80295_L as its substrates
+        (rh:substrates); the master reaction RHEA:80295 is undirected. This participant is CHEBI:231452
+        with coefficient 1. Rhea cites PMID:36821810, PMID:36701471 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: isomeliandiol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80296
+      snippet: 7,8-epoxymelianol => isomeliandiol
+      notes: Rhea's left-to-right directional reaction RHEA:80296 declares side 80295_R as its products
+        (rh:products); the master reaction RHEA:80295 is undirected. This participant is CHEBI:231453
+        with coefficient 1. Rhea cites PMID:36821810, PMID:36701471 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

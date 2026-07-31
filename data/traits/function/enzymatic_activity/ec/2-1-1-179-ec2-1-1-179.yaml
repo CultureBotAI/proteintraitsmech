@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 synonyms:
@@ -39,4 +39,173 @@ definitions:
       Catalyses: guanosine(1405) in 16S rRNA + S-adenosyl-L-methionine = N(7)- methylguanosine(1405) in 16S rRNA + S-adenosyl-L-homocysteine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 16S rRNA (guanine(1405)-N(7))-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.179. EC 2.1.1.179 maps to
+    exactly one curated Rhea reaction (RHEA:42772), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "guanosine(1405)
+    in 16S rRNA + S-adenosyl-L-methionine = N(7)- methylguanosine(1405) in 16S rRNA + S-adenosyl-L-homocysteine".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 16S rRNA (guanine(1405)-N(7))-methyltransferase
+    grounding: EC:2.1.1.179
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: guanosine(1405) in 16S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10225
+    description: Rhea compound GENERIC:10225.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: GMP residue at position 1405
+    description: The reacting group Rhea names inside the generic participant GENERIC:10225 (guanosine(1405)
+      in 16S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74269
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: N(7)-methylguanosine(1405) in 16S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10226
+    description: Rhea compound GENERIC:10226.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(7)-methylguanosine 5'-phosphate residue at position 1405
+    description: The reacting group Rhea names inside the generic participant GENERIC:10226 (N(7)-methylguanosine(1405)
+      in 16S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74480
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prot_Q08325
+    node_type: PROTEIN
+    label: FMRO_MICOL
+    grounding: UniProtKB:Q08325
+  - node_id: prot_P24618
+    node_type: PROTEIN
+    label: GRM_MICEC
+    grounding: UniProtKB:P24618
+  - node_id: prot_P24619
+    node_type: PROTEIN
+    label: GRM_MICRO
+    grounding: UniProtKB:P24619
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: guanosine(1405) in 16S rRNA is a substrate consumed by RHEA:42772 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42773
+      snippet: guanosine(1405) in 16S rRNA + S-adenosyl-L-methionine => N(7)-methylguanosine(1405) in
+        16S rRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:42773 declares side 42772_L as its substrates
+        (rh:substrates); the master reaction RHEA:42772 is undirected. This participant is GENERIC:10225
+        with coefficient 1. Rhea cites PMID:18586937, PMID:20194115 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: GMP residue is the reactive part of guanosine(1405) in 16S rRNA.
+    evidence:
+    - reference: RHEA:42772
+      snippet: GMP residue
+      notes: Rhea compound GENERIC:10225 (guanosine(1405) in 16S rRNA) declares rh:reactivePart at position
+        1405 = GMP residue (CHEBI:74269).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:42772 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42773
+      snippet: guanosine(1405) in 16S rRNA + S-adenosyl-L-methionine => N(7)-methylguanosine(1405) in
+        16S rRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:42773 declares side 42772_L as its substrates
+        (rh:substrates); the master reaction RHEA:42772 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:18586937, PMID:20194115 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(7)-methylguanosine(1405) in 16S rRNA is a product released by RHEA:42772 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42773
+      snippet: guanosine(1405) in 16S rRNA + S-adenosyl-L-methionine => N(7)-methylguanosine(1405) in
+        16S rRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:42773 declares side 42772_R as its products
+        (rh:products); the master reaction RHEA:42772 is undirected. This participant is GENERIC:10226
+        with coefficient 1. Rhea cites PMID:18586937, PMID:20194115 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(7)-methylguanosine 5'-phosphate residue is the reactive part of N(7)-methylguanosine(1405)
+      in 16S rRNA.
+    evidence:
+    - reference: RHEA:42772
+      snippet: N(7)-methylguanosine 5'-phosphate residue
+      notes: Rhea compound GENERIC:10226 (N(7)-methylguanosine(1405) in 16S rRNA) declares rh:reactivePart
+        at position 1405 = N(7)-methylguanosine 5'-phosphate residue (CHEBI:74480).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:42772 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42773
+      snippet: guanosine(1405) in 16S rRNA + S-adenosyl-L-methionine => N(7)-methylguanosine(1405) in
+        16S rRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:42773 declares side 42772_R as its products
+        (rh:products); the master reaction RHEA:42772 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:18586937, PMID:20194115 for this reaction.
+  - subject: prot_Q08325
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FMRO_MICOL is an exemplar enzyme with EC 2.1.1.179 activity.
+    evidence:
+    - reference: EC:2.1.1.179
+      snippet: DR   Q08325, FMRO_MICOL ;  P24618, GRM_MICEC  ;  P24619, GRM_MICRO  ;
+      notes: ExPASy ENZYME entry EC 2.1.1.179 cross-references UniProtKB:Q08325 (FMRO_MICOL) as a protein
+        with this activity.
+  - subject: prot_P24618
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GRM_MICEC is an exemplar enzyme with EC 2.1.1.179 activity.
+    evidence:
+    - reference: EC:2.1.1.179
+      snippet: DR   Q08325, FMRO_MICOL ;  P24618, GRM_MICEC  ;  P24619, GRM_MICRO  ;
+      notes: ExPASy ENZYME entry EC 2.1.1.179 cross-references UniProtKB:P24618 (GRM_MICEC) as a protein
+        with this activity.
+  - subject: prot_P24619
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GRM_MICRO is an exemplar enzyme with EC 2.1.1.179 activity.
+    evidence:
+    - reference: EC:2.1.1.179
+      snippet: DR   Q08325, FMRO_MICOL ;  P24618, GRM_MICEC  ;  P24619, GRM_MICRO  ;
+      notes: ExPASy ENZYME entry EC 2.1.1.179 cross-references UniProtKB:P24619 (GRM_MICRO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

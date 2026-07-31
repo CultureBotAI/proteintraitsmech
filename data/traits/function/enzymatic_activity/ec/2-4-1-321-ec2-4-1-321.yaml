@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -32,4 +32,119 @@ definitions:
       Catalyses: 4-O-beta-D-glucopyranosyl-D-gluconate + phosphate = D-gluconate + alpha- D-glucose 1-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cellobionic acid phosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.321. EC 2.4.1.321 maps to
+    exactly one curated Rhea reaction (RHEA:11564), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-O-beta-D-glucopyranosyl-D-gluconate
+    + phosphate = D-gluconate + alpha- D-glucose 1-phosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cellobionic acid phosphorylase
+    grounding: EC:2.4.1.321
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-O-beta-D-glucopyranosyl-D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:76825
+    description: Formula C12H21O12.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:18391
+    description: Formula C6H11O7.
+  - node_id: prd2
+    label: alpha-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58601
+    description: Formula C6H11O9P.
+  - node_id: prot_Q7S0S2
+    node_type: PROTEIN
+    label: CELAP_NEUCR
+    grounding: UniProtKB:Q7S0S2
+  - node_id: prot_Q8P3J4
+    node_type: PROTEIN
+    label: CELAP_XANCP
+    grounding: UniProtKB:Q8P3J4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-O-beta-D-glucopyranosyl-D-gluconate is a substrate consumed by RHEA:11564 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11565
+      snippet: 4-O-beta-D-glucopyranosyl-D-gluconate + phosphate => D-gluconate + alpha-D-glucose 1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11565 declares side 11564_L as its substrates
+        (rh:substrates); the master reaction RHEA:11564 is undirected. This participant is CHEBI:76825
+        with coefficient 1. Rhea cites PMID:24055472 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:11564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11565
+      snippet: 4-O-beta-D-glucopyranosyl-D-gluconate + phosphate => D-gluconate + alpha-D-glucose 1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11565 declares side 11564_L as its substrates
+        (rh:substrates); the master reaction RHEA:11564 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:24055472 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-gluconate is a product released by RHEA:11564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11565
+      snippet: 4-O-beta-D-glucopyranosyl-D-gluconate + phosphate => D-gluconate + alpha-D-glucose 1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11565 declares side 11564_R as its products
+        (rh:products); the master reaction RHEA:11564 is undirected. This participant is CHEBI:18391 with
+        coefficient 1. Rhea cites PMID:24055472 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: alpha-D-glucose 1-phosphate is a product released by RHEA:11564 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11565
+      snippet: 4-O-beta-D-glucopyranosyl-D-gluconate + phosphate => D-gluconate + alpha-D-glucose 1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11565 declares side 11564_R as its products
+        (rh:products); the master reaction RHEA:11564 is undirected. This participant is CHEBI:58601 with
+        coefficient 1. Rhea cites PMID:24055472 for this reaction.
+  - subject: prot_Q7S0S2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CELAP_NEUCR is an exemplar enzyme with EC 2.4.1.321 activity.
+    evidence:
+    - reference: EC:2.4.1.321
+      snippet: DR   Q7S0S2, CELAP_NEUCR;  Q8P3J4, CELAP_XANCP;
+      notes: ExPASy ENZYME entry EC 2.4.1.321 cross-references UniProtKB:Q7S0S2 (CELAP_NEUCR) as a protein
+        with this activity.
+  - subject: prot_Q8P3J4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CELAP_XANCP is an exemplar enzyme with EC 2.4.1.321 activity.
+    evidence:
+    - reference: EC:2.4.1.321
+      snippet: DR   Q7S0S2, CELAP_NEUCR;  Q8P3J4, CELAP_XANCP;
+      notes: ExPASy ENZYME entry EC 2.4.1.321 cross-references UniProtKB:Q8P3J4 (CELAP_XANCP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -28,4 +28,138 @@ definitions:
       Catalyses: [protein]-C-terminal-L-glutamine + H2O = [protein]-C-terminal-L-glutamate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptidyl-glutaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.43. EC 3.5.1.43 maps to exactly
+    one curated Rhea reaction (RHEA:10032), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[protein]-C-terminal-L-glutamine
+    + H2O = [protein]-C-terminal-L-glutamate + NH4(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-glutaminase
+    grounding: EC:3.5.1.43
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[protein]-C-terminal-L-glutamine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14703
+    description: Rhea compound GENERIC:14703.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: C-terminal L-glutaminyl residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14703 ([protein]-C-terminal-L-glutamine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:88115
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: '[protein]-C-terminal-L-glutamate'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14704
+    description: Rhea compound GENERIC:14704.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: C-terminal-L-glutamyl residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14704 ([protein]-C-terminal-L-glutamate);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78525
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-glutaminase activity
+    grounding: GO:0050170
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[protein]-C-terminal-L-glutamine is a substrate consumed by RHEA:10032 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:10033
+      snippet: '[protein]-C-terminal-L-glutamine + H2O => [protein]-C-terminal-L-glutamate + NH4(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10033 declares side 10032_L as its substrates
+        (rh:substrates); the master reaction RHEA:10032 is undirected. This participant is GENERIC:14703
+        with coefficient 1. Rhea cites PMID:4928623 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: C-terminal L-glutaminyl residue is the reactive part of [protein]-C-terminal-L-glutamine.
+    evidence:
+    - reference: RHEA:10032
+      snippet: C-terminal L-glutaminyl residue
+      notes: Rhea compound GENERIC:14703 ([protein]-C-terminal-L-glutamine) declares rh:reactivePart =
+        C-terminal L-glutaminyl residue (CHEBI:88115).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:10032 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10033
+      snippet: '[protein]-C-terminal-L-glutamine + H2O => [protein]-C-terminal-L-glutamate + NH4(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10033 declares side 10032_L as its substrates
+        (rh:substrates); the master reaction RHEA:10032 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4928623 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[protein]-C-terminal-L-glutamate is a product released by RHEA:10032 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:10033
+      snippet: '[protein]-C-terminal-L-glutamine + H2O => [protein]-C-terminal-L-glutamate + NH4(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10033 declares side 10032_R as its products
+        (rh:products); the master reaction RHEA:10032 is undirected. This participant is GENERIC:14704
+        with coefficient 1. Rhea cites PMID:4928623 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: C-terminal-L-glutamyl residue is the reactive part of [protein]-C-terminal-L-glutamate.
+    evidence:
+    - reference: RHEA:10032
+      snippet: C-terminal-L-glutamyl residue
+      notes: Rhea compound GENERIC:14704 ([protein]-C-terminal-L-glutamate) declares rh:reactivePart =
+        C-terminal-L-glutamyl residue (CHEBI:78525).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:10032 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10033
+      snippet: '[protein]-C-terminal-L-glutamine + H2O => [protein]-C-terminal-L-glutamate + NH4(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10033 declares side 10032_R as its products
+        (rh:products); the master reaction RHEA:10032 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:4928623 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.43
+      snippet: EC:3.5.1.43 > GO:protein-glutaminase activity ; GO:0050170
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050170 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

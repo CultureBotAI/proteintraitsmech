@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:63528
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: dTMP + H2O = 2-deoxy-D-ribose 5-phosphate + thymine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dTMP + H2O = 2-deoxy-D-ribose 5-phosphate + thymine
+  description: Substrate-to-product chemistry of RHEA:52712, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:52713 (rh:substrates → 52712_L, rh:products → 52712_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dTMP + H2O = 2-deoxy-D-ribose 5-phosphate + thymine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:52712
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dTMP + H2O = 2-deoxy-D-ribose 5-phosphate + thymine'
+  - node_id: sub1
+    label: dTMP
+    node_type: CHEMICAL
+    grounding: CHEBI:63528
+    description: Formula C10H13N2O8P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 2-deoxy-D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:62877
+    description: Formula C5H9O7P.
+  - node_id: prd2
+    label: thymine
+    node_type: CHEMICAL
+    grounding: CHEBI:17821
+    description: Formula C5H6N2O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTMP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52713
+      snippet: dTMP + H2O => 2-deoxy-D-ribose 5-phosphate + thymine
+      notes: Rhea's left-to-right directional reaction RHEA:52713 declares side 52712_L as its substrates
+        (rh:substrates); the master reaction RHEA:52712 is undirected. This participant is CHEBI:63528
+        with coefficient 1. Rhea cites PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52713
+      snippet: dTMP + H2O => 2-deoxy-D-ribose 5-phosphate + thymine
+      notes: Rhea's left-to-right directional reaction RHEA:52713 declares side 52712_L as its substrates
+        (rh:substrates); the master reaction RHEA:52712 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-deoxy-D-ribose 5-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52713
+      snippet: dTMP + H2O => 2-deoxy-D-ribose 5-phosphate + thymine
+      notes: Rhea's left-to-right directional reaction RHEA:52713 declares side 52712_R as its products
+        (rh:products); the master reaction RHEA:52712 is undirected. This participant is CHEBI:62877 with
+        coefficient 1. Rhea cites PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: thymine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52713
+      snippet: dTMP + H2O => 2-deoxy-D-ribose 5-phosphate + thymine
+      notes: Rhea's left-to-right directional reaction RHEA:52713 declares side 52712_R as its products
+        (rh:products); the master reaction RHEA:52712 is undirected. This participant is CHEBI:17821 with
+        coefficient 1. Rhea cites PMID:27941785 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

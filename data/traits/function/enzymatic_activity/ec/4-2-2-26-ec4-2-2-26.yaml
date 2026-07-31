@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -37,4 +37,68 @@ definitions:
       Catalyses: Cleavage of 4-deoxy-alpha-L-erythro-hex-4-enopyranuronoside oligosaccharides into 4-deoxy-alpha-L-erythro-hex-4-enopyranuronate monosaccharides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of oligo-alginate lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.26. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleavage
+    of 4-deoxy-alpha-L-erythro-hex-4-enopyranuronoside oligosaccharides into 4-deoxy-alpha-L-erythro-hex-4-enopyranuronate
+    monosaccharides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: oligo-alginate lyase
+    grounding: EC:4.2.2.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: exo-oligoalginate lyase activity
+    grounding: GO:0052764
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q21FJ0
+    node_type: PROTEIN
+    label: EALGL_SACD2
+    grounding: UniProtKB:Q21FJ0
+  - node_id: prot_B2FSW8
+    node_type: PROTEIN
+    label: EALGL_STRMK
+    grounding: UniProtKB:B2FSW8
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.26
+      snippet: EC:4.2.2.26 > GO:exo-oligoalginate lyase activity ; GO:0052764
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0052764 is itself a record
+        in this KB.
+  - subject: prot_Q21FJ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EALGL_SACD2 is an exemplar enzyme with EC 4.2.2.26 activity.
+    evidence:
+    - reference: EC:4.2.2.26
+      snippet: DR   Q21FJ0, EALGL_SACD2;  B2FSW8, EALGL_STRMK;
+      notes: ExPASy ENZYME entry EC 4.2.2.26 cross-references UniProtKB:Q21FJ0 (EALGL_SACD2) as a protein
+        with this activity.
+  - subject: prot_B2FSW8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EALGL_STRMK is an exemplar enzyme with EC 4.2.2.26 activity.
+    evidence:
+    - reference: EC:4.2.2.26
+      snippet: DR   Q21FJ0, EALGL_SACD2;  B2FSW8, EALGL_STRMK;
+      notes: ExPASy ENZYME entry EC 4.2.2.26 cross-references UniProtKB:B2FSW8 (EALGL_STRMK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

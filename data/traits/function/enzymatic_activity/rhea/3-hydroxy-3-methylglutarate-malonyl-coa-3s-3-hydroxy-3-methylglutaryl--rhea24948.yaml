@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.8.3.13
     mapping_source: rhea2ec
@@ -28,4 +28,109 @@ definitions:
       Catalyses the reaction: 3-hydroxy-3-methylglutarate + malonyl-CoA = (3S)-3-hydroxy-3-methylglutaryl-CoA + malonate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-hydroxy-3-methylglutarate + malonyl-CoA = (3S)-3-hydroxy-3-methylglutaryl-CoA
+    + malon…
+  description: Substrate-to-product chemistry of RHEA:24948, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24949 (rh:substrates → 24948_L, rh:products → 24948_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-hydroxy-3-methylglutarate + malonyl-CoA = (3S)-3-hydroxy-3-methylglutaryl-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24948
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-hydroxy-3-methylglutarate + malonyl-CoA = (3S)-3-hydroxy-3-methylglutaryl-CoA +
+      malonate'
+  - node_id: sub1
+    label: 3-hydroxy-3-methylglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:17325
+    description: Formula C6H8O5.
+  - node_id: sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: prd1
+    label: (3S)-3-hydroxy-3-methylglutaryl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:43074
+    description: Formula C27H39N7O20P3S.
+  - node_id: prd2
+    label: malonate
+    node_type: CHEMICAL
+    grounding: CHEBI:15792
+    description: Formula C3H2O4.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: succinate--hydroxymethylglutarate CoA-transferase
+    grounding: EC:2.8.3.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-hydroxy-3-methylglutarate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24949
+      snippet: 3-hydroxy-3-methylglutarate + malonyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + malonate
+      notes: Rhea's left-to-right directional reaction RHEA:24949 declares side 24948_L as its substrates
+        (rh:substrates); the master reaction RHEA:24948 is undirected. This participant is CHEBI:17325
+        with coefficient 1. Rhea cites PMID:6946836 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24949
+      snippet: 3-hydroxy-3-methylglutarate + malonyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + malonate
+      notes: Rhea's left-to-right directional reaction RHEA:24949 declares side 24948_L as its substrates
+        (rh:substrates); the master reaction RHEA:24948 is undirected. This participant is CHEBI:57384
+        with coefficient 1. Rhea cites PMID:6946836 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3S)-3-hydroxy-3-methylglutaryl-CoA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24949
+      snippet: 3-hydroxy-3-methylglutarate + malonyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + malonate
+      notes: Rhea's left-to-right directional reaction RHEA:24949 declares side 24948_R as its products
+        (rh:products); the master reaction RHEA:24948 is undirected. This participant is CHEBI:43074 with
+        coefficient 1. Rhea cites PMID:6946836 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: malonate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24949
+      snippet: 3-hydroxy-3-methylglutarate + malonyl-CoA => (3S)-3-hydroxy-3-methylglutaryl-CoA + malonate
+      notes: Rhea's left-to-right directional reaction RHEA:24949 declares side 24948_R as its products
+        (rh:products); the master reaction RHEA:24948 is undirected. This participant is CHEBI:15792 with
+        coefficient 1. Rhea cites PMID:6946836 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.8.3.13; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24948
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.13"/>
+      notes: The rh:ec triple on RHEA:24948 in rhea.rdf. EC 2.8.3.13 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

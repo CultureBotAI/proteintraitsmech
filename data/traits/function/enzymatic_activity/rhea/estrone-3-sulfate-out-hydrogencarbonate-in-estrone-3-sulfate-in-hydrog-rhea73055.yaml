@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:60050
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,100 @@ definitions:
       Catalyses the reaction: estrone 3-sulfate(out) + hydrogencarbonate(in) = estrone 3-sulfate(in) + hydrogencarbonate(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of estrone 3-sulfate(out) + hydrogencarbonate(in) = estrone 3-sulfate(in)
+    + hydrogencarbon…
+  description: 'Substrate-to-product chemistry of RHEA:73055, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:73056 (rh:substrates → 73055_L, rh:products → 73055_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of estrone 3-sulfate(out) + hydrogencarbonate(in) = estrone 3-sulfate(in) + hyd…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:73055
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: estrone 3-sulfate(out) + hydrogencarbonate(in) = estrone 3-sulfate(in) + hydrogencarbonate(out)'
+  - node_id: sub1
+    label: estrone 3-sulfate (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:60050
+    description: Formula C18H21O5S.
+  - node_id: sub2
+    label: hydrogencarbonate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:17544
+    description: Formula CHO3.
+  - node_id: prd1
+    label: estrone 3-sulfate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:60050
+    description: Formula C18H21O5S.
+  - node_id: prd2
+    label: hydrogencarbonate (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:17544
+    description: Formula CHO3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: estrone 3-sulfate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:73056
+      snippet: estrone 3-sulfate(out) + hydrogencarbonate(in) => estrone 3-sulfate(in) + hydrogencarbonate(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73056 declares side 73055_L as its substrates
+        (rh:substrates); the master reaction RHEA:73055 is undirected. This participant is CHEBI:60050
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:19129463 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogencarbonate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:73056
+      snippet: estrone 3-sulfate(out) + hydrogencarbonate(in) => estrone 3-sulfate(in) + hydrogencarbonate(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73056 declares side 73055_L as its substrates
+        (rh:substrates); the master reaction RHEA:73055 is undirected. This participant is CHEBI:17544
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:19129463
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: estrone 3-sulfate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:73056
+      snippet: estrone 3-sulfate(out) + hydrogencarbonate(in) => estrone 3-sulfate(in) + hydrogencarbonate(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73056 declares side 73055_R as its products
+        (rh:products); the master reaction RHEA:73055 is undirected. This participant is CHEBI:60050 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:19129463
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: hydrogencarbonate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:73056
+      snippet: estrone 3-sulfate(out) + hydrogencarbonate(in) => estrone 3-sulfate(in) + hydrogencarbonate(out)
+      notes: Rhea's left-to-right directional reaction RHEA:73056 declares side 73055_R as its products
+        (rh:products); the master reaction RHEA:73055 is undirected. This participant is CHEBI:17544 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:19129463
+        for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

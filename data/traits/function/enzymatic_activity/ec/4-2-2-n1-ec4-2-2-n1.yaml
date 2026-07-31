@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -38,4 +38,83 @@ definitions:
       Catalyses: Exolytic cleavage of the (1->4)-beta-glycosidic linkage between N-acetylmuramic acid (MurNAc) and N-acetylglucosamine (GlcNAc) residues in peptidoglycan, from either the reducing or the non-reducing ends of the peptidoglycan chains, with concomitant formation of a 1,6-anhydrobond in the MurNAc residue
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptidoglycan lytic exotransglycosylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.n1. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Exolytic
+    cleavage of the (1->4)-beta-glycosidic linkage between N-acetylmuramic acid (MurNAc) and N-acetylglucosamine
+    (GlcNAc) residues in peptidoglycan, from either the reducing or the non-reducing ends of the peptidoglycan
+    chains, with concomitant formation of a 1,6-anhydrobond in the MurNAc residue".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptidoglycan lytic exotransglycosylase
+    grounding: EC:4.2.2.n1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: lytic exotransglycosylase activity
+    grounding: GO:0140100
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O31608
+    node_type: PROTEIN
+    label: CWLQ_BACSU
+    grounding: UniProtKB:O31608
+  - node_id: prot_Q8SD18
+    node_type: PROTEIN
+    label: ENLYS_BPDPK
+    grounding: UniProtKB:Q8SD18
+  - node_id: prot_P27380
+    node_type: PROTEIN
+    label: EXLYS_BPPRD
+    grounding: UniProtKB:P27380
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.n1
+      snippet: EC:4.2.2.n1 > GO:lytic exotransglycosylase activity ; GO:0140100
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0140100 is itself a record
+        in this KB.
+  - subject: prot_O31608
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CWLQ_BACSU is an exemplar enzyme with EC 4.2.2.n1 activity.
+    evidence:
+    - reference: EC:4.2.2.n1
+      snippet: DR   O31608, CWLQ_BACSU ;  Q8SD18, ENLYS_BPDPK;  P27380, EXLYS_BPPRD;
+      notes: ExPASy ENZYME entry EC 4.2.2.n1 cross-references UniProtKB:O31608 (CWLQ_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q8SD18
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ENLYS_BPDPK is an exemplar enzyme with EC 4.2.2.n1 activity.
+    evidence:
+    - reference: EC:4.2.2.n1
+      snippet: DR   O31608, CWLQ_BACSU ;  Q8SD18, ENLYS_BPDPK;  P27380, EXLYS_BPPRD;
+      notes: ExPASy ENZYME entry EC 4.2.2.n1 cross-references UniProtKB:Q8SD18 (ENLYS_BPDPK) as a protein
+        with this activity.
+  - subject: prot_P27380
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EXLYS_BPPRD is an exemplar enzyme with EC 4.2.2.n1 activity.
+    evidence:
+    - reference: EC:4.2.2.n1
+      snippet: DR   O31608, CWLQ_BACSU ;  Q8SD18, ENLYS_BPDPK;  P27380, EXLYS_BPPRD;
+      notes: ExPASy ENZYME entry EC 4.2.2.n1 cross-references UniProtKB:P27380 (EXLYS_BPPRD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

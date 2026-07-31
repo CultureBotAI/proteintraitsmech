@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:114953
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,94 @@ definitions:
       Catalyses the reaction: N(omega)-methyl-L-arginine + glyoxylate = 5-(3-methylguanidino)-2-oxopentanoate + glycine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(omega)-methyl-L-arginine + glyoxylate = 5-(3-methylguanidino)-2-oxopentanoate
+    + glyci…
+  description: Substrate-to-product chemistry of RHEA:77323, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77324 (rh:substrates → 77323_L, rh:products → 77323_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N(omega)-methyl-L-arginine + glyoxylate = 5-(3-methylguanidino)-2-oxopentano…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77323
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N(omega)-methyl-L-arginine + glyoxylate = 5-(3-methylguanidino)-2-oxopentanoate +
+      glycine'
+  - node_id: sub1
+    label: N(omega)-methyl-L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:114953
+    description: Formula C7H17N4O2.
+  - node_id: sub2
+    label: glyoxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:36655
+    description: Formula C2HO3.
+  - node_id: prd1
+    label: 5-(3-methylguanidino)-2-oxopentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:197314
+    description: Formula C7H13N3O3.
+  - node_id: prd2
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+    description: Formula C2H5NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(omega)-methyl-L-arginine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77324
+      snippet: N(omega)-methyl-L-arginine + glyoxylate => 5-(3-methylguanidino)-2-oxopentanoate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:77324 declares side 77323_L as its substrates
+        (rh:substrates); the master reaction RHEA:77323 is undirected. This participant is CHEBI:114953
+        with coefficient 1. Rhea cites PMID:2123486 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: glyoxylate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77324
+      snippet: N(omega)-methyl-L-arginine + glyoxylate => 5-(3-methylguanidino)-2-oxopentanoate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:77324 declares side 77323_L as its substrates
+        (rh:substrates); the master reaction RHEA:77323 is undirected. This participant is CHEBI:36655
+        with coefficient 1. Rhea cites PMID:2123486 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-(3-methylguanidino)-2-oxopentanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:77324
+      snippet: N(omega)-methyl-L-arginine + glyoxylate => 5-(3-methylguanidino)-2-oxopentanoate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:77324 declares side 77323_R as its products
+        (rh:products); the master reaction RHEA:77323 is undirected. This participant is CHEBI:197314
+        with coefficient 1. Rhea cites PMID:2123486 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glycine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77324
+      snippet: N(omega)-methyl-L-arginine + glyoxylate => 5-(3-methylguanidino)-2-oxopentanoate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:77324 declares side 77323_R as its products
+        (rh:products); the master reaction RHEA:77323 is undirected. This participant is CHEBI:57305 with
+        coefficient 1. Rhea cites PMID:2123486 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.1.6
     mapping_source: rhea2ec
@@ -32,4 +32,152 @@ definitions:
       Catalyses the reaction: aldehydo-D-ribose 5-phosphate = D-ribulose 5-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aldehydo-D-ribose 5-phosphate = D-ribulose 5-phosphate
+  description: Substrate-to-product chemistry of RHEA:14657, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:14658 (rh:substrates → 14657_L, rh:products → 14657_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of aldehydo-D-ribose 5-phosphate = D-ribulose 5-phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:14657
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: aldehydo-D-ribose 5-phosphate = D-ribulose 5-phosphate'
+  - node_id: sub1
+    label: aldehydo-D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58273
+    description: Formula C5H9O8P.
+  - node_id: prd1
+    label: D-ribulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58121
+    description: Formula C5H9O8P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ribose-5-phosphate isomerase activity
+    grounding: GO:0004751
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: ribose-5-phosphate isomerase
+    grounding: EC:5.3.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P83534
+    node_type: PROTEIN
+    label: RBSKI_FRUSL
+    grounding: UniProtKB:P83534
+  - node_id: prot_Q9C998
+    node_type: PROTEIN
+    label: RPI1_ARATH
+    grounding: UniProtKB:Q9C998
+  - node_id: prot_Q9ZU38
+    node_type: PROTEIN
+    label: RPI2_ARATH
+    grounding: UniProtKB:Q9ZU38
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: aldehydo-D-ribose 5-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14658
+      snippet: aldehydo-D-ribose 5-phosphate => D-ribulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14658 declares side 14657_L as its substrates
+        (rh:substrates); the master reaction RHEA:14657 is undirected. This participant is CHEBI:58273
+        with coefficient 1. Rhea cites PMID:18640127, PMID:13373810, PMID:13295229, PMID:1104357 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-ribulose 5-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14658
+      snippet: aldehydo-D-ribose 5-phosphate => D-ribulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14658 declares side 14657_R as its products
+        (rh:products); the master reaction RHEA:14657 is undirected. This participant is CHEBI:58121 with
+        coefficient 1. Rhea cites PMID:18640127, PMID:13373810, PMID:13295229, PMID:1104357 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:14657
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004751"/>
+      notes: The rdfs:seeAlso triple on RHEA:14657 in rhea.rdf. GO term GO:0004751 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.1.6; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:14657
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.6"/>
+      notes: The rh:ec triple on RHEA:14657 in rhea.rdf. EC 5.3.1.6 is itself a record in this KB.
+  - subject: prot_P83534
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RBSKI_FRUSL is an exemplar enzyme carrying EC 5.3.1.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.6
+      snippet: DR   P83534, RBSKI_FRUSL;  Q9C998, RPI1_ARATH ;  Q9ZU38, RPI2_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.3.1.6 cross-references UniProtKB:P83534 (RBSKI_FRUSL) as a protein
+        with this activity.
+    - reference: RHEA:14657
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.6"/>
+      notes: Rhea assigns RHEA:14657 to EC 5.3.1.6, and EC 5.3.1.6 maps to exactly one Rhea master reaction
+        (RHEA:14657), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9C998
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RPI1_ARATH is an exemplar enzyme carrying EC 5.3.1.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.6
+      snippet: DR   P83534, RBSKI_FRUSL;  Q9C998, RPI1_ARATH ;  Q9ZU38, RPI2_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.3.1.6 cross-references UniProtKB:Q9C998 (RPI1_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:14657
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.6"/>
+      notes: Rhea assigns RHEA:14657 to EC 5.3.1.6, and EC 5.3.1.6 maps to exactly one Rhea master reaction
+        (RHEA:14657), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9ZU38
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RPI2_ARATH is an exemplar enzyme carrying EC 5.3.1.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.6
+      snippet: DR   P83534, RBSKI_FRUSL;  Q9C998, RPI1_ARATH ;  Q9ZU38, RPI2_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.3.1.6 cross-references UniProtKB:Q9ZU38 (RPI2_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:14657
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.6"/>
+      notes: Rhea assigns RHEA:14657 to EC 5.3.1.6, and EC 5.3.1.6 maps to exactly one Rhea master reaction
+        (RHEA:14657), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

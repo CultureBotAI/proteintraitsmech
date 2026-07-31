@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -41,4 +41,146 @@ definitions:
       Catalyses: formamide + H2O = formate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of formamidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.49. EC 3.5.1.49 maps to exactly
+    one curated Rhea reaction (RHEA:21948), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "formamide + H2O
+    = formate + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: formamidase
+    grounding: EC:3.5.1.49
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: formamide
+    node_type: CHEMICAL
+    grounding: CHEBI:16397
+    description: Formula CH3NO.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: formamidase activity
+    grounding: GO:0004328
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B9K1J4
+    node_type: PROTEIN
+    label: AMIF_ALLAM
+    grounding: UniProtKB:B9K1J4
+  - node_id: prot_C3P6U6
+    node_type: PROTEIN
+    label: AMIF_BACAA
+    grounding: UniProtKB:C3P6U6
+  - node_id: prot_C3LI05
+    node_type: PROTEIN
+    label: AMIF_BACAC
+    grounding: UniProtKB:C3LI05
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: formamide is a substrate consumed by RHEA:21948 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21949
+      snippet: formamide + H2O => formate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21949 declares side 21948_L as its substrates
+        (rh:substrates); the master reaction RHEA:21948 is undirected. This participant is CHEBI:16397
+        with coefficient 1. Rhea cites PMID:11359566 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:21948 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21949
+      snippet: formamide + H2O => formate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21949 declares side 21948_L as its substrates
+        (rh:substrates); the master reaction RHEA:21948 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11359566 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: formate is a product released by RHEA:21948 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21949
+      snippet: formamide + H2O => formate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21949 declares side 21948_R as its products
+        (rh:products); the master reaction RHEA:21948 is undirected. This participant is CHEBI:15740 with
+        coefficient 1. Rhea cites PMID:11359566 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:21948 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21949
+      snippet: formamide + H2O => formate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21949 declares side 21948_R as its products
+        (rh:products); the master reaction RHEA:21948 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:11359566 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.49
+      snippet: EC:3.5.1.49 > GO:formamidase activity ; GO:0004328
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004328 is itself a record
+        in this KB.
+  - subject: prot_B9K1J4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMIF_ALLAM is an exemplar enzyme with EC 3.5.1.49 activity.
+    evidence:
+    - reference: EC:3.5.1.49
+      snippet: DR   B9K1J4, AMIF_ALLAM ;  C3P6U6, AMIF_BACAA ;  C3LI05, AMIF_BACAC ;
+      notes: ExPASy ENZYME entry EC 3.5.1.49 cross-references UniProtKB:B9K1J4 (AMIF_ALLAM) as a protein
+        with this activity.
+  - subject: prot_C3P6U6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMIF_BACAA is an exemplar enzyme with EC 3.5.1.49 activity.
+    evidence:
+    - reference: EC:3.5.1.49
+      snippet: DR   B9K1J4, AMIF_ALLAM ;  C3P6U6, AMIF_BACAA ;  C3LI05, AMIF_BACAC ;
+      notes: ExPASy ENZYME entry EC 3.5.1.49 cross-references UniProtKB:C3P6U6 (AMIF_BACAA) as a protein
+        with this activity.
+  - subject: prot_C3LI05
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMIF_BACAC is an exemplar enzyme with EC 3.5.1.49 activity.
+    evidence:
+    - reference: EC:3.5.1.49
+      snippet: DR   B9K1J4, AMIF_ALLAM ;  C3P6U6, AMIF_BACAA ;  C3LI05, AMIF_BACAC ;
+      notes: ExPASy ENZYME entry EC 3.5.1.49 cross-references UniProtKB:C3LI05 (AMIF_BACAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.106
     mapping_source: rhea2ec
@@ -32,4 +32,133 @@ definitions:
       Catalyses the reaction: 7alpha,12alpha-dihydroxy-3-oxochol-4-en-24-oyl-CoA = 12alpha-hydroxy-3-oxochola-4,6-dien-24-oyl-CoA + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 7alpha,12alpha-dihydroxy-3-oxochol-4-en-24-oyl-CoA = 12alpha-hydroxy-3-oxochola-4,6-die…
+  description: Substrate-to-product chemistry of RHEA:10436, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:10437 (rh:substrates → 10436_L, rh:products → 10436_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 7alpha,12alpha-dihydroxy-3-oxochol-4-en-24-oyl-CoA = 12alpha-hydroxy-3-oxoch…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10436
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 7alpha,12alpha-dihydroxy-3-oxochol-4-en-24-oyl-CoA = 12alpha-hydroxy-3-oxochola-4,6-dien-24-oyl-CoA
+      + H2O'
+  - node_id: sub1
+    label: 7alpha,12alpha-dihydroxy-3-oxochol-4-en-24-oyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:132977
+    description: Formula C45H66N7O20P3S.
+  - node_id: prd1
+    label: 12alpha-hydroxy-3-oxochola-4,6-dien-24-oyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:132978
+    description: Formula C45H64N7O19P3S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: bile-acid 7alpha-dehydratase activity
+    grounding: GO:0033988
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: bile-acid 7alpha-dehydratase
+    grounding: EC:4.2.1.106
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P19412
+    node_type: PROTEIN
+    label: BAIE_CLOSV
+    grounding: UniProtKB:P19412
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 7alpha,12alpha-dihydroxy-3-oxochol-4-en-24-oyl-CoA is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10437
+      snippet: 7alpha,12alpha-dihydroxy-3-oxochol-4-en-24-oyl-CoA => 12alpha-hydroxy-3-oxochola-4,6-dien-24-oyl-CoA
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10437 declares side 10436_L as its substrates
+        (rh:substrates); the master reaction RHEA:10436 is undirected. This participant is CHEBI:132977
+        with coefficient 1. Rhea cites PMID:2254270, PMID:8808760, PMID:26650892, PMID:32555455 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 12alpha-hydroxy-3-oxochola-4,6-dien-24-oyl-CoA is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10437
+      snippet: 7alpha,12alpha-dihydroxy-3-oxochol-4-en-24-oyl-CoA => 12alpha-hydroxy-3-oxochola-4,6-dien-24-oyl-CoA
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10437 declares side 10436_R as its products
+        (rh:products); the master reaction RHEA:10436 is undirected. This participant is CHEBI:132978
+        with coefficient 1. Rhea cites PMID:2254270, PMID:8808760, PMID:26650892, PMID:32555455 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10437
+      snippet: 7alpha,12alpha-dihydroxy-3-oxochol-4-en-24-oyl-CoA => 12alpha-hydroxy-3-oxochola-4,6-dien-24-oyl-CoA
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:10437 declares side 10436_R as its products
+        (rh:products); the master reaction RHEA:10436 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:2254270, PMID:8808760, PMID:26650892, PMID:32555455 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:10436
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0033988"/>
+      notes: The rdfs:seeAlso triple on RHEA:10436 in rhea.rdf. GO term GO:0033988 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.106; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:10436
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.106"/>
+      notes: The rh:ec triple on RHEA:10436 in rhea.rdf. EC 4.2.1.106 is itself a record in this KB.
+  - subject: prot_P19412
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BAIE_CLOSV is an exemplar enzyme carrying EC 4.2.1.106, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.106
+      snippet: DR   P19412, BAIE_CLOSV ;
+      notes: ExPASy ENZYME entry EC 4.2.1.106 cross-references UniProtKB:P19412 (BAIE_CLOSV) as a protein
+        with this activity.
+    - reference: RHEA:10436
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.106"/>
+      notes: Rhea assigns RHEA:10436 to EC 4.2.1.106, and EC 4.2.1.106 maps to exactly one Rhea master
+        reaction (RHEA:10436), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

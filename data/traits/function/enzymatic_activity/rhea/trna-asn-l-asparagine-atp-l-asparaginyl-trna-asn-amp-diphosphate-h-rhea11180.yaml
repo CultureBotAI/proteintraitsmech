@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:6.1.1.22
     mapping_source: rhea2ec
@@ -38,4 +38,263 @@ definitions:
       Catalyses the reaction: tRNA(Asn) + L-asparagine + ATP = L-asparaginyl-tRNA(Asn) + AMP + diphosphate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA(Asn) + L-asparagine + ATP = L-asparaginyl-tRNA(Asn) + AMP + diphosphate
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:11180, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:11181 (rh:substrates → 11180_L, rh:products → 11180_R), and Rhea
+    curates the reverse direction too. 3 substrates, 4 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tRNA(Asn) + L-asparagine + ATP = L-asparaginyl-tRNA(Asn) + AMP + diphosphate…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:11180
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tRNA(Asn) + L-asparagine + ATP = L-asparaginyl-tRNA(Asn) + AMP + diphosphate + H(+)'
+  - node_id: sub1
+    label: tRNA(Asn)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9659
+    description: Rhea compound GENERIC:9659.
+  - node_id: sub1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9659 (tRNA(Asn));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-asparagine
+    node_type: CHEMICAL
+    grounding: CHEBI:58048
+    description: Formula C4H8N2O3.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-asparaginyl-tRNA(Asn)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9674
+    description: Rhea compound GENERIC:9674.
+  - node_id: prd1_rp1
+    label: 3'-(L-asparaginyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9674 (L-asparaginyl-tRNA(Asn));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78515
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: asparagine-tRNA ligase activity
+    grounding: GO:0004816
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: asparagine--tRNA ligase
+    grounding: EC:6.1.1.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q88Y40
+    node_type: PROTEIN
+    label: SYN1_LACPL
+    grounding: UniProtKB:Q88Y40
+  - node_id: prot_Q88WA8
+    node_type: PROTEIN
+    label: SYN2_LACPL
+    grounding: UniProtKB:Q88WA8
+  - node_id: prot_Q9SW96
+    node_type: PROTEIN
+    label: SYNC1_ARATH
+    grounding: UniProtKB:Q9SW96
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Asn) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11181
+      snippet: tRNA(Asn) + L-asparagine + ATP => L-asparaginyl-tRNA(Asn) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11181 declares side 11180_L as its substrates
+        (rh:substrates); the master reaction RHEA:11180 is undirected. This participant is GENERIC:9659
+        with coefficient 1. Rhea cites PMID:9421509, PMID:5040239, PMID:10966471 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Asn).
+    evidence:
+    - reference: RHEA:11180
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9659 (tRNA(Asn)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-asparagine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11181
+      snippet: tRNA(Asn) + L-asparagine + ATP => L-asparaginyl-tRNA(Asn) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11181 declares side 11180_L as its substrates
+        (rh:substrates); the master reaction RHEA:11180 is undirected. This participant is CHEBI:58048
+        with coefficient 1. Rhea cites PMID:9421509, PMID:5040239, PMID:10966471 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11181
+      snippet: tRNA(Asn) + L-asparagine + ATP => L-asparaginyl-tRNA(Asn) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11181 declares side 11180_L as its substrates
+        (rh:substrates); the master reaction RHEA:11180 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:9421509, PMID:5040239, PMID:10966471 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-asparaginyl-tRNA(Asn) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11181
+      snippet: tRNA(Asn) + L-asparagine + ATP => L-asparaginyl-tRNA(Asn) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11181 declares side 11180_R as its products
+        (rh:products); the master reaction RHEA:11180 is undirected. This participant is GENERIC:9674
+        with coefficient 1. Rhea cites PMID:9421509, PMID:5040239, PMID:10966471 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-asparaginyl)adenylyl group is the reactive part of L-asparaginyl-tRNA(Asn).
+    evidence:
+    - reference: RHEA:11180
+      snippet: 3'-(L-asparaginyl)adenylyl group
+      notes: Rhea compound GENERIC:9674 (L-asparaginyl-tRNA(Asn)) declares rh:reactivePart = 3'-(L-asparaginyl)adenylyl
+        group (CHEBI:78515), formula C14H18N7O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11181
+      snippet: tRNA(Asn) + L-asparagine + ATP => L-asparaginyl-tRNA(Asn) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11181 declares side 11180_R as its products
+        (rh:products); the master reaction RHEA:11180 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:9421509, PMID:5040239, PMID:10966471 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11181
+      snippet: tRNA(Asn) + L-asparagine + ATP => L-asparaginyl-tRNA(Asn) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11181 declares side 11180_R as its products
+        (rh:products); the master reaction RHEA:11180 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:9421509, PMID:5040239, PMID:10966471 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11181
+      snippet: tRNA(Asn) + L-asparagine + ATP => L-asparaginyl-tRNA(Asn) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11181 declares side 11180_R as its products
+        (rh:products); the master reaction RHEA:11180 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9421509, PMID:5040239, PMID:10966471 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:11180
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004816"/>
+      notes: The rdfs:seeAlso triple on RHEA:11180 in rhea.rdf. GO term GO:0004816 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 6.1.1.22; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:11180
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.22"/>
+      notes: The rh:ec triple on RHEA:11180 in rhea.rdf. EC 6.1.1.22 is itself a record in this KB.
+  - subject: prot_Q88Y40
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYN1_LACPL is an exemplar enzyme carrying EC 6.1.1.22, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.22
+      snippet: DR   Q88Y40, SYN1_LACPL ;  Q88WA8, SYN2_LACPL ;  Q9SW96, SYNC1_ARATH;
+      notes: ExPASy ENZYME entry EC 6.1.1.22 cross-references UniProtKB:Q88Y40 (SYN1_LACPL) as a protein
+        with this activity.
+    - reference: RHEA:11180
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.22"/>
+      notes: Rhea assigns RHEA:11180 to EC 6.1.1.22, and EC 6.1.1.22 maps to exactly one Rhea master reaction
+        (RHEA:11180), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q88WA8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYN2_LACPL is an exemplar enzyme carrying EC 6.1.1.22, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.22
+      snippet: DR   Q88Y40, SYN1_LACPL ;  Q88WA8, SYN2_LACPL ;  Q9SW96, SYNC1_ARATH;
+      notes: ExPASy ENZYME entry EC 6.1.1.22 cross-references UniProtKB:Q88WA8 (SYN2_LACPL) as a protein
+        with this activity.
+    - reference: RHEA:11180
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.22"/>
+      notes: Rhea assigns RHEA:11180 to EC 6.1.1.22, and EC 6.1.1.22 maps to exactly one Rhea master reaction
+        (RHEA:11180), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9SW96
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYNC1_ARATH is an exemplar enzyme carrying EC 6.1.1.22, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.22
+      snippet: DR   Q88Y40, SYN1_LACPL ;  Q88WA8, SYN2_LACPL ;  Q9SW96, SYNC1_ARATH;
+      notes: ExPASy ENZYME entry EC 6.1.1.22 cross-references UniProtKB:Q9SW96 (SYNC1_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:11180
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.22"/>
+      notes: Rhea assigns RHEA:11180 to EC 6.1.1.22, and EC 6.1.1.22 maps to exactly one Rhea master reaction
+        (RHEA:11180), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

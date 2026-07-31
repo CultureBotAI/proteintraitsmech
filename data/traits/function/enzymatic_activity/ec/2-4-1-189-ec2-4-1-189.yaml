@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -25,4 +25,123 @@ definitions:
       Catalyses: luteolin + UDP-alpha-D-glucuronate = luteolin 7-O-beta-D-glucuronide + UDP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of luteolin 7-O-glucuronosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.189. EC 2.4.1.189 maps to
+    exactly one curated Rhea reaction (RHEA:10568), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "luteolin
+    + UDP-alpha-D-glucuronate = luteolin 7-O-beta-D-glucuronide + UDP + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: luteolin 7-O-glucuronosyltransferase
+    grounding: EC:2.4.1.189
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: luteolin
+    node_type: CHEMICAL
+    grounding: CHEBI:57545
+    description: Formula C15H9O6.
+  - node_id: sub2
+    label: UDP-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58052
+    description: Formula C15H19N2O18P2.
+  - node_id: prd1
+    label: luteolin 7-O-beta-D-glucuronide
+    node_type: CHEMICAL
+    grounding: CHEBI:77671
+    description: Formula C21H16O12.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: luteolin 7-O-glucuronosyltransferase activity
+    grounding: GO:0050064
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: luteolin is a substrate consumed by RHEA:10568 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10569
+      snippet: luteolin + UDP-alpha-D-glucuronate => luteolin 7-O-beta-D-glucuronide + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10569 declares side 10568_L as its substrates
+        (rh:substrates); the master reaction RHEA:10568 is undirected. This participant is CHEBI:57545
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-glucuronate is a substrate consumed by RHEA:10568 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10569
+      snippet: luteolin + UDP-alpha-D-glucuronate => luteolin 7-O-beta-D-glucuronide + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10569 declares side 10568_L as its substrates
+        (rh:substrates); the master reaction RHEA:10568 is undirected. This participant is CHEBI:58052
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: luteolin 7-O-beta-D-glucuronide is a product released by RHEA:10568 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10569
+      snippet: luteolin + UDP-alpha-D-glucuronate => luteolin 7-O-beta-D-glucuronide + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10569 declares side 10568_R as its products
+        (rh:products); the master reaction RHEA:10568 is undirected. This participant is CHEBI:77671 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by RHEA:10568 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10569
+      snippet: luteolin + UDP-alpha-D-glucuronate => luteolin 7-O-beta-D-glucuronide + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10569 declares side 10568_R as its products
+        (rh:products); the master reaction RHEA:10568 is undirected. This participant is CHEBI:58223 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:10568 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10569
+      snippet: luteolin + UDP-alpha-D-glucuronate => luteolin 7-O-beta-D-glucuronide + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10569 declares side 10568_R as its products
+        (rh:products); the master reaction RHEA:10568 is undirected. This participant is CHEBI:15378 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.189
+      snippet: EC:2.4.1.189 > GO:luteolin 7-O-glucuronosyltransferase activity ; GO:0050064
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050064 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

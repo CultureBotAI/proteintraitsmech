@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:7.1.1.1
     mapping_source: rhea2ec
@@ -44,4 +44,218 @@ definitions:
       Catalyses the reaction: NAD(+) + NADPH + H(+)(in) = NADH + NADP(+) + H(+)(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of NAD(+) + NADPH + H(+)(in) = NADH + NADP(+) + H(+)(out)
+  description: 'Substrate-to-product chemistry of RHEA:47992, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:47993 (rh:substrates → 47992_L, rh:products → 47992_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of NAD(+) + NADPH + H(+)(in) = NADH + NADP(+) + H(+)(out)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:47992
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: NAD(+) + NADPH + H(+)(in) = NADH + NADP(+) + H(+)(out)'
+  - node_id: sub1
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: sub3
+    label: H(+) (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd3
+    label: H(+) (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: proton-translocating NAD(P)+ transhydrogenase activity
+    grounding: GO:0008750
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: proton-translocating NAD(P)(+) transhydrogenase
+    grounding: EC:7.1.1.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P11024
+    node_type: PROTEIN
+    label: NNTM_BOVIN
+    grounding: UniProtKB:P11024
+  - node_id: prot_Q13423
+    node_type: PROTEIN
+    label: NNTM_HUMAN
+    grounding: UniProtKB:Q13423
+  - node_id: prot_Q61941
+    node_type: PROTEIN
+    label: NNTM_MOUSE
+    grounding: UniProtKB:Q61941
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47993
+      snippet: NAD(+) + NADPH + H(+)(in) => NADH + NADP(+) + H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:47993 declares side 47992_L as its substrates
+        (rh:substrates); the master reaction RHEA:47992 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:22634753, PMID:10773166, PMID:16083909, PMID:7779816 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47993
+      snippet: NAD(+) + NADPH + H(+)(in) => NADH + NADP(+) + H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:47993 declares side 47992_L as its substrates
+        (rh:substrates); the master reaction RHEA:47992 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:22634753, PMID:10773166, PMID:16083909, PMID:7779816 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47993
+      snippet: NAD(+) + NADPH + H(+)(in) => NADH + NADP(+) + H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:47993 declares side 47992_L as its substrates
+        (rh:substrates); the master reaction RHEA:47992 is undirected. This participant is CHEBI:15378
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:22634753,
+        PMID:10773166, PMID:16083909, PMID:7779816 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: NADH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47993
+      snippet: NAD(+) + NADPH + H(+)(in) => NADH + NADP(+) + H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:47993 declares side 47992_R as its products
+        (rh:products); the master reaction RHEA:47992 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:22634753, PMID:10773166, PMID:16083909, PMID:7779816 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47993
+      snippet: NAD(+) + NADPH + H(+)(in) => NADH + NADP(+) + H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:47993 declares side 47992_R as its products
+        (rh:products); the master reaction RHEA:47992 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:22634753, PMID:10773166, PMID:16083909, PMID:7779816 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47993
+      snippet: NAD(+) + NADPH + H(+)(in) => NADH + NADP(+) + H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:47993 declares side 47992_R as its products
+        (rh:products); the master reaction RHEA:47992 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:22634753,
+        PMID:10773166, PMID:16083909, PMID:7779816 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:47992
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008750"/>
+      notes: The rdfs:seeAlso triple on RHEA:47992 in rhea.rdf. GO term GO:0008750 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 7.1.1.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:47992
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.1.1.1"/>
+      notes: The rh:ec triple on RHEA:47992 in rhea.rdf. EC 7.1.1.1 is itself a record in this KB.
+  - subject: prot_P11024
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NNTM_BOVIN is an exemplar enzyme carrying EC 7.1.1.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:7.1.1.1
+      snippet: DR   P11024, NNTM_BOVIN ;  Q13423, NNTM_HUMAN ;  Q61941, NNTM_MOUSE ;
+      notes: ExPASy ENZYME entry EC 7.1.1.1 cross-references UniProtKB:P11024 (NNTM_BOVIN) as a protein
+        with this activity.
+    - reference: RHEA:47992
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.1.1.1"/>
+      notes: Rhea assigns RHEA:47992 to EC 7.1.1.1, and EC 7.1.1.1 maps to exactly one Rhea master reaction
+        (RHEA:47992), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q13423
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NNTM_HUMAN is an exemplar enzyme carrying EC 7.1.1.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:7.1.1.1
+      snippet: DR   P11024, NNTM_BOVIN ;  Q13423, NNTM_HUMAN ;  Q61941, NNTM_MOUSE ;
+      notes: ExPASy ENZYME entry EC 7.1.1.1 cross-references UniProtKB:Q13423 (NNTM_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:47992
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.1.1.1"/>
+      notes: Rhea assigns RHEA:47992 to EC 7.1.1.1, and EC 7.1.1.1 maps to exactly one Rhea master reaction
+        (RHEA:47992), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q61941
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NNTM_MOUSE is an exemplar enzyme carrying EC 7.1.1.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:7.1.1.1
+      snippet: DR   P11024, NNTM_BOVIN ;  Q13423, NNTM_HUMAN ;  Q61941, NNTM_MOUSE ;
+      notes: ExPASy ENZYME entry EC 7.1.1.1 cross-references UniProtKB:Q61941 (NNTM_MOUSE) as a protein
+        with this activity.
+    - reference: RHEA:47992
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.1.1.1"/>
+      notes: Rhea assigns RHEA:47992 to EC 7.1.1.1, and EC 7.1.1.1 maps to exactly one Rhea master reaction
+        (RHEA:47992), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

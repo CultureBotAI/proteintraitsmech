@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:233774
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,60 @@ definitions:
       Catalyses the reaction: (2E,5Z,8Z,11Z,14Z)-eicosatetraenoyl-CoA = (3E,5Z,8Z,11Z,14Z)-eicosapentaenoyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,5Z,8Z,11Z,14Z)-eicosatetraenoyl-CoA = (3E,5Z,8Z,11Z,14Z)-eicosapentaenoyl-CoA
+  description: Substrate-to-product chemistry of RHEA:84503, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:84504 (rh:substrates → 84503_L, rh:products → 84503_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,5Z,8Z,11Z,14Z)-eicosatetraenoyl-CoA = (3E,5Z,8Z,11Z,14Z)-eicosapentaenoy…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:84503
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,5Z,8Z,11Z,14Z)-eicosatetraenoyl-CoA = (3E,5Z,8Z,11Z,14Z)-eicosapentaenoyl-CoA'
+  - node_id: sub1
+    label: (2E,5Z,8Z,11Z,14Z)-eicosatetraenoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:233774
+    description: Formula C41H60N7O17P3S.
+  - node_id: prd1
+    label: (3E,5Z,8Z,11Z,14Z)-eicosapentaenoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:85090
+    description: Formula C41H60N7O17P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,5Z,8Z,11Z,14Z)-eicosatetraenoyl-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:84504
+      snippet: (2E,5Z,8Z,11Z,14Z)-eicosatetraenoyl-CoA => (3E,5Z,8Z,11Z,14Z)-eicosapentaenoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:84504 declares side 84503_L as its substrates
+        (rh:substrates); the master reaction RHEA:84503 is undirected. This participant is CHEBI:233774
+        with coefficient 1. Rhea cites PMID:10760462, PMID:35951481 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3E,5Z,8Z,11Z,14Z)-eicosapentaenoyl-CoA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:84504
+      snippet: (2E,5Z,8Z,11Z,14Z)-eicosatetraenoyl-CoA => (3E,5Z,8Z,11Z,14Z)-eicosapentaenoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:84504 declares side 84503_R as its products
+        (rh:products); the master reaction RHEA:84503 is undirected. This participant is CHEBI:85090 with
+        coefficient 1. Rhea cites PMID:10760462, PMID:35951481 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

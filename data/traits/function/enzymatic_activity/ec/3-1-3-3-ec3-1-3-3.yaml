@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.3.-
 xrefs:
@@ -40,4 +40,238 @@ definitions:
       Catalyses: (1) O-phospho-L-serine + H2O = L-serine + phosphate. (2) O-phospho-D-serine + H2O = D-serine + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphoserine phosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.3.3. Rhea assigns 2 curated
+    reactions to EC 3.1.3.3. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "(1) O-phospho-L-serine + H2O = L-serine + phosphate. (2) O-phospho-D-serine
+    + H2O = D-serine + phosphate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoserine phosphatase
+    grounding: EC:3.1.3.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of O-phospho-L-serine + H2O = L-serine + phosphate
+    grounding: RHEA:21208
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: O-phospho-L-serine + H2O = L-serine + phosphate'
+  - node_id: rxn1_sub1
+    label: O-phospho-L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:57524
+    description: Formula C3H6NO6P.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:33384
+    description: Formula C3H7NO3.
+  - node_id: rxn1_prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of O-phospho-D-serine + H2O = D-serine + phosphate
+    grounding: RHEA:24873
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: O-phospho-D-serine + H2O = D-serine + phosphate'
+  - node_id: rxn2_sub1
+    label: O-phospho-D-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:58680
+    description: Formula C3H6NO6P.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: D-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:35247
+    description: Formula C3H7NO3.
+  - node_id: rxn2_prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prot_P94526
+    node_type: PROTEIN
+    label: ARAL_BACSU
+    grounding: UniProtKB:P94526
+  - node_id: prot_D3DFG8
+    node_type: PROTEIN
+    label: PSPA_HYDTT
+    grounding: UniProtKB:D3DFG8
+  - node_id: prot_D3DFP8
+    node_type: PROTEIN
+    label: PSPB_HYDTT
+    grounding: UniProtKB:D3DFP8
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:21208 is one of the 2 curated reactions Rhea assigns to EC 3.1.3.3; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:21208
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.3.3"/>
+      notes: The rh:ec triple on RHEA:21208 in rhea.rdf assigns that reaction to EC 3.1.3.3.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: O-phospho-L-serine is a substrate consumed by RHEA:21208 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21209
+      snippet: O-phospho-L-serine + H2O => L-serine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21209 declares side 21208_L as its substrates
+        (rh:substrates); the master reaction RHEA:21208 is undirected. This participant is CHEBI:57524
+        with coefficient 1. Rhea cites PMID:16990279, PMID:25521849, PMID:10196182, PMID:22337887 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:21208 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21209
+      snippet: O-phospho-L-serine + H2O => L-serine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21209 declares side 21208_L as its substrates
+        (rh:substrates); the master reaction RHEA:21208 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16990279, PMID:25521849, PMID:10196182, PMID:22337887 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: L-serine is a product released by RHEA:21208 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21209
+      snippet: O-phospho-L-serine + H2O => L-serine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21209 declares side 21208_R as its products
+        (rh:products); the master reaction RHEA:21208 is undirected. This participant is CHEBI:33384 with
+        coefficient 1. Rhea cites PMID:16990279, PMID:25521849, PMID:10196182, PMID:22337887 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: phosphate is a product released by RHEA:21208 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21209
+      snippet: O-phospho-L-serine + H2O => L-serine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:21209 declares side 21208_R as its products
+        (rh:products); the master reaction RHEA:21208 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:16990279, PMID:25521849, PMID:10196182, PMID:22337887 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:24873 is one of the 2 curated reactions Rhea assigns to EC 3.1.3.3; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24873
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.3.3"/>
+      notes: The rh:ec triple on RHEA:24873 in rhea.rdf assigns that reaction to EC 3.1.3.3.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: O-phospho-D-serine is a substrate consumed by RHEA:24873 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24874
+      snippet: O-phospho-D-serine + H2O => D-serine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24874 declares side 24873_L as its substrates
+        (rh:substrates); the master reaction RHEA:24873 is undirected. This participant is CHEBI:58680
+        with coefficient 1. Rhea cites PMID:16990279, PMID:25521849, PMID:10196182, PMID:22337887 for
+        this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:24873 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24874
+      snippet: O-phospho-D-serine + H2O => D-serine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24874 declares side 24873_L as its substrates
+        (rh:substrates); the master reaction RHEA:24873 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16990279, PMID:25521849, PMID:10196182, PMID:22337887 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: D-serine is a product released by RHEA:24873 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24874
+      snippet: O-phospho-D-serine + H2O => D-serine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24874 declares side 24873_R as its products
+        (rh:products); the master reaction RHEA:24873 is undirected. This participant is CHEBI:35247 with
+        coefficient 1. Rhea cites PMID:16990279, PMID:25521849, PMID:10196182, PMID:22337887 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: phosphate is a product released by RHEA:24873 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24874
+      snippet: O-phospho-D-serine + H2O => D-serine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24874 declares side 24873_R as its products
+        (rh:products); the master reaction RHEA:24873 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:16990279, PMID:25521849, PMID:10196182, PMID:22337887 for this
+        reaction.
+  - subject: prot_P94526
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARAL_BACSU is an exemplar enzyme with EC 3.1.3.3 activity.
+    evidence:
+    - reference: EC:3.1.3.3
+      snippet: DR   P94526, ARAL_BACSU ;  D3DFG8, PSPA_HYDTT ;  D3DFP8, PSPB_HYDTT ;
+      notes: ExPASy ENZYME entry EC 3.1.3.3 cross-references UniProtKB:P94526 (ARAL_BACSU) as a protein
+        with this activity.
+  - subject: prot_D3DFG8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSPA_HYDTT is an exemplar enzyme with EC 3.1.3.3 activity.
+    evidence:
+    - reference: EC:3.1.3.3
+      snippet: DR   P94526, ARAL_BACSU ;  D3DFG8, PSPA_HYDTT ;  D3DFP8, PSPB_HYDTT ;
+      notes: ExPASy ENZYME entry EC 3.1.3.3 cross-references UniProtKB:D3DFG8 (PSPA_HYDTT) as a protein
+        with this activity.
+  - subject: prot_D3DFP8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSPB_HYDTT is an exemplar enzyme with EC 3.1.3.3 activity.
+    evidence:
+    - reference: EC:3.1.3.3
+      snippet: DR   P94526, ARAL_BACSU ;  D3DFG8, PSPA_HYDTT ;  D3DFP8, PSPB_HYDTT ;
+      notes: ExPASy ENZYME entry EC 3.1.3.3 cross-references UniProtKB:D3DFP8 (PSPB_HYDTT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

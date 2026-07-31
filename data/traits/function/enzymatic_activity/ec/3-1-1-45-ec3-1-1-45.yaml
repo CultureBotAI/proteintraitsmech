@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -43,4 +43,148 @@ definitions:
       Catalyses: 2-(5-oxo-2,5-dihydrofuran-2-ylidene)acetate + H2O = 4-oxohex-2-enedioate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of carboxymethylenebutenolidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.45. EC 3.1.1.45 maps to exactly
+    one curated Rhea reaction (RHEA:12372), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-(5-oxo-2,5-dihydrofuran-2-ylidene)acetate
+    + H2O = 4-oxohex-2-enedioate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: carboxymethylenebutenolidase
+    grounding: EC:3.1.1.45
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-(5-oxo-2,5-dihydrofuran-2-ylidene)acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:57263
+    description: Formula C6H3O4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 4-oxohex-2-enedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:12040
+    description: Formula C6H4O5.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: carboxymethylenebutenolidase activity
+    grounding: GO:0008806
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0A115
+    node_type: PROTEIN
+    label: CLCD_PSEKB
+    grounding: UniProtKB:P0A115
+  - node_id: prot_P0A114
+    node_type: PROTEIN
+    label: CLCD_PSEPU
+    grounding: UniProtKB:P0A114
+  - node_id: prot_O67988
+    node_type: PROTEIN
+    label: CLCD_RHOOP
+    grounding: UniProtKB:O67988
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-(5-oxo-2,5-dihydrofuran-2-ylidene)acetate is a substrate consumed by RHEA:12372 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:12373
+      snippet: 2-(5-oxo-2,5-dihydrofuran-2-ylidene)acetate + H2O => 4-oxohex-2-enedioate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12373 declares side 12372_L as its substrates
+        (rh:substrates); the master reaction RHEA:12372 is undirected. This participant is CHEBI:57263
+        with coefficient 1. Rhea cites PMID:7305906 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:12372 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12373
+      snippet: 2-(5-oxo-2,5-dihydrofuran-2-ylidene)acetate + H2O => 4-oxohex-2-enedioate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12373 declares side 12372_L as its substrates
+        (rh:substrates); the master reaction RHEA:12372 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7305906 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-oxohex-2-enedioate is a product released by RHEA:12372 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12373
+      snippet: 2-(5-oxo-2,5-dihydrofuran-2-ylidene)acetate + H2O => 4-oxohex-2-enedioate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12373 declares side 12372_R as its products
+        (rh:products); the master reaction RHEA:12372 is undirected. This participant is CHEBI:12040 with
+        coefficient 1. Rhea cites PMID:7305906 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:12372 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12373
+      snippet: 2-(5-oxo-2,5-dihydrofuran-2-ylidene)acetate + H2O => 4-oxohex-2-enedioate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12373 declares side 12372_R as its products
+        (rh:products); the master reaction RHEA:12372 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:7305906 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.45
+      snippet: EC:3.1.1.45 > GO:carboxymethylenebutenolidase activity ; GO:0008806
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008806 is itself a record
+        in this KB.
+  - subject: prot_P0A115
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLCD_PSEKB is an exemplar enzyme with EC 3.1.1.45 activity.
+    evidence:
+    - reference: EC:3.1.1.45
+      snippet: DR   P0A115, CLCD_PSEKB ;  P0A114, CLCD_PSEPU ;  O67988, CLCD_RHOOP ;
+      notes: ExPASy ENZYME entry EC 3.1.1.45 cross-references UniProtKB:P0A115 (CLCD_PSEKB) as a protein
+        with this activity.
+  - subject: prot_P0A114
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLCD_PSEPU is an exemplar enzyme with EC 3.1.1.45 activity.
+    evidence:
+    - reference: EC:3.1.1.45
+      snippet: DR   P0A115, CLCD_PSEKB ;  P0A114, CLCD_PSEPU ;  O67988, CLCD_RHOOP ;
+      notes: ExPASy ENZYME entry EC 3.1.1.45 cross-references UniProtKB:P0A114 (CLCD_PSEPU) as a protein
+        with this activity.
+  - subject: prot_O67988
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLCD_RHOOP is an exemplar enzyme with EC 3.1.1.45 activity.
+    evidence:
+    - reference: EC:3.1.1.45
+      snippet: DR   P0A115, CLCD_PSEKB ;  P0A114, CLCD_PSEPU ;  O67988, CLCD_RHOOP ;
+      notes: ExPASy ENZYME entry EC 3.1.1.45 cross-references UniProtKB:O67988 (CLCD_RHOOP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

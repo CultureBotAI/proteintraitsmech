@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.5.-
 mapped_xrefs:
@@ -25,4 +25,106 @@ definitions:
       Catalyses: ricinine + 2 H2O = 4-methoxy-1-methyl-2-oxo-1,2-dihydropyridine-3- carboxylate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ricinine nitrilase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.5.2. EC 3.5.5.2 maps to exactly
+    one curated Rhea reaction (RHEA:22704), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "ricinine + 2
+    H2O = 4-methoxy-1-methyl-2-oxo-1,2-dihydropyridine-3- carboxylate + NH4(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ricinine nitrilase
+    grounding: EC:3.5.5.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: ricinine
+    node_type: CHEMICAL
+    grounding: CHEBI:18043
+    description: Formula C8H8N2O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 4-methoxy-1-methyl-2-oxo-1,2-dihydropyridine-3-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:58238
+    description: Formula C8H8NO4.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ricinine nitrilase activity
+    grounding: GO:0047426
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ricinine is a substrate consumed by RHEA:22704 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22705
+      snippet: ricinine + 2 H2O => 4-methoxy-1-methyl-2-oxo-1,2-dihydropyridine-3-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22705 declares side 22704_L as its substrates
+        (rh:substrates); the master reaction RHEA:22704 is undirected. This participant is CHEBI:18043
+        with coefficient 1. Rhea cites PMID:11380987, PMID:14247679, PMID:14247680 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:22704 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:22705
+      snippet: ricinine + 2 H2O => 4-methoxy-1-methyl-2-oxo-1,2-dihydropyridine-3-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22705 declares side 22704_L as its substrates
+        (rh:substrates); the master reaction RHEA:22704 is undirected. This participant is CHEBI:15377
+        with coefficient 2. Rhea cites PMID:11380987, PMID:14247679, PMID:14247680 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-methoxy-1-methyl-2-oxo-1,2-dihydropyridine-3-carboxylate is a product released by RHEA:22704
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22705
+      snippet: ricinine + 2 H2O => 4-methoxy-1-methyl-2-oxo-1,2-dihydropyridine-3-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22705 declares side 22704_R as its products
+        (rh:products); the master reaction RHEA:22704 is undirected. This participant is CHEBI:58238 with
+        coefficient 1. Rhea cites PMID:11380987, PMID:14247679, PMID:14247680 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:22704 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22705
+      snippet: ricinine + 2 H2O => 4-methoxy-1-methyl-2-oxo-1,2-dihydropyridine-3-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22705 declares side 22704_R as its products
+        (rh:products); the master reaction RHEA:22704 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:11380987, PMID:14247679, PMID:14247680 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.5.2
+      snippet: EC:3.5.5.2 > GO:ricinine nitrilase activity ; GO:0047426
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047426 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

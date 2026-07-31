@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:64976
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,123 @@ definitions:
       Catalyses the reaction: ergosteryl hexadecanoate + H2O = ergosterol + hexadecanoate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ergosteryl hexadecanoate + H2O = ergosterol + hexadecanoate + H(+)
+  description: Substrate-to-product chemistry of RHEA:33543, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33544 (rh:substrates → 33543_L, rh:products → 33543_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of ergosteryl hexadecanoate + H2O = ergosterol + hexadecanoate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33543
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: ergosteryl hexadecanoate + H2O = ergosterol + hexadecanoate + H(+)'
+  - node_id: sub1
+    label: ergosteryl hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:64976
+    description: Formula C44H74O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: ergosterol
+    node_type: CHEMICAL
+    grounding: CHEBI:16933
+    description: Formula C28H44O.
+  - node_id: prd2
+    label: hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:7896
+    description: Formula C16H31O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sterol ester esterase activity
+    grounding: GO:0004771
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ergosteryl hexadecanoate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33544
+      snippet: ergosteryl hexadecanoate + H2O => ergosterol + hexadecanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33544 declares side 33543_L as its substrates
+        (rh:substrates); the master reaction RHEA:33543 is undirected. This participant is CHEBI:64976
+        with coefficient 1. Rhea cites PMID:16835446 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33544
+      snippet: ergosteryl hexadecanoate + H2O => ergosterol + hexadecanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33544 declares side 33543_L as its substrates
+        (rh:substrates); the master reaction RHEA:33543 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16835446 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ergosterol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33544
+      snippet: ergosteryl hexadecanoate + H2O => ergosterol + hexadecanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33544 declares side 33543_R as its products
+        (rh:products); the master reaction RHEA:33543 is undirected. This participant is CHEBI:16933 with
+        coefficient 1. Rhea cites PMID:16835446 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: hexadecanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33544
+      snippet: ergosteryl hexadecanoate + H2O => ergosterol + hexadecanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33544 declares side 33543_R as its products
+        (rh:products); the master reaction RHEA:33543 is undirected. This participant is CHEBI:7896 with
+        coefficient 1. Rhea cites PMID:16835446 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33544
+      snippet: ergosteryl hexadecanoate + H2O => ergosterol + hexadecanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33544 declares side 33543_R as its products
+        (rh:products); the master reaction RHEA:33543 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:16835446 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:33543
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004771"/>
+      notes: The rdfs:seeAlso triple on RHEA:33543 in rhea.rdf. GO term GO:0004771 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 mapped_xrefs:
@@ -40,4 +40,280 @@ definitions:
       Catalyses: cytidine + ATP = CMP + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cytidine kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.213. Rhea assigns 2 curated
+    reactions to EC 2.7.1.213. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "cytidine + ATP = CMP + ADP + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cytidine kinase
+    grounding: EC:2.7.1.213
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of cytidine + ATP = CMP + ADP + H(+)
+    grounding: RHEA:24674
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: cytidine + ATP = CMP + ADP + H(+)'
+  - node_id: rxn1_sub1
+    label: cytidine
+    node_type: CHEMICAL
+    grounding: CHEBI:17562
+    description: Formula C9H13N3O5.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_prd1
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of cytidine + GTP = GDP + CMP + H(+)
+    grounding: RHEA:28162
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: cytidine + GTP = GDP + CMP + H(+)'
+  - node_id: rxn2_sub1
+    label: cytidine
+    node_type: CHEMICAL
+    grounding: CHEBI:17562
+    description: Formula C9H13N3O5.
+  - node_id: rxn2_sub2
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: rxn2_prd1
+    label: GDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+    description: Formula C10H12N5O11P2.
+  - node_id: rxn2_prd2
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cytidine kinase activity
+    grounding: GO:0043771
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5JEK6
+    node_type: PROTEIN
+    label: CYDK_THEKO
+    grounding: UniProtKB:Q5JEK6
+  - node_id: prot_Q57849
+    node_type: PROTEIN
+    label: NK_METJA
+    grounding: UniProtKB:Q57849
+  - node_id: prot_Q9HJT3
+    node_type: PROTEIN
+    label: NK_THEAC
+    grounding: UniProtKB:Q9HJT3
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:24674 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.213; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24674
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.213"/>
+      notes: The rh:ec triple on RHEA:24674 in rhea.rdf assigns that reaction to EC 2.7.1.213.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: cytidine is a substrate consumed by RHEA:24674 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24675
+      snippet: cytidine + ATP => CMP + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24675 declares side 24674_L as its substrates
+        (rh:substrates); the master reaction RHEA:24674 is undirected. This participant is CHEBI:17562
+        with coefficient 1. Rhea cites PMID:17021658, PMID:29866806, PMID:25822915, PMID:15130468 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:24674 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24675
+      snippet: cytidine + ATP => CMP + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24675 declares side 24674_L as its substrates
+        (rh:substrates); the master reaction RHEA:24674 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:17021658, PMID:29866806, PMID:25822915, PMID:15130468 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: CMP is a product released by RHEA:24674 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24675
+      snippet: cytidine + ATP => CMP + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24675 declares side 24674_R as its products
+        (rh:products); the master reaction RHEA:24674 is undirected. This participant is CHEBI:60377 with
+        coefficient 1. Rhea cites PMID:17021658, PMID:29866806, PMID:25822915, PMID:15130468 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:24674 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24675
+      snippet: cytidine + ATP => CMP + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24675 declares side 24674_R as its products
+        (rh:products); the master reaction RHEA:24674 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:17021658, PMID:29866806, PMID:25822915, PMID:15130468 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:24674 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24675
+      snippet: cytidine + ATP => CMP + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24675 declares side 24674_R as its products
+        (rh:products); the master reaction RHEA:24674 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:17021658, PMID:29866806, PMID:25822915, PMID:15130468 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:28162 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.213; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:28162
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.213"/>
+      notes: The rh:ec triple on RHEA:28162 in rhea.rdf assigns that reaction to EC 2.7.1.213.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: cytidine is a substrate consumed by RHEA:28162 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28163
+      snippet: cytidine + GTP => GDP + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28163 declares side 28162_L as its substrates
+        (rh:substrates); the master reaction RHEA:28162 is undirected. This participant is CHEBI:17562
+        with coefficient 1. Rhea cites PMID:211379 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: GTP is a substrate consumed by RHEA:28162 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28163
+      snippet: cytidine + GTP => GDP + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28163 declares side 28162_L as its substrates
+        (rh:substrates); the master reaction RHEA:28162 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:211379 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: GDP is a product released by RHEA:28162 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28163
+      snippet: cytidine + GTP => GDP + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28163 declares side 28162_R as its products
+        (rh:products); the master reaction RHEA:28162 is undirected. This participant is CHEBI:58189 with
+        coefficient 1. Rhea cites PMID:211379 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: CMP is a product released by RHEA:28162 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28163
+      snippet: cytidine + GTP => GDP + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28163 declares side 28162_R as its products
+        (rh:products); the master reaction RHEA:28162 is undirected. This participant is CHEBI:60377 with
+        coefficient 1. Rhea cites PMID:211379 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:28162 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28163
+      snippet: cytidine + GTP => GDP + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28163 declares side 28162_R as its products
+        (rh:products); the master reaction RHEA:28162 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:211379 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.1.213
+      snippet: EC:2.7.1.213 > GO:cytidine kinase activity ; GO:0043771
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043771 is itself a record
+        in this KB.
+  - subject: prot_Q5JEK6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYDK_THEKO is an exemplar enzyme with EC 2.7.1.213 activity.
+    evidence:
+    - reference: EC:2.7.1.213
+      snippet: DR   Q5JEK6, CYDK_THEKO ;  Q57849, NK_METJA   ;  Q9HJT3, NK_THEAC   ;
+      notes: ExPASy ENZYME entry EC 2.7.1.213 cross-references UniProtKB:Q5JEK6 (CYDK_THEKO) as a protein
+        with this activity.
+  - subject: prot_Q57849
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NK_METJA is an exemplar enzyme with EC 2.7.1.213 activity.
+    evidence:
+    - reference: EC:2.7.1.213
+      snippet: DR   Q5JEK6, CYDK_THEKO ;  Q57849, NK_METJA   ;  Q9HJT3, NK_THEAC   ;
+      notes: ExPASy ENZYME entry EC 2.7.1.213 cross-references UniProtKB:Q57849 (NK_METJA) as a protein
+        with this activity.
+  - subject: prot_Q9HJT3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NK_THEAC is an exemplar enzyme with EC 2.7.1.213 activity.
+    evidence:
+    - reference: EC:2.7.1.213
+      snippet: DR   Q5JEK6, CYDK_THEKO ;  Q57849, NK_METJA   ;  Q9HJT3, NK_THEAC   ;
+      notes: ExPASy ENZYME entry EC 2.7.1.213 cross-references UniProtKB:Q9HJT3 (NK_THEAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

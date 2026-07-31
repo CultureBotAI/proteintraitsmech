@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:27904
     role: SUBSTRATE_OR_PRODUCT
@@ -20,4 +20,76 @@ definitions:
       Catalyses the reaction: D-erythrose + 3-hydroxypyruvate = (3S,4S,5R,6R)-3,4,5,6,7-pentahydroxy-2-oxoheptanoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-erythrose + 3-hydroxypyruvate = (3S,4S,5R,6R)-3,4,5,6,7-pentahydroxy-2-oxoheptanoate
+  description: Substrate-to-product chemistry of RHEA:80075, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80076 (rh:substrates → 80075_L, rh:products → 80075_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-erythrose + 3-hydroxypyruvate = (3S,4S,5R,6R)-3,4,5,6,7-pentahydroxy-2-oxo…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80075
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-erythrose + 3-hydroxypyruvate = (3S,4S,5R,6R)-3,4,5,6,7-pentahydroxy-2-oxoheptanoate'
+  - node_id: sub1
+    label: D-erythrose
+    node_type: CHEMICAL
+    grounding: CHEBI:27904
+    description: Formula C4H8O4.
+  - node_id: sub2
+    label: 3-hydroxypyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:17180
+    description: Formula C3H3O4.
+  - node_id: prd1
+    label: (3S,4S,5R,6R)-3,4,5,6,7-pentahydroxy-2-oxoheptanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:231439
+    description: Formula C7H11O8.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-erythrose is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80076
+      snippet: D-erythrose + 3-hydroxypyruvate => (3S,4S,5R,6R)-3,4,5,6,7-pentahydroxy-2-oxoheptanoate
+      notes: Rhea's left-to-right directional reaction RHEA:80076 declares side 80075_L as its substrates
+        (rh:substrates); the master reaction RHEA:80075 is undirected. This participant is CHEBI:27904
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 3-hydroxypyruvate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80076
+      snippet: D-erythrose + 3-hydroxypyruvate => (3S,4S,5R,6R)-3,4,5,6,7-pentahydroxy-2-oxoheptanoate
+      notes: Rhea's left-to-right directional reaction RHEA:80076 declares side 80075_L as its substrates
+        (rh:substrates); the master reaction RHEA:80075 is undirected. This participant is CHEBI:17180
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3S,4S,5R,6R)-3,4,5,6,7-pentahydroxy-2-oxoheptanoate is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80076
+      snippet: D-erythrose + 3-hydroxypyruvate => (3S,4S,5R,6R)-3,4,5,6,7-pentahydroxy-2-oxoheptanoate
+      notes: Rhea's left-to-right directional reaction RHEA:80076 declares side 80075_R as its products
+        (rh:products); the master reaction RHEA:80075 is undirected. This participant is CHEBI:231439
+        with coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

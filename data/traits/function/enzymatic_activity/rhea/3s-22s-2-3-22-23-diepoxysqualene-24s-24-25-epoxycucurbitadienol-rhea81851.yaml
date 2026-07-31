@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:138307
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,60 @@ definitions:
       Catalyses the reaction: (3S,22S)-2,3:22,23-diepoxysqualene = (24S)-24,25-epoxycucurbitadienol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (3S,22S)-2,3:22,23-diepoxysqualene = (24S)-24,25-epoxycucurbitadienol
+  description: Substrate-to-product chemistry of RHEA:81851, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:81852 (rh:substrates → 81851_L, rh:products → 81851_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (3S,22S)-2,3:22,23-diepoxysqualene = (24S)-24,25-epoxycucurbitadienol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:81851
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (3S,22S)-2,3:22,23-diepoxysqualene = (24S)-24,25-epoxycucurbitadienol'
+  - node_id: sub1
+    label: (3S,22S)-2,3:22,23-diepoxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:138307
+    description: Formula C30H50O2.
+  - node_id: prd1
+    label: (24S)-24,25-epoxycucurbitadienol
+    node_type: CHEMICAL
+    grounding: CHEBI:229949
+    description: Formula C30H50O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (3S,22S)-2,3:22,23-diepoxysqualene is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:81852
+      snippet: (3S,22S)-2,3:22,23-diepoxysqualene => (24S)-24,25-epoxycucurbitadienol
+      notes: Rhea's left-to-right directional reaction RHEA:81852 declares side 81851_L as its substrates
+        (rh:substrates); the master reaction RHEA:81851 is undirected. This participant is CHEBI:138307
+        with coefficient 1. Rhea cites PMID:27821754 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (24S)-24,25-epoxycucurbitadienol is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:81852
+      snippet: (3S,22S)-2,3:22,23-diepoxysqualene => (24S)-24,25-epoxycucurbitadienol
+      notes: Rhea's left-to-right directional reaction RHEA:81852 declares side 81851_R as its products
+        (rh:products); the master reaction RHEA:81851 is undirected. This participant is CHEBI:229949
+        with coefficient 1. Rhea cites PMID:27821754 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

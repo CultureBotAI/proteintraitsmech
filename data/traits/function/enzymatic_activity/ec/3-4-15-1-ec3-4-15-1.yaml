@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.15.-
 synonyms:
@@ -53,4 +53,149 @@ definitions:
       Catalyses: Release of a C-terminal dipeptide, oligopeptide-|-Xaa-Yaa, when Xaa is not Pro, and Yaa is neither Asp nor Glu. Thus, conversion of angiotensin I to angiotensin II, with increase in vasoconstrictor activity, but no action on angiotensin II
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptidyl-dipeptidase A
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.15.1. EC 3.4.15.1 maps to exactly
+    one curated Rhea reaction (RHEA:63560), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "Release of a
+    C-terminal dipeptide, oligopeptide-|-Xaa-Yaa, when Xaa is not Pro, and Yaa is neither Asp nor Glu.
+    Thus, conversion of angiotensin I to angiotensin II, with increase in vasoconstrictor activity, but
+    no action on angiotensin II". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-dipeptidase A
+    grounding: EC:3.4.15.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: angiotensin I
+    node_type: CHEMICAL
+    grounding: CHEBI:147350
+    description: Formula C62H89N17O14.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-histidyl-L-leucine
+    node_type: CHEMICAL
+    grounding: CHEBI:147392
+    description: Formula C12H20N4O3.
+  - node_id: prd2
+    label: angiotensin II
+    node_type: CHEMICAL
+    grounding: CHEBI:58506
+    description: Formula C50H71N13O12.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-dipeptidase activity
+    grounding: GO:0008241
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9VLJ6
+    node_type: PROTEIN
+    label: ACER_DROME
+    grounding: UniProtKB:Q9VLJ6
+  - node_id: prot_P12820
+    node_type: PROTEIN
+    label: ACE_BOVIN
+    grounding: UniProtKB:P12820
+  - node_id: prot_Q10751
+    node_type: PROTEIN
+    label: ACE_CHICK
+    grounding: UniProtKB:Q10751
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: angiotensin I is a substrate consumed by RHEA:63560 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63561
+      snippet: angiotensin I + H2O => L-histidyl-L-leucine + angiotensin II
+      notes: Rhea's left-to-right directional reaction RHEA:63561 declares side 63560_L as its substrates
+        (rh:substrates); the master reaction RHEA:63560 is undirected. This participant is CHEBI:147350
+        with coefficient 1. Rhea cites PMID:10969042 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:63560 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63561
+      snippet: angiotensin I + H2O => L-histidyl-L-leucine + angiotensin II
+      notes: Rhea's left-to-right directional reaction RHEA:63561 declares side 63560_L as its substrates
+        (rh:substrates); the master reaction RHEA:63560 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10969042 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-histidyl-L-leucine is a product released by RHEA:63560 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63561
+      snippet: angiotensin I + H2O => L-histidyl-L-leucine + angiotensin II
+      notes: Rhea's left-to-right directional reaction RHEA:63561 declares side 63560_R as its products
+        (rh:products); the master reaction RHEA:63560 is undirected. This participant is CHEBI:147392
+        with coefficient 1. Rhea cites PMID:10969042 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: angiotensin II is a product released by RHEA:63560 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63561
+      snippet: angiotensin I + H2O => L-histidyl-L-leucine + angiotensin II
+      notes: Rhea's left-to-right directional reaction RHEA:63561 declares side 63560_R as its products
+        (rh:products); the master reaction RHEA:63560 is undirected. This participant is CHEBI:58506 with
+        coefficient 1. Rhea cites PMID:10969042 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.15.1
+      snippet: EC:3.4.15.1 > GO:peptidyl-dipeptidase activity ; GO:0008241
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008241 is itself a record
+        in this KB.
+  - subject: prot_Q9VLJ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACER_DROME is an exemplar enzyme with EC 3.4.15.1 activity.
+    evidence:
+    - reference: EC:3.4.15.1
+      snippet: DR   Q9VLJ6, ACER_DROME ;  P12820, ACE_BOVIN  ;  Q10751, ACE_CHICK  ;
+      notes: ExPASy ENZYME entry EC 3.4.15.1 cross-references UniProtKB:Q9VLJ6 (ACER_DROME) as a protein
+        with this activity.
+  - subject: prot_P12820
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE_BOVIN is an exemplar enzyme with EC 3.4.15.1 activity.
+    evidence:
+    - reference: EC:3.4.15.1
+      snippet: DR   Q9VLJ6, ACER_DROME ;  P12820, ACE_BOVIN  ;  Q10751, ACE_CHICK  ;
+      notes: ExPASy ENZYME entry EC 3.4.15.1 cross-references UniProtKB:P12820 (ACE_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q10751
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE_CHICK is an exemplar enzyme with EC 3.4.15.1 activity.
+    evidence:
+    - reference: EC:3.4.15.1
+      snippet: DR   Q9VLJ6, ACER_DROME ;  P12820, ACE_BOVIN  ;  Q10751, ACE_CHICK  ;
+      notes: ExPASy ENZYME entry EC 3.4.15.1 cross-references UniProtKB:Q10751 (ACE_CHICK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

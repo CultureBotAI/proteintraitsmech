@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -36,4 +36,67 @@ definitions:
       Catalyses: Broad endopeptidase action on proteins including elastin, but rather limited hydrolysis of small-molecule substrates. Assays are conveniently made with hemoglobin, casein or Z-Phe-Arg-NHMec as substrate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of staphopain
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.48. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Broad endopeptidase
+    action on proteins including elastin, but rather limited hydrolysis of small-molecule substrates.
+    Assays are conveniently made with hemoglobin, casein or Z-Phe-Arg-NHMec as substrate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: staphopain
+    grounding: EC:3.4.22.48
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q2G2R8
+    node_type: PROTEIN
+    label: SSPP_STAA8
+    grounding: UniProtKB:Q2G2R8
+  - node_id: prot_Q5HEL3
+    node_type: PROTEIN
+    label: SSPP_STAAC
+    grounding: UniProtKB:Q5HEL3
+  - node_id: prot_P65825
+    node_type: PROTEIN
+    label: SSPP_STAAM
+    grounding: UniProtKB:P65825
+  edges:
+  - subject: prot_Q2G2R8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SSPP_STAA8 is an exemplar enzyme with EC 3.4.22.48 activity.
+    evidence:
+    - reference: EC:3.4.22.48
+      snippet: DR   Q2G2R8, SSPP_STAA8 ;  Q5HEL3, SSPP_STAAC ;  P65825, SSPP_STAAM ;
+      notes: ExPASy ENZYME entry EC 3.4.22.48 cross-references UniProtKB:Q2G2R8 (SSPP_STAA8) as a protein
+        with this activity.
+  - subject: prot_Q5HEL3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SSPP_STAAC is an exemplar enzyme with EC 3.4.22.48 activity.
+    evidence:
+    - reference: EC:3.4.22.48
+      snippet: DR   Q2G2R8, SSPP_STAA8 ;  Q5HEL3, SSPP_STAAC ;  P65825, SSPP_STAAM ;
+      notes: ExPASy ENZYME entry EC 3.4.22.48 cross-references UniProtKB:Q5HEL3 (SSPP_STAAC) as a protein
+        with this activity.
+  - subject: prot_P65825
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SSPP_STAAM is an exemplar enzyme with EC 3.4.22.48 activity.
+    evidence:
+    - reference: EC:3.4.22.48
+      snippet: DR   Q2G2R8, SSPP_STAA8 ;  Q5HEL3, SSPP_STAAC ;  P65825, SSPP_STAAM ;
+      notes: ExPASy ENZYME entry EC 3.4.22.48 cross-references UniProtKB:P65825 (SSPP_STAAM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

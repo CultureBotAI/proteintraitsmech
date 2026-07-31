@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.255
     mapping_source: rhea2ec
@@ -48,4 +48,180 @@ definitions:
       Catalyses the reaction: N-terminal L-alanyl-[protein] + acetyl-CoA = N-terminal N(alpha)-acetyl-L-alanyl-[protein] + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-terminal L-alanyl-[protein] + acetyl-CoA = N-terminal N(alpha)-acetyl-L-alanyl-[prote…
+  description: Substrate-to-product chemistry of RHEA:50500, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50501 (rh:substrates → 50500_L, rh:products → 50500_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-terminal L-alanyl-[protein] + acetyl-CoA = N-terminal N(alpha)-acetyl-L-al…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50500
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-terminal L-alanyl-[protein] + acetyl-CoA = N-terminal N(alpha)-acetyl-L-alanyl-[protein]
+      + CoA + H(+)'
+  - node_id: sub1
+    label: N-terminal L-alanyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12702
+    description: Rhea compound GENERIC:12702.
+  - node_id: sub1_rp1
+    label: N-terminal L-alanine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12702 (N-terminal
+      L-alanyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64718
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: N-terminal N(alpha)-acetyl-L-alanyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12701
+    description: Rhea compound GENERIC:12701.
+  - node_id: prd1_rp1
+    label: N-terminal N(alpha)-acetyl-L-alanine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12701 (N-terminal
+      N(alpha)-acetyl-L-alanyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83683
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-N-terminal-alanine acetyltransferase activity
+    grounding: GO:0008999
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: N-terminal amino-acid N(alpha)-acetyltransferase NatA
+    grounding: EC:2.3.1.255
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-terminal L-alanyl-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:50501
+      snippet: N-terminal L-alanyl-[protein] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alanyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50501 declares side 50500_L as its substrates
+        (rh:substrates); the master reaction RHEA:50500 is undirected. This participant is GENERIC:12702
+        with coefficient 1. Rhea cites PMID:25951519, PMID:12888564, PMID:1600941, PMID:32633465 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N-terminal L-alanine residue is the reactive part of N-terminal L-alanyl-[protein].
+    evidence:
+    - reference: RHEA:50500
+      snippet: N-terminal L-alanine residue
+      notes: Rhea compound GENERIC:12702 (N-terminal L-alanyl-[protein]) declares rh:reactivePart = N-terminal
+        L-alanine residue (CHEBI:64718), formula C3H7NO.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50501
+      snippet: N-terminal L-alanyl-[protein] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alanyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50501 declares side 50500_L as its substrates
+        (rh:substrates); the master reaction RHEA:50500 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:25951519, PMID:12888564, PMID:1600941, PMID:32633465 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-terminal N(alpha)-acetyl-L-alanyl-[protein] is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50501
+      snippet: N-terminal L-alanyl-[protein] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alanyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50501 declares side 50500_R as its products
+        (rh:products); the master reaction RHEA:50500 is undirected. This participant is GENERIC:12701
+        with coefficient 1. Rhea cites PMID:25951519, PMID:12888564, PMID:1600941, PMID:32633465 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N-terminal N(alpha)-acetyl-L-alanine residue is the reactive part of N-terminal N(alpha)-acetyl-L-alanyl-[protein].
+    evidence:
+    - reference: RHEA:50500
+      snippet: N-terminal N(alpha)-acetyl-L-alanine residue
+      notes: Rhea compound GENERIC:12701 (N-terminal N(alpha)-acetyl-L-alanyl-[protein]) declares rh:reactivePart
+        = N-terminal N(alpha)-acetyl-L-alanine residue (CHEBI:83683), formula C5H8NO2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50501
+      snippet: N-terminal L-alanyl-[protein] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alanyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50501 declares side 50500_R as its products
+        (rh:products); the master reaction RHEA:50500 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:25951519, PMID:12888564, PMID:1600941, PMID:32633465 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50501
+      snippet: N-terminal L-alanyl-[protein] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alanyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50501 declares side 50500_R as its products
+        (rh:products); the master reaction RHEA:50500 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:25951519, PMID:12888564, PMID:1600941, PMID:32633465 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:50500
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008999"/>
+      notes: The rdfs:seeAlso triple on RHEA:50500 in rhea.rdf. GO term GO:0008999 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.255; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:50500
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.255"/>
+      notes: The rh:ec triple on RHEA:50500 in rhea.rdf. EC 2.3.1.255 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 canonical_examples:
@@ -33,4 +33,66 @@ definitions:
       Catalyses: Hydrolysis of terminal, non-reducing linear (1->3)-alpha-D-galactosidic residues, producing free D-galactose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of blood group B linear chain alpha-1,3-galactosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.n2. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of terminal, non-reducing linear (1->3)-alpha-D-galactosidic residues, producing free D-galactose".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: blood group B linear chain alpha-1,3-galactosidase
+    grounding: EC:3.2.1.n2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_A6KWM0
+    node_type: PROTEIN
+    label: GLAB1_PHOV8
+    grounding: UniProtKB:A6KWM0
+  - node_id: prot_A6L2M8
+    node_type: PROTEIN
+    label: GLAB2_PHOV8
+    grounding: UniProtKB:A6L2M8
+  - node_id: prot_B2UNU8
+    node_type: PROTEIN
+    label: GLAB_AKKM8
+    grounding: UniProtKB:B2UNU8
+  edges:
+  - subject: prot_A6KWM0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLAB1_PHOV8 is an exemplar enzyme with EC 3.2.1.n2 activity.
+    evidence:
+    - reference: EC:3.2.1.n2
+      snippet: DR   A6KWM0, GLAB1_PHOV8;  A6L2M8, GLAB2_PHOV8;  B2UNU8, GLAB_AKKM8 ;
+      notes: ExPASy ENZYME entry EC 3.2.1.n2 cross-references UniProtKB:A6KWM0 (GLAB1_PHOV8) as a protein
+        with this activity.
+  - subject: prot_A6L2M8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLAB2_PHOV8 is an exemplar enzyme with EC 3.2.1.n2 activity.
+    evidence:
+    - reference: EC:3.2.1.n2
+      snippet: DR   A6KWM0, GLAB1_PHOV8;  A6L2M8, GLAB2_PHOV8;  B2UNU8, GLAB_AKKM8 ;
+      notes: ExPASy ENZYME entry EC 3.2.1.n2 cross-references UniProtKB:A6L2M8 (GLAB2_PHOV8) as a protein
+        with this activity.
+  - subject: prot_B2UNU8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLAB_AKKM8 is an exemplar enzyme with EC 3.2.1.n2 activity.
+    evidence:
+    - reference: EC:3.2.1.n2
+      snippet: DR   A6KWM0, GLAB1_PHOV8;  A6L2M8, GLAB2_PHOV8;  B2UNU8, GLAB_AKKM8 ;
+      notes: ExPASy ENZYME entry EC 3.2.1.n2 cross-references UniProtKB:B2UNU8 (GLAB_AKKM8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -23,4 +23,74 @@ definitions:
       Catalyses: 2 chlorogenate = 3,5-di-O-caffeoyl quinate + L-quinate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chlorogenate caffeoyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.324. EC 2.3.1.324 maps to
+    exactly one curated Rhea reaction (RHEA:82243), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 chlorogenate
+    = 3,5-di-O-caffeoyl quinate + L-quinate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: chlorogenate caffeoyltransferase
+    grounding: EC:2.3.1.324
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: chlorogenate
+    node_type: CHEMICAL
+    grounding: CHEBI:57644
+    description: Formula C16H17O9.
+  - node_id: prd1
+    label: 3,5-di-O-caffeoyl quinate
+    node_type: CHEMICAL
+    grounding: CHEBI:231591
+    description: Formula C25H23O12.
+  - node_id: prd2
+    label: L-quinate
+    node_type: CHEMICAL
+    grounding: CHEBI:29751
+    description: Formula C7H11O6.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: chlorogenate is a substrate consumed by RHEA:82243 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:82244
+      snippet: 2 chlorogenate => 3,5-di-O-caffeoyl quinate + L-quinate
+      notes: Rhea's left-to-right directional reaction RHEA:82244 declares side 82243_L as its substrates
+        (rh:substrates); the master reaction RHEA:82243 is undirected. This participant is CHEBI:57644
+        with coefficient 2. Rhea cites PMID:25301886 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3,5-di-O-caffeoyl quinate is a product released by RHEA:82243 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82244
+      snippet: 2 chlorogenate => 3,5-di-O-caffeoyl quinate + L-quinate
+      notes: Rhea's left-to-right directional reaction RHEA:82244 declares side 82243_R as its products
+        (rh:products); the master reaction RHEA:82243 is undirected. This participant is CHEBI:231591
+        with coefficient 1. Rhea cites PMID:25301886 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-quinate is a product released by RHEA:82243 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82244
+      snippet: 2 chlorogenate => 3,5-di-O-caffeoyl quinate + L-quinate
+      notes: Rhea's left-to-right directional reaction RHEA:82244 declares side 82243_R as its products
+        (rh:products); the master reaction RHEA:82243 is undirected. This participant is CHEBI:29751 with
+        coefficient 1. Rhea cites PMID:25301886 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

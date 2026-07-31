@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -28,4 +28,40 @@ definitions:
       Catalyses: The enzyme preferentially hydrolyzes peptides having an Ala or Pro residue at P2 position and prefers such charged amino acid residues as Glu or Arg at the P2' position. In the oxidized insulin B chain, kumamolysin preferentially cleaves between Leu(15) and Tyr(16)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of kumamolysin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.123. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "The enzyme preferentially hydrolyzes peptides having an Ala or Pro residue at P2 position and prefers
+    such charged amino acid residues as Glu or Arg at the P2'' position. In the oxidized insulin B chain,
+    kumamolysin preferentially cleaves between Leu(15) and Tyr(16)".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: kumamolysin
+    grounding: EC:3.4.21.123
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q8RR56
+    node_type: PROTEIN
+    label: KSCP_BACX2
+    grounding: UniProtKB:Q8RR56
+  edges:
+  - subject: prot_Q8RR56
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KSCP_BACX2 is an exemplar enzyme with EC 3.4.21.123 activity.
+    evidence:
+    - reference: EC:3.4.21.123
+      snippet: DR   Q8RR56, KSCP_BACX2 ;
+      notes: ExPASy ENZYME entry EC 3.4.21.123 cross-references UniProtKB:Q8RR56 (KSCP_BACX2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

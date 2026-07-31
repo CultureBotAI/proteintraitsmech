@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.1.3.23
     mapping_source: rhea2ec
@@ -26,4 +26,95 @@ definitions:
       Catalyses the reaction: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate = UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate = UDP-2,3-diacetamido-2,3-dideoxy-a…
+  description: Substrate-to-product chemistry of RHEA:24764, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24765 (rh:substrates → 24764_L, rh:products → 24764_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate = UDP-2,3-diacetamido-2,…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24764
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate = UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate'
+  - node_id: sub1
+    label: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58745
+    description: Formula C19H25N4O18P2.
+  - node_id: prd1
+    label: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58746
+    description: Formula C19H25N4O18P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-2,3-diacetamido-2,3-dideoxyglucuronic acid 2-epimerase
+    grounding: EC:5.1.3.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_G3XD61
+    node_type: PROTEIN
+    label: WBPI_PSEAE
+    grounding: UniProtKB:G3XD61
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24765
+      snippet: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate => UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate
+      notes: Rhea's left-to-right directional reaction RHEA:24765 declares side 24764_L as its substrates
+        (rh:substrates); the master reaction RHEA:24764 is undirected. This participant is CHEBI:58745
+        with coefficient 1. Rhea cites PMID:17346239, PMID:11526328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24765
+      snippet: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate => UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate
+      notes: Rhea's left-to-right directional reaction RHEA:24765 declares side 24764_R as its products
+        (rh:products); the master reaction RHEA:24764 is undirected. This participant is CHEBI:58746 with
+        coefficient 1. Rhea cites PMID:17346239, PMID:11526328 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.1.3.23; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24764
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.23"/>
+      notes: The rh:ec triple on RHEA:24764 in rhea.rdf. EC 5.1.3.23 is itself a record in this KB.
+  - subject: prot_G3XD61
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: WBPI_PSEAE is an exemplar enzyme carrying EC 5.1.3.23, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.23
+      snippet: DR   G3XD61, WBPI_PSEAE ;
+      notes: ExPASy ENZYME entry EC 5.1.3.23 cross-references UniProtKB:G3XD61 (WBPI_PSEAE) as a protein
+        with this activity.
+    - reference: RHEA:24764
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.23"/>
+      notes: Rhea assigns RHEA:24764 to EC 5.1.3.23, and EC 5.1.3.23 maps to exactly one Rhea master reaction
+        (RHEA:24764), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

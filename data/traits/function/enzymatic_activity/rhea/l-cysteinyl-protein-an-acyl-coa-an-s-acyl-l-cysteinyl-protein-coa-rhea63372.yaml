@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29950
     role: SUBSTRATE_OR_PRODUCT
@@ -22,4 +22,141 @@ definitions:
       Catalyses the reaction: L-cysteinyl-[protein] + an acyl-CoA = an S-acyl-L-cysteinyl-[protein] + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-cysteinyl-[protein] + an acyl-CoA = an S-acyl-L-cysteinyl-[protein] +
+    CoA
+  description: Substrate-to-product chemistry of RHEA:63372, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63373 (rh:substrates → 63372_L, rh:products → 63372_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-cysteinyl-[protein] + an acyl-CoA = an S-acyl-L-cysteinyl-[protein] + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63372
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-cysteinyl-[protein] + an acyl-CoA = an S-acyl-L-cysteinyl-[protein] + CoA'
+  - node_id: sub1
+    label: L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10131
+    description: Rhea compound GENERIC:10131.
+  - node_id: sub1_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10131 (L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: an acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:58342
+    description: Formula C22H31N7O17P3SR.
+  - node_id: prd1
+    label: an S-acyl-L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:16330
+    description: Rhea compound GENERIC:16330.
+  - node_id: prd1_rp1
+    label: S-acyl-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:16330 (an S-acyl-L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:143535
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-cysteine S-acyltransferase activity
+    grounding: GO:0019707
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cysteinyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63373
+      snippet: L-cysteinyl-[protein] + an acyl-CoA => an S-acyl-L-cysteinyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:63373 declares side 63372_L as its substrates
+        (rh:substrates); the master reaction RHEA:63372 is undirected. This participant is GENERIC:10131
+        with coefficient 1.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:63372
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10131 (L-cysteinyl-[protein]) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: an acyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63373
+      snippet: L-cysteinyl-[protein] + an acyl-CoA => an S-acyl-L-cysteinyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:63373 declares side 63372_L as its substrates
+        (rh:substrates); the master reaction RHEA:63372 is undirected. This participant is CHEBI:58342
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an S-acyl-L-cysteinyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:63373
+      snippet: L-cysteinyl-[protein] + an acyl-CoA => an S-acyl-L-cysteinyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:63373 declares side 63372_R as its products
+        (rh:products); the master reaction RHEA:63372 is undirected. This participant is GENERIC:16330
+        with coefficient 1.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-acyl-L-cysteine residue is the reactive part of an S-acyl-L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:63372
+      snippet: S-acyl-L-cysteine residue
+      notes: Rhea compound GENERIC:16330 (an S-acyl-L-cysteinyl-[protein]) declares rh:reactivePart =
+        S-acyl-L-cysteine residue (CHEBI:143535), formula C4H4NO2SR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63373
+      snippet: L-cysteinyl-[protein] + an acyl-CoA => an S-acyl-L-cysteinyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:63373 declares side 63372_R as its products
+        (rh:products); the master reaction RHEA:63372 is undirected. This participant is CHEBI:57287 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:63372
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0019707"/>
+      notes: The rdfs:seeAlso triple on RHEA:63372 in rhea.rdf. GO term GO:0019707 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

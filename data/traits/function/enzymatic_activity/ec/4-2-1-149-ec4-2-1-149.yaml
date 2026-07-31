@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -41,4 +41,131 @@ definitions:
       Catalyses: (R)-carnitinyl-CoA = crotonobetainyl-CoA + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of crotonobetainyl-CoA hydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.149. EC 4.2.1.149 maps to
+    exactly one curated Rhea reaction (RHEA:28338), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-carnitinyl-CoA
+    = crotonobetainyl-CoA + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: crotonobetainyl-CoA hydratase
+    grounding: EC:4.2.1.149
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-carnitinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:60932
+    description: Formula C28H46N8O18P3S.
+  - node_id: prd1
+    label: crotonobetainyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:60933
+    description: Formula C28H44N8O17P3S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: crotonobetainyl-CoA hydratase activity
+    grounding: GO:0140427
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A8ALR7
+    node_type: PROTEIN
+    label: CAID_CITK8
+    grounding: UniProtKB:A8ALR7
+  - node_id: prot_Q8XA35
+    node_type: PROTEIN
+    label: CAID_ECO57
+    grounding: UniProtKB:Q8XA35
+  - node_id: prot_Q0TLV3
+    node_type: PROTEIN
+    label: CAID_ECOL5
+    grounding: UniProtKB:Q0TLV3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-carnitinyl-CoA is a substrate consumed by RHEA:28338 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28339
+      snippet: (R)-carnitinyl-CoA => crotonobetainyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:28339 declares side 28338_L as its substrates
+        (rh:substrates); the master reaction RHEA:28338 is undirected. This participant is CHEBI:60932
+        with coefficient 1. Rhea cites PMID:15731894, PMID:11409545, PMID:11551212 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: crotonobetainyl-CoA is a product released by RHEA:28338 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28339
+      snippet: (R)-carnitinyl-CoA => crotonobetainyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:28339 declares side 28338_R as its products
+        (rh:products); the master reaction RHEA:28338 is undirected. This participant is CHEBI:60933 with
+        coefficient 1. Rhea cites PMID:15731894, PMID:11409545, PMID:11551212 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:28338 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28339
+      snippet: (R)-carnitinyl-CoA => crotonobetainyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:28339 declares side 28338_R as its products
+        (rh:products); the master reaction RHEA:28338 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:15731894, PMID:11409545, PMID:11551212 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.149
+      snippet: EC:4.2.1.149 > GO:crotonobetainyl-CoA hydratase activity ; GO:0140427
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0140427 is itself a record
+        in this KB.
+  - subject: prot_A8ALR7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAID_CITK8 is an exemplar enzyme with EC 4.2.1.149 activity.
+    evidence:
+    - reference: EC:4.2.1.149
+      snippet: DR   A8ALR7, CAID_CITK8 ;  Q8XA35, CAID_ECO57 ;  Q0TLV3, CAID_ECOL5 ;
+      notes: ExPASy ENZYME entry EC 4.2.1.149 cross-references UniProtKB:A8ALR7 (CAID_CITK8) as a protein
+        with this activity.
+  - subject: prot_Q8XA35
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAID_ECO57 is an exemplar enzyme with EC 4.2.1.149 activity.
+    evidence:
+    - reference: EC:4.2.1.149
+      snippet: DR   A8ALR7, CAID_CITK8 ;  Q8XA35, CAID_ECO57 ;  Q0TLV3, CAID_ECOL5 ;
+      notes: ExPASy ENZYME entry EC 4.2.1.149 cross-references UniProtKB:Q8XA35 (CAID_ECO57) as a protein
+        with this activity.
+  - subject: prot_Q0TLV3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAID_ECOL5 is an exemplar enzyme with EC 4.2.1.149 activity.
+    evidence:
+    - reference: EC:4.2.1.149
+      snippet: DR   A8ALR7, CAID_CITK8 ;  Q8XA35, CAID_ECO57 ;  Q0TLV3, CAID_ECOL5 ;
+      notes: ExPASy ENZYME entry EC 4.2.1.149 cross-references UniProtKB:Q0TLV3 (CAID_ECOL5) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

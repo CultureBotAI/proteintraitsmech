@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -28,4 +28,38 @@ definitions:
       Catalyses: Cleavage of -Lys-Lys-|-Xaa and -Lys-Arg-|-Xaa bonds
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Lys-Lys/Arg-Xaa endopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.121. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "Cleavage of -Lys-Lys-|-Xaa and -Lys-Arg-|-Xaa bonds".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: Lys-Lys/Arg-Xaa endopeptidase
+    grounding: EC:3.4.21.121
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q9L5A4
+    node_type: PROTEIN
+    label: ASP_AERSO
+    grounding: UniProtKB:Q9L5A4
+  edges:
+  - subject: prot_Q9L5A4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASP_AERSO is an exemplar enzyme with EC 3.4.21.121 activity.
+    evidence:
+    - reference: EC:3.4.21.121
+      snippet: DR   Q9L5A4, ASP_AERSO  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.121 cross-references UniProtKB:Q9L5A4 (ASP_AERSO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

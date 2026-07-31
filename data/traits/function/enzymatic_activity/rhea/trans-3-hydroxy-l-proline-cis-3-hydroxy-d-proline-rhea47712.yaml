@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57938
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,60 @@ definitions:
       Catalyses the reaction: trans-3-hydroxy-L-proline = cis-3-hydroxy-D-proline
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of trans-3-hydroxy-L-proline = cis-3-hydroxy-D-proline
+  description: Substrate-to-product chemistry of RHEA:47712, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:47713 (rh:substrates → 47712_L, rh:products → 47712_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of trans-3-hydroxy-L-proline = cis-3-hydroxy-D-proline
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:47712
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: trans-3-hydroxy-L-proline = cis-3-hydroxy-D-proline'
+  - node_id: sub1
+    label: trans-3-hydroxy-L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:57938
+    description: Formula C5H9NO3.
+  - node_id: prd1
+    label: cis-3-hydroxy-D-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:87840
+    description: Formula C5H9NO3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: trans-3-hydroxy-L-proline is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47713
+      snippet: trans-3-hydroxy-L-proline => cis-3-hydroxy-D-proline
+      notes: Rhea's left-to-right directional reaction RHEA:47713 declares side 47712_L as its substrates
+        (rh:substrates); the master reaction RHEA:47712 is undirected. This participant is CHEBI:57938
+        with coefficient 1. Rhea cites PMID:24980702 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cis-3-hydroxy-D-proline is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47713
+      snippet: trans-3-hydroxy-L-proline => cis-3-hydroxy-D-proline
+      notes: Rhea's left-to-right directional reaction RHEA:47713 declares side 47712_R as its products
+        (rh:products); the master reaction RHEA:47712 is undirected. This participant is CHEBI:87840 with
+        coefficient 1. Rhea cites PMID:24980702 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

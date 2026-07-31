@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.16.-
 synonyms:
@@ -45,4 +45,81 @@ definitions:
       Catalyses: Release of a C-terminal amino acid with broad specificity
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of carboxypeptidase C
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.16.5. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of a C-terminal amino acid with broad specificity".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: carboxypeptidase C
+    grounding: EC:3.4.16.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: serine-type carboxypeptidase activity
+    grounding: GO:0004185
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P38109
+    node_type: PROTEIN
+    label: ATG42_YEAST
+    grounding: UniProtKB:P38109
+  - node_id: prot_P07519
+    node_type: PROTEIN
+    label: CBP1_HORVU
+    grounding: UniProtKB:P07519
+  - node_id: prot_P37890
+    node_type: PROTEIN
+    label: CBP1_ORYSJ
+    grounding: UniProtKB:P37890
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.16.5
+      snippet: EC:3.4.16.5 > GO:serine-type carboxypeptidase activity ; GO:0004185
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004185 is itself a record
+        in this KB.
+  - subject: prot_P38109
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATG42_YEAST is an exemplar enzyme with EC 3.4.16.5 activity.
+    evidence:
+    - reference: EC:3.4.16.5
+      snippet: DR   P38109, ATG42_YEAST;  P07519, CBP1_HORVU ;  P37890, CBP1_ORYSJ ;
+      notes: ExPASy ENZYME entry EC 3.4.16.5 cross-references UniProtKB:P38109 (ATG42_YEAST) as a protein
+        with this activity.
+  - subject: prot_P07519
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBP1_HORVU is an exemplar enzyme with EC 3.4.16.5 activity.
+    evidence:
+    - reference: EC:3.4.16.5
+      snippet: DR   P38109, ATG42_YEAST;  P07519, CBP1_HORVU ;  P37890, CBP1_ORYSJ ;
+      notes: ExPASy ENZYME entry EC 3.4.16.5 cross-references UniProtKB:P07519 (CBP1_HORVU) as a protein
+        with this activity.
+  - subject: prot_P37890
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBP1_ORYSJ is an exemplar enzyme with EC 3.4.16.5 activity.
+    evidence:
+    - reference: EC:3.4.16.5
+      snippet: DR   P38109, ATG42_YEAST;  P07519, CBP1_HORVU ;  P37890, CBP1_ORYSJ ;
+      notes: ExPASy ENZYME entry EC 3.4.16.5 cross-references UniProtKB:P37890 (CBP1_ORYSJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

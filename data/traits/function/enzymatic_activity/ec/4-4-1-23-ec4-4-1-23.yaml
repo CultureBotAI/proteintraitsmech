@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.4.1.-
 synonyms:
@@ -37,4 +37,188 @@ definitions:
       Catalyses: (1) (R)-2-hydroxypropyl-coenzyme M = (R)-1,2-epoxypropane + coenzyme M. (2) (S)-2-hydroxypropyl-coenzyme M = (S)-1,2-epoxypropane + coenzyme M
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-hydroxypropyl-CoM lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.4.1.23. Rhea assigns 2 curated
+    reactions to EC 4.4.1.23. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (R)-2-hydroxypropyl-coenzyme M = (R)-1,2-epoxypropane
+    + coenzyme M. (2) (S)-2-hydroxypropyl-coenzyme M = (S)-1,2-epoxypropane + coenzyme M". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-hydroxypropyl-CoM lyase
+    grounding: EC:4.4.1.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (R)-2-hydroxypropyl-coenzyme M = (R)-1,2-epoxypropane + coenzyme M
+    grounding: RHEA:19421
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (R)-2-hydroxypropyl-coenzyme M = (R)-1,2-epoxypropane + coenzyme M'
+  - node_id: rxn1_sub1
+    label: (R)-2-hydroxypropyl-coenzyme M
+    node_type: CHEMICAL
+    grounding: CHEBI:58458
+    description: Formula C5H11O4S2.
+  - node_id: rxn1_prd1
+    label: (R)-1,2-epoxypropane
+    node_type: CHEMICAL
+    grounding: CHEBI:28985
+    description: Formula C3H6O.
+  - node_id: rxn1_prd2
+    label: coenzyme M
+    node_type: CHEMICAL
+    grounding: CHEBI:58319
+    description: Formula C2H5O3S2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (S)-2-hydroxypropyl-coenzyme M = (S)-1,2-epoxypropane + coenzyme M
+    grounding: RHEA:20904
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (S)-2-hydroxypropyl-coenzyme M = (S)-1,2-epoxypropane + coenzyme M'
+  - node_id: rxn2_sub1
+    label: (S)-2-hydroxypropyl-coenzyme M
+    node_type: CHEMICAL
+    grounding: CHEBI:58430
+    description: Formula C5H11O4S2.
+  - node_id: rxn2_prd1
+    label: (S)-1,2-epoxypropane
+    node_type: CHEMICAL
+    grounding: CHEBI:28982
+    description: Formula C3H6O.
+  - node_id: rxn2_prd2
+    label: coenzyme M
+    node_type: CHEMICAL
+    grounding: CHEBI:58319
+    description: Formula C2H5O3S2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-hydroxypropyl-CoM lyase activity
+    grounding: GO:0050555
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q56837
+    node_type: PROTEIN
+    label: XECA_XANP2
+    grounding: UniProtKB:Q56837
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:19421 is one of the 2 curated reactions Rhea assigns to EC 4.4.1.23; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:19421
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.23"/>
+      notes: The rh:ec triple on RHEA:19421 in rhea.rdf assigns that reaction to EC 4.4.1.23.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (R)-2-hydroxypropyl-coenzyme M is a substrate consumed by RHEA:19421 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:19422
+      snippet: (R)-2-hydroxypropyl-coenzyme M => (R)-1,2-epoxypropane + coenzyme M
+      notes: Rhea's left-to-right directional reaction RHEA:19422 declares side 19421_L as its substrates
+        (rh:substrates); the master reaction RHEA:19421 is undirected. This participant is CHEBI:58458
+        with coefficient 1. Rhea cites PMID:10411892, PMID:12949106, PMID:11939797 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (R)-1,2-epoxypropane is a product released by RHEA:19421 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19422
+      snippet: (R)-2-hydroxypropyl-coenzyme M => (R)-1,2-epoxypropane + coenzyme M
+      notes: Rhea's left-to-right directional reaction RHEA:19422 declares side 19421_R as its products
+        (rh:products); the master reaction RHEA:19421 is undirected. This participant is CHEBI:28985 with
+        coefficient 1. Rhea cites PMID:10411892, PMID:12949106, PMID:11939797 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: coenzyme M is a product released by RHEA:19421 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19422
+      snippet: (R)-2-hydroxypropyl-coenzyme M => (R)-1,2-epoxypropane + coenzyme M
+      notes: Rhea's left-to-right directional reaction RHEA:19422 declares side 19421_R as its products
+        (rh:products); the master reaction RHEA:19421 is undirected. This participant is CHEBI:58319 with
+        coefficient 1. Rhea cites PMID:10411892, PMID:12949106, PMID:11939797 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:20904 is one of the 2 curated reactions Rhea assigns to EC 4.4.1.23; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:20904
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.4.1.23"/>
+      notes: The rh:ec triple on RHEA:20904 in rhea.rdf assigns that reaction to EC 4.4.1.23.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (S)-2-hydroxypropyl-coenzyme M is a substrate consumed by RHEA:20904 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20905
+      snippet: (S)-2-hydroxypropyl-coenzyme M => (S)-1,2-epoxypropane + coenzyme M
+      notes: Rhea's left-to-right directional reaction RHEA:20905 declares side 20904_L as its substrates
+        (rh:substrates); the master reaction RHEA:20904 is undirected. This participant is CHEBI:58430
+        with coefficient 1. Rhea cites PMID:10411892, PMID:12949106, PMID:11939797 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (S)-1,2-epoxypropane is a product released by RHEA:20904 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20905
+      snippet: (S)-2-hydroxypropyl-coenzyme M => (S)-1,2-epoxypropane + coenzyme M
+      notes: Rhea's left-to-right directional reaction RHEA:20905 declares side 20904_R as its products
+        (rh:products); the master reaction RHEA:20904 is undirected. This participant is CHEBI:28982 with
+        coefficient 1. Rhea cites PMID:10411892, PMID:12949106, PMID:11939797 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: coenzyme M is a product released by RHEA:20904 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20905
+      snippet: (S)-2-hydroxypropyl-coenzyme M => (S)-1,2-epoxypropane + coenzyme M
+      notes: Rhea's left-to-right directional reaction RHEA:20905 declares side 20904_R as its products
+        (rh:products); the master reaction RHEA:20904 is undirected. This participant is CHEBI:58319 with
+        coefficient 1. Rhea cites PMID:10411892, PMID:12949106, PMID:11939797 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.4.1.23
+      snippet: EC:4.4.1.23 > GO:2-hydroxypropyl-CoM lyase activity ; GO:0050555
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050555 is itself a record
+        in this KB.
+  - subject: prot_Q56837
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XECA_XANP2 is an exemplar enzyme with EC 4.4.1.23 activity.
+    evidence:
+    - reference: EC:4.4.1.23
+      snippet: DR   Q56837, XECA_XANP2 ;
+      notes: ExPASy ENZYME entry EC 4.4.1.23 cross-references UniProtKB:Q56837 (XECA_XANP2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

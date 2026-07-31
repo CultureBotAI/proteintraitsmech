@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.3.2.-
 synonyms:
@@ -43,4 +43,324 @@ definitions:
       Catalyses: sulfate(out) + ATP + H2O = sulfate(in) + ADP + phosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ABC-type sulfate transporter
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.3.2.3. Rhea assigns 2 curated
+    reactions to EC 7.3.2.3. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "sulfate(out) + ATP + H2O = sulfate(in) + ADP + phosphate + H(+)".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type sulfate transporter
+    grounding: EC:7.3.2.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of sulfate(out) + ATP + H2O = sulfate(in) + ADP + phosphate + H(+)
+    grounding: RHEA:10192
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: sulfate(out) + ATP + H2O = sulfate(in) + ADP + phosphate + H(+)'
+  - node_id: rxn1_sub1
+    label: sulfate (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: sulfate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd3
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn1_prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of thiosulfate(out) + ATP + H2O = thiosulfate(in) + ADP + phosphate + H(+)
+    grounding: RHEA:29871
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: thiosulfate(out) + ATP + H2O = thiosulfate(in) + ADP + phosphate + H(+)'
+  - node_id: rxn2_sub1
+    label: thiosulfate (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:33542
+    description: Formula HO3S2.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: thiosulfate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:33542
+    description: Formula HO3S2.
+  - node_id: rxn2_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn2_prd3
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn2_prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q8UH62
+    node_type: PROTEIN
+    label: CYSA1_AGRFC
+    grounding: UniProtKB:Q8UH62
+  - node_id: prot_Q7NX01
+    node_type: PROTEIN
+    label: CYSA1_CHRVO
+    grounding: UniProtKB:Q7NX01
+  - node_id: prot_Q92XW1
+    node_type: PROTEIN
+    label: CYSA1_RHIME
+    grounding: UniProtKB:Q92XW1
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:10192 is one of the 2 curated reactions Rhea assigns to EC 7.3.2.3; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:10192
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.3.2.3"/>
+      notes: The rh:ec triple on RHEA:10192 in rhea.rdf assigns that reaction to EC 7.3.2.3.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: sulfate is a substrate consumed by RHEA:10192 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10193
+      snippet: sulfate(out) + ATP + H2O => sulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10193 declares side 10192_L as its substrates
+        (rh:substrates); the master reaction RHEA:10192 is undirected. This participant is CHEBI:16189
+        with coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:10192 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10193
+      snippet: sulfate(out) + ATP + H2O => sulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10193 declares side 10192_L as its substrates
+        (rh:substrates); the master reaction RHEA:10192 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: H2O is a substrate consumed by RHEA:10192 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10193
+      snippet: sulfate(out) + ATP + H2O => sulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10193 declares side 10192_L as its substrates
+        (rh:substrates); the master reaction RHEA:10192 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: sulfate is a product released by RHEA:10192 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10193
+      snippet: sulfate(out) + ATP + H2O => sulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10193 declares side 10192_R as its products
+        (rh:products); the master reaction RHEA:10192 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:10192 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10193
+      snippet: sulfate(out) + ATP + H2O => sulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10193 declares side 10192_R as its products
+        (rh:products); the master reaction RHEA:10192 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: phosphate is a product released by RHEA:10192 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10193
+      snippet: sulfate(out) + ATP + H2O => sulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10193 declares side 10192_R as its products
+        (rh:products); the master reaction RHEA:10192 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd4
+    description: H(+) is a product released by RHEA:10192 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10193
+      snippet: sulfate(out) + ATP + H2O => sulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:10193 declares side 10192_R as its products
+        (rh:products); the master reaction RHEA:10192 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:29871 is one of the 2 curated reactions Rhea assigns to EC 7.3.2.3; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:29871
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.3.2.3"/>
+      notes: The rh:ec triple on RHEA:29871 in rhea.rdf assigns that reaction to EC 7.3.2.3.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: thiosulfate is a substrate consumed by RHEA:29871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29872
+      snippet: thiosulfate(out) + ATP + H2O => thiosulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29872 declares side 29871_L as its substrates
+        (rh:substrates); the master reaction RHEA:29871 is undirected. This participant is CHEBI:33542
+        with coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:29871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29872
+      snippet: thiosulfate(out) + ATP + H2O => thiosulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29872 declares side 29871_L as its substrates
+        (rh:substrates); the master reaction RHEA:29871 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: H2O is a substrate consumed by RHEA:29871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29872
+      snippet: thiosulfate(out) + ATP + H2O => thiosulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29872 declares side 29871_L as its substrates
+        (rh:substrates); the master reaction RHEA:29871 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: thiosulfate is a product released by RHEA:29871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29872
+      snippet: thiosulfate(out) + ATP + H2O => thiosulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29872 declares side 29871_R as its products
+        (rh:products); the master reaction RHEA:29871 is undirected. This participant is CHEBI:33542 with
+        coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: ADP is a product released by RHEA:29871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29872
+      snippet: thiosulfate(out) + ATP + H2O => thiosulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29872 declares side 29871_R as its products
+        (rh:products); the master reaction RHEA:29871 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: phosphate is a product released by RHEA:29871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29872
+      snippet: thiosulfate(out) + ATP + H2O => thiosulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29872 declares side 29871_R as its products
+        (rh:products); the master reaction RHEA:29871 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd4
+    description: H(+) is a product released by RHEA:29871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29872
+      snippet: thiosulfate(out) + ATP + H2O => thiosulfate(in) + ADP + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:29872 declares side 29871_R as its products
+        (rh:products); the master reaction RHEA:29871 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:7608089 for this reaction.
+  - subject: prot_Q8UH62
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYSA1_AGRFC is an exemplar enzyme with EC 7.3.2.3 activity.
+    evidence:
+    - reference: EC:7.3.2.3
+      snippet: DR   Q8UH62, CYSA1_AGRFC;  Q7NX01, CYSA1_CHRVO;  Q92XW1, CYSA1_RHIME;
+      notes: ExPASy ENZYME entry EC 7.3.2.3 cross-references UniProtKB:Q8UH62 (CYSA1_AGRFC) as a protein
+        with this activity.
+  - subject: prot_Q7NX01
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYSA1_CHRVO is an exemplar enzyme with EC 7.3.2.3 activity.
+    evidence:
+    - reference: EC:7.3.2.3
+      snippet: DR   Q8UH62, CYSA1_AGRFC;  Q7NX01, CYSA1_CHRVO;  Q92XW1, CYSA1_RHIME;
+      notes: ExPASy ENZYME entry EC 7.3.2.3 cross-references UniProtKB:Q7NX01 (CYSA1_CHRVO) as a protein
+        with this activity.
+  - subject: prot_Q92XW1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYSA1_RHIME is an exemplar enzyme with EC 7.3.2.3 activity.
+    evidence:
+    - reference: EC:7.3.2.3
+      snippet: DR   Q8UH62, CYSA1_AGRFC;  Q7NX01, CYSA1_CHRVO;  Q92XW1, CYSA1_RHIME;
+      notes: ExPASy ENZYME entry EC 7.3.2.3 cross-references UniProtKB:Q92XW1 (CYSA1_RHIME) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (19 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.15.-
 mapped_xrefs:
@@ -28,4 +28,195 @@ definitions:
       Catalyses: 2-hydroxy-5-methyl-1-naphthoate + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) = 2,7-dihydroxy-5-methyl-1-naphthoate + 2 oxidized [2Fe-2S]- [ferredoxin] + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-hydroxy-5-methyl-1-naphthoate 7-hydroxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.15.31. EC 1.14.15.31 maps to
+    exactly one curated Rhea reaction (RHEA:42828), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-hydroxy-5-methyl-1-naphthoate
+    + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) = 2,7-dihydroxy-5-methyl-1-naphthoate + 2 oxidized
+    [2Fe-2S]- [ferredoxin] + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-hydroxy-5-methyl-1-naphthoate 7-hydroxylase
+    grounding: EC:1.14.15.31
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-hydroxy-5-methyl-1-naphthoate
+    node_type: CHEMICAL
+    grounding: CHEBI:82757
+    description: Formula C12H9O3.
+  - node_id: sub2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](1+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 2,7-dihydroxy-5-methyl-1-naphthoate
+    node_type: CHEMICAL
+    grounding: CHEBI:78281
+    description: Formula C12H9O4.
+  - node_id: prd2
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](2+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q84HB6
+    node_type: PROTEIN
+    label: NCSB3_STRCZ
+    grounding: UniProtKB:Q84HB6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-hydroxy-5-methyl-1-naphthoate is a substrate consumed by RHEA:42828 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42829
+      snippet: 2-hydroxy-5-methyl-1-naphthoate + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => 2,7-dihydroxy-5-methyl-1-naphthoate
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:42829 declares side 42828_L as its substrates
+        (rh:substrates); the master reaction RHEA:42828 is undirected. This participant is CHEBI:82757
+        with coefficient 1. Rhea cites PMID:20735485 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [2Fe-2S]-[ferredoxin] is a substrate consumed by RHEA:42828 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:42829
+      snippet: 2-hydroxy-5-methyl-1-naphthoate + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => 2,7-dihydroxy-5-methyl-1-naphthoate
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:42829 declares side 42828_L as its substrates
+        (rh:substrates); the master reaction RHEA:42828 is undirected. This participant is GENERIC:10001
+        with coefficient 2. Rhea cites PMID:20735485 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:42828
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:42828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42829
+      snippet: 2-hydroxy-5-methyl-1-naphthoate + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => 2,7-dihydroxy-5-methyl-1-naphthoate
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:42829 declares side 42828_L as its substrates
+        (rh:substrates); the master reaction RHEA:42828 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:20735485 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by RHEA:42828 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:42829
+      snippet: 2-hydroxy-5-methyl-1-naphthoate + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => 2,7-dihydroxy-5-methyl-1-naphthoate
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:42829 declares side 42828_L as its substrates
+        (rh:substrates); the master reaction RHEA:42828 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:20735485 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2,7-dihydroxy-5-methyl-1-naphthoate is a product released by RHEA:42828 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42829
+      snippet: 2-hydroxy-5-methyl-1-naphthoate + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => 2,7-dihydroxy-5-methyl-1-naphthoate
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:42829 declares side 42828_R as its products
+        (rh:products); the master reaction RHEA:42828 is undirected. This participant is CHEBI:78281 with
+        coefficient 1. Rhea cites PMID:20735485 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [2Fe-2S]-[ferredoxin] is a product released by RHEA:42828 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:42829
+      snippet: 2-hydroxy-5-methyl-1-naphthoate + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => 2,7-dihydroxy-5-methyl-1-naphthoate
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:42829 declares side 42828_R as its products
+        (rh:products); the master reaction RHEA:42828 is undirected. This participant is GENERIC:10000
+        with coefficient 2. Rhea cites PMID:20735485 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:42828
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:42828 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42829
+      snippet: 2-hydroxy-5-methyl-1-naphthoate + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => 2,7-dihydroxy-5-methyl-1-naphthoate
+        + 2 oxidized [2Fe-2S]-[ferredoxin] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:42829 declares side 42828_R as its products
+        (rh:products); the master reaction RHEA:42828 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:20735485 for this reaction.
+  - subject: prot_Q84HB6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NCSB3_STRCZ is an exemplar enzyme with EC 1.14.15.31 activity.
+    evidence:
+    - reference: EC:1.14.15.31
+      snippet: DR   Q84HB6, NCSB3_STRCZ;
+      notes: ExPASy ENZYME entry EC 1.14.15.31 cross-references UniProtKB:Q84HB6 (NCSB3_STRCZ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

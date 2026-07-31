@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.162
     mapping_source: rhea2ec
@@ -30,4 +30,111 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate = (-)-alpha-amorphene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate = (-)-alpha-amorphene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:53640, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:53641 (rh:substrates → 53640_L, rh:products → 53640_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate = (-)-alpha-amorphene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:53640
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate = (-)-alpha-amorphene + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (-)-alpha-amorphene
+    node_type: CHEMICAL
+    grounding: CHEBI:137533
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-alpha-amorphene synthase
+    grounding: EC:4.2.3.162
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_D9XDR8
+    node_type: PROTEIN
+    label: AAMS_STRVT
+    grounding: UniProtKB:D9XDR8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:53641
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-alpha-amorphene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53641 declares side 53640_L as its substrates
+        (rh:substrates); the master reaction RHEA:53640 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:27666571, PMID:27829890, PMID:23307484 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-alpha-amorphene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53641
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-alpha-amorphene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53641 declares side 53640_R as its products
+        (rh:products); the master reaction RHEA:53640 is undirected. This participant is CHEBI:137533
+        with coefficient 1. Rhea cites PMID:27666571, PMID:27829890, PMID:23307484 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53641
+      snippet: (2E,6E)-farnesyl diphosphate => (-)-alpha-amorphene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53641 declares side 53640_R as its products
+        (rh:products); the master reaction RHEA:53640 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:27666571, PMID:27829890, PMID:23307484 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.162; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:53640
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.162"/>
+      notes: The rh:ec triple on RHEA:53640 in rhea.rdf. EC 4.2.3.162 is itself a record in this KB.
+  - subject: prot_D9XDR8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AAMS_STRVT is an exemplar enzyme carrying EC 4.2.3.162, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.162
+      snippet: DR   D9XDR8, AAMS_STRVT ;
+      notes: ExPASy ENZYME entry EC 4.2.3.162 cross-references UniProtKB:D9XDR8 (AAMS_STRVT) as a protein
+        with this activity.
+    - reference: RHEA:53640
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.162"/>
+      notes: Rhea assigns RHEA:53640 to EC 4.2.3.162, and EC 4.2.3.162 maps to exactly one Rhea master
+        reaction (RHEA:53640), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 mapped_xrefs:
@@ -32,4 +32,133 @@ definitions:
       Catalyses: ethyl acetate + H2O = ethanol + acetate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ethyl acetate hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.113. EC 3.1.1.113 maps to
+    exactly one curated Rhea reaction (RHEA:58148), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "ethyl
+    acetate + H2O = ethanol + acetate + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ethyl acetate hydrolase
+    grounding: EC:3.1.1.113
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: ethyl acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:27750
+    description: Formula C4H8O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: ethanol
+    node_type: CHEMICAL
+    grounding: CHEBI:16236
+    description: Formula C2H6O.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q8KQK1
+    node_type: PROTEIN
+    label: ESTZ_PSEPU
+    grounding: UniProtKB:Q8KQK1
+  - node_id: prot_Q0MRG5
+    node_type: PROTEIN
+    label: MEKB_PSEVE
+    grounding: UniProtKB:Q0MRG5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ethyl acetate is a substrate consumed by RHEA:58148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58149
+      snippet: ethyl acetate + H2O => ethanol + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58149 declares side 58148_L as its substrates
+        (rh:substrates); the master reaction RHEA:58148 is undirected. This participant is CHEBI:27750
+        with coefficient 1. Rhea cites PMID:28356220, PMID:12039716 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:58148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58149
+      snippet: ethyl acetate + H2O => ethanol + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58149 declares side 58148_L as its substrates
+        (rh:substrates); the master reaction RHEA:58148 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:28356220, PMID:12039716 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ethanol is a product released by RHEA:58148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58149
+      snippet: ethyl acetate + H2O => ethanol + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58149 declares side 58148_R as its products
+        (rh:products); the master reaction RHEA:58148 is undirected. This participant is CHEBI:16236 with
+        coefficient 1. Rhea cites PMID:28356220, PMID:12039716 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:58148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58149
+      snippet: ethyl acetate + H2O => ethanol + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58149 declares side 58148_R as its products
+        (rh:products); the master reaction RHEA:58148 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:28356220, PMID:12039716 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:58148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58149
+      snippet: ethyl acetate + H2O => ethanol + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:58149 declares side 58148_R as its products
+        (rh:products); the master reaction RHEA:58148 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:28356220, PMID:12039716 for this reaction.
+  - subject: prot_Q8KQK1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ESTZ_PSEPU is an exemplar enzyme with EC 3.1.1.113 activity.
+    evidence:
+    - reference: EC:3.1.1.113
+      snippet: DR   Q8KQK1, ESTZ_PSEPU ;  Q0MRG5, MEKB_PSEVE ;
+      notes: ExPASy ENZYME entry EC 3.1.1.113 cross-references UniProtKB:Q8KQK1 (ESTZ_PSEPU) as a protein
+        with this activity.
+  - subject: prot_Q0MRG5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MEKB_PSEVE is an exemplar enzyme with EC 3.1.1.113 activity.
+    evidence:
+    - reference: EC:3.1.1.113
+      snippet: DR   Q8KQK1, ESTZ_PSEPU ;  Q0MRG5, MEKB_PSEVE ;
+      notes: ExPASy ENZYME entry EC 3.1.1.113 cross-references UniProtKB:Q0MRG5 (MEKB_PSEVE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

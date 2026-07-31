@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:16521
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,107 @@ definitions:
       Catalyses the reaction: lanosterol + NADPH + H(+) = 24,25-dihydrolanosterol + NADP(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lanosterol + NADPH + H(+) = 24,25-dihydrolanosterol + NADP(+)
+  description: Substrate-to-product chemistry of RHEA:33919, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33920 (rh:substrates → 33919_L, rh:products → 33919_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of lanosterol + NADPH + H(+) = 24,25-dihydrolanosterol + NADP(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33919
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: lanosterol + NADPH + H(+) = 24,25-dihydrolanosterol + NADP(+)'
+  - node_id: sub1
+    label: lanosterol
+    node_type: CHEMICAL
+    grounding: CHEBI:16521
+    description: Formula C30H50O.
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 24,25-dihydrolanosterol
+    node_type: CHEMICAL
+    grounding: CHEBI:28113
+    description: Formula C30H52O.
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: lanosterol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33920
+      snippet: lanosterol + NADPH + H(+) => 24,25-dihydrolanosterol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33920 declares side 33919_L as its substrates
+        (rh:substrates); the master reaction RHEA:33919 is undirected. This participant is CHEBI:16521
+        with coefficient 1. Rhea cites PMID:23583456, PMID:9291139 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33920
+      snippet: lanosterol + NADPH + H(+) => 24,25-dihydrolanosterol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33920 declares side 33919_L as its substrates
+        (rh:substrates); the master reaction RHEA:33919 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:23583456, PMID:9291139 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33920
+      snippet: lanosterol + NADPH + H(+) => 24,25-dihydrolanosterol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33920 declares side 33919_L as its substrates
+        (rh:substrates); the master reaction RHEA:33919 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:23583456, PMID:9291139 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 24,25-dihydrolanosterol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33920
+      snippet: lanosterol + NADPH + H(+) => 24,25-dihydrolanosterol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33920 declares side 33919_R as its products
+        (rh:products); the master reaction RHEA:33919 is undirected. This participant is CHEBI:28113 with
+        coefficient 1. Rhea cites PMID:23583456, PMID:9291139 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33920
+      snippet: lanosterol + NADPH + H(+) => 24,25-dihydrolanosterol + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33920 declares side 33919_R as its products
+        (rh:products); the master reaction RHEA:33919 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:23583456, PMID:9291139 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.2.-
 mapped_xrefs:
@@ -28,4 +28,151 @@ definitions:
       Catalyses: altemicidin + L-isoleucyl-tRNA(Ile) = SB-203207 + tRNA(Ile) + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of altemicidin L-isoleucyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.2.39. EC 2.3.2.39 maps to exactly
+    one curated Rhea reaction (RHEA:82255), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "altemicidin +
+    L-isoleucyl-tRNA(Ile) = SB-203207 + tRNA(Ile) + 2 H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: altemicidin L-isoleucyltransferase
+    grounding: EC:2.3.2.39
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: altemicidin
+    node_type: CHEMICAL
+    grounding: CHEBI:232089
+    description: Formula C13H19N4O7S.
+  - node_id: sub2
+    label: L-isoleucyl-tRNA(Ile)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9695
+    description: Rhea compound GENERIC:9695.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: 3'-(L-isoleucyl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9695 (L-isoleucyl-tRNA(Ile));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78528
+  - node_id: prd1
+    label: SB-203207
+    node_type: CHEMICAL
+    grounding: CHEBI:232091
+    description: Formula C19H29N5O8S.
+  - node_id: prd2
+    label: tRNA(Ile)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9666
+    description: Rhea compound GENERIC:9666.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9666 (tRNA(Ile));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_P0DY31
+    node_type: PROTEIN
+    label: SBZA_STRSQ
+    grounding: UniProtKB:P0DY31
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: altemicidin is a substrate consumed by RHEA:82255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82256
+      snippet: altemicidin + L-isoleucyl-tRNA(Ile) => SB-203207 + tRNA(Ile) + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82256 declares side 82255_L as its substrates
+        (rh:substrates); the master reaction RHEA:82255 is undirected. This participant is CHEBI:232089
+        with coefficient 1. Rhea cites PMID:30643149 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-isoleucyl-tRNA(Ile) is a substrate consumed by RHEA:82255 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82256
+      snippet: altemicidin + L-isoleucyl-tRNA(Ile) => SB-203207 + tRNA(Ile) + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82256 declares side 82255_L as its substrates
+        (rh:substrates); the master reaction RHEA:82255 is undirected. This participant is GENERIC:9695
+        with coefficient 1. Rhea cites PMID:30643149 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: 3'-(L-isoleucyl)adenylyl group is the reactive part of L-isoleucyl-tRNA(Ile).
+    evidence:
+    - reference: RHEA:82255
+      snippet: 3'-(L-isoleucyl)adenylyl group
+      notes: Rhea compound GENERIC:9695 (L-isoleucyl-tRNA(Ile)) declares rh:reactivePart = 3'-(L-isoleucyl)adenylyl
+        group (CHEBI:78528).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: SB-203207 is a product released by RHEA:82255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82256
+      snippet: altemicidin + L-isoleucyl-tRNA(Ile) => SB-203207 + tRNA(Ile) + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82256 declares side 82255_R as its products
+        (rh:products); the master reaction RHEA:82255 is undirected. This participant is CHEBI:232091
+        with coefficient 1. Rhea cites PMID:30643149 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: tRNA(Ile) is a product released by RHEA:82255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82256
+      snippet: altemicidin + L-isoleucyl-tRNA(Ile) => SB-203207 + tRNA(Ile) + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82256 declares side 82255_R as its products
+        (rh:products); the master reaction RHEA:82255 is undirected. This participant is GENERIC:9666
+        with coefficient 1. Rhea cites PMID:30643149 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: AMP 3'-end residue is the reactive part of tRNA(Ile).
+    evidence:
+    - reference: RHEA:82255
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9666 (tRNA(Ile)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:82255 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:82256
+      snippet: altemicidin + L-isoleucyl-tRNA(Ile) => SB-203207 + tRNA(Ile) + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:82256 declares side 82255_R as its products
+        (rh:products); the master reaction RHEA:82255 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:30643149 for this reaction.
+  - subject: prot_P0DY31
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SBZA_STRSQ is an exemplar enzyme with EC 2.3.2.39 activity.
+    evidence:
+    - reference: EC:2.3.2.39
+      snippet: DR   P0DY31, SBZA_STRSQ ;
+      notes: ExPASy ENZYME entry EC 2.3.2.39 cross-references UniProtKB:P0DY31 (SBZA_STRSQ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

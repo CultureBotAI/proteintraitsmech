@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -41,4 +41,134 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate + H2O = (5S,9S,10S)-drim-7-en-11-ol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (-)-drimenol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.194. EC 4.2.3.194 maps to
+    exactly one curated Rhea reaction (RHEA:28290), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate + H2O = (5S,9S,10S)-drim-7-en-11-ol + diphosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-drimenol synthase
+    grounding: EC:4.2.3.194
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (5S,9S,10S)-drim-7-en-11-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:61148
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A0U5GNT1
+    node_type: PROTEIN
+    label: DRTB_ASPCI
+    grounding: UniProtKB:A0A0U5GNT1
+  - node_id: prot_W0FFD7
+    node_type: PROTEIN
+    label: DS_PERHD
+    grounding: UniProtKB:W0FFD7
+  - node_id: prot_U3KYL2
+    node_type: PROTEIN
+    label: DS_VALOF
+    grounding: UniProtKB:U3KYL2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:28290 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28291
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (5S,9S,10S)-drim-7-en-11-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28291 declares side 28290_L as its substrates
+        (rh:substrates); the master reaction RHEA:28290 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:28258968, PMID:25447532 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:28290 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28291
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (5S,9S,10S)-drim-7-en-11-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28291 declares side 28290_L as its substrates
+        (rh:substrates); the master reaction RHEA:28290 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:28258968, PMID:25447532 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (5S,9S,10S)-drim-7-en-11-ol is a product released by RHEA:28290 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28291
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (5S,9S,10S)-drim-7-en-11-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28291 declares side 28290_R as its products
+        (rh:products); the master reaction RHEA:28290 is undirected. This participant is CHEBI:61148 with
+        coefficient 1. Rhea cites PMID:28258968, PMID:25447532 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:28290 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28291
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (5S,9S,10S)-drim-7-en-11-ol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28291 declares side 28290_R as its products
+        (rh:products); the master reaction RHEA:28290 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:28258968, PMID:25447532 for this reaction.
+  - subject: prot_A0A0U5GNT1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DRTB_ASPCI is an exemplar enzyme with EC 4.2.3.194 activity.
+    evidence:
+    - reference: EC:4.2.3.194
+      snippet: DR   A0A0U5GNT1, DRTB_ASPCI ;  W0FFD7, DS_PERHD   ;  U3KYL2, DS_VALOF   ;
+      notes: ExPASy ENZYME entry EC 4.2.3.194 cross-references UniProtKB:A0A0U5GNT1 (DRTB_ASPCI) as a
+        protein with this activity.
+  - subject: prot_W0FFD7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DS_PERHD is an exemplar enzyme with EC 4.2.3.194 activity.
+    evidence:
+    - reference: EC:4.2.3.194
+      snippet: DR   A0A0U5GNT1, DRTB_ASPCI ;  W0FFD7, DS_PERHD   ;  U3KYL2, DS_VALOF   ;
+      notes: ExPASy ENZYME entry EC 4.2.3.194 cross-references UniProtKB:W0FFD7 (DS_PERHD) as a protein
+        with this activity.
+  - subject: prot_U3KYL2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DS_VALOF is an exemplar enzyme with EC 4.2.3.194 activity.
+    evidence:
+    - reference: EC:4.2.3.194
+      snippet: DR   A0A0U5GNT1, DRTB_ASPCI ;  W0FFD7, DS_PERHD   ;  U3KYL2, DS_VALOF   ;
+      notes: ExPASy ENZYME entry EC 4.2.3.194 cross-references UniProtKB:U3KYL2 (DS_VALOF) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

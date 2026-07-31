@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:229974
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,80 @@ definitions:
       Catalyses the reaction: 3-hydroxy-3-(4-O-beta-D-glucosyl-3-methoxyphenyl)propanoate = 4-O-beta-D-glucosyl-vanillin + acetate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-hydroxy-3-(4-O-beta-D-glucosyl-3-methoxyphenyl)propanoate = 4-O-beta-D-glucosyl-vanil…
+  description: Substrate-to-product chemistry of RHEA:79447, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79448 (rh:substrates → 79447_L, rh:products → 79447_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-hydroxy-3-(4-O-beta-D-glucosyl-3-methoxyphenyl)propanoate = 4-O-beta-D-glu…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79447
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-hydroxy-3-(4-O-beta-D-glucosyl-3-methoxyphenyl)propanoate = 4-O-beta-D-glucosyl-vanillin
+      + acetate'
+  - node_id: sub1
+    label: 3-hydroxy-3-(4-O-beta-D-glucosyl-3-methoxyphenyl)propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:229974
+    description: Formula C16H21O10.
+  - node_id: prd1
+    label: 4-O-beta-D-glucosyl-vanillin
+    node_type: CHEMICAL
+    grounding: CHEBI:179508
+    description: Formula C14H18O8.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-hydroxy-3-(4-O-beta-D-glucosyl-3-methoxyphenyl)propanoate is a substrate consumed by
+      this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79448
+      snippet: 3-hydroxy-3-(4-O-beta-D-glucosyl-3-methoxyphenyl)propanoate => 4-O-beta-D-glucosyl-vanillin
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:79448 declares side 79447_L as its substrates
+        (rh:substrates); the master reaction RHEA:79447 is undirected. This participant is CHEBI:229974
+        with coefficient 1. Rhea cites PMID:24941968 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-O-beta-D-glucosyl-vanillin is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79448
+      snippet: 3-hydroxy-3-(4-O-beta-D-glucosyl-3-methoxyphenyl)propanoate => 4-O-beta-D-glucosyl-vanillin
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:79448 declares side 79447_R as its products
+        (rh:products); the master reaction RHEA:79447 is undirected. This participant is CHEBI:179508
+        with coefficient 1. Rhea cites PMID:24941968 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79448
+      snippet: 3-hydroxy-3-(4-O-beta-D-glucosyl-3-methoxyphenyl)propanoate => 4-O-beta-D-glucosyl-vanillin
+        + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:79448 declares side 79447_R as its products
+        (rh:products); the master reaction RHEA:79447 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:24941968 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

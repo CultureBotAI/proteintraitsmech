@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.6.1.-
 synonyms:
@@ -32,4 +32,52 @@ definitions:
       Catalyses: RNA = a 5'-hydroxy-ribonucleotide + n nucleoside-2',3'-cyclophosphates
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Bacillus subtilis ribonuclease
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.6.1.22. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "RNA = a
+    5''-hydroxy-ribonucleotide + n nucleoside-2'',3''-cyclophosphates".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: Bacillus subtilis ribonuclease
+    grounding: EC:4.6.1.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_U2UMQ6
+    node_type: PROTEIN
+    label: CS12A_ACISB
+    grounding: UniProtKB:U2UMQ6
+  - node_id: prot_A0Q7Q2
+    node_type: PROTEIN
+    label: CS12A_FRATN
+    grounding: UniProtKB:A0Q7Q2
+  edges:
+  - subject: prot_U2UMQ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CS12A_ACISB is an exemplar enzyme with EC 4.6.1.22 activity.
+    evidence:
+    - reference: EC:4.6.1.22
+      snippet: DR   U2UMQ6, CS12A_ACISB;  A0Q7Q2, CS12A_FRATN;
+      notes: ExPASy ENZYME entry EC 4.6.1.22 cross-references UniProtKB:U2UMQ6 (CS12A_ACISB) as a protein
+        with this activity.
+  - subject: prot_A0Q7Q2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CS12A_FRATN is an exemplar enzyme with EC 4.6.1.22 activity.
+    evidence:
+    - reference: EC:4.6.1.22
+      snippet: DR   U2UMQ6, CS12A_ACISB;  A0Q7Q2, CS12A_FRATN;
+      notes: ExPASy ENZYME entry EC 4.6.1.22 cross-references UniProtKB:A0Q7Q2 (CS12A_FRATN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -43,4 +43,278 @@ definitions:
       Catalyses: a primary alcohol + NADP(+) = an aldehyde + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alcohol dehydrogenase (NADP(+))
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.2. Rhea assigns 2 curated
+    reactions to EC 1.1.1.2. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "a primary alcohol + NADP(+) = an aldehyde + NADPH + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alcohol dehydrogenase (NADP(+))
+    grounding: EC:1.1.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a primary alcohol + NADP(+) = an aldehyde + NADPH + H(+)
+    grounding: RHEA:15937
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a primary alcohol + NADP(+) = an aldehyde + NADPH + H(+)'
+  - node_id: rxn1_sub1
+    label: a primary alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:15734
+    description: Formula CH3OR.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: an aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+    description: Formula CHOR.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a secondary alcohol + NADP(+) = a ketone + NADPH + H(+)
+    grounding: RHEA:19257
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a secondary alcohol + NADP(+) = a ketone + NADPH + H(+)'
+  - node_id: rxn2_sub1
+    label: a secondary alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:35681
+    description: Formula CH2OR2.
+  - node_id: rxn2_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn2_prd1
+    label: a ketone
+    node_type: CHEMICAL
+    grounding: CHEBI:17087
+    description: Formula COR2.
+  - node_id: rxn2_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alcohol dehydrogenase (NADP+) activity
+    grounding: GO:0008106
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q6AZW2
+    node_type: PROTEIN
+    label: A1A1A_DANRE
+    grounding: UniProtKB:Q6AZW2
+  - node_id: prot_Q568L5
+    node_type: PROTEIN
+    label: A1A1B_DANRE
+    grounding: UniProtKB:Q568L5
+  - node_id: prot_Q24857
+    node_type: PROTEIN
+    label: ADH3_ENTH1
+    grounding: UniProtKB:Q24857
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:15937 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:15937
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.2"/>
+      notes: The rh:ec triple on RHEA:15937 in rhea.rdf assigns that reaction to EC 1.1.1.2.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a primary alcohol is a substrate consumed by RHEA:15937 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15938
+      snippet: a primary alcohol + NADP(+) => an aldehyde + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15938 declares side 15937_L as its substrates
+        (rh:substrates); the master reaction RHEA:15937 is undirected. This participant is CHEBI:15734
+        with coefficient 1. Rhea cites PMID:25108218, PMID:4300551, PMID:3896793, PMID:4402936 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:15937 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15938
+      snippet: a primary alcohol + NADP(+) => an aldehyde + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15938 declares side 15937_L as its substrates
+        (rh:substrates); the master reaction RHEA:15937 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:25108218, PMID:4300551, PMID:3896793, PMID:4402936 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: an aldehyde is a product released by RHEA:15937 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15938
+      snippet: a primary alcohol + NADP(+) => an aldehyde + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15938 declares side 15937_R as its products
+        (rh:products); the master reaction RHEA:15937 is undirected. This participant is CHEBI:17478 with
+        coefficient 1. Rhea cites PMID:25108218, PMID:4300551, PMID:3896793, PMID:4402936 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:15937 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15938
+      snippet: a primary alcohol + NADP(+) => an aldehyde + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15938 declares side 15937_R as its products
+        (rh:products); the master reaction RHEA:15937 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:25108218, PMID:4300551, PMID:3896793, PMID:4402936 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:15937 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15938
+      snippet: a primary alcohol + NADP(+) => an aldehyde + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15938 declares side 15937_R as its products
+        (rh:products); the master reaction RHEA:15937 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:25108218, PMID:4300551, PMID:3896793, PMID:4402936 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:19257 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:19257
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.2"/>
+      notes: The rh:ec triple on RHEA:19257 in rhea.rdf assigns that reaction to EC 1.1.1.2.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a secondary alcohol is a substrate consumed by RHEA:19257 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19258
+      snippet: a secondary alcohol + NADP(+) => a ketone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19258 declares side 19257_L as its substrates
+        (rh:substrates); the master reaction RHEA:19257 is undirected. This participant is CHEBI:35681
+        with coefficient 1. Rhea cites PMID:7005231, PMID:31888 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADP(+) is a substrate consumed by RHEA:19257 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19258
+      snippet: a secondary alcohol + NADP(+) => a ketone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19258 declares side 19257_L as its substrates
+        (rh:substrates); the master reaction RHEA:19257 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:7005231, PMID:31888 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: a ketone is a product released by RHEA:19257 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19258
+      snippet: a secondary alcohol + NADP(+) => a ketone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19258 declares side 19257_R as its products
+        (rh:products); the master reaction RHEA:19257 is undirected. This participant is CHEBI:17087 with
+        coefficient 1. Rhea cites PMID:7005231, PMID:31888 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADPH is a product released by RHEA:19257 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19258
+      snippet: a secondary alcohol + NADP(+) => a ketone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19258 declares side 19257_R as its products
+        (rh:products); the master reaction RHEA:19257 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:7005231, PMID:31888 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:19257 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19258
+      snippet: a secondary alcohol + NADP(+) => a ketone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19258 declares side 19257_R as its products
+        (rh:products); the master reaction RHEA:19257 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:7005231, PMID:31888 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.1.2
+      snippet: EC:1.1.1.2 > GO:alcohol dehydrogenase (NADP+) activity ; GO:0008106
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008106 is itself a record
+        in this KB.
+  - subject: prot_Q6AZW2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: A1A1A_DANRE is an exemplar enzyme with EC 1.1.1.2 activity.
+    evidence:
+    - reference: EC:1.1.1.2
+      snippet: DR   Q6AZW2, A1A1A_DANRE;  Q568L5, A1A1B_DANRE;  Q24857, ADH3_ENTH1 ;
+      notes: ExPASy ENZYME entry EC 1.1.1.2 cross-references UniProtKB:Q6AZW2 (A1A1A_DANRE) as a protein
+        with this activity.
+  - subject: prot_Q568L5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: A1A1B_DANRE is an exemplar enzyme with EC 1.1.1.2 activity.
+    evidence:
+    - reference: EC:1.1.1.2
+      snippet: DR   Q6AZW2, A1A1A_DANRE;  Q568L5, A1A1B_DANRE;  Q24857, ADH3_ENTH1 ;
+      notes: ExPASy ENZYME entry EC 1.1.1.2 cross-references UniProtKB:Q568L5 (A1A1B_DANRE) as a protein
+        with this activity.
+  - subject: prot_Q24857
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADH3_ENTH1 is an exemplar enzyme with EC 1.1.1.2 activity.
+    evidence:
+    - reference: EC:1.1.1.2
+      snippet: DR   Q6AZW2, A1A1A_DANRE;  Q568L5, A1A1B_DANRE;  Q24857, ADH3_ENTH1 ;
+      notes: ExPASy ENZYME entry EC 1.1.1.2 cross-references UniProtKB:Q24857 (ADH3_ENTH1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

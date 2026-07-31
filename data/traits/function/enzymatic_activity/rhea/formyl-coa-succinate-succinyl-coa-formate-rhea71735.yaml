@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.8.3.16
     mapping_source: rhea2ec
@@ -30,4 +30,105 @@ definitions:
       Catalyses the reaction: formyl-CoA + succinate = succinyl-CoA + formate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of formyl-CoA + succinate = succinyl-CoA + formate
+  description: Substrate-to-product chemistry of RHEA:71735, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:71736 (rh:substrates → 71735_L, rh:products → 71735_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of formyl-CoA + succinate = succinyl-CoA + formate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:71735
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: formyl-CoA + succinate = succinyl-CoA + formate'
+  - node_id: sub1
+    label: formyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57376
+    description: Formula C22H32N7O17P3S.
+  - node_id: sub2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: prd1
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: prd2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: formyl-CoA transferase
+    grounding: EC:2.8.3.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: formyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71736
+      snippet: formyl-CoA + succinate => succinyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:71736 declares side 71735_L as its substrates
+        (rh:substrates); the master reaction RHEA:71735 is undirected. This participant is CHEBI:57376
+        with coefficient 1. Rhea cites PMID:18245280, PMID:2361939 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: succinate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71736
+      snippet: formyl-CoA + succinate => succinyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:71736 declares side 71735_L as its substrates
+        (rh:substrates); the master reaction RHEA:71735 is undirected. This participant is CHEBI:30031
+        with coefficient 1. Rhea cites PMID:18245280, PMID:2361939 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: succinyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71736
+      snippet: formyl-CoA + succinate => succinyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:71736 declares side 71735_R as its products
+        (rh:products); the master reaction RHEA:71735 is undirected. This participant is CHEBI:57292 with
+        coefficient 1. Rhea cites PMID:18245280, PMID:2361939 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: formate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71736
+      snippet: formyl-CoA + succinate => succinyl-CoA + formate
+      notes: Rhea's left-to-right directional reaction RHEA:71736 declares side 71735_R as its products
+        (rh:products); the master reaction RHEA:71735 is undirected. This participant is CHEBI:15740 with
+        coefficient 1. Rhea cites PMID:18245280, PMID:2361939 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.8.3.16; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:71735
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.16"/>
+      notes: The rh:ec triple on RHEA:71735 in rhea.rdf. EC 2.8.3.16 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

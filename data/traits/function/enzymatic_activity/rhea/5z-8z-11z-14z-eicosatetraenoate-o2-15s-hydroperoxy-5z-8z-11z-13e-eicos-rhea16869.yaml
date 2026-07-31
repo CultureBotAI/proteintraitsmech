@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.13.11.33
     mapping_source: rhea2ec
@@ -42,4 +42,169 @@ definitions:
       Catalyses the reaction: (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 = (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 = (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetrae…
+  description: Substrate-to-product chemistry of RHEA:16869, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:16870 (rh:substrates → 16869_L, rh:products → 16869_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 = (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-e…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:16869
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 = (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate'
+  - node_id: sub1
+    label: (5Z,8Z,11Z,14Z)-eicosatetraenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:32395
+    description: Formula C20H31O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57446
+    description: Formula C20H31O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: arachidonate 15-lipoxygenase activity
+    grounding: GO:0050473
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: arachidonate 15-lipoxygenase
+    grounding: EC:1.13.11.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P18054
+    node_type: PROTEIN
+    label: LOX12_HUMAN
+    grounding: UniProtKB:P18054
+  - node_id: prot_P39655
+    node_type: PROTEIN
+    label: LOX12_MOUSE
+    grounding: UniProtKB:P39655
+  - node_id: prot_F1LQ70
+    node_type: PROTEIN
+    label: LOX12_RAT
+    grounding: UniProtKB:F1LQ70
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (5Z,8Z,11Z,14Z)-eicosatetraenoate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16870
+      snippet: (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 => (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:16870 declares side 16869_L as its substrates
+        (rh:substrates); the master reaction RHEA:16869 is undirected. This participant is CHEBI:32395
+        with coefficient 1. Rhea cites PMID:1539676, PMID:8305485, PMID:24282679, PMID:23382512 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16870
+      snippet: (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 => (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:16870 declares side 16869_L as its substrates
+        (rh:substrates); the master reaction RHEA:16869 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:1539676, PMID:8305485, PMID:24282679, PMID:23382512 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16870
+      snippet: (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 => (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:16870 declares side 16869_R as its products
+        (rh:products); the master reaction RHEA:16869 is undirected. This participant is CHEBI:57446 with
+        coefficient 1. Rhea cites PMID:1539676, PMID:8305485, PMID:24282679, PMID:23382512 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:16869
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050473"/>
+      notes: The rdfs:seeAlso triple on RHEA:16869 in rhea.rdf. GO term GO:0050473 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.13.11.33; the EC class covers the chemistry, this
+      reaction is one curated instance of it.
+    evidence:
+    - reference: RHEA:16869
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.33"/>
+      notes: The rh:ec triple on RHEA:16869 in rhea.rdf. EC 1.13.11.33 is itself a record in this KB.
+  - subject: prot_P18054
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LOX12_HUMAN is an exemplar enzyme carrying EC 1.13.11.33, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.33
+      snippet: DR   P18054, LOX12_HUMAN;  P39655, LOX12_MOUSE;  F1LQ70, LOX12_RAT  ;
+      notes: ExPASy ENZYME entry EC 1.13.11.33 cross-references UniProtKB:P18054 (LOX12_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:16869
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.33"/>
+      notes: Rhea assigns RHEA:16869 to EC 1.13.11.33, and EC 1.13.11.33 maps to exactly one Rhea master
+        reaction (RHEA:16869), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P39655
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LOX12_MOUSE is an exemplar enzyme carrying EC 1.13.11.33, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.33
+      snippet: DR   P18054, LOX12_HUMAN;  P39655, LOX12_MOUSE;  F1LQ70, LOX12_RAT  ;
+      notes: ExPASy ENZYME entry EC 1.13.11.33 cross-references UniProtKB:P39655 (LOX12_MOUSE) as a protein
+        with this activity.
+    - reference: RHEA:16869
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.33"/>
+      notes: Rhea assigns RHEA:16869 to EC 1.13.11.33, and EC 1.13.11.33 maps to exactly one Rhea master
+        reaction (RHEA:16869), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_F1LQ70
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LOX12_RAT is an exemplar enzyme carrying EC 1.13.11.33, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.13.11.33
+      snippet: DR   P18054, LOX12_HUMAN;  P39655, LOX12_MOUSE;  F1LQ70, LOX12_RAT  ;
+      notes: ExPASy ENZYME entry EC 1.13.11.33 cross-references UniProtKB:F1LQ70 (LOX12_RAT) as a protein
+        with this activity.
+    - reference: RHEA:16869
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.33"/>
+      notes: Rhea assigns RHEA:16869 to EC 1.13.11.33, and EC 1.13.11.33 maps to exactly one Rhea master
+        reaction (RHEA:16869), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.3.-
 mapped_xrefs:
@@ -28,4 +28,73 @@ definitions:
       Catalyses: D-erythrulose 1-phosphate = L-erythrulose 1-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-erythrulose 1-phosphate 3-epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.3.38. EC 5.1.3.38 maps to exactly
+    one curated Rhea reaction (RHEA:49584), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-erythrulose
+    1-phosphate = L-erythrulose 1-phosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-erythrulose 1-phosphate 3-epimerase
+    grounding: EC:5.1.3.38
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-erythrulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:131767
+    description: Formula C4H7O7P.
+  - node_id: prd1
+    label: L-erythrulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58002
+    description: Formula C4H7O7P.
+  - node_id: prot_Q2YIQ3
+    node_type: PROTEIN
+    label: ERYC_BRUA2
+    grounding: UniProtKB:Q2YIQ3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-erythrulose 1-phosphate is a substrate consumed by RHEA:49584 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49585
+      snippet: D-erythrulose 1-phosphate => L-erythrulose 1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49585 declares side 49584_L as its substrates
+        (rh:substrates); the master reaction RHEA:49584 is undirected. This participant is CHEBI:131767
+        with coefficient 1. Rhea cites PMID:25453104 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-erythrulose 1-phosphate is a product released by RHEA:49584 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49585
+      snippet: D-erythrulose 1-phosphate => L-erythrulose 1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49585 declares side 49584_R as its products
+        (rh:products); the master reaction RHEA:49584 is undirected. This participant is CHEBI:58002 with
+        coefficient 1. Rhea cites PMID:25453104 for this reaction.
+  - subject: prot_Q2YIQ3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ERYC_BRUA2 is an exemplar enzyme with EC 5.1.3.38 activity.
+    evidence:
+    - reference: EC:5.1.3.38
+      snippet: DR   Q2YIQ3, ERYC_BRUA2 ;
+      notes: ExPASy ENZYME entry EC 5.1.3.38 cross-references UniProtKB:Q2YIQ3 (ERYC_BRUA2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

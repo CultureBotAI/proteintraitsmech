@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -36,4 +36,132 @@ definitions:
       Catalyses: (S)-2-benzoylsuccinyl-CoA + CoA = benzoyl-CoA + succinyl-CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of benzoylsuccinyl-CoA thiolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.310. EC 2.3.1.310 maps to
+    exactly one curated Rhea reaction (RHEA:74147), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-2-benzoylsuccinyl-CoA
+    + CoA = benzoyl-CoA + succinyl-CoA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: benzoylsuccinyl-CoA thiolase
+    grounding: EC:2.3.1.310
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-2-benzoylsuccinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:189060
+    description: Formula C32H39N7O20P3S.
+  - node_id: sub2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd1
+    label: benzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57369
+    description: Formula C28H36N7O17P3S.
+  - node_id: prd2
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: prot_Q39VG2
+    node_type: PROTEIN
+    label: BBSA_GEOMG
+    grounding: UniProtKB:Q39VG2
+  - node_id: prot_Q9KJF4
+    node_type: PROTEIN
+    label: BBSA_THAAR
+    grounding: UniProtKB:Q9KJF4
+  - node_id: prot_Q39VG1
+    node_type: PROTEIN
+    label: BBSB_GEOMG
+    grounding: UniProtKB:Q39VG1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-2-benzoylsuccinyl-CoA is a substrate consumed by RHEA:74147 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74148
+      snippet: (S)-2-benzoylsuccinyl-CoA + CoA => benzoyl-CoA + succinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:74148 declares side 74147_L as its substrates
+        (rh:substrates); the master reaction RHEA:74147 is undirected. This participant is CHEBI:189060
+        with coefficient 1. Rhea cites PMID:35313080 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CoA is a substrate consumed by RHEA:74147 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74148
+      snippet: (S)-2-benzoylsuccinyl-CoA + CoA => benzoyl-CoA + succinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:74148 declares side 74147_L as its substrates
+        (rh:substrates); the master reaction RHEA:74147 is undirected. This participant is CHEBI:57287
+        with coefficient 1. Rhea cites PMID:35313080 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: benzoyl-CoA is a product released by RHEA:74147 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74148
+      snippet: (S)-2-benzoylsuccinyl-CoA + CoA => benzoyl-CoA + succinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:74148 declares side 74147_R as its products
+        (rh:products); the master reaction RHEA:74147 is undirected. This participant is CHEBI:57369 with
+        coefficient 1. Rhea cites PMID:35313080 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinyl-CoA is a product released by RHEA:74147 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74148
+      snippet: (S)-2-benzoylsuccinyl-CoA + CoA => benzoyl-CoA + succinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:74148 declares side 74147_R as its products
+        (rh:products); the master reaction RHEA:74147 is undirected. This participant is CHEBI:57292 with
+        coefficient 1. Rhea cites PMID:35313080 for this reaction.
+  - subject: prot_Q39VG2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BBSA_GEOMG is an exemplar enzyme with EC 2.3.1.310 activity.
+    evidence:
+    - reference: EC:2.3.1.310
+      snippet: DR   Q39VG2, BBSA_GEOMG ;  Q9KJF4, BBSA_THAAR ;  Q39VG1, BBSB_GEOMG ;
+      notes: ExPASy ENZYME entry EC 2.3.1.310 cross-references UniProtKB:Q39VG2 (BBSA_GEOMG) as a protein
+        with this activity.
+  - subject: prot_Q9KJF4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BBSA_THAAR is an exemplar enzyme with EC 2.3.1.310 activity.
+    evidence:
+    - reference: EC:2.3.1.310
+      snippet: DR   Q39VG2, BBSA_GEOMG ;  Q9KJF4, BBSA_THAAR ;  Q39VG1, BBSB_GEOMG ;
+      notes: ExPASy ENZYME entry EC 2.3.1.310 cross-references UniProtKB:Q9KJF4 (BBSA_THAAR) as a protein
+        with this activity.
+  - subject: prot_Q39VG1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BBSB_GEOMG is an exemplar enzyme with EC 2.3.1.310 activity.
+    evidence:
+    - reference: EC:2.3.1.310
+      snippet: DR   Q39VG2, BBSA_GEOMG ;  Q9KJF4, BBSA_THAAR ;  Q39VG1, BBSB_GEOMG ;
+      notes: ExPASy ENZYME entry EC 2.3.1.310 cross-references UniProtKB:Q39VG1 (BBSB_GEOMG) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

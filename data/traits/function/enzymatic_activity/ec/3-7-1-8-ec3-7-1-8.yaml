@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.7.1.-
 synonyms:
@@ -41,4 +41,252 @@ definitions:
       Catalyses: 2,6-dioxo-6-phenylhexa-3-enoate + H2O = 2-oxopent-4-enoate + benzoate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2,6-dioxo-6-phenylhexa-3-enoate hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.7.1.8. Rhea assigns 2 curated
+    reactions to EC 3.7.1.8. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "2,6-dioxo-6-phenylhexa-3-enoate + H2O = 2-oxopent-4-enoate + benzoate
+    + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2,6-dioxo-6-phenylhexa-3-enoate hydrolase
+    grounding: EC:3.7.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2,6-dioxo-6-phenylhexa-3-enoate + H2O = 2-oxopent-4-enoate + benzoate + H(+)
+    grounding: RHEA:17161
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2,6-dioxo-6-phenylhexa-3-enoate + H2O = 2-oxopent-4-enoate + benzoate +
+      H(+)'
+  - node_id: rxn1_sub1
+    label: 2,6-dioxo-6-phenylhexa-3-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:64675
+    description: Formula C12H9O4.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: 2-oxopent-4-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:11641
+    description: Formula C5H5O3.
+  - node_id: rxn1_prd2
+    label: benzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:16150
+    description: Formula C7H5O2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O = 2-oxop…
+    grounding: RHEA:42468
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O = 2-oxopent-4-enoate
+      + salicylate'
+  - node_id: rxn2_sub1
+    label: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:79172
+    description: Formula C12H8O5.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: 2-oxopent-4-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:11641
+    description: Formula C5H5O3.
+  - node_id: rxn2_prd2
+    label: salicylate
+    node_type: CHEMICAL
+    grounding: CHEBI:30762
+    description: Formula C7H5O3.
+  - node_id: prot_Q2VLB9
+    node_type: PROTEIN
+    label: BPHD_BURCE
+    grounding: UniProtKB:Q2VLB9
+  - node_id: prot_Q59324
+    node_type: PROTEIN
+    label: BPHD_COMTE
+    grounding: UniProtKB:Q59324
+  - node_id: prot_Q8KRD3
+    node_type: PROTEIN
+    label: BPHD_DELAC
+    grounding: UniProtKB:Q8KRD3
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:17161 is one of the 2 curated reactions Rhea assigns to EC 3.7.1.8; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:17161
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.7.1.8"/>
+      notes: The rh:ec triple on RHEA:17161 in rhea.rdf assigns that reaction to EC 3.7.1.8.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 2,6-dioxo-6-phenylhexa-3-enoate is a substrate consumed by RHEA:17161 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17162
+      snippet: 2,6-dioxo-6-phenylhexa-3-enoate + H2O => 2-oxopent-4-enoate + benzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17162 declares side 17161_L as its substrates
+        (rh:substrates); the master reaction RHEA:17161 is undirected. This participant is CHEBI:64675
+        with coefficient 1. Rhea cites PMID:8481010 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:17161 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17162
+      snippet: 2,6-dioxo-6-phenylhexa-3-enoate + H2O => 2-oxopent-4-enoate + benzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17162 declares side 17161_L as its substrates
+        (rh:substrates); the master reaction RHEA:17161 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:8481010 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 2-oxopent-4-enoate is a product released by RHEA:17161 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17162
+      snippet: 2,6-dioxo-6-phenylhexa-3-enoate + H2O => 2-oxopent-4-enoate + benzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17162 declares side 17161_R as its products
+        (rh:products); the master reaction RHEA:17161 is undirected. This participant is CHEBI:11641 with
+        coefficient 1. Rhea cites PMID:8481010 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: benzoate is a product released by RHEA:17161 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17162
+      snippet: 2,6-dioxo-6-phenylhexa-3-enoate + H2O => 2-oxopent-4-enoate + benzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17162 declares side 17161_R as its products
+        (rh:products); the master reaction RHEA:17161 is undirected. This participant is CHEBI:16150 with
+        coefficient 1. Rhea cites PMID:8481010 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:17161 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17162
+      snippet: 2,6-dioxo-6-phenylhexa-3-enoate + H2O => 2-oxopent-4-enoate + benzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17162 declares side 17161_R as its products
+        (rh:products); the master reaction RHEA:17161 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8481010 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:42468 is one of the 2 curated reactions Rhea assigns to EC 3.7.1.8; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:42468
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.7.1.8"/>
+      notes: The rh:ec triple on RHEA:42468 in rhea.rdf assigns that reaction to EC 3.7.1.8.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate is a substrate consumed
+      by RHEA:42468 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42469
+      snippet: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O => 2-oxopent-4-enoate
+        + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:42469 declares side 42468_L as its substrates
+        (rh:substrates); the master reaction RHEA:42468 is undirected. This participant is CHEBI:79172
+        with coefficient 1.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:42468 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42469
+      snippet: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O => 2-oxopent-4-enoate
+        + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:42469 declares side 42468_L as its substrates
+        (rh:substrates); the master reaction RHEA:42468 is undirected. This participant is CHEBI:15377
+        with coefficient 1.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 2-oxopent-4-enoate is a product released by RHEA:42468 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42469
+      snippet: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O => 2-oxopent-4-enoate
+        + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:42469 declares side 42468_R as its products
+        (rh:products); the master reaction RHEA:42468 is undirected. This participant is CHEBI:11641 with
+        coefficient 1.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: salicylate is a product released by RHEA:42468 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42469
+      snippet: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O => 2-oxopent-4-enoate
+        + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:42469 declares side 42468_R as its products
+        (rh:products); the master reaction RHEA:42468 is undirected. This participant is CHEBI:30762 with
+        coefficient 1.
+  - subject: prot_Q2VLB9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BPHD_BURCE is an exemplar enzyme with EC 3.7.1.8 activity.
+    evidence:
+    - reference: EC:3.7.1.8
+      snippet: DR   Q2VLB9, BPHD_BURCE ;  Q59324, BPHD_COMTE ;  Q8KRD3, BPHD_DELAC ;
+      notes: ExPASy ENZYME entry EC 3.7.1.8 cross-references UniProtKB:Q2VLB9 (BPHD_BURCE) as a protein
+        with this activity.
+  - subject: prot_Q59324
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BPHD_COMTE is an exemplar enzyme with EC 3.7.1.8 activity.
+    evidence:
+    - reference: EC:3.7.1.8
+      snippet: DR   Q2VLB9, BPHD_BURCE ;  Q59324, BPHD_COMTE ;  Q8KRD3, BPHD_DELAC ;
+      notes: ExPASy ENZYME entry EC 3.7.1.8 cross-references UniProtKB:Q59324 (BPHD_COMTE) as a protein
+        with this activity.
+  - subject: prot_Q8KRD3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BPHD_DELAC is an exemplar enzyme with EC 3.7.1.8 activity.
+    evidence:
+    - reference: EC:3.7.1.8
+      snippet: DR   Q2VLB9, BPHD_BURCE ;  Q59324, BPHD_COMTE ;  Q8KRD3, BPHD_DELAC ;
+      notes: ExPASy ENZYME entry EC 3.7.1.8 cross-references UniProtKB:Q8KRD3 (BPHD_DELAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

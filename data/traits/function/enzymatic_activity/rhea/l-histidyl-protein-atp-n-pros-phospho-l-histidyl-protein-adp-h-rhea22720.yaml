@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.13.1
     mapping_source: rhea2ec
@@ -32,4 +32,172 @@ definitions:
       Catalyses the reaction: L-histidyl-[protein] + ATP = N(pros)-phospho-L-histidyl-[protein] + ADP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-histidyl-[protein] + ATP = N(pros)-phospho-L-histidyl-[protein] + ADP
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:22720, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22721 (rh:substrates → 22720_L, rh:products → 22720_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-histidyl-[protein] + ATP = N(pros)-phospho-L-histidyl-[protein] + ADP + H(…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22720
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-histidyl-[protein] + ATP = N(pros)-phospho-L-histidyl-[protein] + ADP + H(+)'
+  - node_id: sub1
+    label: L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9745
+    description: Rhea compound GENERIC:9745.
+  - node_id: sub1_rp1
+    label: L-histidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9745 (L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29979
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: N(pros)-phospho-L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9746
+    description: Rhea compound GENERIC:9746.
+  - node_id: prd1_rp1
+    label: N(pros)-phospho-L-histidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64837
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein histidine pros-kinase activity
+    grounding: GO:0008256
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: protein-histidine pros-kinase
+    grounding: EC:2.7.13.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-histidyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22721
+      snippet: L-histidyl-[protein] + ATP => N(pros)-phospho-L-histidyl-[protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22721 declares side 22720_L as its substrates
+        (rh:substrates); the master reaction RHEA:22720 is undirected. This participant is GENERIC:9745
+        with coefficient 1. Rhea cites PMID:4066704, PMID:7196259 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-histidine residue is the reactive part of L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:22720
+      snippet: L-histidine residue
+      notes: Rhea compound GENERIC:9745 (L-histidyl-[protein]) declares rh:reactivePart = L-histidine
+        residue (CHEBI:29979), formula C6H7N3O.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22721
+      snippet: L-histidyl-[protein] + ATP => N(pros)-phospho-L-histidyl-[protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22721 declares side 22720_L as its substrates
+        (rh:substrates); the master reaction RHEA:22720 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:4066704, PMID:7196259 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(pros)-phospho-L-histidyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:22721
+      snippet: L-histidyl-[protein] + ATP => N(pros)-phospho-L-histidyl-[protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22721 declares side 22720_R as its products
+        (rh:products); the master reaction RHEA:22720 is undirected. This participant is GENERIC:9746
+        with coefficient 1. Rhea cites PMID:4066704, PMID:7196259 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(pros)-phospho-L-histidine residue is the reactive part of N(pros)-phospho-L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:22720
+      snippet: N(pros)-phospho-L-histidine residue
+      notes: Rhea compound GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]) declares rh:reactivePart
+        = N(pros)-phospho-L-histidine residue (CHEBI:64837), formula C6H6N3O4P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22721
+      snippet: L-histidyl-[protein] + ATP => N(pros)-phospho-L-histidyl-[protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22721 declares side 22720_R as its products
+        (rh:products); the master reaction RHEA:22720 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:4066704, PMID:7196259 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22721
+      snippet: L-histidyl-[protein] + ATP => N(pros)-phospho-L-histidyl-[protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22721 declares side 22720_R as its products
+        (rh:products); the master reaction RHEA:22720 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4066704, PMID:7196259 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:22720
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008256"/>
+      notes: The rdfs:seeAlso triple on RHEA:22720 in rhea.rdf. GO term GO:0008256 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.13.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22720
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.13.1"/>
+      notes: The rh:ec triple on RHEA:22720 in rhea.rdf. EC 2.7.13.1 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

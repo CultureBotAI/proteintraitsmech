@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.8.3.5
     mapping_source: rhea2ec
@@ -34,4 +34,160 @@ definitions:
       Catalyses the reaction: an S-polyprenyl-L-cysteine + O2 + H2O = a polyprenal + L-cysteine + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an S-polyprenyl-L-cysteine + O2 + H2O = a polyprenal + L-cysteine + H2O2
+  description: Substrate-to-product chemistry of RHEA:53892, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:53893 (rh:substrates → 53892_L, rh:products → 53892_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an S-polyprenyl-L-cysteine + O2 + H2O = a polyprenal + L-cysteine + H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:53892
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an S-polyprenyl-L-cysteine + O2 + H2O = a polyprenal + L-cysteine + H2O2'
+  - node_id: sub1
+    label: an S-polyprenyl-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:137935
+    xrefs:
+    - RHEA-COMP:13676
+    description: Rhea compound POLYMER:13676. Formula C8H15NO2S(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a polyprenal
+    node_type: CHEMICAL
+    grounding: CHEBI:137934
+    xrefs:
+    - RHEA-COMP:13675
+    description: Rhea compound POLYMER:13675. Formula C5H8O(C5H8)<i><sub>n</sub></i>. Polymerisation index
+      n.
+  - node_id: prd2
+    label: L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:35235
+    description: Formula C3H7NO2S.
+  - node_id: prd3
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: prenylcysteine oxidase activity
+    grounding: GO:0001735
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: prenylcysteine oxidase
+    grounding: EC:1.8.3.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an S-polyprenyl-L-cysteine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53893
+      snippet: an S-polyprenyl-L-cysteine + O2 + H2O => a polyprenal + L-cysteine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:53893 declares side 53892_L as its substrates
+        (rh:substrates); the master reaction RHEA:53892 is undirected. This participant is POLYMER:13676
+        with coefficient 1. Rhea cites PMID:9287348, PMID:11078725 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53893
+      snippet: an S-polyprenyl-L-cysteine + O2 + H2O => a polyprenal + L-cysteine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:53893 declares side 53892_L as its substrates
+        (rh:substrates); the master reaction RHEA:53892 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:9287348, PMID:11078725 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53893
+      snippet: an S-polyprenyl-L-cysteine + O2 + H2O => a polyprenal + L-cysteine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:53893 declares side 53892_L as its substrates
+        (rh:substrates); the master reaction RHEA:53892 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:9287348, PMID:11078725 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a polyprenal is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53893
+      snippet: an S-polyprenyl-L-cysteine + O2 + H2O => a polyprenal + L-cysteine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:53893 declares side 53892_R as its products
+        (rh:products); the master reaction RHEA:53892 is undirected. This participant is POLYMER:13675
+        with coefficient 1. Rhea cites PMID:9287348, PMID:11078725 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-cysteine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53893
+      snippet: an S-polyprenyl-L-cysteine + O2 + H2O => a polyprenal + L-cysteine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:53893 declares side 53892_R as its products
+        (rh:products); the master reaction RHEA:53892 is undirected. This participant is CHEBI:35235 with
+        coefficient 1. Rhea cites PMID:9287348, PMID:11078725 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53893
+      snippet: an S-polyprenyl-L-cysteine + O2 + H2O => a polyprenal + L-cysteine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:53893 declares side 53892_R as its products
+        (rh:products); the master reaction RHEA:53892 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:9287348, PMID:11078725 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:53892
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0001735"/>
+      notes: The rdfs:seeAlso triple on RHEA:53892 in rhea.rdf. GO term GO:0001735 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.8.3.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:53892
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.8.3.5"/>
+      notes: The rh:ec triple on RHEA:53892 in rhea.rdf. EC 1.8.3.5 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

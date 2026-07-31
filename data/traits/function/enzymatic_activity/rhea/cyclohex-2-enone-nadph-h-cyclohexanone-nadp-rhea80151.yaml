@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:15977
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,123 @@ definitions:
       Catalyses the reaction: cyclohex-2-enone + NADPH + H(+) = cyclohexanone + NADP(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyclohex-2-enone + NADPH + H(+) = cyclohexanone + NADP(+)
+  description: Substrate-to-product chemistry of RHEA:80151, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80152 (rh:substrates → 80151_L, rh:products → 80151_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of cyclohex-2-enone + NADPH + H(+) = cyclohexanone + NADP(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80151
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: cyclohex-2-enone + NADPH + H(+) = cyclohexanone + NADP(+)'
+  - node_id: sub1
+    label: cyclohex-2-enone
+    node_type: CHEMICAL
+    grounding: CHEBI:15977
+    description: Formula C6H8O.
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: cyclohexanone
+    node_type: CHEMICAL
+    grounding: CHEBI:17854
+    description: Formula C6H10O.
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cyclohexanone dehydrogenase activity
+    grounding: GO:0047797
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cyclohex-2-enone is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80152
+      snippet: cyclohex-2-enone + NADPH + H(+) => cyclohexanone + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80152 declares side 80151_L as its substrates
+        (rh:substrates); the master reaction RHEA:80151 is undirected. This participant is CHEBI:15977
+        with coefficient 1. Rhea cites PMID:10515912 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80152
+      snippet: cyclohex-2-enone + NADPH + H(+) => cyclohexanone + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80152 declares side 80151_L as its substrates
+        (rh:substrates); the master reaction RHEA:80151 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:10515912 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80152
+      snippet: cyclohex-2-enone + NADPH + H(+) => cyclohexanone + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80152 declares side 80151_L as its substrates
+        (rh:substrates); the master reaction RHEA:80151 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:10515912 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cyclohexanone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80152
+      snippet: cyclohex-2-enone + NADPH + H(+) => cyclohexanone + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80152 declares side 80151_R as its products
+        (rh:products); the master reaction RHEA:80151 is undirected. This participant is CHEBI:17854 with
+        coefficient 1. Rhea cites PMID:10515912 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80152
+      snippet: cyclohex-2-enone + NADPH + H(+) => cyclohexanone + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80152 declares side 80151_R as its products
+        (rh:products); the master reaction RHEA:80151 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:10515912 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:80151
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047797"/>
+      notes: The rdfs:seeAlso triple on RHEA:80151 in rhea.rdf. GO term GO:0047797 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78481
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,142 @@ definitions:
       Catalyses the reaction: (2E)-hexadecenoyl-[ACP] + NADH + H(+) = hexadecanoyl-[ACP] + NAD(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E)-hexadecenoyl-[ACP] + NADH + H(+) = hexadecanoyl-[ACP] + NAD(+)
+  description: Substrate-to-product chemistry of RHEA:54900, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:54901 (rh:substrates → 54900_L, rh:products → 54900_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E)-hexadecenoyl-[ACP] + NADH + H(+) = hexadecanoyl-[ACP] + NAD(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:54900
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E)-hexadecenoyl-[ACP] + NADH + H(+) = hexadecanoyl-[ACP] + NAD(+)'
+  - node_id: sub1
+    label: (2E)-hexadecenoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9651
+    description: Rhea compound GENERIC:9651.
+  - node_id: sub1_rp1
+    label: O-(S-2E-hexadecenoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9651 ((2E)-hexadecenoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78481
+  - node_id: sub2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: hexadecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9652
+    description: Rhea compound GENERIC:9652.
+  - node_id: prd1_rp1
+    label: O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9652 (hexadecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78483
+  - node_id: prd2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-hexadecenoyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54901
+      snippet: (2E)-hexadecenoyl-[ACP] + NADH + H(+) => hexadecanoyl-[ACP] + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54901 declares side 54900_L as its substrates
+        (rh:substrates); the master reaction RHEA:54900 is undirected. This participant is GENERIC:9651
+        with coefficient 1. Rhea cites PMID:8910376, PMID:7592873 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-2E-hexadecenoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part
+      of (2E)-hexadecenoyl-[ACP].
+    evidence:
+    - reference: RHEA:54900
+      snippet: O-(S-2E-hexadecenoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9651 ((2E)-hexadecenoyl-[ACP]) declares rh:reactivePart = O-(S-2E-hexadecenoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78481), formula C30H53N3O9PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54901
+      snippet: (2E)-hexadecenoyl-[ACP] + NADH + H(+) => hexadecanoyl-[ACP] + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54901 declares side 54900_L as its substrates
+        (rh:substrates); the master reaction RHEA:54900 is undirected. This participant is CHEBI:57945
+        with coefficient 1. Rhea cites PMID:8910376, PMID:7592873 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54901
+      snippet: (2E)-hexadecenoyl-[ACP] + NADH + H(+) => hexadecanoyl-[ACP] + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54901 declares side 54900_L as its substrates
+        (rh:substrates); the master reaction RHEA:54900 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:8910376, PMID:7592873 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hexadecanoyl-[ACP] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54901
+      snippet: (2E)-hexadecenoyl-[ACP] + NADH + H(+) => hexadecanoyl-[ACP] + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54901 declares side 54900_R as its products
+        (rh:products); the master reaction RHEA:54900 is undirected. This participant is GENERIC:9652
+        with coefficient 1. Rhea cites PMID:8910376, PMID:7592873 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of
+      hexadecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:54900
+      snippet: O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9652 (hexadecanoyl-[ACP]) declares rh:reactivePart = O-(S-hexadecanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78483), formula C30H55N3O9PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NAD(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54901
+      snippet: (2E)-hexadecenoyl-[ACP] + NADH + H(+) => hexadecanoyl-[ACP] + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54901 declares side 54900_R as its products
+        (rh:products); the master reaction RHEA:54900 is undirected. This participant is CHEBI:57540 with
+        coefficient 1. Rhea cites PMID:8910376, PMID:7592873 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

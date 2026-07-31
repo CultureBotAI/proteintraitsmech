@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -41,4 +41,83 @@ definitions:
       Catalyses: Cleavage of the triple helix of collagen at about three-quarters of the length of the molecule from the N-terminus, at 775-Gly-|-Ile-776 in the alpha1(I) chain. Cleaves synthetic substrates and alpha-macroglobulins at bonds where P1' is a hydrophobic residue
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of interstitial collagenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.7. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleavage
+    of the triple helix of collagen at about three-quarters of the length of the molecule from the N-terminus,
+    at 775-Gly-|-Ile-776 in the alpha1(I) chain. Cleaves synthetic substrates and alpha-macroglobulins
+    at bonds where P1'' is a hydrophobic residue".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: interstitial collagenase
+    grounding: EC:3.4.24.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: metalloendopeptidase activity
+    grounding: GO:0004222
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P34156
+    node_type: PROTEIN
+    label: COG4_CHIOP
+    grounding: UniProtKB:P34156
+  - node_id: prot_Q9EPL5
+    node_type: PROTEIN
+    label: MMP1A_MOUSE
+    grounding: UniProtKB:Q9EPL5
+  - node_id: prot_Q9EPL6
+    node_type: PROTEIN
+    label: MMP1B_MOUSE
+    grounding: UniProtKB:Q9EPL6
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.24.7
+      snippet: EC:3.4.24.7 > GO:metalloendopeptidase activity ; GO:0004222
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004222 is itself a record
+        in this KB.
+  - subject: prot_P34156
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COG4_CHIOP is an exemplar enzyme with EC 3.4.24.7 activity.
+    evidence:
+    - reference: EC:3.4.24.7
+      snippet: DR   P34156, COG4_CHIOP ;  Q9EPL5, MMP1A_MOUSE;  Q9EPL6, MMP1B_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.24.7 cross-references UniProtKB:P34156 (COG4_CHIOP) as a protein
+        with this activity.
+  - subject: prot_Q9EPL5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP1A_MOUSE is an exemplar enzyme with EC 3.4.24.7 activity.
+    evidence:
+    - reference: EC:3.4.24.7
+      snippet: DR   P34156, COG4_CHIOP ;  Q9EPL5, MMP1A_MOUSE;  Q9EPL6, MMP1B_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.24.7 cross-references UniProtKB:Q9EPL5 (MMP1A_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q9EPL6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMP1B_MOUSE is an exemplar enzyme with EC 3.4.24.7 activity.
+    evidence:
+    - reference: EC:3.4.24.7
+      snippet: DR   P34156, COG4_CHIOP ;  Q9EPL5, MMP1A_MOUSE;  Q9EPL6, MMP1B_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.24.7 cross-references UniProtKB:Q9EPL6 (MMP1B_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

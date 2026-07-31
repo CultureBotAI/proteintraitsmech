@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78469
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,142 @@ definitions:
       Catalyses the reaction: 3-oxododecanoyl-[ACP] + NADPH + H(+) = (3R)-hydroxydodecanoyl-[ACP] + NADP(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-oxododecanoyl-[ACP] + NADPH + H(+) = (3R)-hydroxydodecanoyl-[ACP] + NADP(+)
+  description: Substrate-to-product chemistry of RHEA:41872, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:41873 (rh:substrates → 41872_L, rh:products → 41872_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-oxododecanoyl-[ACP] + NADPH + H(+) = (3R)-hydroxydodecanoyl-[ACP] + NADP(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:41872
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-oxododecanoyl-[ACP] + NADPH + H(+) = (3R)-hydroxydodecanoyl-[ACP] + NADP(+)'
+  - node_id: sub1
+    label: 3-oxododecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9641
+    description: Rhea compound GENERIC:9641.
+  - node_id: sub1_rp1
+    label: O-(S-3-oxododecanoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9641 (3-oxododecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78469
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: (3R)-hydroxydodecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9642
+    description: Rhea compound GENERIC:9642.
+  - node_id: prd1_rp1
+    label: O-(S-3R-hydroxydodecanoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9642 ((3R)-hydroxydodecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78470
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-oxododecanoyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:41873
+      snippet: 3-oxododecanoyl-[ACP] + NADPH + H(+) => (3R)-hydroxydodecanoyl-[ACP] + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:41873 declares side 41872_L as its substrates
+        (rh:substrates); the master reaction RHEA:41872 is undirected. This participant is GENERIC:9641
+        with coefficient 1. Rhea cites PMID:7567999, PMID:9356448, PMID:8962082 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-3-oxododecanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part
+      of 3-oxododecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:41872
+      snippet: O-(S-3-oxododecanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9641 (3-oxododecanoyl-[ACP]) declares rh:reactivePart = O-(S-3-oxododecanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78469), formula C26H45N3O10PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41873
+      snippet: 3-oxododecanoyl-[ACP] + NADPH + H(+) => (3R)-hydroxydodecanoyl-[ACP] + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:41873 declares side 41872_L as its substrates
+        (rh:substrates); the master reaction RHEA:41872 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:7567999, PMID:9356448, PMID:8962082 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41873
+      snippet: 3-oxododecanoyl-[ACP] + NADPH + H(+) => (3R)-hydroxydodecanoyl-[ACP] + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:41873 declares side 41872_L as its substrates
+        (rh:substrates); the master reaction RHEA:41872 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:7567999, PMID:9356448, PMID:8962082 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3R)-hydroxydodecanoyl-[ACP] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:41873
+      snippet: 3-oxododecanoyl-[ACP] + NADPH + H(+) => (3R)-hydroxydodecanoyl-[ACP] + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:41873 declares side 41872_R as its products
+        (rh:products); the master reaction RHEA:41872 is undirected. This participant is GENERIC:9642
+        with coefficient 1. Rhea cites PMID:7567999, PMID:9356448, PMID:8962082 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-3R-hydroxydodecanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive
+      part of (3R)-hydroxydodecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:41872
+      snippet: O-(S-3R-hydroxydodecanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9642 ((3R)-hydroxydodecanoyl-[ACP]) declares rh:reactivePart = O-(S-3R-hydroxydodecanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78470), formula C26H47N3O10PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41873
+      snippet: 3-oxododecanoyl-[ACP] + NADPH + H(+) => (3R)-hydroxydodecanoyl-[ACP] + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:41873 declares side 41872_R as its products
+        (rh:products); the master reaction RHEA:41872 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:7567999, PMID:9356448, PMID:8962082 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

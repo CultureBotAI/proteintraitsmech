@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.1.25
     mapping_source: rhea2ec
@@ -46,4 +46,184 @@ definitions:
       Catalyses the reaction: L-tyrosine + H(+) = tyramine + CO2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-tyrosine + H(+) = tyramine + CO2
+  description: Substrate-to-product chemistry of RHEA:14345, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:14346 (rh:substrates → 14345_L, rh:products → 14345_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-tyrosine + H(+) = tyramine + CO2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:14345
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-tyrosine + H(+) = tyramine + CO2'
+  - node_id: sub1
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+    description: Formula C9H11NO3.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: tyramine
+    node_type: CHEMICAL
+    grounding: CHEBI:327995
+    description: Formula C8H12NO.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tyrosine decarboxylase activity
+    grounding: GO:0004837
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: tyrosine decarboxylase
+    grounding: EC:4.1.1.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A4P1LYB6
+    node_type: PROTEIN
+    label: AAAD_PSICU
+    grounding: UniProtKB:A0A4P1LYB6
+  - node_id: prot_A6UVR4
+    node_type: PROTEIN
+    label: MFNA_META3
+    grounding: UniProtKB:A6UVR4
+  - node_id: prot_Q8TUQ9
+    node_type: PROTEIN
+    label: MFNA_METAC
+    grounding: UniProtKB:Q8TUQ9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tyrosine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14346
+      snippet: L-tyrosine + H(+) => tyramine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:14346 declares side 14345_L as its substrates
+        (rh:substrates); the master reaction RHEA:14345 is undirected. This participant is CHEBI:58315
+        with coefficient 1. Rhea cites PMID:15715981, PMID:31196984, PMID:121930, PMID:37675639 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14346
+      snippet: L-tyrosine + H(+) => tyramine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:14346 declares side 14345_L as its substrates
+        (rh:substrates); the master reaction RHEA:14345 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:15715981, PMID:31196984, PMID:121930, PMID:37675639 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tyramine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14346
+      snippet: L-tyrosine + H(+) => tyramine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:14346 declares side 14345_R as its products
+        (rh:products); the master reaction RHEA:14345 is undirected. This participant is CHEBI:327995
+        with coefficient 1. Rhea cites PMID:15715981, PMID:31196984, PMID:121930, PMID:37675639 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14346
+      snippet: L-tyrosine + H(+) => tyramine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:14346 declares side 14345_R as its products
+        (rh:products); the master reaction RHEA:14345 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:15715981, PMID:31196984, PMID:121930, PMID:37675639 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:14345
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004837"/>
+      notes: The rdfs:seeAlso triple on RHEA:14345 in rhea.rdf. GO term GO:0004837 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.1.25; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:14345
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.25"/>
+      notes: The rh:ec triple on RHEA:14345 in rhea.rdf. EC 4.1.1.25 is itself a record in this KB.
+  - subject: prot_A0A4P1LYB6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AAAD_PSICU is an exemplar enzyme carrying EC 4.1.1.25, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.1.25
+      snippet: DR   A0A4P1LYB6, AAAD_PSICU ;  A6UVR4, MFNA_META3 ;  Q8TUQ9, MFNA_METAC ;
+      notes: ExPASy ENZYME entry EC 4.1.1.25 cross-references UniProtKB:A0A4P1LYB6 (AAAD_PSICU) as a protein
+        with this activity.
+    - reference: RHEA:14345
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.25"/>
+      notes: Rhea assigns RHEA:14345 to EC 4.1.1.25, and EC 4.1.1.25 maps to exactly one Rhea master reaction
+        (RHEA:14345), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A6UVR4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MFNA_META3 is an exemplar enzyme carrying EC 4.1.1.25, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.1.25
+      snippet: DR   A0A4P1LYB6, AAAD_PSICU ;  A6UVR4, MFNA_META3 ;  Q8TUQ9, MFNA_METAC ;
+      notes: ExPASy ENZYME entry EC 4.1.1.25 cross-references UniProtKB:A6UVR4 (MFNA_META3) as a protein
+        with this activity.
+    - reference: RHEA:14345
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.25"/>
+      notes: Rhea assigns RHEA:14345 to EC 4.1.1.25, and EC 4.1.1.25 maps to exactly one Rhea master reaction
+        (RHEA:14345), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q8TUQ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MFNA_METAC is an exemplar enzyme carrying EC 4.1.1.25, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.1.25
+      snippet: DR   A0A4P1LYB6, AAAD_PSICU ;  A6UVR4, MFNA_META3 ;  Q8TUQ9, MFNA_METAC ;
+      notes: ExPASy ENZYME entry EC 4.1.1.25 cross-references UniProtKB:Q8TUQ9 (MFNA_METAC) as a protein
+        with this activity.
+    - reference: RHEA:14345
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.25"/>
+      notes: Rhea assigns RHEA:14345 to EC 4.1.1.25, and EC 4.1.1.25 maps to exactly one Rhea master reaction
+        (RHEA:14345), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -31,4 +31,88 @@ definitions:
       Catalyses: L-altrarate = 5-dehydro-4-deoxy-D-glucarate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-talarate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.156. EC 4.2.1.156 maps to
+    exactly one curated Rhea reaction (RHEA:44028), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-altrarate
+    = 5-dehydro-4-deoxy-D-glucarate + H2O". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-talarate dehydratase
+    grounding: EC:4.2.1.156
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-altrarate
+    node_type: CHEMICAL
+    grounding: CHEBI:37547
+    description: Formula C6H8O8.
+  - node_id: prd1
+    label: 5-dehydro-4-deoxy-D-glucarate
+    node_type: CHEMICAL
+    grounding: CHEBI:42819
+    description: Formula C6H6O7.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_Q8ZL58
+    node_type: PROTEIN
+    label: TAGAD_SALTY
+    grounding: UniProtKB:Q8ZL58
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-altrarate is a substrate consumed by RHEA:44028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44029
+      snippet: L-altrarate => 5-dehydro-4-deoxy-D-glucarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:44029 declares side 44028_L as its substrates
+        (rh:substrates); the master reaction RHEA:44028 is undirected. This participant is CHEBI:37547
+        with coefficient 1. Rhea cites PMID:17649980 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-dehydro-4-deoxy-D-glucarate is a product released by RHEA:44028 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44029
+      snippet: L-altrarate => 5-dehydro-4-deoxy-D-glucarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:44029 declares side 44028_R as its products
+        (rh:products); the master reaction RHEA:44028 is undirected. This participant is CHEBI:42819 with
+        coefficient 1. Rhea cites PMID:17649980 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:44028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44029
+      snippet: L-altrarate => 5-dehydro-4-deoxy-D-glucarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:44029 declares side 44028_R as its products
+        (rh:products); the master reaction RHEA:44028 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:17649980 for this reaction.
+  - subject: prot_Q8ZL58
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAGAD_SALTY is an exemplar enzyme with EC 4.2.1.156 activity.
+    evidence:
+    - reference: EC:4.2.1.156
+      snippet: DR   Q8ZL58, TAGAD_SALTY;
+      notes: ExPASy ENZYME entry EC 4.2.1.156 cross-references UniProtKB:Q8ZL58 (TAGAD_SALTY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

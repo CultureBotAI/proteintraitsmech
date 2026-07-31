@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29965
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,164 @@ definitions:
       Catalyses the reaction: L-arginyl-[protein] + UDP-N-acetyl-alpha-D-glucosamine = N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein] + UDP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-arginyl-[protein] + UDP-N-acetyl-alpha-D-glucosamine = N(omega)-(N-acetyl-beta-D-gluc…
+  description: Substrate-to-product chemistry of RHEA:66632, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:66633 (rh:substrates → 66632_L, rh:products → 66632_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-arginyl-[protein] + UDP-N-acetyl-alpha-D-glucosamine = N(omega)-(N-acetyl-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:66632
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-arginyl-[protein] + UDP-N-acetyl-alpha-D-glucosamine = N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein]
+      + UDP + H(+)'
+  - node_id: sub1
+    label: L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10532
+    description: Rhea compound GENERIC:10532.
+  - node_id: sub1_rp1
+    label: L-arginine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10532 (L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29965
+  - node_id: sub2
+    label: UDP-N-acetyl-alpha-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+    description: Formula C17H25N3O17P2.
+  - node_id: prd1
+    label: N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17079
+    description: Rhea compound GENERIC:17079.
+  - node_id: prd1_rp1
+    label: N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17079 (N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:167322
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-arginine N-acetylglucosaminyltransferase activity
+    grounding: GO:0106362
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arginyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66633
+      snippet: L-arginyl-[protein] + UDP-N-acetyl-alpha-D-glucosamine => N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein]
+        + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:66633 declares side 66632_L as its substrates
+        (rh:substrates); the master reaction RHEA:66632 is undirected. This participant is GENERIC:10532
+        with coefficient 1. Rhea cites PMID:24025841, PMID:23955153, PMID:30979585 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-arginine residue is the reactive part of L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:66632
+      snippet: L-arginine residue
+      notes: Rhea compound GENERIC:10532 (L-arginyl-[protein]) declares rh:reactivePart = L-arginine residue
+        (CHEBI:29965), formula C6H13N4O.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-N-acetyl-alpha-D-glucosamine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:66633
+      snippet: L-arginyl-[protein] + UDP-N-acetyl-alpha-D-glucosamine => N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein]
+        + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:66633 declares side 66632_L as its substrates
+        (rh:substrates); the master reaction RHEA:66632 is undirected. This participant is CHEBI:57705
+        with coefficient 1. Rhea cites PMID:24025841, PMID:23955153, PMID:30979585 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein] is a product released by
+      this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66633
+      snippet: L-arginyl-[protein] + UDP-N-acetyl-alpha-D-glucosamine => N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein]
+        + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:66633 declares side 66632_R as its products
+        (rh:products); the master reaction RHEA:66632 is undirected. This participant is GENERIC:17079
+        with coefficient 1. Rhea cites PMID:24025841, PMID:23955153, PMID:30979585 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl residue is the reactive part of N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:66632
+      snippet: N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl residue
+      notes: Rhea compound GENERIC:17079 (N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein])
+        declares rh:reactivePart = N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl residue (CHEBI:167322),
+        formula C14H26N5O6.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66633
+      snippet: L-arginyl-[protein] + UDP-N-acetyl-alpha-D-glucosamine => N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein]
+        + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:66633 declares side 66632_R as its products
+        (rh:products); the master reaction RHEA:66632 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:24025841, PMID:23955153, PMID:30979585 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66633
+      snippet: L-arginyl-[protein] + UDP-N-acetyl-alpha-D-glucosamine => N(omega)-(N-acetyl-beta-D-glucosaminyl)-L-arginyl-[protein]
+        + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:66633 declares side 66632_R as its products
+        (rh:products); the master reaction RHEA:66632 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:24025841, PMID:23955153, PMID:30979585 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:66632
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0106362"/>
+      notes: The rdfs:seeAlso triple on RHEA:66632 in rhea.rdf. GO term GO:0106362 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

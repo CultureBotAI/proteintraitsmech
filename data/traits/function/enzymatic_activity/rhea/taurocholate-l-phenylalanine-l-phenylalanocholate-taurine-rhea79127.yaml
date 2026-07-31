@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:36257
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: taurocholate + L-phenylalanine = L-phenylalanocholate + taurine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of taurocholate + L-phenylalanine = L-phenylalanocholate + taurine
+  description: Substrate-to-product chemistry of RHEA:79127, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79128 (rh:substrates → 79127_L, rh:products → 79127_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of taurocholate + L-phenylalanine = L-phenylalanocholate + taurine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79127
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: taurocholate + L-phenylalanine = L-phenylalanocholate + taurine'
+  - node_id: sub1
+    label: taurocholate
+    node_type: CHEMICAL
+    grounding: CHEBI:36257
+    description: Formula C26H44NO7S.
+  - node_id: sub2
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: prd1
+    label: L-phenylalanocholate
+    node_type: CHEMICAL
+    grounding: CHEBI:229714
+    description: Formula C33H48NO6.
+  - node_id: prd2
+    label: taurine
+    node_type: CHEMICAL
+    grounding: CHEBI:507393
+    description: Formula C2H7NO3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: taurocholate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79128
+      snippet: taurocholate + L-phenylalanine => L-phenylalanocholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:79128 declares side 79127_L as its substrates
+        (rh:substrates); the master reaction RHEA:79127 is undirected. This participant is CHEBI:36257
+        with coefficient 1. Rhea cites PMID:38326608 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-phenylalanine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79128
+      snippet: taurocholate + L-phenylalanine => L-phenylalanocholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:79128 declares side 79127_L as its substrates
+        (rh:substrates); the master reaction RHEA:79127 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:38326608 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-phenylalanocholate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79128
+      snippet: taurocholate + L-phenylalanine => L-phenylalanocholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:79128 declares side 79127_R as its products
+        (rh:products); the master reaction RHEA:79127 is undirected. This participant is CHEBI:229714
+        with coefficient 1. Rhea cites PMID:38326608 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: taurine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79128
+      snippet: taurocholate + L-phenylalanine => L-phenylalanocholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:79128 declares side 79127_R as its products
+        (rh:products); the master reaction RHEA:79127 is undirected. This participant is CHEBI:507393
+        with coefficient 1. Rhea cites PMID:38326608 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

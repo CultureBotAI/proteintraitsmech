@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -40,4 +40,67 @@ definitions:
       Catalyses: Preferential cleavage of bonds with hydrophobic residues in P1'. Also 3-Asn-|-Gln-4 and 8-Gly-|-Ser-9 bonds in insulin B chain
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of deuterolysin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.39. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Preferential
+    cleavage of bonds with hydrophobic residues in P1''. Also 3-Asn-|-Gln-4 and 8-Gly-|-Ser-9 bonds in
+    insulin B chain".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: deuterolysin
+    grounding: EC:3.4.24.39
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_G2WRE6
+    node_type: PROTEIN
+    label: M351_VERDV
+    grounding: UniProtKB:G2WRE6
+  - node_id: prot_P46073
+    node_type: PROTEIN
+    label: MEP20_ASPFL
+    grounding: UniProtKB:P46073
+  - node_id: prot_Q09016
+    node_type: PROTEIN
+    label: MEP20_ASPFM
+    grounding: UniProtKB:Q09016
+  edges:
+  - subject: prot_G2WRE6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: M351_VERDV is an exemplar enzyme with EC 3.4.24.39 activity.
+    evidence:
+    - reference: EC:3.4.24.39
+      snippet: DR   G2WRE6, M351_VERDV ;  P46073, MEP20_ASPFL;  Q09016, MEP20_ASPFM;
+      notes: ExPASy ENZYME entry EC 3.4.24.39 cross-references UniProtKB:G2WRE6 (M351_VERDV) as a protein
+        with this activity.
+  - subject: prot_P46073
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MEP20_ASPFL is an exemplar enzyme with EC 3.4.24.39 activity.
+    evidence:
+    - reference: EC:3.4.24.39
+      snippet: DR   G2WRE6, M351_VERDV ;  P46073, MEP20_ASPFL;  Q09016, MEP20_ASPFM;
+      notes: ExPASy ENZYME entry EC 3.4.24.39 cross-references UniProtKB:P46073 (MEP20_ASPFL) as a protein
+        with this activity.
+  - subject: prot_Q09016
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MEP20_ASPFM is an exemplar enzyme with EC 3.4.24.39 activity.
+    evidence:
+    - reference: EC:3.4.24.39
+      snippet: DR   G2WRE6, M351_VERDV ;  P46073, MEP20_ASPFL;  Q09016, MEP20_ASPFM;
+      notes: ExPASy ENZYME entry EC 3.4.24.39 cross-references UniProtKB:Q09016 (MEP20_ASPFM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

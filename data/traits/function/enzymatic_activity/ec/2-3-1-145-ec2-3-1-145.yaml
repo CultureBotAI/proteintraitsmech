@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -34,4 +34,149 @@ definitions:
       Catalyses: piperidine + (E,E)-piperoyl-CoA = piperine + CoA + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of piperidine N-piperoyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.145. EC 2.3.1.145 maps to
+    exactly one curated Rhea reaction (RHEA:14561), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "piperidine
+    + (E,E)-piperoyl-CoA = piperine + CoA + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: piperidine N-piperoyltransferase
+    grounding: EC:2.3.1.145
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: piperidine
+    node_type: CHEMICAL
+    grounding: CHEBI:589779
+    description: Formula C5H12N.
+  - node_id: sub2
+    label: (E,E)-piperoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57325
+    description: Formula C33H40N7O19P3S.
+  - node_id: prd1
+    label: piperine
+    node_type: CHEMICAL
+    grounding: CHEBI:28821
+    description: Formula C17H19NO3.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: piperidine N-piperoyltransferase activity
+    grounding: GO:0050199
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0DO57
+    node_type: PROTEIN
+    label: PAS_PIPNI
+    grounding: UniProtKB:P0DO57
+  - node_id: prot_P0DO56
+    node_type: PROTEIN
+    label: PS_PIPNI
+    grounding: UniProtKB:P0DO56
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: piperidine is a substrate consumed by RHEA:14561 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14562
+      snippet: piperidine + (E,E)-piperoyl-CoA => piperine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14562 declares side 14561_L as its substrates
+        (rh:substrates); the master reaction RHEA:14561 is undirected. This participant is CHEBI:589779
+        with coefficient 1. Rhea cites PMID:33833371 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (E,E)-piperoyl-CoA is a substrate consumed by RHEA:14561 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14562
+      snippet: piperidine + (E,E)-piperoyl-CoA => piperine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14562 declares side 14561_L as its substrates
+        (rh:substrates); the master reaction RHEA:14561 is undirected. This participant is CHEBI:57325
+        with coefficient 1. Rhea cites PMID:33833371 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: piperine is a product released by RHEA:14561 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14562
+      snippet: piperidine + (E,E)-piperoyl-CoA => piperine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14562 declares side 14561_R as its products
+        (rh:products); the master reaction RHEA:14561 is undirected. This participant is CHEBI:28821 with
+        coefficient 1. Rhea cites PMID:33833371 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:14561 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14562
+      snippet: piperidine + (E,E)-piperoyl-CoA => piperine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14562 declares side 14561_R as its products
+        (rh:products); the master reaction RHEA:14561 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:33833371 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:14561 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14562
+      snippet: piperidine + (E,E)-piperoyl-CoA => piperine + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:14562 declares side 14561_R as its products
+        (rh:products); the master reaction RHEA:14561 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:33833371 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.145
+      snippet: EC:2.3.1.145 > GO:piperidine N-piperoyltransferase activity ; GO:0050199
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050199 is itself a record
+        in this KB.
+  - subject: prot_P0DO57
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAS_PIPNI is an exemplar enzyme with EC 2.3.1.145 activity.
+    evidence:
+    - reference: EC:2.3.1.145
+      snippet: DR   P0DO57, PAS_PIPNI  ;  P0DO56, PS_PIPNI   ;
+      notes: ExPASy ENZYME entry EC 2.3.1.145 cross-references UniProtKB:P0DO57 (PAS_PIPNI) as a protein
+        with this activity.
+  - subject: prot_P0DO56
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PS_PIPNI is an exemplar enzyme with EC 2.3.1.145 activity.
+    evidence:
+    - reference: EC:2.3.1.145
+      snippet: DR   P0DO57, PAS_PIPNI  ;  P0DO56, PS_PIPNI   ;
+      notes: ExPASy ENZYME entry EC 2.3.1.145 cross-references UniProtKB:P0DO56 (PS_PIPNI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

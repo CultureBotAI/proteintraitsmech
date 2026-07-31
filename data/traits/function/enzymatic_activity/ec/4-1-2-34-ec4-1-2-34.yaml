@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -37,4 +37,119 @@ definitions:
       Catalyses: (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H2O = 2-formylbenzoate + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-(2-carboxyphenyl)-2-oxobut-3-enoate aldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.34. EC 4.1.2.34 maps to exactly
+    one curated Rhea reaction (RHEA:16453), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate
+    + H2O = 2-formylbenzoate + pyruvate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-(2-carboxyphenyl)-2-oxobut-3-enoate aldolase
+    grounding: EC:4.1.2.34
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58794
+    description: Formula C11H6O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 2-formylbenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58203
+    description: Formula C8H5O3.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 4-(2-carboxyphenyl)-2-oxobut-3-enoate aldolase activity
+    grounding: GO:0018803
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q79EM8
+    node_type: PROTEIN
+    label: PHDJ_NOCSK
+    grounding: UniProtKB:Q79EM8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate is a substrate consumed by RHEA:16453 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16454
+      snippet: (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H2O => 2-formylbenzoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:16454 declares side 16453_L as its substrates
+        (rh:substrates); the master reaction RHEA:16453 is undirected. This participant is CHEBI:58794
+        with coefficient 1. Rhea cites PMID:6833175, PMID:9473051 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:16453 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16454
+      snippet: (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H2O => 2-formylbenzoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:16454 declares side 16453_L as its substrates
+        (rh:substrates); the master reaction RHEA:16453 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:6833175, PMID:9473051 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-formylbenzoate is a product released by RHEA:16453 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16454
+      snippet: (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H2O => 2-formylbenzoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:16454 declares side 16453_R as its products
+        (rh:products); the master reaction RHEA:16453 is undirected. This participant is CHEBI:58203 with
+        coefficient 1. Rhea cites PMID:6833175, PMID:9473051 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:16453 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16454
+      snippet: (3Z)-4-(2-carboxyphenyl)-2-oxobut-3-enoate + H2O => 2-formylbenzoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:16454 declares side 16453_R as its products
+        (rh:products); the master reaction RHEA:16453 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:6833175, PMID:9473051 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.2.34
+      snippet: EC:4.1.2.34 > GO:4-(2-carboxyphenyl)-2-oxobut-3-enoate aldolase activity ; GO:0018803
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018803 is itself a record
+        in this KB.
+  - subject: prot_Q79EM8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHDJ_NOCSK is an exemplar enzyme with EC 4.1.2.34 activity.
+    evidence:
+    - reference: EC:4.1.2.34
+      snippet: DR   Q79EM8, PHDJ_NOCSK ;
+      notes: ExPASy ENZYME entry EC 4.1.2.34 cross-references UniProtKB:Q79EM8 (PHDJ_NOCSK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.3.9
     mapping_source: rhea2ec
@@ -28,4 +28,218 @@ definitions:
       Catalyses the reaction: L-histidyl-[protein] + phosphoenolpyruvate = N(pros)-phospho-L-histidyl-[protein] + pyruvate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-histidyl-[protein] + phosphoenolpyruvate = N(pros)-phospho-L-histidyl-[protein]
+    + pyr…
+  description: Substrate-to-product chemistry of RHEA:23880, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:23881 (rh:substrates → 23880_L, rh:products → 23880_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-histidyl-[protein] + phosphoenolpyruvate = N(pros)-phospho-L-histidyl-[pro…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23880
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-histidyl-[protein] + phosphoenolpyruvate = N(pros)-phospho-L-histidyl-[protein]
+      + pyruvate'
+  - node_id: sub1
+    label: L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9745
+    description: Rhea compound GENERIC:9745.
+  - node_id: sub1_rp1
+    label: L-histidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9745 (L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29979
+  - node_id: sub2
+    label: phosphoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+    description: Formula C3H2O6P.
+  - node_id: prd1
+    label: N(pros)-phospho-L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9746
+    description: Rhea compound GENERIC:9746.
+  - node_id: prd1_rp1
+    label: N(pros)-phospho-L-histidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64837
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoenolpyruvate-protein phosphotransferase activity
+    grounding: GO:0008965
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoenolpyruvate--protein phosphotransferase
+    grounding: EC:2.7.3.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P37177
+    node_type: PROTEIN
+    label: PT1P_ECOLI
+    grounding: UniProtKB:P37177
+  - node_id: prot_P37178
+    node_type: PROTEIN
+    label: PT1P_SALTY
+    grounding: UniProtKB:P37178
+  - node_id: prot_O83018
+    node_type: PROTEIN
+    label: PT1_BACSI
+    grounding: UniProtKB:O83018
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-histidyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23881
+      snippet: L-histidyl-[protein] + phosphoenolpyruvate => N(pros)-phospho-L-histidyl-[protein] + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:23881 declares side 23880_L as its substrates
+        (rh:substrates); the master reaction RHEA:23880 is undirected. This participant is GENERIC:9745
+        with coefficient 1. Rhea cites PMID:23105153 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-histidine residue is the reactive part of L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:23880
+      snippet: L-histidine residue
+      notes: Rhea compound GENERIC:9745 (L-histidyl-[protein]) declares rh:reactivePart = L-histidine
+        residue (CHEBI:29979), formula C6H7N3O.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphoenolpyruvate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23881
+      snippet: L-histidyl-[protein] + phosphoenolpyruvate => N(pros)-phospho-L-histidyl-[protein] + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:23881 declares side 23880_L as its substrates
+        (rh:substrates); the master reaction RHEA:23880 is undirected. This participant is CHEBI:58702
+        with coefficient 1. Rhea cites PMID:23105153 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(pros)-phospho-L-histidyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:23881
+      snippet: L-histidyl-[protein] + phosphoenolpyruvate => N(pros)-phospho-L-histidyl-[protein] + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:23881 declares side 23880_R as its products
+        (rh:products); the master reaction RHEA:23880 is undirected. This participant is GENERIC:9746
+        with coefficient 1. Rhea cites PMID:23105153 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(pros)-phospho-L-histidine residue is the reactive part of N(pros)-phospho-L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:23880
+      snippet: N(pros)-phospho-L-histidine residue
+      notes: Rhea compound GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]) declares rh:reactivePart
+        = N(pros)-phospho-L-histidine residue (CHEBI:64837), formula C6H6N3O4P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23881
+      snippet: L-histidyl-[protein] + phosphoenolpyruvate => N(pros)-phospho-L-histidyl-[protein] + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:23881 declares side 23880_R as its products
+        (rh:products); the master reaction RHEA:23880 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:23105153 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:23880
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008965"/>
+      notes: The rdfs:seeAlso triple on RHEA:23880 in rhea.rdf. GO term GO:0008965 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.3.9; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:23880
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.3.9"/>
+      notes: The rh:ec triple on RHEA:23880 in rhea.rdf. EC 2.7.3.9 is itself a record in this KB.
+  - subject: prot_P37177
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PT1P_ECOLI is an exemplar enzyme carrying EC 2.7.3.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.3.9
+      snippet: DR   P37177, PT1P_ECOLI ;  P37178, PT1P_SALTY ;  O83018, PT1_BACSI  ;
+      notes: ExPASy ENZYME entry EC 2.7.3.9 cross-references UniProtKB:P37177 (PT1P_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:23880
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.3.9"/>
+      notes: Rhea assigns RHEA:23880 to EC 2.7.3.9, and EC 2.7.3.9 maps to exactly one Rhea master reaction
+        (RHEA:23880), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P37178
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PT1P_SALTY is an exemplar enzyme carrying EC 2.7.3.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.3.9
+      snippet: DR   P37177, PT1P_ECOLI ;  P37178, PT1P_SALTY ;  O83018, PT1_BACSI  ;
+      notes: ExPASy ENZYME entry EC 2.7.3.9 cross-references UniProtKB:P37178 (PT1P_SALTY) as a protein
+        with this activity.
+    - reference: RHEA:23880
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.3.9"/>
+      notes: Rhea assigns RHEA:23880 to EC 2.7.3.9, and EC 2.7.3.9 maps to exactly one Rhea master reaction
+        (RHEA:23880), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O83018
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PT1_BACSI is an exemplar enzyme carrying EC 2.7.3.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.3.9
+      snippet: DR   P37177, PT1P_ECOLI ;  P37178, PT1P_SALTY ;  O83018, PT1_BACSI  ;
+      notes: ExPASy ENZYME entry EC 2.7.3.9 cross-references UniProtKB:O83018 (PT1_BACSI) as a protein
+        with this activity.
+    - reference: RHEA:23880
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.3.9"/>
+      notes: Rhea assigns RHEA:23880 to EC 2.7.3.9, and EC 2.7.3.9 maps to exactly one Rhea master reaction
+        (RHEA:23880), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

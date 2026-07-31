@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:229678
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,129 @@ definitions:
       Catalyses the reaction: 4-carboxy-3-methylbut-(2E)-enoyl-[ACP] + H(+) = 3-methylbut-(2E)-enoyl-[ACP] + CO2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-carboxy-3-methylbut-(2E)-enoyl-[ACP] + H(+) = 3-methylbut-(2E)-enoyl-[ACP]
+    + CO2
+  description: Substrate-to-product chemistry of RHEA:79059, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79060 (rh:substrates → 79059_L, rh:products → 79059_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4-carboxy-3-methylbut-(2E)-enoyl-[ACP] + H(+) = 3-methylbut-(2E)-enoyl-[ACP]…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79059
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4-carboxy-3-methylbut-(2E)-enoyl-[ACP] + H(+) = 3-methylbut-(2E)-enoyl-[ACP] + CO2'
+  - node_id: sub1
+    label: 4-carboxy-3-methylbut-(2E)-enoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:19185
+    description: Rhea compound GENERIC:19185.
+  - node_id: sub1_rp1
+    label: an O-[S-(4-carboxy-3-methylbut-(2E)-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19185 (4-carboxy-3-methylbut-(2E)-enoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:229678
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 3-methylbut-(2E)-enoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:19188
+    description: Rhea compound GENERIC:19188.
+  - node_id: prd1_rp1
+    label: an O-[S-(3-methylbut-2-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19188 (3-methylbut-(2E)-enoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:229679
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-carboxy-3-methylbut-(2E)-enoyl-[ACP] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79060
+      snippet: 4-carboxy-3-methylbut-(2E)-enoyl-[ACP] + H(+) => 3-methylbut-(2E)-enoyl-[ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:79060 declares side 79059_L as its substrates
+        (rh:substrates); the master reaction RHEA:79059 is undirected. This participant is GENERIC:19185
+        with coefficient 1. Rhea cites PMID:17928301 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: an O-[S-(4-carboxy-3-methylbut-(2E)-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue
+      is the reactive part of 4-carboxy-3-methylbut-(2E)-enoyl-[ACP].
+    evidence:
+    - reference: RHEA:79059
+      snippet: an O-[S-(4-carboxy-3-methylbut-(2E)-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue
+      notes: Rhea compound GENERIC:19185 (4-carboxy-3-methylbut-(2E)-enoyl-[ACP]) declares rh:reactivePart
+        = an O-[S-(4-carboxy-3-methylbut-(2E)-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue (CHEBI:229678),
+        formula C20H30N3O11PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79060
+      snippet: 4-carboxy-3-methylbut-(2E)-enoyl-[ACP] + H(+) => 3-methylbut-(2E)-enoyl-[ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:79060 declares side 79059_L as its substrates
+        (rh:substrates); the master reaction RHEA:79059 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:17928301 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-methylbut-(2E)-enoyl-[ACP] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79060
+      snippet: 4-carboxy-3-methylbut-(2E)-enoyl-[ACP] + H(+) => 3-methylbut-(2E)-enoyl-[ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:79060 declares side 79059_R as its products
+        (rh:products); the master reaction RHEA:79059 is undirected. This participant is GENERIC:19188
+        with coefficient 1. Rhea cites PMID:17928301 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: an O-[S-(3-methylbut-2-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue is the reactive
+      part of 3-methylbut-(2E)-enoyl-[ACP].
+    evidence:
+    - reference: RHEA:79059
+      snippet: an O-[S-(3-methylbut-2-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue
+      notes: Rhea compound GENERIC:19188 (3-methylbut-(2E)-enoyl-[ACP]) declares rh:reactivePart = an
+        O-[S-(3-methylbut-2-enoyl)-pantetheine-4'-phosphoryl]-L-serine residue (CHEBI:229679), formula
+        C19H31N3O9PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79060
+      snippet: 4-carboxy-3-methylbut-(2E)-enoyl-[ACP] + H(+) => 3-methylbut-(2E)-enoyl-[ACP] + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:79060 declares side 79059_R as its products
+        (rh:products); the master reaction RHEA:79059 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:17928301 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

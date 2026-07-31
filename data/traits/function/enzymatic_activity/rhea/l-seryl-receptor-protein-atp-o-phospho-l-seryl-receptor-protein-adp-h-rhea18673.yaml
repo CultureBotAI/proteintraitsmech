@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.11.30
     mapping_source: rhea2ec
@@ -34,4 +34,172 @@ definitions:
       Catalyses the reaction: L-seryl-[receptor-protein] + ATP = O-phospho-L-seryl-[receptor-protein] + ADP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-seryl-[receptor-protein] + ATP = O-phospho-L-seryl-[receptor-protein]
+    + ADP + H(+)
+  description: Substrate-to-product chemistry of RHEA:18673, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:18674 (rh:substrates → 18673_L, rh:products → 18673_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-seryl-[receptor-protein] + ATP = O-phospho-L-seryl-[receptor-protein] + AD…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:18673
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-seryl-[receptor-protein] + ATP = O-phospho-L-seryl-[receptor-protein] + ADP + H(+)'
+  - node_id: sub1
+    label: L-seryl-[receptor-protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11022
+    description: Rhea compound GENERIC:11022.
+  - node_id: sub1_rp1
+    label: L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11022 (L-seryl-[receptor-protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: O-phospho-L-seryl-[receptor-protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11023
+    description: Rhea compound GENERIC:11023.
+  - node_id: prd1_rp1
+    label: O-phospho-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11023 (O-phospho-L-seryl-[receptor-protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83421
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: transmembrane receptor protein serine/threonine kinase activity
+    grounding: GO:0004675
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: receptor protein serine/threonine kinase
+    grounding: EC:2.7.11.30
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-seryl-[receptor-protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18674
+      snippet: L-seryl-[receptor-protein] + ATP => O-phospho-L-seryl-[receptor-protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18674 declares side 18673_L as its substrates
+        (rh:substrates); the master reaction RHEA:18673 is undirected. This participant is GENERIC:11022
+        with coefficient 1. Rhea cites PMID:9153220, PMID:10733523, PMID:8047140 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of L-seryl-[receptor-protein].
+    evidence:
+    - reference: RHEA:18673
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:11022 (L-seryl-[receptor-protein]) declares rh:reactivePart = L-serine
+        residue (CHEBI:29999), formula C3H5NO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18674
+      snippet: L-seryl-[receptor-protein] + ATP => O-phospho-L-seryl-[receptor-protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18674 declares side 18673_L as its substrates
+        (rh:substrates); the master reaction RHEA:18673 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:9153220, PMID:10733523, PMID:8047140 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-phospho-L-seryl-[receptor-protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18674
+      snippet: L-seryl-[receptor-protein] + ATP => O-phospho-L-seryl-[receptor-protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18674 declares side 18673_R as its products
+        (rh:products); the master reaction RHEA:18673 is undirected. This participant is GENERIC:11023
+        with coefficient 1. Rhea cites PMID:9153220, PMID:10733523, PMID:8047140 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-phospho-L-serine residue is the reactive part of O-phospho-L-seryl-[receptor-protein].
+    evidence:
+    - reference: RHEA:18673
+      snippet: O-phospho-L-serine residue
+      notes: Rhea compound GENERIC:11023 (O-phospho-L-seryl-[receptor-protein]) declares rh:reactivePart
+        = O-phospho-L-serine residue (CHEBI:83421), formula C3H4NO5P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18674
+      snippet: L-seryl-[receptor-protein] + ATP => O-phospho-L-seryl-[receptor-protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18674 declares side 18673_R as its products
+        (rh:products); the master reaction RHEA:18673 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:9153220, PMID:10733523, PMID:8047140 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18674
+      snippet: L-seryl-[receptor-protein] + ATP => O-phospho-L-seryl-[receptor-protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18674 declares side 18673_R as its products
+        (rh:products); the master reaction RHEA:18673 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9153220, PMID:10733523, PMID:8047140 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:18673
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004675"/>
+      notes: The rdfs:seeAlso triple on RHEA:18673 in rhea.rdf. GO term GO:0004675 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.11.30; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:18673
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.11.30"/>
+      notes: The rh:ec triple on RHEA:18673 in rhea.rdf. EC 2.7.11.30 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

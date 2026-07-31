@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:83440
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,142 @@ definitions:
       Catalyses the reaction: 3-oxoeicosanoyl-[ACP] + NADPH + H(+) = 3R-hydroxyeicosanoyl-[ACP] + NADP(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-oxoeicosanoyl-[ACP] + NADPH + H(+) = 3R-hydroxyeicosanoyl-[ACP] + NADP(+)
+  description: Substrate-to-product chemistry of RHEA:43600, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:43601 (rh:substrates → 43600_L, rh:products → 43600_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-oxoeicosanoyl-[ACP] + NADPH + H(+) = 3R-hydroxyeicosanoyl-[ACP] + NADP(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:43600
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-oxoeicosanoyl-[ACP] + NADPH + H(+) = 3R-hydroxyeicosanoyl-[ACP] + NADP(+)'
+  - node_id: sub1
+    label: 3-oxoeicosanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10620
+    description: Rhea compound GENERIC:10620.
+  - node_id: sub1_rp1
+    label: O-(S-3-oxoeicosanoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10620 (3-oxoeicosanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83440
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 3R-hydroxyeicosanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10619
+    description: Rhea compound GENERIC:10619.
+  - node_id: prd1_rp1
+    label: O-(S-3R-hydroxyeicosanoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10619 (3R-hydroxyeicosanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83441
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-oxoeicosanoyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43601
+      snippet: 3-oxoeicosanoyl-[ACP] + NADPH + H(+) => 3R-hydroxyeicosanoyl-[ACP] + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43601 declares side 43600_L as its substrates
+        (rh:substrates); the master reaction RHEA:43600 is undirected. This participant is GENERIC:10620
+        with coefficient 1. Rhea cites PMID:11932442 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-3-oxoeicosanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part
+      of 3-oxoeicosanoyl-[ACP].
+    evidence:
+    - reference: RHEA:43600
+      snippet: O-(S-3-oxoeicosanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:10620 (3-oxoeicosanoyl-[ACP]) declares rh:reactivePart = O-(S-3-oxoeicosanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:83440), formula C34H61N3O10PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43601
+      snippet: 3-oxoeicosanoyl-[ACP] + NADPH + H(+) => 3R-hydroxyeicosanoyl-[ACP] + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43601 declares side 43600_L as its substrates
+        (rh:substrates); the master reaction RHEA:43600 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:11932442 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43601
+      snippet: 3-oxoeicosanoyl-[ACP] + NADPH + H(+) => 3R-hydroxyeicosanoyl-[ACP] + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43601 declares side 43600_L as its substrates
+        (rh:substrates); the master reaction RHEA:43600 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:11932442 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3R-hydroxyeicosanoyl-[ACP] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43601
+      snippet: 3-oxoeicosanoyl-[ACP] + NADPH + H(+) => 3R-hydroxyeicosanoyl-[ACP] + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43601 declares side 43600_R as its products
+        (rh:products); the master reaction RHEA:43600 is undirected. This participant is GENERIC:10619
+        with coefficient 1. Rhea cites PMID:11932442 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-3R-hydroxyeicosanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive
+      part of 3R-hydroxyeicosanoyl-[ACP].
+    evidence:
+    - reference: RHEA:43600
+      snippet: O-(S-3R-hydroxyeicosanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:10619 (3R-hydroxyeicosanoyl-[ACP]) declares rh:reactivePart = O-(S-3R-hydroxyeicosanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:83441), formula C34H63N3O10PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43601
+      snippet: 3-oxoeicosanoyl-[ACP] + NADPH + H(+) => 3R-hydroxyeicosanoyl-[ACP] + NADP(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43601 declares side 43600_R as its products
+        (rh:products); the master reaction RHEA:43600 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:11932442 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

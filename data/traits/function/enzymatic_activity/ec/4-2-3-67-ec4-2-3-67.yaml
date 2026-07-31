@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -30,4 +30,173 @@ definitions:
       Catalyses: (1) (2E,6E)-farnesyl diphosphate = cis-muurola-3,5-diene + diphosphate. (2) (2E,6E)-farnesyl diphosphate = cis-muurola-4(14),5-diene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cis-muuroladiene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.67. Rhea assigns 2 curated
+    reactions to EC 4.2.3.67. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (2E,6E)-farnesyl diphosphate = cis-muurola-3,5-diene
+    + diphosphate. (2) (2E,6E)-farnesyl diphosphate = cis-muurola-4(14),5-diene + diphosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cis-muuroladiene synthase
+    grounding: EC:4.2.3.67
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (2E,6E)-farnesyl diphosphate = cis-muurola-3,5-diene + diphosphate
+    grounding: RHEA:29487
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (2E,6E)-farnesyl diphosphate = cis-muurola-3,5-diene + diphosphate'
+  - node_id: rxn1_sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: rxn1_prd1
+    label: cis-muurola-3,5-diene
+    node_type: CHEMICAL
+    grounding: CHEBI:61687
+    description: Formula C15H24.
+  - node_id: rxn1_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (2E,6E)-farnesyl diphosphate = cis-muurola-4(14),5-diene + diphosphate
+    grounding: RHEA:29491
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (2E,6E)-farnesyl diphosphate = cis-muurola-4(14),5-diene + diphosphate'
+  - node_id: rxn2_sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: rxn2_prd1
+    label: cis-muurola-4(14),5-diene
+    node_type: CHEMICAL
+    grounding: CHEBI:61688
+    description: Formula C15H24.
+  - node_id: rxn2_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q5W283
+    node_type: PROTEIN
+    label: TPSCM_MENPI
+    grounding: UniProtKB:Q5W283
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:29487 is one of the 2 curated reactions Rhea assigns to EC 4.2.3.67; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:29487
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.67"/>
+      notes: The rh:ec triple on RHEA:29487 in rhea.rdf assigns that reaction to EC 4.2.3.67.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:29487 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:29488
+      snippet: (2E,6E)-farnesyl diphosphate => cis-muurola-3,5-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29488 declares side 29487_L as its substrates
+        (rh:substrates); the master reaction RHEA:29487 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:16083926 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: cis-muurola-3,5-diene is a product released by RHEA:29487 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:29488
+      snippet: (2E,6E)-farnesyl diphosphate => cis-muurola-3,5-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29488 declares side 29487_R as its products
+        (rh:products); the master reaction RHEA:29487 is undirected. This participant is CHEBI:61687 with
+        coefficient 1. Rhea cites PMID:16083926 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: diphosphate is a product released by RHEA:29487 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29488
+      snippet: (2E,6E)-farnesyl diphosphate => cis-muurola-3,5-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29488 declares side 29487_R as its products
+        (rh:products); the master reaction RHEA:29487 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:16083926 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:29491 is one of the 2 curated reactions Rhea assigns to EC 4.2.3.67; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:29491
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.67"/>
+      notes: The rh:ec triple on RHEA:29491 in rhea.rdf assigns that reaction to EC 4.2.3.67.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:29491 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:29492
+      snippet: (2E,6E)-farnesyl diphosphate => cis-muurola-4(14),5-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29492 declares side 29491_L as its substrates
+        (rh:substrates); the master reaction RHEA:29491 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:16083926 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: cis-muurola-4(14),5-diene is a product released by RHEA:29491 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:29492
+      snippet: (2E,6E)-farnesyl diphosphate => cis-muurola-4(14),5-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29492 declares side 29491_R as its products
+        (rh:products); the master reaction RHEA:29491 is undirected. This participant is CHEBI:61688 with
+        coefficient 1. Rhea cites PMID:16083926 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: diphosphate is a product released by RHEA:29491 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29492
+      snippet: (2E,6E)-farnesyl diphosphate => cis-muurola-4(14),5-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29492 declares side 29491_R as its products
+        (rh:products); the master reaction RHEA:29491 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:16083926 for this reaction.
+  - subject: prot_Q5W283
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPSCM_MENPI is an exemplar enzyme with EC 4.2.3.67 activity.
+    evidence:
+    - reference: EC:4.2.3.67
+      snippet: DR   Q5W283, TPSCM_MENPI;
+      notes: ExPASy ENZYME entry EC 4.2.3.67 cross-references UniProtKB:Q5W283 (TPSCM_MENPI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

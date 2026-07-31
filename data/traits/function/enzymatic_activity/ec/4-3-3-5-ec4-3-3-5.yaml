@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.3.-
 synonyms:
@@ -31,4 +31,105 @@ definitions:
       Catalyses: 4'-demethylrebeccamycin + H2O = dichloroarcyriaflavin A + beta-D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4'-demethylrebeccamycin synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.3.5. EC 4.3.3.5 maps to exactly
+    one curated Rhea reaction (RHEA:27397), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4''-demethylrebeccamycin
+    + H2O = dichloroarcyriaflavin A + beta-D-glucose". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4'-demethylrebeccamycin synthase
+    grounding: EC:4.3.3.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4'-demethylrebeccamycin
+    node_type: CHEMICAL
+    grounding: CHEBI:595389
+    description: Formula C26H19Cl2N3O7.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: dichloroarcyriaflavin A
+    node_type: CHEMICAL
+    grounding: CHEBI:330772
+    description: Formula C20H9Cl2N3O2.
+  - node_id: prd2
+    label: beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:15903
+    description: Formula C6H12O6.
+  - node_id: prot_Q8KHE4
+    node_type: PROTEIN
+    label: REBG_LENAE
+    grounding: UniProtKB:Q8KHE4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4'-demethylrebeccamycin is a substrate consumed by RHEA:27397 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27398
+      snippet: 4'-demethylrebeccamycin + H2O => dichloroarcyriaflavin A + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:27398 declares side 27397_L as its substrates
+        (rh:substrates); the master reaction RHEA:27397 is undirected. This participant is CHEBI:595389
+        with coefficient 1. Rhea cites PMID:16575939, PMID:10866221 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:27397 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27398
+      snippet: 4'-demethylrebeccamycin + H2O => dichloroarcyriaflavin A + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:27398 declares side 27397_L as its substrates
+        (rh:substrates); the master reaction RHEA:27397 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16575939, PMID:10866221 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dichloroarcyriaflavin A is a product released by RHEA:27397 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27398
+      snippet: 4'-demethylrebeccamycin + H2O => dichloroarcyriaflavin A + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:27398 declares side 27397_R as its products
+        (rh:products); the master reaction RHEA:27397 is undirected. This participant is CHEBI:330772
+        with coefficient 1. Rhea cites PMID:16575939, PMID:10866221 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: beta-D-glucose is a product released by RHEA:27397 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27398
+      snippet: 4'-demethylrebeccamycin + H2O => dichloroarcyriaflavin A + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:27398 declares side 27397_R as its products
+        (rh:products); the master reaction RHEA:27397 is undirected. This participant is CHEBI:15903 with
+        coefficient 1. Rhea cites PMID:16575939, PMID:10866221 for this reaction.
+  - subject: prot_Q8KHE4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: REBG_LENAE is an exemplar enzyme with EC 4.3.3.5 activity.
+    evidence:
+    - reference: EC:4.3.3.5
+      snippet: DR   Q8KHE4, REBG_LENAE ;
+      notes: ExPASy ENZYME entry EC 4.3.3.5 cross-references UniProtKB:Q8KHE4 (REBG_LENAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

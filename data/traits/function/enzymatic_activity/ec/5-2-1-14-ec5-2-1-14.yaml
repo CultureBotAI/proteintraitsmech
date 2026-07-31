@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.2.1.-
 mapped_xrefs:
@@ -38,4 +38,115 @@ definitions:
       Catalyses: all-trans-beta-carotene = 9-cis-beta-carotene
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-carotene isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.2.1.14. EC 5.2.1.14 maps to exactly
+    one curated Rhea reaction (RHEA:34455), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "all-trans-beta-carotene
+    = 9-cis-beta-carotene". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-carotene isomerase
+    grounding: EC:5.2.1.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: all-trans-beta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:17579
+    description: Formula C40H56.
+  - node_id: prd1
+    label: 9-cis-beta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:67188
+    description: Formula C40H56.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-carotene isomerase activity
+    grounding: GO:0106365
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q7XA78
+    node_type: PROTEIN
+    label: D27_ARATH
+    grounding: UniProtKB:Q7XA78
+  - node_id: prot_R4HZ96
+    node_type: PROTEIN
+    label: D27_MEDTR
+    grounding: UniProtKB:R4HZ96
+  - node_id: prot_C7AU21
+    node_type: PROTEIN
+    label: D27_ORYSJ
+    grounding: UniProtKB:C7AU21
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-beta-carotene is a substrate consumed by RHEA:34455 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34456
+      snippet: all-trans-beta-carotene => 9-cis-beta-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:34456 declares side 34455_L as its substrates
+        (rh:substrates); the master reaction RHEA:34455 is undirected. This participant is CHEBI:17579
+        with coefficient 1. Rhea cites PMID:19470589, PMID:22422982 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 9-cis-beta-carotene is a product released by RHEA:34455 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34456
+      snippet: all-trans-beta-carotene => 9-cis-beta-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:34456 declares side 34455_R as its products
+        (rh:products); the master reaction RHEA:34455 is undirected. This participant is CHEBI:67188 with
+        coefficient 1. Rhea cites PMID:19470589, PMID:22422982 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.2.1.14
+      snippet: EC:5.2.1.14 > GO:beta-carotene isomerase activity ; GO:0106365
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0106365 is itself a record
+        in this KB.
+  - subject: prot_Q7XA78
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: D27_ARATH is an exemplar enzyme with EC 5.2.1.14 activity.
+    evidence:
+    - reference: EC:5.2.1.14
+      snippet: DR   Q7XA78, D27_ARATH  ;  R4HZ96, D27_MEDTR  ;  C7AU21, D27_ORYSJ  ;
+      notes: ExPASy ENZYME entry EC 5.2.1.14 cross-references UniProtKB:Q7XA78 (D27_ARATH) as a protein
+        with this activity.
+  - subject: prot_R4HZ96
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: D27_MEDTR is an exemplar enzyme with EC 5.2.1.14 activity.
+    evidence:
+    - reference: EC:5.2.1.14
+      snippet: DR   Q7XA78, D27_ARATH  ;  R4HZ96, D27_MEDTR  ;  C7AU21, D27_ORYSJ  ;
+      notes: ExPASy ENZYME entry EC 5.2.1.14 cross-references UniProtKB:R4HZ96 (D27_MEDTR) as a protein
+        with this activity.
+  - subject: prot_C7AU21
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: D27_ORYSJ is an exemplar enzyme with EC 5.2.1.14 activity.
+    evidence:
+    - reference: EC:5.2.1.14
+      snippet: DR   Q7XA78, D27_ARATH  ;  R4HZ96, D27_MEDTR  ;  C7AU21, D27_ORYSJ  ;
+      notes: ExPASy ENZYME entry EC 5.2.1.14 cross-references UniProtKB:C7AU21 (D27_ORYSJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

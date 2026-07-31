@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -28,4 +28,72 @@ definitions:
       Catalyses: (S)-2,3-epoxysqualene = alpha-seco-amyrin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha-seco-amyrin synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.52. EC 5.4.99.52 maps to
+    exactly one curated Rhea reaction (RHEA:31871), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-2,3-epoxysqualene
+    = alpha-seco-amyrin". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-seco-amyrin synthase
+    grounding: EC:5.4.99.52
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-2,3-epoxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:15441
+    description: Formula C30H50O.
+  - node_id: prd1
+    label: alpha-seco-amyrin
+    node_type: CHEMICAL
+    grounding: CHEBI:63464
+    description: Formula C30H50O.
+  - node_id: prot_Q9SYN1
+    node_type: PROTEIN
+    label: PEN6_ARATH
+    grounding: UniProtKB:Q9SYN1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-2,3-epoxysqualene is a substrate consumed by RHEA:31871 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31872
+      snippet: (S)-2,3-epoxysqualene => alpha-seco-amyrin
+      notes: Rhea's left-to-right directional reaction RHEA:31872 declares side 31871_L as its substrates
+        (rh:substrates); the master reaction RHEA:31871 is undirected. This participant is CHEBI:15441
+        with coefficient 1. Rhea cites PMID:17263431 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-seco-amyrin is a product released by RHEA:31871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31872
+      snippet: (S)-2,3-epoxysqualene => alpha-seco-amyrin
+      notes: Rhea's left-to-right directional reaction RHEA:31872 declares side 31871_R as its products
+        (rh:products); the master reaction RHEA:31871 is undirected. This participant is CHEBI:63464 with
+        coefficient 1. Rhea cites PMID:17263431 for this reaction.
+  - subject: prot_Q9SYN1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEN6_ARATH is an exemplar enzyme with EC 5.4.99.52 activity.
+    evidence:
+    - reference: EC:5.4.99.52
+      snippet: DR   Q9SYN1, PEN6_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.4.99.52 cross-references UniProtKB:Q9SYN1 (PEN6_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

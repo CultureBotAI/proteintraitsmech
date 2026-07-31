@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78516
     role: SUBSTRATE_OR_PRODUCT
@@ -37,4 +37,146 @@ definitions:
       Catalyses the reaction: L-aspartyl-tRNA(Asn) + ATP = 4-phosphooxy-L-aspartyl-tRNA(Asn) + ADP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-aspartyl-tRNA(Asn) + ATP = 4-phosphooxy-L-aspartyl-tRNA(Asn) + ADP +
+    H(+)
+  description: Substrate-to-product chemistry of RHEA:57916, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57917 (rh:substrates → 57916_L, rh:products → 57916_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-aspartyl-tRNA(Asn) + ATP = 4-phosphooxy-L-aspartyl-tRNA(Asn) + ADP + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57916
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-aspartyl-tRNA(Asn) + ATP = 4-phosphooxy-L-aspartyl-tRNA(Asn) + ADP + H(+)'
+  - node_id: sub1
+    label: L-aspartyl-tRNA(Asn)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9677
+    description: Rhea compound GENERIC:9677.
+  - node_id: sub1_rp1
+    label: 3'-O-adenylyl -L-aspartate group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9677 (L-aspartyl-tRNA(Asn));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78516
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: 4-phosphooxy-L-aspartyl-tRNA(Asn)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15033
+    description: Rhea compound GENERIC:15033.
+  - node_id: prd1_rp1
+    label: 3'-(4-phosphooxy-L-aspartate)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15033 (4-phosphooxy-L-aspartyl-tRNA(Asn));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142450
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-aspartyl-tRNA(Asn) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57917
+      snippet: L-aspartyl-tRNA(Asn) + ATP => 4-phosphooxy-L-aspartyl-tRNA(Asn) + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57917 declares side 57916_L as its substrates
+        (rh:substrates); the master reaction RHEA:57916 is undirected. This participant is GENERIC:9677
+        with coefficient 1. Rhea cites PMID:11880622, PMID:19520089, PMID:11585842, PMID:16809541 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-O-adenylyl -L-aspartate group is the reactive part of L-aspartyl-tRNA(Asn).
+    evidence:
+    - reference: RHEA:57916
+      snippet: 3'-O-adenylyl -L-aspartate group
+      notes: Rhea compound GENERIC:9677 (L-aspartyl-tRNA(Asn)) declares rh:reactivePart = 3'-O-adenylyl
+        -L-aspartate group (CHEBI:78516), formula C14H17N6O9P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57917
+      snippet: L-aspartyl-tRNA(Asn) + ATP => 4-phosphooxy-L-aspartyl-tRNA(Asn) + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57917 declares side 57916_L as its substrates
+        (rh:substrates); the master reaction RHEA:57916 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:11880622, PMID:19520089, PMID:11585842, PMID:16809541 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-phosphooxy-L-aspartyl-tRNA(Asn) is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57917
+      snippet: L-aspartyl-tRNA(Asn) + ATP => 4-phosphooxy-L-aspartyl-tRNA(Asn) + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57917 declares side 57916_R as its products
+        (rh:products); the master reaction RHEA:57916 is undirected. This participant is GENERIC:15033
+        with coefficient 1. Rhea cites PMID:11880622, PMID:19520089, PMID:11585842, PMID:16809541 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(4-phosphooxy-L-aspartate)adenylyl group is the reactive part of 4-phosphooxy-L-aspartyl-tRNA(Asn).
+    evidence:
+    - reference: RHEA:57916
+      snippet: 3'-(4-phosphooxy-L-aspartate)adenylyl group
+      notes: Rhea compound GENERIC:15033 (4-phosphooxy-L-aspartyl-tRNA(Asn)) declares rh:reactivePart
+        = 3'-(4-phosphooxy-L-aspartate)adenylyl group (CHEBI:142450), formula C14H16N6O12P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57917
+      snippet: L-aspartyl-tRNA(Asn) + ATP => 4-phosphooxy-L-aspartyl-tRNA(Asn) + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57917 declares side 57916_R as its products
+        (rh:products); the master reaction RHEA:57916 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:11880622, PMID:19520089, PMID:11585842, PMID:16809541 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57917
+      snippet: L-aspartyl-tRNA(Asn) + ATP => 4-phosphooxy-L-aspartyl-tRNA(Asn) + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57917 declares side 57916_R as its products
+        (rh:products); the master reaction RHEA:57916 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11880622, PMID:19520089, PMID:11585842, PMID:16809541 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

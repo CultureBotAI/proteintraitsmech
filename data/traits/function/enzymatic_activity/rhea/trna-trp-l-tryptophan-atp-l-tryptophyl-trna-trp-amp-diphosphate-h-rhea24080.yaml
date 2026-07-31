@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:6.1.1.2
     mapping_source: rhea2ec
@@ -42,4 +42,268 @@ definitions:
       Catalyses the reaction: tRNA(Trp) + L-tryptophan + ATP = L-tryptophyl-tRNA(Trp) + AMP + diphosphate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA(Trp) + L-tryptophan + ATP = L-tryptophyl-tRNA(Trp) + AMP + diphosphate
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:24080, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24081 (rh:substrates → 24080_L, rh:products → 24080_R), and Rhea
+    curates the reverse direction too. 3 substrates, 4 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tRNA(Trp) + L-tryptophan + ATP = L-tryptophyl-tRNA(Trp) + AMP + diphosphate…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24080
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tRNA(Trp) + L-tryptophan + ATP = L-tryptophyl-tRNA(Trp) + AMP + diphosphate + H(+)'
+  - node_id: sub1
+    label: tRNA(Trp)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9671
+    description: Rhea compound GENERIC:9671.
+  - node_id: sub1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9671 (tRNA(Trp));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:57912
+    description: Formula C11H12N2O2.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-tryptophyl-tRNA(Trp)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9705
+    description: Rhea compound GENERIC:9705.
+  - node_id: prd1_rp1
+    label: 3'-(L-tryptophyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9705 (L-tryptophyl-tRNA(Trp));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78535
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tryptophan-tRNA ligase activity
+    grounding: GO:0004830
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: tryptophan--tRNA ligase
+    grounding: EC:6.1.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9HN83
+    node_type: PROTEIN
+    label: SYW1_HALSA
+    grounding: UniProtKB:Q9HN83
+  - node_id: prot_Q82E91
+    node_type: PROTEIN
+    label: SYW1_STRAW
+    grounding: UniProtKB:Q82E91
+  - node_id: prot_Q8CJX0
+    node_type: PROTEIN
+    label: SYW1_STRCO
+    grounding: UniProtKB:Q8CJX0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Trp) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24081
+      snippet: tRNA(Trp) + L-tryptophan + ATP => L-tryptophyl-tRNA(Trp) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24081 declares side 24080_L as its substrates
+        (rh:substrates); the master reaction RHEA:24080 is undirected. This participant is GENERIC:9671
+        with coefficient 1. Rhea cites PMID:13845797, PMID:28369220, PMID:5805407, PMID:13373404 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Trp).
+    evidence:
+    - reference: RHEA:24080
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9671 (tRNA(Trp)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-tryptophan is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24081
+      snippet: tRNA(Trp) + L-tryptophan + ATP => L-tryptophyl-tRNA(Trp) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24081 declares side 24080_L as its substrates
+        (rh:substrates); the master reaction RHEA:24080 is undirected. This participant is CHEBI:57912
+        with coefficient 1. Rhea cites PMID:13845797, PMID:28369220, PMID:5805407, PMID:13373404 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24081
+      snippet: tRNA(Trp) + L-tryptophan + ATP => L-tryptophyl-tRNA(Trp) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24081 declares side 24080_L as its substrates
+        (rh:substrates); the master reaction RHEA:24080 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:13845797, PMID:28369220, PMID:5805407, PMID:13373404 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-tryptophyl-tRNA(Trp) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24081
+      snippet: tRNA(Trp) + L-tryptophan + ATP => L-tryptophyl-tRNA(Trp) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24081 declares side 24080_R as its products
+        (rh:products); the master reaction RHEA:24080 is undirected. This participant is GENERIC:9705
+        with coefficient 1. Rhea cites PMID:13845797, PMID:28369220, PMID:5805407, PMID:13373404 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-tryptophyl)adenylyl group is the reactive part of L-tryptophyl-tRNA(Trp).
+    evidence:
+    - reference: RHEA:24080
+      snippet: 3'-(L-tryptophyl)adenylyl group
+      notes: Rhea compound GENERIC:9705 (L-tryptophyl-tRNA(Trp)) declares rh:reactivePart = 3'-(L-tryptophyl)adenylyl
+        group (CHEBI:78535), formula C21H22N7O7P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24081
+      snippet: tRNA(Trp) + L-tryptophan + ATP => L-tryptophyl-tRNA(Trp) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24081 declares side 24080_R as its products
+        (rh:products); the master reaction RHEA:24080 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:13845797, PMID:28369220, PMID:5805407, PMID:13373404 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24081
+      snippet: tRNA(Trp) + L-tryptophan + ATP => L-tryptophyl-tRNA(Trp) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24081 declares side 24080_R as its products
+        (rh:products); the master reaction RHEA:24080 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:13845797, PMID:28369220, PMID:5805407, PMID:13373404 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24081
+      snippet: tRNA(Trp) + L-tryptophan + ATP => L-tryptophyl-tRNA(Trp) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24081 declares side 24080_R as its products
+        (rh:products); the master reaction RHEA:24080 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:13845797, PMID:28369220, PMID:5805407, PMID:13373404 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:24080
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004830"/>
+      notes: The rdfs:seeAlso triple on RHEA:24080 in rhea.rdf. GO term GO:0004830 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 6.1.1.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24080
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.2"/>
+      notes: The rh:ec triple on RHEA:24080 in rhea.rdf. EC 6.1.1.2 is itself a record in this KB.
+  - subject: prot_Q9HN83
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYW1_HALSA is an exemplar enzyme carrying EC 6.1.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.2
+      snippet: DR   Q9HN83, SYW1_HALSA ;  Q82E91, SYW1_STRAW ;  Q8CJX0, SYW1_STRCO ;
+      notes: ExPASy ENZYME entry EC 6.1.1.2 cross-references UniProtKB:Q9HN83 (SYW1_HALSA) as a protein
+        with this activity.
+    - reference: RHEA:24080
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.2"/>
+      notes: Rhea assigns RHEA:24080 to EC 6.1.1.2, and EC 6.1.1.2 maps to exactly one Rhea master reaction
+        (RHEA:24080), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q82E91
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYW1_STRAW is an exemplar enzyme carrying EC 6.1.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.2
+      snippet: DR   Q9HN83, SYW1_HALSA ;  Q82E91, SYW1_STRAW ;  Q8CJX0, SYW1_STRCO ;
+      notes: ExPASy ENZYME entry EC 6.1.1.2 cross-references UniProtKB:Q82E91 (SYW1_STRAW) as a protein
+        with this activity.
+    - reference: RHEA:24080
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.2"/>
+      notes: Rhea assigns RHEA:24080 to EC 6.1.1.2, and EC 6.1.1.2 maps to exactly one Rhea master reaction
+        (RHEA:24080), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q8CJX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYW1_STRCO is an exemplar enzyme carrying EC 6.1.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.2
+      snippet: DR   Q9HN83, SYW1_HALSA ;  Q82E91, SYW1_STRAW ;  Q8CJX0, SYW1_STRCO ;
+      notes: ExPASy ENZYME entry EC 6.1.1.2 cross-references UniProtKB:Q8CJX0 (SYW1_STRCO) as a protein
+        with this activity.
+    - reference: RHEA:24080
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.2"/>
+      notes: Rhea assigns RHEA:24080 to EC 6.1.1.2, and EC 6.1.1.2 maps to exactly one Rhea master reaction
+        (RHEA:24080), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

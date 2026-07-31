@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 synonyms:
@@ -41,4 +41,146 @@ definitions:
       Catalyses: 3-sulfopyruvate + H(+) = sulfoacetaldehyde + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sulfopyruvate decarboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.79. EC 4.1.1.79 maps to exactly
+    one curated Rhea reaction (RHEA:20948), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-sulfopyruvate
+    + H(+) = sulfoacetaldehyde + CO2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sulfopyruvate decarboxylase
+    grounding: EC:4.1.1.79
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-sulfopyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:57940
+    description: Formula C3H2O6S.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: sulfoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58246
+    description: Formula C2H3O4S.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sulfopyruvate decarboxylase activity
+    grounding: GO:0050545
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8TKU6
+    node_type: PROTEIN
+    label: COMDE_METAC
+    grounding: UniProtKB:Q8TKU6
+  - node_id: prot_P58415
+    node_type: PROTEIN
+    label: COMD_METJA
+    grounding: UniProtKB:P58415
+  - node_id: prot_Q6M060
+    node_type: PROTEIN
+    label: COMD_METMP
+    grounding: UniProtKB:Q6M060
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-sulfopyruvate is a substrate consumed by RHEA:20948 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20949
+      snippet: 3-sulfopyruvate + H(+) => sulfoacetaldehyde + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:20949 declares side 20948_L as its substrates
+        (rh:substrates); the master reaction RHEA:20948 is undirected. This participant is CHEBI:57940
+        with coefficient 1. Rhea cites PMID:10940029 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by RHEA:20948 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20949
+      snippet: 3-sulfopyruvate + H(+) => sulfoacetaldehyde + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:20949 declares side 20948_L as its substrates
+        (rh:substrates); the master reaction RHEA:20948 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:10940029 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sulfoacetaldehyde is a product released by RHEA:20948 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20949
+      snippet: 3-sulfopyruvate + H(+) => sulfoacetaldehyde + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:20949 declares side 20948_R as its products
+        (rh:products); the master reaction RHEA:20948 is undirected. This participant is CHEBI:58246 with
+        coefficient 1. Rhea cites PMID:10940029 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:20948 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20949
+      snippet: 3-sulfopyruvate + H(+) => sulfoacetaldehyde + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:20949 declares side 20948_R as its products
+        (rh:products); the master reaction RHEA:20948 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:10940029 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.1.79
+      snippet: EC:4.1.1.79 > GO:sulfopyruvate decarboxylase activity ; GO:0050545
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050545 is itself a record
+        in this KB.
+  - subject: prot_Q8TKU6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COMDE_METAC is an exemplar enzyme with EC 4.1.1.79 activity.
+    evidence:
+    - reference: EC:4.1.1.79
+      snippet: DR   Q8TKU6, COMDE_METAC;  P58415, COMD_METJA ;  Q6M060, COMD_METMP ;
+      notes: ExPASy ENZYME entry EC 4.1.1.79 cross-references UniProtKB:Q8TKU6 (COMDE_METAC) as a protein
+        with this activity.
+  - subject: prot_P58415
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COMD_METJA is an exemplar enzyme with EC 4.1.1.79 activity.
+    evidence:
+    - reference: EC:4.1.1.79
+      snippet: DR   Q8TKU6, COMDE_METAC;  P58415, COMD_METJA ;  Q6M060, COMD_METMP ;
+      notes: ExPASy ENZYME entry EC 4.1.1.79 cross-references UniProtKB:P58415 (COMD_METJA) as a protein
+        with this activity.
+  - subject: prot_Q6M060
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COMD_METMP is an exemplar enzyme with EC 4.1.1.79 activity.
+    evidence:
+    - reference: EC:4.1.1.79
+      snippet: DR   Q8TKU6, COMDE_METAC;  P58415, COMD_METJA ;  Q6M060, COMD_METMP ;
+      notes: ExPASy ENZYME entry EC 4.1.1.79 cross-references UniProtKB:Q6M060 (COMD_METMP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

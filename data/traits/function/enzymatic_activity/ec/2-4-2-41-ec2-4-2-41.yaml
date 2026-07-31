@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 synonyms:
@@ -33,4 +33,54 @@ definitions:
       Catalyses: Transfers a xylosyl residue from UDP-D-xylose to a D-galactose residue in xylogalacturonan, forming a beta-1,3-D-xylosyl-D-galactose linkage
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of xylogalacturonan beta-1,3-xylosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.41. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Transfers
+    a xylosyl residue from UDP-D-xylose to a D-galactose residue in xylogalacturonan, forming a beta-1,3-D-xylosyl-D-galactose
+    linkage".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: xylogalacturonan beta-1,3-xylosyltransferase
+    grounding: EC:2.4.2.41
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: xylogalacturonan beta-1,3-xylosyltransferase activity
+    grounding: GO:0102983
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q94AA9
+    node_type: PROTEIN
+    label: XGD1_ARATH
+    grounding: UniProtKB:Q94AA9
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.2.41
+      snippet: EC:2.4.2.41 > GO:xylogalacturonan beta-1,3-xylosyltransferase activity ; GO:0102983
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102983 is itself a record
+        in this KB.
+  - subject: prot_Q94AA9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XGD1_ARATH is an exemplar enzyme with EC 2.4.2.41 activity.
+    evidence:
+    - reference: EC:2.4.2.41
+      snippet: DR   Q94AA9, XGD1_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.4.2.41 cross-references UniProtKB:Q94AA9 (XGD1_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

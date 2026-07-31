@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:87609
     role: SUBSTRATE_OR_PRODUCT
@@ -20,4 +20,93 @@ definitions:
       Catalyses the reaction: furan-3-carbaldehyde + hydrogen cyanide = (2S)-2-(furan-3-yl)-2-hydroxyacetonitrile
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of furan-3-carbaldehyde + hydrogen cyanide = (2S)-2-(furan-3-yl)-2-hydroxyacetonitrile
+  description: Substrate-to-product chemistry of RHEA:77463, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77464 (rh:substrates → 77463_L, rh:products → 77463_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of furan-3-carbaldehyde + hydrogen cyanide = (2S)-2-(furan-3-yl)-2-hydroxyaceto…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77463
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: furan-3-carbaldehyde + hydrogen cyanide = (2S)-2-(furan-3-yl)-2-hydroxyacetonitrile'
+  - node_id: sub1
+    label: furan-3-carbaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:87609
+    description: Formula C5H4O2.
+  - node_id: sub2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: prd1
+    label: (2S)-2-(furan-3-yl)-2-hydroxyacetonitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:197362
+    description: Formula C6H5NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aromatic (S)-hydroxynitrile lyase activity
+    grounding: GO:0052892
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: furan-3-carbaldehyde is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77464
+      snippet: furan-3-carbaldehyde + hydrogen cyanide => (2S)-2-(furan-3-yl)-2-hydroxyacetonitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77464 declares side 77463_L as its substrates
+        (rh:substrates); the master reaction RHEA:77463 is undirected. This participant is CHEBI:87609
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen cyanide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77464
+      snippet: furan-3-carbaldehyde + hydrogen cyanide => (2S)-2-(furan-3-yl)-2-hydroxyacetonitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77464 declares side 77463_L as its substrates
+        (rh:substrates); the master reaction RHEA:77463 is undirected. This participant is CHEBI:18407
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S)-2-(furan-3-yl)-2-hydroxyacetonitrile is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:77464
+      snippet: furan-3-carbaldehyde + hydrogen cyanide => (2S)-2-(furan-3-yl)-2-hydroxyacetonitrile
+      notes: Rhea's left-to-right directional reaction RHEA:77464 declares side 77463_R as its products
+        (rh:products); the master reaction RHEA:77463 is undirected. This participant is CHEBI:197362
+        with coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:77463
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052892"/>
+      notes: The rdfs:seeAlso triple on RHEA:77463 in rhea.rdf. GO term GO:0052892 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

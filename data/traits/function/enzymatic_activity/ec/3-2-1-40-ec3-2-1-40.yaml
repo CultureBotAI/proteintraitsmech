@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 xrefs:
@@ -40,4 +40,149 @@ definitions:
       Catalyses: Hydrolysis of terminal non-reducing alpha-L-rhamnose residues in alpha-L- rhamnosides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha-L-rhamnosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.40. EC 3.2.1.40 maps to exactly
+    one curated Rhea reaction (RHEA:17465), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis of
+    terminal non-reducing alpha-L-rhamnose residues in alpha-L- rhamnosides". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-L-rhamnosidase
+    grounding: EC:3.2.1.40
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: quercitrin
+    node_type: CHEMICAL
+    grounding: CHEBI:58192
+    description: Formula C21H19O11.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-rhamnopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:62346
+    description: Formula C6H12O5.
+  - node_id: prd2
+    label: quercetin
+    node_type: CHEMICAL
+    grounding: CHEBI:57694
+    description: Formula C15H9O7.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-L-rhamnosidase activity
+    grounding: GO:0030596
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_T2KNB2
+    node_type: PROTEIN
+    label: PLH20_FORAG
+    grounding: UniProtKB:T2KNB2
+  - node_id: prot_T2KPL4
+    node_type: PROTEIN
+    label: PLH28_FORAG
+    grounding: UniProtKB:T2KPL4
+  - node_id: prot_T2KM26
+    node_type: PROTEIN
+    label: PLH36_FORAG
+    grounding: UniProtKB:T2KM26
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: quercitrin is a substrate consumed by RHEA:17465 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17466
+      snippet: quercitrin + H2O => L-rhamnopyranose + quercetin
+      notes: Rhea's left-to-right directional reaction RHEA:17466 declares side 17465_L as its substrates
+        (rh:substrates); the master reaction RHEA:17465 is undirected. This participant is CHEBI:58192
+        with coefficient 1. Rhea cites PMID:24815685, PMID:10632887, PMID:17936784, PMID:4632197 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:17465 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17466
+      snippet: quercitrin + H2O => L-rhamnopyranose + quercetin
+      notes: Rhea's left-to-right directional reaction RHEA:17466 declares side 17465_L as its substrates
+        (rh:substrates); the master reaction RHEA:17465 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:24815685, PMID:10632887, PMID:17936784, PMID:4632197 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-rhamnopyranose is a product released by RHEA:17465 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17466
+      snippet: quercitrin + H2O => L-rhamnopyranose + quercetin
+      notes: Rhea's left-to-right directional reaction RHEA:17466 declares side 17465_R as its products
+        (rh:products); the master reaction RHEA:17465 is undirected. This participant is CHEBI:62346 with
+        coefficient 1. Rhea cites PMID:24815685, PMID:10632887, PMID:17936784, PMID:4632197 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: quercetin is a product released by RHEA:17465 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17466
+      snippet: quercitrin + H2O => L-rhamnopyranose + quercetin
+      notes: Rhea's left-to-right directional reaction RHEA:17466 declares side 17465_R as its products
+        (rh:products); the master reaction RHEA:17465 is undirected. This participant is CHEBI:57694 with
+        coefficient 1. Rhea cites PMID:24815685, PMID:10632887, PMID:17936784, PMID:4632197 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.40
+      snippet: EC:3.2.1.40 > GO:alpha-L-rhamnosidase activity ; GO:0030596
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0030596 is itself a record
+        in this KB.
+  - subject: prot_T2KNB2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLH20_FORAG is an exemplar enzyme with EC 3.2.1.40 activity.
+    evidence:
+    - reference: EC:3.2.1.40
+      snippet: DR   T2KNB2, PLH20_FORAG;  T2KPL4, PLH28_FORAG;  T2KM26, PLH36_FORAG;
+      notes: ExPASy ENZYME entry EC 3.2.1.40 cross-references UniProtKB:T2KNB2 (PLH20_FORAG) as a protein
+        with this activity.
+  - subject: prot_T2KPL4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLH28_FORAG is an exemplar enzyme with EC 3.2.1.40 activity.
+    evidence:
+    - reference: EC:3.2.1.40
+      snippet: DR   T2KNB2, PLH20_FORAG;  T2KPL4, PLH28_FORAG;  T2KM26, PLH36_FORAG;
+      notes: ExPASy ENZYME entry EC 3.2.1.40 cross-references UniProtKB:T2KPL4 (PLH28_FORAG) as a protein
+        with this activity.
+  - subject: prot_T2KM26
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLH36_FORAG is an exemplar enzyme with EC 3.2.1.40 activity.
+    evidence:
+    - reference: EC:3.2.1.40
+      snippet: DR   T2KNB2, PLH20_FORAG;  T2KPL4, PLH28_FORAG;  T2KM26, PLH36_FORAG;
+      notes: ExPASy ENZYME entry EC 3.2.1.40 cross-references UniProtKB:T2KM26 (PLH36_FORAG) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

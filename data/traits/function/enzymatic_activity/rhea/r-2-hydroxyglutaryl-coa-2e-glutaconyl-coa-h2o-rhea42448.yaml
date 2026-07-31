@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.167
     mapping_source: rhea2ec
@@ -36,4 +36,148 @@ definitions:
       Catalyses the reaction: (R)-2-hydroxyglutaryl-CoA = (2E)-glutaconyl-CoA + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (R)-2-hydroxyglutaryl-CoA = (2E)-glutaconyl-CoA + H2O
+  description: Substrate-to-product chemistry of RHEA:42448, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:42449 (rh:substrates → 42448_L, rh:products → 42448_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (R)-2-hydroxyglutaryl-CoA = (2E)-glutaconyl-CoA + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:42448
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (R)-2-hydroxyglutaryl-CoA = (2E)-glutaconyl-CoA + H2O'
+  - node_id: sub1
+    label: (R)-2-hydroxyglutaryl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:132946
+    description: Formula C26H37N7O20P3S.
+  - node_id: prd1
+    label: (2E)-glutaconyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57353
+    description: Formula C26H35N7O19P3S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-hydroxyglutaryl-CoA dehydratase activity
+    grounding: GO:0043717
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (R)-2-hydroxyglutaryl-CoA dehydratase
+    grounding: EC:4.2.1.167
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P11569
+    node_type: PROTEIN
+    label: HGDA_ACIFV
+    grounding: UniProtKB:P11569
+  - node_id: prot_P11570
+    node_type: PROTEIN
+    label: HGDB_ACIFV
+    grounding: UniProtKB:P11570
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-2-hydroxyglutaryl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42449
+      snippet: (R)-2-hydroxyglutaryl-CoA => (2E)-glutaconyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:42449 declares side 42448_L as its substrates
+        (rh:substrates); the master reaction RHEA:42448 is undirected. This participant is CHEBI:132946
+        with coefficient 1. Rhea cites PMID:7398622, PMID:11243821, PMID:3691501, PMID:7607244 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E)-glutaconyl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42449
+      snippet: (R)-2-hydroxyglutaryl-CoA => (2E)-glutaconyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:42449 declares side 42448_R as its products
+        (rh:products); the master reaction RHEA:42448 is undirected. This participant is CHEBI:57353 with
+        coefficient 1. Rhea cites PMID:7398622, PMID:11243821, PMID:3691501, PMID:7607244 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42449
+      snippet: (R)-2-hydroxyglutaryl-CoA => (2E)-glutaconyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:42449 declares side 42448_R as its products
+        (rh:products); the master reaction RHEA:42448 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:7398622, PMID:11243821, PMID:3691501, PMID:7607244 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:42448
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0043717"/>
+      notes: The rdfs:seeAlso triple on RHEA:42448 in rhea.rdf. GO term GO:0043717 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.167; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:42448
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.167"/>
+      notes: The rh:ec triple on RHEA:42448 in rhea.rdf. EC 4.2.1.167 is itself a record in this KB.
+  - subject: prot_P11569
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGDA_ACIFV is an exemplar enzyme carrying EC 4.2.1.167, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.167
+      snippet: DR   P11569, HGDA_ACIFV ;  P11570, HGDB_ACIFV ;
+      notes: ExPASy ENZYME entry EC 4.2.1.167 cross-references UniProtKB:P11569 (HGDA_ACIFV) as a protein
+        with this activity.
+    - reference: RHEA:42448
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.167"/>
+      notes: Rhea assigns RHEA:42448 to EC 4.2.1.167, and EC 4.2.1.167 maps to exactly one Rhea master
+        reaction (RHEA:42448), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P11570
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HGDB_ACIFV is an exemplar enzyme carrying EC 4.2.1.167, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.167
+      snippet: DR   P11569, HGDA_ACIFV ;  P11570, HGDB_ACIFV ;
+      notes: ExPASy ENZYME entry EC 4.2.1.167 cross-references UniProtKB:P11570 (HGDB_ACIFV) as a protein
+        with this activity.
+    - reference: RHEA:42448
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.167"/>
+      notes: Rhea assigns RHEA:42448 to EC 4.2.1.167, and EC 4.2.1.167 maps to exactly one Rhea master
+        reaction (RHEA:42448), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

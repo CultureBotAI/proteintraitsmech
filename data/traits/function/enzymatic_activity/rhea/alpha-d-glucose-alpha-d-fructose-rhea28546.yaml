@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.1.5
     mapping_source: rhea2ec
@@ -34,4 +34,75 @@ definitions:
       Catalyses the reaction: alpha-D-glucose = alpha-D-fructose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha-D-glucose = alpha-D-fructose
+  description: Substrate-to-product chemistry of RHEA:28546, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28547 (rh:substrates → 28546_L, rh:products → 28546_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of alpha-D-glucose = alpha-D-fructose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28546
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: alpha-D-glucose = alpha-D-fructose'
+  - node_id: sub1
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+    description: Formula C6H12O6.
+  - node_id: prd1
+    label: alpha-D-fructose
+    node_type: CHEMICAL
+    grounding: CHEBI:37720
+    description: Formula C6H12O6.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: xylose isomerase
+    grounding: EC:5.3.1.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: alpha-D-glucose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28547
+      snippet: alpha-D-glucose => alpha-D-fructose
+      notes: Rhea's left-to-right directional reaction RHEA:28547 declares side 28546_L as its substrates
+        (rh:substrates); the master reaction RHEA:28546 is undirected. This participant is CHEBI:17925
+        with coefficient 1. Rhea cites PMID:12369908, PMID:2734296, PMID:29569257, PMID:5550812 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-fructose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28547
+      snippet: alpha-D-glucose => alpha-D-fructose
+      notes: Rhea's left-to-right directional reaction RHEA:28547 declares side 28546_R as its products
+        (rh:products); the master reaction RHEA:28546 is undirected. This participant is CHEBI:37720 with
+        coefficient 1. Rhea cites PMID:12369908, PMID:2734296, PMID:29569257, PMID:5550812 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.1.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28546
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.5"/>
+      notes: The rh:ec triple on RHEA:28546 in rhea.rdf. EC 5.3.1.5 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

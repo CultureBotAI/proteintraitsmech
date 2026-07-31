@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.40
     mapping_source: rhea2ec
@@ -26,4 +26,167 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate = (Z)-gamma-bisabolene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate = (Z)-gamma-bisabolene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:26081, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:26082 (rh:substrates → 26081_L, rh:products → 26081_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate = (Z)-gamma-bisabolene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:26081
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate = (Z)-gamma-bisabolene + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (Z)-gamma-bisabolene
+    node_type: CHEMICAL
+    grounding: CHEBI:49238
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (Z)-gamma-bisabolene synthase activity
+    grounding: GO:0052683
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (Z)-gamma-bisabolene synthase
+    grounding: EC:4.2.3.40
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9T0J9
+    node_type: PROTEIN
+    label: GBIS1_ARATH
+    grounding: UniProtKB:Q9T0J9
+  - node_id: prot_Q9T0K1
+    node_type: PROTEIN
+    label: GBIS2_ARATH
+    grounding: UniProtKB:Q9T0K1
+  - node_id: prot_G5CV54
+    node_type: PROTEIN
+    label: TPS14_SOLLC
+    grounding: UniProtKB:G5CV54
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:26082
+      snippet: (2E,6E)-farnesyl diphosphate => (Z)-gamma-bisabolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26082 declares side 26081_L as its substrates
+        (rh:substrates); the master reaction RHEA:26081 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:16297850 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (Z)-gamma-bisabolene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26082
+      snippet: (2E,6E)-farnesyl diphosphate => (Z)-gamma-bisabolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26082 declares side 26081_R as its products
+        (rh:products); the master reaction RHEA:26081 is undirected. This participant is CHEBI:49238 with
+        coefficient 1. Rhea cites PMID:16297850 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26082
+      snippet: (2E,6E)-farnesyl diphosphate => (Z)-gamma-bisabolene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26082 declares side 26081_R as its products
+        (rh:products); the master reaction RHEA:26081 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:16297850 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:26081
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052683"/>
+      notes: The rdfs:seeAlso triple on RHEA:26081 in rhea.rdf. GO term GO:0052683 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.40; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:26081
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.40"/>
+      notes: The rh:ec triple on RHEA:26081 in rhea.rdf. EC 4.2.3.40 is itself a record in this KB.
+  - subject: prot_Q9T0J9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GBIS1_ARATH is an exemplar enzyme carrying EC 4.2.3.40, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.40
+      snippet: DR   Q9T0J9, GBIS1_ARATH;  Q9T0K1, GBIS2_ARATH;  G5CV54, TPS14_SOLLC;
+      notes: ExPASy ENZYME entry EC 4.2.3.40 cross-references UniProtKB:Q9T0J9 (GBIS1_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:26081
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.40"/>
+      notes: Rhea assigns RHEA:26081 to EC 4.2.3.40, and EC 4.2.3.40 maps to exactly one Rhea master reaction
+        (RHEA:26081), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9T0K1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GBIS2_ARATH is an exemplar enzyme carrying EC 4.2.3.40, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.40
+      snippet: DR   Q9T0J9, GBIS1_ARATH;  Q9T0K1, GBIS2_ARATH;  G5CV54, TPS14_SOLLC;
+      notes: ExPASy ENZYME entry EC 4.2.3.40 cross-references UniProtKB:Q9T0K1 (GBIS2_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:26081
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.40"/>
+      notes: Rhea assigns RHEA:26081 to EC 4.2.3.40, and EC 4.2.3.40 maps to exactly one Rhea master reaction
+        (RHEA:26081), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_G5CV54
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS14_SOLLC is an exemplar enzyme carrying EC 4.2.3.40, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.40
+      snippet: DR   Q9T0J9, GBIS1_ARATH;  Q9T0K1, GBIS2_ARATH;  G5CV54, TPS14_SOLLC;
+      notes: ExPASy ENZYME entry EC 4.2.3.40 cross-references UniProtKB:G5CV54 (TPS14_SOLLC) as a protein
+        with this activity.
+    - reference: RHEA:26081
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.40"/>
+      notes: Rhea assigns RHEA:26081 to EC 4.2.3.40, and EC 4.2.3.40 maps to exactly one Rhea master reaction
+        (RHEA:26081), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

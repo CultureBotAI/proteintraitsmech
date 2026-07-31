@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.11.-
 canonical_examples:
@@ -33,4 +33,67 @@ definitions:
       Catalyses: Release of an N-terminal D-amino acid from a peptide, Xaa-|-Yaa-, in which Xaa is preferably D-Ala, D-Ser or D-Thr. D-amino acid amides and methyl esters also are hydrolyzed, as is glycine amide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-stereospecific aminopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.11.19. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of an N-terminal D-amino acid from a peptide, Xaa-|-Yaa-, in which Xaa is preferably D-Ala, D-Ser
+    or D-Thr. D-amino acid amides and methyl esters also are hydrolyzed, as is glycine amide".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-stereospecific aminopeptidase
+    grounding: EC:3.4.11.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_B2SD81
+    node_type: PROTEIN
+    label: DAP_BRUA1
+    grounding: UniProtKB:B2SD81
+  - node_id: prot_Q2YLB4
+    node_type: PROTEIN
+    label: DAP_BRUA2
+    grounding: UniProtKB:Q2YLB4
+  - node_id: prot_A6WYS5
+    node_type: PROTEIN
+    label: DAP_BRUA4
+    grounding: UniProtKB:A6WYS5
+  edges:
+  - subject: prot_B2SD81
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DAP_BRUA1 is an exemplar enzyme with EC 3.4.11.19 activity.
+    evidence:
+    - reference: EC:3.4.11.19
+      snippet: DR   B2SD81, DAP_BRUA1  ;  Q2YLB4, DAP_BRUA2  ;  A6WYS5, DAP_BRUA4  ;
+      notes: ExPASy ENZYME entry EC 3.4.11.19 cross-references UniProtKB:B2SD81 (DAP_BRUA1) as a protein
+        with this activity.
+  - subject: prot_Q2YLB4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DAP_BRUA2 is an exemplar enzyme with EC 3.4.11.19 activity.
+    evidence:
+    - reference: EC:3.4.11.19
+      snippet: DR   B2SD81, DAP_BRUA1  ;  Q2YLB4, DAP_BRUA2  ;  A6WYS5, DAP_BRUA4  ;
+      notes: ExPASy ENZYME entry EC 3.4.11.19 cross-references UniProtKB:Q2YLB4 (DAP_BRUA2) as a protein
+        with this activity.
+  - subject: prot_A6WYS5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DAP_BRUA4 is an exemplar enzyme with EC 3.4.11.19 activity.
+    evidence:
+    - reference: EC:3.4.11.19
+      snippet: DR   B2SD81, DAP_BRUA1  ;  Q2YLB4, DAP_BRUA2  ;  A6WYS5, DAP_BRUA4  ;
+      notes: ExPASy ENZYME entry EC 3.4.11.19 cross-references UniProtKB:A6WYS5 (DAP_BRUA4) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.4.13.5
     mapping_source: rhea2ec
@@ -40,4 +40,124 @@ definitions:
       Catalyses the reaction: anserine + H2O = N(pros)-methyl-L-histidine + beta-alanine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of anserine + H2O = N(pros)-methyl-L-histidine + beta-alanine
+  description: Substrate-to-product chemistry of RHEA:59576, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59577 (rh:substrates → 59576_L, rh:products → 59576_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of anserine + H2O = N(pros)-methyl-L-histidine + beta-alanine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59576
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: anserine + H2O = N(pros)-methyl-L-histidine + beta-alanine'
+  - node_id: sub1
+    label: anserine
+    node_type: CHEMICAL
+    grounding: CHEBI:58445
+    description: Formula C10H16N4O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N(pros)-methyl-L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:143076
+    description: Formula C7H11N3O2.
+  - node_id: prd2
+    label: beta-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57966
+    description: Formula C3H7NO2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: beta-Ala-His dipeptidase
+    grounding: EC:3.4.13.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: ec2
+    node_type: MOLECULAR_FUNCTION
+    label: Xaa-methyl-His dipeptidase
+    grounding: EC:3.4.13.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: anserine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59577
+      snippet: anserine + H2O => N(pros)-methyl-L-histidine + beta-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:59577 declares side 59576_L as its substrates
+        (rh:substrates); the master reaction RHEA:59576 is undirected. This participant is CHEBI:58445
+        with coefficient 1. Rhea cites PMID:1903095, PMID:24566305, PMID:318374, PMID:7116644 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59577
+      snippet: anserine + H2O => N(pros)-methyl-L-histidine + beta-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:59577 declares side 59576_L as its substrates
+        (rh:substrates); the master reaction RHEA:59576 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:1903095, PMID:24566305, PMID:318374, PMID:7116644 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(pros)-methyl-L-histidine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59577
+      snippet: anserine + H2O => N(pros)-methyl-L-histidine + beta-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:59577 declares side 59576_R as its products
+        (rh:products); the master reaction RHEA:59576 is undirected. This participant is CHEBI:143076
+        with coefficient 1. Rhea cites PMID:1903095, PMID:24566305, PMID:318374, PMID:7116644 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: beta-alanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59577
+      snippet: anserine + H2O => N(pros)-methyl-L-histidine + beta-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:59577 declares side 59576_R as its products
+        (rh:products); the master reaction RHEA:59576 is undirected. This participant is CHEBI:57966 with
+        coefficient 1. Rhea cites PMID:1903095, PMID:24566305, PMID:318374, PMID:7116644 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.4.13.20; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:59576
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.13.20"/>
+      notes: The rh:ec triple on RHEA:59576 in rhea.rdf. EC 3.4.13.20 is itself a record in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec2
+    description: Rhea assigns this reaction to EC 3.4.13.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:59576
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.13.5"/>
+      notes: The rh:ec triple on RHEA:59576 in rhea.rdf. EC 3.4.13.5 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

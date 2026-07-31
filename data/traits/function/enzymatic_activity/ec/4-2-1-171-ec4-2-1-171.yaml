@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -39,4 +39,117 @@ definitions:
       Catalyses: cis-3-hydroxy-L-proline = 1-pyrroline-2-carboxylate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cis-L-3-hydroxyproline dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.171. EC 4.2.1.171 maps to
+    exactly one curated Rhea reaction (RHEA:47624), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "cis-3-hydroxy-L-proline
+    = 1-pyrroline-2-carboxylate + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cis-L-3-hydroxyproline dehydratase
+    grounding: EC:4.2.1.171
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: cis-3-hydroxy-L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:60041
+    description: Formula C5H9NO3.
+  - node_id: prd1
+    label: 1-pyrroline-2-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:39785
+    description: Formula C5H7NO2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_A9CH00
+    node_type: PROTEIN
+    label: C3HPD_AGRFC
+    grounding: UniProtKB:A9CH00
+  - node_id: prot_D7A0Y2
+    node_type: PROTEIN
+    label: C3HPD_ANCN5
+    grounding: UniProtKB:D7A0Y2
+  - node_id: prot_Q9I485
+    node_type: PROTEIN
+    label: C3HPD_PSEAE
+    grounding: UniProtKB:Q9I485
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cis-3-hydroxy-L-proline is a substrate consumed by RHEA:47624 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47625
+      snippet: cis-3-hydroxy-L-proline => 1-pyrroline-2-carboxylate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:47625 declares side 47624_L as its substrates
+        (rh:substrates); the master reaction RHEA:47624 is undirected. This participant is CHEBI:60041
+        with coefficient 1. Rhea cites PMID:25608448 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-pyrroline-2-carboxylate is a product released by RHEA:47624 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47625
+      snippet: cis-3-hydroxy-L-proline => 1-pyrroline-2-carboxylate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:47625 declares side 47624_R as its products
+        (rh:products); the master reaction RHEA:47624 is undirected. This participant is CHEBI:39785 with
+        coefficient 1. Rhea cites PMID:25608448 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:47624 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47625
+      snippet: cis-3-hydroxy-L-proline => 1-pyrroline-2-carboxylate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:47625 declares side 47624_R as its products
+        (rh:products); the master reaction RHEA:47624 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:25608448 for this reaction.
+  - subject: prot_A9CH00
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C3HPD_AGRFC is an exemplar enzyme with EC 4.2.1.171 activity.
+    evidence:
+    - reference: EC:4.2.1.171
+      snippet: DR   A9CH00, C3HPD_AGRFC;  D7A0Y2, C3HPD_ANCN5;  Q9I485, C3HPD_PSEAE;
+      notes: ExPASy ENZYME entry EC 4.2.1.171 cross-references UniProtKB:A9CH00 (C3HPD_AGRFC) as a protein
+        with this activity.
+  - subject: prot_D7A0Y2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C3HPD_ANCN5 is an exemplar enzyme with EC 4.2.1.171 activity.
+    evidence:
+    - reference: EC:4.2.1.171
+      snippet: DR   A9CH00, C3HPD_AGRFC;  D7A0Y2, C3HPD_ANCN5;  Q9I485, C3HPD_PSEAE;
+      notes: ExPASy ENZYME entry EC 4.2.1.171 cross-references UniProtKB:D7A0Y2 (C3HPD_ANCN5) as a protein
+        with this activity.
+  - subject: prot_Q9I485
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C3HPD_PSEAE is an exemplar enzyme with EC 4.2.1.171 activity.
+    evidence:
+    - reference: EC:4.2.1.171
+      snippet: DR   A9CH00, C3HPD_AGRFC;  D7A0Y2, C3HPD_ANCN5;  Q9I485, C3HPD_PSEAE;
+      notes: ExPASy ENZYME entry EC 4.2.1.171 cross-references UniProtKB:Q9I485 (C3HPD_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

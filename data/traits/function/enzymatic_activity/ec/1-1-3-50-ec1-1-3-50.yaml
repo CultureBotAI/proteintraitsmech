@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.3.-
 mapped_xrefs:
@@ -42,4 +42,310 @@ definitions:
       Catalyses: carminate + O2 = 3'-dehydrocarminate + H2O2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of C-glycoside oxidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.3.50. Rhea assigns 4 curated
+    reactions to EC 1.1.3.50 (the first 3 are shown). No one substrate set is the class''s chemistry,
+    so each reaction is its own node — grounded to the Rhea record in this KB — and carries its own inputs
+    and outputs. ExPASy ENZYME states the catalysed reaction as: "carminate + O2 = 3''-dehydrocarminate
+    + H2O2". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: C-glycoside oxidase
+    grounding: EC:1.1.3.50
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of carminate + O2 = 3'-dehydrocarminate + H2O2
+    grounding: RHEA:75251
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: carminate + O2 = 3''-dehydrocarminate + H2O2'
+  - node_id: rxn1_sub1
+    label: carminate
+    node_type: CHEMICAL
+    grounding: CHEBI:149531
+    description: Formula C22H18O13.
+  - node_id: rxn1_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn1_prd1
+    label: 3'-dehydrocarminate
+    node_type: CHEMICAL
+    grounding: CHEBI:192513
+    description: Formula C22H16O13.
+  - node_id: rxn1_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of mangiferin + O2 = 3'-dehydromangiferin + H2O2
+    grounding: RHEA:75255
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: mangiferin + O2 = 3''-dehydromangiferin + H2O2'
+  - node_id: rxn2_sub1
+    label: mangiferin
+    node_type: CHEMICAL
+    grounding: CHEBI:194216
+    description: Formula C19H17O11.
+  - node_id: rxn2_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn2_prd1
+    label: 3'-dehydromangiferin
+    node_type: CHEMICAL
+    grounding: CHEBI:194217
+    description: Formula C19H15O11.
+  - node_id: rxn2_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of isoorientin + O2 = 3''-dehydroisoorientin + H2O2
+    grounding: RHEA:75259
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: isoorientin + O2 = 3''''-dehydroisoorientin + H2O2'
+  - node_id: rxn3_sub1
+    label: isoorientin
+    node_type: CHEMICAL
+    grounding: CHEBI:58333
+    description: Formula C21H19O11.
+  - node_id: rxn3_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn3_prd1
+    label: 3''-dehydroisoorientin
+    node_type: CHEMICAL
+    grounding: CHEBI:194218
+    description: Formula C21H17O11.
+  - node_id: rxn3_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: prot_H0QPM2
+    node_type: PROTEIN
+    label: CGLYO_ARTG1
+    grounding: UniProtKB:H0QPM2
+  - node_id: prot_P0DXE4
+    node_type: PROTEIN
+    label: CGLYO_MICSX
+    grounding: UniProtKB:P0DXE4
+  - node_id: prot_A0A0M2HFA3
+    node_type: PROTEIN
+    label: CGLYO_MICTR
+    grounding: UniProtKB:A0A0M2HFA3
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:75251 is one of the 4 curated reactions Rhea assigns to EC 1.1.3.50; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:75251
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.3.50"/>
+      notes: The rh:ec triple on RHEA:75251 in rhea.rdf assigns that reaction to EC 1.1.3.50.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: carminate is a substrate consumed by RHEA:75251 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75252
+      snippet: carminate + O2 => 3'-dehydrocarminate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75252 declares side 75251_L as its substrates
+        (rh:substrates); the master reaction RHEA:75251 is undirected. This participant is CHEBI:149531
+        with coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: O2 is a substrate consumed by RHEA:75251 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75252
+      snippet: carminate + O2 => 3'-dehydrocarminate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75252 declares side 75251_L as its substrates
+        (rh:substrates); the master reaction RHEA:75251 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 3'-dehydrocarminate is a product released by RHEA:75251 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75252
+      snippet: carminate + O2 => 3'-dehydrocarminate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75252 declares side 75251_R as its products
+        (rh:products); the master reaction RHEA:75251 is undirected. This participant is CHEBI:192513
+        with coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H2O2 is a product released by RHEA:75251 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75252
+      snippet: carminate + O2 => 3'-dehydrocarminate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75252 declares side 75251_R as its products
+        (rh:products); the master reaction RHEA:75251 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:75255 is one of the 4 curated reactions Rhea assigns to EC 1.1.3.50; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:75255
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.3.50"/>
+      notes: The rh:ec triple on RHEA:75255 in rhea.rdf assigns that reaction to EC 1.1.3.50.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: mangiferin is a substrate consumed by RHEA:75255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75256
+      snippet: mangiferin + O2 => 3'-dehydromangiferin + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75256 declares side 75255_L as its substrates
+        (rh:substrates); the master reaction RHEA:75255 is undirected. This participant is CHEBI:194216
+        with coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: O2 is a substrate consumed by RHEA:75255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75256
+      snippet: mangiferin + O2 => 3'-dehydromangiferin + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75256 declares side 75255_L as its substrates
+        (rh:substrates); the master reaction RHEA:75255 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 3'-dehydromangiferin is a product released by RHEA:75255 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:75256
+      snippet: mangiferin + O2 => 3'-dehydromangiferin + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75256 declares side 75255_R as its products
+        (rh:products); the master reaction RHEA:75255 is undirected. This participant is CHEBI:194217
+        with coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H2O2 is a product released by RHEA:75255 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75256
+      snippet: mangiferin + O2 => 3'-dehydromangiferin + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75256 declares side 75255_R as its products
+        (rh:products); the master reaction RHEA:75255 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:75259 is one of the 4 curated reactions Rhea assigns to EC 1.1.3.50; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:75259
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.3.50"/>
+      notes: The rh:ec triple on RHEA:75259 in rhea.rdf assigns that reaction to EC 1.1.3.50.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: isoorientin is a substrate consumed by RHEA:75259 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75260
+      snippet: isoorientin + O2 => 3''-dehydroisoorientin + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75260 declares side 75259_L as its substrates
+        (rh:substrates); the master reaction RHEA:75259 is undirected. This participant is CHEBI:58333
+        with coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: O2 is a substrate consumed by RHEA:75259 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75260
+      snippet: isoorientin + O2 => 3''-dehydroisoorientin + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75260 declares side 75259_L as its substrates
+        (rh:substrates); the master reaction RHEA:75259 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: 3''-dehydroisoorientin is a product released by RHEA:75259 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:75260
+      snippet: isoorientin + O2 => 3''-dehydroisoorientin + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75260 declares side 75259_R as its products
+        (rh:products); the master reaction RHEA:75259 is undirected. This participant is CHEBI:194218
+        with coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: H2O2 is a product released by RHEA:75259 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75260
+      snippet: isoorientin + O2 => 3''-dehydroisoorientin + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:75260 declares side 75259_R as its products
+        (rh:products); the master reaction RHEA:75259 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:34583991 for this reaction.
+  - subject: prot_H0QPM2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGLYO_ARTG1 is an exemplar enzyme with EC 1.1.3.50 activity.
+    evidence:
+    - reference: EC:1.1.3.50
+      snippet: DR   H0QPM2, CGLYO_ARTG1;  P0DXE4, CGLYO_MICSX;  A0A0M2HFA3, CGLYO_MICTR;
+      notes: ExPASy ENZYME entry EC 1.1.3.50 cross-references UniProtKB:H0QPM2 (CGLYO_ARTG1) as a protein
+        with this activity.
+  - subject: prot_P0DXE4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGLYO_MICSX is an exemplar enzyme with EC 1.1.3.50 activity.
+    evidence:
+    - reference: EC:1.1.3.50
+      snippet: DR   H0QPM2, CGLYO_ARTG1;  P0DXE4, CGLYO_MICSX;  A0A0M2HFA3, CGLYO_MICTR;
+      notes: ExPASy ENZYME entry EC 1.1.3.50 cross-references UniProtKB:P0DXE4 (CGLYO_MICSX) as a protein
+        with this activity.
+  - subject: prot_A0A0M2HFA3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGLYO_MICTR is an exemplar enzyme with EC 1.1.3.50 activity.
+    evidence:
+    - reference: EC:1.1.3.50
+      snippet: DR   H0QPM2, CGLYO_ARTG1;  P0DXE4, CGLYO_MICSX;  A0A0M2HFA3, CGLYO_MICTR;
+      notes: ExPASy ENZYME entry EC 1.1.3.50 cross-references UniProtKB:A0A0M2HFA3 (CGLYO_MICTR) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (18 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

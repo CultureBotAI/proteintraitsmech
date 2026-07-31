@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -38,4 +38,67 @@ definitions:
       Catalyses: Hydrolyzes the peptide bond -P2-(S-farnesyl or geranylgeranyl)C-P1'-P2'-P3'-COOH where P1' and P2' are amino acids with aliphatic side chains and P3' is any C-terminal residue
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Ste24 endopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.84. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolyzes
+    the peptide bond -P2-(S-farnesyl or geranylgeranyl)C-P1''-P2''-P3''-COOH where P1'' and P2'' are amino
+    acids with aliphatic side chains and P3'' is any C-terminal residue".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: Ste24 endopeptidase
+    grounding: EC:3.4.24.84
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q8RX88
+    node_type: PROTEIN
+    label: FACE1_ARATH
+    grounding: UniProtKB:Q8RX88
+  - node_id: prot_Q9XVE5
+    node_type: PROTEIN
+    label: FACE1_CAEEL
+    grounding: UniProtKB:Q9XVE5
+  - node_id: prot_Q54FH7
+    node_type: PROTEIN
+    label: FACE1_DICDI
+    grounding: UniProtKB:Q54FH7
+  edges:
+  - subject: prot_Q8RX88
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FACE1_ARATH is an exemplar enzyme with EC 3.4.24.84 activity.
+    evidence:
+    - reference: EC:3.4.24.84
+      snippet: DR   Q8RX88, FACE1_ARATH;  Q9XVE5, FACE1_CAEEL;  Q54FH7, FACE1_DICDI;
+      notes: ExPASy ENZYME entry EC 3.4.24.84 cross-references UniProtKB:Q8RX88 (FACE1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9XVE5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FACE1_CAEEL is an exemplar enzyme with EC 3.4.24.84 activity.
+    evidence:
+    - reference: EC:3.4.24.84
+      snippet: DR   Q8RX88, FACE1_ARATH;  Q9XVE5, FACE1_CAEEL;  Q54FH7, FACE1_DICDI;
+      notes: ExPASy ENZYME entry EC 3.4.24.84 cross-references UniProtKB:Q9XVE5 (FACE1_CAEEL) as a protein
+        with this activity.
+  - subject: prot_Q54FH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FACE1_DICDI is an exemplar enzyme with EC 3.4.24.84 activity.
+    evidence:
+    - reference: EC:3.4.24.84
+      snippet: DR   Q8RX88, FACE1_ARATH;  Q9XVE5, FACE1_CAEEL;  Q54FH7, FACE1_DICDI;
+      notes: ExPASy ENZYME entry EC 3.4.24.84 cross-references UniProtKB:Q54FH7 (FACE1_DICDI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

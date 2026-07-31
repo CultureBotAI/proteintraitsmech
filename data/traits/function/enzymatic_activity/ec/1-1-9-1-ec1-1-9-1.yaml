@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.9.-
 synonyms:
@@ -39,4 +39,181 @@ definitions:
       Catalyses: 2 oxidized [azurin] + a primary alcohol = 2 reduced [azurin] + an aldehyde + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alcohol dehydrogenase (azurin)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.9.1. EC 1.1.9.1 maps to exactly
+    one curated Rhea reaction (RHEA:51148), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 oxidized [azurin]
+    + a primary alcohol = 2 reduced [azurin] + an aldehyde + 2 H(+)". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alcohol dehydrogenase (azurin)
+    grounding: EC:1.1.9.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: oxidized [azurin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11034
+    description: Rhea compound GENERIC:11034.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: Cu(2+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:11034 (oxidized
+      [azurin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29036
+  - node_id: sub2
+    label: a primary alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:15734
+    description: Formula CH3OR.
+  - node_id: prd1
+    label: reduced [azurin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11035
+    description: Rhea compound GENERIC:11035.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: Cu(+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:11035 (reduced [azurin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:49552
+  - node_id: prd2
+    label: an aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:17478
+    description: Formula CHOR.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q4W6G0
+    node_type: PROTEIN
+    label: QGDA_PSEPU
+    grounding: UniProtKB:Q4W6G0
+  - node_id: prot_Q46444
+    node_type: PROTEIN
+    label: QHED_COMTE
+    grounding: UniProtKB:Q46444
+  - node_id: prot_Q8GR64
+    node_type: PROTEIN
+    label: QHED_PSEPU
+    grounding: UniProtKB:Q8GR64
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: oxidized [azurin] is a substrate consumed by RHEA:51148 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:51149
+      snippet: 2 oxidized [azurin] + a primary alcohol => 2 reduced [azurin] + an aldehyde + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51149 declares side 51148_L as its substrates
+        (rh:substrates); the master reaction RHEA:51148 is undirected. This participant is GENERIC:11034
+        with coefficient 2. Rhea cites PMID:11714714, PMID:12057198, PMID:7626615, PMID:7730276 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Cu(2+) is the reactive part of oxidized [azurin].
+    evidence:
+    - reference: RHEA:51148
+      snippet: Cu(2+)
+      notes: Rhea compound GENERIC:11034 (oxidized [azurin]) declares rh:reactivePart = Cu(2+) (CHEBI:29036).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a primary alcohol is a substrate consumed by RHEA:51148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51149
+      snippet: 2 oxidized [azurin] + a primary alcohol => 2 reduced [azurin] + an aldehyde + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51149 declares side 51148_L as its substrates
+        (rh:substrates); the master reaction RHEA:51148 is undirected. This participant is CHEBI:15734
+        with coefficient 1. Rhea cites PMID:11714714, PMID:12057198, PMID:7626615, PMID:7730276 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: reduced [azurin] is a product released by RHEA:51148 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:51149
+      snippet: 2 oxidized [azurin] + a primary alcohol => 2 reduced [azurin] + an aldehyde + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51149 declares side 51148_R as its products
+        (rh:products); the master reaction RHEA:51148 is undirected. This participant is GENERIC:11035
+        with coefficient 2. Rhea cites PMID:11714714, PMID:12057198, PMID:7626615, PMID:7730276 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Cu(+) is the reactive part of reduced [azurin].
+    evidence:
+    - reference: RHEA:51148
+      snippet: Cu(+)
+      notes: Rhea compound GENERIC:11035 (reduced [azurin]) declares rh:reactivePart = Cu(+) (CHEBI:49552).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: an aldehyde is a product released by RHEA:51148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51149
+      snippet: 2 oxidized [azurin] + a primary alcohol => 2 reduced [azurin] + an aldehyde + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51149 declares side 51148_R as its products
+        (rh:products); the master reaction RHEA:51148 is undirected. This participant is CHEBI:17478 with
+        coefficient 1. Rhea cites PMID:11714714, PMID:12057198, PMID:7626615, PMID:7730276 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:51148 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:51149
+      snippet: 2 oxidized [azurin] + a primary alcohol => 2 reduced [azurin] + an aldehyde + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51149 declares side 51148_R as its products
+        (rh:products); the master reaction RHEA:51148 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:11714714, PMID:12057198, PMID:7626615, PMID:7730276 for this reaction.
+  - subject: prot_Q4W6G0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: QGDA_PSEPU is an exemplar enzyme with EC 1.1.9.1 activity.
+    evidence:
+    - reference: EC:1.1.9.1
+      snippet: DR   Q4W6G0, QGDA_PSEPU ;  Q46444, QHED_COMTE ;  Q8GR64, QHED_PSEPU ;
+      notes: ExPASy ENZYME entry EC 1.1.9.1 cross-references UniProtKB:Q4W6G0 (QGDA_PSEPU) as a protein
+        with this activity.
+  - subject: prot_Q46444
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: QHED_COMTE is an exemplar enzyme with EC 1.1.9.1 activity.
+    evidence:
+    - reference: EC:1.1.9.1
+      snippet: DR   Q4W6G0, QGDA_PSEPU ;  Q46444, QHED_COMTE ;  Q8GR64, QHED_PSEPU ;
+      notes: ExPASy ENZYME entry EC 1.1.9.1 cross-references UniProtKB:Q46444 (QHED_COMTE) as a protein
+        with this activity.
+  - subject: prot_Q8GR64
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: QHED_PSEPU is an exemplar enzyme with EC 1.1.9.1 activity.
+    evidence:
+    - reference: EC:1.1.9.1
+      snippet: DR   Q4W6G0, QGDA_PSEPU ;  Q46444, QHED_COMTE ;  Q8GR64, QHED_PSEPU ;
+      notes: ExPASy ENZYME entry EC 1.1.9.1 cross-references UniProtKB:Q8GR64 (QHED_PSEPU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

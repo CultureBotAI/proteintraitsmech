@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:16967
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,60 @@ definitions:
       Catalyses the reaction: (Z)-5-oxohex-2-enedioate = (2E,4Z)-2-hydroxyhexa-2,4-dienedioate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (Z)-5-oxohex-2-enedioate = (2E,4Z)-2-hydroxyhexa-2,4-dienedioate
+  description: Substrate-to-product chemistry of RHEA:32211, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:32212 (rh:substrates → 32211_L, rh:products → 32211_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (Z)-5-oxohex-2-enedioate = (2E,4Z)-2-hydroxyhexa-2,4-dienedioate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:32211
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (Z)-5-oxohex-2-enedioate = (2E,4Z)-2-hydroxyhexa-2,4-dienedioate'
+  - node_id: sub1
+    label: (Z)-5-oxohex-2-enedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:16967
+    description: Formula C6H4O5.
+  - node_id: prd1
+    label: (2E,4Z)-2-hydroxyhexa-2,4-dienedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:64016
+    description: Formula C6H4O5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (Z)-5-oxohex-2-enedioate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32212
+      snippet: (Z)-5-oxohex-2-enedioate => (2E,4Z)-2-hydroxyhexa-2,4-dienedioate
+      notes: Rhea's left-to-right directional reaction RHEA:32212 declares side 32211_L as its substrates
+        (rh:substrates); the master reaction RHEA:32211 is undirected. This participant is CHEBI:16967
+        with coefficient 1. Rhea cites PMID:19717587, PMID:1339435 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E,4Z)-2-hydroxyhexa-2,4-dienedioate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:32212
+      snippet: (Z)-5-oxohex-2-enedioate => (2E,4Z)-2-hydroxyhexa-2,4-dienedioate
+      notes: Rhea's left-to-right directional reaction RHEA:32212 declares side 32211_R as its products
+        (rh:products); the master reaction RHEA:32211 is undirected. This participant is CHEBI:64016 with
+        coefficient 1. Rhea cites PMID:19717587, PMID:1339435 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

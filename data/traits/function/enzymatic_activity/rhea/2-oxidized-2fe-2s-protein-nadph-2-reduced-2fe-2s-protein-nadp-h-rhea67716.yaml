@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:33737
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,158 @@ definitions:
       Catalyses the reaction: 2 oxidized [2Fe-2S]-[protein] + NADPH = 2 reduced [2Fe-2S]-[protein] + NADP(+) + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 oxidized [2Fe-2S]-[protein] + NADPH = 2 reduced [2Fe-2S]-[protein] +
+    NADP(+) + H(+)
+  description: Substrate-to-product chemistry of RHEA:67716, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67717 (rh:substrates → 67716_L, rh:products → 67716_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 oxidized [2Fe-2S]-[protein] + NADPH = 2 reduced [2Fe-2S]-[protein] + NADP(…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67716
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 oxidized [2Fe-2S]-[protein] + NADPH = 2 reduced [2Fe-2S]-[protein] + NADP(+) +
+      H(+)'
+  - node_id: sub1
+    label: oxidized [2Fe-2S]-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17327
+    description: Rhea compound GENERIC:17327.
+  - node_id: sub1_rp1
+    label: '[2Fe-2S](2+)'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17327 (oxidized
+      [2Fe-2S]-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd1
+    label: reduced [2Fe-2S]-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17328
+    description: Rhea compound GENERIC:17328.
+  - node_id: prd1_rp1
+    label: '[2Fe-2S](1+)'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17328 (reduced [2Fe-2S]-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: NADPH-iron-sulfur [2Fe-2S] protein oxidoreductase activity
+    grounding: GO:0160246
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: oxidized [2Fe-2S]-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:67717
+      snippet: 2 oxidized [2Fe-2S]-[protein] + NADPH => 2 reduced [2Fe-2S]-[protein] + NADP(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:67717 declares side 67716_L as its substrates
+        (rh:substrates); the master reaction RHEA:67716 is undirected. This participant is GENERIC:17327
+        with coefficient 2. Rhea cites PMID:20802492, PMID:23596212 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[protein].'
+    evidence:
+    - reference: RHEA:67716
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:17327 (oxidized [2Fe-2S]-[protein]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737), formula Fe2S2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67717
+      snippet: 2 oxidized [2Fe-2S]-[protein] + NADPH => 2 reduced [2Fe-2S]-[protein] + NADP(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:67717 declares side 67716_L as its substrates
+        (rh:substrates); the master reaction RHEA:67716 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:20802492, PMID:23596212 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: reduced [2Fe-2S]-[protein] is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:67717
+      snippet: 2 oxidized [2Fe-2S]-[protein] + NADPH => 2 reduced [2Fe-2S]-[protein] + NADP(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:67717 declares side 67716_R as its products
+        (rh:products); the master reaction RHEA:67716 is undirected. This participant is GENERIC:17328
+        with coefficient 2. Rhea cites PMID:20802492, PMID:23596212 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[protein].'
+    evidence:
+    - reference: RHEA:67716
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:17328 (reduced [2Fe-2S]-[protein]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738), formula Fe2S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67717
+      snippet: 2 oxidized [2Fe-2S]-[protein] + NADPH => 2 reduced [2Fe-2S]-[protein] + NADP(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:67717 declares side 67716_R as its products
+        (rh:products); the master reaction RHEA:67716 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:20802492, PMID:23596212 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67717
+      snippet: 2 oxidized [2Fe-2S]-[protein] + NADPH => 2 reduced [2Fe-2S]-[protein] + NADP(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:67717 declares side 67716_R as its products
+        (rh:products); the master reaction RHEA:67716 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:20802492, PMID:23596212 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:67716
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0160246"/>
+      notes: The rdfs:seeAlso triple on RHEA:67716 in rhea.rdf. GO term GO:0160246 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

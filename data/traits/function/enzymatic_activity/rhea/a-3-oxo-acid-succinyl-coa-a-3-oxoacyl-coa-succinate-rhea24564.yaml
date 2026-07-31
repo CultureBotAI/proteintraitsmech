@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.8.3.5
     mapping_source: rhea2ec
@@ -40,4 +40,123 @@ definitions:
       Catalyses the reaction: a 3-oxo acid + succinyl-CoA = a 3-oxoacyl-CoA + succinate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 3-oxo acid + succinyl-CoA = a 3-oxoacyl-CoA + succinate
+  description: Substrate-to-product chemistry of RHEA:24564, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24565 (rh:substrates → 24564_L, rh:products → 24564_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 3-oxo acid + succinyl-CoA = a 3-oxoacyl-CoA + succinate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24564
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 3-oxo acid + succinyl-CoA = a 3-oxoacyl-CoA + succinate'
+  - node_id: sub1
+    label: a 3-oxo acid
+    node_type: CHEMICAL
+    grounding: CHEBI:35973
+    description: Formula C3H2O3R.
+  - node_id: sub2
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: prd1
+    label: a 3-oxoacyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:90726
+    description: Formula C24H33N7O18P3SR.
+  - node_id: prd2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: succinyl-CoA:3-oxo-acid CoA-transferase activity
+    grounding: GO:0008260
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 3-oxoacid CoA-transferase
+    grounding: EC:2.8.3.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3-oxo acid is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24565
+      snippet: a 3-oxo acid + succinyl-CoA => a 3-oxoacyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:24565 declares side 24564_L as its substrates
+        (rh:substrates); the master reaction RHEA:24564 is undirected. This participant is CHEBI:35973
+        with coefficient 1. Rhea cites PMID:20977214, PMID:24100554, PMID:13345795, PMID:9325289 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: succinyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24565
+      snippet: a 3-oxo acid + succinyl-CoA => a 3-oxoacyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:24565 declares side 24564_L as its substrates
+        (rh:substrates); the master reaction RHEA:24564 is undirected. This participant is CHEBI:57292
+        with coefficient 1. Rhea cites PMID:20977214, PMID:24100554, PMID:13345795, PMID:9325289 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3-oxoacyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24565
+      snippet: a 3-oxo acid + succinyl-CoA => a 3-oxoacyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:24565 declares side 24564_R as its products
+        (rh:products); the master reaction RHEA:24564 is undirected. This participant is CHEBI:90726 with
+        coefficient 1. Rhea cites PMID:20977214, PMID:24100554, PMID:13345795, PMID:9325289 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24565
+      snippet: a 3-oxo acid + succinyl-CoA => a 3-oxoacyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:24565 declares side 24564_R as its products
+        (rh:products); the master reaction RHEA:24564 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:20977214, PMID:24100554, PMID:13345795, PMID:9325289 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:24564
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008260"/>
+      notes: The rdfs:seeAlso triple on RHEA:24564 in rhea.rdf. GO term GO:0008260 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.8.3.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24564
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.5"/>
+      notes: The rh:ec triple on RHEA:24564 in rhea.rdf. EC 2.8.3.5 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

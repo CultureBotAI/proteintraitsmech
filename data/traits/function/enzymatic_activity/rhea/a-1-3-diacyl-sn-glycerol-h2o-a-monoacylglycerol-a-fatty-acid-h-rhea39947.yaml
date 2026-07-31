@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:77272
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,108 @@ definitions:
       Catalyses the reaction: a 1,3-diacyl-sn-glycerol + H2O = a monoacylglycerol + a fatty acid + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 1,3-diacyl-sn-glycerol + H2O = a monoacylglycerol + a fatty acid + H(+)
+  description: Substrate-to-product chemistry of RHEA:39947, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:39948 (rh:substrates → 39947_L, rh:products → 39947_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 1,3-diacyl-sn-glycerol + H2O = a monoacylglycerol + a fatty acid + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:39947
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 1,3-diacyl-sn-glycerol + H2O = a monoacylglycerol + a fatty acid + H(+)'
+  - node_id: sub1
+    label: a 1,3-diacyl-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:77272
+    description: Formula C5H6O5R2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a monoacylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17408
+    description: Formula C4H7O4R.
+  - node_id: prd2
+    label: a fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+    description: Formula CO2R.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 1,3-diacyl-sn-glycerol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39948
+      snippet: a 1,3-diacyl-sn-glycerol + H2O => a monoacylglycerol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:39948 declares side 39947_L as its substrates
+        (rh:substrates); the master reaction RHEA:39947 is undirected. This participant is CHEBI:77272
+        with coefficient 1. Rhea cites PMID:23066022, PMID:8509424 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39948
+      snippet: a 1,3-diacyl-sn-glycerol + H2O => a monoacylglycerol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:39948 declares side 39947_L as its substrates
+        (rh:substrates); the master reaction RHEA:39947 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:23066022, PMID:8509424 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a monoacylglycerol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:39948
+      snippet: a 1,3-diacyl-sn-glycerol + H2O => a monoacylglycerol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:39948 declares side 39947_R as its products
+        (rh:products); the master reaction RHEA:39947 is undirected. This participant is CHEBI:17408 with
+        coefficient 1. Rhea cites PMID:23066022, PMID:8509424 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a fatty acid is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39948
+      snippet: a 1,3-diacyl-sn-glycerol + H2O => a monoacylglycerol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:39948 declares side 39947_R as its products
+        (rh:products); the master reaction RHEA:39947 is undirected. This participant is CHEBI:28868 with
+        coefficient 1. Rhea cites PMID:23066022, PMID:8509424 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:39948
+      snippet: a 1,3-diacyl-sn-glycerol + H2O => a monoacylglycerol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:39948 declares side 39947_R as its products
+        (rh:products); the master reaction RHEA:39947 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:23066022, PMID:8509424 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

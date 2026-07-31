@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 synonyms:
@@ -31,4 +31,162 @@ definitions:
       Catalyses: uridine(2791) in 21S rRNA + S-adenosyl-L-methionine = 2'-O- methyluridine(2791) in 21S rRNA + S-adenosyl-L-homocysteine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 21S rRNA (uridine(2791)-2'-O)-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.168. EC 2.1.1.168 maps to
+    exactly one curated Rhea reaction (RHEA:42728), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "uridine(2791)
+    in 21S rRNA + S-adenosyl-L-methionine = 2''-O- methyluridine(2791) in 21S rRNA + S-adenosyl-L-homocysteine
+    + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 21S rRNA (uridine(2791)-2'-O)-methyltransferase
+    grounding: EC:2.1.1.168
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: uridine(2791) in 21S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10204
+    description: Rhea compound GENERIC:10204.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: UMP residue at position 2791
+    description: The reacting group Rhea names inside the generic participant GENERIC:10204 (uridine(2791)
+      in 21S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: 2'-O-methyluridine(2791) in 21S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10205
+    description: Rhea compound GENERIC:10205.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 2'-O-methyluridine 5'-phosphate residue at position 2791
+    description: The reacting group Rhea names inside the generic participant GENERIC:10205 (2'-O-methyluridine(2791)
+      in 21S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74478
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_P53123
+    node_type: PROTEIN
+    label: MRM2_YEAST
+    grounding: UniProtKB:P53123
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine(2791) in 21S rRNA is a substrate consumed by RHEA:42728 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42729
+      snippet: uridine(2791) in 21S rRNA + S-adenosyl-L-methionine => 2'-O-methyluridine(2791) in 21S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42729 declares side 42728_L as its substrates
+        (rh:substrates); the master reaction RHEA:42728 is undirected. This participant is GENERIC:10204
+        with coefficient 1. Rhea cites PMID:11867542 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine(2791) in 21S rRNA.
+    evidence:
+    - reference: RHEA:42728
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:10204 (uridine(2791) in 21S rRNA) declares rh:reactivePart at position
+        2791 = UMP residue (CHEBI:65315).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:42728 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42729
+      snippet: uridine(2791) in 21S rRNA + S-adenosyl-L-methionine => 2'-O-methyluridine(2791) in 21S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42729 declares side 42728_L as its substrates
+        (rh:substrates); the master reaction RHEA:42728 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:11867542 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2'-O-methyluridine(2791) in 21S rRNA is a product released by RHEA:42728 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42729
+      snippet: uridine(2791) in 21S rRNA + S-adenosyl-L-methionine => 2'-O-methyluridine(2791) in 21S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42729 declares side 42728_R as its products
+        (rh:products); the master reaction RHEA:42728 is undirected. This participant is GENERIC:10205
+        with coefficient 1. Rhea cites PMID:11867542 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 2'-O-methyluridine 5'-phosphate residue is the reactive part of 2'-O-methyluridine(2791)
+      in 21S rRNA.
+    evidence:
+    - reference: RHEA:42728
+      snippet: 2'-O-methyluridine 5'-phosphate residue
+      notes: Rhea compound GENERIC:10205 (2'-O-methyluridine(2791) in 21S rRNA) declares rh:reactivePart
+        at position 2791 = 2'-O-methyluridine 5'-phosphate residue (CHEBI:74478).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:42728 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42729
+      snippet: uridine(2791) in 21S rRNA + S-adenosyl-L-methionine => 2'-O-methyluridine(2791) in 21S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42729 declares side 42728_R as its products
+        (rh:products); the master reaction RHEA:42728 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:11867542 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:42728 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42729
+      snippet: uridine(2791) in 21S rRNA + S-adenosyl-L-methionine => 2'-O-methyluridine(2791) in 21S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42729 declares side 42728_R as its products
+        (rh:products); the master reaction RHEA:42728 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11867542 for this reaction.
+  - subject: prot_P53123
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MRM2_YEAST is an exemplar enzyme with EC 2.1.1.168 activity.
+    evidence:
+    - reference: EC:2.1.1.168
+      snippet: DR   P53123, MRM2_YEAST ;
+      notes: ExPASy ENZYME entry EC 2.1.1.168 cross-references UniProtKB:P53123 (MRM2_YEAST) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

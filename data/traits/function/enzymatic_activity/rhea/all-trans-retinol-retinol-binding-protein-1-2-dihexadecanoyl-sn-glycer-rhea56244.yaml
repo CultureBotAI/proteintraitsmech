@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17336
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,182 @@ definitions:
       Catalyses the reaction: all-trans-retinol--[retinol-binding protein] + 1,2-dihexadecanoyl-sn-glycero-3-phosphocholine = apo--[retinol-binding protein] + all-trans-retinyl hexadecanoate + 2-hexadecanoyl-sn-glycero-3-phosphocholine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of all-trans-retinol--[retinol-binding protein] + 1,2-dihexadecanoyl-sn-glycero-3-phosphoc…
+  description: Substrate-to-product chemistry of RHEA:56244, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:56245 (rh:substrates → 56244_L, rh:products → 56244_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of all-trans-retinol--[retinol-binding protein] + 1,2-dihexadecanoyl-sn-glycero…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:56244
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: all-trans-retinol--[retinol-binding protein] + 1,2-dihexadecanoyl-sn-glycero-3-phosphocholine
+      = apo--[retinol-binding protein] + all-trans-retinyl hexadecanoate + 2-hexadecanoyl-sn-glycero-3-phosphocholine'
+  - node_id: sub1
+    label: all-trans-retinol--[retinol-binding protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14428
+    description: Rhea compound GENERIC:14428.
+  - node_id: sub1_rp1
+    label: all-trans-retinol
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14428 (all-trans-retinol--[retinol-binding
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:17336
+  - node_id: sub1_rp2
+    label: an L-alpha amino acid residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14428 (all-trans-retinol--[retinol-binding
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83228
+  - node_id: sub2
+    label: 1,2-dihexadecanoyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:72999
+    description: Formula C40H80NO8P.
+  - node_id: prd1
+    label: apo--[retinol-binding protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14426
+    description: Rhea compound GENERIC:14426.
+  - node_id: prd1_rp1
+    label: an L-alpha amino acid residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14426 (apo--[retinol-binding
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83228
+  - node_id: prd2
+    label: all-trans-retinyl hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17616
+    description: Formula C36H60O2.
+  - node_id: prd3
+    label: 2-hexadecanoyl-sn-glycero-3-phosphocholine
+    node_type: CHEMICAL
+    grounding: CHEBI:76078
+    description: Formula C24H50NO7P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphatidylcholine-retinol O-acyltransferase activity
+    grounding: GO:0047173
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-retinol--[retinol-binding protein] is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56245
+      snippet: all-trans-retinol--[retinol-binding protein] + 1,2-dihexadecanoyl-sn-glycero-3-phosphocholine
+        => apo--[retinol-binding protein] + all-trans-retinyl hexadecanoate + 2-hexadecanoyl-sn-glycero-3-phosphocholine
+      notes: Rhea's left-to-right directional reaction RHEA:56245 declares side 56244_L as its substrates
+        (rh:substrates); the master reaction RHEA:56244 is undirected. This participant is GENERIC:14428
+        with coefficient 1. Rhea cites PMID:20628054 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: all-trans-retinol is the reactive part of all-trans-retinol--[retinol-binding protein].
+    evidence:
+    - reference: RHEA:56244
+      snippet: all-trans-retinol
+      notes: Rhea compound GENERIC:14428 (all-trans-retinol--[retinol-binding protein]) declares rh:reactivePart
+        = all-trans-retinol (CHEBI:17336), formula C20H30O.
+  - subject: sub1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: an L-alpha amino acid residue is the reactive part of all-trans-retinol--[retinol-binding
+      protein].
+    evidence:
+    - reference: RHEA:56244
+      snippet: an L-alpha amino acid residue
+      notes: Rhea compound GENERIC:14428 (all-trans-retinol--[retinol-binding protein]) declares rh:reactivePart
+        = an L-alpha amino acid residue (CHEBI:83228), formula C2H2NOR.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 1,2-dihexadecanoyl-sn-glycero-3-phosphocholine is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56245
+      snippet: all-trans-retinol--[retinol-binding protein] + 1,2-dihexadecanoyl-sn-glycero-3-phosphocholine
+        => apo--[retinol-binding protein] + all-trans-retinyl hexadecanoate + 2-hexadecanoyl-sn-glycero-3-phosphocholine
+      notes: Rhea's left-to-right directional reaction RHEA:56245 declares side 56244_L as its substrates
+        (rh:substrates); the master reaction RHEA:56244 is undirected. This participant is CHEBI:72999
+        with coefficient 1. Rhea cites PMID:20628054 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: apo--[retinol-binding protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:56245
+      snippet: all-trans-retinol--[retinol-binding protein] + 1,2-dihexadecanoyl-sn-glycero-3-phosphocholine
+        => apo--[retinol-binding protein] + all-trans-retinyl hexadecanoate + 2-hexadecanoyl-sn-glycero-3-phosphocholine
+      notes: Rhea's left-to-right directional reaction RHEA:56245 declares side 56244_R as its products
+        (rh:products); the master reaction RHEA:56244 is undirected. This participant is GENERIC:14426
+        with coefficient 1. Rhea cites PMID:20628054 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: an L-alpha amino acid residue is the reactive part of apo--[retinol-binding protein].
+    evidence:
+    - reference: RHEA:56244
+      snippet: an L-alpha amino acid residue
+      notes: Rhea compound GENERIC:14426 (apo--[retinol-binding protein]) declares rh:reactivePart = an
+        L-alpha amino acid residue (CHEBI:83228), formula C2H2NOR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: all-trans-retinyl hexadecanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:56245
+      snippet: all-trans-retinol--[retinol-binding protein] + 1,2-dihexadecanoyl-sn-glycero-3-phosphocholine
+        => apo--[retinol-binding protein] + all-trans-retinyl hexadecanoate + 2-hexadecanoyl-sn-glycero-3-phosphocholine
+      notes: Rhea's left-to-right directional reaction RHEA:56245 declares side 56244_R as its products
+        (rh:products); the master reaction RHEA:56244 is undirected. This participant is CHEBI:17616 with
+        coefficient 1. Rhea cites PMID:20628054 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: 2-hexadecanoyl-sn-glycero-3-phosphocholine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:56245
+      snippet: all-trans-retinol--[retinol-binding protein] + 1,2-dihexadecanoyl-sn-glycero-3-phosphocholine
+        => apo--[retinol-binding protein] + all-trans-retinyl hexadecanoate + 2-hexadecanoyl-sn-glycero-3-phosphocholine
+      notes: Rhea's left-to-right directional reaction RHEA:56245 declares side 56244_R as its products
+        (rh:products); the master reaction RHEA:56244 is undirected. This participant is CHEBI:76078 with
+        coefficient 1. Rhea cites PMID:20628054 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:56244
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047173"/>
+      notes: The rdfs:seeAlso triple on RHEA:56244 in rhea.rdf. GO term GO:0047173 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

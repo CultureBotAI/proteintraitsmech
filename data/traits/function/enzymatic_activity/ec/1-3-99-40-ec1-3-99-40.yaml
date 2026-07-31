@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.3.99.-
 mapped_xrefs:
@@ -23,4 +23,92 @@ definitions:
       Catalyses: a carotenoid beta-end derivative + 2 A = a carotenoid chi-end derivative + 2 AH2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of carotenoid chi-ring synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.3.99.40. EC 1.3.99.40 maps to
+    exactly one curated Rhea reaction (RHEA:55656), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a carotenoid
+    beta-end derivative + 2 A = a carotenoid chi-end derivative + 2 AH2". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: carotenoid chi-ring synthase
+    grounding: EC:1.3.99.40
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a carotenoid beta-end derivative
+    node_type: CHEMICAL
+    grounding: CHEBI:139120
+    description: Formula C19H27R.
+  - node_id: sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: prd1
+    label: a carotenoid chi-end derivative
+    node_type: CHEMICAL
+    grounding: CHEBI:139130
+    description: Formula C19H23R.
+  - node_id: prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a carotenoid beta-end derivative is a substrate consumed by RHEA:55656 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:55657
+      snippet: a carotenoid beta-end derivative + 2 A => a carotenoid chi-end derivative + 2 AH2
+      notes: Rhea's left-to-right directional reaction RHEA:55657 declares side 55656_L as its substrates
+        (rh:substrates); the master reaction RHEA:55656 is undirected. This participant is CHEBI:139120
+        with coefficient 1. Rhea cites PMID:22070388, PMID:18849428 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: A is a substrate consumed by RHEA:55656 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:55657
+      snippet: a carotenoid beta-end derivative + 2 A => a carotenoid chi-end derivative + 2 AH2
+      notes: Rhea's left-to-right directional reaction RHEA:55657 declares side 55656_L as its substrates
+        (rh:substrates); the master reaction RHEA:55656 is undirected. This participant is CHEBI:13193
+        with coefficient 2. Rhea cites PMID:22070388, PMID:18849428 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a carotenoid chi-end derivative is a product released by RHEA:55656 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:55657
+      snippet: a carotenoid beta-end derivative + 2 A => a carotenoid chi-end derivative + 2 AH2
+      notes: Rhea's left-to-right directional reaction RHEA:55657 declares side 55656_R as its products
+        (rh:products); the master reaction RHEA:55656 is undirected. This participant is CHEBI:139130
+        with coefficient 1. Rhea cites PMID:22070388, PMID:18849428 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AH2 is a product released by RHEA:55656 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:55657
+      snippet: a carotenoid beta-end derivative + 2 A => a carotenoid chi-end derivative + 2 AH2
+      notes: Rhea's left-to-right directional reaction RHEA:55657 declares side 55656_R as its products
+        (rh:products); the master reaction RHEA:55656 is undirected. This participant is CHEBI:17499 with
+        coefficient 2. Rhea cites PMID:22070388, PMID:18849428 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

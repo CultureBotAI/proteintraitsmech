@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 mapped_xrefs:
@@ -36,4 +36,190 @@ definitions:
       Catalyses: cytidine(1402) in 16S rRNA + S-adenosyl-L-methionine = N(4)- methylcytidine(1402) in 16S rRNA + S-adenosyl-L-homocysteine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 16S rRNA (cytosine(1402)-N(4))-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.199. EC 2.1.1.199 maps to
+    exactly one curated Rhea reaction (RHEA:42928), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "cytidine(1402)
+    in 16S rRNA + S-adenosyl-L-methionine = N(4)- methylcytidine(1402) in 16S rRNA + S-adenosyl-L-homocysteine
+    + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 16S rRNA (cytosine(1402)-N(4))-methyltransferase
+    grounding: EC:2.1.1.199
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: cytidine(1402) in 16S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10286
+    description: Rhea compound GENERIC:10286.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: CMP residue at position 1402
+    description: The reacting group Rhea names inside the generic participant GENERIC:10286 (cytidine(1402)
+      in 16S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82748
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: N(4)-methylcytidine(1402) in 16S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10287
+    description: Rhea compound GENERIC:10287.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(4)-methylcytidine 5'-phosphate residue at position 1402
+    description: The reacting group Rhea names inside the generic participant GENERIC:10287 (N(4)-methylcytidine(1402)
+      in 16S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74506
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A9NFP3
+    node_type: PROTEIN
+    label: RSMH1_ACHLI
+    grounding: UniProtKB:A9NFP3
+  - node_id: prot_C4ZBW8
+    node_type: PROTEIN
+    label: RSMH1_AGARV
+    grounding: UniProtKB:C4ZBW8
+  - node_id: prot_A6TS69
+    node_type: PROTEIN
+    label: RSMH1_ALKMQ
+    grounding: UniProtKB:A6TS69
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cytidine(1402) in 16S rRNA is a substrate consumed by RHEA:42928 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42929
+      snippet: cytidine(1402) in 16S rRNA + S-adenosyl-L-methionine => N(4)-methylcytidine(1402) in 16S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42929 declares side 42928_L as its substrates
+        (rh:substrates); the master reaction RHEA:42928 is undirected. This participant is GENERIC:10286
+        with coefficient 1. Rhea cites PMID:19965768 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: CMP residue is the reactive part of cytidine(1402) in 16S rRNA.
+    evidence:
+    - reference: RHEA:42928
+      snippet: CMP residue
+      notes: Rhea compound GENERIC:10286 (cytidine(1402) in 16S rRNA) declares rh:reactivePart at position
+        1402 = CMP residue (CHEBI:82748).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:42928 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42929
+      snippet: cytidine(1402) in 16S rRNA + S-adenosyl-L-methionine => N(4)-methylcytidine(1402) in 16S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42929 declares side 42928_L as its substrates
+        (rh:substrates); the master reaction RHEA:42928 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:19965768 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(4)-methylcytidine(1402) in 16S rRNA is a product released by RHEA:42928 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42929
+      snippet: cytidine(1402) in 16S rRNA + S-adenosyl-L-methionine => N(4)-methylcytidine(1402) in 16S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42929 declares side 42928_R as its products
+        (rh:products); the master reaction RHEA:42928 is undirected. This participant is GENERIC:10287
+        with coefficient 1. Rhea cites PMID:19965768 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(4)-methylcytidine 5'-phosphate residue is the reactive part of N(4)-methylcytidine(1402)
+      in 16S rRNA.
+    evidence:
+    - reference: RHEA:42928
+      snippet: N(4)-methylcytidine 5'-phosphate residue
+      notes: Rhea compound GENERIC:10287 (N(4)-methylcytidine(1402) in 16S rRNA) declares rh:reactivePart
+        at position 1402 = N(4)-methylcytidine 5'-phosphate residue (CHEBI:74506).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:42928 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42929
+      snippet: cytidine(1402) in 16S rRNA + S-adenosyl-L-methionine => N(4)-methylcytidine(1402) in 16S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42929 declares side 42928_R as its products
+        (rh:products); the master reaction RHEA:42928 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:19965768 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:42928 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42929
+      snippet: cytidine(1402) in 16S rRNA + S-adenosyl-L-methionine => N(4)-methylcytidine(1402) in 16S
+        rRNA + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42929 declares side 42928_R as its products
+        (rh:products); the master reaction RHEA:42928 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19965768 for this reaction.
+  - subject: prot_A9NFP3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RSMH1_ACHLI is an exemplar enzyme with EC 2.1.1.199 activity.
+    evidence:
+    - reference: EC:2.1.1.199
+      snippet: DR   A9NFP3, RSMH1_ACHLI;  C4ZBW8, RSMH1_AGARV;  A6TS69, RSMH1_ALKMQ;
+      notes: ExPASy ENZYME entry EC 2.1.1.199 cross-references UniProtKB:A9NFP3 (RSMH1_ACHLI) as a protein
+        with this activity.
+  - subject: prot_C4ZBW8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RSMH1_AGARV is an exemplar enzyme with EC 2.1.1.199 activity.
+    evidence:
+    - reference: EC:2.1.1.199
+      snippet: DR   A9NFP3, RSMH1_ACHLI;  C4ZBW8, RSMH1_AGARV;  A6TS69, RSMH1_ALKMQ;
+      notes: ExPASy ENZYME entry EC 2.1.1.199 cross-references UniProtKB:C4ZBW8 (RSMH1_AGARV) as a protein
+        with this activity.
+  - subject: prot_A6TS69
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RSMH1_ALKMQ is an exemplar enzyme with EC 2.1.1.199 activity.
+    evidence:
+    - reference: EC:2.1.1.199
+      snippet: DR   A9NFP3, RSMH1_ACHLI;  C4ZBW8, RSMH1_AGARV;  A6TS69, RSMH1_ALKMQ;
+      notes: ExPASy ENZYME entry EC 2.1.1.199 cross-references UniProtKB:A6TS69 (RSMH1_ALKMQ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

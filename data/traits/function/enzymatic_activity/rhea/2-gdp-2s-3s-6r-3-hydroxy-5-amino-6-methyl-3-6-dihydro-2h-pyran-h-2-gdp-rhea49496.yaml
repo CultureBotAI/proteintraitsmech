@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:131636
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,77 @@ definitions:
       Catalyses the reaction: 2-GDP-(2S,3S,6R)-3-hydroxy-5-amino-6-methyl-3,6-dihydro-2H-pyran + H(+) = 2-GDP-(2S,3S,6R)-3-hydroxy-5-imino-6-methyloxane
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-GDP-(2S,3S,6R)-3-hydroxy-5-amino-6-methyl-3,6-dihydro-2H-pyran + H(+)
+    = 2-GDP-(2S,3S,…
+  description: Substrate-to-product chemistry of RHEA:49496, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:49497 (rh:substrates → 49496_L, rh:products → 49496_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-GDP-(2S,3S,6R)-3-hydroxy-5-amino-6-methyl-3,6-dihydro-2H-pyran + H(+) = 2-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:49496
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-GDP-(2S,3S,6R)-3-hydroxy-5-amino-6-methyl-3,6-dihydro-2H-pyran + H(+) = 2-GDP-(2S,3S,6R)-3-hydroxy-5-imino-6-methyloxane'
+  - node_id: sub1
+    label: 2-GDP-(2S,3S,6R)-3-hydroxy-5-amino-6-methyl-3,6-dihydro-2H-pyran
+    node_type: CHEMICAL
+    grounding: CHEBI:131636
+    description: Formula C16H22N6O13P2.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 2-GDP-(2S,3S,6R)-3-hydroxy-5-imino-6-methyloxane
+    node_type: CHEMICAL
+    grounding: CHEBI:131639
+    description: Formula C16H23N6O13P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-GDP-(2S,3S,6R)-3-hydroxy-5-amino-6-methyl-3,6-dihydro-2H-pyran is a substrate consumed
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49497
+      snippet: 2-GDP-(2S,3S,6R)-3-hydroxy-5-amino-6-methyl-3,6-dihydro-2H-pyran + H(+) => 2-GDP-(2S,3S,6R)-3-hydroxy-5-imino-6-methyloxane
+      notes: Rhea's left-to-right directional reaction RHEA:49497 declares side 49496_L as its substrates
+        (rh:substrates); the master reaction RHEA:49496 is undirected. This participant is CHEBI:131636
+        with coefficient 1. Rhea cites PMID:15610039, PMID:17997582 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49497
+      snippet: 2-GDP-(2S,3S,6R)-3-hydroxy-5-amino-6-methyl-3,6-dihydro-2H-pyran + H(+) => 2-GDP-(2S,3S,6R)-3-hydroxy-5-imino-6-methyloxane
+      notes: Rhea's left-to-right directional reaction RHEA:49497 declares side 49496_L as its substrates
+        (rh:substrates); the master reaction RHEA:49496 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:15610039, PMID:17997582 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-GDP-(2S,3S,6R)-3-hydroxy-5-imino-6-methyloxane is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49497
+      snippet: 2-GDP-(2S,3S,6R)-3-hydroxy-5-amino-6-methyl-3,6-dihydro-2H-pyran + H(+) => 2-GDP-(2S,3S,6R)-3-hydroxy-5-imino-6-methyloxane
+      notes: Rhea's left-to-right directional reaction RHEA:49497 declares side 49496_R as its products
+        (rh:products); the master reaction RHEA:49496 is undirected. This participant is CHEBI:131639
+        with coefficient 1. Rhea cites PMID:15610039, PMID:17997582 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

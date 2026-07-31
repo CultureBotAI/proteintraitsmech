@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:85643
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,128 @@ definitions:
       Catalyses the reaction: a 3'-end uridylyl-uridine-RNA = a 3'-end 2',3'-cyclophospho-uridine-RNA + uridine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 3'-end uridylyl-uridine-RNA = a 3'-end 2',3'-cyclophospho-uridine-RNA
+    + uridine
+  description: Substrate-to-product chemistry of RHEA:46052, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:46053 (rh:substrates → 46052_L, rh:products → 46052_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 3'-end uridylyl-uridine-RNA = a 3'-end 2',3'-cyclophospho-uridine-RNA + ur…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:46052
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 3''-end uridylyl-uridine-RNA = a 3''-end 2'',3''-cyclophospho-uridine-RNA + uridine'
+  - node_id: sub1
+    label: a 3'-end uridylyl-uridine-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17384
+    description: Rhea compound GENERIC:17384.
+  - node_id: sub1_rp1
+    label: 3'-terminal pUpU residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17384 (a 3'-end
+      uridylyl-uridine-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85643
+  - node_id: prd1
+    label: a 3'-end 2',3'-cyclophospho-uridine-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17385
+    description: Rhea compound GENERIC:17385.
+  - node_id: prd1_rp1
+    label: 3'-terminal uridine 2',3'-cyclic phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17385 (a 3'-end
+      2',3'-cyclophospho-uridine-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85644
+  - node_id: prd2
+    label: uridine
+    node_type: CHEMICAL
+    grounding: CHEBI:16704
+    description: Formula C9H12N2O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: poly(U)-specific exoribonuclease activity, producing 3' uridine cyclic phosphate ends
+    grounding: GO:1990838
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3'-end uridylyl-uridine-RNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:46053
+      snippet: a 3'-end uridylyl-uridine-RNA => a 3'-end 2',3'-cyclophospho-uridine-RNA + uridine
+      notes: Rhea's left-to-right directional reaction RHEA:46053 declares side 46052_L as its substrates
+        (rh:substrates); the master reaction RHEA:46052 is undirected. This participant is GENERIC:17384
+        with coefficient 1. Rhea cites PMID:23190533, PMID:28887445, PMID:23022480, PMID:26213367 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-terminal pUpU residue is the reactive part of a 3'-end uridylyl-uridine-RNA.
+    evidence:
+    - reference: RHEA:46052
+      snippet: 3'-terminal pUpU residue
+      notes: Rhea compound GENERIC:17384 (a 3'-end uridylyl-uridine-RNA) declares rh:reactivePart = 3'-terminal
+        pUpU residue (CHEBI:85643), formula C18H21N4O16P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3'-end 2',3'-cyclophospho-uridine-RNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:46053
+      snippet: a 3'-end uridylyl-uridine-RNA => a 3'-end 2',3'-cyclophospho-uridine-RNA + uridine
+      notes: Rhea's left-to-right directional reaction RHEA:46053 declares side 46052_R as its products
+        (rh:products); the master reaction RHEA:46052 is undirected. This participant is GENERIC:17385
+        with coefficient 1. Rhea cites PMID:23190533, PMID:28887445, PMID:23022480, PMID:26213367 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-terminal uridine 2',3'-cyclic phosphate residue is the reactive part of a 3'-end 2',3'-cyclophospho-uridine-RNA.
+    evidence:
+    - reference: RHEA:46052
+      snippet: 3'-terminal uridine 2',3'-cyclic phosphate residue
+      notes: Rhea compound GENERIC:17385 (a 3'-end 2',3'-cyclophospho-uridine-RNA) declares rh:reactivePart
+        = 3'-terminal uridine 2',3'-cyclic phosphate residue (CHEBI:85644), formula C9H9N2O10P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: uridine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46053
+      snippet: a 3'-end uridylyl-uridine-RNA => a 3'-end 2',3'-cyclophospho-uridine-RNA + uridine
+      notes: Rhea's left-to-right directional reaction RHEA:46053 declares side 46052_R as its products
+        (rh:products); the master reaction RHEA:46052 is undirected. This participant is CHEBI:16704 with
+        coefficient 1. Rhea cites PMID:23190533, PMID:28887445, PMID:23022480, PMID:26213367 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:46052
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_1990838"/>
+      notes: The rdfs:seeAlso triple on RHEA:46052 in rhea.rdf. GO term GO:1990838 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

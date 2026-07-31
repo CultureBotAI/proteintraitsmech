@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:193003
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,92 @@ definitions:
       Catalyses the reaction: preechinulin + dimethylallyl diphosphate = tardioxopiperazine A + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of preechinulin + dimethylallyl diphosphate = tardioxopiperazine A + diphosphate
+  description: Substrate-to-product chemistry of RHEA:73779, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:73780 (rh:substrates → 73779_L, rh:products → 73779_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of preechinulin + dimethylallyl diphosphate = tardioxopiperazine A + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:73779
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: preechinulin + dimethylallyl diphosphate = tardioxopiperazine A + diphosphate'
+  - node_id: sub1
+    label: preechinulin
+    node_type: CHEMICAL
+    grounding: CHEBI:193003
+    description: Formula C19H23N3O2.
+  - node_id: sub2
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: tardioxopiperazine A
+    node_type: CHEMICAL
+    grounding: CHEBI:193007
+    description: Formula C24H31N3O2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: preechinulin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73780
+      snippet: preechinulin + dimethylallyl diphosphate => tardioxopiperazine A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:73780 declares side 73779_L as its substrates
+        (rh:substrates); the master reaction RHEA:73779 is undirected. This participant is CHEBI:193003
+        with coefficient 1. Rhea cites PMID:29072465, PMID:33381959 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dimethylallyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:73780
+      snippet: preechinulin + dimethylallyl diphosphate => tardioxopiperazine A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:73780 declares side 73779_L as its substrates
+        (rh:substrates); the master reaction RHEA:73779 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:29072465, PMID:33381959 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tardioxopiperazine A is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:73780
+      snippet: preechinulin + dimethylallyl diphosphate => tardioxopiperazine A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:73780 declares side 73779_R as its products
+        (rh:products); the master reaction RHEA:73779 is undirected. This participant is CHEBI:193007
+        with coefficient 1. Rhea cites PMID:29072465, PMID:33381959 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73780
+      snippet: preechinulin + dimethylallyl diphosphate => tardioxopiperazine A + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:73780 declares side 73779_R as its products
+        (rh:products); the master reaction RHEA:73779 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:29072465, PMID:33381959 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

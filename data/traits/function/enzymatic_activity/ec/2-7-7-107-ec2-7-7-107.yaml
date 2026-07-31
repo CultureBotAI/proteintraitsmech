@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 mapped_xrefs:
@@ -32,4 +32,119 @@ definitions:
       Catalyses: (2-aminoethyl)phosphonate + CTP = CMP-(2-aminoethyl)phosphonate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2-aminoethyl)phosphonate cytidylyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.107. EC 2.7.7.107 maps to
+    exactly one curated Rhea reaction (RHEA:63448), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2-aminoethyl)phosphonate
+    + CTP = CMP-(2-aminoethyl)phosphonate + diphosphate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (2-aminoethyl)phosphonate cytidylyltransferase
+    grounding: EC:2.7.7.107
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2-aminoethyl)phosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57418
+    description: Formula C2H8NO3P.
+  - node_id: sub2
+    label: CTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37563
+    description: Formula C9H12N3O14P3.
+  - node_id: prd1
+    label: CMP-(2-aminoethyl)phosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:147307
+    description: Formula C11H19N4O10P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q73MU2
+    node_type: PROTEIN
+    label: PNTCW_TREDE
+    grounding: UniProtKB:Q73MU2
+  - node_id: prot_B9CM12
+    node_type: PROTEIN
+    label: PNTC_LANR4
+    grounding: UniProtKB:B9CM12
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2-aminoethyl)phosphonate is a substrate consumed by RHEA:63448 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63449
+      snippet: (2-aminoethyl)phosphonate + CTP => CMP-(2-aminoethyl)phosphonate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:63449 declares side 63448_L as its substrates
+        (rh:substrates); the master reaction RHEA:63448 is undirected. This participant is CHEBI:57418
+        with coefficient 1. Rhea cites PMID:31420548 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CTP is a substrate consumed by RHEA:63448 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63449
+      snippet: (2-aminoethyl)phosphonate + CTP => CMP-(2-aminoethyl)phosphonate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:63449 declares side 63448_L as its substrates
+        (rh:substrates); the master reaction RHEA:63448 is undirected. This participant is CHEBI:37563
+        with coefficient 1. Rhea cites PMID:31420548 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: CMP-(2-aminoethyl)phosphonate is a product released by RHEA:63448 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63449
+      snippet: (2-aminoethyl)phosphonate + CTP => CMP-(2-aminoethyl)phosphonate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:63449 declares side 63448_R as its products
+        (rh:products); the master reaction RHEA:63448 is undirected. This participant is CHEBI:147307
+        with coefficient 1. Rhea cites PMID:31420548 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:63448 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63449
+      snippet: (2-aminoethyl)phosphonate + CTP => CMP-(2-aminoethyl)phosphonate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:63449 declares side 63448_R as its products
+        (rh:products); the master reaction RHEA:63448 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:31420548 for this reaction.
+  - subject: prot_Q73MU2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PNTCW_TREDE is an exemplar enzyme with EC 2.7.7.107 activity.
+    evidence:
+    - reference: EC:2.7.7.107
+      snippet: DR   Q73MU2, PNTCW_TREDE;  B9CM12, PNTC_LANR4 ;
+      notes: ExPASy ENZYME entry EC 2.7.7.107 cross-references UniProtKB:Q73MU2 (PNTCW_TREDE) as a protein
+        with this activity.
+  - subject: prot_B9CM12
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PNTC_LANR4 is an exemplar enzyme with EC 2.7.7.107 activity.
+    evidence:
+    - reference: EC:2.7.7.107
+      snippet: DR   Q73MU2, PNTCW_TREDE;  B9CM12, PNTC_LANR4 ;
+      notes: ExPASy ENZYME entry EC 2.7.7.107 cross-references UniProtKB:B9CM12 (PNTC_LANR4) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

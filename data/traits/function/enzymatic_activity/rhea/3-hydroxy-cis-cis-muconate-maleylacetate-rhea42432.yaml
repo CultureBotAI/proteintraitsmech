@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58139
     role: SUBSTRATE_OR_PRODUCT
@@ -18,4 +18,59 @@ definitions:
       Catalyses the reaction: 3-hydroxy-cis,cis-muconate = maleylacetate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-hydroxy-cis,cis-muconate = maleylacetate
+  description: Substrate-to-product chemistry of RHEA:42432, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:42433 (rh:substrates → 42432_L, rh:products → 42432_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-hydroxy-cis,cis-muconate = maleylacetate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:42432
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-hydroxy-cis,cis-muconate = maleylacetate'
+  - node_id: sub1
+    label: 3-hydroxy-cis,cis-muconate
+    node_type: CHEMICAL
+    grounding: CHEBI:58139
+    description: Formula C6H4O5.
+  - node_id: prd1
+    label: maleylacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16468
+    description: Formula C6H4O5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-hydroxy-cis,cis-muconate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42433
+      snippet: 3-hydroxy-cis,cis-muconate => maleylacetate
+      notes: Rhea's left-to-right directional reaction RHEA:42433 declares side 42432_L as its substrates
+        (rh:substrates); the master reaction RHEA:42432 is undirected. This participant is CHEBI:58139
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: maleylacetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42433
+      snippet: 3-hydroxy-cis,cis-muconate => maleylacetate
+      notes: Rhea's left-to-right directional reaction RHEA:42433 declares side 42432_R as its products
+        (rh:products); the master reaction RHEA:42432 is undirected. This participant is CHEBI:16468 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

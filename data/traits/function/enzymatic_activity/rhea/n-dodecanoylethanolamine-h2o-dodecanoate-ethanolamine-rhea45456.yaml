@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:85263
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,91 @@ definitions:
       Catalyses the reaction: N-dodecanoylethanolamine + H2O = dodecanoate + ethanolamine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-dodecanoylethanolamine + H2O = dodecanoate + ethanolamine
+  description: Substrate-to-product chemistry of RHEA:45456, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:45457 (rh:substrates → 45456_L, rh:products → 45456_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-dodecanoylethanolamine + H2O = dodecanoate + ethanolamine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:45456
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-dodecanoylethanolamine + H2O = dodecanoate + ethanolamine'
+  - node_id: sub1
+    label: N-dodecanoylethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:85263
+    description: Formula C14H29NO2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: dodecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:18262
+    description: Formula C12H23O2.
+  - node_id: prd2
+    label: ethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57603
+    description: Formula C2H8NO.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-dodecanoylethanolamine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45457
+      snippet: N-dodecanoylethanolamine + H2O => dodecanoate + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:45457 declares side 45456_L as its substrates
+        (rh:substrates); the master reaction RHEA:45456 is undirected. This participant is CHEBI:85263
+        with coefficient 1. Rhea cites PMID:12824167, PMID:15655246 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45457
+      snippet: N-dodecanoylethanolamine + H2O => dodecanoate + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:45457 declares side 45456_L as its substrates
+        (rh:substrates); the master reaction RHEA:45456 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12824167, PMID:15655246 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dodecanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45457
+      snippet: N-dodecanoylethanolamine + H2O => dodecanoate + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:45457 declares side 45456_R as its products
+        (rh:products); the master reaction RHEA:45456 is undirected. This participant is CHEBI:18262 with
+        coefficient 1. Rhea cites PMID:12824167, PMID:15655246 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ethanolamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45457
+      snippet: N-dodecanoylethanolamine + H2O => dodecanoate + ethanolamine
+      notes: Rhea's left-to-right directional reaction RHEA:45457 declares side 45456_R as its products
+        (rh:products); the master reaction RHEA:45456 is undirected. This participant is CHEBI:57603 with
+        coefficient 1. Rhea cites PMID:12824167, PMID:15655246 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

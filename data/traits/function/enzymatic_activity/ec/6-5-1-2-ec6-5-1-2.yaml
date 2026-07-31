@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.5.1.-
 synonyms:
@@ -49,4 +49,82 @@ definitions:
       Catalyses: NAD(+) + (deoxyribonucleotide)n-3'-hydroxyl + 5'-phospho- (deoxyribonucleotide)m = (deoxyribonucleotide)n+m + AMP + beta- nicotinamide D-nucleotide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of DNA ligase (NAD(+))
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.5.1.2. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "NAD(+)
+    + (deoxyribonucleotide)n-3''-hydroxyl + 5''-phospho- (deoxyribonucleotide)m = (deoxyribonucleotide)n+m
+    + AMP + beta- nicotinamide D-nucleotide".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: DNA ligase (NAD(+))
+    grounding: EC:6.5.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: DNA ligase (NAD+) activity
+    grounding: GO:0003911
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q97JS8
+    node_type: PROTEIN
+    label: DNLJ1_CLOAB
+    grounding: UniProtKB:Q97JS8
+  - node_id: prot_C1D1Y6
+    node_type: PROTEIN
+    label: DNLJ1_DEIDV
+    grounding: UniProtKB:C1D1Y6
+  - node_id: prot_A1VC99
+    node_type: PROTEIN
+    label: DNLJ1_NITV4
+    grounding: UniProtKB:A1VC99
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.5.1.2
+      snippet: EC:6.5.1.2 > GO:DNA ligase (NAD+) activity ; GO:0003911
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003911 is itself a record
+        in this KB.
+  - subject: prot_Q97JS8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DNLJ1_CLOAB is an exemplar enzyme with EC 6.5.1.2 activity.
+    evidence:
+    - reference: EC:6.5.1.2
+      snippet: DR   Q97JS8, DNLJ1_CLOAB;  C1D1Y6, DNLJ1_DEIDV;  A1VC99, DNLJ1_NITV4;
+      notes: ExPASy ENZYME entry EC 6.5.1.2 cross-references UniProtKB:Q97JS8 (DNLJ1_CLOAB) as a protein
+        with this activity.
+  - subject: prot_C1D1Y6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DNLJ1_DEIDV is an exemplar enzyme with EC 6.5.1.2 activity.
+    evidence:
+    - reference: EC:6.5.1.2
+      snippet: DR   Q97JS8, DNLJ1_CLOAB;  C1D1Y6, DNLJ1_DEIDV;  A1VC99, DNLJ1_NITV4;
+      notes: ExPASy ENZYME entry EC 6.5.1.2 cross-references UniProtKB:C1D1Y6 (DNLJ1_DEIDV) as a protein
+        with this activity.
+  - subject: prot_A1VC99
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DNLJ1_NITV4 is an exemplar enzyme with EC 6.5.1.2 activity.
+    evidence:
+    - reference: EC:6.5.1.2
+      snippet: DR   Q97JS8, DNLJ1_CLOAB;  C1D1Y6, DNLJ1_DEIDV;  A1VC99, DNLJ1_NITV4;
+      notes: ExPASy ENZYME entry EC 6.5.1.2 cross-references UniProtKB:A1VC99 (DNLJ1_NITV4) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

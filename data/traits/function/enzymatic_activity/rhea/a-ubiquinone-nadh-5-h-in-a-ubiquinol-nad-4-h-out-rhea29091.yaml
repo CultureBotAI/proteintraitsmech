@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:7.1.1.2
     mapping_source: rhea2ec
@@ -38,4 +38,225 @@ definitions:
       Catalyses the reaction: a ubiquinone + NADH + 5 H(+)(in) = a ubiquinol + NAD(+) + 4 H(+)(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a ubiquinone + NADH + 5 H(+)(in) = a ubiquinol + NAD(+) + 4 H(+)(out)
+  description: 'Substrate-to-product chemistry of RHEA:29091, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:29092 (rh:substrates → 29091_L, rh:products → 29091_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of a ubiquinone + NADH + 5 H(+)(in) = a ubiquinol + NAD(+) + 4 H(+)(out)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:29091
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a ubiquinone + NADH + 5 H(+)(in) = a ubiquinol + NAD(+) + 4 H(+)(out)'
+  - node_id: sub1
+    label: a ubiquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16389
+    xrefs:
+    - RHEA-COMP:9565
+    description: Rhea compound POLYMER:9565. Formula C9H10O4(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: sub3
+    label: H(+) (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: a ubiquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:17976
+    xrefs:
+    - RHEA-COMP:9566
+    description: Rhea compound POLYMER:9566. Formula C9H12O4(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: prd2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd3
+    label: H(+) (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: NADH dehydrogenase (ubiquinone) activity
+    grounding: GO:0008137
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: NADH:ubiquinone reductase (H(+)-translocating)
+    grounding: EC:7.1.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P42974
+    node_type: PROTEIN
+    label: DHNA_BACSU
+    grounding: UniProtKB:P42974
+  - node_id: prot_P26829
+    node_type: PROTEIN
+    label: DHNA_FERAY
+    grounding: UniProtKB:P26829
+  - node_id: prot_Q55CD9
+    node_type: PROTEIN
+    label: NDH_DICDI
+    grounding: UniProtKB:Q55CD9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a ubiquinone is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29092
+      snippet: a ubiquinone + NADH + 5 H(+)(in) => a ubiquinol + NAD(+) + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:29092 declares side 29091_L as its substrates
+        (rh:substrates); the master reaction RHEA:29091 is undirected. This participant is POLYMER:9565
+        with coefficient 1. Rhea cites PMID:22392981, PMID:9446680, PMID:20595580, PMID:17274631 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29092
+      snippet: a ubiquinone + NADH + 5 H(+)(in) => a ubiquinol + NAD(+) + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:29092 declares side 29091_L as its substrates
+        (rh:substrates); the master reaction RHEA:29091 is undirected. This participant is CHEBI:57945
+        with coefficient 1. Rhea cites PMID:22392981, PMID:9446680, PMID:20595580, PMID:17274631 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 5).
+    evidence:
+    - reference: RHEA:29092
+      snippet: a ubiquinone + NADH + 5 H(+)(in) => a ubiquinol + NAD(+) + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:29092 declares side 29091_L as its substrates
+        (rh:substrates); the master reaction RHEA:29091 is undirected. This participant is CHEBI:15378
+        with coefficient 5. It is transported, and appears on the inside of the membrane. Rhea cites PMID:22392981,
+        PMID:9446680, PMID:20595580, PMID:17274631 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a ubiquinol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29092
+      snippet: a ubiquinone + NADH + 5 H(+)(in) => a ubiquinol + NAD(+) + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:29092 declares side 29091_R as its products
+        (rh:products); the master reaction RHEA:29091 is undirected. This participant is POLYMER:9566
+        with coefficient 1. Rhea cites PMID:22392981, PMID:9446680, PMID:20595580, PMID:17274631 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NAD(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29092
+      snippet: a ubiquinone + NADH + 5 H(+)(in) => a ubiquinol + NAD(+) + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:29092 declares side 29091_R as its products
+        (rh:products); the master reaction RHEA:29091 is undirected. This participant is CHEBI:57540 with
+        coefficient 1. Rhea cites PMID:22392981, PMID:9446680, PMID:20595580, PMID:17274631 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:29092
+      snippet: a ubiquinone + NADH + 5 H(+)(in) => a ubiquinol + NAD(+) + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:29092 declares side 29091_R as its products
+        (rh:products); the master reaction RHEA:29091 is undirected. This participant is CHEBI:15378 with
+        coefficient 4. It is transported, and appears on the outside of the membrane. Rhea cites PMID:22392981,
+        PMID:9446680, PMID:20595580, PMID:17274631 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:29091
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008137"/>
+      notes: The rdfs:seeAlso triple on RHEA:29091 in rhea.rdf. GO term GO:0008137 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 7.1.1.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:29091
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.1.1.2"/>
+      notes: The rh:ec triple on RHEA:29091 in rhea.rdf. EC 7.1.1.2 is itself a record in this KB.
+  - subject: prot_P42974
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHNA_BACSU is an exemplar enzyme carrying EC 7.1.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:7.1.1.2
+      snippet: DR   P42974, DHNA_BACSU ;  P26829, DHNA_FERAY ;  Q55CD9, NDH_DICDI  ;
+      notes: ExPASy ENZYME entry EC 7.1.1.2 cross-references UniProtKB:P42974 (DHNA_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:29091
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.1.1.2"/>
+      notes: Rhea assigns RHEA:29091 to EC 7.1.1.2, and EC 7.1.1.2 maps to exactly one Rhea master reaction
+        (RHEA:29091), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P26829
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHNA_FERAY is an exemplar enzyme carrying EC 7.1.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:7.1.1.2
+      snippet: DR   P42974, DHNA_BACSU ;  P26829, DHNA_FERAY ;  Q55CD9, NDH_DICDI  ;
+      notes: ExPASy ENZYME entry EC 7.1.1.2 cross-references UniProtKB:P26829 (DHNA_FERAY) as a protein
+        with this activity.
+    - reference: RHEA:29091
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.1.1.2"/>
+      notes: Rhea assigns RHEA:29091 to EC 7.1.1.2, and EC 7.1.1.2 maps to exactly one Rhea master reaction
+        (RHEA:29091), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q55CD9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NDH_DICDI is an exemplar enzyme carrying EC 7.1.1.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:7.1.1.2
+      snippet: DR   P42974, DHNA_BACSU ;  P26829, DHNA_FERAY ;  Q55CD9, NDH_DICDI  ;
+      notes: ExPASy ENZYME entry EC 7.1.1.2 cross-references UniProtKB:Q55CD9 (NDH_DICDI) as a protein
+        with this activity.
+    - reference: RHEA:29091
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/7.1.1.2"/>
+      notes: Rhea assigns RHEA:29091 to EC 7.1.1.2, and EC 7.1.1.2 maps to exactly one Rhea master reaction
+        (RHEA:29091), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

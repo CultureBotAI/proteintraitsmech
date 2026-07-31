@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:61429
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,75 @@ definitions:
       Catalyses the reaction: dGTP + methylglyoxal = N(2)-(1-hydroxy-2-oxopropyl)-dGTP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dGTP + methylglyoxal = N(2)-(1-hydroxy-2-oxopropyl)-dGTP
+  description: Substrate-to-product chemistry of RHEA:57212, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57213 (rh:substrates → 57212_L, rh:products → 57212_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dGTP + methylglyoxal = N(2)-(1-hydroxy-2-oxopropyl)-dGTP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57212
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dGTP + methylglyoxal = N(2)-(1-hydroxy-2-oxopropyl)-dGTP'
+  - node_id: sub1
+    label: dGTP
+    node_type: CHEMICAL
+    grounding: CHEBI:61429
+    description: Formula C10H12N5O13P3.
+  - node_id: sub2
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+    description: Formula C3H4O2.
+  - node_id: prd1
+    label: N(2)-(1-hydroxy-2-oxopropyl)-dGTP
+    node_type: CHEMICAL
+    grounding: CHEBI:141569
+    description: Formula C13H16N5O15P3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dGTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57213
+      snippet: dGTP + methylglyoxal => N(2)-(1-hydroxy-2-oxopropyl)-dGTP
+      notes: Rhea's left-to-right directional reaction RHEA:57213 declares side 57212_L as its substrates
+        (rh:substrates); the master reaction RHEA:57212 is undirected. This participant is CHEBI:61429
+        with coefficient 1. Rhea cites PMID:23334546, PMID:28596309, PMID:18533367 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: methylglyoxal is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57213
+      snippet: dGTP + methylglyoxal => N(2)-(1-hydroxy-2-oxopropyl)-dGTP
+      notes: Rhea's left-to-right directional reaction RHEA:57213 declares side 57212_L as its substrates
+        (rh:substrates); the master reaction RHEA:57212 is undirected. This participant is CHEBI:17158
+        with coefficient 1. Rhea cites PMID:23334546, PMID:28596309, PMID:18533367 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(2)-(1-hydroxy-2-oxopropyl)-dGTP is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57213
+      snippet: dGTP + methylglyoxal => N(2)-(1-hydroxy-2-oxopropyl)-dGTP
+      notes: Rhea's left-to-right directional reaction RHEA:57213 declares side 57212_R as its products
+        (rh:products); the master reaction RHEA:57212 is undirected. This participant is CHEBI:141569
+        with coefficient 1. Rhea cites PMID:23334546, PMID:28596309, PMID:18533367 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

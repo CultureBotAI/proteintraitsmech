@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.8.3.26
     mapping_source: rhea2ec
@@ -30,4 +30,146 @@ definitions:
       Catalyses the reaction: mesaconate + succinyl-CoA = 2-methylfumaryl-CoA + succinate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mesaconate + succinyl-CoA = 2-methylfumaryl-CoA + succinate
+  description: Substrate-to-product chemistry of RHEA:45820, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:45821 (rh:substrates → 45820_L, rh:products → 45820_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of mesaconate + succinyl-CoA = 2-methylfumaryl-CoA + succinate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:45820
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: mesaconate + succinyl-CoA = 2-methylfumaryl-CoA + succinate'
+  - node_id: sub1
+    label: mesaconate
+    node_type: CHEMICAL
+    grounding: CHEBI:36986
+    description: Formula C5H4O4.
+  - node_id: sub2
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: prd1
+    label: 2-methylfumaryl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:75635
+    description: Formula C26H35N7O19P3S.
+  - node_id: prd2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: succinyl-CoA:mesaconate CoA transferase
+    grounding: EC:2.8.3.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_G0HQ31
+    node_type: PROTEIN
+    label: MCT_HALHT
+    grounding: UniProtKB:G0HQ31
+  - node_id: prot_Q5V468
+    node_type: PROTEIN
+    label: MCT_HALMA
+    grounding: UniProtKB:Q5V468
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: mesaconate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45821
+      snippet: mesaconate + succinyl-CoA => 2-methylfumaryl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:45821 declares side 45820_L as its substrates
+        (rh:substrates); the master reaction RHEA:45820 is undirected. This participant is CHEBI:36986
+        with coefficient 1. Rhea cites PMID:28932214, PMID:21252347 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: succinyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45821
+      snippet: mesaconate + succinyl-CoA => 2-methylfumaryl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:45821 declares side 45820_L as its substrates
+        (rh:substrates); the master reaction RHEA:45820 is undirected. This participant is CHEBI:57292
+        with coefficient 1. Rhea cites PMID:28932214, PMID:21252347 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-methylfumaryl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45821
+      snippet: mesaconate + succinyl-CoA => 2-methylfumaryl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:45821 declares side 45820_R as its products
+        (rh:products); the master reaction RHEA:45820 is undirected. This participant is CHEBI:75635 with
+        coefficient 1. Rhea cites PMID:28932214, PMID:21252347 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45821
+      snippet: mesaconate + succinyl-CoA => 2-methylfumaryl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:45821 declares side 45820_R as its products
+        (rh:products); the master reaction RHEA:45820 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:28932214, PMID:21252347 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.8.3.26; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:45820
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.26"/>
+      notes: The rh:ec triple on RHEA:45820 in rhea.rdf. EC 2.8.3.26 is itself a record in this KB.
+  - subject: prot_G0HQ31
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCT_HALHT is an exemplar enzyme carrying EC 2.8.3.26, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.8.3.26
+      snippet: DR   G0HQ31, MCT_HALHT  ;  Q5V468, MCT_HALMA  ;
+      notes: ExPASy ENZYME entry EC 2.8.3.26 cross-references UniProtKB:G0HQ31 (MCT_HALHT) as a protein
+        with this activity.
+    - reference: RHEA:45820
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.26"/>
+      notes: Rhea assigns RHEA:45820 to EC 2.8.3.26, and EC 2.8.3.26 maps to exactly one Rhea master reaction
+        (RHEA:45820), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q5V468
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCT_HALMA is an exemplar enzyme carrying EC 2.8.3.26, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.8.3.26
+      snippet: DR   G0HQ31, MCT_HALHT  ;  Q5V468, MCT_HALMA  ;
+      notes: ExPASy ENZYME entry EC 2.8.3.26 cross-references UniProtKB:Q5V468 (MCT_HALMA) as a protein
+        with this activity.
+    - reference: RHEA:45820
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.8.3.26"/>
+      notes: Rhea assigns RHEA:45820 to EC 2.8.3.26, and EC 2.8.3.26 maps to exactly one Rhea master reaction
+        (RHEA:45820), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

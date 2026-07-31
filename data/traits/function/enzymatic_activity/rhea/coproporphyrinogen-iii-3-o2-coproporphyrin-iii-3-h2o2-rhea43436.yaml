@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.3.3.15
     mapping_source: rhea2ec
@@ -34,4 +34,170 @@ definitions:
       Catalyses the reaction: coproporphyrinogen III + 3 O2 = coproporphyrin III + 3 H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of coproporphyrinogen III + 3 O2 = coproporphyrin III + 3 H2O2
+  description: Substrate-to-product chemistry of RHEA:43436, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:43437 (rh:substrates → 43436_L, rh:products → 43436_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of coproporphyrinogen III + 3 O2 = coproporphyrin III + 3 H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:43436
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: coproporphyrinogen III + 3 O2 = coproporphyrin III + 3 H2O2'
+  - node_id: sub1
+    label: coproporphyrinogen III
+    node_type: CHEMICAL
+    grounding: CHEBI:57309
+    description: Formula C36H40N4O8.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: coproporphyrin III
+    node_type: CHEMICAL
+    grounding: CHEBI:131725
+    description: Formula C36H34N4O8.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: coproporphyrinogen III oxidase (coproporphyrin-forming)
+    grounding: EC:1.3.3.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P32397
+    node_type: PROTEIN
+    label: CGOX_BACSU
+    grounding: UniProtKB:P32397
+  - node_id: prot_P0A5A8
+    node_type: PROTEIN
+    label: CGOX_MYCBO
+    grounding: UniProtKB:P0A5A8
+  - node_id: prot_Q50008
+    node_type: PROTEIN
+    label: CGOX_MYCLE
+    grounding: UniProtKB:Q50008
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: coproporphyrinogen III is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43437
+      snippet: coproporphyrinogen III + 3 O2 => coproporphyrin III + 3 H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:43437 declares side 43436_L as its substrates
+        (rh:substrates); the master reaction RHEA:43436 is undirected. This participant is CHEBI:57309
+        with coefficient 1. Rhea cites PMID:9784236, PMID:25646457, PMID:19944166, PMID:7928957 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:43437
+      snippet: coproporphyrinogen III + 3 O2 => coproporphyrin III + 3 H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:43437 declares side 43436_L as its substrates
+        (rh:substrates); the master reaction RHEA:43436 is undirected. This participant is CHEBI:15379
+        with coefficient 3. Rhea cites PMID:9784236, PMID:25646457, PMID:19944166, PMID:7928957 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: coproporphyrin III is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43437
+      snippet: coproporphyrinogen III + 3 O2 => coproporphyrin III + 3 H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:43437 declares side 43436_R as its products
+        (rh:products); the master reaction RHEA:43436 is undirected. This participant is CHEBI:131725
+        with coefficient 1. Rhea cites PMID:9784236, PMID:25646457, PMID:19944166, PMID:7928957 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:43437
+      snippet: coproporphyrinogen III + 3 O2 => coproporphyrin III + 3 H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:43437 declares side 43436_R as its products
+        (rh:products); the master reaction RHEA:43436 is undirected. This participant is CHEBI:16240 with
+        coefficient 3. Rhea cites PMID:9784236, PMID:25646457, PMID:19944166, PMID:7928957 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.3.3.15; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:43436
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.3.15"/>
+      notes: The rh:ec triple on RHEA:43436 in rhea.rdf. EC 1.3.3.15 is itself a record in this KB.
+  - subject: prot_P32397
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGOX_BACSU is an exemplar enzyme carrying EC 1.3.3.15, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.3.3.15
+      snippet: DR   P32397, CGOX_BACSU ;  P0A5A8, CGOX_MYCBO ;  Q50008, CGOX_MYCLE ;
+      notes: ExPASy ENZYME entry EC 1.3.3.15 cross-references UniProtKB:P32397 (CGOX_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:43436
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.3.15"/>
+      notes: Rhea assigns RHEA:43436 to EC 1.3.3.15, and EC 1.3.3.15 maps to exactly one Rhea master reaction
+        (RHEA:43436), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P0A5A8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGOX_MYCBO is an exemplar enzyme carrying EC 1.3.3.15, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.3.3.15
+      snippet: DR   P32397, CGOX_BACSU ;  P0A5A8, CGOX_MYCBO ;  Q50008, CGOX_MYCLE ;
+      notes: ExPASy ENZYME entry EC 1.3.3.15 cross-references UniProtKB:P0A5A8 (CGOX_MYCBO) as a protein
+        with this activity.
+    - reference: RHEA:43436
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.3.15"/>
+      notes: Rhea assigns RHEA:43436 to EC 1.3.3.15, and EC 1.3.3.15 maps to exactly one Rhea master reaction
+        (RHEA:43436), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q50008
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGOX_MYCLE is an exemplar enzyme carrying EC 1.3.3.15, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.3.3.15
+      snippet: DR   P32397, CGOX_BACSU ;  P0A5A8, CGOX_MYCBO ;  Q50008, CGOX_MYCLE ;
+      notes: ExPASy ENZYME entry EC 1.3.3.15 cross-references UniProtKB:Q50008 (CGOX_MYCLE) as a protein
+        with this activity.
+    - reference: RHEA:43436
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.3.15"/>
+      notes: Rhea assigns RHEA:43436 to EC 1.3.3.15, and EC 1.3.3.15 maps to exactly one Rhea master reaction
+        (RHEA:43436), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

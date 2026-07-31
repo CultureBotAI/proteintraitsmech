@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:85445
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,113 @@ definitions:
       Catalyses the reaction: a 2'-deoxyguanosine in DNA + methylglyoxal = an N(2)-(1-hydroxy-2-oxopropyl)-2'-deoxyguanosine in DNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 2'-deoxyguanosine in DNA + methylglyoxal = an N(2)-(1-hydroxy-2-oxopropyl)-2'-deoxygu…
+  description: Substrate-to-product chemistry of RHEA:57272, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57273 (rh:substrates → 57272_L, rh:products → 57272_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2'-deoxyguanosine in DNA + methylglyoxal = an N(2)-(1-hydroxy-2-oxopropyl)…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57272
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 2''-deoxyguanosine in DNA + methylglyoxal = an N(2)-(1-hydroxy-2-oxopropyl)-2''-deoxyguanosine
+      in DNA'
+  - node_id: sub1
+    label: a 2'-deoxyguanosine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:11367
+    description: Rhea compound GENERIC:11367.
+  - node_id: sub1_rp1
+    label: dGMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11367 (a 2'-deoxyguanosine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85445
+  - node_id: sub2
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+    description: Formula C3H4O2.
+  - node_id: prd1
+    label: an N(2)-(1-hydroxy-2-oxopropyl)-2'-deoxyguanosine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:14856
+    description: Rhea compound GENERIC:14856.
+  - node_id: prd1_rp1
+    label: N(2)-(1-hydroxy-2-oxopropyl)-dGMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14856 (an N(2)-(1-hydroxy-2-oxopropyl)-2'-deoxyguanosine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:141578
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2'-deoxyguanosine in DNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57273
+      snippet: a 2'-deoxyguanosine in DNA + methylglyoxal => an N(2)-(1-hydroxy-2-oxopropyl)-2'-deoxyguanosine
+        in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:57273 declares side 57272_L as its substrates
+        (rh:substrates); the master reaction RHEA:57272 is undirected. This participant is GENERIC:11367
+        with coefficient 1. Rhea cites PMID:23334546, PMID:28596309, PMID:18533367 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: dGMP residue is the reactive part of a 2'-deoxyguanosine in DNA.
+    evidence:
+    - reference: RHEA:57272
+      snippet: dGMP residue
+      notes: Rhea compound GENERIC:11367 (a 2'-deoxyguanosine in DNA) declares rh:reactivePart = dGMP
+        residue (CHEBI:85445), formula C10H11N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: methylglyoxal is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57273
+      snippet: a 2'-deoxyguanosine in DNA + methylglyoxal => an N(2)-(1-hydroxy-2-oxopropyl)-2'-deoxyguanosine
+        in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:57273 declares side 57272_L as its substrates
+        (rh:substrates); the master reaction RHEA:57272 is undirected. This participant is CHEBI:17158
+        with coefficient 1. Rhea cites PMID:23334546, PMID:28596309, PMID:18533367 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N(2)-(1-hydroxy-2-oxopropyl)-2'-deoxyguanosine in DNA is a product released by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57273
+      snippet: a 2'-deoxyguanosine in DNA + methylglyoxal => an N(2)-(1-hydroxy-2-oxopropyl)-2'-deoxyguanosine
+        in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:57273 declares side 57272_R as its products
+        (rh:products); the master reaction RHEA:57272 is undirected. This participant is GENERIC:14856
+        with coefficient 1. Rhea cites PMID:23334546, PMID:28596309, PMID:18533367 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(2)-(1-hydroxy-2-oxopropyl)-dGMP residue is the reactive part of an N(2)-(1-hydroxy-2-oxopropyl)-2'-deoxyguanosine
+      in DNA.
+    evidence:
+    - reference: RHEA:57272
+      snippet: N(2)-(1-hydroxy-2-oxopropyl)-dGMP residue
+      notes: Rhea compound GENERIC:14856 (an N(2)-(1-hydroxy-2-oxopropyl)-2'-deoxyguanosine in DNA) declares
+        rh:reactivePart = N(2)-(1-hydroxy-2-oxopropyl)-dGMP residue (CHEBI:141578), formula C13H15N5O8P.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -36,4 +36,69 @@ definitions:
       Catalyses: Hydrolyzes glutaminyl bonds, and activity is further restricted by preferences for the amino acids in P6 - P1' that vary with the species of potyvirus, e.g. Glu-Xaa-Xaa-Tyr-Xaa-Gln-|-(Ser or Gly) for the enzyme from tobacco etch virus. The natural substrate is the viral polyprotein, but other proteins and oligopeptides containing the appropriate consensus sequence are also cleaved
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nuclear-inclusion-a endopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.44. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolyzes
+    glutaminyl bonds, and activity is further restricted by preferences for the amino acids in P6 - P1''
+    that vary with the species of potyvirus, e.g. Glu-Xaa-Xaa-Tyr-Xaa-Gln-|-(Ser or Gly) for the enzyme
+    from tobacco etch virus. The natural substrate is the viral polyprotein, but other proteins and oligopeptides
+    containing the appropriate consensus sequence are also cleaved".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nuclear-inclusion-a endopeptidase
+    grounding: EC:3.4.22.44
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P90245
+    node_type: PROTEIN
+    label: POL1_BAMMN
+    grounding: UniProtKB:P90245
+  - node_id: prot_Q04574
+    node_type: PROTEIN
+    label: POL1_BAYMG
+    grounding: UniProtKB:Q04574
+  - node_id: prot_Q01206
+    node_type: PROTEIN
+    label: POL1_BAYMJ
+    grounding: UniProtKB:Q01206
+  edges:
+  - subject: prot_P90245
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL1_BAMMN is an exemplar enzyme with EC 3.4.22.44 activity.
+    evidence:
+    - reference: EC:3.4.22.44
+      snippet: DR   P90245, POL1_BAMMN ;  Q04574, POL1_BAYMG ;  Q01206, POL1_BAYMJ ;
+      notes: ExPASy ENZYME entry EC 3.4.22.44 cross-references UniProtKB:P90245 (POL1_BAMMN) as a protein
+        with this activity.
+  - subject: prot_Q04574
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL1_BAYMG is an exemplar enzyme with EC 3.4.22.44 activity.
+    evidence:
+    - reference: EC:3.4.22.44
+      snippet: DR   P90245, POL1_BAMMN ;  Q04574, POL1_BAYMG ;  Q01206, POL1_BAYMJ ;
+      notes: ExPASy ENZYME entry EC 3.4.22.44 cross-references UniProtKB:Q04574 (POL1_BAYMG) as a protein
+        with this activity.
+  - subject: prot_Q01206
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL1_BAYMJ is an exemplar enzyme with EC 3.4.22.44 activity.
+    evidence:
+    - reference: EC:3.4.22.44
+      snippet: DR   P90245, POL1_BAMMN ;  Q04574, POL1_BAYMG ;  Q01206, POL1_BAYMJ ;
+      notes: ExPASy ENZYME entry EC 3.4.22.44 cross-references UniProtKB:Q01206 (POL1_BAYMJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

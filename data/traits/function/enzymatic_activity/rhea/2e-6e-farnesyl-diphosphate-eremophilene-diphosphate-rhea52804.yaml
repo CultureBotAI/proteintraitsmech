@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.164
     mapping_source: rhea2ec
@@ -28,4 +28,130 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate = (+)-eremophilene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate = (+)-eremophilene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:52804, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:52805 (rh:substrates → 52804_L, rh:products → 52804_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate = (+)-eremophilene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:52804
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate = (+)-eremophilene + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (+)-eremophilene
+    node_type: CHEMICAL
+    grounding: CHEBI:137562
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-eremophilene synthase
+    grounding: EC:4.2.3.164
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_S0DX56
+    node_type: PROTEIN
+    label: EREMS_GIBF5
+    grounding: UniProtKB:S0DX56
+  - node_id: prot_A9FZ87
+    node_type: PROTEIN
+    label: EREMS_SORC5
+    grounding: UniProtKB:A9FZ87
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:52805
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-eremophilene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52805 declares side 52804_L as its substrates
+        (rh:substrates); the master reaction RHEA:52804 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:25504914, PMID:27294564 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-eremophilene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52805
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-eremophilene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52805 declares side 52804_R as its products
+        (rh:products); the master reaction RHEA:52804 is undirected. This participant is CHEBI:137562
+        with coefficient 1. Rhea cites PMID:25504914, PMID:27294564 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52805
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-eremophilene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52805 declares side 52804_R as its products
+        (rh:products); the master reaction RHEA:52804 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25504914, PMID:27294564 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.164; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:52804
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.164"/>
+      notes: The rh:ec triple on RHEA:52804 in rhea.rdf. EC 4.2.3.164 is itself a record in this KB.
+  - subject: prot_S0DX56
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EREMS_GIBF5 is an exemplar enzyme carrying EC 4.2.3.164, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.164
+      snippet: DR   S0DX56, EREMS_GIBF5;  A9FZ87, EREMS_SORC5;
+      notes: ExPASy ENZYME entry EC 4.2.3.164 cross-references UniProtKB:S0DX56 (EREMS_GIBF5) as a protein
+        with this activity.
+    - reference: RHEA:52804
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.164"/>
+      notes: Rhea assigns RHEA:52804 to EC 4.2.3.164, and EC 4.2.3.164 maps to exactly one Rhea master
+        reaction (RHEA:52804), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A9FZ87
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EREMS_SORC5 is an exemplar enzyme carrying EC 4.2.3.164, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.164
+      snippet: DR   S0DX56, EREMS_GIBF5;  A9FZ87, EREMS_SORC5;
+      notes: ExPASy ENZYME entry EC 4.2.3.164 cross-references UniProtKB:A9FZ87 (EREMS_SORC5) as a protein
+        with this activity.
+    - reference: RHEA:52804
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.164"/>
+      notes: Rhea assigns RHEA:52804 to EC 4.2.3.164, and EC 4.2.3.164 maps to exactly one Rhea master
+        reaction (RHEA:52804), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

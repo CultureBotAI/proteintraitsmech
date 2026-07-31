@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:42819
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,76 @@ definitions:
       Catalyses the reaction: 5-dehydro-4-deoxy-D-glucarate = 2-hydroxy-3-oxopropanoate + pyruvate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-dehydro-4-deoxy-D-glucarate = 2-hydroxy-3-oxopropanoate + pyruvate
+  description: Substrate-to-product chemistry of RHEA:27726, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:27727 (rh:substrates → 27726_L, rh:products → 27726_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-dehydro-4-deoxy-D-glucarate = 2-hydroxy-3-oxopropanoate + pyruvate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:27726
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-dehydro-4-deoxy-D-glucarate = 2-hydroxy-3-oxopropanoate + pyruvate'
+  - node_id: sub1
+    label: 5-dehydro-4-deoxy-D-glucarate
+    node_type: CHEMICAL
+    grounding: CHEBI:42819
+    description: Formula C6H6O7.
+  - node_id: prd1
+    label: 2-hydroxy-3-oxopropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57978
+    description: Formula C3H3O4.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-dehydro-4-deoxy-D-glucarate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27727
+      snippet: 5-dehydro-4-deoxy-D-glucarate => 2-hydroxy-3-oxopropanoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:27727 declares side 27726_L as its substrates
+        (rh:substrates); the master reaction RHEA:27726 is undirected. This participant is CHEBI:42819
+        with coefficient 1. Rhea cites PMID:9772162, PMID:10393309 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-hydroxy-3-oxopropanoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27727
+      snippet: 5-dehydro-4-deoxy-D-glucarate => 2-hydroxy-3-oxopropanoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:27727 declares side 27726_R as its products
+        (rh:products); the master reaction RHEA:27726 is undirected. This participant is CHEBI:57978 with
+        coefficient 1. Rhea cites PMID:9772162, PMID:10393309 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27727
+      snippet: 5-dehydro-4-deoxy-D-glucarate => 2-hydroxy-3-oxopropanoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:27727 declares side 27726_R as its products
+        (rh:products); the master reaction RHEA:27726 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:9772162, PMID:10393309 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

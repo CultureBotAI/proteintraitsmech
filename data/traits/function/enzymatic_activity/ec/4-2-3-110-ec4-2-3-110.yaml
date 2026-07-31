@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,116 @@ definitions:
       Catalyses: (2E)-geranyl diphosphate = (1R,5R)-sabinene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (+)-sabinene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.110. EC 4.2.3.110 maps to
+    exactly one curated Rhea reaction (RHEA:32547), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-geranyl
+    diphosphate = (1R,5R)-sabinene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-sabinene synthase
+    grounding: EC:4.2.3.110
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: (1R,5R)-sabinene
+    node_type: CHEMICAL
+    grounding: CHEBI:50029
+    description: Formula C10H16.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_F1CKJ1
+    node_type: PROTEIN
+    label: SSS_PICSI
+    grounding: UniProtKB:F1CKJ1
+  - node_id: prot_O81193
+    node_type: PROTEIN
+    label: SSS_SALOF
+    grounding: UniProtKB:O81193
+  - node_id: prot_E2E2P2
+    node_type: PROTEIN
+    label: TPS1D_ORIVU
+    grounding: UniProtKB:E2E2P2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:32547 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32548
+      snippet: (2E)-geranyl diphosphate => (1R,5R)-sabinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32548 declares side 32547_L as its substrates
+        (rh:substrates); the master reaction RHEA:32547 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:21323772, PMID:12941302, PMID:9614092 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (1R,5R)-sabinene is a product released by RHEA:32547 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32548
+      snippet: (2E)-geranyl diphosphate => (1R,5R)-sabinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32548 declares side 32547_R as its products
+        (rh:products); the master reaction RHEA:32547 is undirected. This participant is CHEBI:50029 with
+        coefficient 1. Rhea cites PMID:21323772, PMID:12941302, PMID:9614092 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:32547 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32548
+      snippet: (2E)-geranyl diphosphate => (1R,5R)-sabinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32548 declares side 32547_R as its products
+        (rh:products); the master reaction RHEA:32547 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21323772, PMID:12941302, PMID:9614092 for this reaction.
+  - subject: prot_F1CKJ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SSS_PICSI is an exemplar enzyme with EC 4.2.3.110 activity.
+    evidence:
+    - reference: EC:4.2.3.110
+      snippet: DR   F1CKJ1, SSS_PICSI  ;  O81193, SSS_SALOF  ;  E2E2P2, TPS1D_ORIVU;
+      notes: ExPASy ENZYME entry EC 4.2.3.110 cross-references UniProtKB:F1CKJ1 (SSS_PICSI) as a protein
+        with this activity.
+  - subject: prot_O81193
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SSS_SALOF is an exemplar enzyme with EC 4.2.3.110 activity.
+    evidence:
+    - reference: EC:4.2.3.110
+      snippet: DR   F1CKJ1, SSS_PICSI  ;  O81193, SSS_SALOF  ;  E2E2P2, TPS1D_ORIVU;
+      notes: ExPASy ENZYME entry EC 4.2.3.110 cross-references UniProtKB:O81193 (SSS_SALOF) as a protein
+        with this activity.
+  - subject: prot_E2E2P2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS1D_ORIVU is an exemplar enzyme with EC 4.2.3.110 activity.
+    evidence:
+    - reference: EC:4.2.3.110
+      snippet: DR   F1CKJ1, SSS_PICSI  ;  O81193, SSS_SALOF  ;  E2E2P2, TPS1D_ORIVU;
+      notes: ExPASy ENZYME entry EC 4.2.3.110 cross-references UniProtKB:E2E2P2 (TPS1D_ORIVU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

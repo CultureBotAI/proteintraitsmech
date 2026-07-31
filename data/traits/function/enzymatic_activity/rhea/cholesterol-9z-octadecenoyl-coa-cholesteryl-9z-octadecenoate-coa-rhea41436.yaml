@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:16113
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,111 @@ definitions:
       Catalyses the reaction: cholesterol + (9Z)-octadecenoyl-CoA = cholesteryl (9Z-octadecenoate) + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cholesterol + (9Z)-octadecenoyl-CoA = cholesteryl (9Z-octadecenoate) +
+    CoA
+  description: Substrate-to-product chemistry of RHEA:41436, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:41437 (rh:substrates → 41436_L, rh:products → 41436_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of cholesterol + (9Z)-octadecenoyl-CoA = cholesteryl (9Z-octadecenoate) + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:41436
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: cholesterol + (9Z)-octadecenoyl-CoA = cholesteryl (9Z-octadecenoate) + CoA'
+  - node_id: sub1
+    label: cholesterol
+    node_type: CHEMICAL
+    grounding: CHEBI:16113
+    description: Formula C27H46O.
+  - node_id: sub2
+    label: (9Z)-octadecenoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57387
+    description: Formula C39H64N7O17P3S.
+  - node_id: prd1
+    label: cholesteryl (9Z-octadecenoate)
+    node_type: CHEMICAL
+    grounding: CHEBI:46898
+    description: Formula C45H78O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cholesterol O-acyltransferase activity
+    grounding: GO:0034736
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cholesterol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41437
+      snippet: cholesterol + (9Z)-octadecenoyl-CoA => cholesteryl (9Z-octadecenoate) + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:41437 declares side 41436_L as its substrates
+        (rh:substrates); the master reaction RHEA:41436 is undirected. This participant is CHEBI:16113
+        with coefficient 1. Rhea cites PMID:11294643, PMID:9857049, PMID:9756920, PMID:9020103 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (9Z)-octadecenoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:41437
+      snippet: cholesterol + (9Z)-octadecenoyl-CoA => cholesteryl (9Z-octadecenoate) + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:41437 declares side 41436_L as its substrates
+        (rh:substrates); the master reaction RHEA:41436 is undirected. This participant is CHEBI:57387
+        with coefficient 1. Rhea cites PMID:11294643, PMID:9857049, PMID:9756920, PMID:9020103 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cholesteryl (9Z-octadecenoate) is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:41437
+      snippet: cholesterol + (9Z)-octadecenoyl-CoA => cholesteryl (9Z-octadecenoate) + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:41437 declares side 41436_R as its products
+        (rh:products); the master reaction RHEA:41436 is undirected. This participant is CHEBI:46898 with
+        coefficient 1. Rhea cites PMID:11294643, PMID:9857049, PMID:9756920, PMID:9020103 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41437
+      snippet: cholesterol + (9Z)-octadecenoyl-CoA => cholesteryl (9Z-octadecenoate) + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:41437 declares side 41436_R as its products
+        (rh:products); the master reaction RHEA:41436 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:11294643, PMID:9857049, PMID:9756920, PMID:9020103 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:41436
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0034736"/>
+      notes: The rdfs:seeAlso triple on RHEA:41436 in rhea.rdf. GO term GO:0034736 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

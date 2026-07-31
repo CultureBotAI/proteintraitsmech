@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.8.37
     mapping_source: rhea2ec
@@ -28,4 +28,184 @@ definitions:
       Catalyses the reaction: methylphosphonate + ATP = alpha-D-ribose 1-methylphosphonate 5-triphosphate + adenine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of methylphosphonate + ATP = alpha-D-ribose 1-methylphosphonate 5-triphosphate
+    + adenine
+  description: Substrate-to-product chemistry of RHEA:34679, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34680 (rh:substrates → 34679_L, rh:products → 34679_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of methylphosphonate + ATP = alpha-D-ribose 1-methylphosphonate 5-triphosphate…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34679
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: methylphosphonate + ATP = alpha-D-ribose 1-methylphosphonate 5-triphosphate + adenine'
+  - node_id: sub1
+    label: methylphosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:68684
+    description: Formula CH4O3P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: alpha-D-ribose 1-methylphosphonate 5-triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:68823
+    description: Formula C6H11O16P4.
+  - node_id: prd2
+    label: adenine
+    node_type: CHEMICAL
+    grounding: CHEBI:16708
+    description: Formula C5H5N5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-D-ribose 1-methylphosphonate 5-triphosphate synthase activity
+    grounding: GO:0061693
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-D-ribose 1-methylphosphonate 5-triphosphate synthase
+    grounding: EC:2.7.8.37
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P16685
+    node_type: PROTEIN
+    label: PHNG_ECOLI
+    grounding: UniProtKB:P16685
+  - node_id: prot_Q52984
+    node_type: PROTEIN
+    label: PHNG_RHIME
+    grounding: UniProtKB:Q52984
+  - node_id: prot_P16686
+    node_type: PROTEIN
+    label: PHNH_ECOLI
+    grounding: UniProtKB:P16686
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: methylphosphonate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34680
+      snippet: methylphosphonate + ATP => alpha-D-ribose 1-methylphosphonate 5-triphosphate + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:34680 declares side 34679_L as its substrates
+        (rh:substrates); the master reaction RHEA:34679 is undirected. This participant is CHEBI:68684
+        with coefficient 1. Rhea cites PMID:22089136 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34680
+      snippet: methylphosphonate + ATP => alpha-D-ribose 1-methylphosphonate 5-triphosphate + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:34680 declares side 34679_L as its substrates
+        (rh:substrates); the master reaction RHEA:34679 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:22089136 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-ribose 1-methylphosphonate 5-triphosphate is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34680
+      snippet: methylphosphonate + ATP => alpha-D-ribose 1-methylphosphonate 5-triphosphate + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:34680 declares side 34679_R as its products
+        (rh:products); the master reaction RHEA:34679 is undirected. This participant is CHEBI:68823 with
+        coefficient 1. Rhea cites PMID:22089136 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: adenine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34680
+      snippet: methylphosphonate + ATP => alpha-D-ribose 1-methylphosphonate 5-triphosphate + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:34680 declares side 34679_R as its products
+        (rh:products); the master reaction RHEA:34679 is undirected. This participant is CHEBI:16708 with
+        coefficient 1. Rhea cites PMID:22089136 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:34679
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0061693"/>
+      notes: The rdfs:seeAlso triple on RHEA:34679 in rhea.rdf. GO term GO:0061693 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.8.37; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34679
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.8.37"/>
+      notes: The rh:ec triple on RHEA:34679 in rhea.rdf. EC 2.7.8.37 is itself a record in this KB.
+  - subject: prot_P16685
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHNG_ECOLI is an exemplar enzyme carrying EC 2.7.8.37, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.8.37
+      snippet: DR   P16685, PHNG_ECOLI ;  Q52984, PHNG_RHIME ;  P16686, PHNH_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.8.37 cross-references UniProtKB:P16685 (PHNG_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:34679
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.8.37"/>
+      notes: Rhea assigns RHEA:34679 to EC 2.7.8.37, and EC 2.7.8.37 maps to exactly one Rhea master reaction
+        (RHEA:34679), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q52984
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHNG_RHIME is an exemplar enzyme carrying EC 2.7.8.37, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.8.37
+      snippet: DR   P16685, PHNG_ECOLI ;  Q52984, PHNG_RHIME ;  P16686, PHNH_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.8.37 cross-references UniProtKB:Q52984 (PHNG_RHIME) as a protein
+        with this activity.
+    - reference: RHEA:34679
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.8.37"/>
+      notes: Rhea assigns RHEA:34679 to EC 2.7.8.37, and EC 2.7.8.37 maps to exactly one Rhea master reaction
+        (RHEA:34679), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P16686
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHNH_ECOLI is an exemplar enzyme carrying EC 2.7.8.37, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.8.37
+      snippet: DR   P16685, PHNG_ECOLI ;  Q52984, PHNG_RHIME ;  P16686, PHNH_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.8.37 cross-references UniProtKB:P16686 (PHNH_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:34679
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.8.37"/>
+      notes: Rhea assigns RHEA:34679 to EC 2.7.8.37, and EC 2.7.8.37 maps to exactly one Rhea master reaction
+        (RHEA:34679), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

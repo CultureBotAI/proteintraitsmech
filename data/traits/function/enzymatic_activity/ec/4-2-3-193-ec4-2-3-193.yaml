@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -32,4 +32,103 @@ definitions:
       Catalyses: (+)-copalyl diphosphate = (12E)-labda-8(17),12,14-triene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (12E)-labda-8(17),12,14-triene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.193. EC 4.2.3.193 maps to
+    exactly one curated Rhea reaction (RHEA:54640), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(+)-copalyl
+    diphosphate = (12E)-labda-8(17),12,14-triene + diphosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (12E)-labda-8(17),12,14-triene synthase
+    grounding: EC:4.2.3.193
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (+)-copalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58635
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: (12E)-labda-8(17),12,14-triene
+    node_type: CHEMICAL
+    grounding: CHEBI:138302
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A0H5BN57
+    node_type: PROTEIN
+    label: CLDD_STRCP
+    grounding: UniProtKB:A0A0H5BN57
+  - node_id: prot_A0A0H5BN61
+    node_type: PROTEIN
+    label: RMND_STRAQ
+    grounding: UniProtKB:A0A0H5BN61
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (+)-copalyl diphosphate is a substrate consumed by RHEA:54640 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54641
+      snippet: (+)-copalyl diphosphate => (12E)-labda-8(17),12,14-triene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54641 declares side 54640_L as its substrates
+        (rh:substrates); the master reaction RHEA:54640 is undirected. This participant is CHEBI:58635
+        with coefficient 1. Rhea cites PMID:26814669 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (12E)-labda-8(17),12,14-triene is a product released by RHEA:54640 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54641
+      snippet: (+)-copalyl diphosphate => (12E)-labda-8(17),12,14-triene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54641 declares side 54640_R as its products
+        (rh:products); the master reaction RHEA:54640 is undirected. This participant is CHEBI:138302
+        with coefficient 1. Rhea cites PMID:26814669 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:54640 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54641
+      snippet: (+)-copalyl diphosphate => (12E)-labda-8(17),12,14-triene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54641 declares side 54640_R as its products
+        (rh:products); the master reaction RHEA:54640 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:26814669 for this reaction.
+  - subject: prot_A0A0H5BN57
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CLDD_STRCP is an exemplar enzyme with EC 4.2.3.193 activity.
+    evidence:
+    - reference: EC:4.2.3.193
+      snippet: DR   A0A0H5BN57, CLDD_STRCP ;  A0A0H5BN61, RMND_STRAQ ;
+      notes: ExPASy ENZYME entry EC 4.2.3.193 cross-references UniProtKB:A0A0H5BN57 (CLDD_STRCP) as a
+        protein with this activity.
+  - subject: prot_A0A0H5BN61
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RMND_STRAQ is an exemplar enzyme with EC 4.2.3.193 activity.
+    evidence:
+    - reference: EC:4.2.3.193
+      snippet: DR   A0A0H5BN57, CLDD_STRCP ;  A0A0H5BN61, RMND_STRAQ ;
+      notes: ExPASy ENZYME entry EC 4.2.3.193 cross-references UniProtKB:A0A0H5BN61 (RMND_STRAQ) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.99.29
     mapping_source: rhea2ec
@@ -28,4 +28,183 @@ definitions:
       Catalyses the reaction: uridine(746) in 23S rRNA = pseudouridine(746) in 23S rRNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of uridine(746) in 23S rRNA = pseudouridine(746) in 23S rRNA
+  description: Substrate-to-product chemistry of RHEA:42548, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:42549 (rh:substrates → 42548_L, rh:products → 42548_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of uridine(746) in 23S rRNA = pseudouridine(746) in 23S rRNA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:42548
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: uridine(746) in 23S rRNA = pseudouridine(746) in 23S rRNA'
+  - node_id: sub1
+    label: uridine(746) in 23S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10109
+    description: Rhea compound GENERIC:10109.
+  - node_id: sub1_rp1
+    label: UMP residue at position 746
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10109 (uridine(746)
+      in 23S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: prd1
+    label: pseudouridine(746) in 23S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10110
+    description: Rhea compound GENERIC:10110.
+  - node_id: prd1_rp1
+    label: psi-uridine residue at position 746
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10110 (pseudouridine(746)
+      in 23S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65314
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 23S rRNA pseudouridine(746) synthase activity
+    grounding: GO:0160142
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 23S rRNA pseudouridine(746) synthase
+    grounding: EC:5.4.99.29
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8XA10
+    node_type: PROTEIN
+    label: RLUA_ECO57
+    grounding: UniProtKB:Q8XA10
+  - node_id: prot_Q8FL93
+    node_type: PROTEIN
+    label: RLUA_ECOL6
+    grounding: UniProtKB:Q8FL93
+  - node_id: prot_P0AA37
+    node_type: PROTEIN
+    label: RLUA_ECOLI
+    grounding: UniProtKB:P0AA37
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine(746) in 23S rRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42549
+      snippet: uridine(746) in 23S rRNA => pseudouridine(746) in 23S rRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42549 declares side 42548_L as its substrates
+        (rh:substrates); the master reaction RHEA:42548 is undirected. This participant is GENERIC:10109
+        with coefficient 1. Rhea cites PMID:7493321, PMID:10383384, PMID:17188032 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine(746) in 23S rRNA.
+    evidence:
+    - reference: RHEA:42548
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:10109 (uridine(746) in 23S rRNA) declares rh:reactivePart at position
+        746 = UMP residue (CHEBI:65315), formula C9H10N2O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pseudouridine(746) in 23S rRNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42549
+      snippet: uridine(746) in 23S rRNA => pseudouridine(746) in 23S rRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42549 declares side 42548_R as its products
+        (rh:products); the master reaction RHEA:42548 is undirected. This participant is GENERIC:10110
+        with coefficient 1. Rhea cites PMID:7493321, PMID:10383384, PMID:17188032 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: psi-uridine residue is the reactive part of pseudouridine(746) in 23S rRNA.
+    evidence:
+    - reference: RHEA:42548
+      snippet: psi-uridine residue
+      notes: Rhea compound GENERIC:10110 (pseudouridine(746) in 23S rRNA) declares rh:reactivePart at
+        position 746 = psi-uridine residue (CHEBI:65314), formula C9H10N2O8P.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:42548
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0160142"/>
+      notes: The rdfs:seeAlso triple on RHEA:42548 in rhea.rdf. GO term GO:0160142 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.99.29; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:42548
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.29"/>
+      notes: The rh:ec triple on RHEA:42548 in rhea.rdf. EC 5.4.99.29 is itself a record in this KB.
+  - subject: prot_Q8XA10
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RLUA_ECO57 is an exemplar enzyme carrying EC 5.4.99.29, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.29
+      snippet: DR   Q8XA10, RLUA_ECO57 ;  Q8FL93, RLUA_ECOL6 ;  P0AA37, RLUA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 5.4.99.29 cross-references UniProtKB:Q8XA10 (RLUA_ECO57) as a protein
+        with this activity.
+    - reference: RHEA:42548
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.29"/>
+      notes: Rhea assigns RHEA:42548 to EC 5.4.99.29, and EC 5.4.99.29 maps to exactly one Rhea master
+        reaction (RHEA:42548), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q8FL93
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RLUA_ECOL6 is an exemplar enzyme carrying EC 5.4.99.29, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.29
+      snippet: DR   Q8XA10, RLUA_ECO57 ;  Q8FL93, RLUA_ECOL6 ;  P0AA37, RLUA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 5.4.99.29 cross-references UniProtKB:Q8FL93 (RLUA_ECOL6) as a protein
+        with this activity.
+    - reference: RHEA:42548
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.29"/>
+      notes: Rhea assigns RHEA:42548 to EC 5.4.99.29, and EC 5.4.99.29 maps to exactly one Rhea master
+        reaction (RHEA:42548), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P0AA37
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RLUA_ECOLI is an exemplar enzyme carrying EC 5.4.99.29, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.99.29
+      snippet: DR   Q8XA10, RLUA_ECO57 ;  Q8FL93, RLUA_ECOL6 ;  P0AA37, RLUA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 5.4.99.29 cross-references UniProtKB:P0AA37 (RLUA_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:42548
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.99.29"/>
+      notes: Rhea assigns RHEA:42548 to EC 5.4.99.29, and EC 5.4.99.29 maps to exactly one Rhea master
+        reaction (RHEA:42548), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

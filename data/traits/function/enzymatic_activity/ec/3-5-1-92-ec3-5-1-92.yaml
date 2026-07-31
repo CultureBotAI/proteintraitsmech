@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -43,4 +43,146 @@ definitions:
       Catalyses: (R)-pantetheine + H2O = cysteamine + (R)-pantothenate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pantetheine hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.92. EC 3.5.1.92 maps to exactly
+    one curated Rhea reaction (RHEA:13445), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-pantetheine
+    + H2O = cysteamine + (R)-pantothenate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: pantetheine hydrolase
+    grounding: EC:3.5.1.92
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-pantetheine
+    node_type: CHEMICAL
+    grounding: CHEBI:16753
+    description: Formula C11H22N2O4S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: cysteamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58029
+    description: Formula C2H8NS.
+  - node_id: prd2
+    label: (R)-pantothenate
+    node_type: CHEMICAL
+    grounding: CHEBI:29032
+    description: Formula C9H16NO5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: pantetheine hydrolase activity
+    grounding: GO:0017159
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q58CQ9
+    node_type: PROTEIN
+    label: VNN1_BOVIN
+    grounding: UniProtKB:Q58CQ9
+  - node_id: prot_Q9TSX8
+    node_type: PROTEIN
+    label: VNN1_CANLF
+    grounding: UniProtKB:Q9TSX8
+  - node_id: prot_O95497
+    node_type: PROTEIN
+    label: VNN1_HUMAN
+    grounding: UniProtKB:O95497
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-pantetheine is a substrate consumed by RHEA:13445 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13446
+      snippet: (R)-pantetheine + H2O => cysteamine + (R)-pantothenate
+      notes: Rhea's left-to-right directional reaction RHEA:13446 declares side 13445_L as its substrates
+        (rh:substrates); the master reaction RHEA:13445 is undirected. This participant is CHEBI:16753
+        with coefficient 1. Rhea cites PMID:10567687, PMID:11491533, PMID:11042271 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:13445 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13446
+      snippet: (R)-pantetheine + H2O => cysteamine + (R)-pantothenate
+      notes: Rhea's left-to-right directional reaction RHEA:13446 declares side 13445_L as its substrates
+        (rh:substrates); the master reaction RHEA:13445 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10567687, PMID:11491533, PMID:11042271 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cysteamine is a product released by RHEA:13445 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13446
+      snippet: (R)-pantetheine + H2O => cysteamine + (R)-pantothenate
+      notes: Rhea's left-to-right directional reaction RHEA:13446 declares side 13445_R as its products
+        (rh:products); the master reaction RHEA:13445 is undirected. This participant is CHEBI:58029 with
+        coefficient 1. Rhea cites PMID:10567687, PMID:11491533, PMID:11042271 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (R)-pantothenate is a product released by RHEA:13445 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13446
+      snippet: (R)-pantetheine + H2O => cysteamine + (R)-pantothenate
+      notes: Rhea's left-to-right directional reaction RHEA:13446 declares side 13445_R as its products
+        (rh:products); the master reaction RHEA:13445 is undirected. This participant is CHEBI:29032 with
+        coefficient 1. Rhea cites PMID:10567687, PMID:11491533, PMID:11042271 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.92
+      snippet: EC:3.5.1.92 > GO:pantetheine hydrolase activity ; GO:0017159
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0017159 is itself a record
+        in this KB.
+  - subject: prot_Q58CQ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VNN1_BOVIN is an exemplar enzyme with EC 3.5.1.92 activity.
+    evidence:
+    - reference: EC:3.5.1.92
+      snippet: DR   Q58CQ9, VNN1_BOVIN ;  Q9TSX8, VNN1_CANLF ;  O95497, VNN1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.92 cross-references UniProtKB:Q58CQ9 (VNN1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q9TSX8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VNN1_CANLF is an exemplar enzyme with EC 3.5.1.92 activity.
+    evidence:
+    - reference: EC:3.5.1.92
+      snippet: DR   Q58CQ9, VNN1_BOVIN ;  Q9TSX8, VNN1_CANLF ;  O95497, VNN1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.92 cross-references UniProtKB:Q9TSX8 (VNN1_CANLF) as a protein
+        with this activity.
+  - subject: prot_O95497
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VNN1_HUMAN is an exemplar enzyme with EC 3.5.1.92 activity.
+    evidence:
+    - reference: EC:3.5.1.92
+      snippet: DR   Q58CQ9, VNN1_BOVIN ;  Q9TSX8, VNN1_CANLF ;  O95497, VNN1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.92 cross-references UniProtKB:O95497 (VNN1_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

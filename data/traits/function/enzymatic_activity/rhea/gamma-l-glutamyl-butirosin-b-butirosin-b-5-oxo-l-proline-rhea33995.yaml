@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.3.2.6
     mapping_source: rhea2ec
@@ -26,4 +26,110 @@ definitions:
       Catalyses the reaction: gamma-L-glutamyl-butirosin B = butirosin B + 5-oxo-L-proline
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gamma-L-glutamyl-butirosin B = butirosin B + 5-oxo-L-proline
+  description: Substrate-to-product chemistry of RHEA:33995, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33996 (rh:substrates → 33995_L, rh:products → 33995_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of gamma-L-glutamyl-butirosin B = butirosin B + 5-oxo-L-proline
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33995
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: gamma-L-glutamyl-butirosin B = butirosin B + 5-oxo-L-proline'
+  - node_id: sub1
+    label: gamma-L-glutamyl-butirosin B
+    node_type: CHEMICAL
+    grounding: CHEBI:65086
+    description: Formula C26H51N6O15.
+  - node_id: prd1
+    label: butirosin B
+    node_type: CHEMICAL
+    grounding: CHEBI:65085
+    description: Formula C21H45N5O12.
+  - node_id: prd2
+    label: 5-oxo-L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:58402
+    description: Formula C5H6NO3.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-L-glutamyl-butirosin B gamma-glutamyl cyclotransferase
+    grounding: EC:4.3.2.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q4H4F0
+    node_type: PROTEIN
+    label: BTRG_NIACI
+    grounding: UniProtKB:Q4H4F0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: gamma-L-glutamyl-butirosin B is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33996
+      snippet: gamma-L-glutamyl-butirosin B => butirosin B + 5-oxo-L-proline
+      notes: Rhea's left-to-right directional reaction RHEA:33996 declares side 33995_L as its substrates
+        (rh:substrates); the master reaction RHEA:33995 is undirected. This participant is CHEBI:65086
+        with coefficient 1. Rhea cites PMID:17462573 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: butirosin B is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33996
+      snippet: gamma-L-glutamyl-butirosin B => butirosin B + 5-oxo-L-proline
+      notes: Rhea's left-to-right directional reaction RHEA:33996 declares side 33995_R as its products
+        (rh:products); the master reaction RHEA:33995 is undirected. This participant is CHEBI:65085 with
+        coefficient 1. Rhea cites PMID:17462573 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 5-oxo-L-proline is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33996
+      snippet: gamma-L-glutamyl-butirosin B => butirosin B + 5-oxo-L-proline
+      notes: Rhea's left-to-right directional reaction RHEA:33996 declares side 33995_R as its products
+        (rh:products); the master reaction RHEA:33995 is undirected. This participant is CHEBI:58402 with
+        coefficient 1. Rhea cites PMID:17462573 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.3.2.6; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:33995
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.2.6"/>
+      notes: The rh:ec triple on RHEA:33995 in rhea.rdf. EC 4.3.2.6 is itself a record in this KB.
+  - subject: prot_Q4H4F0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BTRG_NIACI is an exemplar enzyme carrying EC 4.3.2.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.2.6
+      snippet: DR   Q4H4F0, BTRG_NIACI ;
+      notes: ExPASy ENZYME entry EC 4.3.2.6 cross-references UniProtKB:Q4H4F0 (BTRG_NIACI) as a protein
+        with this activity.
+    - reference: RHEA:33995
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.2.6"/>
+      notes: Rhea assigns RHEA:33995 to EC 4.3.2.6, and EC 4.3.2.6 maps to exactly one Rhea master reaction
+        (RHEA:33995), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

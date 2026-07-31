@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -39,4 +39,134 @@ definitions:
       Catalyses: 10-deacetyl-2-debenzoylbaccatin III + benzoyl-CoA = 10-deacetylbaccatin III + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2alpha-hydroxytaxane 2-O-benzoyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.166. EC 2.3.1.166 maps to
+    exactly one curated Rhea reaction (RHEA:18741), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "10-deacetyl-2-debenzoylbaccatin
+    III + benzoyl-CoA = 10-deacetylbaccatin III + CoA". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2alpha-hydroxytaxane 2-O-benzoyltransferase
+    grounding: EC:2.3.1.166
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 10-deacetyl-2-debenzoylbaccatin III
+    node_type: CHEMICAL
+    grounding: CHEBI:32897
+    description: Formula C22H32O9.
+  - node_id: sub2
+    label: benzoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57369
+    description: Formula C28H36N7O17P3S.
+  - node_id: prd1
+    label: 10-deacetylbaccatin III
+    node_type: CHEMICAL
+    grounding: CHEBI:18193
+    description: Formula C29H36O10.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-alpha-hydroxytaxane 2-O-benzoyltransferase activity
+    grounding: GO:0050642
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0AA38GTP3
+    node_type: PROTEIN
+    label: DBBT_TAXCH
+    grounding: UniProtKB:A0AA38GTP3
+  - node_id: prot_Q9FPW3
+    node_type: PROTEIN
+    label: DBBT_TAXCU
+    grounding: UniProtKB:Q9FPW3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 10-deacetyl-2-debenzoylbaccatin III is a substrate consumed by RHEA:18741 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18742
+      snippet: 10-deacetyl-2-debenzoylbaccatin III + benzoyl-CoA => 10-deacetylbaccatin III + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18742 declares side 18741_L as its substrates
+        (rh:substrates); the master reaction RHEA:18741 is undirected. This participant is CHEBI:32897
+        with coefficient 1. Rhea cites PMID:11095755 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: benzoyl-CoA is a substrate consumed by RHEA:18741 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18742
+      snippet: 10-deacetyl-2-debenzoylbaccatin III + benzoyl-CoA => 10-deacetylbaccatin III + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18742 declares side 18741_L as its substrates
+        (rh:substrates); the master reaction RHEA:18741 is undirected. This participant is CHEBI:57369
+        with coefficient 1. Rhea cites PMID:11095755 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 10-deacetylbaccatin III is a product released by RHEA:18741 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18742
+      snippet: 10-deacetyl-2-debenzoylbaccatin III + benzoyl-CoA => 10-deacetylbaccatin III + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18742 declares side 18741_R as its products
+        (rh:products); the master reaction RHEA:18741 is undirected. This participant is CHEBI:18193 with
+        coefficient 1. Rhea cites PMID:11095755 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:18741 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18742
+      snippet: 10-deacetyl-2-debenzoylbaccatin III + benzoyl-CoA => 10-deacetylbaccatin III + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18742 declares side 18741_R as its products
+        (rh:products); the master reaction RHEA:18741 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:11095755 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.166
+      snippet: EC:2.3.1.166 > GO:2-alpha-hydroxytaxane 2-O-benzoyltransferase activity ; GO:0050642
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050642 is itself a record
+        in this KB.
+  - subject: prot_A0AA38GTP3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DBBT_TAXCH is an exemplar enzyme with EC 2.3.1.166 activity.
+    evidence:
+    - reference: EC:2.3.1.166
+      snippet: DR   A0AA38GTP3, DBBT_TAXCH ;  Q9FPW3, DBBT_TAXCU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.166 cross-references UniProtKB:A0AA38GTP3 (DBBT_TAXCH) as a
+        protein with this activity.
+  - subject: prot_Q9FPW3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DBBT_TAXCU is an exemplar enzyme with EC 2.3.1.166 activity.
+    evidence:
+    - reference: EC:2.3.1.166
+      snippet: DR   A0AA38GTP3, DBBT_TAXCH ;  Q9FPW3, DBBT_TAXCU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.166 cross-references UniProtKB:Q9FPW3 (DBBT_TAXCU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

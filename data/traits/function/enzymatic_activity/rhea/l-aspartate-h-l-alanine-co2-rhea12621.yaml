@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.1.12
     mapping_source: rhea2ec
@@ -36,4 +36,163 @@ definitions:
       Catalyses the reaction: L-aspartate + H(+) = L-alanine + CO2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-aspartate + H(+) = L-alanine + CO2
+  description: Substrate-to-product chemistry of RHEA:12621, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12622 (rh:substrates → 12621_L, rh:products → 12621_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-aspartate + H(+) = L-alanine + CO2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12621
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-aspartate + H(+) = L-alanine + CO2'
+  - node_id: sub1
+    label: L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+    description: Formula C4H6NO4.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aspartate 4-decarboxylase activity
+    grounding: GO:0047688
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: aspartate 4-decarboxylase
+    grounding: EC:4.1.1.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q93QX0
+    node_type: PROTEIN
+    label: ASDA_COMTE
+    grounding: UniProtKB:Q93QX0
+  - node_id: prot_Q53IZ1
+    node_type: PROTEIN
+    label: ASDP_PSESP
+    grounding: UniProtKB:Q53IZ1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-aspartate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12622
+      snippet: L-aspartate + H(+) => L-alanine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:12622 declares side 12621_L as its substrates
+        (rh:substrates); the master reaction RHEA:12621 is undirected. This participant is CHEBI:29991
+        with coefficient 1. Rhea cites PMID:4005219, PMID:7037785, PMID:16847601, PMID:19129626 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12622
+      snippet: L-aspartate + H(+) => L-alanine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:12622 declares side 12621_L as its substrates
+        (rh:substrates); the master reaction RHEA:12621 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:4005219, PMID:7037785, PMID:16847601, PMID:19129626 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-alanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12622
+      snippet: L-aspartate + H(+) => L-alanine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:12622 declares side 12621_R as its products
+        (rh:products); the master reaction RHEA:12621 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:4005219, PMID:7037785, PMID:16847601, PMID:19129626 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12622
+      snippet: L-aspartate + H(+) => L-alanine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:12622 declares side 12621_R as its products
+        (rh:products); the master reaction RHEA:12621 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:4005219, PMID:7037785, PMID:16847601, PMID:19129626 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12621
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047688"/>
+      notes: The rdfs:seeAlso triple on RHEA:12621 in rhea.rdf. GO term GO:0047688 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.1.12; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12621
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.12"/>
+      notes: The rh:ec triple on RHEA:12621 in rhea.rdf. EC 4.1.1.12 is itself a record in this KB.
+  - subject: prot_Q93QX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASDA_COMTE is an exemplar enzyme carrying EC 4.1.1.12, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.1.12
+      snippet: DR   Q93QX0, ASDA_COMTE ;  Q53IZ1, ASDP_PSESP ;
+      notes: ExPASy ENZYME entry EC 4.1.1.12 cross-references UniProtKB:Q93QX0 (ASDA_COMTE) as a protein
+        with this activity.
+    - reference: RHEA:12621
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.12"/>
+      notes: Rhea assigns RHEA:12621 to EC 4.1.1.12, and EC 4.1.1.12 maps to exactly one Rhea master reaction
+        (RHEA:12621), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q53IZ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASDP_PSESP is an exemplar enzyme carrying EC 4.1.1.12, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.1.12
+      snippet: DR   Q93QX0, ASDA_COMTE ;  Q53IZ1, ASDP_PSESP ;
+      notes: ExPASy ENZYME entry EC 4.1.1.12 cross-references UniProtKB:Q53IZ1 (ASDP_PSESP) as a protein
+        with this activity.
+    - reference: RHEA:12621
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.1.12"/>
+      notes: Rhea assigns RHEA:12621 to EC 4.1.1.12, and EC 4.1.1.12 maps to exactly one Rhea master reaction
+        (RHEA:12621), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

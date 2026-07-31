@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -31,4 +31,144 @@ definitions:
       Catalyses: (2R)-2-O-(alpha-D-mannosyl)-glycerate(out) + N(pros)-phospho-L-histidyl- [protein] = (2R)-2-O-(6-phospho-alpha-D-mannosyl)-glycerate(in) + L-histidyl-[protein]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-N(pi)-phosphohistidine--2-O-alpha-mannosyl-D-glycerate
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.195. EC 2.7.1.195 maps to
+    exactly one curated Rhea reaction (RHEA:33307), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2R)-2-O-(alpha-D-mannosyl)-glycerate(out)
+    + N(pros)-phospho-L-histidyl- [protein] = (2R)-2-O-(6-phospho-alpha-D-mannosyl)-glycerate(in) + L-histidyl-[protein]".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-N(pi)-phosphohistidine--2-O-alpha-mannosyl-D-glycerate
+    grounding: EC:2.7.1.195
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2R)-2-O-(alpha-D-mannosyl)-glycerate (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:57541
+    description: Formula C9H15O9.
+  - node_id: sub2
+    label: N(pros)-phospho-L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9746
+    description: Rhea compound GENERIC:9746.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: N(pros)-phospho-L-histidine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64837
+  - node_id: prd1
+    label: (2R)-2-O-(6-phospho-alpha-D-mannosyl)-glycerate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:60331
+    description: Formula C9H14O12P.
+  - node_id: prd2
+    label: L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9745
+    description: Rhea compound GENERIC:9745.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: L-histidine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9745 (L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29979
+  - node_id: prot_P54745
+    node_type: PROTEIN
+    label: MNGA_ECOLI
+    grounding: UniProtKB:P54745
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2R)-2-O-(alpha-D-mannosyl)-glycerate is a substrate consumed by RHEA:33307 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33308
+      snippet: (2R)-2-O-(alpha-D-mannosyl)-glycerate(out) + N(pros)-phospho-L-histidyl-[protein] => (2R)-2-O-(6-phospho-alpha-D-mannosyl)-glycerate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:33308 declares side 33307_L as its substrates
+        (rh:substrates); the master reaction RHEA:33307 is undirected. This participant is CHEBI:57541
+        with coefficient 1. Rhea cites PMID:14645248 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: N(pros)-phospho-L-histidyl-[protein] is a substrate consumed by RHEA:33307 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33308
+      snippet: (2R)-2-O-(alpha-D-mannosyl)-glycerate(out) + N(pros)-phospho-L-histidyl-[protein] => (2R)-2-O-(6-phospho-alpha-D-mannosyl)-glycerate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:33308 declares side 33307_L as its substrates
+        (rh:substrates); the master reaction RHEA:33307 is undirected. This participant is GENERIC:9746
+        with coefficient 1. Rhea cites PMID:14645248 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: N(pros)-phospho-L-histidine residue is the reactive part of N(pros)-phospho-L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:33307
+      snippet: N(pros)-phospho-L-histidine residue
+      notes: Rhea compound GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]) declares rh:reactivePart
+        = N(pros)-phospho-L-histidine residue (CHEBI:64837).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2R)-2-O-(6-phospho-alpha-D-mannosyl)-glycerate is a product released by RHEA:33307 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33308
+      snippet: (2R)-2-O-(alpha-D-mannosyl)-glycerate(out) + N(pros)-phospho-L-histidyl-[protein] => (2R)-2-O-(6-phospho-alpha-D-mannosyl)-glycerate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:33308 declares side 33307_R as its products
+        (rh:products); the master reaction RHEA:33307 is undirected. This participant is CHEBI:60331 with
+        coefficient 1. Rhea cites PMID:14645248 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-histidyl-[protein] is a product released by RHEA:33307 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33308
+      snippet: (2R)-2-O-(alpha-D-mannosyl)-glycerate(out) + N(pros)-phospho-L-histidyl-[protein] => (2R)-2-O-(6-phospho-alpha-D-mannosyl)-glycerate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:33308 declares side 33307_R as its products
+        (rh:products); the master reaction RHEA:33307 is undirected. This participant is GENERIC:9745
+        with coefficient 1. Rhea cites PMID:14645248 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-histidine residue is the reactive part of L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:33307
+      snippet: L-histidine residue
+      notes: Rhea compound GENERIC:9745 (L-histidyl-[protein]) declares rh:reactivePart = L-histidine
+        residue (CHEBI:29979).
+  - subject: prot_P54745
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MNGA_ECOLI is an exemplar enzyme with EC 2.7.1.195 activity.
+    evidence:
+    - reference: EC:2.7.1.195
+      snippet: DR   P54745, MNGA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.1.195 cross-references UniProtKB:P54745 (MNGA_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

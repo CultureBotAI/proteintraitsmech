@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.99.-
 synonyms:
@@ -41,4 +41,99 @@ definitions:
       Catalyses: scyllo-inosose = scyllo-inosine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-keto-myo-inositol isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.99.11. EC 5.3.99.11 maps to
+    exactly one curated Rhea reaction (RHEA:25776), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "scyllo-inosose
+    = scyllo-inosine". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-keto-myo-inositol isomerase
+    grounding: EC:5.3.99.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: scyllo-inosose
+    node_type: CHEMICAL
+    grounding: CHEBI:17811
+    description: Formula C6H10O6.
+  - node_id: prd1
+    label: scyllo-inosine
+    node_type: CHEMICAL
+    grounding: CHEBI:50920
+    description: Formula C6H10O6.
+  - node_id: prot_Q65D08
+    node_type: PROTEIN
+    label: IOLI_BACLD
+    grounding: UniProtKB:Q65D08
+  - node_id: prot_P42419
+    node_type: PROTEIN
+    label: IOLI_BACSU
+    grounding: UniProtKB:P42419
+  - node_id: prot_A7ZAH3
+    node_type: PROTEIN
+    label: IOLI_BACVZ
+    grounding: UniProtKB:A7ZAH3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: scyllo-inosose is a substrate consumed by RHEA:25776 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25777
+      snippet: scyllo-inosose => scyllo-inosine
+      notes: Rhea's left-to-right directional reaction RHEA:25777 declares side 25776_L as its substrates
+        (rh:substrates); the master reaction RHEA:25776 is undirected. This participant is CHEBI:17811
+        with coefficient 1. Rhea cites PMID:16461681, PMID:12112707 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: scyllo-inosine is a product released by RHEA:25776 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25777
+      snippet: scyllo-inosose => scyllo-inosine
+      notes: Rhea's left-to-right directional reaction RHEA:25777 declares side 25776_R as its products
+        (rh:products); the master reaction RHEA:25776 is undirected. This participant is CHEBI:50920 with
+        coefficient 1. Rhea cites PMID:16461681, PMID:12112707 for this reaction.
+  - subject: prot_Q65D08
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IOLI_BACLD is an exemplar enzyme with EC 5.3.99.11 activity.
+    evidence:
+    - reference: EC:5.3.99.11
+      snippet: DR   Q65D08, IOLI_BACLD ;  P42419, IOLI_BACSU ;  A7ZAH3, IOLI_BACVZ ;
+      notes: ExPASy ENZYME entry EC 5.3.99.11 cross-references UniProtKB:Q65D08 (IOLI_BACLD) as a protein
+        with this activity.
+  - subject: prot_P42419
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IOLI_BACSU is an exemplar enzyme with EC 5.3.99.11 activity.
+    evidence:
+    - reference: EC:5.3.99.11
+      snippet: DR   Q65D08, IOLI_BACLD ;  P42419, IOLI_BACSU ;  A7ZAH3, IOLI_BACVZ ;
+      notes: ExPASy ENZYME entry EC 5.3.99.11 cross-references UniProtKB:P42419 (IOLI_BACSU) as a protein
+        with this activity.
+  - subject: prot_A7ZAH3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IOLI_BACVZ is an exemplar enzyme with EC 5.3.99.11 activity.
+    evidence:
+    - reference: EC:5.3.99.11
+      snippet: DR   Q65D08, IOLI_BACLD ;  P42419, IOLI_BACSU ;  A7ZAH3, IOLI_BACVZ ;
+      notes: ExPASy ENZYME entry EC 5.3.99.11 cross-references UniProtKB:A7ZAH3 (IOLI_BACVZ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

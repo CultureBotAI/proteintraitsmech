@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.2.2.-
 synonyms:
@@ -37,4 +37,68 @@ definitions:
       Catalyses: ATP + H2O + Fe(3+)-hydroxamate complex-[hydroxamate-binding protein]Side 1 = ADP + phosphate + Fe(3+)-hydroxamate complexSide 2 + [hydroxamate- binding protein]Side 1
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ABC-type ferric hydroxamate transporter
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.2.2.16. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + H2O
+    + Fe(3+)-hydroxamate complex-[hydroxamate-binding protein]Side 1 = ADP + phosphate + Fe(3+)-hydroxamate
+    complexSide 2 + [hydroxamate- binding protein]Side 1".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type ferric hydroxamate transporter
+    grounding: EC:7.2.2.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type ferric hydroxamate transporter activity
+    grounding: GO:0015625
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P49938
+    node_type: PROTEIN
+    label: FHUC_BACSU
+    grounding: UniProtKB:P49938
+  - node_id: prot_P07821
+    node_type: PROTEIN
+    label: FHUC_ECOLI
+    grounding: UniProtKB:P07821
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:7.2.2.16
+      snippet: EC:7.2.2.16 > GO:ABC-type ferric hydroxamate transporter activity ; GO:0015625
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0015625 is itself a record
+        in this KB.
+  - subject: prot_P49938
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FHUC_BACSU is an exemplar enzyme with EC 7.2.2.16 activity.
+    evidence:
+    - reference: EC:7.2.2.16
+      snippet: DR   P49938, FHUC_BACSU ;  P07821, FHUC_ECOLI ;
+      notes: ExPASy ENZYME entry EC 7.2.2.16 cross-references UniProtKB:P49938 (FHUC_BACSU) as a protein
+        with this activity.
+  - subject: prot_P07821
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FHUC_ECOLI is an exemplar enzyme with EC 7.2.2.16 activity.
+    evidence:
+    - reference: EC:7.2.2.16
+      snippet: DR   P49938, FHUC_BACSU ;  P07821, FHUC_ECOLI ;
+      notes: ExPASy ENZYME entry EC 7.2.2.16 cross-references UniProtKB:P07821 (FHUC_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

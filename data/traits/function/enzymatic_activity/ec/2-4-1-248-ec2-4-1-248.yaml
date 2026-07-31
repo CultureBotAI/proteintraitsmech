@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 canonical_examples:
@@ -29,4 +29,52 @@ definitions:
       Catalyses: cyclizes part of a (1->6)-alpha-D-glucan chain by formation of a (1->6)- alpha-D-glucosidic bond
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cycloisomaltooligosaccharide glucanotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.248. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "cyclizes
+    part of a (1->6)-alpha-D-glucan chain by formation of a (1->6)- alpha-D-glucosidic bond".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cycloisomaltooligosaccharide glucanotransferase
+    grounding: EC:2.4.1.248
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P94286
+    node_type: PROTEIN
+    label: CTA1_NIACI
+    grounding: UniProtKB:P94286
+  - node_id: prot_P70873
+    node_type: PROTEIN
+    label: CTA2_NIACI
+    grounding: UniProtKB:P70873
+  edges:
+  - subject: prot_P94286
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CTA1_NIACI is an exemplar enzyme with EC 2.4.1.248 activity.
+    evidence:
+    - reference: EC:2.4.1.248
+      snippet: DR   P94286, CTA1_NIACI ;  P70873, CTA2_NIACI ;
+      notes: ExPASy ENZYME entry EC 2.4.1.248 cross-references UniProtKB:P94286 (CTA1_NIACI) as a protein
+        with this activity.
+  - subject: prot_P70873
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CTA2_NIACI is an exemplar enzyme with EC 2.4.1.248 activity.
+    evidence:
+    - reference: EC:2.4.1.248
+      snippet: DR   P94286, CTA1_NIACI ;  P70873, CTA2_NIACI ;
+      notes: ExPASy ENZYME entry EC 2.4.1.248 cross-references UniProtKB:P70873 (CTA2_NIACI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

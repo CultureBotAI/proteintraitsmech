@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.118
     mapping_source: rhea2ec
@@ -28,4 +28,183 @@ definitions:
       Catalyses the reaction: an N-hydroxyarylamine + acetyl-CoA = an N-acetoxyarylamine + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an N-hydroxyarylamine + acetyl-CoA = an N-acetoxyarylamine + CoA
+  description: Substrate-to-product chemistry of RHEA:20277, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20278 (rh:substrates → 20277_L, rh:products → 20277_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an N-hydroxyarylamine + acetyl-CoA = an N-acetoxyarylamine + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20277
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an N-hydroxyarylamine + acetyl-CoA = an N-acetoxyarylamine + CoA'
+  - node_id: sub1
+    label: an N-hydroxyarylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:13792
+    description: Formula H2NOR.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: an N-acetoxyarylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:21494
+    description: Formula C2H4NO2R.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-hydroxyarylamine O-acetyltransferase activity
+    grounding: GO:0046990
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: N-hydroxyarylamine O-acetyltransferase
+    grounding: EC:2.3.1.118
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P13914
+    node_type: PROTEIN
+    label: ARY2_CHICK
+    grounding: UniProtKB:P13914
+  - node_id: prot_P11245
+    node_type: PROTEIN
+    label: ARY2_HUMAN
+    grounding: UniProtKB:P11245
+  - node_id: prot_Q7YRG5
+    node_type: PROTEIN
+    label: ARY2_MACMU
+    grounding: UniProtKB:Q7YRG5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-hydroxyarylamine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20278
+      snippet: an N-hydroxyarylamine + acetyl-CoA => an N-acetoxyarylamine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20278 declares side 20277_L as its substrates
+        (rh:substrates); the master reaction RHEA:20277 is undirected. This participant is CHEBI:13792
+        with coefficient 1. Rhea cites PMID:3745141 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20278
+      snippet: an N-hydroxyarylamine + acetyl-CoA => an N-acetoxyarylamine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20278 declares side 20277_L as its substrates
+        (rh:substrates); the master reaction RHEA:20277 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:3745141 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N-acetoxyarylamine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20278
+      snippet: an N-hydroxyarylamine + acetyl-CoA => an N-acetoxyarylamine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20278 declares side 20277_R as its products
+        (rh:products); the master reaction RHEA:20277 is undirected. This participant is CHEBI:21494 with
+        coefficient 1. Rhea cites PMID:3745141 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20278
+      snippet: an N-hydroxyarylamine + acetyl-CoA => an N-acetoxyarylamine + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20278 declares side 20277_R as its products
+        (rh:products); the master reaction RHEA:20277 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:3745141 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:20277
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0046990"/>
+      notes: The rdfs:seeAlso triple on RHEA:20277 in rhea.rdf. GO term GO:0046990 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.118; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:20277
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.118"/>
+      notes: The rh:ec triple on RHEA:20277 in rhea.rdf. EC 2.3.1.118 is itself a record in this KB.
+  - subject: prot_P13914
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARY2_CHICK is an exemplar enzyme carrying EC 2.3.1.118, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.118
+      snippet: DR   P13914, ARY2_CHICK ;  P11245, ARY2_HUMAN ;  Q7YRG5, ARY2_MACMU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.118 cross-references UniProtKB:P13914 (ARY2_CHICK) as a protein
+        with this activity.
+    - reference: RHEA:20277
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.118"/>
+      notes: Rhea assigns RHEA:20277 to EC 2.3.1.118, and EC 2.3.1.118 maps to exactly one Rhea master
+        reaction (RHEA:20277), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P11245
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARY2_HUMAN is an exemplar enzyme carrying EC 2.3.1.118, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.118
+      snippet: DR   P13914, ARY2_CHICK ;  P11245, ARY2_HUMAN ;  Q7YRG5, ARY2_MACMU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.118 cross-references UniProtKB:P11245 (ARY2_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:20277
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.118"/>
+      notes: Rhea assigns RHEA:20277 to EC 2.3.1.118, and EC 2.3.1.118 maps to exactly one Rhea master
+        reaction (RHEA:20277), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q7YRG5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARY2_MACMU is an exemplar enzyme carrying EC 2.3.1.118, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.118
+      snippet: DR   P13914, ARY2_CHICK ;  P11245, ARY2_HUMAN ;  Q7YRG5, ARY2_MACMU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.118 cross-references UniProtKB:Q7YRG5 (ARY2_MACMU) as a protein
+        with this activity.
+    - reference: RHEA:20277
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.118"/>
+      notes: Rhea assigns RHEA:20277 to EC 2.3.1.118, and EC 2.3.1.118 maps to exactly one Rhea master
+        reaction (RHEA:20277), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.3.5.-
 synonyms:
@@ -45,4 +45,235 @@ definitions:
       Catalyses: 2 a plastoquinone + 15-cis-phytoene = 9,9',15-tri-cis-zeta-carotene + 2 a plastoquinol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 15-cis-phytoene desaturase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.3.5.5. Rhea assigns 2 curated
+    reactions to EC 1.3.5.5. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "2 a plastoquinone + 15-cis-phytoene = 9,9'',15-tri-cis-zeta-carotene
+    + 2 a plastoquinol". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 15-cis-phytoene desaturase
+    grounding: EC:1.3.5.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2 plastoquinone-9 + 15-cis-phytoene = 2 plastoquinol-9 + 9,9',15-tri-cis-zet…
+    grounding: RHEA:30175
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2 plastoquinone-9 + 15-cis-phytoene = 2 plastoquinol-9 + 9,9'',15-tri-cis-zeta-carotene'
+  - node_id: rxn1_sub1
+    label: plastoquinone-9
+    node_type: CHEMICAL
+    grounding: CHEBI:28377
+    description: Formula C53H80O2.
+  - node_id: rxn1_sub2
+    label: 15-cis-phytoene
+    node_type: CHEMICAL
+    grounding: CHEBI:27787
+    description: Formula C40H64.
+  - node_id: rxn1_prd1
+    label: plastoquinol-9
+    node_type: CHEMICAL
+    grounding: CHEBI:28026
+    description: Formula C53H82O2.
+  - node_id: rxn1_prd2
+    label: 9,9',15-tri-cis-zeta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:48717
+    description: Formula C40H60.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 2 a plastoquinone + 15-cis-phytoene = 9,9',15-tri-cis-zeta-carotene + 2 a pl…
+    grounding: RHEA:30287
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 2 a plastoquinone + 15-cis-phytoene = 9,9'',15-tri-cis-zeta-carotene +
+      2 a plastoquinol'
+  - node_id: rxn2_sub1
+    label: a plastoquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:17757
+    xrefs:
+    - RHEA-COMP:9562
+    description: Rhea compound POLYMER:9562. Formula C8H8O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: rxn2_sub2
+    label: 15-cis-phytoene
+    node_type: CHEMICAL
+    grounding: CHEBI:27787
+    description: Formula C40H64.
+  - node_id: rxn2_prd1
+    label: 9,9',15-tri-cis-zeta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:48717
+    description: Formula C40H60.
+  - node_id: rxn2_prd2
+    label: a plastoquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:62192
+    xrefs:
+    - RHEA-COMP:9561
+    description: Rhea compound POLYMER:9561. Formula C8H10O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: prot_Q07356
+    node_type: PROTEIN
+    label: PDS_ARATH
+    grounding: UniProtKB:Q07356
+  - node_id: prot_P80093
+    node_type: PROTEIN
+    label: PDS_CAPAN
+    grounding: UniProtKB:P80093
+  - node_id: prot_P49086
+    node_type: PROTEIN
+    label: PDS_MAIZE
+    grounding: UniProtKB:P49086
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:30175 is one of the 2 curated reactions Rhea assigns to EC 1.3.5.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:30175
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.5.5"/>
+      notes: The rh:ec triple on RHEA:30175 in rhea.rdf assigns that reaction to EC 1.3.5.5.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: plastoquinone-9 is a substrate consumed by RHEA:30175 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:30176
+      snippet: 2 plastoquinone-9 + 15-cis-phytoene => 2 plastoquinol-9 + 9,9',15-tri-cis-zeta-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:30176 declares side 30175_L as its substrates
+        (rh:substrates); the master reaction RHEA:30175 is undirected. This participant is CHEBI:28377
+        with coefficient 2. Rhea cites PMID:15503129 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: 15-cis-phytoene is a substrate consumed by RHEA:30175 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30176
+      snippet: 2 plastoquinone-9 + 15-cis-phytoene => 2 plastoquinol-9 + 9,9',15-tri-cis-zeta-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:30176 declares side 30175_L as its substrates
+        (rh:substrates); the master reaction RHEA:30175 is undirected. This participant is CHEBI:27787
+        with coefficient 1. Rhea cites PMID:15503129 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: plastoquinol-9 is a product released by RHEA:30175 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:30176
+      snippet: 2 plastoquinone-9 + 15-cis-phytoene => 2 plastoquinol-9 + 9,9',15-tri-cis-zeta-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:30176 declares side 30175_R as its products
+        (rh:products); the master reaction RHEA:30175 is undirected. This participant is CHEBI:28026 with
+        coefficient 2. Rhea cites PMID:15503129 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: 9,9',15-tri-cis-zeta-carotene is a product released by RHEA:30175 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30176
+      snippet: 2 plastoquinone-9 + 15-cis-phytoene => 2 plastoquinol-9 + 9,9',15-tri-cis-zeta-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:30176 declares side 30175_R as its products
+        (rh:products); the master reaction RHEA:30175 is undirected. This participant is CHEBI:48717 with
+        coefficient 1. Rhea cites PMID:15503129 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:30287 is one of the 2 curated reactions Rhea assigns to EC 1.3.5.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:30287
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.5.5"/>
+      notes: The rh:ec triple on RHEA:30287 in rhea.rdf assigns that reaction to EC 1.3.5.5.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a plastoquinone is a substrate consumed by RHEA:30287 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:30288
+      snippet: 2 a plastoquinone + 15-cis-phytoene => 9,9',15-tri-cis-zeta-carotene + 2 a plastoquinol
+      notes: Rhea's left-to-right directional reaction RHEA:30288 declares side 30287_L as its substrates
+        (rh:substrates); the master reaction RHEA:30287 is undirected. This participant is POLYMER:9562
+        with coefficient 2. Rhea cites PMID:9226712, PMID:15503129, PMID:9914519 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: 15-cis-phytoene is a substrate consumed by RHEA:30287 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30288
+      snippet: 2 a plastoquinone + 15-cis-phytoene => 9,9',15-tri-cis-zeta-carotene + 2 a plastoquinol
+      notes: Rhea's left-to-right directional reaction RHEA:30288 declares side 30287_L as its substrates
+        (rh:substrates); the master reaction RHEA:30287 is undirected. This participant is CHEBI:27787
+        with coefficient 1. Rhea cites PMID:9226712, PMID:15503129, PMID:9914519 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 9,9',15-tri-cis-zeta-carotene is a product released by RHEA:30287 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30288
+      snippet: 2 a plastoquinone + 15-cis-phytoene => 9,9',15-tri-cis-zeta-carotene + 2 a plastoquinol
+      notes: Rhea's left-to-right directional reaction RHEA:30288 declares side 30287_R as its products
+        (rh:products); the master reaction RHEA:30287 is undirected. This participant is CHEBI:48717 with
+        coefficient 1. Rhea cites PMID:9226712, PMID:15503129, PMID:9914519 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: a plastoquinol is a product released by RHEA:30287 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:30288
+      snippet: 2 a plastoquinone + 15-cis-phytoene => 9,9',15-tri-cis-zeta-carotene + 2 a plastoquinol
+      notes: Rhea's left-to-right directional reaction RHEA:30288 declares side 30287_R as its products
+        (rh:products); the master reaction RHEA:30287 is undirected. This participant is POLYMER:9561
+        with coefficient 2. Rhea cites PMID:9226712, PMID:15503129, PMID:9914519 for this reaction.
+  - subject: prot_Q07356
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDS_ARATH is an exemplar enzyme with EC 1.3.5.5 activity.
+    evidence:
+    - reference: EC:1.3.5.5
+      snippet: DR   Q07356, PDS_ARATH  ;  P80093, PDS_CAPAN  ;  P49086, PDS_MAIZE  ;
+      notes: ExPASy ENZYME entry EC 1.3.5.5 cross-references UniProtKB:Q07356 (PDS_ARATH) as a protein
+        with this activity.
+  - subject: prot_P80093
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDS_CAPAN is an exemplar enzyme with EC 1.3.5.5 activity.
+    evidence:
+    - reference: EC:1.3.5.5
+      snippet: DR   Q07356, PDS_ARATH  ;  P80093, PDS_CAPAN  ;  P49086, PDS_MAIZE  ;
+      notes: ExPASy ENZYME entry EC 1.3.5.5 cross-references UniProtKB:P80093 (PDS_CAPAN) as a protein
+        with this activity.
+  - subject: prot_P49086
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDS_MAIZE is an exemplar enzyme with EC 1.3.5.5 activity.
+    evidence:
+    - reference: EC:1.3.5.5
+      snippet: DR   Q07356, PDS_ARATH  ;  P80093, PDS_CAPAN  ;  P49086, PDS_MAIZE  ;
+      notes: ExPASy ENZYME entry EC 1.3.5.5 cross-references UniProtKB:P49086 (PDS_MAIZE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

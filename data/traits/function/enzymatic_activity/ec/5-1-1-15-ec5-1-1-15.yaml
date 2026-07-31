@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.1.-
 synonyms:
@@ -35,4 +35,88 @@ definitions:
       Catalyses: L-2-aminohexano-6-lactam = D-2-aminohexano-6-lactam
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-aminohexano-6-lactam racemase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.1.15. EC 5.1.1.15 maps to exactly
+    one curated Rhea reaction (RHEA:14813), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-2-aminohexano-6-lactam
+    = D-2-aminohexano-6-lactam". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-aminohexano-6-lactam racemase
+    grounding: EC:5.1.1.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-2-aminohexano-6-lactam
+    node_type: CHEMICAL
+    grounding: CHEBI:58113
+    description: Formula C6H13N2O.
+  - node_id: prd1
+    label: D-2-aminohexano-6-lactam
+    node_type: CHEMICAL
+    grounding: CHEBI:58609
+    description: Formula C6H13N2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-aminohexano-6-lactam racemase activity
+    grounding: GO:0047463
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q7M181
+    node_type: PROTEIN
+    label: ACLR_ACHOB
+    grounding: UniProtKB:Q7M181
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-2-aminohexano-6-lactam is a substrate consumed by RHEA:14813 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14814
+      snippet: L-2-aminohexano-6-lactam => D-2-aminohexano-6-lactam
+      notes: Rhea's left-to-right directional reaction RHEA:14814 declares side 14813_L as its substrates
+        (rh:substrates); the master reaction RHEA:14813 is undirected. This participant is CHEBI:58113
+        with coefficient 1. Rhea cites PMID:3955003, PMID:19146406 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-2-aminohexano-6-lactam is a product released by RHEA:14813 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14814
+      snippet: L-2-aminohexano-6-lactam => D-2-aminohexano-6-lactam
+      notes: Rhea's left-to-right directional reaction RHEA:14814 declares side 14813_R as its products
+        (rh:products); the master reaction RHEA:14813 is undirected. This participant is CHEBI:58609 with
+        coefficient 1. Rhea cites PMID:3955003, PMID:19146406 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.1.15
+      snippet: EC:5.1.1.15 > GO:2-aminohexano-6-lactam racemase activity ; GO:0047463
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047463 is itself a record
+        in this KB.
+  - subject: prot_Q7M181
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACLR_ACHOB is an exemplar enzyme with EC 5.1.1.15 activity.
+    evidence:
+    - reference: EC:5.1.1.15
+      snippet: DR   Q7M181, ACLR_ACHOB ;
+      notes: ExPASy ENZYME entry EC 5.1.1.15 cross-references UniProtKB:Q7M181 (ACLR_ACHOB) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

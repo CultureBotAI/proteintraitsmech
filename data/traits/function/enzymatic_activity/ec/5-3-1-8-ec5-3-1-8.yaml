@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.1.-
 synonyms:
@@ -49,4 +49,117 @@ definitions:
       Catalyses: D-mannose 6-phosphate = D-fructose 6-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mannose-6-phosphate isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.1.8. EC 5.3.1.8 maps to exactly
+    one curated Rhea reaction (RHEA:12356), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-mannose 6-phosphate
+    = D-fructose 6-phosphate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mannose-6-phosphate isomerase
+    grounding: EC:5.3.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-mannose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58735
+    description: Formula C6H11O9P.
+  - node_id: prd1
+    label: D-fructose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:61527
+    description: Formula C6H11O9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: mannose-6-phosphate isomerase activity
+    grounding: GO:0004476
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P07874
+    node_type: PROTEIN
+    label: ALGA_PSEAE
+    grounding: UniProtKB:P07874
+  - node_id: prot_P59785
+    node_type: PROTEIN
+    label: ALGA_PSEFL
+    grounding: UniProtKB:P59785
+  - node_id: prot_Q88ND5
+    node_type: PROTEIN
+    label: ALGA_PSEPK
+    grounding: UniProtKB:Q88ND5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-mannose 6-phosphate is a substrate consumed by RHEA:12356 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12357
+      snippet: D-mannose 6-phosphate => D-fructose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12357 declares side 12356_L as its substrates
+        (rh:substrates); the master reaction RHEA:12356 is undirected. This participant is CHEBI:58735
+        with coefficient 1. Rhea cites PMID:14794671, PMID:4969968, PMID:13596383, PMID:39208883 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-fructose 6-phosphate is a product released by RHEA:12356 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12357
+      snippet: D-mannose 6-phosphate => D-fructose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12357 declares side 12356_R as its products
+        (rh:products); the master reaction RHEA:12356 is undirected. This participant is CHEBI:61527 with
+        coefficient 1. Rhea cites PMID:14794671, PMID:4969968, PMID:13596383, PMID:39208883 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.1.8
+      snippet: EC:5.3.1.8 > GO:mannose-6-phosphate isomerase activity ; GO:0004476
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004476 is itself a record
+        in this KB.
+  - subject: prot_P07874
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALGA_PSEAE is an exemplar enzyme with EC 5.3.1.8 activity.
+    evidence:
+    - reference: EC:5.3.1.8
+      snippet: DR   P07874, ALGA_PSEAE ;  P59785, ALGA_PSEFL ;  Q88ND5, ALGA_PSEPK ;
+      notes: ExPASy ENZYME entry EC 5.3.1.8 cross-references UniProtKB:P07874 (ALGA_PSEAE) as a protein
+        with this activity.
+  - subject: prot_P59785
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALGA_PSEFL is an exemplar enzyme with EC 5.3.1.8 activity.
+    evidence:
+    - reference: EC:5.3.1.8
+      snippet: DR   P07874, ALGA_PSEAE ;  P59785, ALGA_PSEFL ;  Q88ND5, ALGA_PSEPK ;
+      notes: ExPASy ENZYME entry EC 5.3.1.8 cross-references UniProtKB:P59785 (ALGA_PSEFL) as a protein
+        with this activity.
+  - subject: prot_Q88ND5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALGA_PSEPK is an exemplar enzyme with EC 5.3.1.8 activity.
+    evidence:
+    - reference: EC:5.3.1.8
+      snippet: DR   P07874, ALGA_PSEAE ;  P59785, ALGA_PSEFL ;  Q88ND5, ALGA_PSEPK ;
+      notes: ExPASy ENZYME entry EC 5.3.1.8 cross-references UniProtKB:Q88ND5 (ALGA_PSEPK) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

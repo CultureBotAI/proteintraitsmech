@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.1.-
 mapped_xrefs:
@@ -28,4 +28,89 @@ definitions:
       Catalyses: (1R)-(2-amino-1-hydroxyethyl)phosphonate = phosphonoacetaldehyde + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (R)-1-hydroxy-2-aminoethylphosphonate ammonia-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.1.33. EC 4.3.1.33 maps to exactly
+    one curated Rhea reaction (RHEA:72879), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(1R)-(2-amino-1-hydroxyethyl)phosphonate
+    = phosphonoacetaldehyde + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (R)-1-hydroxy-2-aminoethylphosphonate ammonia-lyase
+    grounding: EC:4.3.1.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (1R)-(2-amino-1-hydroxyethyl)phosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:141612
+    description: Formula C2H8NO4P.
+  - node_id: prd1
+    label: phosphonoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58383
+    description: Formula C2H4O4P.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prot_A3UZK3
+    node_type: PROTEIN
+    label: PBFA_VIBS1
+    grounding: UniProtKB:A3UZK3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (1R)-(2-amino-1-hydroxyethyl)phosphonate is a substrate consumed by RHEA:72879 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:72880
+      snippet: (1R)-(2-amino-1-hydroxyethyl)phosphonate => phosphonoacetaldehyde + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72880 declares side 72879_L as its substrates
+        (rh:substrates); the master reaction RHEA:72879 is undirected. This participant is CHEBI:141612
+        with coefficient 1. Rhea cites PMID:33830741 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phosphonoacetaldehyde is a product released by RHEA:72879 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:72880
+      snippet: (1R)-(2-amino-1-hydroxyethyl)phosphonate => phosphonoacetaldehyde + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72880 declares side 72879_R as its products
+        (rh:products); the master reaction RHEA:72879 is undirected. This participant is CHEBI:58383 with
+        coefficient 1. Rhea cites PMID:33830741 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:72879 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72880
+      snippet: (1R)-(2-amino-1-hydroxyethyl)phosphonate => phosphonoacetaldehyde + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:72880 declares side 72879_R as its products
+        (rh:products); the master reaction RHEA:72879 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:33830741 for this reaction.
+  - subject: prot_A3UZK3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PBFA_VIBS1 is an exemplar enzyme with EC 4.3.1.33 activity.
+    evidence:
+    - reference: EC:4.3.1.33
+      snippet: DR   A3UZK3, PBFA_VIBS1 ;
+      notes: ExPASy ENZYME entry EC 4.3.1.33 cross-references UniProtKB:A3UZK3 (PBFA_VIBS1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

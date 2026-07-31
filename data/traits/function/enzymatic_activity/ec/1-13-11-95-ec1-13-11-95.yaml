@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 mapped_xrefs:
@@ -28,4 +28,120 @@ definitions:
       Catalyses: L-cysteine + 2 O2 = 2-oxoethane-1-sulfonamide + CO2 + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-oxoethane-1-sulfonamide synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.95. EC 1.13.11.95 maps to
+    exactly one curated Rhea reaction (RHEA:81871), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-cysteine
+    + 2 O2 = 2-oxoethane-1-sulfonamide + CO2 + H2O". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-oxoethane-1-sulfonamide synthase
+    grounding: EC:1.13.11.95
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:35235
+    description: Formula C3H7NO2S.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 2-oxoethane-1-sulfonamide
+    node_type: CHEMICAL
+    grounding: CHEBI:231960
+    description: Formula C2H5NO3S.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_P0DY49
+    node_type: PROTEIN
+    label: SBZM_STRSQ
+    grounding: UniProtKB:P0DY49
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cysteine is a substrate consumed by RHEA:81871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81872
+      snippet: L-cysteine + 2 O2 => 2-oxoethane-1-sulfonamide + CO2 + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:81872 declares side 81871_L as its substrates
+        (rh:substrates); the master reaction RHEA:81871 is undirected. This participant is CHEBI:35235
+        with coefficient 1. Rhea cites PMID:30643149 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:81871 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:81872
+      snippet: L-cysteine + 2 O2 => 2-oxoethane-1-sulfonamide + CO2 + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:81872 declares side 81871_L as its substrates
+        (rh:substrates); the master reaction RHEA:81871 is undirected. This participant is CHEBI:15379
+        with coefficient 2. Rhea cites PMID:30643149 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-oxoethane-1-sulfonamide is a product released by RHEA:81871 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81872
+      snippet: L-cysteine + 2 O2 => 2-oxoethane-1-sulfonamide + CO2 + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:81872 declares side 81871_R as its products
+        (rh:products); the master reaction RHEA:81871 is undirected. This participant is CHEBI:231960
+        with coefficient 1. Rhea cites PMID:30643149 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:81871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81872
+      snippet: L-cysteine + 2 O2 => 2-oxoethane-1-sulfonamide + CO2 + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:81872 declares side 81871_R as its products
+        (rh:products); the master reaction RHEA:81871 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:30643149 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:81871 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81872
+      snippet: L-cysteine + 2 O2 => 2-oxoethane-1-sulfonamide + CO2 + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:81872 declares side 81871_R as its products
+        (rh:products); the master reaction RHEA:81871 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:30643149 for this reaction.
+  - subject: prot_P0DY49
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SBZM_STRSQ is an exemplar enzyme with EC 1.13.11.95 activity.
+    evidence:
+    - reference: EC:1.13.11.95
+      snippet: DR   P0DY49, SBZM_STRSQ ;
+      notes: ExPASy ENZYME entry EC 1.13.11.95 cross-references UniProtKB:P0DY49 (SBZM_STRSQ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

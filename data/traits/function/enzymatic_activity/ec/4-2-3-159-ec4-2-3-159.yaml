@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -28,4 +28,88 @@ definitions:
       Catalyses: (2E,6E,10E)-geranylgeranyl diphosphate = tsukubadiene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tsukubadiene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.159. EC 4.2.3.159 maps to
+    exactly one curated Rhea reaction (RHEA:53624), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E,10E)-geranylgeranyl
+    diphosphate = tsukubadiene + diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tsukubadiene synthase
+    grounding: EC:4.2.3.159
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: tsukubadiene
+    node_type: CHEMICAL
+    grounding: CHEBI:137528
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_I2N045
+    node_type: PROTEIN
+    label: TSUKU_STRT9
+    grounding: UniProtKB:I2N045
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a substrate consumed by RHEA:53624 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:53625
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => tsukubadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53625 declares side 53624_L as its substrates
+        (rh:substrates); the master reaction RHEA:53624 is undirected. This participant is CHEBI:58756
+        with coefficient 1. Rhea cites PMID:25605043, PMID:28146322 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tsukubadiene is a product released by RHEA:53624 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53625
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => tsukubadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53625 declares side 53624_R as its products
+        (rh:products); the master reaction RHEA:53624 is undirected. This participant is CHEBI:137528
+        with coefficient 1. Rhea cites PMID:25605043, PMID:28146322 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:53624 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53625
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => tsukubadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:53625 declares side 53624_R as its products
+        (rh:products); the master reaction RHEA:53624 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:25605043, PMID:28146322 for this reaction.
+  - subject: prot_I2N045
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TSUKU_STRT9 is an exemplar enzyme with EC 4.2.3.159 activity.
+    evidence:
+    - reference: EC:4.2.3.159
+      snippet: DR   I2N045, TSUKU_STRT9;
+      notes: ExPASy ENZYME entry EC 4.2.3.159 cross-references UniProtKB:I2N045 (TSUKU_STRT9) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.17.5.1
     mapping_source: rhea2ec
@@ -32,4 +32,145 @@ definitions:
       Catalyses the reaction: phenylacetyl-CoA + 2 a ubiquinone + H2O = phenylglyoxylyl-CoA + 2 a ubiquinol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phenylacetyl-CoA + 2 a ubiquinone + H2O = phenylglyoxylyl-CoA + 2 a ubiquinol
+  description: Substrate-to-product chemistry of RHEA:15705, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:15706 (rh:substrates → 15705_L, rh:products → 15705_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of phenylacetyl-CoA + 2 a ubiquinone + H2O = phenylglyoxylyl-CoA + 2 a ubiquinol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:15705
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: phenylacetyl-CoA + 2 a ubiquinone + H2O = phenylglyoxylyl-CoA + 2 a ubiquinol'
+  - node_id: sub1
+    label: phenylacetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57390
+    description: Formula C29H38N7O17P3S.
+  - node_id: sub2
+    label: a ubiquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16389
+    xrefs:
+    - RHEA-COMP:9565
+    description: Rhea compound POLYMER:9565. Formula C9H10O4(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: phenylglyoxylyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:58811
+    description: Formula C29H36N7O18P3S.
+  - node_id: prd2
+    label: a ubiquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:17976
+    xrefs:
+    - RHEA-COMP:9566
+    description: Rhea compound POLYMER:9566. Formula C9H12O4(C5H8)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phenylacetyl-CoA dehydrogenase activity
+    grounding: GO:0033789
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: phenylacetyl-CoA dehydrogenase
+    grounding: EC:1.17.5.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: phenylacetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15706
+      snippet: phenylacetyl-CoA + 2 a ubiquinone + H2O => phenylglyoxylyl-CoA + 2 a ubiquinol
+      notes: Rhea's left-to-right directional reaction RHEA:15706 declares side 15705_L as its substrates
+        (rh:substrates); the master reaction RHEA:15705 is undirected. This participant is CHEBI:57390
+        with coefficient 1. Rhea cites PMID:10336636, PMID:9575237 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a ubiquinone is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:15706
+      snippet: phenylacetyl-CoA + 2 a ubiquinone + H2O => phenylglyoxylyl-CoA + 2 a ubiquinol
+      notes: Rhea's left-to-right directional reaction RHEA:15706 declares side 15705_L as its substrates
+        (rh:substrates); the master reaction RHEA:15705 is undirected. This participant is POLYMER:9565
+        with coefficient 2. Rhea cites PMID:10336636, PMID:9575237 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15706
+      snippet: phenylacetyl-CoA + 2 a ubiquinone + H2O => phenylglyoxylyl-CoA + 2 a ubiquinol
+      notes: Rhea's left-to-right directional reaction RHEA:15706 declares side 15705_L as its substrates
+        (rh:substrates); the master reaction RHEA:15705 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10336636, PMID:9575237 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phenylglyoxylyl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15706
+      snippet: phenylacetyl-CoA + 2 a ubiquinone + H2O => phenylglyoxylyl-CoA + 2 a ubiquinol
+      notes: Rhea's left-to-right directional reaction RHEA:15706 declares side 15705_R as its products
+        (rh:products); the master reaction RHEA:15705 is undirected. This participant is CHEBI:58811 with
+        coefficient 1. Rhea cites PMID:10336636, PMID:9575237 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a ubiquinol is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:15706
+      snippet: phenylacetyl-CoA + 2 a ubiquinone + H2O => phenylglyoxylyl-CoA + 2 a ubiquinol
+      notes: Rhea's left-to-right directional reaction RHEA:15706 declares side 15705_R as its products
+        (rh:products); the master reaction RHEA:15705 is undirected. This participant is POLYMER:9566
+        with coefficient 2. Rhea cites PMID:10336636, PMID:9575237 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:15705
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0033789"/>
+      notes: The rdfs:seeAlso triple on RHEA:15705 in rhea.rdf. GO term GO:0033789 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.17.5.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:15705
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.17.5.1"/>
+      notes: The rh:ec triple on RHEA:15705 in rhea.rdf. EC 1.17.5.1 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

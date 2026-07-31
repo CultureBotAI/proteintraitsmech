@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:64583
     role: SUBSTRATE_OR_PRODUCT
@@ -19,4 +19,63 @@ definitions:
       Catalyses the reaction: an N-(acyl)-sphingosylphosphocholine(in) = an N-(acyl)-sphingosylphosphocholine(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an N-(acyl)-sphingosylphosphocholine(in) = an N-(acyl)-sphingosylphosphocholine(out)
+  description: 'Substrate-to-product chemistry of RHEA:43776, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:43777 (rh:substrates → 43776_L, rh:products → 43776_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of an N-(acyl)-sphingosylphosphocholine(in) = an N-(acyl)-sphingosylphosphochol…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:43776
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an N-(acyl)-sphingosylphosphocholine(in) = an N-(acyl)-sphingosylphosphocholine(out)'
+  - node_id: sub1
+    label: an N-(acyl)-sphingosylphosphocholine (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:64583
+    description: Formula C9H19N2O6PR2.
+  - node_id: prd1
+    label: an N-(acyl)-sphingosylphosphocholine (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:64583
+    description: Formula C9H19N2O6PR2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-(acyl)-sphingosylphosphocholine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:43777
+      snippet: an N-(acyl)-sphingosylphosphocholine(in) => an N-(acyl)-sphingosylphosphocholine(out)
+      notes: Rhea's left-to-right directional reaction RHEA:43777 declares side 43776_L as its substrates
+        (rh:substrates); the master reaction RHEA:43776 is undirected. This participant is CHEBI:64583
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:7654206
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N-(acyl)-sphingosylphosphocholine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:43777
+      snippet: an N-(acyl)-sphingosylphosphocholine(in) => an N-(acyl)-sphingosylphosphocholine(out)
+      notes: Rhea's left-to-right directional reaction RHEA:43777 declares side 43776_R as its products
+        (rh:products); the master reaction RHEA:43776 is undirected. This participant is CHEBI:64583 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:7654206
+        for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

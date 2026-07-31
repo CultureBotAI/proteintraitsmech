@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 mapped_xrefs:
@@ -28,4 +28,121 @@ definitions:
       Catalyses: (R)-3-phosphomevalonate + ATP = (R)-3,5-bisphosphomevalonate + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mevalonate-3-phosphate 5-kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.186. EC 2.7.1.186 maps to
+    exactly one curated Rhea reaction (RHEA:42888), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-3-phosphomevalonate
+    + ATP = (R)-3,5-bisphosphomevalonate + ADP + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mevalonate-3-phosphate 5-kinase
+    grounding: EC:2.7.1.186
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-3-phosphomevalonate
+    node_type: CHEMICAL
+    grounding: CHEBI:82773
+    description: Formula C6H10O7P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: (R)-3,5-bisphosphomevalonate
+    node_type: CHEMICAL
+    grounding: CHEBI:82774
+    description: Formula C6H9O10P2.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q9HK44
+    node_type: PROTEIN
+    label: MVP5K_THEAC
+    grounding: UniProtKB:Q9HK44
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-3-phosphomevalonate is a substrate consumed by RHEA:42888 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42889
+      snippet: (R)-3-phosphomevalonate + ATP => (R)-3,5-bisphosphomevalonate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42889 declares side 42888_L as its substrates
+        (rh:substrates); the master reaction RHEA:42888 is undirected. This participant is CHEBI:82773
+        with coefficient 1. Rhea cites PMID:24914732 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:42888 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42889
+      snippet: (R)-3-phosphomevalonate + ATP => (R)-3,5-bisphosphomevalonate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42889 declares side 42888_L as its substrates
+        (rh:substrates); the master reaction RHEA:42888 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:24914732 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R)-3,5-bisphosphomevalonate is a product released by RHEA:42888 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42889
+      snippet: (R)-3-phosphomevalonate + ATP => (R)-3,5-bisphosphomevalonate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42889 declares side 42888_R as its products
+        (rh:products); the master reaction RHEA:42888 is undirected. This participant is CHEBI:82774 with
+        coefficient 1. Rhea cites PMID:24914732 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:42888 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42889
+      snippet: (R)-3-phosphomevalonate + ATP => (R)-3,5-bisphosphomevalonate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42889 declares side 42888_R as its products
+        (rh:products); the master reaction RHEA:42888 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:24914732 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:42888 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42889
+      snippet: (R)-3-phosphomevalonate + ATP => (R)-3,5-bisphosphomevalonate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42889 declares side 42888_R as its products
+        (rh:products); the master reaction RHEA:42888 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:24914732 for this reaction.
+  - subject: prot_Q9HK44
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MVP5K_THEAC is an exemplar enzyme with EC 2.7.1.186 activity.
+    evidence:
+    - reference: EC:2.7.1.186
+      snippet: DR   Q9HK44, MVP5K_THEAC;
+      notes: ExPASy ENZYME entry EC 2.7.1.186 cross-references UniProtKB:Q9HK44 (MVP5K_THEAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

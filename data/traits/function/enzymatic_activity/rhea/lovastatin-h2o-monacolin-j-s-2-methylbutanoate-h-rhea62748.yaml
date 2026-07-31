@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:40303
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,107 @@ definitions:
       Catalyses the reaction: lovastatin + H2O = monacolin J + (S)-2-methylbutanoate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lovastatin + H2O = monacolin J + (S)-2-methylbutanoate + H(+)
+  description: Substrate-to-product chemistry of RHEA:62748, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62749 (rh:substrates → 62748_L, rh:products → 62748_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of lovastatin + H2O = monacolin J + (S)-2-methylbutanoate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62748
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: lovastatin + H2O = monacolin J + (S)-2-methylbutanoate + H(+)'
+  - node_id: sub1
+    label: lovastatin
+    node_type: CHEMICAL
+    grounding: CHEBI:40303
+    description: Formula C24H36O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: monacolin J
+    node_type: CHEMICAL
+    grounding: CHEBI:79034
+    description: Formula C19H28O4.
+  - node_id: prd2
+    label: (S)-2-methylbutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:145932
+    description: Formula C5H9O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: lovastatin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62749
+      snippet: lovastatin + H2O => monacolin J + (S)-2-methylbutanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62749 declares side 62748_L as its substrates
+        (rh:substrates); the master reaction RHEA:62748 is undirected. This participant is CHEBI:40303
+        with coefficient 1. Rhea cites PMID:31839596, PMID:28619444 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62749
+      snippet: lovastatin + H2O => monacolin J + (S)-2-methylbutanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62749 declares side 62748_L as its substrates
+        (rh:substrates); the master reaction RHEA:62748 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:31839596, PMID:28619444 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: monacolin J is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62749
+      snippet: lovastatin + H2O => monacolin J + (S)-2-methylbutanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62749 declares side 62748_R as its products
+        (rh:products); the master reaction RHEA:62748 is undirected. This participant is CHEBI:79034 with
+        coefficient 1. Rhea cites PMID:31839596, PMID:28619444 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (S)-2-methylbutanoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62749
+      snippet: lovastatin + H2O => monacolin J + (S)-2-methylbutanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62749 declares side 62748_R as its products
+        (rh:products); the master reaction RHEA:62748 is undirected. This participant is CHEBI:145932
+        with coefficient 1. Rhea cites PMID:31839596, PMID:28619444 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62749
+      snippet: lovastatin + H2O => monacolin J + (S)-2-methylbutanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:62749 declares side 62748_R as its products
+        (rh:products); the master reaction RHEA:62748 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:31839596, PMID:28619444 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

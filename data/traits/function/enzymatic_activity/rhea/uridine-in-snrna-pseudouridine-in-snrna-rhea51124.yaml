@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:65315
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,108 @@ definitions:
       Catalyses the reaction: uridine in snRNA = pseudouridine in snRNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of uridine in snRNA = pseudouridine in snRNA
+  description: Substrate-to-product chemistry of RHEA:51124, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:51125 (rh:substrates → 51124_L, rh:products → 51124_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of uridine in snRNA = pseudouridine in snRNA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:51124
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: uridine in snRNA = pseudouridine in snRNA'
+  - node_id: sub1
+    label: uridine in snRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:12891
+    description: Rhea compound GENERIC:12891.
+  - node_id: sub1_rp1
+    label: UMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12891 (uridine in
+      snRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: prd1
+    label: pseudouridine in snRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:12892
+    description: Rhea compound GENERIC:12892.
+  - node_id: prd1_rp1
+    label: psi-uridine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12892 (pseudouridine
+      in snRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65314
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: snRNA pseudouridine synthase activity
+    grounding: GO:0106032
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine in snRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51125
+      snippet: uridine in snRNA => pseudouridine in snRNA
+      notes: Rhea's left-to-right directional reaction RHEA:51125 declares side 51124_L as its substrates
+        (rh:substrates); the master reaction RHEA:51124 is undirected. This participant is GENERIC:12891
+        with coefficient 1. Rhea cites PMID:14561887 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine in snRNA.
+    evidence:
+    - reference: RHEA:51124
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:12891 (uridine in snRNA) declares rh:reactivePart = UMP residue (CHEBI:65315),
+        formula C9H10N2O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pseudouridine in snRNA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51125
+      snippet: uridine in snRNA => pseudouridine in snRNA
+      notes: Rhea's left-to-right directional reaction RHEA:51125 declares side 51124_R as its products
+        (rh:products); the master reaction RHEA:51124 is undirected. This participant is GENERIC:12892
+        with coefficient 1. Rhea cites PMID:14561887 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: psi-uridine residue is the reactive part of pseudouridine in snRNA.
+    evidence:
+    - reference: RHEA:51124
+      snippet: psi-uridine residue
+      notes: Rhea compound GENERIC:12892 (pseudouridine in snRNA) declares rh:reactivePart = psi-uridine
+        residue (CHEBI:65314), formula C9H10N2O8P.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:51124
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0106032"/>
+      notes: The rdfs:seeAlso triple on RHEA:51124 in rhea.rdf. GO term GO:0106032 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

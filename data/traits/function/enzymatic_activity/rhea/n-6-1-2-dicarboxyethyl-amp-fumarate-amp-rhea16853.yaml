@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.3.2.2
     mapping_source: rhea2ec
@@ -32,4 +32,109 @@ definitions:
       Catalyses the reaction: N(6)-(1,2-dicarboxyethyl)-AMP = fumarate + AMP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(6)-(1,2-dicarboxyethyl)-AMP = fumarate + AMP
+  description: Substrate-to-product chemistry of RHEA:16853, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:16854 (rh:substrates → 16853_L, rh:products → 16853_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N(6)-(1,2-dicarboxyethyl)-AMP = fumarate + AMP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:16853
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N(6)-(1,2-dicarboxyethyl)-AMP = fumarate + AMP'
+  - node_id: sub1
+    label: N(6)-(1,2-dicarboxyethyl)-AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57567
+    description: Formula C14H14N5O11P.
+  - node_id: prd1
+    label: fumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+    description: Formula C4H2O4.
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N6-(1,2-dicarboxyethyl)AMP AMP-lyase (fumarate-forming) activity
+    grounding: GO:0004018
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: adenylosuccinate lyase
+    grounding: EC:4.3.2.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(6)-(1,2-dicarboxyethyl)-AMP is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16854
+      snippet: N(6)-(1,2-dicarboxyethyl)-AMP => fumarate + AMP
+      notes: Rhea's left-to-right directional reaction RHEA:16854 declares side 16853_L as its substrates
+        (rh:substrates); the master reaction RHEA:16853 is undirected. This participant is CHEBI:57567
+        with coefficient 1. Rhea cites PMID:17531264, PMID:22812634, PMID:15182182, PMID:16973378 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: fumarate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16854
+      snippet: N(6)-(1,2-dicarboxyethyl)-AMP => fumarate + AMP
+      notes: Rhea's left-to-right directional reaction RHEA:16854 declares side 16853_R as its products
+        (rh:products); the master reaction RHEA:16853 is undirected. This participant is CHEBI:29806 with
+        coefficient 1. Rhea cites PMID:17531264, PMID:22812634, PMID:15182182, PMID:16973378 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16854
+      snippet: N(6)-(1,2-dicarboxyethyl)-AMP => fumarate + AMP
+      notes: Rhea's left-to-right directional reaction RHEA:16854 declares side 16853_R as its products
+        (rh:products); the master reaction RHEA:16853 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:17531264, PMID:22812634, PMID:15182182, PMID:16973378 for
+        this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:16853
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004018"/>
+      notes: The rdfs:seeAlso triple on RHEA:16853 in rhea.rdf. GO term GO:0004018 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.3.2.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:16853
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.2.2"/>
+      notes: The rh:ec triple on RHEA:16853 in rhea.rdf. EC 4.3.2.2 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

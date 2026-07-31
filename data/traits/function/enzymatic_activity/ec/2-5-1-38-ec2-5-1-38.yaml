@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 mapped_xrefs:
@@ -32,4 +32,263 @@ definitions:
       Catalyses: nocardicin G + S-adenosyl-L-methionine = isonocardicin C + S-methyl- 5'-thioadenosine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isonocardicin synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.38. Rhea assigns 2 curated
+    reactions to EC 2.5.1.38. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "nocardicin G + S-adenosyl-L-methionine = isonocardicin C
+    + S-methyl- 5''-thioadenosine + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: isonocardicin synthase
+    grounding: EC:2.5.1.38
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of nocardicin E + S-adenosyl-L-methionine = isonocardicin A + S-methyl-5'-thioa…
+    grounding: RHEA:19845
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: nocardicin E + S-adenosyl-L-methionine = isonocardicin A + S-methyl-5''-thioadenosine
+      + H(+)'
+  - node_id: rxn1_sub1
+    label: nocardicin E
+    node_type: CHEMICAL
+    grounding: CHEBI:77885
+    description: Formula C19H15N3O7.
+  - node_id: rxn1_sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: rxn1_prd1
+    label: isonocardicin A
+    node_type: CHEMICAL
+    grounding: CHEBI:77633
+    description: Formula C23H22N4O9.
+  - node_id: rxn1_prd2
+    label: S-methyl-5'-thioadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17509
+    description: Formula C11H15N5O3S.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of nocardicin G + S-adenosyl-L-methionine = isonocardicin C + S-methyl-5'-thioa…
+    grounding: RHEA:49708
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: nocardicin G + S-adenosyl-L-methionine = isonocardicin C + S-methyl-5''-thioadenosine
+      + H(+)'
+  - node_id: rxn2_sub1
+    label: nocardicin G
+    node_type: CHEMICAL
+    grounding: CHEBI:131919
+    description: Formula C19H19N3O6.
+  - node_id: rxn2_sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: rxn2_prd1
+    label: isonocardicin C
+    node_type: CHEMICAL
+    grounding: CHEBI:131920
+    description: Formula C23H26N4O8.
+  - node_id: rxn2_prd2
+    label: S-methyl-5'-thioadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17509
+    description: Formula C11H15N5O3S.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: isonocardicin synthase activity
+    grounding: GO:0050007
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9RAH6
+    node_type: PROTEIN
+    label: NAT_NOCUT
+    grounding: UniProtKB:Q9RAH6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:19845 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.38; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:19845
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.38"/>
+      notes: The rh:ec triple on RHEA:19845 in rhea.rdf assigns that reaction to EC 2.5.1.38.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: nocardicin E is a substrate consumed by RHEA:19845 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19846
+      snippet: nocardicin E + S-adenosyl-L-methionine => isonocardicin A + S-methyl-5'-thioadenosine +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19846 declares side 19845_L as its substrates
+        (rh:substrates); the master reaction RHEA:19845 is undirected. This participant is CHEBI:77885
+        with coefficient 1. Rhea cites PMID:15629944, PMID:9804844 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:19845 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19846
+      snippet: nocardicin E + S-adenosyl-L-methionine => isonocardicin A + S-methyl-5'-thioadenosine +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19846 declares side 19845_L as its substrates
+        (rh:substrates); the master reaction RHEA:19845 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:15629944, PMID:9804844 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: isonocardicin A is a product released by RHEA:19845 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19846
+      snippet: nocardicin E + S-adenosyl-L-methionine => isonocardicin A + S-methyl-5'-thioadenosine +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19846 declares side 19845_R as its products
+        (rh:products); the master reaction RHEA:19845 is undirected. This participant is CHEBI:77633 with
+        coefficient 1. Rhea cites PMID:15629944, PMID:9804844 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: S-methyl-5'-thioadenosine is a product released by RHEA:19845 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19846
+      snippet: nocardicin E + S-adenosyl-L-methionine => isonocardicin A + S-methyl-5'-thioadenosine +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19846 declares side 19845_R as its products
+        (rh:products); the master reaction RHEA:19845 is undirected. This participant is CHEBI:17509 with
+        coefficient 1. Rhea cites PMID:15629944, PMID:9804844 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:19845 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19846
+      snippet: nocardicin E + S-adenosyl-L-methionine => isonocardicin A + S-methyl-5'-thioadenosine +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19846 declares side 19845_R as its products
+        (rh:products); the master reaction RHEA:19845 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15629944, PMID:9804844 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:49708 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.38; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:49708
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.38"/>
+      notes: The rh:ec triple on RHEA:49708 in rhea.rdf assigns that reaction to EC 2.5.1.38.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: nocardicin G is a substrate consumed by RHEA:49708 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49709
+      snippet: nocardicin G + S-adenosyl-L-methionine => isonocardicin C + S-methyl-5'-thioadenosine +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49709 declares side 49708_L as its substrates
+        (rh:substrates); the master reaction RHEA:49708 is undirected. This participant is CHEBI:131919
+        with coefficient 1. Rhea cites PMID:15629944, PMID:9804844 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:49708 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49709
+      snippet: nocardicin G + S-adenosyl-L-methionine => isonocardicin C + S-methyl-5'-thioadenosine +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49709 declares side 49708_L as its substrates
+        (rh:substrates); the master reaction RHEA:49708 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:15629944, PMID:9804844 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: isonocardicin C is a product released by RHEA:49708 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49709
+      snippet: nocardicin G + S-adenosyl-L-methionine => isonocardicin C + S-methyl-5'-thioadenosine +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49709 declares side 49708_R as its products
+        (rh:products); the master reaction RHEA:49708 is undirected. This participant is CHEBI:131920
+        with coefficient 1. Rhea cites PMID:15629944, PMID:9804844 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: S-methyl-5'-thioadenosine is a product released by RHEA:49708 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49709
+      snippet: nocardicin G + S-adenosyl-L-methionine => isonocardicin C + S-methyl-5'-thioadenosine +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49709 declares side 49708_R as its products
+        (rh:products); the master reaction RHEA:49708 is undirected. This participant is CHEBI:17509 with
+        coefficient 1. Rhea cites PMID:15629944, PMID:9804844 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:49708 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49709
+      snippet: nocardicin G + S-adenosyl-L-methionine => isonocardicin C + S-methyl-5'-thioadenosine +
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49709 declares side 49708_R as its products
+        (rh:products); the master reaction RHEA:49708 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15629944, PMID:9804844 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.38
+      snippet: EC:2.5.1.38 > GO:isonocardicin synthase activity ; GO:0050007
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050007 is itself a record
+        in this KB.
+  - subject: prot_Q9RAH6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NAT_NOCUT is an exemplar enzyme with EC 2.5.1.38 activity.
+    evidence:
+    - reference: EC:2.5.1.38
+      snippet: DR   Q9RAH6, NAT_NOCUT  ;
+      notes: ExPASy ENZYME entry EC 2.5.1.38 cross-references UniProtKB:Q9RAH6 (NAT_NOCUT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:52980
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: N-hexacosanoyl-(4R)-hydroxysphinganine + H2O = hexacosanoate + (4R)-hydroxysphinganine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-hexacosanoyl-(4R)-hydroxysphinganine + H2O = hexacosanoate + (4R)-hydroxysphinganine
+  description: Substrate-to-product chemistry of RHEA:33835, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33836 (rh:substrates → 33835_L, rh:products → 33835_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-hexacosanoyl-(4R)-hydroxysphinganine + H2O = hexacosanoate + (4R)-hydroxys…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33835
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-hexacosanoyl-(4R)-hydroxysphinganine + H2O = hexacosanoate + (4R)-hydroxysphinganine'
+  - node_id: sub1
+    label: N-hexacosanoyl-(4R)-hydroxysphinganine
+    node_type: CHEMICAL
+    grounding: CHEBI:52980
+    description: Formula C44H89NO4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: hexacosanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:31013
+    description: Formula C26H51O2.
+  - node_id: prd2
+    label: (4R)-hydroxysphinganine
+    node_type: CHEMICAL
+    grounding: CHEBI:64124
+    description: Formula C18H40NO3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-hexacosanoyl-(4R)-hydroxysphinganine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33836
+      snippet: N-hexacosanoyl-(4R)-hydroxysphinganine + H2O => hexacosanoate + (4R)-hydroxysphinganine
+      notes: Rhea's left-to-right directional reaction RHEA:33836 declares side 33835_L as its substrates
+        (rh:substrates); the master reaction RHEA:33835 is undirected. This participant is CHEBI:52980
+        with coefficient 1. Rhea cites PMID:10702247 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33836
+      snippet: N-hexacosanoyl-(4R)-hydroxysphinganine + H2O => hexacosanoate + (4R)-hydroxysphinganine
+      notes: Rhea's left-to-right directional reaction RHEA:33836 declares side 33835_L as its substrates
+        (rh:substrates); the master reaction RHEA:33835 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10702247 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hexacosanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33836
+      snippet: N-hexacosanoyl-(4R)-hydroxysphinganine + H2O => hexacosanoate + (4R)-hydroxysphinganine
+      notes: Rhea's left-to-right directional reaction RHEA:33836 declares side 33835_R as its products
+        (rh:products); the master reaction RHEA:33835 is undirected. This participant is CHEBI:31013 with
+        coefficient 1. Rhea cites PMID:10702247 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (4R)-hydroxysphinganine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33836
+      snippet: N-hexacosanoyl-(4R)-hydroxysphinganine + H2O => hexacosanoate + (4R)-hydroxysphinganine
+      notes: Rhea's left-to-right directional reaction RHEA:33836 declares side 33835_R as its products
+        (rh:products); the master reaction RHEA:33835 is undirected. This participant is CHEBI:64124 with
+        coefficient 1. Rhea cites PMID:10702247 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -45,4 +45,132 @@ definitions:
       Catalyses: 2-dehydro-3-deoxy-D-glucarate = 2-hydroxy-3-oxopropanoate + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-dehydro-3-deoxyglucarate aldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.20. EC 4.1.2.20 maps to exactly
+    one curated Rhea reaction (RHEA:10268), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-dehydro-3-deoxy-D-glucarate
+    = 2-hydroxy-3-oxopropanoate + pyruvate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-dehydro-3-deoxyglucarate aldolase
+    grounding: EC:4.1.2.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-dehydro-3-deoxy-D-glucarate
+    node_type: CHEMICAL
+    grounding: CHEBI:58098
+    description: Formula C6H6O7.
+  - node_id: prd1
+    label: 2-hydroxy-3-oxopropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57978
+    description: Formula C3H3O4.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-dehydro-3-deoxyglucarate aldolase activity
+    grounding: GO:0008672
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A8AQ14
+    node_type: PROTEIN
+    label: GARL_CITK8
+    grounding: UniProtKB:A8AQ14
+  - node_id: prot_A7ZS18
+    node_type: PROTEIN
+    label: GARL_ECO24
+    grounding: UniProtKB:A7ZS18
+  - node_id: prot_B7UJ26
+    node_type: PROTEIN
+    label: GARL_ECO27
+    grounding: UniProtKB:B7UJ26
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-dehydro-3-deoxy-D-glucarate is a substrate consumed by RHEA:10268 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10269
+      snippet: 2-dehydro-3-deoxy-D-glucarate => 2-hydroxy-3-oxopropanoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:10269 declares side 10268_L as its substrates
+        (rh:substrates); the master reaction RHEA:10268 is undirected. This participant is CHEBI:58098
+        with coefficient 1. Rhea cites PMID:9772162 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-hydroxy-3-oxopropanoate is a product released by RHEA:10268 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10269
+      snippet: 2-dehydro-3-deoxy-D-glucarate => 2-hydroxy-3-oxopropanoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:10269 declares side 10268_R as its products
+        (rh:products); the master reaction RHEA:10268 is undirected. This participant is CHEBI:57978 with
+        coefficient 1. Rhea cites PMID:9772162 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:10268 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10269
+      snippet: 2-dehydro-3-deoxy-D-glucarate => 2-hydroxy-3-oxopropanoate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:10269 declares side 10268_R as its products
+        (rh:products); the master reaction RHEA:10268 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:9772162 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.2.20
+      snippet: EC:4.1.2.20 > GO:2-dehydro-3-deoxyglucarate aldolase activity ; GO:0008672
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008672 is itself a record
+        in this KB.
+  - subject: prot_A8AQ14
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GARL_CITK8 is an exemplar enzyme with EC 4.1.2.20 activity.
+    evidence:
+    - reference: EC:4.1.2.20
+      snippet: DR   A8AQ14, GARL_CITK8 ;  A7ZS18, GARL_ECO24 ;  B7UJ26, GARL_ECO27 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.20 cross-references UniProtKB:A8AQ14 (GARL_CITK8) as a protein
+        with this activity.
+  - subject: prot_A7ZS18
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GARL_ECO24 is an exemplar enzyme with EC 4.1.2.20 activity.
+    evidence:
+    - reference: EC:4.1.2.20
+      snippet: DR   A8AQ14, GARL_CITK8 ;  A7ZS18, GARL_ECO24 ;  B7UJ26, GARL_ECO27 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.20 cross-references UniProtKB:A7ZS18 (GARL_ECO24) as a protein
+        with this activity.
+  - subject: prot_B7UJ26
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GARL_ECO27 is an exemplar enzyme with EC 4.1.2.20 activity.
+    evidence:
+    - reference: EC:4.1.2.20
+      snippet: DR   A8AQ14, GARL_CITK8 ;  A7ZS18, GARL_ECO24 ;  B7UJ26, GARL_ECO27 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.20 cross-references UniProtKB:B7UJ26 (GARL_ECO27) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

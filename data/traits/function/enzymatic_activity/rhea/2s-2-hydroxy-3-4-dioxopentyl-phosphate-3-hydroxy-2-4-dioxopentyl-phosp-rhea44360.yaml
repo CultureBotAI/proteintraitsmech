@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.1.32
     mapping_source: rhea2ec
@@ -26,4 +26,151 @@ definitions:
       Catalyses the reaction: (2S)-2-hydroxy-3,4-dioxopentyl phosphate = 3-hydroxy-2,4-dioxopentyl phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2S)-2-hydroxy-3,4-dioxopentyl phosphate = 3-hydroxy-2,4-dioxopentyl phosphate
+  description: Substrate-to-product chemistry of RHEA:44360, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:44361 (rh:substrates → 44360_L, rh:products → 44360_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2S)-2-hydroxy-3,4-dioxopentyl phosphate = 3-hydroxy-2,4-dioxopentyl phospha…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:44360
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2S)-2-hydroxy-3,4-dioxopentyl phosphate = 3-hydroxy-2,4-dioxopentyl phosphate'
+  - node_id: sub1
+    label: (2S)-2-hydroxy-3,4-dioxopentyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:71677
+    description: Formula C5H7O7P.
+  - node_id: prd1
+    label: 3-hydroxy-2,4-dioxopentyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:84359
+    description: Formula C5H7O7P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (4S)-4-hydroxy-5-phosphonooxypentane-2,3-dione isomerase activity
+    grounding: GO:0002952
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (4S)-4-hydroxy-5-phosphooxypentane-2,3-dione isomerase
+    grounding: EC:5.3.1.32
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P64462
+    node_type: PROTEIN
+    label: LSRG_ECO57
+    grounding: UniProtKB:P64462
+  - node_id: prot_B1XEA6
+    node_type: PROTEIN
+    label: LSRG_ECODH
+    grounding: UniProtKB:B1XEA6
+  - node_id: prot_A8A071
+    node_type: PROTEIN
+    label: LSRG_ECOHS
+    grounding: UniProtKB:A8A071
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S)-2-hydroxy-3,4-dioxopentyl phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:44361
+      snippet: (2S)-2-hydroxy-3,4-dioxopentyl phosphate => 3-hydroxy-2,4-dioxopentyl phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:44361 declares side 44360_L as its substrates
+        (rh:substrates); the master reaction RHEA:44360 is undirected. This participant is CHEBI:71677
+        with coefficient 1. Rhea cites PMID:17274596, PMID:21454635 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-hydroxy-2,4-dioxopentyl phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:44361
+      snippet: (2S)-2-hydroxy-3,4-dioxopentyl phosphate => 3-hydroxy-2,4-dioxopentyl phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:44361 declares side 44360_R as its products
+        (rh:products); the master reaction RHEA:44360 is undirected. This participant is CHEBI:84359 with
+        coefficient 1. Rhea cites PMID:17274596, PMID:21454635 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:44360
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0002952"/>
+      notes: The rdfs:seeAlso triple on RHEA:44360 in rhea.rdf. GO term GO:0002952 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.1.32; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:44360
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.32"/>
+      notes: The rh:ec triple on RHEA:44360 in rhea.rdf. EC 5.3.1.32 is itself a record in this KB.
+  - subject: prot_P64462
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LSRG_ECO57 is an exemplar enzyme carrying EC 5.3.1.32, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.32
+      snippet: DR   P64462, LSRG_ECO57 ;  B1XEA6, LSRG_ECODH ;  A8A071, LSRG_ECOHS ;
+      notes: ExPASy ENZYME entry EC 5.3.1.32 cross-references UniProtKB:P64462 (LSRG_ECO57) as a protein
+        with this activity.
+    - reference: RHEA:44360
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.32"/>
+      notes: Rhea assigns RHEA:44360 to EC 5.3.1.32, and EC 5.3.1.32 maps to exactly one Rhea master reaction
+        (RHEA:44360), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B1XEA6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LSRG_ECODH is an exemplar enzyme carrying EC 5.3.1.32, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.32
+      snippet: DR   P64462, LSRG_ECO57 ;  B1XEA6, LSRG_ECODH ;  A8A071, LSRG_ECOHS ;
+      notes: ExPASy ENZYME entry EC 5.3.1.32 cross-references UniProtKB:B1XEA6 (LSRG_ECODH) as a protein
+        with this activity.
+    - reference: RHEA:44360
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.32"/>
+      notes: Rhea assigns RHEA:44360 to EC 5.3.1.32, and EC 5.3.1.32 maps to exactly one Rhea master reaction
+        (RHEA:44360), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A8A071
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LSRG_ECOHS is an exemplar enzyme carrying EC 5.3.1.32, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.32
+      snippet: DR   P64462, LSRG_ECO57 ;  B1XEA6, LSRG_ECODH ;  A8A071, LSRG_ECOHS ;
+      notes: ExPASy ENZYME entry EC 5.3.1.32 cross-references UniProtKB:A8A071 (LSRG_ECOHS) as a protein
+        with this activity.
+    - reference: RHEA:44360
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.32"/>
+      notes: Rhea assigns RHEA:44360 to EC 5.3.1.32, and EC 5.3.1.32 maps to exactly one Rhea master reaction
+        (RHEA:44360), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

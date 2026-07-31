@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.225
     mapping_source: rhea2ec
@@ -32,4 +32,218 @@ definitions:
       Catalyses the reaction: L-cysteinyl-[protein] + hexadecanoyl-CoA = S-hexadecanoyl-L-cysteinyl-[protein] + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-cysteinyl-[protein] + hexadecanoyl-CoA = S-hexadecanoyl-L-cysteinyl-[protein]
+    + CoA
+  description: Substrate-to-product chemistry of RHEA:36683, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:36684 (rh:substrates → 36683_L, rh:products → 36683_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-cysteinyl-[protein] + hexadecanoyl-CoA = S-hexadecanoyl-L-cysteinyl-[prote…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:36683
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-cysteinyl-[protein] + hexadecanoyl-CoA = S-hexadecanoyl-L-cysteinyl-[protein] +
+      CoA'
+  - node_id: sub1
+    label: L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10131
+    description: Rhea compound GENERIC:10131.
+  - node_id: sub1_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10131 (L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: hexadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57379
+    description: Formula C37H62N7O17P3S.
+  - node_id: prd1
+    label: S-hexadecanoyl-L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11032
+    description: Rhea compound GENERIC:11032.
+  - node_id: prd1_rp1
+    label: S-hexadecanoyl-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11032 (S-hexadecanoyl-L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74151
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-cysteine S-palmitoyltransferase activity
+    grounding: GO:0019706
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: protein S-acyltransferase
+    grounding: EC:2.3.1.225
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q4X251
+    node_type: PROTEIN
+    label: AKR1_ASPFU
+    grounding: UniProtKB:Q4X251
+  - node_id: prot_Q7Z8U2
+    node_type: PROTEIN
+    label: AKR1_ASPOR
+    grounding: UniProtKB:Q7Z8U2
+  - node_id: prot_Q5AL27
+    node_type: PROTEIN
+    label: AKR1_CANAL
+    grounding: UniProtKB:Q5AL27
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cysteinyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36684
+      snippet: L-cysteinyl-[protein] + hexadecanoyl-CoA => S-hexadecanoyl-L-cysteinyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:36684 declares side 36683_L as its substrates
+        (rh:substrates); the master reaction RHEA:36683 is undirected. This participant is GENERIC:10131
+        with coefficient 1. Rhea cites PMID:22968831, PMID:22247542, PMID:12681491 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:36683
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10131 (L-cysteinyl-[protein]) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hexadecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36684
+      snippet: L-cysteinyl-[protein] + hexadecanoyl-CoA => S-hexadecanoyl-L-cysteinyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:36684 declares side 36683_L as its substrates
+        (rh:substrates); the master reaction RHEA:36683 is undirected. This participant is CHEBI:57379
+        with coefficient 1. Rhea cites PMID:22968831, PMID:22247542, PMID:12681491 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-hexadecanoyl-L-cysteinyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36684
+      snippet: L-cysteinyl-[protein] + hexadecanoyl-CoA => S-hexadecanoyl-L-cysteinyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:36684 declares side 36683_R as its products
+        (rh:products); the master reaction RHEA:36683 is undirected. This participant is GENERIC:11032
+        with coefficient 1. Rhea cites PMID:22968831, PMID:22247542, PMID:12681491 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-hexadecanoyl-L-cysteine residue is the reactive part of S-hexadecanoyl-L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:36683
+      snippet: S-hexadecanoyl-L-cysteine residue
+      notes: Rhea compound GENERIC:11032 (S-hexadecanoyl-L-cysteinyl-[protein]) declares rh:reactivePart
+        = S-hexadecanoyl-L-cysteine residue (CHEBI:74151), formula C19H35NO2S.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36684
+      snippet: L-cysteinyl-[protein] + hexadecanoyl-CoA => S-hexadecanoyl-L-cysteinyl-[protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:36684 declares side 36683_R as its products
+        (rh:products); the master reaction RHEA:36683 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:22968831, PMID:22247542, PMID:12681491 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:36683
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0019706"/>
+      notes: The rdfs:seeAlso triple on RHEA:36683 in rhea.rdf. GO term GO:0019706 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.225; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:36683
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.225"/>
+      notes: The rh:ec triple on RHEA:36683 in rhea.rdf. EC 2.3.1.225 is itself a record in this KB.
+  - subject: prot_Q4X251
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AKR1_ASPFU is an exemplar enzyme carrying EC 2.3.1.225, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.225
+      snippet: DR   Q4X251, AKR1_ASPFU ;  Q7Z8U2, AKR1_ASPOR ;  Q5AL27, AKR1_CANAL ;
+      notes: ExPASy ENZYME entry EC 2.3.1.225 cross-references UniProtKB:Q4X251 (AKR1_ASPFU) as a protein
+        with this activity.
+    - reference: RHEA:36683
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.225"/>
+      notes: Rhea assigns RHEA:36683 to EC 2.3.1.225, and EC 2.3.1.225 maps to exactly one Rhea master
+        reaction (RHEA:36683), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q7Z8U2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AKR1_ASPOR is an exemplar enzyme carrying EC 2.3.1.225, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.225
+      snippet: DR   Q4X251, AKR1_ASPFU ;  Q7Z8U2, AKR1_ASPOR ;  Q5AL27, AKR1_CANAL ;
+      notes: ExPASy ENZYME entry EC 2.3.1.225 cross-references UniProtKB:Q7Z8U2 (AKR1_ASPOR) as a protein
+        with this activity.
+    - reference: RHEA:36683
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.225"/>
+      notes: Rhea assigns RHEA:36683 to EC 2.3.1.225, and EC 2.3.1.225 maps to exactly one Rhea master
+        reaction (RHEA:36683), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q5AL27
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AKR1_CANAL is an exemplar enzyme carrying EC 2.3.1.225, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.225
+      snippet: DR   Q4X251, AKR1_ASPFU ;  Q7Z8U2, AKR1_ASPOR ;  Q5AL27, AKR1_CANAL ;
+      notes: ExPASy ENZYME entry EC 2.3.1.225 cross-references UniProtKB:Q5AL27 (AKR1_CANAL) as a protein
+        with this activity.
+    - reference: RHEA:36683
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.225"/>
+      notes: Rhea assigns RHEA:36683 to EC 2.3.1.225, and EC 2.3.1.225 maps to exactly one Rhea master
+        reaction (RHEA:36683), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

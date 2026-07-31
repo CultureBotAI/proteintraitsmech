@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.19.-
 mapped_xrefs:
@@ -36,4 +36,81 @@ definitions:
       Catalyses: Cleavage of a beta-linked Asp residue from the N-terminus of a polypeptide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-aspartyl-peptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.19.5. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleavage
+    of a beta-linked Asp residue from the N-terminus of a polypeptide".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-aspartyl-peptidase
+    grounding: EC:3.4.19.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-aspartyl-peptidase activity
+    grounding: GO:0008798
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q32LE5
+    node_type: PROTEIN
+    label: ASGL1_BOVIN
+    grounding: UniProtKB:Q32LE5
+  - node_id: prot_Q5BKW9
+    node_type: PROTEIN
+    label: ASGL1_DANRE
+    grounding: UniProtKB:Q5BKW9
+  - node_id: prot_Q9VXT7
+    node_type: PROTEIN
+    label: ASGL1_DROME
+    grounding: UniProtKB:Q9VXT7
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.19.5
+      snippet: EC:3.4.19.5 > GO:beta-aspartyl-peptidase activity ; GO:0008798
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008798 is itself a record
+        in this KB.
+  - subject: prot_Q32LE5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASGL1_BOVIN is an exemplar enzyme with EC 3.4.19.5 activity.
+    evidence:
+    - reference: EC:3.4.19.5
+      snippet: DR   Q32LE5, ASGL1_BOVIN;  Q5BKW9, ASGL1_DANRE;  Q9VXT7, ASGL1_DROME;
+      notes: ExPASy ENZYME entry EC 3.4.19.5 cross-references UniProtKB:Q32LE5 (ASGL1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q5BKW9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASGL1_DANRE is an exemplar enzyme with EC 3.4.19.5 activity.
+    evidence:
+    - reference: EC:3.4.19.5
+      snippet: DR   Q32LE5, ASGL1_BOVIN;  Q5BKW9, ASGL1_DANRE;  Q9VXT7, ASGL1_DROME;
+      notes: ExPASy ENZYME entry EC 3.4.19.5 cross-references UniProtKB:Q5BKW9 (ASGL1_DANRE) as a protein
+        with this activity.
+  - subject: prot_Q9VXT7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASGL1_DROME is an exemplar enzyme with EC 3.4.19.5 activity.
+    evidence:
+    - reference: EC:3.4.19.5
+      snippet: DR   Q32LE5, ASGL1_BOVIN;  Q5BKW9, ASGL1_DANRE;  Q9VXT7, ASGL1_DROME;
+      notes: ExPASy ENZYME entry EC 3.4.19.5 cross-references UniProtKB:Q9VXT7 (ASGL1_DROME) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

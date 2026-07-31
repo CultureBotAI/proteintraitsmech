@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:188927
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,76 @@ definitions:
       Catalyses the reaction: o-quinone methide + ethanol = hydroxyclavatol ethyl ether
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of o-quinone methide + ethanol = hydroxyclavatol ethyl ether
+  description: Substrate-to-product chemistry of RHEA:70091, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:70092 (rh:substrates → 70091_L, rh:products → 70091_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of o-quinone methide + ethanol = hydroxyclavatol ethyl ether
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:70091
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: o-quinone methide + ethanol = hydroxyclavatol ethyl ether'
+  - node_id: sub1
+    label: o-quinone methide
+    node_type: CHEMICAL
+    grounding: CHEBI:188927
+    description: Formula C10H10O3.
+  - node_id: sub2
+    label: ethanol
+    node_type: CHEMICAL
+    grounding: CHEBI:16236
+    description: Formula C2H6O.
+  - node_id: prd1
+    label: hydroxyclavatol ethyl ether
+    node_type: CHEMICAL
+    grounding: CHEBI:188929
+    description: Formula C12H16O4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: o-quinone methide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70092
+      snippet: o-quinone methide + ethanol => hydroxyclavatol ethyl ether
+      notes: Rhea's left-to-right directional reaction RHEA:70092 declares side 70091_L as its substrates
+        (rh:substrates); the master reaction RHEA:70091 is undirected. This participant is CHEBI:188927
+        with coefficient 1. Rhea cites PMID:30811183 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ethanol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70092
+      snippet: o-quinone methide + ethanol => hydroxyclavatol ethyl ether
+      notes: Rhea's left-to-right directional reaction RHEA:70092 declares side 70091_L as its substrates
+        (rh:substrates); the master reaction RHEA:70091 is undirected. This participant is CHEBI:16236
+        with coefficient 1. Rhea cites PMID:30811183 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hydroxyclavatol ethyl ether is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70092
+      snippet: o-quinone methide + ethanol => hydroxyclavatol ethyl ether
+      notes: Rhea's left-to-right directional reaction RHEA:70092 declares side 70091_R as its products
+        (rh:products); the master reaction RHEA:70091 is undirected. This participant is CHEBI:188929
+        with coefficient 1. Rhea cites PMID:30811183 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

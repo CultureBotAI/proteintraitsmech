@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 mapped_xrefs:
@@ -30,4 +30,119 @@ definitions:
       Catalyses: D-xylono-1,4-lactone + H2O = D-xylonate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of xylono-1,4-lactonase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.68. EC 3.1.1.68 maps to exactly
+    one curated Rhea reaction (RHEA:18341), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-xylono-1,4-lactone
+    + H2O = D-xylonate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: xylono-1,4-lactonase
+    grounding: EC:3.1.1.68
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-xylono-1,4-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:16392
+    description: Formula C5H8O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-xylonate
+    node_type: CHEMICAL
+    grounding: CHEBI:17746
+    description: Formula C5H9O6.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: xylono-1,4-lactonase activity
+    grounding: GO:0050402
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_D4GP31
+    node_type: PROTEIN
+    label: XACC_HALVD
+    grounding: UniProtKB:D4GP31
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-xylono-1,4-lactone is a substrate consumed by RHEA:18341 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18342
+      snippet: D-xylono-1,4-lactone + H2O => D-xylonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18342 declares side 18341_L as its substrates
+        (rh:substrates); the master reaction RHEA:18341 is undirected. This participant is CHEBI:16392
+        with coefficient 1. Rhea cites PMID:28854683 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:18341 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18342
+      snippet: D-xylono-1,4-lactone + H2O => D-xylonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18342 declares side 18341_L as its substrates
+        (rh:substrates); the master reaction RHEA:18341 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:28854683 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-xylonate is a product released by RHEA:18341 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18342
+      snippet: D-xylono-1,4-lactone + H2O => D-xylonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18342 declares side 18341_R as its products
+        (rh:products); the master reaction RHEA:18341 is undirected. This participant is CHEBI:17746 with
+        coefficient 1. Rhea cites PMID:28854683 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:18341 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18342
+      snippet: D-xylono-1,4-lactone + H2O => D-xylonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18342 declares side 18341_R as its products
+        (rh:products); the master reaction RHEA:18341 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:28854683 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.68
+      snippet: EC:3.1.1.68 > GO:xylono-1,4-lactonase activity ; GO:0050402
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050402 is itself a record
+        in this KB.
+  - subject: prot_D4GP31
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XACC_HALVD is an exemplar enzyme with EC 3.1.1.68 activity.
+    evidence:
+    - reference: EC:3.1.1.68
+      snippet: DR   D4GP31, XACC_HALVD ;
+      notes: ExPASy ENZYME entry EC 3.1.1.68 cross-references UniProtKB:D4GP31 (XACC_HALVD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

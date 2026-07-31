@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 mapped_xrefs:
@@ -30,4 +30,122 @@ definitions:
       Catalyses: biuret + H2O = urea-1-carboxylate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of biuret amidohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.84. EC 3.5.1.84 maps to exactly
+    one curated Rhea reaction (RHEA:17525), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "biuret + H2O
+    = urea-1-carboxylate + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: biuret amidohydrolase
+    grounding: EC:3.5.1.84
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: biuret
+    node_type: CHEMICAL
+    grounding: CHEBI:18138
+    description: Formula C2H5N3O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: urea-1-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:15832
+    description: Formula C2H3N2O3.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: biuret amidohydrolase activity
+    grounding: GO:0018750
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q1M7F4
+    node_type: PROTEIN
+    label: BIUH_RHIJ3
+    grounding: UniProtKB:Q1M7F4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: biuret is a substrate consumed by RHEA:17525 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17526
+      snippet: biuret + H2O => urea-1-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17526 declares side 17525_L as its substrates
+        (rh:substrates); the master reaction RHEA:17525 is undirected. This participant is CHEBI:18138
+        with coefficient 1. Rhea cites PMID:16085834, PMID:29425231, PMID:21897878, PMID:11544232 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:17525 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17526
+      snippet: biuret + H2O => urea-1-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17526 declares side 17525_L as its substrates
+        (rh:substrates); the master reaction RHEA:17525 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16085834, PMID:29425231, PMID:21897878, PMID:11544232 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: urea-1-carboxylate is a product released by RHEA:17525 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17526
+      snippet: biuret + H2O => urea-1-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17526 declares side 17525_R as its products
+        (rh:products); the master reaction RHEA:17525 is undirected. This participant is CHEBI:15832 with
+        coefficient 1. Rhea cites PMID:16085834, PMID:29425231, PMID:21897878, PMID:11544232 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:17525 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17526
+      snippet: biuret + H2O => urea-1-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17526 declares side 17525_R as its products
+        (rh:products); the master reaction RHEA:17525 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:16085834, PMID:29425231, PMID:21897878, PMID:11544232 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.84
+      snippet: EC:3.5.1.84 > GO:biuret amidohydrolase activity ; GO:0018750
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018750 is itself a record
+        in this KB.
+  - subject: prot_Q1M7F4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BIUH_RHIJ3 is an exemplar enzyme with EC 3.5.1.84 activity.
+    evidence:
+    - reference: EC:3.5.1.84
+      snippet: DR   Q1M7F4, BIUH_RHIJ3 ;
+      notes: ExPASy ENZYME entry EC 3.5.1.84 cross-references UniProtKB:Q1M7F4 (BIUH_RHIJ3) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -41,4 +41,148 @@ definitions:
       Catalyses: sn-glycerol 3-phosphate + an acyl-CoA = a 1-acyl-sn-glycero-3-phosphate + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glycerol-3-phosphate 1-O-acyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.15. EC 2.3.1.15 maps to exactly
+    one curated Rhea reaction (RHEA:15325), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "sn-glycerol 3-phosphate
+    + an acyl-CoA = a 1-acyl-sn-glycero-3-phosphate + CoA". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glycerol-3-phosphate 1-O-acyltransferase
+    grounding: EC:2.3.1.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: sn-glycerol 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+    description: Formula C3H7O6P.
+  - node_id: sub2
+    label: an acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:58342
+    description: Formula C22H31N7O17P3SR.
+  - node_id: prd1
+    label: a 1-acyl-sn-glycero-3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57970
+    description: Formula C4H6O7PR.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glycerol-3-phosphate O-acyltransferase activity
+    grounding: GO:0004366
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9SHJ5
+    node_type: PROTEIN
+    label: GPAT1_ARATH
+    grounding: UniProtKB:Q9SHJ5
+  - node_id: prot_Q5GJ77
+    node_type: PROTEIN
+    label: GPAT1_BOVIN
+    grounding: UniProtKB:Q5GJ77
+  - node_id: prot_Q9FEQ0
+    node_type: PROTEIN
+    label: GPAT1_CUCMO
+    grounding: UniProtKB:Q9FEQ0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sn-glycerol 3-phosphate is a substrate consumed by RHEA:15325 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15326
+      snippet: sn-glycerol 3-phosphate + an acyl-CoA => a 1-acyl-sn-glycero-3-phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15326 declares side 15325_L as its substrates
+        (rh:substrates); the master reaction RHEA:15325 is undirected. This participant is CHEBI:57597
+        with coefficient 1. Rhea cites PMID:22905194, PMID:11544256 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: an acyl-CoA is a substrate consumed by RHEA:15325 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15326
+      snippet: sn-glycerol 3-phosphate + an acyl-CoA => a 1-acyl-sn-glycero-3-phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15326 declares side 15325_L as its substrates
+        (rh:substrates); the master reaction RHEA:15325 is undirected. This participant is CHEBI:58342
+        with coefficient 1. Rhea cites PMID:22905194, PMID:11544256 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 1-acyl-sn-glycero-3-phosphate is a product released by RHEA:15325 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15326
+      snippet: sn-glycerol 3-phosphate + an acyl-CoA => a 1-acyl-sn-glycero-3-phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15326 declares side 15325_R as its products
+        (rh:products); the master reaction RHEA:15325 is undirected. This participant is CHEBI:57970 with
+        coefficient 1. Rhea cites PMID:22905194, PMID:11544256 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:15325 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15326
+      snippet: sn-glycerol 3-phosphate + an acyl-CoA => a 1-acyl-sn-glycero-3-phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15326 declares side 15325_R as its products
+        (rh:products); the master reaction RHEA:15325 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:22905194, PMID:11544256 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.15
+      snippet: EC:2.3.1.15 > GO:glycerol-3-phosphate O-acyltransferase activity ; GO:0004366
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004366 is itself a record
+        in this KB.
+  - subject: prot_Q9SHJ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPAT1_ARATH is an exemplar enzyme with EC 2.3.1.15 activity.
+    evidence:
+    - reference: EC:2.3.1.15
+      snippet: DR   Q9SHJ5, GPAT1_ARATH;  Q5GJ77, GPAT1_BOVIN;  Q9FEQ0, GPAT1_CUCMO;
+      notes: ExPASy ENZYME entry EC 2.3.1.15 cross-references UniProtKB:Q9SHJ5 (GPAT1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q5GJ77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPAT1_BOVIN is an exemplar enzyme with EC 2.3.1.15 activity.
+    evidence:
+    - reference: EC:2.3.1.15
+      snippet: DR   Q9SHJ5, GPAT1_ARATH;  Q5GJ77, GPAT1_BOVIN;  Q9FEQ0, GPAT1_CUCMO;
+      notes: ExPASy ENZYME entry EC 2.3.1.15 cross-references UniProtKB:Q5GJ77 (GPAT1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q9FEQ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPAT1_CUCMO is an exemplar enzyme with EC 2.3.1.15 activity.
+    evidence:
+    - reference: EC:2.3.1.15
+      snippet: DR   Q9SHJ5, GPAT1_ARATH;  Q5GJ77, GPAT1_BOVIN;  Q9FEQ0, GPAT1_CUCMO;
+      notes: ExPASy ENZYME entry EC 2.3.1.15 cross-references UniProtKB:Q9FEQ0 (GPAT1_CUCMO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

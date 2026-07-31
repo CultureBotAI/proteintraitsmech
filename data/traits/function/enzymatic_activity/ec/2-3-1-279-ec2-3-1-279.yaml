@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -32,4 +32,125 @@ definitions:
       Catalyses: a long-chain fatty acyl-CoA + alpha,alpha-trehalose = a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of long-chain-acyl-CoA--trehalose acyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.279. EC 2.3.1.279 maps to
+    exactly one curated Rhea reaction (RHEA:58044), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a long-chain
+    fatty acyl-CoA + alpha,alpha-trehalose = a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose + CoA".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: long-chain-acyl-CoA--trehalose acyltransferase
+    grounding: EC:2.3.1.279
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a long-chain fatty acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:83139
+    description: Formula C22H31N7O17P3SR.
+  - node_id: sub2
+    label: alpha,alpha-trehalose
+    node_type: CHEMICAL
+    grounding: CHEBI:16551
+    description: Formula C12H22O11.
+  - node_id: prd1
+    label: a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose
+    node_type: CHEMICAL
+    grounding: CHEBI:142477
+    description: Formula C13H21O12R.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_P9WIK4
+    node_type: PROTEIN
+    label: PAPA3_MYCTO
+    grounding: UniProtKB:P9WIK4
+  - node_id: prot_P9WIK5
+    node_type: PROTEIN
+    label: PAPA3_MYCTU
+    grounding: UniProtKB:P9WIK5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a long-chain fatty acyl-CoA is a substrate consumed by RHEA:58044 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58045
+      snippet: a long-chain fatty acyl-CoA + alpha,alpha-trehalose => a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58045 declares side 58044_L as its substrates
+        (rh:substrates); the master reaction RHEA:58044 is undirected. This participant is CHEBI:83139
+        with coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: alpha,alpha-trehalose is a substrate consumed by RHEA:58044 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58045
+      snippet: a long-chain fatty acyl-CoA + alpha,alpha-trehalose => a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58045 declares side 58044_L as its substrates
+        (rh:substrates); the master reaction RHEA:58044 is undirected. This participant is CHEBI:16551
+        with coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose is a product released by RHEA:58044
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58045
+      snippet: a long-chain fatty acyl-CoA + alpha,alpha-trehalose => a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58045 declares side 58044_R as its products
+        (rh:products); the master reaction RHEA:58044 is undirected. This participant is CHEBI:142477
+        with coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:58044 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58045
+      snippet: a long-chain fatty acyl-CoA + alpha,alpha-trehalose => a 2-O-(long-chain fatty acyl)-alpha,alpha-trehalose
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:58045 declares side 58044_R as its products
+        (rh:products); the master reaction RHEA:58044 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:19276083 for this reaction.
+  - subject: prot_P9WIK4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAPA3_MYCTO is an exemplar enzyme with EC 2.3.1.279 activity.
+    evidence:
+    - reference: EC:2.3.1.279
+      snippet: DR   P9WIK4, PAPA3_MYCTO;  P9WIK5, PAPA3_MYCTU;
+      notes: ExPASy ENZYME entry EC 2.3.1.279 cross-references UniProtKB:P9WIK4 (PAPA3_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WIK5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAPA3_MYCTU is an exemplar enzyme with EC 2.3.1.279 activity.
+    evidence:
+    - reference: EC:2.3.1.279
+      snippet: DR   P9WIK4, PAPA3_MYCTO;  P9WIK5, PAPA3_MYCTU;
+      notes: ExPASy ENZYME entry EC 2.3.1.279 cross-references UniProtKB:P9WIK5 (PAPA3_MYCTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

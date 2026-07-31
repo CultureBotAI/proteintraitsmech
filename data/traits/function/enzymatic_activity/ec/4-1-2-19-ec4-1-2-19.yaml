@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -45,4 +45,132 @@ definitions:
       Catalyses: L-rhamnulose 1-phosphate = (S)-lactaldehyde + dihydroxyacetone phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of rhamnulose-1-phosphate aldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.19. EC 4.1.2.19 maps to exactly
+    one curated Rhea reaction (RHEA:19689), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-rhamnulose
+    1-phosphate = (S)-lactaldehyde + dihydroxyacetone phosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: rhamnulose-1-phosphate aldolase
+    grounding: EC:4.1.2.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-rhamnulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58313
+    description: Formula C6H11O8P.
+  - node_id: prd1
+    label: (S)-lactaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:18041
+    description: Formula C3H6O2.
+  - node_id: prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: rhamnulose-1-phosphate aldolase activity
+    grounding: GO:0008994
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8A1A0
+    node_type: PROTEIN
+    label: RHAD_BACTN
+    grounding: UniProtKB:Q8A1A0
+  - node_id: prot_A8AL31
+    node_type: PROTEIN
+    label: RHAD_CITK8
+    grounding: UniProtKB:A8AL31
+  - node_id: prot_A7ML62
+    node_type: PROTEIN
+    label: RHAD_CROS8
+    grounding: UniProtKB:A7ML62
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-rhamnulose 1-phosphate is a substrate consumed by RHEA:19689 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19690
+      snippet: L-rhamnulose 1-phosphate => (S)-lactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19690 declares side 19689_L as its substrates
+        (rh:substrates); the master reaction RHEA:19689 is undirected. This participant is CHEBI:58313
+        with coefficient 1. Rhea cites PMID:18085797, PMID:12962479 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-lactaldehyde is a product released by RHEA:19689 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19690
+      snippet: L-rhamnulose 1-phosphate => (S)-lactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19690 declares side 19689_R as its products
+        (rh:products); the master reaction RHEA:19689 is undirected. This participant is CHEBI:18041 with
+        coefficient 1. Rhea cites PMID:18085797, PMID:12962479 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dihydroxyacetone phosphate is a product released by RHEA:19689 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19690
+      snippet: L-rhamnulose 1-phosphate => (S)-lactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19690 declares side 19689_R as its products
+        (rh:products); the master reaction RHEA:19689 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:18085797, PMID:12962479 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.2.19
+      snippet: EC:4.1.2.19 > GO:rhamnulose-1-phosphate aldolase activity ; GO:0008994
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008994 is itself a record
+        in this KB.
+  - subject: prot_Q8A1A0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHAD_BACTN is an exemplar enzyme with EC 4.1.2.19 activity.
+    evidence:
+    - reference: EC:4.1.2.19
+      snippet: DR   Q8A1A0, RHAD_BACTN ;  A8AL31, RHAD_CITK8 ;  A7ML62, RHAD_CROS8 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.19 cross-references UniProtKB:Q8A1A0 (RHAD_BACTN) as a protein
+        with this activity.
+  - subject: prot_A8AL31
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHAD_CITK8 is an exemplar enzyme with EC 4.1.2.19 activity.
+    evidence:
+    - reference: EC:4.1.2.19
+      snippet: DR   Q8A1A0, RHAD_BACTN ;  A8AL31, RHAD_CITK8 ;  A7ML62, RHAD_CROS8 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.19 cross-references UniProtKB:A8AL31 (RHAD_CITK8) as a protein
+        with this activity.
+  - subject: prot_A7ML62
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHAD_CROS8 is an exemplar enzyme with EC 4.1.2.19 activity.
+    evidence:
+    - reference: EC:4.1.2.19
+      snippet: DR   Q8A1A0, RHAD_BACTN ;  A8AL31, RHAD_CITK8 ;  A7ML62, RHAD_CROS8 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.19 cross-references UniProtKB:A7ML62 (RHAD_CROS8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

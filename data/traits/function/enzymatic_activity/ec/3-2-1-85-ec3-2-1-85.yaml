@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -45,4 +45,247 @@ definitions:
       Catalyses: a 6-phospho-beta-D-galactoside + H2O = D-galactose 6-phosphate + an alcohol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-phospho-beta-galactosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.85. Rhea assigns 2 curated
+    reactions to EC 3.2.1.85. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "a 6-phospho-beta-D-galactoside + H2O = D-galactose 6-phosphate
+    + an alcohol". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 6-phospho-beta-galactosidase
+    grounding: EC:3.2.1.85
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a 6-phospho-beta-D-galactoside + H2O = D-galactose 6-phosphate + an alcohol
+    grounding: RHEA:24568
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a 6-phospho-beta-D-galactoside + H2O = D-galactose 6-phosphate + an alcohol'
+  - node_id: rxn1_sub1
+    label: a 6-phospho-beta-D-galactoside
+    node_type: CHEMICAL
+    grounding: CHEBI:58534
+    description: Formula C6H10O9PR.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: D-galactose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:91004
+    description: Formula C6H11O9P.
+  - node_id: rxn1_prd2
+    label: an alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+    description: Formula HOR.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of lactose 6-phosphate + H2O = D-galactose 6-phosphate + beta-D-glucose
+    grounding: RHEA:42404
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: lactose 6-phosphate + H2O = D-galactose 6-phosphate + beta-D-glucose'
+  - node_id: rxn2_sub1
+    label: lactose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:79080
+    description: Formula C12H21O14P.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: D-galactose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:91004
+    description: Formula C6H11O9P.
+  - node_id: rxn2_prd2
+    label: beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:15903
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 6-phospho-beta-galactosidase activity
+    grounding: GO:0033920
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q97SA9
+    node_type: PROTEIN
+    label: LACG1_STRPN
+    grounding: UniProtKB:Q97SA9
+  - node_id: prot_Q8DQZ1
+    node_type: PROTEIN
+    label: LACG1_STRR6
+    grounding: UniProtKB:Q8DQZ1
+  - node_id: prot_Q97QL9
+    node_type: PROTEIN
+    label: LACG2_STRPN
+    grounding: UniProtKB:Q97QL9
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:24568 is one of the 2 curated reactions Rhea assigns to EC 3.2.1.85; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24568
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.85"/>
+      notes: The rh:ec triple on RHEA:24568 in rhea.rdf assigns that reaction to EC 3.2.1.85.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a 6-phospho-beta-D-galactoside is a substrate consumed by RHEA:24568 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24569
+      snippet: a 6-phospho-beta-D-galactoside + H2O => D-galactose 6-phosphate + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:24569 declares side 24568_L as its substrates
+        (rh:substrates); the master reaction RHEA:24568 is undirected. This participant is CHEBI:58534
+        with coefficient 1. Rhea cites PMID:12351228, PMID:5447434 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:24568 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24569
+      snippet: a 6-phospho-beta-D-galactoside + H2O => D-galactose 6-phosphate + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:24569 declares side 24568_L as its substrates
+        (rh:substrates); the master reaction RHEA:24568 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12351228, PMID:5447434 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: D-galactose 6-phosphate is a product released by RHEA:24568 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24569
+      snippet: a 6-phospho-beta-D-galactoside + H2O => D-galactose 6-phosphate + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:24569 declares side 24568_R as its products
+        (rh:products); the master reaction RHEA:24568 is undirected. This participant is CHEBI:91004 with
+        coefficient 1. Rhea cites PMID:12351228, PMID:5447434 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: an alcohol is a product released by RHEA:24568 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24569
+      snippet: a 6-phospho-beta-D-galactoside + H2O => D-galactose 6-phosphate + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:24569 declares side 24568_R as its products
+        (rh:products); the master reaction RHEA:24568 is undirected. This participant is CHEBI:30879 with
+        coefficient 1. Rhea cites PMID:12351228, PMID:5447434 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:42404 is one of the 2 curated reactions Rhea assigns to EC 3.2.1.85; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:42404
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.85"/>
+      notes: The rh:ec triple on RHEA:42404 in rhea.rdf assigns that reaction to EC 3.2.1.85.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: lactose 6-phosphate is a substrate consumed by RHEA:42404 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42405
+      snippet: lactose 6-phosphate + H2O => D-galactose 6-phosphate + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:42405 declares side 42404_L as its substrates
+        (rh:substrates); the master reaction RHEA:42404 is undirected. This participant is CHEBI:79080
+        with coefficient 1. Rhea cites PMID:5447434 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:42404 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42405
+      snippet: lactose 6-phosphate + H2O => D-galactose 6-phosphate + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:42405 declares side 42404_L as its substrates
+        (rh:substrates); the master reaction RHEA:42404 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:5447434 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: D-galactose 6-phosphate is a product released by RHEA:42404 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42405
+      snippet: lactose 6-phosphate + H2O => D-galactose 6-phosphate + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:42405 declares side 42404_R as its products
+        (rh:products); the master reaction RHEA:42404 is undirected. This participant is CHEBI:91004 with
+        coefficient 1. Rhea cites PMID:5447434 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: beta-D-glucose is a product released by RHEA:42404 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42405
+      snippet: lactose 6-phosphate + H2O => D-galactose 6-phosphate + beta-D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:42405 declares side 42404_R as its products
+        (rh:products); the master reaction RHEA:42404 is undirected. This participant is CHEBI:15903 with
+        coefficient 1. Rhea cites PMID:5447434 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.85
+      snippet: EC:3.2.1.85 > GO:6-phospho-beta-galactosidase activity ; GO:0033920
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033920 is itself a record
+        in this KB.
+  - subject: prot_Q97SA9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LACG1_STRPN is an exemplar enzyme with EC 3.2.1.85 activity.
+    evidence:
+    - reference: EC:3.2.1.85
+      snippet: DR   Q97SA9, LACG1_STRPN;  Q8DQZ1, LACG1_STRR6;  Q97QL9, LACG2_STRPN;
+      notes: ExPASy ENZYME entry EC 3.2.1.85 cross-references UniProtKB:Q97SA9 (LACG1_STRPN) as a protein
+        with this activity.
+  - subject: prot_Q8DQZ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LACG1_STRR6 is an exemplar enzyme with EC 3.2.1.85 activity.
+    evidence:
+    - reference: EC:3.2.1.85
+      snippet: DR   Q97SA9, LACG1_STRPN;  Q8DQZ1, LACG1_STRR6;  Q97QL9, LACG2_STRPN;
+      notes: ExPASy ENZYME entry EC 3.2.1.85 cross-references UniProtKB:Q8DQZ1 (LACG1_STRR6) as a protein
+        with this activity.
+  - subject: prot_Q97QL9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LACG2_STRPN is an exemplar enzyme with EC 3.2.1.85 activity.
+    evidence:
+    - reference: EC:3.2.1.85
+      snippet: DR   Q97SA9, LACG1_STRPN;  Q8DQZ1, LACG1_STRR6;  Q97QL9, LACG2_STRPN;
+      notes: ExPASy ENZYME entry EC 3.2.1.85 cross-references UniProtKB:Q97QL9 (LACG2_STRPN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

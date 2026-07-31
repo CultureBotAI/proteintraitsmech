@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -37,4 +37,133 @@ definitions:
       Catalyses: (2E)-geranyl diphosphate + H2O = sabinene hydrate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sabinene-hydrate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.11. EC 4.2.3.11 maps to exactly
+    one curated Rhea reaction (RHEA:19565), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-geranyl
+    diphosphate + H2O = sabinene hydrate + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sabinene-hydrate synthase
+    grounding: EC:4.2.3.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: sabinene hydrate
+    node_type: CHEMICAL
+    grounding: CHEBI:16377
+    description: Formula C10H18O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sabinene-hydrate synthase activity
+    grounding: GO:0050469
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_L0HAM7
+    node_type: PROTEIN
+    label: SBHS6_THYVU
+    grounding: UniProtKB:L0HAM7
+  - node_id: prot_L0HB77
+    node_type: PROTEIN
+    label: SBHS7_THYVU
+    grounding: UniProtKB:L0HB77
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:19565 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19566
+      snippet: (2E)-geranyl diphosphate + H2O => sabinene hydrate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19566 declares side 19565_L as its substrates
+        (rh:substrates); the master reaction RHEA:19565 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:3401015, PMID:2916845 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:19565 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19566
+      snippet: (2E)-geranyl diphosphate + H2O => sabinene hydrate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19566 declares side 19565_L as its substrates
+        (rh:substrates); the master reaction RHEA:19565 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:3401015, PMID:2916845 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sabinene hydrate is a product released by RHEA:19565 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19566
+      snippet: (2E)-geranyl diphosphate + H2O => sabinene hydrate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19566 declares side 19565_R as its products
+        (rh:products); the master reaction RHEA:19565 is undirected. This participant is CHEBI:16377 with
+        coefficient 1. Rhea cites PMID:3401015, PMID:2916845 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:19565 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19566
+      snippet: (2E)-geranyl diphosphate + H2O => sabinene hydrate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19566 declares side 19565_R as its products
+        (rh:products); the master reaction RHEA:19565 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:3401015, PMID:2916845 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.11
+      snippet: EC:4.2.3.11 > GO:sabinene-hydrate synthase activity ; GO:0050469
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050469 is itself a record
+        in this KB.
+  - subject: prot_L0HAM7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SBHS6_THYVU is an exemplar enzyme with EC 4.2.3.11 activity.
+    evidence:
+    - reference: EC:4.2.3.11
+      snippet: DR   L0HAM7, SBHS6_THYVU;  L0HB77, SBHS7_THYVU;
+      notes: ExPASy ENZYME entry EC 4.2.3.11 cross-references UniProtKB:L0HAM7 (SBHS6_THYVU) as a protein
+        with this activity.
+  - subject: prot_L0HB77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SBHS7_THYVU is an exemplar enzyme with EC 4.2.3.11 activity.
+    evidence:
+    - reference: EC:4.2.3.11
+      snippet: DR   L0HAM7, SBHS6_THYVU;  L0HB77, SBHS7_THYVU;
+      notes: ExPASy ENZYME entry EC 4.2.3.11 cross-references UniProtKB:L0HB77 (SBHS7_THYVU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

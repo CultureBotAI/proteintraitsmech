@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -31,4 +31,53 @@ definitions:
       Catalyses: Endohydrolysis of (1->4)-beta-D-linkages between D-galactose 4-sulfate and 3,6-anhydro-D-galactose in kappa-carrageenans
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of kappa-carrageenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.83. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endohydrolysis
+    of (1->4)-beta-D-linkages between D-galactose 4-sulfate and 3,6-anhydro-D-galactose in kappa-carrageenans".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: kappa-carrageenase
+    grounding: EC:3.2.1.83
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: kappa-carrageenase activity
+    grounding: GO:0033918
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P43478
+    node_type: PROTEIN
+    label: CGKA_PSEVC
+    grounding: UniProtKB:P43478
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.83
+      snippet: EC:3.2.1.83 > GO:kappa-carrageenase activity ; GO:0033918
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033918 is itself a record
+        in this KB.
+  - subject: prot_P43478
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CGKA_PSEVC is an exemplar enzyme with EC 3.2.1.83 activity.
+    evidence:
+    - reference: EC:3.2.1.83
+      snippet: DR   P43478, CGKA_PSEVC ;
+      notes: ExPASy ENZYME entry EC 3.2.1.83 cross-references UniProtKB:P43478 (CGKA_PSEVC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -41,4 +41,204 @@ definitions:
       Catalyses: L-threonylcarbamoyladenylate + adenosine(37) in tRNA = N(6)-L- threonylcarbamoyladenosine(37) in tRNA + AMP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(6)-L-threonylcarbamoyladenine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.234. EC 2.3.1.234 maps to
+    exactly one curated Rhea reaction (RHEA:37059), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-threonylcarbamoyladenylate
+    + adenosine(37) in tRNA = N(6)-L- threonylcarbamoyladenosine(37) in tRNA + AMP + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N(6)-L-threonylcarbamoyladenine synthase
+    grounding: EC:2.3.1.234
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-threonylcarbamoyladenylate
+    node_type: CHEMICAL
+    grounding: CHEBI:73682
+    description: Formula C15H19N6O11P.
+  - node_id: sub2
+    label: adenosine(37) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10162
+    description: Rhea compound GENERIC:10162.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: AMP residue at position 37
+    description: The reacting group Rhea names inside the generic participant GENERIC:10162 (adenosine(37)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74411
+  - node_id: prd1
+    label: N(6)-L-threonylcarbamoyladenosine(37) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10163
+    description: Rhea compound GENERIC:10163.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(6)-L-threonylcarbamoyladenosine 5'-phosphate residue at position 37
+    description: The reacting group Rhea names inside the generic participant GENERIC:10163 (N(6)-L-threonylcarbamoyladenosine(37)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74418
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA N(6)-L-threonylcarbamoyladenine synthase activity
+    grounding: GO:0061711
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P36174
+    node_type: PROTEIN
+    label: KAE1B_HALMA
+    grounding: UniProtKB:P36174
+  - node_id: prot_Q9HNL6
+    node_type: PROTEIN
+    label: KAE1B_HALSA
+    grounding: UniProtKB:Q9HNL6
+  - node_id: prot_Q18KI0
+    node_type: PROTEIN
+    label: KAE1B_HALWD
+    grounding: UniProtKB:Q18KI0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-threonylcarbamoyladenylate is a substrate consumed by RHEA:37059 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:37060
+      snippet: L-threonylcarbamoyladenylate + adenosine(37) in tRNA => N(6)-L-threonylcarbamoyladenosine(37)
+        in tRNA + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37060 declares side 37059_L as its substrates
+        (rh:substrates); the master reaction RHEA:37059 is undirected. This participant is CHEBI:73682
+        with coefficient 1. Rhea cites PMID:23072323, PMID:23258706 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: adenosine(37) in tRNA is a substrate consumed by RHEA:37059 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:37060
+      snippet: L-threonylcarbamoyladenylate + adenosine(37) in tRNA => N(6)-L-threonylcarbamoyladenosine(37)
+        in tRNA + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37060 declares side 37059_L as its substrates
+        (rh:substrates); the master reaction RHEA:37059 is undirected. This participant is GENERIC:10162
+        with coefficient 1. Rhea cites PMID:23072323, PMID:23258706 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: AMP residue is the reactive part of adenosine(37) in tRNA.
+    evidence:
+    - reference: RHEA:37059
+      snippet: AMP residue
+      notes: Rhea compound GENERIC:10162 (adenosine(37) in tRNA) declares rh:reactivePart at position
+        37 = AMP residue (CHEBI:74411).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-L-threonylcarbamoyladenosine(37) in tRNA is a product released by RHEA:37059 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:37060
+      snippet: L-threonylcarbamoyladenylate + adenosine(37) in tRNA => N(6)-L-threonylcarbamoyladenosine(37)
+        in tRNA + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37060 declares side 37059_R as its products
+        (rh:products); the master reaction RHEA:37059 is undirected. This participant is GENERIC:10163
+        with coefficient 1. Rhea cites PMID:23072323, PMID:23258706 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-L-threonylcarbamoyladenosine 5'-phosphate residue is the reactive part of N(6)-L-threonylcarbamoyladenosine(37)
+      in tRNA.
+    evidence:
+    - reference: RHEA:37059
+      snippet: N(6)-L-threonylcarbamoyladenosine 5'-phosphate residue
+      notes: Rhea compound GENERIC:10163 (N(6)-L-threonylcarbamoyladenosine(37) in tRNA) declares rh:reactivePart
+        at position 37 = N(6)-L-threonylcarbamoyladenosine 5'-phosphate residue (CHEBI:74418).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:37059 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37060
+      snippet: L-threonylcarbamoyladenylate + adenosine(37) in tRNA => N(6)-L-threonylcarbamoyladenosine(37)
+        in tRNA + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37060 declares side 37059_R as its products
+        (rh:products); the master reaction RHEA:37059 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:23072323, PMID:23258706 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:37059 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37060
+      snippet: L-threonylcarbamoyladenylate + adenosine(37) in tRNA => N(6)-L-threonylcarbamoyladenosine(37)
+        in tRNA + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37060 declares side 37059_R as its products
+        (rh:products); the master reaction RHEA:37059 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:23072323, PMID:23258706 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.234
+      snippet: EC:2.3.1.234 > GO:tRNA N(6)-L-threonylcarbamoyladenine synthase activity ; GO:0061711
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0061711 is itself a record
+        in this KB.
+  - subject: prot_P36174
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KAE1B_HALMA is an exemplar enzyme with EC 2.3.1.234 activity.
+    evidence:
+    - reference: EC:2.3.1.234
+      snippet: DR   P36174, KAE1B_HALMA;  Q9HNL6, KAE1B_HALSA;  Q18KI0, KAE1B_HALWD;
+      notes: ExPASy ENZYME entry EC 2.3.1.234 cross-references UniProtKB:P36174 (KAE1B_HALMA) as a protein
+        with this activity.
+  - subject: prot_Q9HNL6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KAE1B_HALSA is an exemplar enzyme with EC 2.3.1.234 activity.
+    evidence:
+    - reference: EC:2.3.1.234
+      snippet: DR   P36174, KAE1B_HALMA;  Q9HNL6, KAE1B_HALSA;  Q18KI0, KAE1B_HALWD;
+      notes: ExPASy ENZYME entry EC 2.3.1.234 cross-references UniProtKB:Q9HNL6 (KAE1B_HALSA) as a protein
+        with this activity.
+  - subject: prot_Q18KI0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KAE1B_HALWD is an exemplar enzyme with EC 2.3.1.234 activity.
+    evidence:
+    - reference: EC:2.3.1.234
+      snippet: DR   P36174, KAE1B_HALMA;  Q9HNL6, KAE1B_HALSA;  Q18KI0, KAE1B_HALWD;
+      notes: ExPASy ENZYME entry EC 2.3.1.234 cross-references UniProtKB:Q18KI0 (KAE1B_HALWD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

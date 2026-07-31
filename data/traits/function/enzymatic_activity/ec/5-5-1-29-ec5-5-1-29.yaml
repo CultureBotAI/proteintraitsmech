@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 mapped_xrefs:
@@ -34,4 +34,102 @@ definitions:
       Catalyses: (2E,6E,10E)-geranylgeranyl diphosphate = (+)-kolavenyl diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (+)-kolavenyl diphosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.29. EC 5.5.1.29 maps to exactly
+    one curated Rhea reaction (RHEA:54676), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E,10E)-geranylgeranyl
+    diphosphate = (+)-kolavenyl diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-kolavenyl diphosphate synthase
+    grounding: EC:5.5.1.29
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: (+)-kolavenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:138311
+    description: Formula C20H33O7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: kolavenyl diphosphate synthase activity
+    grounding: GO:0106242
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A9AWD5
+    node_type: PROTEIN
+    label: KVDS_HERA2
+    grounding: UniProtKB:A9AWD5
+  - node_id: prot_A0A2K9RG07
+    node_type: PROTEIN
+    label: TPS5_VITAC
+    grounding: UniProtKB:A0A2K9RG07
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a substrate consumed by RHEA:54676 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54677
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => (+)-kolavenyl diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54677 declares side 54676_L as its substrates
+        (rh:substrates); the master reaction RHEA:54676 is undirected. This participant is CHEBI:58756
+        with coefficient 1. Rhea cites PMID:25694050, PMID:29315936 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-kolavenyl diphosphate is a product released by RHEA:54676 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54677
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => (+)-kolavenyl diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54677 declares side 54676_R as its products
+        (rh:products); the master reaction RHEA:54676 is undirected. This participant is CHEBI:138311
+        with coefficient 1. Rhea cites PMID:25694050, PMID:29315936 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.5.1.29
+      snippet: EC:5.5.1.29 > GO:kolavenyl diphosphate synthase activity ; GO:0106242
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0106242 is itself a record
+        in this KB.
+  - subject: prot_A9AWD5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KVDS_HERA2 is an exemplar enzyme with EC 5.5.1.29 activity.
+    evidence:
+    - reference: EC:5.5.1.29
+      snippet: DR   A9AWD5, KVDS_HERA2 ;  A0A2K9RG07, TPS5_VITAC ;
+      notes: ExPASy ENZYME entry EC 5.5.1.29 cross-references UniProtKB:A9AWD5 (KVDS_HERA2) as a protein
+        with this activity.
+  - subject: prot_A0A2K9RG07
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS5_VITAC is an exemplar enzyme with EC 5.5.1.29 activity.
+    evidence:
+    - reference: EC:5.5.1.29
+      snippet: DR   A9AWD5, KVDS_HERA2 ;  A0A2K9RG07, TPS5_VITAC ;
+      notes: ExPASy ENZYME entry EC 5.5.1.29 cross-references UniProtKB:A0A2K9RG07 (TPS5_VITAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

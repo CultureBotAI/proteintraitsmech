@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -47,4 +47,132 @@ definitions:
       Catalyses: a (3R)-3-hydroxyacyl-CoA = a (2E)-enoyl-CoA + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of enoyl-CoA hydratase 2
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.119. EC 4.2.1.119 maps to
+    exactly one curated Rhea reaction (RHEA:26526), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a (3R)-3-hydroxyacyl-CoA
+    = a (2E)-enoyl-CoA + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: enoyl-CoA hydratase 2
+    grounding: EC:4.2.1.119
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a (3R)-3-hydroxyacyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57319
+    description: Formula C24H35N7O18P3SR.
+  - node_id: prd1
+    label: a (2E)-enoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:58856
+    description: Formula C24H33N7O17P3SR.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (2E)-enoyl-CoA hydratase activity
+    grounding: GO:0080023
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9VXJ0
+    node_type: PROTEIN
+    label: DHB4_DROME
+    grounding: UniProtKB:Q9VXJ0
+  - node_id: prot_P51659
+    node_type: PROTEIN
+    label: DHB4_HUMAN
+    grounding: UniProtKB:P51659
+  - node_id: prot_P51660
+    node_type: PROTEIN
+    label: DHB4_MOUSE
+    grounding: UniProtKB:P51660
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a (3R)-3-hydroxyacyl-CoA is a substrate consumed by RHEA:26526 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26527
+      snippet: a (3R)-3-hydroxyacyl-CoA => a (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:26527 declares side 26526_L as its substrates
+        (rh:substrates); the master reaction RHEA:26526 is undirected. This participant is CHEBI:57319
+        with coefficient 1. Rhea cites PMID:16982622, PMID:9457873, PMID:1879422, PMID:15644212 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a (2E)-enoyl-CoA is a product released by RHEA:26526 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26527
+      snippet: a (3R)-3-hydroxyacyl-CoA => a (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:26527 declares side 26526_R as its products
+        (rh:products); the master reaction RHEA:26526 is undirected. This participant is CHEBI:58856 with
+        coefficient 1. Rhea cites PMID:16982622, PMID:9457873, PMID:1879422, PMID:15644212 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:26526 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26527
+      snippet: a (3R)-3-hydroxyacyl-CoA => a (2E)-enoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:26527 declares side 26526_R as its products
+        (rh:products); the master reaction RHEA:26526 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:16982622, PMID:9457873, PMID:1879422, PMID:15644212 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.119
+      snippet: EC:4.2.1.119 > GO:(2E)-enoyl-CoA hydratase activity ; GO:0080023
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0080023 is itself a record
+        in this KB.
+  - subject: prot_Q9VXJ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHB4_DROME is an exemplar enzyme with EC 4.2.1.119 activity.
+    evidence:
+    - reference: EC:4.2.1.119
+      snippet: DR   Q9VXJ0, DHB4_DROME ;  P51659, DHB4_HUMAN ;  P51660, DHB4_MOUSE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.119 cross-references UniProtKB:Q9VXJ0 (DHB4_DROME) as a protein
+        with this activity.
+  - subject: prot_P51659
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHB4_HUMAN is an exemplar enzyme with EC 4.2.1.119 activity.
+    evidence:
+    - reference: EC:4.2.1.119
+      snippet: DR   Q9VXJ0, DHB4_DROME ;  P51659, DHB4_HUMAN ;  P51660, DHB4_MOUSE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.119 cross-references UniProtKB:P51659 (DHB4_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P51660
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHB4_MOUSE is an exemplar enzyme with EC 4.2.1.119 activity.
+    evidence:
+    - reference: EC:4.2.1.119
+      snippet: DR   Q9VXJ0, DHB4_DROME ;  P51659, DHB4_HUMAN ;  P51660, DHB4_MOUSE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.119 cross-references UniProtKB:P51660 (DHB4_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

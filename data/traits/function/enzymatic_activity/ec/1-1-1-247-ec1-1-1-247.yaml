@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 mapped_xrefs:
@@ -40,4 +40,275 @@ definitions:
       Catalyses: codeine + NADP(+) = codeinone + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of codeinone reductase (NADPH)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.247. Rhea assigns 2 curated
+    reactions to EC 1.1.1.247. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "codeine + NADP(+) = codeinone + NADPH + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: codeinone reductase (NADPH)
+    grounding: EC:1.1.1.247
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of codeine + NADP(+) = codeinone + NADPH + H(+)
+    grounding: RHEA:19209
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: codeine + NADP(+) = codeinone + NADPH + H(+)'
+  - node_id: rxn1_sub1
+    label: codeine
+    node_type: CHEMICAL
+    grounding: CHEBI:57871
+    description: Formula C18H22NO3.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: codeinone
+    node_type: CHEMICAL
+    grounding: CHEBI:58473
+    description: Formula C18H20NO3.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of neopine + NADP(+) = neopinone + NADPH + H(+)
+    grounding: RHEA:75135
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: neopine + NADP(+) = neopinone + NADPH + H(+)'
+  - node_id: rxn2_sub1
+    label: neopine
+    node_type: CHEMICAL
+    grounding: CHEBI:194190
+    description: Formula C18H22NO3.
+  - node_id: rxn2_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn2_prd1
+    label: neopinone
+    node_type: CHEMICAL
+    grounding: CHEBI:59950
+    description: Formula C18H20NO3.
+  - node_id: rxn2_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: codeinone reductase (NADPH) activity
+    grounding: GO:0047036
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9SQ70
+    node_type: PROTEIN
+    label: COR11_PAPSO
+    grounding: UniProtKB:Q9SQ70
+  - node_id: prot_Q9SQ69
+    node_type: PROTEIN
+    label: COR12_PAPSO
+    grounding: UniProtKB:Q9SQ69
+  - node_id: prot_Q9SQ68
+    node_type: PROTEIN
+    label: COR13_PAPSO
+    grounding: UniProtKB:Q9SQ68
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:19209 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.247; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:19209
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.247"/>
+      notes: The rh:ec triple on RHEA:19209 in rhea.rdf assigns that reaction to EC 1.1.1.247.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: codeine is a substrate consumed by RHEA:19209 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19210
+      snippet: codeine + NADP(+) => codeinone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19210 declares side 19209_L as its substrates
+        (rh:substrates); the master reaction RHEA:19209 is undirected. This participant is CHEBI:57871
+        with coefficient 1. Rhea cites PMID:10417697, PMID:7588736, PMID:29779229 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:19209 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19210
+      snippet: codeine + NADP(+) => codeinone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19210 declares side 19209_L as its substrates
+        (rh:substrates); the master reaction RHEA:19209 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:10417697, PMID:7588736, PMID:29779229 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: codeinone is a product released by RHEA:19209 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19210
+      snippet: codeine + NADP(+) => codeinone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19210 declares side 19209_R as its products
+        (rh:products); the master reaction RHEA:19209 is undirected. This participant is CHEBI:58473 with
+        coefficient 1. Rhea cites PMID:10417697, PMID:7588736, PMID:29779229 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:19209 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19210
+      snippet: codeine + NADP(+) => codeinone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19210 declares side 19209_R as its products
+        (rh:products); the master reaction RHEA:19209 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:10417697, PMID:7588736, PMID:29779229 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:19209 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19210
+      snippet: codeine + NADP(+) => codeinone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19210 declares side 19209_R as its products
+        (rh:products); the master reaction RHEA:19209 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:10417697, PMID:7588736, PMID:29779229 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:75135 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.247; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:75135
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.247"/>
+      notes: The rh:ec triple on RHEA:75135 in rhea.rdf assigns that reaction to EC 1.1.1.247.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: neopine is a substrate consumed by RHEA:75135 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75136
+      snippet: neopine + NADP(+) => neopinone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75136 declares side 75135_L as its substrates
+        (rh:substrates); the master reaction RHEA:75135 is undirected. This participant is CHEBI:194190
+        with coefficient 1. Rhea cites PMID:29779229 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADP(+) is a substrate consumed by RHEA:75135 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75136
+      snippet: neopine + NADP(+) => neopinone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75136 declares side 75135_L as its substrates
+        (rh:substrates); the master reaction RHEA:75135 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:29779229 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: neopinone is a product released by RHEA:75135 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75136
+      snippet: neopine + NADP(+) => neopinone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75136 declares side 75135_R as its products
+        (rh:products); the master reaction RHEA:75135 is undirected. This participant is CHEBI:59950 with
+        coefficient 1. Rhea cites PMID:29779229 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADPH is a product released by RHEA:75135 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75136
+      snippet: neopine + NADP(+) => neopinone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75136 declares side 75135_R as its products
+        (rh:products); the master reaction RHEA:75135 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:29779229 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:75135 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75136
+      snippet: neopine + NADP(+) => neopinone + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:75136 declares side 75135_R as its products
+        (rh:products); the master reaction RHEA:75135 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29779229 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.1.247
+      snippet: EC:1.1.1.247 > GO:codeinone reductase (NADPH) activity ; GO:0047036
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047036 is itself a record
+        in this KB.
+  - subject: prot_Q9SQ70
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COR11_PAPSO is an exemplar enzyme with EC 1.1.1.247 activity.
+    evidence:
+    - reference: EC:1.1.1.247
+      snippet: DR   Q9SQ70, COR11_PAPSO;  Q9SQ69, COR12_PAPSO;  Q9SQ68, COR13_PAPSO;
+      notes: ExPASy ENZYME entry EC 1.1.1.247 cross-references UniProtKB:Q9SQ70 (COR11_PAPSO) as a protein
+        with this activity.
+  - subject: prot_Q9SQ69
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COR12_PAPSO is an exemplar enzyme with EC 1.1.1.247 activity.
+    evidence:
+    - reference: EC:1.1.1.247
+      snippet: DR   Q9SQ70, COR11_PAPSO;  Q9SQ69, COR12_PAPSO;  Q9SQ68, COR13_PAPSO;
+      notes: ExPASy ENZYME entry EC 1.1.1.247 cross-references UniProtKB:Q9SQ69 (COR12_PAPSO) as a protein
+        with this activity.
+  - subject: prot_Q9SQ68
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COR13_PAPSO is an exemplar enzyme with EC 1.1.1.247 activity.
+    evidence:
+    - reference: EC:1.1.1.247
+      snippet: DR   Q9SQ70, COR11_PAPSO;  Q9SQ69, COR12_PAPSO;  Q9SQ68, COR13_PAPSO;
+      notes: ExPASy ENZYME entry EC 1.1.1.247 cross-references UniProtKB:Q9SQ68 (COR13_PAPSO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

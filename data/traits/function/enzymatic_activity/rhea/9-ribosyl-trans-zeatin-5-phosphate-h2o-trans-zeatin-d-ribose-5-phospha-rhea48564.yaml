@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.2.n1
     mapping_source: rhea2ec
@@ -32,4 +32,107 @@ definitions:
       Catalyses the reaction: 9-ribosyl-trans-zeatin 5'-phosphate + H2O = trans-zeatin + D-ribose 5-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 9-ribosyl-trans-zeatin 5'-phosphate + H2O = trans-zeatin + D-ribose 5-phosphate
+  description: Substrate-to-product chemistry of RHEA:48564, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48565 (rh:substrates → 48564_L, rh:products → 48564_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 9-ribosyl-trans-zeatin 5'-phosphate + H2O = trans-zeatin + D-ribose 5-phosph…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48564
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 9-ribosyl-trans-zeatin 5''-phosphate + H2O = trans-zeatin + D-ribose 5-phosphate'
+  - node_id: sub1
+    label: 9-ribosyl-trans-zeatin 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:87947
+    description: Formula C15H20N5O8P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: trans-zeatin
+    node_type: CHEMICAL
+    grounding: CHEBI:16522
+    description: Formula C10H13N5O.
+  - node_id: prd2
+    label: D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:78346
+    description: Formula C5H9O8P.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: cytokinin riboside 5'-monophosphate phosphoribohydrolase
+    grounding: EC:3.2.2.n1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 9-ribosyl-trans-zeatin 5'-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:48565
+      snippet: 9-ribosyl-trans-zeatin 5'-phosphate + H2O => trans-zeatin + D-ribose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:48565 declares side 48564_L as its substrates
+        (rh:substrates); the master reaction RHEA:48564 is undirected. This participant is CHEBI:87947
+        with coefficient 1. Rhea cites PMID:25728768, PMID:19837870, PMID:17287810 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48565
+      snippet: 9-ribosyl-trans-zeatin 5'-phosphate + H2O => trans-zeatin + D-ribose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:48565 declares side 48564_L as its substrates
+        (rh:substrates); the master reaction RHEA:48564 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:25728768, PMID:19837870, PMID:17287810 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: trans-zeatin is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48565
+      snippet: 9-ribosyl-trans-zeatin 5'-phosphate + H2O => trans-zeatin + D-ribose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:48565 declares side 48564_R as its products
+        (rh:products); the master reaction RHEA:48564 is undirected. This participant is CHEBI:16522 with
+        coefficient 1. Rhea cites PMID:25728768, PMID:19837870, PMID:17287810 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-ribose 5-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48565
+      snippet: 9-ribosyl-trans-zeatin 5'-phosphate + H2O => trans-zeatin + D-ribose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:48565 declares side 48564_R as its products
+        (rh:products); the master reaction RHEA:48564 is undirected. This participant is CHEBI:78346 with
+        coefficient 1. Rhea cites PMID:25728768, PMID:19837870, PMID:17287810 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.2.n1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:48564
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.2.n1"/>
+      notes: The rh:ec triple on RHEA:48564 in rhea.rdf. EC 3.2.2.n1 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

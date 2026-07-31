@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.1.1.-
 synonyms:
@@ -43,4 +43,215 @@ definitions:
       Catalyses: tRNA(Pro) + L-proline + ATP = L-prolyl-tRNA(Pro) + AMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of proline--tRNA ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.1.1.15. EC 6.1.1.15 maps to exactly
+    one curated Rhea reaction (RHEA:14305), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "tRNA(Pro) + L-proline
+    + ATP = L-prolyl-tRNA(Pro) + AMP + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: proline--tRNA ligase
+    grounding: EC:6.1.1.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: tRNA(Pro)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9702
+    description: Rhea compound GENERIC:9702.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9702 (tRNA(Pro));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:60039
+    description: Formula C5H9NO2.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-prolyl-tRNA(Pro)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9700
+    description: Rhea compound GENERIC:9700.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 3'-(L-prolyl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9700 (L-prolyl-tRNA(Pro));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78532
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: proline-tRNA ligase activity
+    grounding: GO:0004827
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O60155
+    node_type: PROTEIN
+    label: PRS1_SCHPO
+    grounding: UniProtKB:O60155
+  - node_id: prot_Q7SIA2
+    node_type: PROTEIN
+    label: SYEP_CRIGR
+    grounding: UniProtKB:Q7SIA2
+  - node_id: prot_P28668
+    node_type: PROTEIN
+    label: SYEP_DROME
+    grounding: UniProtKB:P28668
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Pro) is a substrate consumed by RHEA:14305 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14306
+      snippet: tRNA(Pro) + L-proline + ATP => L-prolyl-tRNA(Pro) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14306 declares side 14305_L as its substrates
+        (rh:substrates); the master reaction RHEA:14305 is undirected. This participant is GENERIC:9702
+        with coefficient 1. Rhea cites PMID:14217147, PMID:17027500, PMID:16749091, PMID:10966471 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Pro).
+    evidence:
+    - reference: RHEA:14305
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9702 (tRNA(Pro)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-proline is a substrate consumed by RHEA:14305 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14306
+      snippet: tRNA(Pro) + L-proline + ATP => L-prolyl-tRNA(Pro) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14306 declares side 14305_L as its substrates
+        (rh:substrates); the master reaction RHEA:14305 is undirected. This participant is CHEBI:60039
+        with coefficient 1. Rhea cites PMID:14217147, PMID:17027500, PMID:16749091, PMID:10966471 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:14305 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14306
+      snippet: tRNA(Pro) + L-proline + ATP => L-prolyl-tRNA(Pro) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14306 declares side 14305_L as its substrates
+        (rh:substrates); the master reaction RHEA:14305 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:14217147, PMID:17027500, PMID:16749091, PMID:10966471 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-prolyl-tRNA(Pro) is a product released by RHEA:14305 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14306
+      snippet: tRNA(Pro) + L-proline + ATP => L-prolyl-tRNA(Pro) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14306 declares side 14305_R as its products
+        (rh:products); the master reaction RHEA:14305 is undirected. This participant is GENERIC:9700
+        with coefficient 1. Rhea cites PMID:14217147, PMID:17027500, PMID:16749091, PMID:10966471 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-prolyl)adenylyl group is the reactive part of L-prolyl-tRNA(Pro).
+    evidence:
+    - reference: RHEA:14305
+      snippet: 3'-(L-prolyl)adenylyl group
+      notes: Rhea compound GENERIC:9700 (L-prolyl-tRNA(Pro)) declares rh:reactivePart = 3'-(L-prolyl)adenylyl
+        group (CHEBI:78532).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:14305 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14306
+      snippet: tRNA(Pro) + L-proline + ATP => L-prolyl-tRNA(Pro) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14306 declares side 14305_R as its products
+        (rh:products); the master reaction RHEA:14305 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:14217147, PMID:17027500, PMID:16749091, PMID:10966471 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:14305 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14306
+      snippet: tRNA(Pro) + L-proline + ATP => L-prolyl-tRNA(Pro) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14306 declares side 14305_R as its products
+        (rh:products); the master reaction RHEA:14305 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:14217147, PMID:17027500, PMID:16749091, PMID:10966471 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.1.1.15
+      snippet: EC:6.1.1.15 > GO:proline-tRNA ligase activity ; GO:0004827
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004827 is itself a record
+        in this KB.
+  - subject: prot_O60155
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRS1_SCHPO is an exemplar enzyme with EC 6.1.1.15 activity.
+    evidence:
+    - reference: EC:6.1.1.15
+      snippet: DR   O60155, PRS1_SCHPO ;  Q7SIA2, SYEP_CRIGR ;  P28668, SYEP_DROME ;
+      notes: ExPASy ENZYME entry EC 6.1.1.15 cross-references UniProtKB:O60155 (PRS1_SCHPO) as a protein
+        with this activity.
+  - subject: prot_Q7SIA2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYEP_CRIGR is an exemplar enzyme with EC 6.1.1.15 activity.
+    evidence:
+    - reference: EC:6.1.1.15
+      snippet: DR   O60155, PRS1_SCHPO ;  Q7SIA2, SYEP_CRIGR ;  P28668, SYEP_DROME ;
+      notes: ExPASy ENZYME entry EC 6.1.1.15 cross-references UniProtKB:Q7SIA2 (SYEP_CRIGR) as a protein
+        with this activity.
+  - subject: prot_P28668
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYEP_DROME is an exemplar enzyme with EC 6.1.1.15 activity.
+    evidence:
+    - reference: EC:6.1.1.15
+      snippet: DR   O60155, PRS1_SCHPO ;  Q7SIA2, SYEP_CRIGR ;  P28668, SYEP_DROME ;
+      notes: ExPASy ENZYME entry EC 6.1.1.15 cross-references UniProtKB:P28668 (SYEP_DROME) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57907
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,99 @@ definitions:
       Catalyses the reaction: (2E,6E,10E,14E)-geranylfarnesyl diphosphate + 6 isopentenyl diphosphate = tetra-trans,hexa-cis-undecaprenyl diphosphate + 6 diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E,10E,14E)-geranylfarnesyl diphosphate + 6 isopentenyl diphosphate
+    = tetra-trans,h…
+  description: Substrate-to-product chemistry of RHEA:55384, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:55385 (rh:substrates → 55384_L, rh:products → 55384_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E,10E,14E)-geranylfarnesyl diphosphate + 6 isopentenyl diphosphate = te…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:55384
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E,10E,14E)-geranylfarnesyl diphosphate + 6 isopentenyl diphosphate = tetra-trans,hexa-cis-undecaprenyl
+      diphosphate + 6 diphosphate'
+  - node_id: sub1
+    label: (2E,6E,10E,14E)-geranylfarnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57907
+    description: Formula C25H41O7P2.
+  - node_id: sub2
+    label: isopentenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:128769
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: tetra-trans,hexa-cis-undecaprenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:140981
+    description: Formula C55H89O7P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E,14E)-geranylfarnesyl diphosphate is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55385
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate + 6 isopentenyl diphosphate => tetra-trans,hexa-cis-undecaprenyl
+        diphosphate + 6 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:55385 declares side 55384_L as its substrates
+        (rh:substrates); the master reaction RHEA:55384 is undirected. This participant is CHEBI:57907
+        with coefficient 1. Rhea cites PMID:23726912 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: isopentenyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      6).
+    evidence:
+    - reference: RHEA:55385
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate + 6 isopentenyl diphosphate => tetra-trans,hexa-cis-undecaprenyl
+        diphosphate + 6 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:55385 declares side 55384_L as its substrates
+        (rh:substrates); the master reaction RHEA:55384 is undirected. This participant is CHEBI:128769
+        with coefficient 6. Rhea cites PMID:23726912 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tetra-trans,hexa-cis-undecaprenyl diphosphate is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55385
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate + 6 isopentenyl diphosphate => tetra-trans,hexa-cis-undecaprenyl
+        diphosphate + 6 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:55385 declares side 55384_R as its products
+        (rh:products); the master reaction RHEA:55384 is undirected. This participant is CHEBI:140981
+        with coefficient 1. Rhea cites PMID:23726912 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 6).
+    evidence:
+    - reference: RHEA:55385
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate + 6 isopentenyl diphosphate => tetra-trans,hexa-cis-undecaprenyl
+        diphosphate + 6 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:55385 declares side 55384_R as its products
+        (rh:products); the master reaction RHEA:55384 is undirected. This participant is CHEBI:33019 with
+        coefficient 6. Rhea cites PMID:23726912 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

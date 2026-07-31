@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -30,4 +30,103 @@ definitions:
       Catalyses: CDP-D-glucose = CDP-4-dehydro-6-deoxy-D-glucose + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of CDP-glucose 4,6-dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.45. EC 4.2.1.45 maps to exactly
+    one curated Rhea reaction (RHEA:17153), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "CDP-D-glucose
+    = CDP-4-dehydro-6-deoxy-D-glucose + H2O". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: CDP-glucose 4,6-dehydratase
+    grounding: EC:4.2.1.45
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: CDP-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:58660
+    description: Formula C15H23N3O16P2.
+  - node_id: prd1
+    label: CDP-4-dehydro-6-deoxy-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:58166
+    description: Formula C15H21N3O15P2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: CDP-glucose 4,6-dehydratase activity
+    grounding: GO:0047733
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P26397
+    node_type: PROTEIN
+    label: RFBG_SALTY
+    grounding: UniProtKB:P26397
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: CDP-D-glucose is a substrate consumed by RHEA:17153 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17154
+      snippet: CDP-D-glucose => CDP-4-dehydro-6-deoxy-D-glucose + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:17154 declares side 17153_L as its substrates
+        (rh:substrates); the master reaction RHEA:17153 is undirected. This participant is CHEBI:58660
+        with coefficient 1. Rhea cites PMID:15023057, PMID:15805590 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: CDP-4-dehydro-6-deoxy-D-glucose is a product released by RHEA:17153 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17154
+      snippet: CDP-D-glucose => CDP-4-dehydro-6-deoxy-D-glucose + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:17154 declares side 17153_R as its products
+        (rh:products); the master reaction RHEA:17153 is undirected. This participant is CHEBI:58166 with
+        coefficient 1. Rhea cites PMID:15023057, PMID:15805590 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:17153 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17154
+      snippet: CDP-D-glucose => CDP-4-dehydro-6-deoxy-D-glucose + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:17154 declares side 17153_R as its products
+        (rh:products); the master reaction RHEA:17153 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:15023057, PMID:15805590 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.45
+      snippet: EC:4.2.1.45 > GO:CDP-glucose 4,6-dehydratase activity ; GO:0047733
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047733 is itself a record
+        in this KB.
+  - subject: prot_P26397
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RFBG_SALTY is an exemplar enzyme with EC 4.2.1.45 activity.
+    evidence:
+    - reference: EC:4.2.1.45
+      snippet: DR   P26397, RFBG_SALTY ;
+      notes: ExPASy ENZYME entry EC 4.2.1.45 cross-references UniProtKB:P26397 (RFBG_SALTY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

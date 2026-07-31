@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78520
     role: SUBSTRATE_OR_PRODUCT
@@ -41,4 +41,128 @@ definitions:
       Catalyses the reaction: L-glutamyl-tRNA(Gln) + ATP = 5-phosphooxy-L-glutamyl-tRNA(Gln) + ADP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-glutamyl-tRNA(Gln) + ATP = 5-phosphooxy-L-glutamyl-tRNA(Gln) + ADP
+  description: Substrate-to-product chemistry of RHEA:57908, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57909 (rh:substrates → 57908_L, rh:products → 57908_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-glutamyl-tRNA(Gln) + ATP = 5-phosphooxy-L-glutamyl-tRNA(Gln) + ADP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57908
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-glutamyl-tRNA(Gln) + ATP = 5-phosphooxy-L-glutamyl-tRNA(Gln) + ADP'
+  - node_id: sub1
+    label: L-glutamyl-tRNA(Gln)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9684
+    description: Rhea compound GENERIC:9684.
+  - node_id: sub1_rp1
+    label: 3'-(L-glutamate)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9684 (L-glutamyl-tRNA(Gln));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78520
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: 5-phosphooxy-L-glutamyl-tRNA(Gln)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15032
+    description: Rhea compound GENERIC:15032.
+  - node_id: prd1_rp1
+    label: 3'-(5-phosphooxy-L-glutamate)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15032 (5-phosphooxy-L-glutamyl-tRNA(Gln));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142449
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-glutamyl-tRNA(Gln) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57909
+      snippet: L-glutamyl-tRNA(Gln) + ATP => 5-phosphooxy-L-glutamyl-tRNA(Gln) + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:57909 declares side 57908_L as its substrates
+        (rh:substrates); the master reaction RHEA:57908 is undirected. This participant is GENERIC:9684
+        with coefficient 1. Rhea cites PMID:19417106, PMID:19520089, PMID:24692665, PMID:18667535 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-glutamate)adenylyl group is the reactive part of L-glutamyl-tRNA(Gln).
+    evidence:
+    - reference: RHEA:57908
+      snippet: 3'-(L-glutamate)adenylyl group
+      notes: Rhea compound GENERIC:9684 (L-glutamyl-tRNA(Gln)) declares rh:reactivePart = 3'-(L-glutamate)adenylyl
+        group (CHEBI:78520), formula C15H19N6O9P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57909
+      snippet: L-glutamyl-tRNA(Gln) + ATP => 5-phosphooxy-L-glutamyl-tRNA(Gln) + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:57909 declares side 57908_L as its substrates
+        (rh:substrates); the master reaction RHEA:57908 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:19417106, PMID:19520089, PMID:24692665, PMID:18667535 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-phosphooxy-L-glutamyl-tRNA(Gln) is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:57909
+      snippet: L-glutamyl-tRNA(Gln) + ATP => 5-phosphooxy-L-glutamyl-tRNA(Gln) + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:57909 declares side 57908_R as its products
+        (rh:products); the master reaction RHEA:57908 is undirected. This participant is GENERIC:15032
+        with coefficient 1. Rhea cites PMID:19417106, PMID:19520089, PMID:24692665, PMID:18667535 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(5-phosphooxy-L-glutamate)adenylyl group is the reactive part of 5-phosphooxy-L-glutamyl-tRNA(Gln).
+    evidence:
+    - reference: RHEA:57908
+      snippet: 3'-(5-phosphooxy-L-glutamate)adenylyl group
+      notes: Rhea compound GENERIC:15032 (5-phosphooxy-L-glutamyl-tRNA(Gln)) declares rh:reactivePart
+        = 3'-(5-phosphooxy-L-glutamate)adenylyl group (CHEBI:142449), formula C15H19N6O12P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57909
+      snippet: L-glutamyl-tRNA(Gln) + ATP => 5-phosphooxy-L-glutamyl-tRNA(Gln) + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:57909 declares side 57908_R as its products
+        (rh:products); the master reaction RHEA:57908 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:19417106, PMID:19520089, PMID:24692665, PMID:18667535 for
+        this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

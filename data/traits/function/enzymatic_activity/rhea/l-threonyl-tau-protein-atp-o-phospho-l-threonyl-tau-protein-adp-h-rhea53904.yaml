@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.11.26
     mapping_source: rhea2ec
@@ -40,4 +40,176 @@ definitions:
       Catalyses the reaction: L-threonyl-[tau protein] + ATP = O-phospho-L-threonyl-[tau protein] + ADP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-threonyl-[tau protein] + ATP = O-phospho-L-threonyl-[tau protein] + ADP
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:53904, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:53905 (rh:substrates → 53904_L, rh:products → 53904_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-threonyl-[tau protein] + ATP = O-phospho-L-threonyl-[tau protein] + ADP +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:53904
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-threonyl-[tau protein] + ATP = O-phospho-L-threonyl-[tau protein] + ADP + H(+)'
+  - node_id: sub1
+    label: L-threonyl-[tau protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13703
+    description: Rhea compound GENERIC:13703.
+  - node_id: sub1_rp1
+    label: L-threonine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13703 (L-threonyl-[tau
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:30013
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: O-phospho-L-threonyl-[tau protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13704
+    description: Rhea compound GENERIC:13704.
+  - node_id: prd1_rp1
+    label: O-phospho-L-threonine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13704 (O-phospho-L-threonyl-[tau
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:61977
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tau-protein kinase activity
+    grounding: GO:0050321
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: '[tau protein] kinase'
+    grounding: EC:2.7.11.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-threonyl-[tau protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:53905
+      snippet: L-threonyl-[tau protein] + ATP => O-phospho-L-threonyl-[tau protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53905 declares side 53904_L as its substrates
+        (rh:substrates); the master reaction RHEA:53904 is undirected. This participant is GENERIC:13703
+        with coefficient 1. Rhea cites PMID:9565682, PMID:2467901, PMID:21985311, PMID:21204788 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-threonine residue is the reactive part of L-threonyl-[tau protein].
+    evidence:
+    - reference: RHEA:53904
+      snippet: L-threonine residue
+      notes: Rhea compound GENERIC:13703 (L-threonyl-[tau protein]) declares rh:reactivePart = L-threonine
+        residue (CHEBI:30013), formula C4H7NO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53905
+      snippet: L-threonyl-[tau protein] + ATP => O-phospho-L-threonyl-[tau protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53905 declares side 53904_L as its substrates
+        (rh:substrates); the master reaction RHEA:53904 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:9565682, PMID:2467901, PMID:21985311, PMID:21204788 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-phospho-L-threonyl-[tau protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:53905
+      snippet: L-threonyl-[tau protein] + ATP => O-phospho-L-threonyl-[tau protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53905 declares side 53904_R as its products
+        (rh:products); the master reaction RHEA:53904 is undirected. This participant is GENERIC:13704
+        with coefficient 1. Rhea cites PMID:9565682, PMID:2467901, PMID:21985311, PMID:21204788 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-phospho-L-threonine residue is the reactive part of O-phospho-L-threonyl-[tau protein].
+    evidence:
+    - reference: RHEA:53904
+      snippet: O-phospho-L-threonine residue
+      notes: Rhea compound GENERIC:13704 (O-phospho-L-threonyl-[tau protein]) declares rh:reactivePart
+        = O-phospho-L-threonine residue (CHEBI:61977), formula C4H6NO5P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53905
+      snippet: L-threonyl-[tau protein] + ATP => O-phospho-L-threonyl-[tau protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53905 declares side 53904_R as its products
+        (rh:products); the master reaction RHEA:53904 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:9565682, PMID:2467901, PMID:21985311, PMID:21204788 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53905
+      snippet: L-threonyl-[tau protein] + ATP => O-phospho-L-threonyl-[tau protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:53905 declares side 53904_R as its products
+        (rh:products); the master reaction RHEA:53904 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9565682, PMID:2467901, PMID:21985311, PMID:21204788 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:53904
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050321"/>
+      notes: The rdfs:seeAlso triple on RHEA:53904 in rhea.rdf. GO term GO:0050321 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.11.26; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:53904
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.11.26"/>
+      notes: The rh:ec triple on RHEA:53904 in rhea.rdf. EC 2.7.11.26 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

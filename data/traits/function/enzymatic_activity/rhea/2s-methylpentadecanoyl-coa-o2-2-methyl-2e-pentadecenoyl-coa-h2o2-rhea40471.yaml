@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:77257
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,108 @@ definitions:
       Catalyses the reaction: (2S)-methylpentadecanoyl-CoA + O2 = 2-methyl-(2E)-pentadecenoyl-CoA + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2S)-methylpentadecanoyl-CoA + O2 = 2-methyl-(2E)-pentadecenoyl-CoA + H2O2
+  description: Substrate-to-product chemistry of RHEA:40471, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:40472 (rh:substrates → 40471_L, rh:products → 40471_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2S)-methylpentadecanoyl-CoA + O2 = 2-methyl-(2E)-pentadecenoyl-CoA + H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:40471
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2S)-methylpentadecanoyl-CoA + O2 = 2-methyl-(2E)-pentadecenoyl-CoA + H2O2'
+  - node_id: sub1
+    label: (2S)-methylpentadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:77257
+    description: Formula C37H62N7O17P3S.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 2-methyl-(2E)-pentadecenoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:77310
+    description: Formula C37H60N7O17P3S.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acyl-CoA oxidase activity
+    grounding: GO:0003997
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S)-methylpentadecanoyl-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:40472
+      snippet: (2S)-methylpentadecanoyl-CoA + O2 => 2-methyl-(2E)-pentadecenoyl-CoA + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:40472 declares side 40471_L as its substrates
+        (rh:substrates); the master reaction RHEA:40471 is undirected. This participant is CHEBI:77257
+        with coefficient 1. Rhea cites PMID:8654595 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40472
+      snippet: (2S)-methylpentadecanoyl-CoA + O2 => 2-methyl-(2E)-pentadecenoyl-CoA + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:40472 declares side 40471_L as its substrates
+        (rh:substrates); the master reaction RHEA:40471 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:8654595 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-methyl-(2E)-pentadecenoyl-CoA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:40472
+      snippet: (2S)-methylpentadecanoyl-CoA + O2 => 2-methyl-(2E)-pentadecenoyl-CoA + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:40472 declares side 40471_R as its products
+        (rh:products); the master reaction RHEA:40471 is undirected. This participant is CHEBI:77310 with
+        coefficient 1. Rhea cites PMID:8654595 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40472
+      snippet: (2S)-methylpentadecanoyl-CoA + O2 => 2-methyl-(2E)-pentadecenoyl-CoA + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:40472 declares side 40471_R as its products
+        (rh:products); the master reaction RHEA:40471 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:8654595 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:40471
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003997"/>
+      notes: The rdfs:seeAlso triple on RHEA:40471 in rhea.rdf. GO term GO:0003997 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

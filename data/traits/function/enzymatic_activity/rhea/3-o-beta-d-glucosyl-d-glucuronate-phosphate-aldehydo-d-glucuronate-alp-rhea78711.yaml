@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.4.1.392
     mapping_source: rhea2ec
@@ -28,4 +28,114 @@ definitions:
       Catalyses the reaction: 3-O-beta-D-glucosyl-D-glucuronate + phosphate = aldehydo-D-glucuronate + alpha-D-glucose 1-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-O-beta-D-glucosyl-D-glucuronate + phosphate = aldehydo-D-glucuronate
+    + alpha-D-glucos…
+  description: Substrate-to-product chemistry of RHEA:78711, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78712 (rh:substrates → 78711_L, rh:products → 78711_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-O-beta-D-glucosyl-D-glucuronate + phosphate = aldehydo-D-glucuronate + alp…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78711
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-O-beta-D-glucosyl-D-glucuronate + phosphate = aldehydo-D-glucuronate + alpha-D-glucose
+      1-phosphate'
+  - node_id: sub1
+    label: 3-O-beta-D-glucosyl-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:76826
+    description: Formula C12H19O12.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: aldehydo-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:142686
+    description: Formula C6H9O7.
+  - node_id: prd2
+    label: alpha-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58601
+    description: Formula C6H11O9P.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 3-O-beta-D-glucopyranosyl-beta-D-glucuronide phosphorylase
+    grounding: EC:2.4.1.392
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-O-beta-D-glucosyl-D-glucuronate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78712
+      snippet: 3-O-beta-D-glucosyl-D-glucuronate + phosphate => aldehydo-D-glucuronate + alpha-D-glucose
+        1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78712 declares side 78711_L as its substrates
+        (rh:substrates); the master reaction RHEA:78711 is undirected. This participant is CHEBI:76826
+        with coefficient 1. Rhea cites PMID:35947916 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78712
+      snippet: 3-O-beta-D-glucosyl-D-glucuronate + phosphate => aldehydo-D-glucuronate + alpha-D-glucose
+        1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78712 declares side 78711_L as its substrates
+        (rh:substrates); the master reaction RHEA:78711 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:35947916 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: aldehydo-D-glucuronate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78712
+      snippet: 3-O-beta-D-glucosyl-D-glucuronate + phosphate => aldehydo-D-glucuronate + alpha-D-glucose
+        1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78712 declares side 78711_R as its products
+        (rh:products); the master reaction RHEA:78711 is undirected. This participant is CHEBI:142686
+        with coefficient 1. Rhea cites PMID:35947916 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: alpha-D-glucose 1-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78712
+      snippet: 3-O-beta-D-glucosyl-D-glucuronate + phosphate => aldehydo-D-glucuronate + alpha-D-glucose
+        1-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78712 declares side 78711_R as its products
+        (rh:products); the master reaction RHEA:78711 is undirected. This participant is CHEBI:58601 with
+        coefficient 1. Rhea cites PMID:35947916 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.4.1.392; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:78711
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.392"/>
+      notes: The rh:ec triple on RHEA:78711 in rhea.rdf. EC 2.4.1.392 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

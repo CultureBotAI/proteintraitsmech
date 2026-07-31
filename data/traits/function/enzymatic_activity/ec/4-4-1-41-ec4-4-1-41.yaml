@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.4.1.-
 synonyms:
@@ -31,4 +31,104 @@ definitions:
       Catalyses: (2S)-3-sulfopropanediol = hydroxyacetone + sulfite + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2S)-3-sulfopropanediol sulfolyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.4.1.41. EC 4.4.1.41 maps to exactly
+    one curated Rhea reaction (RHEA:68604), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2S)-3-sulfopropanediol
+    = hydroxyacetone + sulfite + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (2S)-3-sulfopropanediol sulfolyase
+    grounding: EC:4.4.1.41
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2S)-3-sulfopropanediol
+    node_type: CHEMICAL
+    grounding: CHEBI:176527
+    description: Formula C3H7O5S.
+  - node_id: prd1
+    label: hydroxyacetone
+    node_type: CHEMICAL
+    grounding: CHEBI:27957
+    description: Formula C3H6O2.
+  - node_id: prd2
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_E5Y7I4
+    node_type: PROTEIN
+    label: HPSG_BILW3
+    grounding: UniProtKB:E5Y7I4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2S)-3-sulfopropanediol is a substrate consumed by RHEA:68604 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68605
+      snippet: (2S)-3-sulfopropanediol => hydroxyacetone + sulfite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68605 declares side 68604_L as its substrates
+        (rh:substrates); the master reaction RHEA:68604 is undirected. This participant is CHEBI:176527
+        with coefficient 1. Rhea cites PMID:32571930 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hydroxyacetone is a product released by RHEA:68604 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68605
+      snippet: (2S)-3-sulfopropanediol => hydroxyacetone + sulfite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68605 declares side 68604_R as its products
+        (rh:products); the master reaction RHEA:68604 is undirected. This participant is CHEBI:27957 with
+        coefficient 1. Rhea cites PMID:32571930 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfite is a product released by RHEA:68604 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68605
+      snippet: (2S)-3-sulfopropanediol => hydroxyacetone + sulfite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68605 declares side 68604_R as its products
+        (rh:products); the master reaction RHEA:68604 is undirected. This participant is CHEBI:17359 with
+        coefficient 1. Rhea cites PMID:32571930 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:68604 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68605
+      snippet: (2S)-3-sulfopropanediol => hydroxyacetone + sulfite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68605 declares side 68604_R as its products
+        (rh:products); the master reaction RHEA:68604 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:32571930 for this reaction.
+  - subject: prot_E5Y7I4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPSG_BILW3 is an exemplar enzyme with EC 4.4.1.41 activity.
+    evidence:
+    - reference: EC:4.4.1.41
+      snippet: DR   E5Y7I4, HPSG_BILW3 ;
+      notes: ExPASy ENZYME entry EC 4.4.1.41 cross-references UniProtKB:E5Y7I4 (HPSG_BILW3) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

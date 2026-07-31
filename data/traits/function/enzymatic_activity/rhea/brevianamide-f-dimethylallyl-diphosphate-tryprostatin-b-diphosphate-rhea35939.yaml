@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.5.1.106
     mapping_source: rhea2ec
@@ -30,4 +30,166 @@ definitions:
       Catalyses the reaction: brevianamide F + dimethylallyl diphosphate = tryprostatin B + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of brevianamide F + dimethylallyl diphosphate = tryprostatin B + diphosphate
+  description: Substrate-to-product chemistry of RHEA:35939, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:35940 (rh:substrates → 35939_L, rh:products → 35939_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of brevianamide F + dimethylallyl diphosphate = tryprostatin B + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:35939
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: brevianamide F + dimethylallyl diphosphate = tryprostatin B + diphosphate'
+  - node_id: sub1
+    label: brevianamide F
+    node_type: CHEMICAL
+    grounding: CHEBI:64530
+    description: Formula C16H17N3O2.
+  - node_id: sub2
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: tryprostatin B
+    node_type: CHEMICAL
+    grounding: CHEBI:72760
+    description: Formula C21H25N3O2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: tryprostatin B synthase
+    grounding: EC:2.5.1.106
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A1DA62
+    node_type: PROTEIN
+    label: FTMB_ASPF1
+    grounding: UniProtKB:A1DA62
+  - node_id: prot_B9WZX3
+    node_type: PROTEIN
+    label: FTMB_ASPFM
+    grounding: UniProtKB:B9WZX3
+  - node_id: prot_Q4WAW7
+    node_type: PROTEIN
+    label: FTMB_ASPFU
+    grounding: UniProtKB:Q4WAW7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: brevianamide F is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35940
+      snippet: brevianamide F + dimethylallyl diphosphate => tryprostatin B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35940 declares side 35939_L as its substrates
+        (rh:substrates); the master reaction RHEA:35939 is undirected. This participant is CHEBI:64530
+        with coefficient 1. Rhea cites PMID:16000710, PMID:23090579 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dimethylallyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35940
+      snippet: brevianamide F + dimethylallyl diphosphate => tryprostatin B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35940 declares side 35939_L as its substrates
+        (rh:substrates); the master reaction RHEA:35939 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:16000710, PMID:23090579 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tryprostatin B is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35940
+      snippet: brevianamide F + dimethylallyl diphosphate => tryprostatin B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35940 declares side 35939_R as its products
+        (rh:products); the master reaction RHEA:35939 is undirected. This participant is CHEBI:72760 with
+        coefficient 1. Rhea cites PMID:16000710, PMID:23090579 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35940
+      snippet: brevianamide F + dimethylallyl diphosphate => tryprostatin B + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:35940 declares side 35939_R as its products
+        (rh:products); the master reaction RHEA:35939 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:16000710, PMID:23090579 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.5.1.106; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:35939
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.106"/>
+      notes: The rh:ec triple on RHEA:35939 in rhea.rdf. EC 2.5.1.106 is itself a record in this KB.
+  - subject: prot_A1DA62
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FTMB_ASPF1 is an exemplar enzyme carrying EC 2.5.1.106, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.106
+      snippet: DR   A1DA62, FTMB_ASPF1 ;  B9WZX3, FTMB_ASPFM ;  Q4WAW7, FTMB_ASPFU ;
+      notes: ExPASy ENZYME entry EC 2.5.1.106 cross-references UniProtKB:A1DA62 (FTMB_ASPF1) as a protein
+        with this activity.
+    - reference: RHEA:35939
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.106"/>
+      notes: Rhea assigns RHEA:35939 to EC 2.5.1.106, and EC 2.5.1.106 maps to exactly one Rhea master
+        reaction (RHEA:35939), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_B9WZX3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FTMB_ASPFM is an exemplar enzyme carrying EC 2.5.1.106, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.106
+      snippet: DR   A1DA62, FTMB_ASPF1 ;  B9WZX3, FTMB_ASPFM ;  Q4WAW7, FTMB_ASPFU ;
+      notes: ExPASy ENZYME entry EC 2.5.1.106 cross-references UniProtKB:B9WZX3 (FTMB_ASPFM) as a protein
+        with this activity.
+    - reference: RHEA:35939
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.106"/>
+      notes: Rhea assigns RHEA:35939 to EC 2.5.1.106, and EC 2.5.1.106 maps to exactly one Rhea master
+        reaction (RHEA:35939), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q4WAW7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FTMB_ASPFU is an exemplar enzyme carrying EC 2.5.1.106, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.106
+      snippet: DR   A1DA62, FTMB_ASPF1 ;  B9WZX3, FTMB_ASPFM ;  Q4WAW7, FTMB_ASPFU ;
+      notes: ExPASy ENZYME entry EC 2.5.1.106 cross-references UniProtKB:Q4WAW7 (FTMB_ASPFU) as a protein
+        with this activity.
+    - reference: RHEA:35939
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.106"/>
+      notes: Rhea assigns RHEA:35939 to EC 2.5.1.106, and EC 2.5.1.106 maps to exactly one Rhea master
+        reaction (RHEA:35939), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.5.8.1
     mapping_source: rhea2ec
@@ -34,4 +34,232 @@ definitions:
       Catalyses the reaction: dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+) = methylamine + reduced [electron-transfer flavoprotein] + formaldehyde
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+)
+    = methylamine +…
+  description: Substrate-to-product chemistry of RHEA:10204, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:10205 (rh:substrates → 10204_L, rh:products → 10204_R), and Rhea
+    curates the reverse direction too. 4 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+) = met…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10204
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+) = methylamine
+      + reduced [electron-transfer flavoprotein] + formaldehyde'
+  - node_id: sub1
+    label: dimethylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58040
+    description: Formula C2H8N.
+  - node_id: sub2
+    label: oxidized [electron-transfer flavoprotein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10685
+    description: Rhea compound GENERIC:10685.
+  - node_id: sub2_rp1
+    label: FAD
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10685 (oxidized
+      [electron-transfer flavoprotein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57692
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: methylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:59338
+    description: Formula CH6N.
+  - node_id: prd2
+    label: reduced [electron-transfer flavoprotein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10686
+    description: Rhea compound GENERIC:10686.
+  - node_id: prd2_rp1
+    label: FADH2
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10686 (reduced [electron-transfer
+      flavoprotein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58307
+  - node_id: prd3
+    label: formaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:16842
+    description: Formula CH2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dimethylamine dehydrogenase activity
+    grounding: GO:0047133
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: dimethylamine dehydrogenase
+    grounding: EC:1.5.8.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q48303
+    node_type: PROTEIN
+    label: DHDM_HYPSX
+    grounding: UniProtKB:Q48303
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dimethylamine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10205
+      snippet: dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+) => methylamine +
+        reduced [electron-transfer flavoprotein] + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:10205 declares side 10204_L as its substrates
+        (rh:substrates); the master reaction RHEA:10204 is undirected. This participant is CHEBI:58040
+        with coefficient 1. Rhea cites PMID:7556160 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: oxidized [electron-transfer flavoprotein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:10205
+      snippet: dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+) => methylamine +
+        reduced [electron-transfer flavoprotein] + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:10205 declares side 10204_L as its substrates
+        (rh:substrates); the master reaction RHEA:10204 is undirected. This participant is GENERIC:10685
+        with coefficient 1. Rhea cites PMID:7556160 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: FAD is the reactive part of oxidized [electron-transfer flavoprotein].
+    evidence:
+    - reference: RHEA:10204
+      snippet: FAD
+      notes: Rhea compound GENERIC:10685 (oxidized [electron-transfer flavoprotein]) declares rh:reactivePart
+        = FAD (CHEBI:57692), formula C27H30N9O15P2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10205
+      snippet: dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+) => methylamine +
+        reduced [electron-transfer flavoprotein] + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:10205 declares side 10204_L as its substrates
+        (rh:substrates); the master reaction RHEA:10204 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7556160 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10205
+      snippet: dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+) => methylamine +
+        reduced [electron-transfer flavoprotein] + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:10205 declares side 10204_L as its substrates
+        (rh:substrates); the master reaction RHEA:10204 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:7556160 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: methylamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10205
+      snippet: dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+) => methylamine +
+        reduced [electron-transfer flavoprotein] + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:10205 declares side 10204_R as its products
+        (rh:products); the master reaction RHEA:10204 is undirected. This participant is CHEBI:59338 with
+        coefficient 1. Rhea cites PMID:7556160 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: reduced [electron-transfer flavoprotein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:10205
+      snippet: dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+) => methylamine +
+        reduced [electron-transfer flavoprotein] + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:10205 declares side 10204_R as its products
+        (rh:products); the master reaction RHEA:10204 is undirected. This participant is GENERIC:10686
+        with coefficient 1. Rhea cites PMID:7556160 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: FADH2 is the reactive part of reduced [electron-transfer flavoprotein].
+    evidence:
+    - reference: RHEA:10204
+      snippet: FADH2
+      notes: Rhea compound GENERIC:10686 (reduced [electron-transfer flavoprotein]) declares rh:reactivePart
+        = FADH2 (CHEBI:58307), formula C27H33N9O15P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: formaldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10205
+      snippet: dimethylamine + oxidized [electron-transfer flavoprotein] + H2O + H(+) => methylamine +
+        reduced [electron-transfer flavoprotein] + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:10205 declares side 10204_R as its products
+        (rh:products); the master reaction RHEA:10204 is undirected. This participant is CHEBI:16842 with
+        coefficient 1. Rhea cites PMID:7556160 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:10204
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047133"/>
+      notes: The rdfs:seeAlso triple on RHEA:10204 in rhea.rdf. GO term GO:0047133 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.5.8.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:10204
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.8.1"/>
+      notes: The rh:ec triple on RHEA:10204 in rhea.rdf. EC 1.5.8.1 is itself a record in this KB.
+  - subject: prot_Q48303
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHDM_HYPSX is an exemplar enzyme carrying EC 1.5.8.1, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.5.8.1
+      snippet: DR   Q48303, DHDM_HYPSX ;
+      notes: ExPASy ENZYME entry EC 1.5.8.1 cross-references UniProtKB:Q48303 (DHDM_HYPSX) as a protein
+        with this activity.
+    - reference: RHEA:10204
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.8.1"/>
+      notes: Rhea assigns RHEA:10204 to EC 1.5.8.1, and EC 1.5.8.1 maps to exactly one Rhea master reaction
+        (RHEA:10204), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

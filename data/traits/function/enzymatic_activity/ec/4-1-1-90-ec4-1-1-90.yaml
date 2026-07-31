@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 synonyms:
@@ -43,4 +43,254 @@ definitions:
       Catalyses: 4-carboxy-L-glutamyl-[protein] + 2,3-epoxyphylloquinone + H2O + H(+) = phylloquinol + L-glutamyl-[protein] + CO2 + O2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptidyl-glutamate 4-carboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.90. EC 4.1.1.90 maps to exactly
+    one curated Rhea reaction (RHEA:45140), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-carboxy-L-glutamyl-[protein]
+    + 2,3-epoxyphylloquinone + H2O + H(+) = phylloquinol + L-glutamyl-[protein] + CO2 + O2". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptidyl-glutamate 4-carboxylase
+    grounding: EC:4.1.1.90
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-carboxy-L-glutamyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11094
+    description: Rhea compound GENERIC:11094.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: gamma-carboxy-L-glutamate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11094 (4-carboxy-L-glutamyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:84990
+  - node_id: sub2
+    label: 2,3-epoxyphylloquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:15759
+    description: Formula C31H46O3.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: phylloquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:28433
+    description: Formula C31H48O2.
+  - node_id: prd2
+    label: L-glutamyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10208
+    description: Rhea compound GENERIC:10208.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: L-glutamate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10208 (L-glutamyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29973
+  - node_id: prd3
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd4
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-glutamyl carboxylase activity
+    grounding: GO:0008488
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q07175
+    node_type: PROTEIN
+    label: VKGC_BOVIN
+    grounding: UniProtKB:Q07175
+  - node_id: prot_Q9MYY3
+    node_type: PROTEIN
+    label: VKGC_DELLE
+    grounding: UniProtKB:Q9MYY3
+  - node_id: prot_P38435
+    node_type: PROTEIN
+    label: VKGC_HUMAN
+    grounding: UniProtKB:P38435
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-carboxy-L-glutamyl-[protein] is a substrate consumed by RHEA:45140 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45141
+      snippet: 4-carboxy-L-glutamyl-[protein] + 2,3-epoxyphylloquinone + H2O + H(+) => phylloquinol +
+        L-glutamyl-[protein] + CO2 + O2
+      notes: Rhea's left-to-right directional reaction RHEA:45141 declares side 45140_L as its substrates
+        (rh:substrates); the master reaction RHEA:45140 is undirected. This participant is GENERIC:11094
+        with coefficient 1. Rhea cites PMID:17073445, PMID:17935315, PMID:6150930 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: gamma-carboxy-L-glutamate residue is the reactive part of 4-carboxy-L-glutamyl-[protein].
+    evidence:
+    - reference: RHEA:45140
+      snippet: gamma-carboxy-L-glutamate residue
+      notes: Rhea compound GENERIC:11094 (4-carboxy-L-glutamyl-[protein]) declares rh:reactivePart = gamma-carboxy-L-glutamate
+        residue (CHEBI:84990).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2,3-epoxyphylloquinone is a substrate consumed by RHEA:45140 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45141
+      snippet: 4-carboxy-L-glutamyl-[protein] + 2,3-epoxyphylloquinone + H2O + H(+) => phylloquinol +
+        L-glutamyl-[protein] + CO2 + O2
+      notes: Rhea's left-to-right directional reaction RHEA:45141 declares side 45140_L as its substrates
+        (rh:substrates); the master reaction RHEA:45140 is undirected. This participant is CHEBI:15759
+        with coefficient 1. Rhea cites PMID:17073445, PMID:17935315, PMID:6150930 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by RHEA:45140 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45141
+      snippet: 4-carboxy-L-glutamyl-[protein] + 2,3-epoxyphylloquinone + H2O + H(+) => phylloquinol +
+        L-glutamyl-[protein] + CO2 + O2
+      notes: Rhea's left-to-right directional reaction RHEA:45141 declares side 45140_L as its substrates
+        (rh:substrates); the master reaction RHEA:45140 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17073445, PMID:17935315, PMID:6150930 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by RHEA:45140 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45141
+      snippet: 4-carboxy-L-glutamyl-[protein] + 2,3-epoxyphylloquinone + H2O + H(+) => phylloquinol +
+        L-glutamyl-[protein] + CO2 + O2
+      notes: Rhea's left-to-right directional reaction RHEA:45141 declares side 45140_L as its substrates
+        (rh:substrates); the master reaction RHEA:45140 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:17073445, PMID:17935315, PMID:6150930 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phylloquinol is a product released by RHEA:45140 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45141
+      snippet: 4-carboxy-L-glutamyl-[protein] + 2,3-epoxyphylloquinone + H2O + H(+) => phylloquinol +
+        L-glutamyl-[protein] + CO2 + O2
+      notes: Rhea's left-to-right directional reaction RHEA:45141 declares side 45140_R as its products
+        (rh:products); the master reaction RHEA:45140 is undirected. This participant is CHEBI:28433 with
+        coefficient 1. Rhea cites PMID:17073445, PMID:17935315, PMID:6150930 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamyl-[protein] is a product released by RHEA:45140 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45141
+      snippet: 4-carboxy-L-glutamyl-[protein] + 2,3-epoxyphylloquinone + H2O + H(+) => phylloquinol +
+        L-glutamyl-[protein] + CO2 + O2
+      notes: Rhea's left-to-right directional reaction RHEA:45141 declares side 45140_R as its products
+        (rh:products); the master reaction RHEA:45140 is undirected. This participant is GENERIC:10208
+        with coefficient 1. Rhea cites PMID:17073445, PMID:17935315, PMID:6150930 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-glutamate residue is the reactive part of L-glutamyl-[protein].
+    evidence:
+    - reference: RHEA:45140
+      snippet: L-glutamate residue
+      notes: Rhea compound GENERIC:10208 (L-glutamyl-[protein]) declares rh:reactivePart = L-glutamate
+        residue (CHEBI:29973).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CO2 is a product released by RHEA:45140 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45141
+      snippet: 4-carboxy-L-glutamyl-[protein] + 2,3-epoxyphylloquinone + H2O + H(+) => phylloquinol +
+        L-glutamyl-[protein] + CO2 + O2
+      notes: Rhea's left-to-right directional reaction RHEA:45141 declares side 45140_R as its products
+        (rh:products); the master reaction RHEA:45140 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:17073445, PMID:17935315, PMID:6150930 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: O2 is a product released by RHEA:45140 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45141
+      snippet: 4-carboxy-L-glutamyl-[protein] + 2,3-epoxyphylloquinone + H2O + H(+) => phylloquinol +
+        L-glutamyl-[protein] + CO2 + O2
+      notes: Rhea's left-to-right directional reaction RHEA:45141 declares side 45140_R as its products
+        (rh:products); the master reaction RHEA:45140 is undirected. This participant is CHEBI:15379 with
+        coefficient 1. Rhea cites PMID:17073445, PMID:17935315, PMID:6150930 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.1.90
+      snippet: EC:4.1.1.90 > GO:gamma-glutamyl carboxylase activity ; GO:0008488
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008488 is itself a record
+        in this KB.
+  - subject: prot_Q07175
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VKGC_BOVIN is an exemplar enzyme with EC 4.1.1.90 activity.
+    evidence:
+    - reference: EC:4.1.1.90
+      snippet: DR   Q07175, VKGC_BOVIN ;  Q9MYY3, VKGC_DELLE ;  P38435, VKGC_HUMAN ;
+      notes: ExPASy ENZYME entry EC 4.1.1.90 cross-references UniProtKB:Q07175 (VKGC_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q9MYY3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VKGC_DELLE is an exemplar enzyme with EC 4.1.1.90 activity.
+    evidence:
+    - reference: EC:4.1.1.90
+      snippet: DR   Q07175, VKGC_BOVIN ;  Q9MYY3, VKGC_DELLE ;  P38435, VKGC_HUMAN ;
+      notes: ExPASy ENZYME entry EC 4.1.1.90 cross-references UniProtKB:Q9MYY3 (VKGC_DELLE) as a protein
+        with this activity.
+  - subject: prot_P38435
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VKGC_HUMAN is an exemplar enzyme with EC 4.1.1.90 activity.
+    evidence:
+    - reference: EC:4.1.1.90
+      snippet: DR   Q07175, VKGC_BOVIN ;  Q9MYY3, VKGC_DELLE ;  P38435, VKGC_HUMAN ;
+      notes: ExPASy ENZYME entry EC 4.1.1.90 cross-references UniProtKB:P38435 (VKGC_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

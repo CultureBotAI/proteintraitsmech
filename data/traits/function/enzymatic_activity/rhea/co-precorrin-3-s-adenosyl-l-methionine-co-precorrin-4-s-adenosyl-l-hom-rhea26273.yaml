@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:60060
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,108 @@ definitions:
       Catalyses the reaction: Co-precorrin-3 + S-adenosyl-L-methionine = Co-precorrin-4 + S-adenosyl-L-homocysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Co-precorrin-3 + S-adenosyl-L-methionine = Co-precorrin-4 + S-adenosyl-L-homocysteine
+  description: Substrate-to-product chemistry of RHEA:26273, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:26274 (rh:substrates → 26273_L, rh:products → 26273_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of Co-precorrin-3 + S-adenosyl-L-methionine = Co-precorrin-4 + S-adenosyl-L-hom…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:26273
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: Co-precorrin-3 + S-adenosyl-L-methionine = Co-precorrin-4 + S-adenosyl-L-homocysteine'
+  - node_id: sub1
+    label: Co-precorrin-3
+    node_type: CHEMICAL
+    grounding: CHEBI:60060
+    description: Formula C43H40CoN4O16.
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: Co-precorrin-4
+    node_type: CHEMICAL
+    grounding: CHEBI:60061
+    description: Formula C44H43CoN4O16.
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cobalt-precorrin-3 C17-methyltransferase activity
+    grounding: GO:0043782
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Co-precorrin-3 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26274
+      snippet: Co-precorrin-3 + S-adenosyl-L-methionine => Co-precorrin-4 + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:26274 declares side 26273_L as its substrates
+        (rh:substrates); the master reaction RHEA:26273 is undirected. This participant is CHEBI:60060
+        with coefficient 1. Rhea cites PMID:16198574, PMID:8962047 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26274
+      snippet: Co-precorrin-3 + S-adenosyl-L-methionine => Co-precorrin-4 + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:26274 declares side 26273_L as its substrates
+        (rh:substrates); the master reaction RHEA:26273 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:16198574, PMID:8962047 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Co-precorrin-4 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26274
+      snippet: Co-precorrin-3 + S-adenosyl-L-methionine => Co-precorrin-4 + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:26274 declares side 26273_R as its products
+        (rh:products); the master reaction RHEA:26273 is undirected. This participant is CHEBI:60061 with
+        coefficient 1. Rhea cites PMID:16198574, PMID:8962047 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26274
+      snippet: Co-precorrin-3 + S-adenosyl-L-methionine => Co-precorrin-4 + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:26274 declares side 26273_R as its products
+        (rh:products); the master reaction RHEA:26273 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:16198574, PMID:8962047 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:26273
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0043782"/>
+      notes: The rdfs:seeAlso triple on RHEA:26273 in rhea.rdf. GO term GO:0043782 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

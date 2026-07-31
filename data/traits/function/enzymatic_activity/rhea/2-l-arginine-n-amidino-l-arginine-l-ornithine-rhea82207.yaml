@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.1.4.5
     mapping_source: rhea2ec
@@ -26,4 +26,130 @@ definitions:
       Catalyses the reaction: 2 L-arginine = N-amidino-L-arginine + L-ornithine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 L-arginine = N-amidino-L-arginine + L-ornithine
+  description: Substrate-to-product chemistry of RHEA:82207, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:82208 (rh:substrates → 82207_L, rh:products → 82207_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 L-arginine = N-amidino-L-arginine + L-ornithine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:82207
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 L-arginine = N-amidino-L-arginine + L-ornithine'
+  - node_id: sub1
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: prd1
+    label: N-amidino-L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:232086
+    description: Formula C7H17N6O2.
+  - node_id: prd2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: arginine amidinotransferase
+    grounding: EC:2.1.4.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P0DY14
+    node_type: PROTEIN
+    label: AMDT_MICS3
+    grounding: UniProtKB:P0DY14
+  - node_id: prot_M3B4Q3
+    node_type: PROTEIN
+    label: AMDT_STRM1
+    grounding: UniProtKB:M3B4Q3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arginine is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:82208
+      snippet: 2 L-arginine => N-amidino-L-arginine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82208 declares side 82207_L as its substrates
+        (rh:substrates); the master reaction RHEA:82207 is undirected. This participant is CHEBI:32682
+        with coefficient 2. Rhea cites PMID:27289319 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-amidino-L-arginine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82208
+      snippet: 2 L-arginine => N-amidino-L-arginine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82208 declares side 82207_R as its products
+        (rh:products); the master reaction RHEA:82207 is undirected. This participant is CHEBI:232086
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-ornithine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82208
+      snippet: 2 L-arginine => N-amidino-L-arginine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82208 declares side 82207_R as its products
+        (rh:products); the master reaction RHEA:82207 is undirected. This participant is CHEBI:46911 with
+        coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.1.4.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:82207
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.4.5"/>
+      notes: The rh:ec triple on RHEA:82207 in rhea.rdf. EC 2.1.4.5 is itself a record in this KB.
+  - subject: prot_P0DY14
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMDT_MICS3 is an exemplar enzyme carrying EC 2.1.4.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.1.4.5
+      snippet: DR   P0DY14, AMDT_MICS3 ;  M3B4Q3, AMDT_STRM1 ;
+      notes: ExPASy ENZYME entry EC 2.1.4.5 cross-references UniProtKB:P0DY14 (AMDT_MICS3) as a protein
+        with this activity.
+    - reference: RHEA:82207
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.4.5"/>
+      notes: Rhea assigns RHEA:82207 to EC 2.1.4.5, and EC 2.1.4.5 maps to exactly one Rhea master reaction
+        (RHEA:82207), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_M3B4Q3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMDT_STRM1 is an exemplar enzyme carrying EC 2.1.4.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.1.4.5
+      snippet: DR   P0DY14, AMDT_MICS3 ;  M3B4Q3, AMDT_STRM1 ;
+      notes: ExPASy ENZYME entry EC 2.1.4.5 cross-references UniProtKB:M3B4Q3 (AMDT_STRM1) as a protein
+        with this activity.
+    - reference: RHEA:82207
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.4.5"/>
+      notes: Rhea assigns RHEA:82207 to EC 2.1.4.5, and EC 2.1.4.5 maps to exactly one Rhea master reaction
+        (RHEA:82207), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

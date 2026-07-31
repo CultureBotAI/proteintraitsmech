@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.8.1.6
     mapping_source: rhea2ec
@@ -32,4 +32,139 @@ definitions:
       Catalyses the reaction: 4-chlorobenzoate + H2O = 4-hydroxybenzoate + chloride + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-chlorobenzoate + H2O = 4-hydroxybenzoate + chloride + H(+)
+  description: Substrate-to-product chemistry of RHEA:23440, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:23441 (rh:substrates → 23440_L, rh:products → 23440_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4-chlorobenzoate + H2O = 4-hydroxybenzoate + chloride + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23440
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4-chlorobenzoate + H2O = 4-hydroxybenzoate + chloride + H(+)'
+  - node_id: sub1
+    label: 4-chlorobenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17861
+    description: Formula C7H4ClO2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 4-hydroxybenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17879
+    description: Formula C7H5O3.
+  - node_id: prd2
+    label: chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17996
+    description: Formula Cl.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 4-chlorobenzoate dehalogenase activity
+    grounding: GO:0047576
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 4-chlorobenzoate dehalogenase
+    grounding: EC:3.8.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-chlorobenzoate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23441
+      snippet: 4-chlorobenzoate + H2O => 4-hydroxybenzoate + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23441 declares side 23440_L as its substrates
+        (rh:substrates); the master reaction RHEA:23440 is undirected. This participant is CHEBI:17861
+        with coefficient 1. Rhea cites PMID:18889931, PMID:6497878 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23441
+      snippet: 4-chlorobenzoate + H2O => 4-hydroxybenzoate + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23441 declares side 23440_L as its substrates
+        (rh:substrates); the master reaction RHEA:23440 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18889931, PMID:6497878 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-hydroxybenzoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23441
+      snippet: 4-chlorobenzoate + H2O => 4-hydroxybenzoate + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23441 declares side 23440_R as its products
+        (rh:products); the master reaction RHEA:23440 is undirected. This participant is CHEBI:17879 with
+        coefficient 1. Rhea cites PMID:18889931, PMID:6497878 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: chloride is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23441
+      snippet: 4-chlorobenzoate + H2O => 4-hydroxybenzoate + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23441 declares side 23440_R as its products
+        (rh:products); the master reaction RHEA:23440 is undirected. This participant is CHEBI:17996 with
+        coefficient 1. Rhea cites PMID:18889931, PMID:6497878 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23441
+      snippet: 4-chlorobenzoate + H2O => 4-hydroxybenzoate + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23441 declares side 23440_R as its products
+        (rh:products); the master reaction RHEA:23440 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18889931, PMID:6497878 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:23440
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047576"/>
+      notes: The rdfs:seeAlso triple on RHEA:23440 in rhea.rdf. GO term GO:0047576 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.8.1.6; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:23440
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.8.1.6"/>
+      notes: The rh:ec triple on RHEA:23440 in rhea.rdf. EC 3.8.1.6 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

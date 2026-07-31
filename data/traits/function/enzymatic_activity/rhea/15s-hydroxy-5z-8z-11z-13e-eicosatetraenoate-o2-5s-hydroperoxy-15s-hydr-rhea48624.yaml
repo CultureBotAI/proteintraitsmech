@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57409
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,76 @@ definitions:
       Catalyses the reaction: (15S)-hydroxy-(5Z,8Z,11Z,13E)-eicosatetraenoate + O2 = (5S)-hydroperoxy-(15S)-hydroxy-(6E,8Z,11Z,13E)-eicosatetraenoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (15S)-hydroxy-(5Z,8Z,11Z,13E)-eicosatetraenoate + O2 = (5S)-hydroperoxy-(15S)-hydroxy-(…
+  description: Substrate-to-product chemistry of RHEA:48624, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48625 (rh:substrates → 48624_L, rh:products → 48624_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (15S)-hydroxy-(5Z,8Z,11Z,13E)-eicosatetraenoate + O2 = (5S)-hydroperoxy-(15S…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48624
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (15S)-hydroxy-(5Z,8Z,11Z,13E)-eicosatetraenoate + O2 = (5S)-hydroperoxy-(15S)-hydroxy-(6E,8Z,11Z,13E)-eicosatetraenoate'
+  - node_id: sub1
+    label: (15S)-hydroxy-(5Z,8Z,11Z,13E)-eicosatetraenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57409
+    description: Formula C20H31O3.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (5S)-hydroperoxy-(15S)-hydroxy-(6E,8Z,11Z,13E)-eicosatetraenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:131564
+    description: Formula C20H31O5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (15S)-hydroxy-(5Z,8Z,11Z,13E)-eicosatetraenoate is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48625
+      snippet: (15S)-hydroxy-(5Z,8Z,11Z,13E)-eicosatetraenoate + O2 => (5S)-hydroperoxy-(15S)-hydroxy-(6E,8Z,11Z,13E)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:48625 declares side 48624_L as its substrates
+        (rh:substrates); the master reaction RHEA:48624 is undirected. This participant is CHEBI:57409
+        with coefficient 1. Rhea cites PMID:31664810, PMID:8615788 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48625
+      snippet: (15S)-hydroxy-(5Z,8Z,11Z,13E)-eicosatetraenoate + O2 => (5S)-hydroperoxy-(15S)-hydroxy-(6E,8Z,11Z,13E)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:48625 declares side 48624_L as its substrates
+        (rh:substrates); the master reaction RHEA:48624 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:31664810, PMID:8615788 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (5S)-hydroperoxy-(15S)-hydroxy-(6E,8Z,11Z,13E)-eicosatetraenoate is a product released
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48625
+      snippet: (15S)-hydroxy-(5Z,8Z,11Z,13E)-eicosatetraenoate + O2 => (5S)-hydroperoxy-(15S)-hydroxy-(6E,8Z,11Z,13E)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:48625 declares side 48624_R as its products
+        (rh:products); the master reaction RHEA:48624 is undirected. This participant is CHEBI:131564
+        with coefficient 1. Rhea cites PMID:31664810, PMID:8615788 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

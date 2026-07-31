@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.99.-
 synonyms:
@@ -43,4 +43,150 @@ definitions:
       Catalyses: D-ribulose 5-phosphate = (2S)-2-hydroxy-3-oxobutyl phosphate + formate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3,4-dihydroxy-2-butanone-4-phosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.99.12. EC 4.1.99.12 maps to
+    exactly one curated Rhea reaction (RHEA:18457), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-ribulose
+    5-phosphate = (2S)-2-hydroxy-3-oxobutyl phosphate + formate + H(+)". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3,4-dihydroxy-2-butanone-4-phosphate synthase
+    grounding: EC:4.1.99.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-ribulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58121
+    description: Formula C5H9O8P.
+  - node_id: prd1
+    label: (2S)-2-hydroxy-3-oxobutyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58830
+    description: Formula C4H7O6P.
+  - node_id: prd2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3,4-dihydroxy-2-butanone-4-phosphate synthase activity
+    grounding: GO:0008686
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5A3V6
+    node_type: PROTEIN
+    label: RIB3_CANAL
+    grounding: UniProtKB:Q5A3V6
+  - node_id: prot_Q8TG90
+    node_type: PROTEIN
+    label: RIB3_PYRO7
+    grounding: UniProtKB:Q8TG90
+  - node_id: prot_O60181
+    node_type: PROTEIN
+    label: RIB3_SCHPO
+    grounding: UniProtKB:O60181
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-ribulose 5-phosphate is a substrate consumed by RHEA:18457 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18458
+      snippet: D-ribulose 5-phosphate => (2S)-2-hydroxy-3-oxobutyl phosphate + formate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18458 declares side 18457_L as its substrates
+        (rh:substrates); the master reaction RHEA:18457 is undirected. This participant is CHEBI:58121
+        with coefficient 1. Rhea cites PMID:12200440, PMID:2246238, PMID:11342130, PMID:12904291 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S)-2-hydroxy-3-oxobutyl phosphate is a product released by RHEA:18457 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18458
+      snippet: D-ribulose 5-phosphate => (2S)-2-hydroxy-3-oxobutyl phosphate + formate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18458 declares side 18457_R as its products
+        (rh:products); the master reaction RHEA:18457 is undirected. This participant is CHEBI:58830 with
+        coefficient 1. Rhea cites PMID:12200440, PMID:2246238, PMID:11342130, PMID:12904291 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: formate is a product released by RHEA:18457 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18458
+      snippet: D-ribulose 5-phosphate => (2S)-2-hydroxy-3-oxobutyl phosphate + formate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18458 declares side 18457_R as its products
+        (rh:products); the master reaction RHEA:18457 is undirected. This participant is CHEBI:15740 with
+        coefficient 1. Rhea cites PMID:12200440, PMID:2246238, PMID:11342130, PMID:12904291 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:18457 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18458
+      snippet: D-ribulose 5-phosphate => (2S)-2-hydroxy-3-oxobutyl phosphate + formate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18458 declares side 18457_R as its products
+        (rh:products); the master reaction RHEA:18457 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12200440, PMID:2246238, PMID:11342130, PMID:12904291 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.99.12
+      snippet: EC:4.1.99.12 > GO:3,4-dihydroxy-2-butanone-4-phosphate synthase activity ; GO:0008686
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008686 is itself a record
+        in this KB.
+  - subject: prot_Q5A3V6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIB3_CANAL is an exemplar enzyme with EC 4.1.99.12 activity.
+    evidence:
+    - reference: EC:4.1.99.12
+      snippet: DR   Q5A3V6, RIB3_CANAL ;  Q8TG90, RIB3_PYRO7 ;  O60181, RIB3_SCHPO ;
+      notes: ExPASy ENZYME entry EC 4.1.99.12 cross-references UniProtKB:Q5A3V6 (RIB3_CANAL) as a protein
+        with this activity.
+  - subject: prot_Q8TG90
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIB3_PYRO7 is an exemplar enzyme with EC 4.1.99.12 activity.
+    evidence:
+    - reference: EC:4.1.99.12
+      snippet: DR   Q5A3V6, RIB3_CANAL ;  Q8TG90, RIB3_PYRO7 ;  O60181, RIB3_SCHPO ;
+      notes: ExPASy ENZYME entry EC 4.1.99.12 cross-references UniProtKB:Q8TG90 (RIB3_PYRO7) as a protein
+        with this activity.
+  - subject: prot_O60181
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RIB3_SCHPO is an exemplar enzyme with EC 4.1.99.12 activity.
+    evidence:
+    - reference: EC:4.1.99.12
+      snippet: DR   Q5A3V6, RIB3_CANAL ;  Q8TG90, RIB3_PYRO7 ;  O60181, RIB3_SCHPO ;
+      notes: ExPASy ENZYME entry EC 4.1.99.12 cross-references UniProtKB:O60181 (RIB3_SCHPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

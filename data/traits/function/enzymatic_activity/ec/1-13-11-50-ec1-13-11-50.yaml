@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -37,4 +37,134 @@ definitions:
       Catalyses: acetylacetone + O2 = methylglyoxal + acetate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetylacetone-cleaving enzyme
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.50. EC 1.13.11.50 maps to
+    exactly one curated Rhea reaction (RHEA:12877), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "acetylacetone
+    + O2 = methylglyoxal + acetate + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acetylacetone-cleaving enzyme
+    grounding: EC:1.13.11.50
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: acetylacetone
+    node_type: CHEMICAL
+    grounding: CHEBI:14750
+    description: Formula C5H8O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+    description: Formula C3H4O2.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acetylacetone-cleaving enzyme activity
+    grounding: GO:0033752
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8GNT2
+    node_type: PROTEIN
+    label: DKE1_ACIJO
+    grounding: UniProtKB:Q8GNT2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acetylacetone is a substrate consumed by RHEA:12877 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12878
+      snippet: acetylacetone + O2 => methylglyoxal + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12878 declares side 12877_L as its substrates
+        (rh:substrates); the master reaction RHEA:12877 is undirected. This participant is CHEBI:14750
+        with coefficient 1. Rhea cites PMID:12379146, PMID:15934927 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:12877 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12878
+      snippet: acetylacetone + O2 => methylglyoxal + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12878 declares side 12877_L as its substrates
+        (rh:substrates); the master reaction RHEA:12877 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:12379146, PMID:15934927 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: methylglyoxal is a product released by RHEA:12877 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12878
+      snippet: acetylacetone + O2 => methylglyoxal + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12878 declares side 12877_R as its products
+        (rh:products); the master reaction RHEA:12877 is undirected. This participant is CHEBI:17158 with
+        coefficient 1. Rhea cites PMID:12379146, PMID:15934927 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:12877 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12878
+      snippet: acetylacetone + O2 => methylglyoxal + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12878 declares side 12877_R as its products
+        (rh:products); the master reaction RHEA:12877 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:12379146, PMID:15934927 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:12877 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12878
+      snippet: acetylacetone + O2 => methylglyoxal + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12878 declares side 12877_R as its products
+        (rh:products); the master reaction RHEA:12877 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12379146, PMID:15934927 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.50
+      snippet: EC:1.13.11.50 > GO:acetylacetone-cleaving enzyme activity ; GO:0033752
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033752 is itself a record
+        in this KB.
+  - subject: prot_Q8GNT2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DKE1_ACIJO is an exemplar enzyme with EC 1.13.11.50 activity.
+    evidence:
+    - reference: EC:1.13.11.50
+      snippet: DR   Q8GNT2, DKE1_ACIJO ;
+      notes: ExPASy ENZYME entry EC 1.13.11.50 cross-references UniProtKB:Q8GNT2 (DKE1_ACIJO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

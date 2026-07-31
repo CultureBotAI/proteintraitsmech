@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.2.-
 synonyms:
@@ -39,4 +39,82 @@ definitions:
       Catalyses: S-ubiquitinyl-[E1 ubiquitin-activating enzyme]-L-cysteine + [acceptor protein]-L-lysine = [E1 ubiquitin-activating enzyme]-L-cysteine + N(6)- monoubiquitinyl-[acceptor protein]-L-lysine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (E3-independent) E2 ubiquitin-conjugating enzyme
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.2.24. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "S-ubiquitinyl-[E1
+    ubiquitin-activating enzyme]-L-cysteine + [acceptor protein]-L-lysine = [E1 ubiquitin-activating enzyme]-L-cysteine
+    + N(6)- monoubiquitinyl-[acceptor protein]-L-lysine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (E3-independent) E2 ubiquitin-conjugating enzyme
+    grounding: EC:2.3.2.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ubiquitin conjugating enzyme activity
+    grounding: GO:0061631
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9NR09
+    node_type: PROTEIN
+    label: BIRC6_HUMAN
+    grounding: UniProtKB:Q9NR09
+  - node_id: prot_O88738
+    node_type: PROTEIN
+    label: BIRC6_MOUSE
+    grounding: UniProtKB:O88738
+  - node_id: prot_Q2TA10
+    node_type: PROTEIN
+    label: UB2D1_BOVIN
+    grounding: UniProtKB:Q2TA10
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.2.24
+      snippet: EC:2.3.2.24 > GO:ubiquitin conjugating enzyme activity ; GO:0061631
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0061631 is itself a record
+        in this KB.
+  - subject: prot_Q9NR09
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BIRC6_HUMAN is an exemplar enzyme with EC 2.3.2.24 activity.
+    evidence:
+    - reference: EC:2.3.2.24
+      snippet: DR   Q9NR09, BIRC6_HUMAN;  O88738, BIRC6_MOUSE;  Q2TA10, UB2D1_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.3.2.24 cross-references UniProtKB:Q9NR09 (BIRC6_HUMAN) as a protein
+        with this activity.
+  - subject: prot_O88738
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BIRC6_MOUSE is an exemplar enzyme with EC 2.3.2.24 activity.
+    evidence:
+    - reference: EC:2.3.2.24
+      snippet: DR   Q9NR09, BIRC6_HUMAN;  O88738, BIRC6_MOUSE;  Q2TA10, UB2D1_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.3.2.24 cross-references UniProtKB:O88738 (BIRC6_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q2TA10
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UB2D1_BOVIN is an exemplar enzyme with EC 2.3.2.24 activity.
+    evidence:
+    - reference: EC:2.3.2.24
+      snippet: DR   Q9NR09, BIRC6_HUMAN;  O88738, BIRC6_MOUSE;  Q2TA10, UB2D1_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.3.2.24 cross-references UniProtKB:Q2TA10 (UB2D1_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.17.4.-
 synonyms:
@@ -28,4 +28,112 @@ definitions:
       Catalyses: 3-hydroxy-2-methyl-3-phytyl-2,3-dihydro-1,4-naphthoquinone + oxidized dithiothreitol = 1,4-dithiothreitol + 2,3-epoxyphylloquinone
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of vitamin-K-epoxide reductase (warfarin-insensitive)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.17.4.5. EC 1.17.4.5 maps to exactly
+    one curated Rhea reaction (RHEA:21560), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-hydroxy-2-methyl-3-phytyl-2,3-dihydro-1,4-naphthoquinone
+    + oxidized dithiothreitol = 1,4-dithiothreitol + 2,3-epoxyphylloquinone". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: vitamin-K-epoxide reductase (warfarin-insensitive)
+    grounding: EC:1.17.4.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-hydroxy-2-methyl-3-phytyl-2,3-dihydro-1,4-naphthoquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:18298
+    description: Formula C31H48O3.
+  - node_id: sub2
+    label: oxidized dithiothreitol
+    node_type: CHEMICAL
+    grounding: CHEBI:41837
+    description: Formula C4H8O2S2.
+  - node_id: prd1
+    label: 1,4-dithiothreitol
+    node_type: CHEMICAL
+    grounding: CHEBI:18320
+    description: Formula C4H10O2S2.
+  - node_id: prd2
+    label: 2,3-epoxyphylloquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:15759
+    description: Formula C31H46O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: vitamin-K-epoxide reductase (warfarin-insensitive) activity
+    grounding: GO:0047058
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-hydroxy-2-methyl-3-phytyl-2,3-dihydro-1,4-naphthoquinone is a substrate consumed by
+      RHEA:21560 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21561
+      snippet: 3-hydroxy-2-methyl-3-phytyl-2,3-dihydro-1,4-naphthoquinone + oxidized dithiothreitol =>
+        1,4-dithiothreitol + 2,3-epoxyphylloquinone
+      notes: Rhea's left-to-right directional reaction RHEA:21561 declares side 21560_L as its substrates
+        (rh:substrates); the master reaction RHEA:21560 is undirected. This participant is CHEBI:18298
+        with coefficient 1. Rhea cites PMID:3857611 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: oxidized dithiothreitol is a substrate consumed by RHEA:21560 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21561
+      snippet: 3-hydroxy-2-methyl-3-phytyl-2,3-dihydro-1,4-naphthoquinone + oxidized dithiothreitol =>
+        1,4-dithiothreitol + 2,3-epoxyphylloquinone
+      notes: Rhea's left-to-right directional reaction RHEA:21561 declares side 21560_L as its substrates
+        (rh:substrates); the master reaction RHEA:21560 is undirected. This participant is CHEBI:41837
+        with coefficient 1. Rhea cites PMID:3857611 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1,4-dithiothreitol is a product released by RHEA:21560 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21561
+      snippet: 3-hydroxy-2-methyl-3-phytyl-2,3-dihydro-1,4-naphthoquinone + oxidized dithiothreitol =>
+        1,4-dithiothreitol + 2,3-epoxyphylloquinone
+      notes: Rhea's left-to-right directional reaction RHEA:21561 declares side 21560_R as its products
+        (rh:products); the master reaction RHEA:21560 is undirected. This participant is CHEBI:18320 with
+        coefficient 1. Rhea cites PMID:3857611 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 2,3-epoxyphylloquinone is a product released by RHEA:21560 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21561
+      snippet: 3-hydroxy-2-methyl-3-phytyl-2,3-dihydro-1,4-naphthoquinone + oxidized dithiothreitol =>
+        1,4-dithiothreitol + 2,3-epoxyphylloquinone
+      notes: Rhea's left-to-right directional reaction RHEA:21561 declares side 21560_R as its products
+        (rh:products); the master reaction RHEA:21560 is undirected. This participant is CHEBI:15759 with
+        coefficient 1. Rhea cites PMID:3857611 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.17.4.5
+      snippet: EC:1.17.4.5 > GO:vitamin-K-epoxide reductase (warfarin-insensitive) activity ; GO:0047058
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047058 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

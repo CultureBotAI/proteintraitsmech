@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -32,4 +32,87 @@ definitions:
       Catalyses: 4-amino-4-deoxychorismate = 4-amino-4-deoxyprephenate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-amino-4-deoxychorismate mutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.67. EC 5.4.99.67 maps to
+    exactly one curated Rhea reaction (RHEA:59376), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-amino-4-deoxychorismate
+    = 4-amino-4-deoxyprephenate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-amino-4-deoxychorismate mutase
+    grounding: EC:5.4.99.67
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-amino-4-deoxychorismate
+    node_type: CHEMICAL
+    grounding: CHEBI:58406
+    description: Formula C10H10NO5.
+  - node_id: prd1
+    label: 4-amino-4-deoxyprephenate
+    node_type: CHEMICAL
+    grounding: CHEBI:143070
+    description: Formula C10H10NO5.
+  - node_id: prot_F2RB77
+    node_type: PROTEIN
+    label: CMLD_STRVP
+    grounding: UniProtKB:F2RB77
+  - node_id: prot_P72541
+    node_type: PROTEIN
+    label: PAPB_STRPR
+    grounding: UniProtKB:P72541
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-amino-4-deoxychorismate is a substrate consumed by RHEA:59376 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59377
+      snippet: 4-amino-4-deoxychorismate => 4-amino-4-deoxyprephenate
+      notes: Rhea's left-to-right directional reaction RHEA:59377 declares side 59376_L as its substrates
+        (rh:substrates); the master reaction RHEA:59376 is undirected. This participant is CHEBI:58406
+        with coefficient 1. Rhea cites PMID:9044253, PMID:11577160, PMID:25267678 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-amino-4-deoxyprephenate is a product released by RHEA:59376 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59377
+      snippet: 4-amino-4-deoxychorismate => 4-amino-4-deoxyprephenate
+      notes: Rhea's left-to-right directional reaction RHEA:59377 declares side 59376_R as its products
+        (rh:products); the master reaction RHEA:59376 is undirected. This participant is CHEBI:143070
+        with coefficient 1. Rhea cites PMID:9044253, PMID:11577160, PMID:25267678 for this reaction.
+  - subject: prot_F2RB77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CMLD_STRVP is an exemplar enzyme with EC 5.4.99.67 activity.
+    evidence:
+    - reference: EC:5.4.99.67
+      snippet: DR   F2RB77, CMLD_STRVP ;  P72541, PAPB_STRPR ;
+      notes: ExPASy ENZYME entry EC 5.4.99.67 cross-references UniProtKB:F2RB77 (CMLD_STRVP) as a protein
+        with this activity.
+  - subject: prot_P72541
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAPB_STRPR is an exemplar enzyme with EC 5.4.99.67 activity.
+    evidence:
+    - reference: EC:5.4.99.67
+      snippet: DR   F2RB77, CMLD_STRVP ;  P72541, PAPB_STRPR ;
+      notes: ExPASy ENZYME entry EC 5.4.99.67 cross-references UniProtKB:P72541 (PAPB_STRPR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

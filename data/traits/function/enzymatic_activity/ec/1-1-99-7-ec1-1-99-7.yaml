@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.99.-
 mapped_xrefs:
@@ -25,4 +25,104 @@ definitions:
       Catalyses: (S)-lactate + oxaloacetate = (S)-malate + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lactate--malate transhydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.99.7. EC 1.1.99.7 maps to exactly
+    one curated Rhea reaction (RHEA:10984), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-lactate +
+    oxaloacetate = (S)-malate + pyruvate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lactate--malate transhydrogenase
+    grounding: EC:1.1.99.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-lactate
+    node_type: CHEMICAL
+    grounding: CHEBI:16651
+    description: Formula C3H5O3.
+  - node_id: sub2
+    label: oxaloacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+    description: Formula C4H2O5.
+  - node_id: prd1
+    label: (S)-malate
+    node_type: CHEMICAL
+    grounding: CHEBI:15589
+    description: Formula C4H4O5.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: lactate-malate transhydrogenase activity
+    grounding: GO:0050042
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-lactate is a substrate consumed by RHEA:10984 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10985
+      snippet: (S)-lactate + oxaloacetate => (S)-malate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:10985 declares side 10984_L as its substrates
+        (rh:substrates); the master reaction RHEA:10984 is undirected. This participant is CHEBI:16651
+        with coefficient 1. Rhea cites PMID:4333516, PMID:4289051 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: oxaloacetate is a substrate consumed by RHEA:10984 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10985
+      snippet: (S)-lactate + oxaloacetate => (S)-malate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:10985 declares side 10984_L as its substrates
+        (rh:substrates); the master reaction RHEA:10984 is undirected. This participant is CHEBI:16452
+        with coefficient 1. Rhea cites PMID:4333516, PMID:4289051 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-malate is a product released by RHEA:10984 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10985
+      snippet: (S)-lactate + oxaloacetate => (S)-malate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:10985 declares side 10984_R as its products
+        (rh:products); the master reaction RHEA:10984 is undirected. This participant is CHEBI:15589 with
+        coefficient 1. Rhea cites PMID:4333516, PMID:4289051 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:10984 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10985
+      snippet: (S)-lactate + oxaloacetate => (S)-malate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:10985 declares side 10984_R as its products
+        (rh:products); the master reaction RHEA:10984 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:4333516, PMID:4289051 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.99.7
+      snippet: EC:1.1.99.7 > GO:lactate-malate transhydrogenase activity ; GO:0050042
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050042 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

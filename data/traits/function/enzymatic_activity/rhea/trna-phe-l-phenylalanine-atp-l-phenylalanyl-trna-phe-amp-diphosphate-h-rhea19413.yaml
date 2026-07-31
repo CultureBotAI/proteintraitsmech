@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:6.1.1.20
     mapping_source: rhea2ec
@@ -42,4 +42,270 @@ definitions:
       Catalyses the reaction: tRNA(Phe) + L-phenylalanine + ATP = L-phenylalanyl-tRNA(Phe) + AMP + diphosphate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA(Phe) + L-phenylalanine + ATP = L-phenylalanyl-tRNA(Phe) + AMP + diphosphate
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:19413, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:19414 (rh:substrates → 19413_L, rh:products → 19413_R), and Rhea
+    curates the reverse direction too. 3 substrates, 4 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tRNA(Phe) + L-phenylalanine + ATP = L-phenylalanyl-tRNA(Phe) + AMP + diphosp…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:19413
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tRNA(Phe) + L-phenylalanine + ATP = L-phenylalanyl-tRNA(Phe) + AMP + diphosphate
+      + H(+)'
+  - node_id: sub1
+    label: tRNA(Phe)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9668
+    description: Rhea compound GENERIC:9668.
+  - node_id: sub1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9668 (tRNA(Phe));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-phenylalanyl-tRNA(Phe)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9699
+    description: Rhea compound GENERIC:9699.
+  - node_id: prd1_rp1
+    label: 3'-(L-phenylalanyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9699 (L-phenylalanyl-tRNA(Phe));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78531
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine-tRNA ligase activity
+    grounding: GO:0004826
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine--tRNA ligase
+    grounding: EC:6.1.1.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q6AZG6
+    node_type: PROTEIN
+    label: SYFAA_XENLA
+    grounding: UniProtKB:Q6AZG6
+  - node_id: prot_Q7SYV0
+    node_type: PROTEIN
+    label: SYFAB_XENLA
+    grounding: UniProtKB:Q7SYV0
+  - node_id: prot_B0C6I2
+    node_type: PROTEIN
+    label: SYFA_ACAM1
+    grounding: UniProtKB:B0C6I2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Phe) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19414
+      snippet: tRNA(Phe) + L-phenylalanine + ATP => L-phenylalanyl-tRNA(Phe) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19414 declares side 19413_L as its substrates
+        (rh:substrates); the master reaction RHEA:19413 is undirected. This participant is GENERIC:9668
+        with coefficient 1. Rhea cites PMID:5335910, PMID:19549855, PMID:20223217, PMID:22833457 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Phe).
+    evidence:
+    - reference: RHEA:19413
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9668 (tRNA(Phe)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-phenylalanine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19414
+      snippet: tRNA(Phe) + L-phenylalanine + ATP => L-phenylalanyl-tRNA(Phe) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19414 declares side 19413_L as its substrates
+        (rh:substrates); the master reaction RHEA:19413 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:5335910, PMID:19549855, PMID:20223217, PMID:22833457 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19414
+      snippet: tRNA(Phe) + L-phenylalanine + ATP => L-phenylalanyl-tRNA(Phe) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19414 declares side 19413_L as its substrates
+        (rh:substrates); the master reaction RHEA:19413 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:5335910, PMID:19549855, PMID:20223217, PMID:22833457 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-phenylalanyl-tRNA(Phe) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19414
+      snippet: tRNA(Phe) + L-phenylalanine + ATP => L-phenylalanyl-tRNA(Phe) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19414 declares side 19413_R as its products
+        (rh:products); the master reaction RHEA:19413 is undirected. This participant is GENERIC:9699
+        with coefficient 1. Rhea cites PMID:5335910, PMID:19549855, PMID:20223217, PMID:22833457 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-phenylalanyl)adenylyl group is the reactive part of L-phenylalanyl-tRNA(Phe).
+    evidence:
+    - reference: RHEA:19413
+      snippet: 3'-(L-phenylalanyl)adenylyl group
+      notes: Rhea compound GENERIC:9699 (L-phenylalanyl-tRNA(Phe)) declares rh:reactivePart = 3'-(L-phenylalanyl)adenylyl
+        group (CHEBI:78531), formula C19H21N6O7P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19414
+      snippet: tRNA(Phe) + L-phenylalanine + ATP => L-phenylalanyl-tRNA(Phe) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19414 declares side 19413_R as its products
+        (rh:products); the master reaction RHEA:19413 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:5335910, PMID:19549855, PMID:20223217, PMID:22833457 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19414
+      snippet: tRNA(Phe) + L-phenylalanine + ATP => L-phenylalanyl-tRNA(Phe) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19414 declares side 19413_R as its products
+        (rh:products); the master reaction RHEA:19413 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:5335910, PMID:19549855, PMID:20223217, PMID:22833457 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19414
+      snippet: tRNA(Phe) + L-phenylalanine + ATP => L-phenylalanyl-tRNA(Phe) + AMP + diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19414 declares side 19413_R as its products
+        (rh:products); the master reaction RHEA:19413 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:5335910, PMID:19549855, PMID:20223217, PMID:22833457 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:19413
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004826"/>
+      notes: The rdfs:seeAlso triple on RHEA:19413 in rhea.rdf. GO term GO:0004826 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 6.1.1.20; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:19413
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.20"/>
+      notes: The rh:ec triple on RHEA:19413 in rhea.rdf. EC 6.1.1.20 is itself a record in this KB.
+  - subject: prot_Q6AZG6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYFAA_XENLA is an exemplar enzyme carrying EC 6.1.1.20, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.20
+      snippet: DR   Q6AZG6, SYFAA_XENLA;  Q7SYV0, SYFAB_XENLA;  B0C6I2, SYFA_ACAM1 ;
+      notes: ExPASy ENZYME entry EC 6.1.1.20 cross-references UniProtKB:Q6AZG6 (SYFAA_XENLA) as a protein
+        with this activity.
+    - reference: RHEA:19413
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.20"/>
+      notes: Rhea assigns RHEA:19413 to EC 6.1.1.20, and EC 6.1.1.20 maps to exactly one Rhea master reaction
+        (RHEA:19413), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q7SYV0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYFAB_XENLA is an exemplar enzyme carrying EC 6.1.1.20, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.20
+      snippet: DR   Q6AZG6, SYFAA_XENLA;  Q7SYV0, SYFAB_XENLA;  B0C6I2, SYFA_ACAM1 ;
+      notes: ExPASy ENZYME entry EC 6.1.1.20 cross-references UniProtKB:Q7SYV0 (SYFAB_XENLA) as a protein
+        with this activity.
+    - reference: RHEA:19413
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.20"/>
+      notes: Rhea assigns RHEA:19413 to EC 6.1.1.20, and EC 6.1.1.20 maps to exactly one Rhea master reaction
+        (RHEA:19413), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B0C6I2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYFA_ACAM1 is an exemplar enzyme carrying EC 6.1.1.20, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.20
+      snippet: DR   Q6AZG6, SYFAA_XENLA;  Q7SYV0, SYFAB_XENLA;  B0C6I2, SYFA_ACAM1 ;
+      notes: ExPASy ENZYME entry EC 6.1.1.20 cross-references UniProtKB:B0C6I2 (SYFA_ACAM1) as a protein
+        with this activity.
+    - reference: RHEA:19413
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.20"/>
+      notes: Rhea assigns RHEA:19413 to EC 6.1.1.20, and EC 6.1.1.20 maps to exactly one Rhea master reaction
+        (RHEA:19413), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

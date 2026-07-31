@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 canonical_examples:
@@ -33,4 +33,66 @@ definitions:
       Catalyses: Endopeptidase for which the P1 residue is preferably hydrophobic
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of HIV-2 retropepsin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.47. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endopeptidase
+    for which the P1 residue is preferably hydrophobic".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: HIV-2 retropepsin
+    grounding: EC:3.4.23.47
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P18096
+    node_type: PROTEIN
+    label: POL_HV2BE
+    grounding: UniProtKB:P18096
+  - node_id: prot_P24107
+    node_type: PROTEIN
+    label: POL_HV2CA
+    grounding: UniProtKB:P24107
+  - node_id: prot_P17757
+    node_type: PROTEIN
+    label: POL_HV2D1
+    grounding: UniProtKB:P17757
+  edges:
+  - subject: prot_P18096
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL_HV2BE is an exemplar enzyme with EC 3.4.23.47 activity.
+    evidence:
+    - reference: EC:3.4.23.47
+      snippet: DR   P18096, POL_HV2BE  ;  P24107, POL_HV2CA  ;  P17757, POL_HV2D1  ;
+      notes: ExPASy ENZYME entry EC 3.4.23.47 cross-references UniProtKB:P18096 (POL_HV2BE) as a protein
+        with this activity.
+  - subject: prot_P24107
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL_HV2CA is an exemplar enzyme with EC 3.4.23.47 activity.
+    evidence:
+    - reference: EC:3.4.23.47
+      snippet: DR   P18096, POL_HV2BE  ;  P24107, POL_HV2CA  ;  P17757, POL_HV2D1  ;
+      notes: ExPASy ENZYME entry EC 3.4.23.47 cross-references UniProtKB:P24107 (POL_HV2CA) as a protein
+        with this activity.
+  - subject: prot_P17757
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POL_HV2D1 is an exemplar enzyme with EC 3.4.23.47 activity.
+    evidence:
+    - reference: EC:3.4.23.47
+      snippet: DR   P18096, POL_HV2BE  ;  P24107, POL_HV2CA  ;  P17757, POL_HV2D1  ;
+      notes: ExPASy ENZYME entry EC 3.4.23.47 cross-references UniProtKB:P17757 (POL_HV2D1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -41,4 +41,259 @@ definitions:
       Catalyses: a 5'-end ribonucleotide-tRNA(His) + GTP + ATP + H2O = a 5'-end phospho- guanosine-ribonucleotide-tRNA(His) + AMP + 2 diphosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA(His) guanylyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.79. EC 2.7.7.79 maps to exactly
+    one curated Rhea reaction (RHEA:54564), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 5''-end ribonucleotide-tRNA(His)
+    + GTP + ATP + H2O = a 5''-end phospho- guanosine-ribonucleotide-tRNA(His) + AMP + 2 diphosphate +
+    H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA(His) guanylyltransferase
+    grounding: EC:2.7.7.79
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 5'-end ribonucleotide-tRNA(His)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:14193
+    description: Rhea compound GENERIC:14193.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: 5'-end ribonucleotide residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14193 (a 5'-end
+      ribonucleotide-tRNA(His)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138282
+  - node_id: sub2
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: sub4
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 5'-end phospho-guanosine-ribonucleotide-tRNA(His)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:14917
+    description: Rhea compound GENERIC:14917.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 5'-phospho-guanosine-ribonucleotide residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14917 (a 5'-end
+      phospho-guanosine-ribonucleotide-tRNA(His)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:141847
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA guanylyltransferase activity
+    grounding: GO:0008193
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_F4IRQ5
+    node_type: PROTEIN
+    label: THG1_ARATH
+    grounding: UniProtKB:F4IRQ5
+  - node_id: prot_Q05B50
+    node_type: PROTEIN
+    label: THG1_BOVIN
+    grounding: UniProtKB:Q05B50
+  - node_id: prot_Q6FPX3
+    node_type: PROTEIN
+    label: THG1_CANGA
+    grounding: UniProtKB:Q6FPX3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 5'-end ribonucleotide-tRNA(His) is a substrate consumed by RHEA:54564 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54565
+      snippet: a 5'-end ribonucleotide-tRNA(His) + GTP + ATP + H2O => a 5'-end phospho-guanosine-ribonucleotide-tRNA(His)
+        + AMP + 2 diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54565 declares side 54564_L as its substrates
+        (rh:substrates); the master reaction RHEA:54564 is undirected. This participant is GENERIC:14193
+        with coefficient 1. Rhea cites PMID:24548272, PMID:20660484, PMID:1660461, PMID:1660462 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 5'-end ribonucleotide residue is the reactive part of a 5'-end ribonucleotide-tRNA(His).
+    evidence:
+    - reference: RHEA:54564
+      snippet: 5'-end ribonucleotide residue
+      notes: Rhea compound GENERIC:14193 (a 5'-end ribonucleotide-tRNA(His)) declares rh:reactivePart
+        = 5'-end ribonucleotide residue (CHEBI:138282).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: GTP is a substrate consumed by RHEA:54564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54565
+      snippet: a 5'-end ribonucleotide-tRNA(His) + GTP + ATP + H2O => a 5'-end phospho-guanosine-ribonucleotide-tRNA(His)
+        + AMP + 2 diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54565 declares side 54564_L as its substrates
+        (rh:substrates); the master reaction RHEA:54564 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:24548272, PMID:20660484, PMID:1660461, PMID:1660462 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:54564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54565
+      snippet: a 5'-end ribonucleotide-tRNA(His) + GTP + ATP + H2O => a 5'-end phospho-guanosine-ribonucleotide-tRNA(His)
+        + AMP + 2 diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54565 declares side 54564_L as its substrates
+        (rh:substrates); the master reaction RHEA:54564 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:24548272, PMID:20660484, PMID:1660461, PMID:1660462 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H2O is a substrate consumed by RHEA:54564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54565
+      snippet: a 5'-end ribonucleotide-tRNA(His) + GTP + ATP + H2O => a 5'-end phospho-guanosine-ribonucleotide-tRNA(His)
+        + AMP + 2 diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54565 declares side 54564_L as its substrates
+        (rh:substrates); the master reaction RHEA:54564 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:24548272, PMID:20660484, PMID:1660461, PMID:1660462 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 5'-end phospho-guanosine-ribonucleotide-tRNA(His) is a product released by RHEA:54564
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54565
+      snippet: a 5'-end ribonucleotide-tRNA(His) + GTP + ATP + H2O => a 5'-end phospho-guanosine-ribonucleotide-tRNA(His)
+        + AMP + 2 diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54565 declares side 54564_R as its products
+        (rh:products); the master reaction RHEA:54564 is undirected. This participant is GENERIC:14917
+        with coefficient 1. Rhea cites PMID:24548272, PMID:20660484, PMID:1660461, PMID:1660462 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 5'-phospho-guanosine-ribonucleotide residue is the reactive part of a 5'-end phospho-guanosine-ribonucleotide-tRNA(His).
+    evidence:
+    - reference: RHEA:54564
+      snippet: 5'-phospho-guanosine-ribonucleotide residue
+      notes: Rhea compound GENERIC:14917 (a 5'-end phospho-guanosine-ribonucleotide-tRNA(His)) declares
+        rh:reactivePart = 5'-phospho-guanosine-ribonucleotide residue (CHEBI:141847).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:54564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54565
+      snippet: a 5'-end ribonucleotide-tRNA(His) + GTP + ATP + H2O => a 5'-end phospho-guanosine-ribonucleotide-tRNA(His)
+        + AMP + 2 diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54565 declares side 54564_R as its products
+        (rh:products); the master reaction RHEA:54564 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:24548272, PMID:20660484, PMID:1660461, PMID:1660462 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:54564 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:54565
+      snippet: a 5'-end ribonucleotide-tRNA(His) + GTP + ATP + H2O => a 5'-end phospho-guanosine-ribonucleotide-tRNA(His)
+        + AMP + 2 diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54565 declares side 54564_R as its products
+        (rh:products); the master reaction RHEA:54564 is undirected. This participant is CHEBI:33019 with
+        coefficient 2. Rhea cites PMID:24548272, PMID:20660484, PMID:1660461, PMID:1660462 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:54564 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54565
+      snippet: a 5'-end ribonucleotide-tRNA(His) + GTP + ATP + H2O => a 5'-end phospho-guanosine-ribonucleotide-tRNA(His)
+        + AMP + 2 diphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54565 declares side 54564_R as its products
+        (rh:products); the master reaction RHEA:54564 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:24548272, PMID:20660484, PMID:1660461, PMID:1660462 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.7.79
+      snippet: EC:2.7.7.79 > GO:tRNA guanylyltransferase activity ; GO:0008193
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008193 is itself a record
+        in this KB.
+  - subject: prot_F4IRQ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THG1_ARATH is an exemplar enzyme with EC 2.7.7.79 activity.
+    evidence:
+    - reference: EC:2.7.7.79
+      snippet: DR   F4IRQ5, THG1_ARATH ;  Q05B50, THG1_BOVIN ;  Q6FPX3, THG1_CANGA ;
+      notes: ExPASy ENZYME entry EC 2.7.7.79 cross-references UniProtKB:F4IRQ5 (THG1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q05B50
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THG1_BOVIN is an exemplar enzyme with EC 2.7.7.79 activity.
+    evidence:
+    - reference: EC:2.7.7.79
+      snippet: DR   F4IRQ5, THG1_ARATH ;  Q05B50, THG1_BOVIN ;  Q6FPX3, THG1_CANGA ;
+      notes: ExPASy ENZYME entry EC 2.7.7.79 cross-references UniProtKB:Q05B50 (THG1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q6FPX3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THG1_CANGA is an exemplar enzyme with EC 2.7.7.79 activity.
+    evidence:
+    - reference: EC:2.7.7.79
+      snippet: DR   F4IRQ5, THG1_ARATH ;  Q05B50, THG1_BOVIN ;  Q6FPX3, THG1_CANGA ;
+      notes: ExPASy ENZYME entry EC 2.7.7.79 cross-references UniProtKB:Q6FPX3 (THG1_CANGA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

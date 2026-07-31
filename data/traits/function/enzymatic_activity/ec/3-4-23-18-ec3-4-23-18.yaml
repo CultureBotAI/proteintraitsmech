@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 synonyms:
@@ -50,4 +50,67 @@ definitions:
       Catalyses: Hydrolysis of proteins with broad specificity. Generally favors hydrophobic residues in P1 and P1', but also accepts Lys in P1, which leads to activation of trypsinogen. Does not clot milk
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aspergillopepsin I
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.18. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of proteins with broad specificity. Generally favors hydrophobic residues in P1 and P1'', but also
+    accepts Lys in P1, which leads to activation of trypsinogen. Does not clot milk".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aspergillopepsin I
+    grounding: EC:3.4.23.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_D4ANC3
+    node_type: PROTEIN
+    label: PEPA_ARTBC
+    grounding: UniProtKB:D4ANC3
+  - node_id: prot_P17946
+    node_type: PROTEIN
+    label: PEPA_ASPAW
+    grounding: UniProtKB:P17946
+  - node_id: prot_A1CBR4
+    node_type: PROTEIN
+    label: PEPA_ASPCL
+    grounding: UniProtKB:A1CBR4
+  edges:
+  - subject: prot_D4ANC3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPA_ARTBC is an exemplar enzyme with EC 3.4.23.18 activity.
+    evidence:
+    - reference: EC:3.4.23.18
+      snippet: DR   D4ANC3, PEPA_ARTBC ;  P17946, PEPA_ASPAW ;  A1CBR4, PEPA_ASPCL ;
+      notes: ExPASy ENZYME entry EC 3.4.23.18 cross-references UniProtKB:D4ANC3 (PEPA_ARTBC) as a protein
+        with this activity.
+  - subject: prot_P17946
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPA_ASPAW is an exemplar enzyme with EC 3.4.23.18 activity.
+    evidence:
+    - reference: EC:3.4.23.18
+      snippet: DR   D4ANC3, PEPA_ARTBC ;  P17946, PEPA_ASPAW ;  A1CBR4, PEPA_ASPCL ;
+      notes: ExPASy ENZYME entry EC 3.4.23.18 cross-references UniProtKB:P17946 (PEPA_ASPAW) as a protein
+        with this activity.
+  - subject: prot_A1CBR4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPA_ASPCL is an exemplar enzyme with EC 3.4.23.18 activity.
+    evidence:
+    - reference: EC:3.4.23.18
+      snippet: DR   D4ANC3, PEPA_ARTBC ;  P17946, PEPA_ASPAW ;  A1CBR4, PEPA_ASPCL ;
+      notes: ExPASy ENZYME entry EC 3.4.23.18 cross-references UniProtKB:A1CBR4 (PEPA_ASPCL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

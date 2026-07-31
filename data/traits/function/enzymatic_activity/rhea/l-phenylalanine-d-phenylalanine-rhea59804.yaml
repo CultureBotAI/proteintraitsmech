@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58095
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,75 @@ definitions:
       Catalyses the reaction: L-phenylalanine = D-phenylalanine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-phenylalanine = D-phenylalanine
+  description: Substrate-to-product chemistry of RHEA:59804, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59805 (rh:substrates → 59804_L, rh:products → 59804_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-phenylalanine = D-phenylalanine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59804
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-phenylalanine = D-phenylalanine'
+  - node_id: sub1
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: prd1
+    label: D-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57981
+    description: Formula C9H11NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: amino-acid racemase activity
+    grounding: GO:0047661
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-phenylalanine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59805
+      snippet: L-phenylalanine => D-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:59805 declares side 59804_L as its substrates
+        (rh:substrates); the master reaction RHEA:59804 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:28894939 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-phenylalanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59805
+      snippet: L-phenylalanine => D-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:59805 declares side 59804_R as its products
+        (rh:products); the master reaction RHEA:59804 is undirected. This participant is CHEBI:57981 with
+        coefficient 1. Rhea cites PMID:28894939 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:59804
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047661"/>
+      notes: The rdfs:seeAlso triple on RHEA:59804 in rhea.rdf. GO term GO:0047661 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

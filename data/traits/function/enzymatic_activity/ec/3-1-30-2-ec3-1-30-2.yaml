@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.30.-
 synonyms:
@@ -28,4 +28,38 @@ definitions:
       Catalyses: Endonucleolytic cleavage to 5'-phosphomononucleotide and 5'-phosphooligonucleotide end-products
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Serratia marcescens nuclease
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.30.2. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endonucleolytic
+    cleavage to 5''-phosphomononucleotide and 5''-phosphooligonucleotide end-products".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: Serratia marcescens nuclease
+    grounding: EC:3.1.30.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P13717
+    node_type: PROTEIN
+    label: NUCA_SERMA
+    grounding: UniProtKB:P13717
+  edges:
+  - subject: prot_P13717
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NUCA_SERMA is an exemplar enzyme with EC 3.1.30.2 activity.
+    evidence:
+    - reference: EC:3.1.30.2
+      snippet: DR   P13717, NUCA_SERMA ;
+      notes: ExPASy ENZYME entry EC 3.1.30.2 cross-references UniProtKB:P13717 (NUCA_SERMA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

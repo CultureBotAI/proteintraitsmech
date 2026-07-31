@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -45,4 +45,81 @@ definitions:
       Catalyses: Hydrolysis of terminal non-reducing N-acetyl-D-hexosamine residues in N-acetyl-beta-D-hexosaminides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-N-acetylhexosaminidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.52. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of terminal non-reducing N-acetyl-D-hexosamine residues in N-acetyl-beta-D-hexosaminides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-N-acetylhexosaminidase
+    grounding: EC:3.2.1.52
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-N-acetylhexosaminidase activity
+    grounding: GO:0004563
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q54468
+    node_type: PROTEIN
+    label: CHB_SERMA
+    grounding: UniProtKB:Q54468
+  - node_id: prot_P13670
+    node_type: PROTEIN
+    label: CHB_VIBHA
+    grounding: UniProtKB:P13670
+  - node_id: prot_O35744
+    node_type: PROTEIN
+    label: CHIL3_MOUSE
+    grounding: UniProtKB:O35744
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.52
+      snippet: EC:3.2.1.52 > GO:beta-N-acetylhexosaminidase activity ; GO:0004563
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004563 is itself a record
+        in this KB.
+  - subject: prot_Q54468
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHB_SERMA is an exemplar enzyme with EC 3.2.1.52 activity.
+    evidence:
+    - reference: EC:3.2.1.52
+      snippet: DR   Q54468, CHB_SERMA  ;  P13670, CHB_VIBHA  ;  O35744, CHIL3_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.2.1.52 cross-references UniProtKB:Q54468 (CHB_SERMA) as a protein
+        with this activity.
+  - subject: prot_P13670
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHB_VIBHA is an exemplar enzyme with EC 3.2.1.52 activity.
+    evidence:
+    - reference: EC:3.2.1.52
+      snippet: DR   Q54468, CHB_SERMA  ;  P13670, CHB_VIBHA  ;  O35744, CHIL3_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.2.1.52 cross-references UniProtKB:P13670 (CHB_VIBHA) as a protein
+        with this activity.
+  - subject: prot_O35744
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHIL3_MOUSE is an exemplar enzyme with EC 3.2.1.52 activity.
+    evidence:
+    - reference: EC:3.2.1.52
+      snippet: DR   Q54468, CHB_SERMA  ;  P13670, CHB_VIBHA  ;  O35744, CHIL3_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.2.1.52 cross-references UniProtKB:O35744 (CHIL3_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

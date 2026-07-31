@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.14.-
 mapped_xrefs:
@@ -38,4 +38,196 @@ definitions:
       Catalyses: L-arginyl-[protein] + ATP = N(omega)-phospho-L-arginyl-[protein] + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein arginine kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.14.1. EC 2.7.14.1 maps to exactly
+    one curated Rhea reaction (RHEA:43384), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-arginyl-[protein]
+    + ATP = N(omega)-phospho-L-arginyl-[protein] + ADP + H(+)". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein arginine kinase
+    grounding: EC:2.7.14.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10532
+    description: Rhea compound GENERIC:10532.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-arginine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10532 (L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29965
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: N(omega)-phospho-L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10533
+    description: Rhea compound GENERIC:10533.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(omega)-phospho-L-arginine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10533 (N(omega)-phospho-L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83226
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein arginine kinase activity
+    grounding: GO:1990424
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_C3P9M6
+    node_type: PROTEIN
+    label: MCSB_BACAA
+    grounding: UniProtKB:C3P9M6
+  - node_id: prot_C3LJ53
+    node_type: PROTEIN
+    label: MCSB_BACAC
+    grounding: UniProtKB:C3LJ53
+  - node_id: prot_Q81VW0
+    node_type: PROTEIN
+    label: MCSB_BACAN
+    grounding: UniProtKB:Q81VW0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arginyl-[protein] is a substrate consumed by RHEA:43384 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43385
+      snippet: L-arginyl-[protein] + ATP => N(omega)-phospho-L-arginyl-[protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43385 declares side 43384_L as its substrates
+        (rh:substrates); the master reaction RHEA:43384 is undirected. This participant is GENERIC:10532
+        with coefficient 1. Rhea cites PMID:22517742, PMID:19498169 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-arginine residue is the reactive part of L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:43384
+      snippet: L-arginine residue
+      notes: Rhea compound GENERIC:10532 (L-arginyl-[protein]) declares rh:reactivePart = L-arginine residue
+        (CHEBI:29965).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:43384 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43385
+      snippet: L-arginyl-[protein] + ATP => N(omega)-phospho-L-arginyl-[protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43385 declares side 43384_L as its substrates
+        (rh:substrates); the master reaction RHEA:43384 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:22517742, PMID:19498169 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(omega)-phospho-L-arginyl-[protein] is a product released by RHEA:43384 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:43385
+      snippet: L-arginyl-[protein] + ATP => N(omega)-phospho-L-arginyl-[protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43385 declares side 43384_R as its products
+        (rh:products); the master reaction RHEA:43384 is undirected. This participant is GENERIC:10533
+        with coefficient 1. Rhea cites PMID:22517742, PMID:19498169 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(omega)-phospho-L-arginine residue is the reactive part of N(omega)-phospho-L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:43384
+      snippet: N(omega)-phospho-L-arginine residue
+      notes: Rhea compound GENERIC:10533 (N(omega)-phospho-L-arginyl-[protein]) declares rh:reactivePart
+        = N(omega)-phospho-L-arginine residue (CHEBI:83226).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:43384 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43385
+      snippet: L-arginyl-[protein] + ATP => N(omega)-phospho-L-arginyl-[protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43385 declares side 43384_R as its products
+        (rh:products); the master reaction RHEA:43384 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:22517742, PMID:19498169 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:43384 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43385
+      snippet: L-arginyl-[protein] + ATP => N(omega)-phospho-L-arginyl-[protein] + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43385 declares side 43384_R as its products
+        (rh:products); the master reaction RHEA:43384 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:22517742, PMID:19498169 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.14.1
+      snippet: EC:2.7.14.1 > GO:protein arginine kinase activity ; GO:1990424
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:1990424 is itself a record
+        in this KB.
+  - subject: prot_C3P9M6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCSB_BACAA is an exemplar enzyme with EC 2.7.14.1 activity.
+    evidence:
+    - reference: EC:2.7.14.1
+      snippet: DR   C3P9M6, MCSB_BACAA ;  C3LJ53, MCSB_BACAC ;  Q81VW0, MCSB_BACAN ;
+      notes: ExPASy ENZYME entry EC 2.7.14.1 cross-references UniProtKB:C3P9M6 (MCSB_BACAA) as a protein
+        with this activity.
+  - subject: prot_C3LJ53
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCSB_BACAC is an exemplar enzyme with EC 2.7.14.1 activity.
+    evidence:
+    - reference: EC:2.7.14.1
+      snippet: DR   C3P9M6, MCSB_BACAA ;  C3LJ53, MCSB_BACAC ;  Q81VW0, MCSB_BACAN ;
+      notes: ExPASy ENZYME entry EC 2.7.14.1 cross-references UniProtKB:C3LJ53 (MCSB_BACAC) as a protein
+        with this activity.
+  - subject: prot_Q81VW0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MCSB_BACAN is an exemplar enzyme with EC 2.7.14.1 activity.
+    evidence:
+    - reference: EC:2.7.14.1
+      snippet: DR   C3P9M6, MCSB_BACAA ;  C3LJ53, MCSB_BACAC ;  Q81VW0, MCSB_BACAN ;
+      notes: ExPASy ENZYME entry EC 2.7.14.1 cross-references UniProtKB:Q81VW0 (MCSB_BACAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

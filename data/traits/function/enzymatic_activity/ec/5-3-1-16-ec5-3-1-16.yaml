@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.1.-
 synonyms:
@@ -45,4 +45,123 @@ definitions:
       Catalyses: 1-(5-phospho-beta-D-ribosyl)-5-[(5-phospho-beta-D- ribosylamino)methylideneamino]imidazole-4-carboxamide = 5-[(5-phospho-1- deoxy-D-ribulos-1-ylimino)methylamino]-1-(5-phospho-beta-D- ribosyl)imidazole-4-carboxamide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-(5-phosphoribosyl)-5-
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.1.16. EC 5.3.1.16 maps to exactly
+    one curated Rhea reaction (RHEA:15469), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "1-(5-phospho-beta-D-ribosyl)-5-[(5-phospho-beta-D-
+    ribosylamino)methylideneamino]imidazole-4-carboxamide = 5-[(5-phospho-1- deoxy-D-ribulos-1-ylimino)methylamino]-1-(5-phospho-beta-D-
+    ribosyl)imidazole-4-carboxamide". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 1-(5-phosphoribosyl)-5-
+    grounding: EC:5.3.1.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 1-(5-phospho-beta-D-ribosyl)-5-[(5-phospho-beta-D-ribosylamino)methylideneamino]imidazole…
+    node_type: CHEMICAL
+    grounding: CHEBI:58435
+    description: 'Full Rhea name: 1-(5-phospho-beta-D-ribosyl)-5-[(5-phospho-beta-D-ribosylamino)methylideneamino]imidazole-4-carboxamide
+      Formula C15H21N5O15P2.'
+  - node_id: prd1
+    label: 5-[(5-phospho-1-deoxy-D-ribulos-1-ylimino)methylamino]-1-(5-phospho-beta-D-ribosyl)imidaz…
+    node_type: CHEMICAL
+    grounding: CHEBI:58525
+    description: 'Full Rhea name: 5-[(5-phospho-1-deoxy-D-ribulos-1-ylimino)methylamino]-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide
+      Formula C15H21N5O15P2.'
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 1-(5-phosphoribosyl)-5-[(5-phosphoribosylamino)methylideneamino]imidazole-4-carboxamide isomerase
+      activity
+    grounding: GO:0003949
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O82782
+    node_type: PROTEIN
+    label: HIS3_ARATH
+    grounding: UniProtKB:O82782
+  - node_id: prot_Q7N6I4
+    node_type: PROTEIN
+    label: HIS41_PHOLL
+    grounding: UniProtKB:Q7N6I4
+  - node_id: prot_Q5LU97
+    node_type: PROTEIN
+    label: HIS41_RUEPO
+    grounding: UniProtKB:Q5LU97
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-(5-phospho-beta-D-ribosyl)-5-[(5-phospho-beta-D-ribosylamino)methylideneamino]imidazole-4-carboxamide
+      is a substrate consumed by RHEA:15469 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15470
+      snippet: 1-(5-phospho-beta-D-ribosyl)-5-[(5-phospho-beta-D-ribosylamino)methylideneamino]imidazole-4-carboxamide
+        => 5-[(5-phospho-1-deoxy-D-ribulos-1-ylimino)methylamino]-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide
+      notes: Rhea's left-to-right directional reaction RHEA:15470 declares side 15469_L as its substrates
+        (rh:substrates); the master reaction RHEA:15469 is undirected. This participant is CHEBI:58435
+        with coefficient 1. Rhea cites PMID:39186852, PMID:16731983, PMID:12356303 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-[(5-phospho-1-deoxy-D-ribulos-1-ylimino)methylamino]-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide
+      is a product released by RHEA:15469 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15470
+      snippet: 1-(5-phospho-beta-D-ribosyl)-5-[(5-phospho-beta-D-ribosylamino)methylideneamino]imidazole-4-carboxamide
+        => 5-[(5-phospho-1-deoxy-D-ribulos-1-ylimino)methylamino]-1-(5-phospho-beta-D-ribosyl)imidazole-4-carboxamide
+      notes: Rhea's left-to-right directional reaction RHEA:15470 declares side 15469_R as its products
+        (rh:products); the master reaction RHEA:15469 is undirected. This participant is CHEBI:58525 with
+        coefficient 1. Rhea cites PMID:39186852, PMID:16731983, PMID:12356303 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.1.16
+      snippet: EC:5.3.1.16 > GO:1-(5-phosphoribosyl)-5-[(5-phosphoribosylamino)methylideneamino]imidazole-4-carboxamide
+        isomerase activity ; GO:0003949
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003949 is itself a record
+        in this KB.
+  - subject: prot_O82782
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS3_ARATH is an exemplar enzyme with EC 5.3.1.16 activity.
+    evidence:
+    - reference: EC:5.3.1.16
+      snippet: DR   O82782, HIS3_ARATH ;  Q7N6I4, HIS41_PHOLL;  Q5LU97, HIS41_RUEPO;
+      notes: ExPASy ENZYME entry EC 5.3.1.16 cross-references UniProtKB:O82782 (HIS3_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q7N6I4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS41_PHOLL is an exemplar enzyme with EC 5.3.1.16 activity.
+    evidence:
+    - reference: EC:5.3.1.16
+      snippet: DR   O82782, HIS3_ARATH ;  Q7N6I4, HIS41_PHOLL;  Q5LU97, HIS41_RUEPO;
+      notes: ExPASy ENZYME entry EC 5.3.1.16 cross-references UniProtKB:Q7N6I4 (HIS41_PHOLL) as a protein
+        with this activity.
+  - subject: prot_Q5LU97
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS41_RUEPO is an exemplar enzyme with EC 5.3.1.16 activity.
+    evidence:
+    - reference: EC:5.3.1.16
+      snippet: DR   O82782, HIS3_ARATH ;  Q7N6I4, HIS41_PHOLL;  Q5LU97, HIS41_RUEPO;
+      notes: ExPASy ENZYME entry EC 5.3.1.16 cross-references UniProtKB:Q5LU97 (HIS41_RUEPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

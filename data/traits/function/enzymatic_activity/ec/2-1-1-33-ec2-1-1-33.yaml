@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 synonyms:
@@ -47,4 +47,184 @@ definitions:
       Catalyses: guanosine(46) in tRNA + S-adenosyl-L-methionine = N(7)- methylguanosine(46) in tRNA + S-adenosyl-L-homocysteine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA (guanine(46)-N(7))-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.33. EC 2.1.1.33 maps to exactly
+    one curated Rhea reaction (RHEA:42708), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "guanosine(46)
+    in tRNA + S-adenosyl-L-methionine = N(7)- methylguanosine(46) in tRNA + S-adenosyl-L-homocysteine".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA (guanine(46)-N(7))-methyltransferase
+    grounding: EC:2.1.1.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: guanosine(46) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10189
+    description: Rhea compound GENERIC:10189.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: GMP residue at position 46
+    description: The reacting group Rhea names inside the generic participant GENERIC:10189 (guanosine(46)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74269
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: N(7)-methylguanosine(46) in tRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10188
+    description: Rhea compound GENERIC:10188.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(7)-methylguanosine 5'-phosphate residue at position 46
+    description: The reacting group Rhea names inside the generic participant GENERIC:10188 (N(7)-methylguanosine(46)
+      in tRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74480
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA (guanine(46)-N7)-methyltransferase activity
+    grounding: GO:0008176
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q1RH40
+    node_type: PROTEIN
+    label: RFTRM_RICBR
+    grounding: UniProtKB:Q1RH40
+  - node_id: prot_Q92G13
+    node_type: PROTEIN
+    label: RFTRM_RICCN
+    grounding: UniProtKB:Q92G13
+  - node_id: prot_Q4UJU4
+    node_type: PROTEIN
+    label: RFTRM_RICFE
+    grounding: UniProtKB:Q4UJU4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: guanosine(46) in tRNA is a substrate consumed by RHEA:42708 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42709
+      snippet: guanosine(46) in tRNA + S-adenosyl-L-methionine => N(7)-methylguanosine(46) in tRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:42709 declares side 42708_L as its substrates
+        (rh:substrates); the master reaction RHEA:42708 is undirected. This participant is GENERIC:10189
+        with coefficient 1. Rhea cites PMID:794833, PMID:16600901 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: GMP residue is the reactive part of guanosine(46) in tRNA.
+    evidence:
+    - reference: RHEA:42708
+      snippet: GMP residue
+      notes: Rhea compound GENERIC:10189 (guanosine(46) in tRNA) declares rh:reactivePart at position
+        46 = GMP residue (CHEBI:74269).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:42708 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42709
+      snippet: guanosine(46) in tRNA + S-adenosyl-L-methionine => N(7)-methylguanosine(46) in tRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:42709 declares side 42708_L as its substrates
+        (rh:substrates); the master reaction RHEA:42708 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:794833, PMID:16600901 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(7)-methylguanosine(46) in tRNA is a product released by RHEA:42708 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42709
+      snippet: guanosine(46) in tRNA + S-adenosyl-L-methionine => N(7)-methylguanosine(46) in tRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:42709 declares side 42708_R as its products
+        (rh:products); the master reaction RHEA:42708 is undirected. This participant is GENERIC:10188
+        with coefficient 1. Rhea cites PMID:794833, PMID:16600901 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(7)-methylguanosine 5'-phosphate residue is the reactive part of N(7)-methylguanosine(46)
+      in tRNA.
+    evidence:
+    - reference: RHEA:42708
+      snippet: N(7)-methylguanosine 5'-phosphate residue
+      notes: Rhea compound GENERIC:10188 (N(7)-methylguanosine(46) in tRNA) declares rh:reactivePart at
+        position 46 = N(7)-methylguanosine 5'-phosphate residue (CHEBI:74480).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:42708 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42709
+      snippet: guanosine(46) in tRNA + S-adenosyl-L-methionine => N(7)-methylguanosine(46) in tRNA + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:42709 declares side 42708_R as its products
+        (rh:products); the master reaction RHEA:42708 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:794833, PMID:16600901 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.1.1.33
+      snippet: EC:2.1.1.33 > GO:tRNA (guanine(46)-N7)-methyltransferase activity ; GO:0008176
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008176 is itself a record
+        in this KB.
+  - subject: prot_Q1RH40
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RFTRM_RICBR is an exemplar enzyme with EC 2.1.1.33 activity.
+    evidence:
+    - reference: EC:2.1.1.33
+      snippet: DR   Q1RH40, RFTRM_RICBR;  Q92G13, RFTRM_RICCN;  Q4UJU4, RFTRM_RICFE;
+      notes: ExPASy ENZYME entry EC 2.1.1.33 cross-references UniProtKB:Q1RH40 (RFTRM_RICBR) as a protein
+        with this activity.
+  - subject: prot_Q92G13
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RFTRM_RICCN is an exemplar enzyme with EC 2.1.1.33 activity.
+    evidence:
+    - reference: EC:2.1.1.33
+      snippet: DR   Q1RH40, RFTRM_RICBR;  Q92G13, RFTRM_RICCN;  Q4UJU4, RFTRM_RICFE;
+      notes: ExPASy ENZYME entry EC 2.1.1.33 cross-references UniProtKB:Q92G13 (RFTRM_RICCN) as a protein
+        with this activity.
+  - subject: prot_Q4UJU4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RFTRM_RICFE is an exemplar enzyme with EC 2.1.1.33 activity.
+    evidence:
+    - reference: EC:2.1.1.33
+      snippet: DR   Q1RH40, RFTRM_RICBR;  Q92G13, RFTRM_RICCN;  Q4UJU4, RFTRM_RICFE;
+      notes: ExPASy ENZYME entry EC 2.1.1.33 cross-references UniProtKB:Q4UJU4 (RFTRM_RICFE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

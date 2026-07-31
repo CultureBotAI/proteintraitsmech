@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -49,4 +49,289 @@ definitions:
       Catalyses: RX + glutathione = an S-substituted glutathione + a halide anion + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glutathione transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.18. Rhea assigns 2 curated
+    reactions to EC 2.5.1.18. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "RX + glutathione = an S-substituted glutathione + a halide
+    anion + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glutathione transferase
+    grounding: EC:2.5.1.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of RX + glutathione = an S-substituted glutathione + a halide anion + H(+)
+    grounding: RHEA:16437
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: RX + glutathione = an S-substituted glutathione + a halide anion + H(+)'
+  - node_id: rxn1_sub1
+    label: RX
+    node_type: CHEMICAL
+    grounding: CHEBI:17792
+    description: Formula RX.
+  - node_id: rxn1_sub2
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: rxn1_prd1
+    label: an S-substituted glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:90779
+    description: Formula C10H15N3O6SR.
+  - node_id: rxn1_prd2
+    label: a halide anion
+    node_type: CHEMICAL
+    grounding: CHEBI:16042
+    description: Formula X.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 1-chloro-2,4-dinitrobenzene + glutathione = 2,4-dinitrophenyl-S-glutathione…
+    grounding: RHEA:51220
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 1-chloro-2,4-dinitrobenzene + glutathione = 2,4-dinitrophenyl-S-glutathione
+      + chloride + H(+)'
+  - node_id: rxn2_sub1
+    label: 1-chloro-2,4-dinitrobenzene
+    node_type: CHEMICAL
+    grounding: CHEBI:34718
+    description: Formula C6H3ClN2O4.
+  - node_id: rxn2_sub2
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: rxn2_prd1
+    label: 2,4-dinitrophenyl-S-glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:133977
+    description: Formula C16H18N5O10S.
+  - node_id: rxn2_prd2
+    label: chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17996
+    description: Formula Cl.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glutathione transferase activity
+    grounding: GO:0004364
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q2UPB2
+    node_type: PROTEIN
+    label: ACLG_ASPOR
+    grounding: UniProtKB:Q2UPB2
+  - node_id: prot_Q0CS62
+    node_type: PROTEIN
+    label: ATIMG_ASPTN
+    grounding: UniProtKB:Q0CS62
+  - node_id: prot_Q9FWR4
+    node_type: PROTEIN
+    label: DHAR1_ARATH
+    grounding: UniProtKB:Q9FWR4
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:16437 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.18; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:16437
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.18"/>
+      notes: The rh:ec triple on RHEA:16437 in rhea.rdf assigns that reaction to EC 2.5.1.18.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: RX is a substrate consumed by RHEA:16437 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16438
+      snippet: RX + glutathione => an S-substituted glutathione + a halide anion + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16438 declares side 16437_L as its substrates
+        (rh:substrates); the master reaction RHEA:16437 is undirected. This participant is CHEBI:17792
+        with coefficient 1. Rhea cites PMID:1540159, PMID:1567427, PMID:15970797, PMID:21106529 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: glutathione is a substrate consumed by RHEA:16437 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16438
+      snippet: RX + glutathione => an S-substituted glutathione + a halide anion + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16438 declares side 16437_L as its substrates
+        (rh:substrates); the master reaction RHEA:16437 is undirected. This participant is CHEBI:57925
+        with coefficient 1. Rhea cites PMID:1540159, PMID:1567427, PMID:15970797, PMID:21106529 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: an S-substituted glutathione is a product released by RHEA:16437 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16438
+      snippet: RX + glutathione => an S-substituted glutathione + a halide anion + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16438 declares side 16437_R as its products
+        (rh:products); the master reaction RHEA:16437 is undirected. This participant is CHEBI:90779 with
+        coefficient 1. Rhea cites PMID:1540159, PMID:1567427, PMID:15970797, PMID:21106529 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: a halide anion is a product released by RHEA:16437 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16438
+      snippet: RX + glutathione => an S-substituted glutathione + a halide anion + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16438 declares side 16437_R as its products
+        (rh:products); the master reaction RHEA:16437 is undirected. This participant is CHEBI:16042 with
+        coefficient 1. Rhea cites PMID:1540159, PMID:1567427, PMID:15970797, PMID:21106529 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:16437 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16438
+      snippet: RX + glutathione => an S-substituted glutathione + a halide anion + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16438 declares side 16437_R as its products
+        (rh:products); the master reaction RHEA:16437 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:1540159, PMID:1567427, PMID:15970797, PMID:21106529 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:51220 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.18; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:51220
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.18"/>
+      notes: The rh:ec triple on RHEA:51220 in rhea.rdf assigns that reaction to EC 2.5.1.18.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 1-chloro-2,4-dinitrobenzene is a substrate consumed by RHEA:51220 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51221
+      snippet: 1-chloro-2,4-dinitrobenzene + glutathione => 2,4-dinitrophenyl-S-glutathione + chloride
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51221 declares side 51220_L as its substrates
+        (rh:substrates); the master reaction RHEA:51220 is undirected. This participant is CHEBI:34718
+        with coefficient 1. Rhea cites PMID:16548513, PMID:10783391, PMID:7272504, PMID:11695986 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: glutathione is a substrate consumed by RHEA:51220 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51221
+      snippet: 1-chloro-2,4-dinitrobenzene + glutathione => 2,4-dinitrophenyl-S-glutathione + chloride
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51221 declares side 51220_L as its substrates
+        (rh:substrates); the master reaction RHEA:51220 is undirected. This participant is CHEBI:57925
+        with coefficient 1. Rhea cites PMID:16548513, PMID:10783391, PMID:7272504, PMID:11695986 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 2,4-dinitrophenyl-S-glutathione is a product released by RHEA:51220 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51221
+      snippet: 1-chloro-2,4-dinitrobenzene + glutathione => 2,4-dinitrophenyl-S-glutathione + chloride
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51221 declares side 51220_R as its products
+        (rh:products); the master reaction RHEA:51220 is undirected. This participant is CHEBI:133977
+        with coefficient 1. Rhea cites PMID:16548513, PMID:10783391, PMID:7272504, PMID:11695986 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: chloride is a product released by RHEA:51220 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51221
+      snippet: 1-chloro-2,4-dinitrobenzene + glutathione => 2,4-dinitrophenyl-S-glutathione + chloride
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51221 declares side 51220_R as its products
+        (rh:products); the master reaction RHEA:51220 is undirected. This participant is CHEBI:17996 with
+        coefficient 1. Rhea cites PMID:16548513, PMID:10783391, PMID:7272504, PMID:11695986 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:51220 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51221
+      snippet: 1-chloro-2,4-dinitrobenzene + glutathione => 2,4-dinitrophenyl-S-glutathione + chloride
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:51221 declares side 51220_R as its products
+        (rh:products); the master reaction RHEA:51220 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:16548513, PMID:10783391, PMID:7272504, PMID:11695986 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.18
+      snippet: EC:2.5.1.18 > GO:glutathione transferase activity ; GO:0004364
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004364 is itself a record
+        in this KB.
+  - subject: prot_Q2UPB2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACLG_ASPOR is an exemplar enzyme with EC 2.5.1.18 activity.
+    evidence:
+    - reference: EC:2.5.1.18
+      snippet: DR   Q2UPB2, ACLG_ASPOR ;  Q0CS62, ATIMG_ASPTN;  Q9FWR4, DHAR1_ARATH;
+      notes: ExPASy ENZYME entry EC 2.5.1.18 cross-references UniProtKB:Q2UPB2 (ACLG_ASPOR) as a protein
+        with this activity.
+  - subject: prot_Q0CS62
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATIMG_ASPTN is an exemplar enzyme with EC 2.5.1.18 activity.
+    evidence:
+    - reference: EC:2.5.1.18
+      snippet: DR   Q2UPB2, ACLG_ASPOR ;  Q0CS62, ATIMG_ASPTN;  Q9FWR4, DHAR1_ARATH;
+      notes: ExPASy ENZYME entry EC 2.5.1.18 cross-references UniProtKB:Q0CS62 (ATIMG_ASPTN) as a protein
+        with this activity.
+  - subject: prot_Q9FWR4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHAR1_ARATH is an exemplar enzyme with EC 2.5.1.18 activity.
+    evidence:
+    - reference: EC:2.5.1.18
+      snippet: DR   Q2UPB2, ACLG_ASPOR ;  Q0CS62, ATIMG_ASPTN;  Q9FWR4, DHAR1_ARATH;
+      notes: ExPASy ENZYME entry EC 2.5.1.18 cross-references UniProtKB:Q9FWR4 (DHAR1_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

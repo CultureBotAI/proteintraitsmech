@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:64479
     role: SUBSTRATE_OR_PRODUCT
@@ -33,4 +33,200 @@ definitions:
       Catalyses the reaction: holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) = 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP] + 9 CO2 + 10 CoA + 2 H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) = 3-(2,4-dioxopentyl)-3,6,8,9-tetrahyd…
+  description: Substrate-to-product chemistry of RHEA:64088, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:64089 (rh:substrates → 64088_L, rh:products → 64088_R), and Rhea
+    curates the reverse direction too. 4 substrates, 4 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) = 3-(2,4-dioxopentyl)-3,6,8…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:64088
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) = 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]
+      + 9 CO2 + 10 CoA + 2 H2O'
+  - node_id: sub1
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: sub1_rp1
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: sub3
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[A…
+    node_type: PROTEIN
+    grounding: RHEA-COMP:16518
+    description: 'Rhea compound GENERIC:16518. Full Rhea name: 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]'
+  - node_id: prd1_rp1
+    label: O-(S-3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxylpantetheine-4'-phosphoryl)-L-serine
+      residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:16518 (3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:149687
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd4
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: holo-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64089
+      snippet: holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) => 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]
+        + 9 CO2 + 10 CoA + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64089 declares side 64088_L as its substrates
+        (rh:substrates); the master reaction RHEA:64088 is undirected. This participant is GENERIC:9685
+        with coefficient 1. Rhea cites PMID:21866960 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:64088
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479), formula C14H25N3O8PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 9).
+    evidence:
+    - reference: RHEA:64089
+      snippet: holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) => 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]
+        + 9 CO2 + 10 CoA + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64089 declares side 64088_L as its substrates
+        (rh:substrates); the master reaction RHEA:64088 is undirected. This participant is CHEBI:57384
+        with coefficient 9. Rhea cites PMID:21866960 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64089
+      snippet: holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) => 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]
+        + 9 CO2 + 10 CoA + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64089 declares side 64088_L as its substrates
+        (rh:substrates); the master reaction RHEA:64088 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:21866960 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 9).
+    evidence:
+    - reference: RHEA:64089
+      snippet: holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) => 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]
+        + 9 CO2 + 10 CoA + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64089 declares side 64088_L as its substrates
+        (rh:substrates); the master reaction RHEA:64088 is undirected. This participant is CHEBI:15378
+        with coefficient 9. Rhea cites PMID:21866960 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]
+      is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64089
+      snippet: holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) => 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]
+        + 9 CO2 + 10 CoA + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64089 declares side 64088_R as its products
+        (rh:products); the master reaction RHEA:64088 is undirected. This participant is GENERIC:16518
+        with coefficient 1. Rhea cites PMID:21866960 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxylpantetheine-4'-phosphoryl)-L-serine
+      residue is the reactive part of 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP].
+    evidence:
+    - reference: RHEA:64088
+      snippet: O-(S-3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxylpantetheine-4'-phosphoryl)-L-serine
+        residue
+      notes: Rhea compound GENERIC:16518 (3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP])
+        declares rh:reactivePart = O-(S-3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:149687), formula C34H41N3O16PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 9).
+    evidence:
+    - reference: RHEA:64089
+      snippet: holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) => 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]
+        + 9 CO2 + 10 CoA + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64089 declares side 64088_R as its products
+        (rh:products); the master reaction RHEA:64088 is undirected. This participant is CHEBI:16526 with
+        coefficient 9. Rhea cites PMID:21866960 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CoA is a product released by this reaction (stoichiometric coefficient 10).
+    evidence:
+    - reference: RHEA:64089
+      snippet: holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) => 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]
+        + 9 CO2 + 10 CoA + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64089 declares side 64088_R as its products
+        (rh:products); the master reaction RHEA:64088 is undirected. This participant is CHEBI:57287 with
+        coefficient 10. Rhea cites PMID:21866960 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H2O is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:64089
+      snippet: holo-[ACP] + 9 malonyl-CoA + acetyl-CoA + 9 H(+) => 3-(2,4-dioxopentyl)-3,6,8,9-tetrahydroxy-1-oxo-1,2,3,4-tetrahydroanthracene-2-carboxyl-[ACP]
+        + 9 CO2 + 10 CoA + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:64089 declares side 64088_R as its products
+        (rh:products); the master reaction RHEA:64088 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:21866960 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

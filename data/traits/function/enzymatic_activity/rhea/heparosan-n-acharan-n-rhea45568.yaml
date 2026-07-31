@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.1.3.36
     mapping_source: rhea2ec
@@ -24,4 +24,80 @@ definitions:
       Catalyses the reaction: [heparosan](n) = [acharan](n)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [heparosan](n) = [acharan](n)
+  description: Substrate-to-product chemistry of RHEA:45568, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:45569 (rh:substrates → 45568_L, rh:products → 45568_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [heparosan](n) = [acharan](n)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:45568
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [heparosan](n) = [acharan](n)'
+  - node_id: sub1
+    label: '[heparosan](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:85307
+    xrefs:
+    - RHEA-COMP:11266
+    description: Rhea compound POLYMER:11266. Formula H2O(C12H19NO10)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: prd1
+    label: '[acharan](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:85308
+    xrefs:
+    - RHEA-COMP:11267
+    description: Rhea compound POLYMER:11267. Formula H2O(C12H19NO10)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: heparosan-glucuronate 5-epimerase
+    grounding: EC:5.1.3.36
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[heparosan](n) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:45569
+      snippet: '[heparosan](n) => [acharan](n)'
+      notes: Rhea's left-to-right directional reaction RHEA:45569 declares side 45568_L as its substrates
+        (rh:substrates); the master reaction RHEA:45568 is undirected. This participant is POLYMER:11266
+        with coefficient 1. Rhea cites PMID:25677302 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[acharan](n) is a product released by this reaction (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:45569
+      snippet: '[heparosan](n) => [acharan](n)'
+      notes: Rhea's left-to-right directional reaction RHEA:45569 declares side 45568_R as its products
+        (rh:products); the master reaction RHEA:45568 is undirected. This participant is POLYMER:11267
+        with coefficient 1. Rhea cites PMID:25677302 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.1.3.36; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:45568
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.36"/>
+      notes: The rh:ec triple on RHEA:45568 in rhea.rdf. EC 5.1.3.36 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:143877
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,60 @@ definitions:
       Catalyses the reaction: N-acetyl-L-tryptophan = N-acetyl-D-tryptophan
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acetyl-L-tryptophan = N-acetyl-D-tryptophan
+  description: Substrate-to-product chemistry of RHEA:60568, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:60569 (rh:substrates → 60568_L, rh:products → 60568_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-acetyl-L-tryptophan = N-acetyl-D-tryptophan
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:60568
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-acetyl-L-tryptophan = N-acetyl-D-tryptophan'
+  - node_id: sub1
+    label: N-acetyl-L-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:143877
+    description: Formula C13H13N2O3.
+  - node_id: prd1
+    label: N-acetyl-D-tryptophan
+    node_type: CHEMICAL
+    grounding: CHEBI:57877
+    description: Formula C13H13N2O3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-acetyl-L-tryptophan is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60569
+      snippet: N-acetyl-L-tryptophan => N-acetyl-D-tryptophan
+      notes: Rhea's left-to-right directional reaction RHEA:60569 declares side 60568_L as its substrates
+        (rh:substrates); the master reaction RHEA:60568 is undirected. This participant is CHEBI:143877
+        with coefficient 1. Rhea cites PMID:15313614 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-D-tryptophan is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60569
+      snippet: N-acetyl-L-tryptophan => N-acetyl-D-tryptophan
+      notes: Rhea's left-to-right directional reaction RHEA:60569 declares side 60568_R as its products
+        (rh:products); the master reaction RHEA:60568 is undirected. This participant is CHEBI:57877 with
+        coefficient 1. Rhea cites PMID:15313614 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

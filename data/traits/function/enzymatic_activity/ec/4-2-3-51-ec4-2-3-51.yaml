@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -31,4 +31,87 @@ definitions:
       Catalyses: neryl diphosphate = beta-phellandrene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-phellandrene synthase (neryl-diphosphate-cyclizing)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.51. EC 4.2.3.51 maps to exactly
+    one curated Rhea reaction (RHEA:27830), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "neryl diphosphate
+    = beta-phellandrene + diphosphate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-phellandrene synthase (neryl-diphosphate-cyclizing)
+    grounding: EC:4.2.3.51
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: neryl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57665
+    description: Formula C10H17O7P2.
+  - node_id: prd1
+    label: beta-phellandrene
+    node_type: CHEMICAL
+    grounding: CHEBI:48741
+    description: Formula C10H16.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_C1K5M3
+    node_type: PROTEIN
+    label: PHS1_SOLLC
+    grounding: UniProtKB:C1K5M3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: neryl diphosphate is a substrate consumed by RHEA:27830 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27831
+      snippet: neryl diphosphate => beta-phellandrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27831 declares side 27830_L as its substrates
+        (rh:substrates); the master reaction RHEA:27830 is undirected. This participant is CHEBI:57665
+        with coefficient 1. Rhea cites PMID:19487664 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-phellandrene is a product released by RHEA:27830 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27831
+      snippet: neryl diphosphate => beta-phellandrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27831 declares side 27830_R as its products
+        (rh:products); the master reaction RHEA:27830 is undirected. This participant is CHEBI:48741 with
+        coefficient 1. Rhea cites PMID:19487664 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:27830 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27831
+      snippet: neryl diphosphate => beta-phellandrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27831 declares side 27830_R as its products
+        (rh:products); the master reaction RHEA:27830 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:19487664 for this reaction.
+  - subject: prot_C1K5M3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHS1_SOLLC is an exemplar enzyme with EC 4.2.3.51 activity.
+    evidence:
+    - reference: EC:4.2.3.51
+      snippet: DR   C1K5M3, PHS1_SOLLC ;
+      notes: ExPASy ENZYME entry EC 4.2.3.51 cross-references UniProtKB:C1K5M3 (PHS1_SOLLC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

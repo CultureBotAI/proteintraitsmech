@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.19.-
 synonyms:
@@ -41,4 +41,148 @@ definitions:
       Catalyses: leukotriene C4 + H2O = leukotriene D4 + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of leukotriene-C4 hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.19.14. EC 3.4.19.14 maps to
+    exactly one curated Rhea reaction (RHEA:31563), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "leukotriene
+    C4 + H2O = leukotriene D4 + L-glutamate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: leukotriene-C4 hydrolase
+    grounding: EC:3.4.19.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: leukotriene C4
+    node_type: CHEMICAL
+    grounding: CHEBI:57973
+    description: Formula C30H45N3O9S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: leukotriene D4
+    node_type: CHEMICAL
+    grounding: CHEBI:63166
+    description: Formula C25H39N2O6S.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: leukotriene-C(4) hydrolase activity
+    grounding: GO:0002951
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_D4B387
+    node_type: PROTEIN
+    label: GGT1_ARTBC
+    grounding: UniProtKB:D4B387
+  - node_id: prot_P19440
+    node_type: PROTEIN
+    label: GGT1_HUMAN
+    grounding: UniProtKB:P19440
+  - node_id: prot_Q60928
+    node_type: PROTEIN
+    label: GGT1_MOUSE
+    grounding: UniProtKB:Q60928
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: leukotriene C4 is a substrate consumed by RHEA:31563 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31564
+      snippet: leukotriene C4 + H2O => leukotriene D4 + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:31564 declares side 31563_L as its substrates
+        (rh:substrates); the master reaction RHEA:31563 is undirected. This participant is CHEBI:57973
+        with coefficient 1. Rhea cites PMID:11463821, PMID:21447318, PMID:12163373, PMID:9139674 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:31563 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31564
+      snippet: leukotriene C4 + H2O => leukotriene D4 + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:31564 declares side 31563_L as its substrates
+        (rh:substrates); the master reaction RHEA:31563 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11463821, PMID:21447318, PMID:12163373, PMID:9139674 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: leukotriene D4 is a product released by RHEA:31563 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31564
+      snippet: leukotriene C4 + H2O => leukotriene D4 + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:31564 declares side 31563_R as its products
+        (rh:products); the master reaction RHEA:31563 is undirected. This participant is CHEBI:63166 with
+        coefficient 1. Rhea cites PMID:11463821, PMID:21447318, PMID:12163373, PMID:9139674 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:31563 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31564
+      snippet: leukotriene C4 + H2O => leukotriene D4 + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:31564 declares side 31563_R as its products
+        (rh:products); the master reaction RHEA:31563 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:11463821, PMID:21447318, PMID:12163373, PMID:9139674 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.19.14
+      snippet: EC:3.4.19.14 > GO:leukotriene-C(4) hydrolase activity ; GO:0002951
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0002951 is itself a record
+        in this KB.
+  - subject: prot_D4B387
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GGT1_ARTBC is an exemplar enzyme with EC 3.4.19.14 activity.
+    evidence:
+    - reference: EC:3.4.19.14
+      snippet: DR   D4B387, GGT1_ARTBC ;  P19440, GGT1_HUMAN ;  Q60928, GGT1_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.19.14 cross-references UniProtKB:D4B387 (GGT1_ARTBC) as a protein
+        with this activity.
+  - subject: prot_P19440
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GGT1_HUMAN is an exemplar enzyme with EC 3.4.19.14 activity.
+    evidence:
+    - reference: EC:3.4.19.14
+      snippet: DR   D4B387, GGT1_ARTBC ;  P19440, GGT1_HUMAN ;  Q60928, GGT1_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.19.14 cross-references UniProtKB:P19440 (GGT1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q60928
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GGT1_MOUSE is an exemplar enzyme with EC 3.4.19.14 activity.
+    evidence:
+    - reference: EC:3.4.19.14
+      snippet: DR   D4B387, GGT1_ARTBC ;  P19440, GGT1_HUMAN ;  Q60928, GGT1_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.19.14 cross-references UniProtKB:Q60928 (GGT1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

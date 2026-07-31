@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17596
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,90 @@ definitions:
       Catalyses the reaction: inosine + AMP = IMP + adenosine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of inosine + AMP = IMP + adenosine
+  description: Substrate-to-product chemistry of RHEA:69596, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69597 (rh:substrates → 69596_L, rh:products → 69596_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of inosine + AMP = IMP + adenosine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69596
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: inosine + AMP = IMP + adenosine'
+  - node_id: sub1
+    label: inosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17596
+    description: Formula C10H12N4O5.
+  - node_id: sub2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd1
+    label: IMP
+    node_type: CHEMICAL
+    grounding: CHEBI:58053
+    description: Formula C10H11N4O8P.
+  - node_id: prd2
+    label: adenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:16335
+    description: Formula C10H13N5O4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: inosine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69597
+      snippet: inosine + AMP => IMP + adenosine
+      notes: Rhea's left-to-right directional reaction RHEA:69597 declares side 69596_L as its substrates
+        (rh:substrates); the master reaction RHEA:69596 is undirected. This participant is CHEBI:17596
+        with coefficient 1. Rhea cites PMID:9371705, PMID:8031149, PMID:1659319 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: AMP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69597
+      snippet: inosine + AMP => IMP + adenosine
+      notes: Rhea's left-to-right directional reaction RHEA:69597 declares side 69596_L as its substrates
+        (rh:substrates); the master reaction RHEA:69596 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:9371705, PMID:8031149, PMID:1659319 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: IMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69597
+      snippet: inosine + AMP => IMP + adenosine
+      notes: Rhea's left-to-right directional reaction RHEA:69597 declares side 69596_R as its products
+        (rh:products); the master reaction RHEA:69596 is undirected. This participant is CHEBI:58053 with
+        coefficient 1. Rhea cites PMID:9371705, PMID:8031149, PMID:1659319 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: adenosine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69597
+      snippet: inosine + AMP => IMP + adenosine
+      notes: Rhea's left-to-right directional reaction RHEA:69597 declares side 69596_R as its products
+        (rh:products); the master reaction RHEA:69596 is undirected. This participant is CHEBI:16335 with
+        coefficient 1. Rhea cites PMID:9371705, PMID:8031149, PMID:1659319 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

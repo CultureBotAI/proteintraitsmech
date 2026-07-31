@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.1.-
 synonyms:
@@ -51,4 +51,183 @@ definitions:
       Catalyses: alpha-D-xylose = alpha-D-xylulofuranose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of xylose isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.1.5. Rhea assigns 2 curated
+    reactions to EC 5.3.1.5. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "alpha-D-xylose = alpha-D-xylulofuranose". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: xylose isomerase
+    grounding: EC:5.3.1.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of alpha-D-xylose = alpha-D-xylulofuranose
+    grounding: RHEA:22816
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: alpha-D-xylose = alpha-D-xylulofuranose'
+  - node_id: rxn1_sub1
+    label: alpha-D-xylose
+    node_type: CHEMICAL
+    grounding: CHEBI:28518
+    description: Formula C5H10O5.
+  - node_id: rxn1_prd1
+    label: alpha-D-xylulofuranose
+    node_type: CHEMICAL
+    grounding: CHEBI:188998
+    description: Formula C5H10O5.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of alpha-D-glucose = alpha-D-fructose
+    grounding: RHEA:28546
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: alpha-D-glucose = alpha-D-fructose'
+  - node_id: rxn2_sub1
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+    description: Formula C6H12O6.
+  - node_id: rxn2_prd1
+    label: alpha-D-fructose
+    node_type: CHEMICAL
+    grounding: CHEBI:37720
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: xylose isomerase activity
+    grounding: GO:0009045
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8PLL9
+    node_type: PROTEIN
+    label: XYLA1_XANC3
+    grounding: UniProtKB:Q8PLL9
+  - node_id: prot_Q4UTU6
+    node_type: PROTEIN
+    label: XYLA1_XANC8
+    grounding: UniProtKB:Q4UTU6
+  - node_id: prot_Q8P9T9
+    node_type: PROTEIN
+    label: XYLA1_XANCP
+    grounding: UniProtKB:Q8P9T9
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:22816 is one of the 2 curated reactions Rhea assigns to EC 5.3.1.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:22816
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.5"/>
+      notes: The rh:ec triple on RHEA:22816 in rhea.rdf assigns that reaction to EC 5.3.1.5.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: alpha-D-xylose is a substrate consumed by RHEA:22816 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22817
+      snippet: alpha-D-xylose => alpha-D-xylulofuranose
+      notes: Rhea's left-to-right directional reaction RHEA:22817 declares side 22816_L as its substrates
+        (rh:substrates); the master reaction RHEA:22816 is undirected. This participant is CHEBI:28518
+        with coefficient 1. Rhea cites PMID:2734296, PMID:5550812, PMID:2006134, PMID:2304904 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: alpha-D-xylulofuranose is a product released by RHEA:22816 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22817
+      snippet: alpha-D-xylose => alpha-D-xylulofuranose
+      notes: Rhea's left-to-right directional reaction RHEA:22817 declares side 22816_R as its products
+        (rh:products); the master reaction RHEA:22816 is undirected. This participant is CHEBI:188998
+        with coefficient 1. Rhea cites PMID:2734296, PMID:5550812, PMID:2006134, PMID:2304904 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:28546 is one of the 2 curated reactions Rhea assigns to EC 5.3.1.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:28546
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.5"/>
+      notes: The rh:ec triple on RHEA:28546 in rhea.rdf assigns that reaction to EC 5.3.1.5.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: alpha-D-glucose is a substrate consumed by RHEA:28546 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28547
+      snippet: alpha-D-glucose => alpha-D-fructose
+      notes: Rhea's left-to-right directional reaction RHEA:28547 declares side 28546_L as its substrates
+        (rh:substrates); the master reaction RHEA:28546 is undirected. This participant is CHEBI:17925
+        with coefficient 1. Rhea cites PMID:12369908, PMID:2734296, PMID:29569257, PMID:5550812 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: alpha-D-fructose is a product released by RHEA:28546 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28547
+      snippet: alpha-D-glucose => alpha-D-fructose
+      notes: Rhea's left-to-right directional reaction RHEA:28547 declares side 28546_R as its products
+        (rh:products); the master reaction RHEA:28546 is undirected. This participant is CHEBI:37720 with
+        coefficient 1. Rhea cites PMID:12369908, PMID:2734296, PMID:29569257, PMID:5550812 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.1.5
+      snippet: EC:5.3.1.5 > GO:xylose isomerase activity ; GO:0009045
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0009045 is itself a record
+        in this KB.
+  - subject: prot_Q8PLL9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XYLA1_XANC3 is an exemplar enzyme with EC 5.3.1.5 activity.
+    evidence:
+    - reference: EC:5.3.1.5
+      snippet: DR   Q8PLL9, XYLA1_XANC3;  Q4UTU6, XYLA1_XANC8;  Q8P9T9, XYLA1_XANCP;
+      notes: ExPASy ENZYME entry EC 5.3.1.5 cross-references UniProtKB:Q8PLL9 (XYLA1_XANC3) as a protein
+        with this activity.
+  - subject: prot_Q4UTU6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XYLA1_XANC8 is an exemplar enzyme with EC 5.3.1.5 activity.
+    evidence:
+    - reference: EC:5.3.1.5
+      snippet: DR   Q8PLL9, XYLA1_XANC3;  Q4UTU6, XYLA1_XANC8;  Q8P9T9, XYLA1_XANCP;
+      notes: ExPASy ENZYME entry EC 5.3.1.5 cross-references UniProtKB:Q4UTU6 (XYLA1_XANC8) as a protein
+        with this activity.
+  - subject: prot_Q8P9T9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XYLA1_XANCP is an exemplar enzyme with EC 5.3.1.5 activity.
+    evidence:
+    - reference: EC:5.3.1.5
+      snippet: DR   Q8PLL9, XYLA1_XANC3;  Q4UTU6, XYLA1_XANC8;  Q8P9T9, XYLA1_XANCP;
+      notes: ExPASy ENZYME entry EC 5.3.1.5 cross-references UniProtKB:Q8P9T9 (XYLA1_XANCP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

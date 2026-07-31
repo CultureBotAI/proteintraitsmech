@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.127
     mapping_source: rhea2ec
@@ -28,4 +28,106 @@ definitions:
       Catalyses the reaction: L-isoleucine-(+)-12-hydroxy-7-isojasmonate + H2O = tuberonate + L-isoleucine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-isoleucine-(+)-12-hydroxy-7-isojasmonate + H2O = tuberonate + L-isoleucine
+  description: Substrate-to-product chemistry of RHEA:52036, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:52037 (rh:substrates → 52036_L, rh:products → 52036_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-isoleucine-(+)-12-hydroxy-7-isojasmonate + H2O = tuberonate + L-isoleucine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:52036
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-isoleucine-(+)-12-hydroxy-7-isojasmonate + H2O = tuberonate + L-isoleucine'
+  - node_id: sub1
+    label: L-isoleucine-(+)-12-hydroxy-7-isojasmonate
+    node_type: CHEMICAL
+    grounding: CHEBI:136181
+    description: Formula C18H28NO5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: tuberonate
+    node_type: CHEMICAL
+    grounding: CHEBI:136182
+    description: Formula C12H17O4.
+  - node_id: prd2
+    label: L-isoleucine
+    node_type: CHEMICAL
+    grounding: CHEBI:58045
+    description: Formula C6H13NO2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: jasmonoyl-L-amino acid hydrolase
+    grounding: EC:3.5.1.127
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-isoleucine-(+)-12-hydroxy-7-isojasmonate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:52037
+      snippet: L-isoleucine-(+)-12-hydroxy-7-isojasmonate + H2O => tuberonate + L-isoleucine
+      notes: Rhea's left-to-right directional reaction RHEA:52037 declares side 52036_L as its substrates
+        (rh:substrates); the master reaction RHEA:52036 is undirected. This participant is CHEBI:136181
+        with coefficient 1. Rhea cites PMID:24052260 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52037
+      snippet: L-isoleucine-(+)-12-hydroxy-7-isojasmonate + H2O => tuberonate + L-isoleucine
+      notes: Rhea's left-to-right directional reaction RHEA:52037 declares side 52036_L as its substrates
+        (rh:substrates); the master reaction RHEA:52036 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:24052260 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tuberonate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52037
+      snippet: L-isoleucine-(+)-12-hydroxy-7-isojasmonate + H2O => tuberonate + L-isoleucine
+      notes: Rhea's left-to-right directional reaction RHEA:52037 declares side 52036_R as its products
+        (rh:products); the master reaction RHEA:52036 is undirected. This participant is CHEBI:136182
+        with coefficient 1. Rhea cites PMID:24052260 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-isoleucine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52037
+      snippet: L-isoleucine-(+)-12-hydroxy-7-isojasmonate + H2O => tuberonate + L-isoleucine
+      notes: Rhea's left-to-right directional reaction RHEA:52037 declares side 52036_R as its products
+        (rh:products); the master reaction RHEA:52036 is undirected. This participant is CHEBI:58045 with
+        coefficient 1. Rhea cites PMID:24052260 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.127; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:52036
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.127"/>
+      notes: The rh:ec triple on RHEA:52036 in rhea.rdf. EC 3.5.1.127 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

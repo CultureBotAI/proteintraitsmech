@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.227
     mapping_source: rhea2ec
@@ -28,4 +28,111 @@ definitions:
       Catalyses the reaction: (2Z,6E)-farnesyl diphosphate = (-)-alpha-cedrene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2Z,6E)-farnesyl diphosphate = (-)-alpha-cedrene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:31423, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:31424 (rh:substrates → 31423_L, rh:products → 31423_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2Z,6E)-farnesyl diphosphate = (-)-alpha-cedrene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:31423
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2Z,6E)-farnesyl diphosphate = (-)-alpha-cedrene + diphosphate'
+  - node_id: sub1
+    label: (2Z,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:162247
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (-)-alpha-cedrene
+    node_type: CHEMICAL
+    grounding: CHEBI:10216
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (-)-alpha-cedrene synthase
+    grounding: EC:4.2.3.227
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q40577
+    node_type: PROTEIN
+    label: 5EAS_TOBAC
+    grounding: UniProtKB:Q40577
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2Z,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31424
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-alpha-cedrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31424 declares side 31423_L as its substrates
+        (rh:substrates); the master reaction RHEA:31423 is undirected. This participant is CHEBI:162247
+        with coefficient 1. Rhea cites PMID:20201526, PMID:20175559 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-alpha-cedrene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31424
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-alpha-cedrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31424 declares side 31423_R as its products
+        (rh:products); the master reaction RHEA:31423 is undirected. This participant is CHEBI:10216 with
+        coefficient 1. Rhea cites PMID:20201526, PMID:20175559 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31424
+      snippet: (2Z,6E)-farnesyl diphosphate => (-)-alpha-cedrene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31424 declares side 31423_R as its products
+        (rh:products); the master reaction RHEA:31423 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20201526, PMID:20175559 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.227; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:31423
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.227"/>
+      notes: The rh:ec triple on RHEA:31423 in rhea.rdf. EC 4.2.3.227 is itself a record in this KB.
+  - subject: prot_Q40577
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 5EAS_TOBAC is an exemplar enzyme carrying EC 4.2.3.227, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.227
+      snippet: DR   Q40577, 5EAS_TOBAC ;
+      notes: ExPASy ENZYME entry EC 4.2.3.227 cross-references UniProtKB:Q40577 (5EAS_TOBAC) as a protein
+        with this activity.
+    - reference: RHEA:31423
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.227"/>
+      notes: Rhea assigns RHEA:31423 to EC 4.2.3.227, and EC 4.2.3.227 maps to exactly one Rhea master
+        reaction (RHEA:31423), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

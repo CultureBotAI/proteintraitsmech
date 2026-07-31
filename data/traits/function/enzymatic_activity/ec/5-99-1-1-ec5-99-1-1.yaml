@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.99.1.-
 synonyms:
@@ -26,4 +26,58 @@ definitions:
       Catalyses: benzyl isothiocyanate = benzyl thiocyanate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thiocyanate isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.99.1.1. EC 5.99.1.1 maps to exactly
+    one curated Rhea reaction (RHEA:10004), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "benzyl isothiocyanate
+    = benzyl thiocyanate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: thiocyanate isomerase
+    grounding: EC:5.99.1.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: benzyl isothiocyanate
+    node_type: CHEMICAL
+    grounding: CHEBI:17484
+    description: Formula C8H7NS.
+  - node_id: prd1
+    label: benzyl thiocyanate
+    node_type: CHEMICAL
+    grounding: CHEBI:16017
+    description: Formula C8H7NS.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: benzyl isothiocyanate is a substrate consumed by RHEA:10004 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10005
+      snippet: benzyl isothiocyanate => benzyl thiocyanate
+      notes: Rhea's left-to-right directional reaction RHEA:10005 declares side 10004_L as its substrates
+        (rh:substrates); the master reaction RHEA:10004 is undirected. This participant is CHEBI:17484
+        with coefficient 1. Rhea cites PMID:13997458 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: benzyl thiocyanate is a product released by RHEA:10004 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10005
+      snippet: benzyl isothiocyanate => benzyl thiocyanate
+      notes: Rhea's left-to-right directional reaction RHEA:10005 declares side 10004_R as its products
+        (rh:products); the master reaction RHEA:10004 is undirected. This participant is CHEBI:16017 with
+        coefficient 1. Rhea cites PMID:13997458 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

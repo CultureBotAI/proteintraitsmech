@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.2.1.-
 synonyms:
@@ -43,4 +43,263 @@ definitions:
       Catalyses: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate = aldehydo-D- ribose 5-phosphate + D-xylulose 5-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of transketolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.2.1.1. Rhea assigns 2 curated
+    reactions to EC 2.2.1.1. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate = aldehydo-D-
+    ribose 5-phosphate + D-xylulose 5-phosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: transketolase
+    grounding: EC:2.2.1.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate = aldehydo-D-ribo…
+    grounding: RHEA:10508
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate = aldehydo-D-ribose
+      5-phosphate + D-xylulose 5-phosphate'
+  - node_id: rxn1_sub1
+    label: D-sedoheptulose 7-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57483
+    description: Formula C7H13O10P.
+  - node_id: rxn1_sub2
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: rxn1_prd1
+    label: aldehydo-D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58273
+    description: Formula C5H9O8P.
+  - node_id: rxn1_prd2
+    label: D-xylulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57737
+    description: Formula C5H9O8P.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of D-erythrose 4-phosphate + D-xylulose 5-phosphate = beta-D-fructose 6-phospha…
+    grounding: RHEA:27626
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: D-erythrose 4-phosphate + D-xylulose 5-phosphate = beta-D-fructose 6-phosphate
+      + D-glyceraldehyde 3-phosphate'
+  - node_id: rxn2_sub1
+    label: D-erythrose 4-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:16897
+    description: Formula C4H7O7P.
+  - node_id: rxn2_sub2
+    label: D-xylulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57737
+    description: Formula C5H9O8P.
+  - node_id: rxn2_prd1
+    label: beta-D-fructose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57634
+    description: Formula C6H11O9P.
+  - node_id: rxn2_prd2
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: transketolase activity
+    grounding: GO:0004802
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5E7R1
+    node_type: PROTEIN
+    label: TKT1_ALIF1
+    grounding: UniProtKB:Q5E7R1
+  - node_id: prot_O94039
+    node_type: PROTEIN
+    label: TKT1_CANAX
+    grounding: UniProtKB:O94039
+  - node_id: prot_P27302
+    node_type: PROTEIN
+    label: TKT1_ECOLI
+    grounding: UniProtKB:P27302
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:10508 is one of the 2 curated reactions Rhea assigns to EC 2.2.1.1; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:10508
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.2.1.1"/>
+      notes: The rh:ec triple on RHEA:10508 in rhea.rdf assigns that reaction to EC 2.2.1.1.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: D-sedoheptulose 7-phosphate is a substrate consumed by RHEA:10508 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10509
+      snippet: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate => aldehydo-D-ribose 5-phosphate
+        + D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10509 declares side 10508_L as its substrates
+        (rh:substrates); the master reaction RHEA:10508 is undirected. This participant is CHEBI:57483
+        with coefficient 1. Rhea cites PMID:8521838, PMID:16125202, PMID:15991799, PMID:8999873 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: D-glyceraldehyde 3-phosphate is a substrate consumed by RHEA:10508 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10509
+      snippet: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate => aldehydo-D-ribose 5-phosphate
+        + D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10509 declares side 10508_L as its substrates
+        (rh:substrates); the master reaction RHEA:10508 is undirected. This participant is CHEBI:59776
+        with coefficient 1. Rhea cites PMID:8521838, PMID:16125202, PMID:15991799, PMID:8999873 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: aldehydo-D-ribose 5-phosphate is a product released by RHEA:10508 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10509
+      snippet: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate => aldehydo-D-ribose 5-phosphate
+        + D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10509 declares side 10508_R as its products
+        (rh:products); the master reaction RHEA:10508 is undirected. This participant is CHEBI:58273 with
+        coefficient 1. Rhea cites PMID:8521838, PMID:16125202, PMID:15991799, PMID:8999873 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: D-xylulose 5-phosphate is a product released by RHEA:10508 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10509
+      snippet: D-sedoheptulose 7-phosphate + D-glyceraldehyde 3-phosphate => aldehydo-D-ribose 5-phosphate
+        + D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10509 declares side 10508_R as its products
+        (rh:products); the master reaction RHEA:10508 is undirected. This participant is CHEBI:57737 with
+        coefficient 1. Rhea cites PMID:8521838, PMID:16125202, PMID:15991799, PMID:8999873 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:27626 is one of the 2 curated reactions Rhea assigns to EC 2.2.1.1; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:27626
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.2.1.1"/>
+      notes: The rh:ec triple on RHEA:27626 in rhea.rdf assigns that reaction to EC 2.2.1.1.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: D-erythrose 4-phosphate is a substrate consumed by RHEA:27626 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27627
+      snippet: D-erythrose 4-phosphate + D-xylulose 5-phosphate => beta-D-fructose 6-phosphate + D-glyceraldehyde
+        3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27627 declares side 27626_L as its substrates
+        (rh:substrates); the master reaction RHEA:27626 is undirected. This participant is CHEBI:16897
+        with coefficient 1.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: D-xylulose 5-phosphate is a substrate consumed by RHEA:27626 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27627
+      snippet: D-erythrose 4-phosphate + D-xylulose 5-phosphate => beta-D-fructose 6-phosphate + D-glyceraldehyde
+        3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27627 declares side 27626_L as its substrates
+        (rh:substrates); the master reaction RHEA:27626 is undirected. This participant is CHEBI:57737
+        with coefficient 1.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: beta-D-fructose 6-phosphate is a product released by RHEA:27626 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27627
+      snippet: D-erythrose 4-phosphate + D-xylulose 5-phosphate => beta-D-fructose 6-phosphate + D-glyceraldehyde
+        3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27627 declares side 27626_R as its products
+        (rh:products); the master reaction RHEA:27626 is undirected. This participant is CHEBI:57634 with
+        coefficient 1.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: D-glyceraldehyde 3-phosphate is a product released by RHEA:27626 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27627
+      snippet: D-erythrose 4-phosphate + D-xylulose 5-phosphate => beta-D-fructose 6-phosphate + D-glyceraldehyde
+        3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:27627 declares side 27626_R as its products
+        (rh:products); the master reaction RHEA:27626 is undirected. This participant is CHEBI:59776 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.2.1.1
+      snippet: EC:2.2.1.1 > GO:transketolase activity ; GO:0004802
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004802 is itself a record
+        in this KB.
+  - subject: prot_Q5E7R1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TKT1_ALIF1 is an exemplar enzyme with EC 2.2.1.1 activity.
+    evidence:
+    - reference: EC:2.2.1.1
+      snippet: DR   Q5E7R1, TKT1_ALIF1 ;  O94039, TKT1_CANAX ;  P27302, TKT1_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.2.1.1 cross-references UniProtKB:Q5E7R1 (TKT1_ALIF1) as a protein
+        with this activity.
+  - subject: prot_O94039
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TKT1_CANAX is an exemplar enzyme with EC 2.2.1.1 activity.
+    evidence:
+    - reference: EC:2.2.1.1
+      snippet: DR   Q5E7R1, TKT1_ALIF1 ;  O94039, TKT1_CANAX ;  P27302, TKT1_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.2.1.1 cross-references UniProtKB:O94039 (TKT1_CANAX) as a protein
+        with this activity.
+  - subject: prot_P27302
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TKT1_ECOLI is an exemplar enzyme with EC 2.2.1.1 activity.
+    evidence:
+    - reference: EC:2.2.1.1
+      snippet: DR   Q5E7R1, TKT1_ALIF1 ;  O94039, TKT1_CANAX ;  P27302, TKT1_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.2.1.1 cross-references UniProtKB:P27302 (TKT1_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

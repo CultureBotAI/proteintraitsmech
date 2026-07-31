@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.6.1.-
 synonyms:
@@ -41,4 +41,223 @@ definitions:
       Catalyses: a ribonucleotidyl-ribonucleotide-RNA + H2O = a 3'-end 3'-phospho- ribonucleotide-RNA + a 5'-end dephospho-ribonucleoside-RNA + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ribonuclease T2
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.6.1.19. EC 4.6.1.19 maps to exactly
+    one curated Rhea reaction (RHEA:68052), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a ribonucleotidyl-ribonucleotide-RNA
+    + H2O = a 3''-end 3''-phospho- ribonucleotide-RNA + a 5''-end dephospho-ribonucleoside-RNA + H(+)".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ribonuclease T2
+    grounding: EC:4.6.1.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a ribonucleotidyl-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17355
+    description: Rhea compound GENERIC:17355.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: ribonucleotide-ribonucleotide residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:17355 (a ribonucleotidyl-ribonucleotide-RNA);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:173118
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 3'-end 3'-phospho-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10463
+    description: Rhea compound GENERIC:10463.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: a 3'-terminal ribonucleotide 3'-phosphate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10463 (a 3'-end
+      3'-phospho-ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83062
+  - node_id: prd2
+    label: a 5'-end dephospho-ribonucleoside-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13936
+    description: Rhea compound GENERIC:13936.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: 5'-end 5'-dephospho ribonucleotide residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13936 (a 5'-end
+      dephospho-ribonucleoside-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138284
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ribonuclease T2 activity
+    grounding: GO:0033897
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q96662
+    node_type: PROTEIN
+    label: POLG_BVDVC
+    grounding: UniProtKB:Q96662
+  - node_id: prot_P19711
+    node_type: PROTEIN
+    label: POLG_BVDVN
+    grounding: UniProtKB:P19711
+  - node_id: prot_Q01499
+    node_type: PROTEIN
+    label: POLG_BVDVS
+    grounding: UniProtKB:Q01499
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a ribonucleotidyl-ribonucleotide-RNA is a substrate consumed by RHEA:68052 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68053
+      snippet: a ribonucleotidyl-ribonucleotide-RNA + H2O => a 3'-end 3'-phospho-ribonucleotide-RNA +
+        a 5'-end dephospho-ribonucleoside-RNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68053 declares side 68052_L as its substrates
+        (rh:substrates); the master reaction RHEA:68052 is undirected. This participant is GENERIC:17355
+        with coefficient 1. Rhea cites PMID:14338240, PMID:3732273, PMID:20189811, PMID:6048969 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: ribonucleotide-ribonucleotide residue is the reactive part of a ribonucleotidyl-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:68052
+      snippet: ribonucleotide-ribonucleotide residue
+      notes: Rhea compound GENERIC:17355 (a ribonucleotidyl-ribonucleotide-RNA) declares rh:reactivePart
+        = ribonucleotide-ribonucleotide residue (CHEBI:173118).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:68052 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68053
+      snippet: a ribonucleotidyl-ribonucleotide-RNA + H2O => a 3'-end 3'-phospho-ribonucleotide-RNA +
+        a 5'-end dephospho-ribonucleoside-RNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68053 declares side 68052_L as its substrates
+        (rh:substrates); the master reaction RHEA:68052 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:14338240, PMID:3732273, PMID:20189811, PMID:6048969 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3'-end 3'-phospho-ribonucleotide-RNA is a product released by RHEA:68052 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68053
+      snippet: a ribonucleotidyl-ribonucleotide-RNA + H2O => a 3'-end 3'-phospho-ribonucleotide-RNA +
+        a 5'-end dephospho-ribonucleoside-RNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68053 declares side 68052_R as its products
+        (rh:products); the master reaction RHEA:68052 is undirected. This participant is GENERIC:10463
+        with coefficient 1. Rhea cites PMID:14338240, PMID:3732273, PMID:20189811, PMID:6048969 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: a 3'-terminal ribonucleotide 3'-phosphate residue is the reactive part of a 3'-end 3'-phospho-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:68052
+      snippet: a 3'-terminal ribonucleotide 3'-phosphate residue
+      notes: Rhea compound GENERIC:10463 (a 3'-end 3'-phospho-ribonucleotide-RNA) declares rh:reactivePart
+        = a 3'-terminal ribonucleotide 3'-phosphate residue (CHEBI:83062).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 5'-end dephospho-ribonucleoside-RNA is a product released by RHEA:68052 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68053
+      snippet: a ribonucleotidyl-ribonucleotide-RNA + H2O => a 3'-end 3'-phospho-ribonucleotide-RNA +
+        a 5'-end dephospho-ribonucleoside-RNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68053 declares side 68052_R as its products
+        (rh:products); the master reaction RHEA:68052 is undirected. This participant is GENERIC:13936
+        with coefficient 1. Rhea cites PMID:14338240, PMID:3732273, PMID:20189811, PMID:6048969 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: 5'-end 5'-dephospho ribonucleotide residue is the reactive part of a 5'-end dephospho-ribonucleoside-RNA.
+    evidence:
+    - reference: RHEA:68052
+      snippet: 5'-end 5'-dephospho ribonucleotide residue
+      notes: Rhea compound GENERIC:13936 (a 5'-end dephospho-ribonucleoside-RNA) declares rh:reactivePart
+        = 5'-end 5'-dephospho ribonucleotide residue (CHEBI:138284).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:68052 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68053
+      snippet: a ribonucleotidyl-ribonucleotide-RNA + H2O => a 3'-end 3'-phospho-ribonucleotide-RNA +
+        a 5'-end dephospho-ribonucleoside-RNA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68053 declares side 68052_R as its products
+        (rh:products); the master reaction RHEA:68052 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:14338240, PMID:3732273, PMID:20189811, PMID:6048969 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.6.1.19
+      snippet: EC:4.6.1.19 > GO:ribonuclease T2 activity ; GO:0033897
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033897 is itself a record
+        in this KB.
+  - subject: prot_Q96662
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_BVDVC is an exemplar enzyme with EC 4.6.1.19 activity.
+    evidence:
+    - reference: EC:4.6.1.19
+      snippet: DR   Q96662, POLG_BVDVC ;  P19711, POLG_BVDVN ;  Q01499, POLG_BVDVS ;
+      notes: ExPASy ENZYME entry EC 4.6.1.19 cross-references UniProtKB:Q96662 (POLG_BVDVC) as a protein
+        with this activity.
+  - subject: prot_P19711
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_BVDVN is an exemplar enzyme with EC 4.6.1.19 activity.
+    evidence:
+    - reference: EC:4.6.1.19
+      snippet: DR   Q96662, POLG_BVDVC ;  P19711, POLG_BVDVN ;  Q01499, POLG_BVDVS ;
+      notes: ExPASy ENZYME entry EC 4.6.1.19 cross-references UniProtKB:P19711 (POLG_BVDVN) as a protein
+        with this activity.
+  - subject: prot_Q01499
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_BVDVS is an exemplar enzyme with EC 4.6.1.19 activity.
+    evidence:
+    - reference: EC:4.6.1.19
+      snippet: DR   Q96662, POLG_BVDVC ;  P19711, POLG_BVDVN ;  Q01499, POLG_BVDVS ;
+      notes: ExPASy ENZYME entry EC 4.6.1.19 cross-references UniProtKB:Q01499 (POLG_BVDVS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

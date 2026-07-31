@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -41,4 +41,131 @@ definitions:
       Catalyses: D-xylonate = 2-dehydro-3-deoxy-D-arabinonate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of xylonate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.82. EC 4.2.1.82 maps to exactly
+    one curated Rhea reaction (RHEA:19157), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-xylonate =
+    2-dehydro-3-deoxy-D-arabinonate + H2O". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: xylonate dehydratase
+    grounding: EC:4.2.1.82
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-xylonate
+    node_type: CHEMICAL
+    grounding: CHEBI:17746
+    description: Formula C5H9O6.
+  - node_id: prd1
+    label: 2-dehydro-3-deoxy-D-arabinonate
+    node_type: CHEMICAL
+    grounding: CHEBI:16699
+    description: Formula C5H7O5.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: xylonate dehydratase activity
+    grounding: GO:0050401
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_D4GP40
+    node_type: PROTEIN
+    label: XAD_HALVD
+    grounding: UniProtKB:D4GP40
+  - node_id: prot_Q9A9Z2
+    node_type: PROTEIN
+    label: XYLD_CAUVC
+    grounding: UniProtKB:Q9A9Z2
+  - node_id: prot_P77596
+    node_type: PROTEIN
+    label: YAGF_ECOLI
+    grounding: UniProtKB:P77596
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-xylonate is a substrate consumed by RHEA:19157 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19158
+      snippet: D-xylonate => 2-dehydro-3-deoxy-D-arabinonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:19158 declares side 19157_L as its substrates
+        (rh:substrates); the master reaction RHEA:19157 is undirected. This participant is CHEBI:17746
+        with coefficient 1. Rhea cites PMID:422572, PMID:7154961, PMID:19584053 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-dehydro-3-deoxy-D-arabinonate is a product released by RHEA:19157 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19158
+      snippet: D-xylonate => 2-dehydro-3-deoxy-D-arabinonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:19158 declares side 19157_R as its products
+        (rh:products); the master reaction RHEA:19157 is undirected. This participant is CHEBI:16699 with
+        coefficient 1. Rhea cites PMID:422572, PMID:7154961, PMID:19584053 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:19157 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19158
+      snippet: D-xylonate => 2-dehydro-3-deoxy-D-arabinonate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:19158 declares side 19157_R as its products
+        (rh:products); the master reaction RHEA:19157 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:422572, PMID:7154961, PMID:19584053 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.82
+      snippet: EC:4.2.1.82 > GO:xylonate dehydratase activity ; GO:0050401
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050401 is itself a record
+        in this KB.
+  - subject: prot_D4GP40
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XAD_HALVD is an exemplar enzyme with EC 4.2.1.82 activity.
+    evidence:
+    - reference: EC:4.2.1.82
+      snippet: DR   D4GP40, XAD_HALVD  ;  Q9A9Z2, XYLD_CAUVC ;  P77596, YAGF_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.82 cross-references UniProtKB:D4GP40 (XAD_HALVD) as a protein
+        with this activity.
+  - subject: prot_Q9A9Z2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XYLD_CAUVC is an exemplar enzyme with EC 4.2.1.82 activity.
+    evidence:
+    - reference: EC:4.2.1.82
+      snippet: DR   D4GP40, XAD_HALVD  ;  Q9A9Z2, XYLD_CAUVC ;  P77596, YAGF_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.82 cross-references UniProtKB:Q9A9Z2 (XYLD_CAUVC) as a protein
+        with this activity.
+  - subject: prot_P77596
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: YAGF_ECOLI is an exemplar enzyme with EC 4.2.1.82 activity.
+    evidence:
+    - reference: EC:4.2.1.82
+      snippet: DR   D4GP40, XAD_HALVD  ;  Q9A9Z2, XYLD_CAUVC ;  P77596, YAGF_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.82 cross-references UniProtKB:P77596 (YAGF_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

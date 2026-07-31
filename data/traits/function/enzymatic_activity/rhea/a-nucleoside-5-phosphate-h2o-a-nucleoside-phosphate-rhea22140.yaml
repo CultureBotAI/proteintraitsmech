@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57867
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,107 @@ definitions:
       Catalyses the reaction: a nucleoside 5'-phosphate + H2O = a nucleoside + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a nucleoside 5'-phosphate + H2O = a nucleoside + phosphate
+  description: Substrate-to-product chemistry of RHEA:22140, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22141 (rh:substrates → 22140_L, rh:products → 22140_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a nucleoside 5'-phosphate + H2O = a nucleoside + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22140
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a nucleoside 5''-phosphate + H2O = a nucleoside + phosphate'
+  - node_id: sub1
+    label: a nucleoside 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57867
+    description: Formula C5H7O6PR2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a nucleoside
+    node_type: CHEMICAL
+    grounding: CHEBI:33838
+    description: Formula C5H8O3R2.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: nucleotidase activity
+    grounding: GO:0008252
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a nucleoside 5'-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22141
+      snippet: a nucleoside 5'-phosphate + H2O => a nucleoside + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22141 declares side 22140_L as its substrates
+        (rh:substrates); the master reaction RHEA:22140 is undirected. This participant is CHEBI:57867
+        with coefficient 1. Rhea cites PMID:5699060 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22141
+      snippet: a nucleoside 5'-phosphate + H2O => a nucleoside + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22141 declares side 22140_L as its substrates
+        (rh:substrates); the master reaction RHEA:22140 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:5699060 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a nucleoside is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22141
+      snippet: a nucleoside 5'-phosphate + H2O => a nucleoside + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22141 declares side 22140_R as its products
+        (rh:products); the master reaction RHEA:22140 is undirected. This participant is CHEBI:33838 with
+        coefficient 1. Rhea cites PMID:5699060 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22141
+      snippet: a nucleoside 5'-phosphate + H2O => a nucleoside + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22141 declares side 22140_R as its products
+        (rh:products); the master reaction RHEA:22140 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:5699060 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:22140
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008252"/>
+      notes: The rdfs:seeAlso triple on RHEA:22140 in rhea.rdf. GO term GO:0008252 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

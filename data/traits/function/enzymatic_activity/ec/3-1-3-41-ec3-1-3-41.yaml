@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.3.-
 mapped_xrefs:
@@ -23,4 +23,106 @@ definitions:
       Catalyses: 4-nitrophenyl phosphate + H2O = 4-nitrophenol + phosphate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-nitrophenylphosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.3.41. EC 3.1.3.41 maps to exactly
+    one curated Rhea reaction (RHEA:21664), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-nitrophenyl
+    phosphate + H2O = 4-nitrophenol + phosphate + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-nitrophenylphosphatase
+    grounding: EC:3.1.3.41
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-nitrophenyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:61146
+    description: Formula C6H4NO6P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 4-nitrophenol
+    node_type: CHEMICAL
+    grounding: CHEBI:57917
+    description: Formula C6H4NO3.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-nitrophenyl phosphate is a substrate consumed by RHEA:21664 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21665
+      snippet: 4-nitrophenyl phosphate + H2O => 4-nitrophenol + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21665 declares side 21664_L as its substrates
+        (rh:substrates); the master reaction RHEA:21664 is undirected. This participant is CHEBI:61146
+        with coefficient 1. Rhea cites PMID:4357666, PMID:4554643 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:21664 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21665
+      snippet: 4-nitrophenyl phosphate + H2O => 4-nitrophenol + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21665 declares side 21664_L as its substrates
+        (rh:substrates); the master reaction RHEA:21664 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4357666, PMID:4554643 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-nitrophenol is a product released by RHEA:21664 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21665
+      snippet: 4-nitrophenyl phosphate + H2O => 4-nitrophenol + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21665 declares side 21664_R as its products
+        (rh:products); the master reaction RHEA:21664 is undirected. This participant is CHEBI:57917 with
+        coefficient 1. Rhea cites PMID:4357666, PMID:4554643 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:21664 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21665
+      snippet: 4-nitrophenyl phosphate + H2O => 4-nitrophenol + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21665 declares side 21664_R as its products
+        (rh:products); the master reaction RHEA:21664 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:4357666, PMID:4554643 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:21664 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21665
+      snippet: 4-nitrophenyl phosphate + H2O => 4-nitrophenol + phosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21665 declares side 21664_R as its products
+        (rh:products); the master reaction RHEA:21664 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4357666, PMID:4554643 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

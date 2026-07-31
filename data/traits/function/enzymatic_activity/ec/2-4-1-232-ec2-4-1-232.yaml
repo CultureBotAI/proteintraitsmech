@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -41,4 +41,83 @@ definitions:
       Catalyses: Transfers an alpha-D-mannosyl residue from GDP-mannose into lipid-linked oligosaccharide, forming an alpha-(1->6)-D-mannosyl-D-mannose linkage
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of initiation-specific alpha-1,6-mannosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.232. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Transfers
+    an alpha-D-mannosyl residue from GDP-mannose into lipid-linked oligosaccharide, forming an alpha-(1->6)-D-mannosyl-D-mannose
+    linkage".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: initiation-specific alpha-1,6-mannosyltransferase
+    grounding: EC:2.4.1.232
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: initiation-specific glycolipid 1,6-alpha-mannosyltransferase activity
+    grounding: GO:0033164
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5A4E3
+    node_type: PROTEIN
+    label: OCH1_CANAL
+    grounding: UniProtKB:Q5A4E3
+  - node_id: prot_Q9UTR6
+    node_type: PROTEIN
+    label: OCH1_SCHPO
+    grounding: UniProtKB:Q9UTR6
+  - node_id: prot_G2WX41
+    node_type: PROTEIN
+    label: OCH1_VERDV
+    grounding: UniProtKB:G2WX41
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.232
+      snippet: EC:2.4.1.232 > GO:initiation-specific glycolipid 1,6-alpha-mannosyltransferase activity
+        ; GO:0033164
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033164 is itself a record
+        in this KB.
+  - subject: prot_Q5A4E3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OCH1_CANAL is an exemplar enzyme with EC 2.4.1.232 activity.
+    evidence:
+    - reference: EC:2.4.1.232
+      snippet: DR   Q5A4E3, OCH1_CANAL ;  Q9UTR6, OCH1_SCHPO ;  G2WX41, OCH1_VERDV ;
+      notes: ExPASy ENZYME entry EC 2.4.1.232 cross-references UniProtKB:Q5A4E3 (OCH1_CANAL) as a protein
+        with this activity.
+  - subject: prot_Q9UTR6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OCH1_SCHPO is an exemplar enzyme with EC 2.4.1.232 activity.
+    evidence:
+    - reference: EC:2.4.1.232
+      snippet: DR   Q5A4E3, OCH1_CANAL ;  Q9UTR6, OCH1_SCHPO ;  G2WX41, OCH1_VERDV ;
+      notes: ExPASy ENZYME entry EC 2.4.1.232 cross-references UniProtKB:Q9UTR6 (OCH1_SCHPO) as a protein
+        with this activity.
+  - subject: prot_G2WX41
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OCH1_VERDV is an exemplar enzyme with EC 2.4.1.232 activity.
+    evidence:
+    - reference: EC:2.4.1.232
+      snippet: DR   Q5A4E3, OCH1_CANAL ;  Q9UTR6, OCH1_SCHPO ;  G2WX41, OCH1_VERDV ;
+      notes: ExPASy ENZYME entry EC 2.4.1.232 cross-references UniProtKB:G2WX41 (OCH1_VERDV) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

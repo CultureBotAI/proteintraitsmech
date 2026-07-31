@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 mapped_xrefs:
@@ -28,4 +28,110 @@ definitions:
       Catalyses: 8-amino-3,8-dideoxy-alpha-D-manno-octulosonate + 2-oxoglutarate = 3,8- dideoxy-8-oxo-alpha-D-manno-octulosonate + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 8-amino-3,8-dideoxy-alpha-D-manno-octulosonate transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.109. EC 2.6.1.109 maps to
+    exactly one curated Rhea reaction (RHEA:46892), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "8-amino-3,8-dideoxy-alpha-D-manno-octulosonate
+    + 2-oxoglutarate = 3,8- dideoxy-8-oxo-alpha-D-manno-octulosonate + L-glutamate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 8-amino-3,8-dideoxy-alpha-D-manno-octulosonate transaminase
+    grounding: EC:2.6.1.109
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 8-amino-3,8-dideoxy-alpha-D-manno-octulosonate
+    node_type: CHEMICAL
+    grounding: CHEBI:87091
+    description: Formula C8H15NO7.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: 3,8-dideoxy-8-oxo-alpha-D-manno-octulosonate
+    node_type: CHEMICAL
+    grounding: CHEBI:87090
+    description: Formula C8H11O8.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prot_Q8EEB1
+    node_type: PROTEIN
+    label: KDNA_SHEON
+    grounding: UniProtKB:Q8EEB1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 8-amino-3,8-dideoxy-alpha-D-manno-octulosonate is a substrate consumed by RHEA:46892
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46893
+      snippet: 8-amino-3,8-dideoxy-alpha-D-manno-octulosonate + 2-oxoglutarate => 3,8-dideoxy-8-oxo-alpha-D-manno-octulosonate
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:46893 declares side 46892_L as its substrates
+        (rh:substrates); the master reaction RHEA:46892 is undirected. This participant is CHEBI:87091
+        with coefficient 1. Rhea cites PMID:23413030 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:46892 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46893
+      snippet: 8-amino-3,8-dideoxy-alpha-D-manno-octulosonate + 2-oxoglutarate => 3,8-dideoxy-8-oxo-alpha-D-manno-octulosonate
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:46893 declares side 46892_L as its substrates
+        (rh:substrates); the master reaction RHEA:46892 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:23413030 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3,8-dideoxy-8-oxo-alpha-D-manno-octulosonate is a product released by RHEA:46892 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:46893
+      snippet: 8-amino-3,8-dideoxy-alpha-D-manno-octulosonate + 2-oxoglutarate => 3,8-dideoxy-8-oxo-alpha-D-manno-octulosonate
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:46893 declares side 46892_R as its products
+        (rh:products); the master reaction RHEA:46892 is undirected. This participant is CHEBI:87090 with
+        coefficient 1. Rhea cites PMID:23413030 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:46892 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46893
+      snippet: 8-amino-3,8-dideoxy-alpha-D-manno-octulosonate + 2-oxoglutarate => 3,8-dideoxy-8-oxo-alpha-D-manno-octulosonate
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:46893 declares side 46892_R as its products
+        (rh:products); the master reaction RHEA:46892 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:23413030 for this reaction.
+  - subject: prot_Q8EEB1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KDNA_SHEON is an exemplar enzyme with EC 2.6.1.109 activity.
+    evidence:
+    - reference: EC:2.6.1.109
+      snippet: DR   Q8EEB1, KDNA_SHEON ;
+      notes: ExPASy ENZYME entry EC 2.6.1.109 cross-references UniProtKB:Q8EEB1 (KDNA_SHEON) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

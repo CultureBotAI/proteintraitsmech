@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 mapped_xrefs:
@@ -32,4 +32,102 @@ definitions:
       Catalyses: 2-dehydro-3-deoxy-L-galactonate = L-glyceraldehyde + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-threo-3-deoxy-hexylosonate aldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.54. EC 4.1.2.54 maps to exactly
+    one curated Rhea reaction (RHEA:38107), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-dehydro-3-deoxy-L-galactonate
+    = L-glyceraldehyde + pyruvate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-threo-3-deoxy-hexylosonate aldolase
+    grounding: EC:4.1.2.54
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-dehydro-3-deoxy-L-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:75545
+    description: Formula C6H9O6.
+  - node_id: prd1
+    label: L-glyceraldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:27975
+    description: Formula C3H6O3.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prot_A8DRH7
+    node_type: PROTEIN
+    label: LGA1_ASPNG
+    grounding: UniProtKB:A8DRH7
+  - node_id: prot_A6Y9S5
+    node_type: PROTEIN
+    label: LGA1_TRIRF
+    grounding: UniProtKB:A6Y9S5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-dehydro-3-deoxy-L-galactonate is a substrate consumed by RHEA:38107 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:38108
+      snippet: 2-dehydro-3-deoxy-L-galactonate => L-glyceraldehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:38108 declares side 38107_L as its substrates
+        (rh:substrates); the master reaction RHEA:38107 is undirected. This participant is CHEBI:75545
+        with coefficient 1. Rhea cites PMID:18768163, PMID:17609199 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-glyceraldehyde is a product released by RHEA:38107 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38108
+      snippet: 2-dehydro-3-deoxy-L-galactonate => L-glyceraldehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:38108 declares side 38107_R as its products
+        (rh:products); the master reaction RHEA:38107 is undirected. This participant is CHEBI:27975 with
+        coefficient 1. Rhea cites PMID:18768163, PMID:17609199 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:38107 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38108
+      snippet: 2-dehydro-3-deoxy-L-galactonate => L-glyceraldehyde + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:38108 declares side 38107_R as its products
+        (rh:products); the master reaction RHEA:38107 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:18768163, PMID:17609199 for this reaction.
+  - subject: prot_A8DRH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LGA1_ASPNG is an exemplar enzyme with EC 4.1.2.54 activity.
+    evidence:
+    - reference: EC:4.1.2.54
+      snippet: DR   A8DRH7, LGA1_ASPNG ;  A6Y9S5, LGA1_TRIRF ;
+      notes: ExPASy ENZYME entry EC 4.1.2.54 cross-references UniProtKB:A8DRH7 (LGA1_ASPNG) as a protein
+        with this activity.
+  - subject: prot_A6Y9S5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LGA1_TRIRF is an exemplar enzyme with EC 4.1.2.54 activity.
+    evidence:
+    - reference: EC:4.1.2.54
+      snippet: DR   A8DRH7, LGA1_ASPNG ;  A6Y9S5, LGA1_TRIRF ;
+      notes: ExPASy ENZYME entry EC 4.1.2.54 cross-references UniProtKB:A6Y9S5 (LGA1_TRIRF) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 mapped_xrefs:
@@ -28,4 +28,104 @@ definitions:
       Catalyses: phosphonoformate + CTP = CMP-5'-phosphonoformate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphonoformate cytidylyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.93. EC 2.7.7.93 maps to exactly
+    one curated Rhea reaction (RHEA:49428), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "phosphonoformate
+    + CTP = CMP-5''-phosphonoformate + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphonoformate cytidylyltransferase
+    grounding: EC:2.7.7.93
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: phosphonoformate
+    node_type: CHEMICAL
+    grounding: CHEBI:91254
+    description: Formula CHO5P.
+  - node_id: sub2
+    label: CTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37563
+    description: Formula C9H12N3O14P3.
+  - node_id: prd1
+    label: CMP-5'-phosphonoformate
+    node_type: CHEMICAL
+    grounding: CHEBI:91255
+    description: Formula C10H12N3O12P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q5IW36
+    node_type: PROTEIN
+    label: PHPF_STRVT
+    grounding: UniProtKB:Q5IW36
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: phosphonoformate is a substrate consumed by RHEA:49428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49429
+      snippet: phosphonoformate + CTP => CMP-5'-phosphonoformate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49429 declares side 49428_L as its substrates
+        (rh:substrates); the master reaction RHEA:49428 is undirected. This participant is CHEBI:91254
+        with coefficient 1. Rhea cites PMID:17632514 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CTP is a substrate consumed by RHEA:49428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49429
+      snippet: phosphonoformate + CTP => CMP-5'-phosphonoformate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49429 declares side 49428_L as its substrates
+        (rh:substrates); the master reaction RHEA:49428 is undirected. This participant is CHEBI:37563
+        with coefficient 1. Rhea cites PMID:17632514 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: CMP-5'-phosphonoformate is a product released by RHEA:49428 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49429
+      snippet: phosphonoformate + CTP => CMP-5'-phosphonoformate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49429 declares side 49428_R as its products
+        (rh:products); the master reaction RHEA:49428 is undirected. This participant is CHEBI:91255 with
+        coefficient 1. Rhea cites PMID:17632514 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:49428 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49429
+      snippet: phosphonoformate + CTP => CMP-5'-phosphonoformate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49429 declares side 49428_R as its products
+        (rh:products); the master reaction RHEA:49428 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:17632514 for this reaction.
+  - subject: prot_Q5IW36
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHPF_STRVT is an exemplar enzyme with EC 2.7.7.93 activity.
+    evidence:
+    - reference: EC:2.7.7.93
+      snippet: DR   Q5IW36, PHPF_STRVT ;
+      notes: ExPASy ENZYME entry EC 2.7.7.93 cross-references UniProtKB:Q5IW36 (PHPF_STRVT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

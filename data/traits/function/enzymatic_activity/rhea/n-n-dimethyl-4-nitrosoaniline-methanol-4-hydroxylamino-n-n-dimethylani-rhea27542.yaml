@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:59990
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,94 @@ definitions:
       Catalyses the reaction: N,N-dimethyl-4-nitrosoaniline + methanol = 4-(hydroxylamino)-N,N-dimethylaniline + formaldehyde
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N,N-dimethyl-4-nitrosoaniline + methanol = 4-(hydroxylamino)-N,N-dimethylaniline
+    + form…
+  description: Substrate-to-product chemistry of RHEA:27542, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:27543 (rh:substrates → 27542_L, rh:products → 27542_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N,N-dimethyl-4-nitrosoaniline + methanol = 4-(hydroxylamino)-N,N-dimethylani…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:27542
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N,N-dimethyl-4-nitrosoaniline + methanol = 4-(hydroxylamino)-N,N-dimethylaniline
+      + formaldehyde'
+  - node_id: sub1
+    label: N,N-dimethyl-4-nitrosoaniline
+    node_type: CHEMICAL
+    grounding: CHEBI:59990
+    description: Formula C8H10N2O.
+  - node_id: sub2
+    label: methanol
+    node_type: CHEMICAL
+    grounding: CHEBI:17790
+    description: Formula CH4O.
+  - node_id: prd1
+    label: 4-(hydroxylamino)-N,N-dimethylaniline
+    node_type: CHEMICAL
+    grounding: CHEBI:59991
+    description: Formula C8H12N2O.
+  - node_id: prd2
+    label: formaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:16842
+    description: Formula CH2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N,N-dimethyl-4-nitrosoaniline is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27543
+      snippet: N,N-dimethyl-4-nitrosoaniline + methanol => 4-(hydroxylamino)-N,N-dimethylaniline + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27543 declares side 27542_L as its substrates
+        (rh:substrates); the master reaction RHEA:27542 is undirected. This participant is CHEBI:59990
+        with coefficient 1. Rhea cites PMID:1995642, PMID:8385013 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: methanol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27543
+      snippet: N,N-dimethyl-4-nitrosoaniline + methanol => 4-(hydroxylamino)-N,N-dimethylaniline + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27543 declares side 27542_L as its substrates
+        (rh:substrates); the master reaction RHEA:27542 is undirected. This participant is CHEBI:17790
+        with coefficient 1. Rhea cites PMID:1995642, PMID:8385013 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-(hydroxylamino)-N,N-dimethylaniline is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27543
+      snippet: N,N-dimethyl-4-nitrosoaniline + methanol => 4-(hydroxylamino)-N,N-dimethylaniline + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27543 declares side 27542_R as its products
+        (rh:products); the master reaction RHEA:27542 is undirected. This participant is CHEBI:59991 with
+        coefficient 1. Rhea cites PMID:1995642, PMID:8385013 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: formaldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27543
+      snippet: N,N-dimethyl-4-nitrosoaniline + methanol => 4-(hydroxylamino)-N,N-dimethylaniline + formaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27543 declares side 27542_R as its products
+        (rh:products); the master reaction RHEA:27542 is undirected. This participant is CHEBI:16842 with
+        coefficient 1. Rhea cites PMID:1995642, PMID:8385013 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

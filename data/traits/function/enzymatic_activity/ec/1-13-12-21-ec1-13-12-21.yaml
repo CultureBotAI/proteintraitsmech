@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.12.-
 mapped_xrefs:
@@ -28,4 +28,119 @@ definitions:
       Catalyses: tetracenomycin F1 + O2 = tetracenomycin D3 + H2O + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tetracenomycin-F1 monooxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.12.21. EC 1.13.12.21 maps to
+    exactly one curated Rhea reaction (RHEA:37447), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "tetracenomycin
+    F1 + O2 = tetracenomycin D3 + H2O + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tetracenomycin-F1 monooxygenase
+    grounding: EC:1.13.12.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: tetracenomycin F1
+    node_type: CHEMICAL
+    grounding: CHEBI:74931
+    description: Formula C20H13O7.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: tetracenomycin D3
+    node_type: CHEMICAL
+    grounding: CHEBI:77990
+    description: Formula C20H10O8.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_P39889
+    node_type: PROTEIN
+    label: TCMH_STRGA
+    grounding: UniProtKB:P39889
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tetracenomycin F1 is a substrate consumed by RHEA:37447 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37448
+      snippet: tetracenomycin F1 + O2 => tetracenomycin D3 + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37448 declares side 37447_L as its substrates
+        (rh:substrates); the master reaction RHEA:37447 is undirected. This participant is CHEBI:74931
+        with coefficient 1. Rhea cites PMID:8329392 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:37447 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37448
+      snippet: tetracenomycin F1 + O2 => tetracenomycin D3 + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37448 declares side 37447_L as its substrates
+        (rh:substrates); the master reaction RHEA:37447 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:8329392 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tetracenomycin D3 is a product released by RHEA:37447 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37448
+      snippet: tetracenomycin F1 + O2 => tetracenomycin D3 + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37448 declares side 37447_R as its products
+        (rh:products); the master reaction RHEA:37447 is undirected. This participant is CHEBI:77990 with
+        coefficient 1. Rhea cites PMID:8329392 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:37447 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37448
+      snippet: tetracenomycin F1 + O2 => tetracenomycin D3 + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37448 declares side 37447_R as its products
+        (rh:products); the master reaction RHEA:37447 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:8329392 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:37447 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:37448
+      snippet: tetracenomycin F1 + O2 => tetracenomycin D3 + H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:37448 declares side 37447_R as its products
+        (rh:products); the master reaction RHEA:37447 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8329392 for this reaction.
+  - subject: prot_P39889
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TCMH_STRGA is an exemplar enzyme with EC 1.13.12.21 activity.
+    evidence:
+    - reference: EC:1.13.12.21
+      snippet: DR   P39889, TCMH_STRGA ;
+      notes: ExPASy ENZYME entry EC 1.13.12.21 cross-references UniProtKB:P39889 (TCMH_STRGA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

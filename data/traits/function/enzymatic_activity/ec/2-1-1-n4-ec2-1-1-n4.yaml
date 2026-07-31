@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 canonical_examples:
@@ -33,4 +33,149 @@ definitions:
       Catalyses: thiocyanate + S-adenosyl-L-methionine = methyl thiocyanate + S-adenosyl- L-homocysteine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thiocyanate methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.n4. EC 2.1.1.n4 maps to exactly
+    one curated Rhea reaction (RHEA:28014), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "thiocyanate +
+    S-adenosyl-L-methionine = methyl thiocyanate + S-adenosyl- L-homocysteine". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: thiocyanate methyltransferase
+    grounding: EC:2.1.1.n4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: thiocyanate
+    node_type: CHEMICAL
+    grounding: CHEBI:18022
+    description: Formula CNS.
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: methyl thiocyanate
+    node_type: CHEMICAL
+    grounding: CHEBI:61112
+    description: Formula C2H3NS.
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: thiocyanate methyltransferase activity
+    grounding: GO:0102215
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q0WP12
+    node_type: PROTEIN
+    label: HOL1_ARATH
+    grounding: UniProtKB:Q0WP12
+  - node_id: prot_Q93V78
+    node_type: PROTEIN
+    label: TMT1_BRAOL
+    grounding: UniProtKB:Q93V78
+  - node_id: prot_Q93XC4
+    node_type: PROTEIN
+    label: TMT2_BRAOL
+    grounding: UniProtKB:Q93XC4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: thiocyanate is a substrate consumed by RHEA:28014 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28015
+      snippet: thiocyanate + S-adenosyl-L-methionine => methyl thiocyanate + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:28015 declares side 28014_L as its substrates
+        (rh:substrates); the master reaction RHEA:28014 is undirected. This participant is CHEBI:18022
+        with coefficient 1. Rhea cites PMID:19419967, PMID:10933880, PMID:12369626 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:28014 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28015
+      snippet: thiocyanate + S-adenosyl-L-methionine => methyl thiocyanate + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:28015 declares side 28014_L as its substrates
+        (rh:substrates); the master reaction RHEA:28014 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:19419967, PMID:10933880, PMID:12369626 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: methyl thiocyanate is a product released by RHEA:28014 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28015
+      snippet: thiocyanate + S-adenosyl-L-methionine => methyl thiocyanate + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:28015 declares side 28014_R as its products
+        (rh:products); the master reaction RHEA:28014 is undirected. This participant is CHEBI:61112 with
+        coefficient 1. Rhea cites PMID:19419967, PMID:10933880, PMID:12369626 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:28014 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28015
+      snippet: thiocyanate + S-adenosyl-L-methionine => methyl thiocyanate + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:28015 declares side 28014_R as its products
+        (rh:products); the master reaction RHEA:28014 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:19419967, PMID:10933880, PMID:12369626 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.1.1.n4
+      snippet: EC:2.1.1.n4 > GO:thiocyanate methyltransferase activity ; GO:0102215
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102215 is itself a record
+        in this KB.
+  - subject: prot_Q0WP12
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HOL1_ARATH is an exemplar enzyme with EC 2.1.1.n4 activity.
+    evidence:
+    - reference: EC:2.1.1.n4
+      snippet: DR   Q0WP12, HOL1_ARATH ;  Q93V78, TMT1_BRAOL ;  Q93XC4, TMT2_BRAOL ;
+      notes: ExPASy ENZYME entry EC 2.1.1.n4 cross-references UniProtKB:Q0WP12 (HOL1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q93V78
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TMT1_BRAOL is an exemplar enzyme with EC 2.1.1.n4 activity.
+    evidence:
+    - reference: EC:2.1.1.n4
+      snippet: DR   Q0WP12, HOL1_ARATH ;  Q93V78, TMT1_BRAOL ;  Q93XC4, TMT2_BRAOL ;
+      notes: ExPASy ENZYME entry EC 2.1.1.n4 cross-references UniProtKB:Q93V78 (TMT1_BRAOL) as a protein
+        with this activity.
+  - subject: prot_Q93XC4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TMT2_BRAOL is an exemplar enzyme with EC 2.1.1.n4 activity.
+    evidence:
+    - reference: EC:2.1.1.n4
+      snippet: DR   Q0WP12, HOL1_ARATH ;  Q93V78, TMT1_BRAOL ;  Q93XC4, TMT2_BRAOL ;
+      notes: ExPASy ENZYME entry EC 2.1.1.n4 cross-references UniProtKB:Q93XC4 (TMT2_BRAOL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

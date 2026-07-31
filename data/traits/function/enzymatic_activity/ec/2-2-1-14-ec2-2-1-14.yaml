@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.2.1.-
 mapped_xrefs:
@@ -34,4 +34,228 @@ definitions:
       Catalyses: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate = D-fructose 6-phosphate + (2S)-3-sulfolactaldehyde
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-deoxy-6-sulfo-D-fructose transaldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.2.1.14. Rhea assigns 2 curated
+    reactions to EC 2.2.1.14. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate
+    = D-fructose 6-phosphate + (2S)-3-sulfolactaldehyde". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 6-deoxy-6-sulfo-D-fructose transaldolase
+    grounding: EC:2.2.1.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate = D-fructose 6-pho…
+    grounding: RHEA:66716
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate = D-fructose
+      6-phosphate + (2S)-3-sulfolactaldehyde'
+  - node_id: rxn1_sub1
+    label: 6-deoxy-6-sulfo-D-fructose
+    node_type: CHEMICAL
+    grounding: CHEBI:77133
+    description: Formula C6H11O8S.
+  - node_id: rxn1_sub2
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: rxn1_prd1
+    label: D-fructose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:61527
+    description: Formula C6H11O9P.
+  - node_id: rxn1_prd2
+    label: (2S)-3-sulfolactaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:90109
+    description: Formula C3H5O5S.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 6-deoxy-6-sulfo-D-fructose + D-erythrose 4-phosphate = (2S)-3-sulfolactaldeh…
+    grounding: RHEA:66920
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 6-deoxy-6-sulfo-D-fructose + D-erythrose 4-phosphate = (2S)-3-sulfolactaldehyde
+      + D-sedoheptulose 7-phosphate'
+  - node_id: rxn2_sub1
+    label: 6-deoxy-6-sulfo-D-fructose
+    node_type: CHEMICAL
+    grounding: CHEBI:77133
+    description: Formula C6H11O8S.
+  - node_id: rxn2_sub2
+    label: D-erythrose 4-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:16897
+    description: Formula C4H7O7P.
+  - node_id: rxn2_prd1
+    label: (2S)-3-sulfolactaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:90109
+    description: Formula C3H5O5S.
+  - node_id: rxn2_prd2
+    label: D-sedoheptulose 7-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57483
+    description: Formula C7H13O10P.
+  - node_id: prot_A0A7W3N5X5
+    node_type: PROTEIN
+    label: SFTAL_PRIAR
+    grounding: UniProtKB:A0A7W3N5X5
+  - node_id: prot_D5E1T2
+    node_type: PROTEIN
+    label: SFTAL_PRIM1
+    grounding: UniProtKB:D5E1T2
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:66716 is one of the 2 curated reactions Rhea assigns to EC 2.2.1.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:66716
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.2.1.14"/>
+      notes: The rh:ec triple on RHEA:66716 in rhea.rdf assigns that reaction to EC 2.2.1.14.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 6-deoxy-6-sulfo-D-fructose is a substrate consumed by RHEA:66716 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66717
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate => D-fructose 6-phosphate + (2S)-3-sulfolactaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:66717 declares side 66716_L as its substrates
+        (rh:substrates); the master reaction RHEA:66716 is undirected. This participant is CHEBI:77133
+        with coefficient 1. Rhea cites PMID:32919372 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: D-glyceraldehyde 3-phosphate is a substrate consumed by RHEA:66716 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66717
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate => D-fructose 6-phosphate + (2S)-3-sulfolactaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:66717 declares side 66716_L as its substrates
+        (rh:substrates); the master reaction RHEA:66716 is undirected. This participant is CHEBI:59776
+        with coefficient 1. Rhea cites PMID:32919372 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: D-fructose 6-phosphate is a product released by RHEA:66716 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66717
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate => D-fructose 6-phosphate + (2S)-3-sulfolactaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:66717 declares side 66716_R as its products
+        (rh:products); the master reaction RHEA:66716 is undirected. This participant is CHEBI:61527 with
+        coefficient 1. Rhea cites PMID:32919372 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: (2S)-3-sulfolactaldehyde is a product released by RHEA:66716 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66717
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate => D-fructose 6-phosphate + (2S)-3-sulfolactaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:66717 declares side 66716_R as its products
+        (rh:products); the master reaction RHEA:66716 is undirected. This participant is CHEBI:90109 with
+        coefficient 1. Rhea cites PMID:32919372 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:66920 is one of the 2 curated reactions Rhea assigns to EC 2.2.1.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:66920
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.2.1.14"/>
+      notes: The rh:ec triple on RHEA:66920 in rhea.rdf assigns that reaction to EC 2.2.1.14.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 6-deoxy-6-sulfo-D-fructose is a substrate consumed by RHEA:66920 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66921
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-erythrose 4-phosphate => (2S)-3-sulfolactaldehyde + D-sedoheptulose
+        7-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:66921 declares side 66920_L as its substrates
+        (rh:substrates); the master reaction RHEA:66920 is undirected. This participant is CHEBI:77133
+        with coefficient 1. Rhea cites PMID:32919372 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: D-erythrose 4-phosphate is a substrate consumed by RHEA:66920 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66921
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-erythrose 4-phosphate => (2S)-3-sulfolactaldehyde + D-sedoheptulose
+        7-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:66921 declares side 66920_L as its substrates
+        (rh:substrates); the master reaction RHEA:66920 is undirected. This participant is CHEBI:16897
+        with coefficient 1. Rhea cites PMID:32919372 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (2S)-3-sulfolactaldehyde is a product released by RHEA:66920 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66921
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-erythrose 4-phosphate => (2S)-3-sulfolactaldehyde + D-sedoheptulose
+        7-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:66921 declares side 66920_R as its products
+        (rh:products); the master reaction RHEA:66920 is undirected. This participant is CHEBI:90109 with
+        coefficient 1. Rhea cites PMID:32919372 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: D-sedoheptulose 7-phosphate is a product released by RHEA:66920 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66921
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-erythrose 4-phosphate => (2S)-3-sulfolactaldehyde + D-sedoheptulose
+        7-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:66921 declares side 66920_R as its products
+        (rh:products); the master reaction RHEA:66920 is undirected. This participant is CHEBI:57483 with
+        coefficient 1. Rhea cites PMID:32919372 for this reaction.
+  - subject: prot_A0A7W3N5X5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SFTAL_PRIAR is an exemplar enzyme with EC 2.2.1.14 activity.
+    evidence:
+    - reference: EC:2.2.1.14
+      snippet: DR   A0A7W3N5X5, SFTAL_PRIAR;  D5E1T2, SFTAL_PRIM1;
+      notes: ExPASy ENZYME entry EC 2.2.1.14 cross-references UniProtKB:A0A7W3N5X5 (SFTAL_PRIAR) as a
+        protein with this activity.
+  - subject: prot_D5E1T2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SFTAL_PRIM1 is an exemplar enzyme with EC 2.2.1.14 activity.
+    evidence:
+    - reference: EC:2.2.1.14
+      snippet: DR   A0A7W3N5X5, SFTAL_PRIAR;  D5E1T2, SFTAL_PRIM1;
+      notes: ExPASy ENZYME entry EC 2.2.1.14 cross-references UniProtKB:D5E1T2 (SFTAL_PRIM1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

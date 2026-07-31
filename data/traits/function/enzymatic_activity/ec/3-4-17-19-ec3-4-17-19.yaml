@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.17.-
 synonyms:
@@ -36,4 +36,66 @@ definitions:
       Catalyses: Release of a C-terminal amino acid with broad specificity, except for -Pro
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of carboxypeptidase Taq
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.17.19. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of a C-terminal amino acid with broad specificity, except for -Pro".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: carboxypeptidase Taq
+    grounding: EC:3.4.17.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P50848
+    node_type: PROTEIN
+    label: CBP1_BACSU
+    grounding: UniProtKB:P50848
+  - node_id: prot_Q8U3L0
+    node_type: PROTEIN
+    label: CBP1_PYRFU
+    grounding: UniProtKB:Q8U3L0
+  - node_id: prot_P42663
+    node_type: PROTEIN
+    label: CBP1_THEAQ
+    grounding: UniProtKB:P42663
+  edges:
+  - subject: prot_P50848
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBP1_BACSU is an exemplar enzyme with EC 3.4.17.19 activity.
+    evidence:
+    - reference: EC:3.4.17.19
+      snippet: DR   P50848, CBP1_BACSU ;  Q8U3L0, CBP1_PYRFU ;  P42663, CBP1_THEAQ ;
+      notes: ExPASy ENZYME entry EC 3.4.17.19 cross-references UniProtKB:P50848 (CBP1_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q8U3L0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBP1_PYRFU is an exemplar enzyme with EC 3.4.17.19 activity.
+    evidence:
+    - reference: EC:3.4.17.19
+      snippet: DR   P50848, CBP1_BACSU ;  Q8U3L0, CBP1_PYRFU ;  P42663, CBP1_THEAQ ;
+      notes: ExPASy ENZYME entry EC 3.4.17.19 cross-references UniProtKB:Q8U3L0 (CBP1_PYRFU) as a protein
+        with this activity.
+  - subject: prot_P42663
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBP1_THEAQ is an exemplar enzyme with EC 3.4.17.19 activity.
+    evidence:
+    - reference: EC:3.4.17.19
+      snippet: DR   P50848, CBP1_BACSU ;  Q8U3L0, CBP1_PYRFU ;  P42663, CBP1_THEAQ ;
+      notes: ExPASy ENZYME entry EC 3.4.17.19 cross-references UniProtKB:P42663 (CBP1_THEAQ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

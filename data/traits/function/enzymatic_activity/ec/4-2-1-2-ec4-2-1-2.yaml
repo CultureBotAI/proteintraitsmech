@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -43,4 +43,130 @@ definitions:
       Catalyses: (S)-malate = fumarate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fumarate hydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.2. EC 4.2.1.2 maps to exactly
+    one curated Rhea reaction (RHEA:12460), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-malate =
+    fumarate + H2O". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fumarate hydratase
+    grounding: EC:4.2.1.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-malate
+    node_type: CHEMICAL
+    grounding: CHEBI:15589
+    description: Formula C4H4O5.
+  - node_id: prd1
+    label: fumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+    description: Formula C4H2O4.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: fumarate hydratase activity
+    grounding: GO:0004333
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P93033
+    node_type: PROTEIN
+    label: FUM1_ARATH
+    grounding: UniProtKB:P93033
+  - node_id: prot_Q4QAU9
+    node_type: PROTEIN
+    label: FUM1_LEIMA
+    grounding: UniProtKB:Q4QAU9
+  - node_id: prot_Q9FI53
+    node_type: PROTEIN
+    label: FUM2_ARATH
+    grounding: UniProtKB:Q9FI53
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-malate is a substrate consumed by RHEA:12460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12461
+      snippet: (S)-malate => fumarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12461 declares side 12460_L as its substrates
+        (rh:substrates); the master reaction RHEA:12460 is undirected. This participant is CHEBI:15589
+        with coefficient 1. Rhea cites PMID:14247669, PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: fumarate is a product released by RHEA:12460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12461
+      snippet: (S)-malate => fumarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12461 declares side 12460_R as its products
+        (rh:products); the master reaction RHEA:12460 is undirected. This participant is CHEBI:29806 with
+        coefficient 1. Rhea cites PMID:14247669, PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:12460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12461
+      snippet: (S)-malate => fumarate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12461 declares side 12460_R as its products
+        (rh:products); the master reaction RHEA:12460 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:14247669, PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.2
+      snippet: EC:4.2.1.2 > GO:fumarate hydratase activity ; GO:0004333
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004333 is itself a record
+        in this KB.
+  - subject: prot_P93033
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUM1_ARATH is an exemplar enzyme with EC 4.2.1.2 activity.
+    evidence:
+    - reference: EC:4.2.1.2
+      snippet: DR   P93033, FUM1_ARATH ;  Q4QAU9, FUM1_LEIMA ;  Q9FI53, FUM2_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.2 cross-references UniProtKB:P93033 (FUM1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q4QAU9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUM1_LEIMA is an exemplar enzyme with EC 4.2.1.2 activity.
+    evidence:
+    - reference: EC:4.2.1.2
+      snippet: DR   P93033, FUM1_ARATH ;  Q4QAU9, FUM1_LEIMA ;  Q9FI53, FUM2_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.2 cross-references UniProtKB:Q4QAU9 (FUM1_LEIMA) as a protein
+        with this activity.
+  - subject: prot_Q9FI53
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUM2_ARATH is an exemplar enzyme with EC 4.2.1.2 activity.
+    evidence:
+    - reference: EC:4.2.1.2
+      snippet: DR   P93033, FUM1_ARATH ;  Q4QAU9, FUM1_LEIMA ;  Q9FI53, FUM2_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.2 cross-references UniProtKB:Q9FI53 (FUM2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

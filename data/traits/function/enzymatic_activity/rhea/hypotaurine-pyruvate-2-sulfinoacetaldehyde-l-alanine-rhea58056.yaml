@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.6.1.77
     mapping_source: rhea2ec
@@ -28,4 +28,106 @@ definitions:
       Catalyses the reaction: hypotaurine + pyruvate = 2-sulfinoacetaldehyde + L-alanine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hypotaurine + pyruvate = 2-sulfinoacetaldehyde + L-alanine
+  description: Substrate-to-product chemistry of RHEA:58056, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58057 (rh:substrates → 58056_L, rh:products → 58056_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of hypotaurine + pyruvate = 2-sulfinoacetaldehyde + L-alanine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58056
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: hypotaurine + pyruvate = 2-sulfinoacetaldehyde + L-alanine'
+  - node_id: sub1
+    label: hypotaurine
+    node_type: CHEMICAL
+    grounding: CHEBI:57853
+    description: Formula C2H7NO2S.
+  - node_id: sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd1
+    label: 2-sulfinoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:142501
+    description: Formula C2H3O3S.
+  - node_id: prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: taurine--pyruvate aminotransferase
+    grounding: EC:2.6.1.77
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hypotaurine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58057
+      snippet: hypotaurine + pyruvate => 2-sulfinoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:58057 declares side 58056_L as its substrates
+        (rh:substrates); the master reaction RHEA:58056 is undirected. This participant is CHEBI:57853
+        with coefficient 1. Rhea cites PMID:23603744 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: pyruvate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58057
+      snippet: hypotaurine + pyruvate => 2-sulfinoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:58057 declares side 58056_L as its substrates
+        (rh:substrates); the master reaction RHEA:58056 is undirected. This participant is CHEBI:15361
+        with coefficient 1. Rhea cites PMID:23603744 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-sulfinoacetaldehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58057
+      snippet: hypotaurine + pyruvate => 2-sulfinoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:58057 declares side 58056_R as its products
+        (rh:products); the master reaction RHEA:58056 is undirected. This participant is CHEBI:142501
+        with coefficient 1. Rhea cites PMID:23603744 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-alanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58057
+      snippet: hypotaurine + pyruvate => 2-sulfinoacetaldehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:58057 declares side 58056_R as its products
+        (rh:products); the master reaction RHEA:58056 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:23603744 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.6.1.77; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:58056
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.77"/>
+      notes: The rh:ec triple on RHEA:58056 in rhea.rdf. EC 2.6.1.77 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

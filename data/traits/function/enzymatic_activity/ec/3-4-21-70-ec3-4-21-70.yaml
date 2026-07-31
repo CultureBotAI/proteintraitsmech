@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -38,4 +38,66 @@ definitions:
       Catalyses: Preferential cleavage: Ala-|-Xaa. Does not hydrolyze elastin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pancreatic endopeptidase E
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.70. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Preferential
+    cleavage: Ala-|-Xaa. Does not hydrolyze elastin".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: pancreatic endopeptidase E
+    grounding: EC:3.4.21.70
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P09093
+    node_type: PROTEIN
+    label: CEL3A_HUMAN
+    grounding: UniProtKB:P09093
+  - node_id: prot_P08861
+    node_type: PROTEIN
+    label: CEL3B_HUMAN
+    grounding: UniProtKB:P08861
+  - node_id: prot_O19023
+    node_type: PROTEIN
+    label: CEL3B_MACMU
+    grounding: UniProtKB:O19023
+  edges:
+  - subject: prot_P09093
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEL3A_HUMAN is an exemplar enzyme with EC 3.4.21.70 activity.
+    evidence:
+    - reference: EC:3.4.21.70
+      snippet: DR   P09093, CEL3A_HUMAN;  P08861, CEL3B_HUMAN;  O19023, CEL3B_MACMU;
+      notes: ExPASy ENZYME entry EC 3.4.21.70 cross-references UniProtKB:P09093 (CEL3A_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P08861
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEL3B_HUMAN is an exemplar enzyme with EC 3.4.21.70 activity.
+    evidence:
+    - reference: EC:3.4.21.70
+      snippet: DR   P09093, CEL3A_HUMAN;  P08861, CEL3B_HUMAN;  O19023, CEL3B_MACMU;
+      notes: ExPASy ENZYME entry EC 3.4.21.70 cross-references UniProtKB:P08861 (CEL3B_HUMAN) as a protein
+        with this activity.
+  - subject: prot_O19023
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CEL3B_MACMU is an exemplar enzyme with EC 3.4.21.70 activity.
+    evidence:
+    - reference: EC:3.4.21.70
+      snippet: DR   P09093, CEL3A_HUMAN;  P08861, CEL3B_HUMAN;  O19023, CEL3B_MACMU;
+      notes: ExPASy ENZYME entry EC 3.4.21.70 cross-references UniProtKB:O19023 (CEL3B_MACMU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

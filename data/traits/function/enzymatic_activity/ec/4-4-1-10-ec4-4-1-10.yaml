@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.4.1.-
 mapped_xrefs:
@@ -25,4 +25,104 @@ definitions:
       Catalyses: sulfite + L-cysteine = L-cysteate + hydrogen sulfide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cysteine lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.4.1.10. EC 4.4.1.10 maps to exactly
+    one curated Rhea reaction (RHEA:20916), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "sulfite + L-cysteine
+    = L-cysteate + hydrogen sulfide". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cysteine lyase
+    grounding: EC:4.4.1.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: sub2
+    label: L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:35235
+    description: Formula C3H7NO2S.
+  - node_id: prd1
+    label: L-cysteate
+    node_type: CHEMICAL
+    grounding: CHEBI:58090
+    description: Formula C3H6NO5S.
+  - node_id: prd2
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cysteine lyase activity
+    grounding: GO:0047803
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sulfite is a substrate consumed by RHEA:20916 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20917
+      snippet: sulfite + L-cysteine => L-cysteate + hydrogen sulfide
+      notes: Rhea's left-to-right directional reaction RHEA:20917 declares side 20916_L as its substrates
+        (rh:substrates); the master reaction RHEA:20916 is undirected. This participant is CHEBI:17359
+        with coefficient 1. Rhea cites PMID:5813025 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-cysteine is a substrate consumed by RHEA:20916 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20917
+      snippet: sulfite + L-cysteine => L-cysteate + hydrogen sulfide
+      notes: Rhea's left-to-right directional reaction RHEA:20917 declares side 20916_L as its substrates
+        (rh:substrates); the master reaction RHEA:20916 is undirected. This participant is CHEBI:35235
+        with coefficient 1. Rhea cites PMID:5813025 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-cysteate is a product released by RHEA:20916 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20917
+      snippet: sulfite + L-cysteine => L-cysteate + hydrogen sulfide
+      notes: Rhea's left-to-right directional reaction RHEA:20917 declares side 20916_R as its products
+        (rh:products); the master reaction RHEA:20916 is undirected. This participant is CHEBI:58090 with
+        coefficient 1. Rhea cites PMID:5813025 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: hydrogen sulfide is a product released by RHEA:20916 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20917
+      snippet: sulfite + L-cysteine => L-cysteate + hydrogen sulfide
+      notes: Rhea's left-to-right directional reaction RHEA:20917 declares side 20916_R as its products
+        (rh:products); the master reaction RHEA:20916 is undirected. This participant is CHEBI:29919 with
+        coefficient 1. Rhea cites PMID:5813025 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.4.1.10
+      snippet: EC:4.4.1.10 > GO:cysteine lyase activity ; GO:0047803
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047803 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

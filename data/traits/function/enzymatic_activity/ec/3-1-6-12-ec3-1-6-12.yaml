@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.6.-
 synonyms:
@@ -43,4 +43,82 @@ definitions:
       Catalyses: Hydrolysis of the 4-sulfate groups of the N-acetyl-D-galactosamine 4-sulfate units of chondroitin sulfate and dermatan sulfate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acetylgalactosamine-4-sulfatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.6.12. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of the 4-sulfate groups of the N-acetyl-D-galactosamine 4-sulfate units of chondroitin sulfate and
+    dermatan sulfate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-acetylgalactosamine-4-sulfatase
+    grounding: EC:3.1.6.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-acetylgalactosamine-4-sulfatase activity
+    grounding: GO:0003943
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P33727
+    node_type: PROTEIN
+    label: ARSB_FELCA
+    grounding: UniProtKB:P33727
+  - node_id: prot_P15848
+    node_type: PROTEIN
+    label: ARSB_HUMAN
+    grounding: UniProtKB:P15848
+  - node_id: prot_P50429
+    node_type: PROTEIN
+    label: ARSB_MOUSE
+    grounding: UniProtKB:P50429
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.6.12
+      snippet: EC:3.1.6.12 > GO:N-acetylgalactosamine-4-sulfatase activity ; GO:0003943
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003943 is itself a record
+        in this KB.
+  - subject: prot_P33727
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSB_FELCA is an exemplar enzyme with EC 3.1.6.12 activity.
+    evidence:
+    - reference: EC:3.1.6.12
+      snippet: DR   P33727, ARSB_FELCA ;  P15848, ARSB_HUMAN ;  P50429, ARSB_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.1.6.12 cross-references UniProtKB:P33727 (ARSB_FELCA) as a protein
+        with this activity.
+  - subject: prot_P15848
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSB_HUMAN is an exemplar enzyme with EC 3.1.6.12 activity.
+    evidence:
+    - reference: EC:3.1.6.12
+      snippet: DR   P33727, ARSB_FELCA ;  P15848, ARSB_HUMAN ;  P50429, ARSB_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.1.6.12 cross-references UniProtKB:P15848 (ARSB_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P50429
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARSB_MOUSE is an exemplar enzyme with EC 3.1.6.12 activity.
+    evidence:
+    - reference: EC:3.1.6.12
+      snippet: DR   P33727, ARSB_FELCA ;  P15848, ARSB_HUMAN ;  P50429, ARSB_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.1.6.12 cross-references UniProtKB:P50429 (ARSB_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -45,4 +45,82 @@ definitions:
       Catalyses: Selective cleavage of Gln-|-Gly bond in the poliovirus polyprotein. In other picornavirus reactions Glu may be substituted for Gln, and Ser or Thr for Gly
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of picornain 3C
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.28. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Selective
+    cleavage of Gln-|-Gly bond in the poliovirus polyprotein. In other picornavirus reactions Glu may
+    be substituted for Gln, and Ser or Thr for Gly".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: picornain 3C
+    grounding: EC:3.4.22.28
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cysteine-type endopeptidase activity
+    grounding: GO:0004197
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9YLS4
+    node_type: PROTEIN
+    label: POLG_AEVCA
+    grounding: UniProtKB:Q9YLS4
+  - node_id: prot_Q6WQ42
+    node_type: PROTEIN
+    label: POLG_AEVL2
+    grounding: UniProtKB:Q6WQ42
+  - node_id: prot_Q6R325
+    node_type: PROTEIN
+    label: POLG_AEVVR
+    grounding: UniProtKB:Q6R325
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.22.28
+      snippet: EC:3.4.22.28 > GO:cysteine-type endopeptidase activity ; GO:0004197
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004197 is itself a record
+        in this KB.
+  - subject: prot_Q9YLS4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_AEVCA is an exemplar enzyme with EC 3.4.22.28 activity.
+    evidence:
+    - reference: EC:3.4.22.28
+      snippet: DR   Q9YLS4, POLG_AEVCA ;  Q6WQ42, POLG_AEVL2 ;  Q6R325, POLG_AEVVR ;
+      notes: ExPASy ENZYME entry EC 3.4.22.28 cross-references UniProtKB:Q9YLS4 (POLG_AEVCA) as a protein
+        with this activity.
+  - subject: prot_Q6WQ42
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_AEVL2 is an exemplar enzyme with EC 3.4.22.28 activity.
+    evidence:
+    - reference: EC:3.4.22.28
+      snippet: DR   Q9YLS4, POLG_AEVCA ;  Q6WQ42, POLG_AEVL2 ;  Q6R325, POLG_AEVVR ;
+      notes: ExPASy ENZYME entry EC 3.4.22.28 cross-references UniProtKB:Q6WQ42 (POLG_AEVL2) as a protein
+        with this activity.
+  - subject: prot_Q6R325
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_AEVVR is an exemplar enzyme with EC 3.4.22.28 activity.
+    evidence:
+    - reference: EC:3.4.22.28
+      snippet: DR   Q9YLS4, POLG_AEVCA ;  Q6WQ42, POLG_AEVL2 ;  Q6R325, POLG_AEVVR ;
+      notes: ExPASy ENZYME entry EC 3.4.22.28 cross-references UniProtKB:Q6R325 (POLG_AEVVR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

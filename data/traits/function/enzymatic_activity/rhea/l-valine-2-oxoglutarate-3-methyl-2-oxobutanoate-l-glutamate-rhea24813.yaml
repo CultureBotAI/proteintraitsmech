@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.6.1.42
     mapping_source: rhea2ec
@@ -36,4 +36,124 @@ definitions:
       Catalyses the reaction: L-valine + 2-oxoglutarate = 3-methyl-2-oxobutanoate + L-glutamate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-valine + 2-oxoglutarate = 3-methyl-2-oxobutanoate + L-glutamate
+  description: Substrate-to-product chemistry of RHEA:24813, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24814 (rh:substrates → 24813_L, rh:products → 24813_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-valine + 2-oxoglutarate = 3-methyl-2-oxobutanoate + L-glutamate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24813
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-valine + 2-oxoglutarate = 3-methyl-2-oxobutanoate + L-glutamate'
+  - node_id: sub1
+    label: L-valine
+    node_type: CHEMICAL
+    grounding: CHEBI:57762
+    description: Formula C5H11NO2.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: 3-methyl-2-oxobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:11851
+    description: Formula C5H7O3.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-valine:2-oxoglutarate transaminase activity
+    grounding: GO:0052655
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: branched-chain-amino-acid transaminase
+    grounding: EC:2.6.1.42
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-valine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24814
+      snippet: L-valine + 2-oxoglutarate => 3-methyl-2-oxobutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:24814 declares side 24813_L as its substrates
+        (rh:substrates); the master reaction RHEA:24813 is undirected. This participant is CHEBI:57762
+        with coefficient 1. Rhea cites PMID:5922965, PMID:4968655, PMID:13034817, PMID:4979711 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24814
+      snippet: L-valine + 2-oxoglutarate => 3-methyl-2-oxobutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:24814 declares side 24813_L as its substrates
+        (rh:substrates); the master reaction RHEA:24813 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:5922965, PMID:4968655, PMID:13034817, PMID:4979711 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-methyl-2-oxobutanoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24814
+      snippet: L-valine + 2-oxoglutarate => 3-methyl-2-oxobutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:24814 declares side 24813_R as its products
+        (rh:products); the master reaction RHEA:24813 is undirected. This participant is CHEBI:11851 with
+        coefficient 1. Rhea cites PMID:5922965, PMID:4968655, PMID:13034817, PMID:4979711 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24814
+      snippet: L-valine + 2-oxoglutarate => 3-methyl-2-oxobutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:24814 declares side 24813_R as its products
+        (rh:products); the master reaction RHEA:24813 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:5922965, PMID:4968655, PMID:13034817, PMID:4979711 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:24813
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052655"/>
+      notes: The rdfs:seeAlso triple on RHEA:24813 in rhea.rdf. GO term GO:0052655 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.6.1.42; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24813
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.42"/>
+      notes: The rh:ec triple on RHEA:24813 in rhea.rdf. EC 2.6.1.42 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

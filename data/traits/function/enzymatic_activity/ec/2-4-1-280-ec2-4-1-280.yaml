@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -32,4 +32,125 @@ definitions:
       Catalyses: N,N'-diacetylchitobiose + phosphate = N-acetyl-alpha-D-glucosamine 1-phosphate + N-acetyl-D-glucosamine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N,N'-diacetylchitobiose phosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.280. EC 2.4.1.280 maps to
+    exactly one curated Rhea reaction (RHEA:32527), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N,N''-diacetylchitobiose
+    + phosphate = N-acetyl-alpha-D-glucosamine 1-phosphate + N-acetyl-D-glucosamine". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N,N'-diacetylchitobiose phosphorylase
+    grounding: EC:2.4.1.280
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N,N'-diacetylchitobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:28681
+    description: Formula C16H28N2O11.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: N-acetyl-alpha-D-glucosamine 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57776
+    description: Formula C8H14NO9P.
+  - node_id: prd2
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+    description: Formula C8H15NO6.
+  - node_id: prot_Q9F8X1
+    node_type: PROTEIN
+    label: CHBP_VIBFU
+    grounding: UniProtKB:Q9F8X1
+  - node_id: prot_Q76IQ9
+    node_type: PROTEIN
+    label: CHBP_VIBPR
+    grounding: UniProtKB:Q76IQ9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N,N'-diacetylchitobiose is a substrate consumed by RHEA:32527 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32528
+      snippet: N,N'-diacetylchitobiose + phosphate => N-acetyl-alpha-D-glucosamine 1-phosphate + N-acetyl-D-glucosamine
+      notes: Rhea's left-to-right directional reaction RHEA:32528 declares side 32527_L as its substrates
+        (rh:substrates); the master reaction RHEA:32527 is undirected. This participant is CHEBI:28681
+        with coefficient 1. Rhea cites PMID:15274915, PMID:13678418, PMID:10913116, PMID:17933912 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:32527 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32528
+      snippet: N,N'-diacetylchitobiose + phosphate => N-acetyl-alpha-D-glucosamine 1-phosphate + N-acetyl-D-glucosamine
+      notes: Rhea's left-to-right directional reaction RHEA:32528 declares side 32527_L as its substrates
+        (rh:substrates); the master reaction RHEA:32527 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:15274915, PMID:13678418, PMID:10913116, PMID:17933912 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-alpha-D-glucosamine 1-phosphate is a product released by RHEA:32527 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:32528
+      snippet: N,N'-diacetylchitobiose + phosphate => N-acetyl-alpha-D-glucosamine 1-phosphate + N-acetyl-D-glucosamine
+      notes: Rhea's left-to-right directional reaction RHEA:32528 declares side 32527_R as its products
+        (rh:products); the master reaction RHEA:32527 is undirected. This participant is CHEBI:57776 with
+        coefficient 1. Rhea cites PMID:15274915, PMID:13678418, PMID:10913116, PMID:17933912 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: N-acetyl-D-glucosamine is a product released by RHEA:32527 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32528
+      snippet: N,N'-diacetylchitobiose + phosphate => N-acetyl-alpha-D-glucosamine 1-phosphate + N-acetyl-D-glucosamine
+      notes: Rhea's left-to-right directional reaction RHEA:32528 declares side 32527_R as its products
+        (rh:products); the master reaction RHEA:32527 is undirected. This participant is CHEBI:506227
+        with coefficient 1. Rhea cites PMID:15274915, PMID:13678418, PMID:10913116, PMID:17933912 for
+        this reaction.
+  - subject: prot_Q9F8X1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHBP_VIBFU is an exemplar enzyme with EC 2.4.1.280 activity.
+    evidence:
+    - reference: EC:2.4.1.280
+      snippet: DR   Q9F8X1, CHBP_VIBFU ;  Q76IQ9, CHBP_VIBPR ;
+      notes: ExPASy ENZYME entry EC 2.4.1.280 cross-references UniProtKB:Q9F8X1 (CHBP_VIBFU) as a protein
+        with this activity.
+  - subject: prot_Q76IQ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHBP_VIBPR is an exemplar enzyme with EC 2.4.1.280 activity.
+    evidence:
+    - reference: EC:2.4.1.280
+      snippet: DR   Q9F8X1, CHBP_VIBFU ;  Q76IQ9, CHBP_VIBPR ;
+      notes: ExPASy ENZYME entry EC 2.4.1.280 cross-references UniProtKB:Q76IQ9 (CHBP_VIBPR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

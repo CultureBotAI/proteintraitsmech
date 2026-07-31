@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -26,4 +26,97 @@ definitions:
       Catalyses: sn-glycerol 1-phosphate + (2E,6E,10E,14E)-geranylfarnesyl diphosphate = sn-3-(O-farnesylgeranyl)glycerol 1-phosphate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphoglycerol geranylfarnesyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.155. EC 2.5.1.155 maps to
+    exactly one curated Rhea reaction (RHEA:69184), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "sn-glycerol
+    1-phosphate + (2E,6E,10E,14E)-geranylfarnesyl diphosphate = sn-3-(O-farnesylgeranyl)glycerol 1-phosphate
+    + diphosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoglycerol geranylfarnesyltransferase
+    grounding: EC:2.5.1.155
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: sn-glycerol 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57685
+    description: Formula C3H7O6P.
+  - node_id: sub2
+    label: (2E,6E,10E,14E)-geranylfarnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57907
+    description: Formula C25H41O7P2.
+  - node_id: prd1
+    label: sn-3-(O-farnesylgeranyl)glycerol 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:193087
+    description: Formula C28H47O6P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sn-glycerol 1-phosphate is a substrate consumed by RHEA:69184 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69185
+      snippet: sn-glycerol 1-phosphate + (2E,6E,10E,14E)-geranylfarnesyl diphosphate => sn-3-(O-farnesylgeranyl)glycerol
+        1-phosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:69185 declares side 69184_L as its substrates
+        (rh:substrates); the master reaction RHEA:69184 is undirected. This participant is CHEBI:57685
+        with coefficient 1. Rhea cites PMID:29427665 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: (2E,6E,10E,14E)-geranylfarnesyl diphosphate is a substrate consumed by RHEA:69184 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:69185
+      snippet: sn-glycerol 1-phosphate + (2E,6E,10E,14E)-geranylfarnesyl diphosphate => sn-3-(O-farnesylgeranyl)glycerol
+        1-phosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:69185 declares side 69184_L as its substrates
+        (rh:substrates); the master reaction RHEA:69184 is undirected. This participant is CHEBI:57907
+        with coefficient 1. Rhea cites PMID:29427665 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sn-3-(O-farnesylgeranyl)glycerol 1-phosphate is a product released by RHEA:69184 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:69185
+      snippet: sn-glycerol 1-phosphate + (2E,6E,10E,14E)-geranylfarnesyl diphosphate => sn-3-(O-farnesylgeranyl)glycerol
+        1-phosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:69185 declares side 69184_R as its products
+        (rh:products); the master reaction RHEA:69184 is undirected. This participant is CHEBI:193087
+        with coefficient 1. Rhea cites PMID:29427665 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:69184 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69185
+      snippet: sn-glycerol 1-phosphate + (2E,6E,10E,14E)-geranylfarnesyl diphosphate => sn-3-(O-farnesylgeranyl)glycerol
+        1-phosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:69185 declares side 69184_R as its products
+        (rh:products); the master reaction RHEA:69184 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:29427665 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

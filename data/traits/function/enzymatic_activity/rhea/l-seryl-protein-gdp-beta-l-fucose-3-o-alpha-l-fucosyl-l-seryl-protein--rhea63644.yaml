@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.4.1.221
     mapping_source: rhea2ec
@@ -38,4 +38,166 @@ definitions:
       Catalyses the reaction: L-seryl-[protein] + GDP-beta-L-fucose = 3-O-(alpha-L-fucosyl)-L-seryl-[protein] + GDP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-seryl-[protein] + GDP-beta-L-fucose = 3-O-(alpha-L-fucosyl)-L-seryl-[protein]
+    + GDP +…
+  description: Substrate-to-product chemistry of RHEA:63644, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63645 (rh:substrates → 63644_L, rh:products → 63644_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-seryl-[protein] + GDP-beta-L-fucose = 3-O-(alpha-L-fucosyl)-L-seryl-[prote…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63644
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-seryl-[protein] + GDP-beta-L-fucose = 3-O-(alpha-L-fucosyl)-L-seryl-[protein] +
+      GDP + H(+)'
+  - node_id: sub1
+    label: L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9863
+    description: Rhea compound GENERIC:9863.
+  - node_id: sub1_rp1
+    label: L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9863 (L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: sub2
+    label: GDP-beta-L-fucose
+    node_type: CHEMICAL
+    grounding: CHEBI:57273
+    description: Formula C16H23N5O15P2.
+  - node_id: prd1
+    label: 3-O-(alpha-L-fucosyl)-L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17914
+    description: Rhea compound GENERIC:17914.
+  - node_id: prd1_rp1
+    label: 3-O-(alpha-L-fucosyl)-L-seryl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17914 (3-O-(alpha-L-fucosyl)-L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:189632
+  - node_id: prd2
+    label: GDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+    description: Formula C10H12N5O11P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: peptide-O-fucosyltransferase
+    grounding: EC:2.4.1.221
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-seryl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63645
+      snippet: L-seryl-[protein] + GDP-beta-L-fucose => 3-O-(alpha-L-fucosyl)-L-seryl-[protein] + GDP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:63645 declares side 63644_L as its substrates
+        (rh:substrates); the master reaction RHEA:63644 is undirected. This participant is GENERIC:9863
+        with coefficient 1. Rhea cites PMID:9525914, PMID:28244988, PMID:11524432, PMID:26854667 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of L-seryl-[protein].
+    evidence:
+    - reference: RHEA:63644
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:9863 (L-seryl-[protein]) declares rh:reactivePart = L-serine residue
+        (CHEBI:29999), formula C3H5NO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: GDP-beta-L-fucose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63645
+      snippet: L-seryl-[protein] + GDP-beta-L-fucose => 3-O-(alpha-L-fucosyl)-L-seryl-[protein] + GDP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:63645 declares side 63644_L as its substrates
+        (rh:substrates); the master reaction RHEA:63644 is undirected. This participant is CHEBI:57273
+        with coefficient 1. Rhea cites PMID:9525914, PMID:28244988, PMID:11524432, PMID:26854667 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-O-(alpha-L-fucosyl)-L-seryl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:63645
+      snippet: L-seryl-[protein] + GDP-beta-L-fucose => 3-O-(alpha-L-fucosyl)-L-seryl-[protein] + GDP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:63645 declares side 63644_R as its products
+        (rh:products); the master reaction RHEA:63644 is undirected. This participant is GENERIC:17914
+        with coefficient 1. Rhea cites PMID:9525914, PMID:28244988, PMID:11524432, PMID:26854667 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3-O-(alpha-L-fucosyl)-L-seryl residue is the reactive part of 3-O-(alpha-L-fucosyl)-L-seryl-[protein].
+    evidence:
+    - reference: RHEA:63644
+      snippet: 3-O-(alpha-L-fucosyl)-L-seryl residue
+      notes: Rhea compound GENERIC:17914 (3-O-(alpha-L-fucosyl)-L-seryl-[protein]) declares rh:reactivePart
+        = 3-O-(alpha-L-fucosyl)-L-seryl residue (CHEBI:189632), formula C9H15NO6.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: GDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63645
+      snippet: L-seryl-[protein] + GDP-beta-L-fucose => 3-O-(alpha-L-fucosyl)-L-seryl-[protein] + GDP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:63645 declares side 63644_R as its products
+        (rh:products); the master reaction RHEA:63644 is undirected. This participant is CHEBI:58189 with
+        coefficient 1. Rhea cites PMID:9525914, PMID:28244988, PMID:11524432, PMID:26854667 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63645
+      snippet: L-seryl-[protein] + GDP-beta-L-fucose => 3-O-(alpha-L-fucosyl)-L-seryl-[protein] + GDP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:63645 declares side 63644_R as its products
+        (rh:products); the master reaction RHEA:63644 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9525914, PMID:28244988, PMID:11524432, PMID:26854667 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.4.1.221; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:63644
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.221"/>
+      notes: The rh:ec triple on RHEA:63644 in rhea.rdf. EC 2.4.1.221 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

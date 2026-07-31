@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:192529
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: anthocyanin A10 + malonyl-CoA = anthocyanin A11 + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of anthocyanin A10 + malonyl-CoA = anthocyanin A11 + CoA
+  description: Substrate-to-product chemistry of RHEA:72763, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:72764 (rh:substrates → 72763_L, rh:products → 72763_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of anthocyanin A10 + malonyl-CoA = anthocyanin A11 + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:72763
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: anthocyanin A10 + malonyl-CoA = anthocyanin A11 + CoA'
+  - node_id: sub1
+    label: anthocyanin A10
+    node_type: CHEMICAL
+    grounding: CHEBI:192529
+    description: Formula C58H64O31.
+  - node_id: sub2
+    label: malonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57384
+    description: Formula C24H33N7O19P3S.
+  - node_id: prd1
+    label: anthocyanin A11
+    node_type: CHEMICAL
+    grounding: CHEBI:72649
+    description: Formula C61H65O34.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: anthocyanin A10 is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:72764
+      snippet: anthocyanin A10 + malonyl-CoA => anthocyanin A11 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:72764 declares side 72763_L as its substrates
+        (rh:substrates); the master reaction RHEA:72763 is undirected. This participant is CHEBI:192529
+        with coefficient 1. Rhea cites PMID:17292360 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72764
+      snippet: anthocyanin A10 + malonyl-CoA => anthocyanin A11 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:72764 declares side 72763_L as its substrates
+        (rh:substrates); the master reaction RHEA:72763 is undirected. This participant is CHEBI:57384
+        with coefficient 1. Rhea cites PMID:17292360 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: anthocyanin A11 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72764
+      snippet: anthocyanin A10 + malonyl-CoA => anthocyanin A11 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:72764 declares side 72763_R as its products
+        (rh:products); the master reaction RHEA:72763 is undirected. This participant is CHEBI:72649 with
+        coefficient 1. Rhea cites PMID:17292360 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:72764
+      snippet: anthocyanin A10 + malonyl-CoA => anthocyanin A11 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:72764 declares side 72763_R as its products
+        (rh:products); the master reaction RHEA:72763 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:17292360 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

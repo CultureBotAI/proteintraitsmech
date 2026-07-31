@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -38,4 +38,66 @@ definitions:
       Catalyses: Endopeptidase with strict specificity for lysyl bonds
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gingipain K
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.47. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endopeptidase
+    with strict specificity for lysyl bonds".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gingipain K
+    grounding: EC:3.4.22.47
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P72194
+    node_type: PROTEIN
+    label: KGP38_PORGN
+    grounding: UniProtKB:P72194
+  - node_id: prot_P72197
+    node_type: PROTEIN
+    label: KGP66_PORGN
+    grounding: UniProtKB:P72197
+  - node_id: prot_Q51817
+    node_type: PROTEIN
+    label: KGP83_PORGN
+    grounding: UniProtKB:Q51817
+  edges:
+  - subject: prot_P72194
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KGP38_PORGN is an exemplar enzyme with EC 3.4.22.47 activity.
+    evidence:
+    - reference: EC:3.4.22.47
+      snippet: DR   P72194, KGP38_PORGN;  P72197, KGP66_PORGN;  Q51817, KGP83_PORGN;
+      notes: ExPASy ENZYME entry EC 3.4.22.47 cross-references UniProtKB:P72194 (KGP38_PORGN) as a protein
+        with this activity.
+  - subject: prot_P72197
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KGP66_PORGN is an exemplar enzyme with EC 3.4.22.47 activity.
+    evidence:
+    - reference: EC:3.4.22.47
+      snippet: DR   P72194, KGP38_PORGN;  P72197, KGP66_PORGN;  Q51817, KGP83_PORGN;
+      notes: ExPASy ENZYME entry EC 3.4.22.47 cross-references UniProtKB:P72197 (KGP66_PORGN) as a protein
+        with this activity.
+  - subject: prot_Q51817
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KGP83_PORGN is an exemplar enzyme with EC 3.4.22.47 activity.
+    evidence:
+    - reference: EC:3.4.22.47
+      snippet: DR   P72194, KGP38_PORGN;  P72197, KGP66_PORGN;  Q51817, KGP83_PORGN;
+      notes: ExPASy ENZYME entry EC 3.4.22.47 cross-references UniProtKB:Q51817 (KGP83_PORGN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

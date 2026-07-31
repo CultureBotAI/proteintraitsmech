@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78597
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,162 @@ definitions:
       Catalyses the reaction: an N-terminal L-alpha-aminoacyl-[protein] + acetyl-CoA = N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein] + CoA + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an N-terminal L-alpha-aminoacyl-[protein] + acetyl-CoA = N-terminal N(alpha)-acetyl-L-a…
+  description: Substrate-to-product chemistry of RHEA:21028, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:21029 (rh:substrates → 21028_L, rh:products → 21028_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an N-terminal L-alpha-aminoacyl-[protein] + acetyl-CoA = N-terminal N(alpha)…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21028
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an N-terminal L-alpha-aminoacyl-[protein] + acetyl-CoA = N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein]
+      + CoA + H(+)'
+  - node_id: sub1
+    label: an N-terminal L-alpha-aminoacyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10636
+    description: Rhea compound GENERIC:10636.
+  - node_id: sub1_rp1
+    label: N-terminal L-alpha-amino-acid residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10636 (an N-terminal
+      L-alpha-aminoacyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78597
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15589
+    description: Rhea compound GENERIC:15589.
+  - node_id: prd1_rp1
+    label: N-terminal N(alpha)-acetyl-L-amino-acid residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15589 (N-terminal
+      N(alpha)-acetyl-L-alpha-aminoacyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78598
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-N-terminal amino-acid acetyltransferase activity
+    grounding: GO:0004596
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-terminal L-alpha-aminoacyl-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21029
+      snippet: an N-terminal L-alpha-aminoacyl-[protein] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21029 declares side 21028_L as its substrates
+        (rh:substrates); the master reaction RHEA:21028 is undirected. This participant is GENERIC:10636
+        with coefficient 1. Rhea cites PMID:3902358, PMID:30054468, PMID:6286657 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N-terminal L-alpha-amino-acid residue is the reactive part of an N-terminal L-alpha-aminoacyl-[protein].
+    evidence:
+    - reference: RHEA:21028
+      snippet: N-terminal L-alpha-amino-acid residue
+      notes: Rhea compound GENERIC:10636 (an N-terminal L-alpha-aminoacyl-[protein]) declares rh:reactivePart
+        = N-terminal L-alpha-amino-acid residue (CHEBI:78597), formula C2H4NOR.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21029
+      snippet: an N-terminal L-alpha-aminoacyl-[protein] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21029 declares side 21028_L as its substrates
+        (rh:substrates); the master reaction RHEA:21028 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:3902358, PMID:30054468, PMID:6286657 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein] is a product released by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21029
+      snippet: an N-terminal L-alpha-aminoacyl-[protein] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21029 declares side 21028_R as its products
+        (rh:products); the master reaction RHEA:21028 is undirected. This participant is GENERIC:15589
+        with coefficient 1. Rhea cites PMID:3902358, PMID:30054468, PMID:6286657 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N-terminal N(alpha)-acetyl-L-amino-acid residue is the reactive part of N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein].
+    evidence:
+    - reference: RHEA:21028
+      snippet: N-terminal N(alpha)-acetyl-L-amino-acid residue
+      notes: Rhea compound GENERIC:15589 (N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein]) declares
+        rh:reactivePart = N-terminal N(alpha)-acetyl-L-amino-acid residue (CHEBI:78598), formula C4H5NO2R.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21029
+      snippet: an N-terminal L-alpha-aminoacyl-[protein] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21029 declares side 21028_R as its products
+        (rh:products); the master reaction RHEA:21028 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:3902358, PMID:30054468, PMID:6286657 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21029
+      snippet: an N-terminal L-alpha-aminoacyl-[protein] + acetyl-CoA => N-terminal N(alpha)-acetyl-L-alpha-aminoacyl-[protein]
+        + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21029 declares side 21028_R as its products
+        (rh:products); the master reaction RHEA:21028 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:3902358, PMID:30054468, PMID:6286657 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:21028
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004596"/>
+      notes: The rdfs:seeAlso triple on RHEA:21028 in rhea.rdf. GO term GO:0004596 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

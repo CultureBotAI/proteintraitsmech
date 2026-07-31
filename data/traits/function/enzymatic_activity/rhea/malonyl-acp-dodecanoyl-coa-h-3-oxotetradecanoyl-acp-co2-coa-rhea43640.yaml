@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.301
     mapping_source: rhea2ec
@@ -34,4 +34,232 @@ definitions:
       Catalyses the reaction: malonyl-[ACP] + dodecanoyl-CoA + H(+) = 3-oxotetradecanoyl-[ACP] + CO2 + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of malonyl-[ACP] + dodecanoyl-CoA + H(+) = 3-oxotetradecanoyl-[ACP] + CO2
+    + CoA
+  description: Substrate-to-product chemistry of RHEA:43640, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:43641 (rh:substrates → 43640_L, rh:products → 43640_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of malonyl-[ACP] + dodecanoyl-CoA + H(+) = 3-oxotetradecanoyl-[ACP] + CO2 + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:43640
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: malonyl-[ACP] + dodecanoyl-CoA + H(+) = 3-oxotetradecanoyl-[ACP] + CO2 + CoA'
+  - node_id: sub1
+    label: malonyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9623
+    description: Rhea compound GENERIC:9623.
+  - node_id: sub1_rp1
+    label: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9623 (malonyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78449
+  - node_id: sub2
+    label: dodecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57375
+    description: Formula C33H54N7O17P3S.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 3-oxotetradecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9645
+    description: Rhea compound GENERIC:9645.
+  - node_id: prd1_rp1
+    label: O-(S-3-oxotetradecanoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9645 (3-oxotetradecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78473
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: mycobacterial beta-ketoacyl-[acyl carrier protein] synthase III
+    grounding: EC:2.3.1.301
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0QLF3
+    node_type: PROTEIN
+    label: FABH_MYCA1
+    grounding: UniProtKB:A0QLF3
+  - node_id: prot_P0A575
+    node_type: PROTEIN
+    label: FABH_MYCBO
+    grounding: UniProtKB:P0A575
+  - node_id: prot_A1KG10
+    node_type: PROTEIN
+    label: FABH_MYCBP
+    grounding: UniProtKB:A1KG10
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: malonyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43641
+      snippet: malonyl-[ACP] + dodecanoyl-CoA + H(+) => 3-oxotetradecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:43641 declares side 43640_L as its substrates
+        (rh:substrates); the master reaction RHEA:43640 is undirected. This participant is GENERIC:9623
+        with coefficient 1. Rhea cites PMID:10840036, PMID:11278743 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of malonyl-[ACP].
+    evidence:
+    - reference: RHEA:43640
+      snippet: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9623 (malonyl-[ACP]) declares rh:reactivePart = O-(S-malonylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78449), formula C17H26N3O11PS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dodecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43641
+      snippet: malonyl-[ACP] + dodecanoyl-CoA + H(+) => 3-oxotetradecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:43641 declares side 43640_L as its substrates
+        (rh:substrates); the master reaction RHEA:43640 is undirected. This participant is CHEBI:57375
+        with coefficient 1. Rhea cites PMID:10840036, PMID:11278743 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43641
+      snippet: malonyl-[ACP] + dodecanoyl-CoA + H(+) => 3-oxotetradecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:43641 declares side 43640_L as its substrates
+        (rh:substrates); the master reaction RHEA:43640 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:10840036, PMID:11278743 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-oxotetradecanoyl-[ACP] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43641
+      snippet: malonyl-[ACP] + dodecanoyl-CoA + H(+) => 3-oxotetradecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:43641 declares side 43640_R as its products
+        (rh:products); the master reaction RHEA:43640 is undirected. This participant is GENERIC:9645
+        with coefficient 1. Rhea cites PMID:10840036, PMID:11278743 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-3-oxotetradecanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part
+      of 3-oxotetradecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:43640
+      snippet: O-(S-3-oxotetradecanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9645 (3-oxotetradecanoyl-[ACP]) declares rh:reactivePart = O-(S-3-oxotetradecanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78473), formula C28H49N3O10PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43641
+      snippet: malonyl-[ACP] + dodecanoyl-CoA + H(+) => 3-oxotetradecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:43641 declares side 43640_R as its products
+        (rh:products); the master reaction RHEA:43640 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:10840036, PMID:11278743 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43641
+      snippet: malonyl-[ACP] + dodecanoyl-CoA + H(+) => 3-oxotetradecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:43641 declares side 43640_R as its products
+        (rh:products); the master reaction RHEA:43640 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:10840036, PMID:11278743 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.301; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:43640
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.301"/>
+      notes: The rh:ec triple on RHEA:43640 in rhea.rdf. EC 2.3.1.301 is itself a record in this KB.
+  - subject: prot_A0QLF3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FABH_MYCA1 is an exemplar enzyme carrying EC 2.3.1.301, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.301
+      snippet: DR   A0QLF3, FABH_MYCA1 ;  P0A575, FABH_MYCBO ;  A1KG10, FABH_MYCBP ;
+      notes: ExPASy ENZYME entry EC 2.3.1.301 cross-references UniProtKB:A0QLF3 (FABH_MYCA1) as a protein
+        with this activity.
+    - reference: RHEA:43640
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.301"/>
+      notes: Rhea assigns RHEA:43640 to EC 2.3.1.301, and EC 2.3.1.301 maps to exactly one Rhea master
+        reaction (RHEA:43640), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P0A575
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FABH_MYCBO is an exemplar enzyme carrying EC 2.3.1.301, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.301
+      snippet: DR   A0QLF3, FABH_MYCA1 ;  P0A575, FABH_MYCBO ;  A1KG10, FABH_MYCBP ;
+      notes: ExPASy ENZYME entry EC 2.3.1.301 cross-references UniProtKB:P0A575 (FABH_MYCBO) as a protein
+        with this activity.
+    - reference: RHEA:43640
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.301"/>
+      notes: Rhea assigns RHEA:43640 to EC 2.3.1.301, and EC 2.3.1.301 maps to exactly one Rhea master
+        reaction (RHEA:43640), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A1KG10
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FABH_MYCBP is an exemplar enzyme carrying EC 2.3.1.301, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.301
+      snippet: DR   A0QLF3, FABH_MYCA1 ;  P0A575, FABH_MYCBO ;  A1KG10, FABH_MYCBP ;
+      notes: ExPASy ENZYME entry EC 2.3.1.301 cross-references UniProtKB:A1KG10 (FABH_MYCBP) as a protein
+        with this activity.
+    - reference: RHEA:43640
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.301"/>
+      notes: Rhea assigns RHEA:43640 to EC 2.3.1.301, and EC 2.3.1.301 maps to exactly one Rhea master
+        reaction (RHEA:43640), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

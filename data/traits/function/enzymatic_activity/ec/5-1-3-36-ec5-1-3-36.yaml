@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.3.-
 mapped_xrefs:
@@ -23,4 +23,61 @@ definitions:
       Catalyses: [heparosan](n) = [acharan](n)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of heparosan-glucuronate 5-epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.3.36. EC 5.1.3.36 maps to exactly
+    one curated Rhea reaction (RHEA:45568), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[heparosan](n)
+    = [acharan](n)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: heparosan-glucuronate 5-epimerase
+    grounding: EC:5.1.3.36
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[heparosan](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:85307
+    xrefs:
+    - RHEA-COMP:11266
+    description: Rhea compound POLYMER:11266. Formula H2O(C12H19NO10)<i><sub>n</sub></i>.
+  - node_id: prd1
+    label: '[acharan](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:85308
+    xrefs:
+    - RHEA-COMP:11267
+    description: Rhea compound POLYMER:11267. Formula H2O(C12H19NO10)<i><sub>n</sub></i>.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[heparosan](n) is a substrate consumed by RHEA:45568 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:45569
+      snippet: '[heparosan](n) => [acharan](n)'
+      notes: Rhea's left-to-right directional reaction RHEA:45569 declares side 45568_L as its substrates
+        (rh:substrates); the master reaction RHEA:45568 is undirected. This participant is POLYMER:11266
+        with coefficient 1. Rhea cites PMID:25677302 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[acharan](n) is a product released by RHEA:45568 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:45569
+      snippet: '[heparosan](n) => [acharan](n)'
+      notes: Rhea's left-to-right directional reaction RHEA:45569 declares side 45568_R as its products
+        (rh:products); the master reaction RHEA:45568 is undirected. This participant is POLYMER:11267
+        with coefficient 1. Rhea cites PMID:25677302 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

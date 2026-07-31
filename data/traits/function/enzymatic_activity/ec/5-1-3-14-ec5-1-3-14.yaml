@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.3.-
 synonyms:
@@ -49,4 +49,117 @@ definitions:
       Catalyses: UDP-N-acetyl-alpha-D-glucosamine = UDP-N-acetyl-alpha-D-mannosamine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-N-acetylglucosamine 2-epimerase (non-hydrolyzing)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.3.14. EC 5.1.3.14 maps to exactly
+    one curated Rhea reaction (RHEA:17213), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "UDP-N-acetyl-alpha-D-glucosamine
+    = UDP-N-acetyl-alpha-D-mannosamine". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-N-acetylglucosamine 2-epimerase (non-hydrolyzing)
+    grounding: EC:5.1.3.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: UDP-N-acetyl-alpha-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+    description: Formula C17H25N3O17P2.
+  - node_id: prd1
+    label: UDP-N-acetyl-alpha-D-mannosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:68623
+    description: Formula C17H25N3O17P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-N-acetylglucosamine 2-epimerase activity
+    grounding: GO:0008761
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P58600
+    node_type: PROTEIN
+    label: EPSC_RALN1
+    grounding: UniProtKB:P58600
+  - node_id: prot_P52641
+    node_type: PROTEIN
+    label: EPSC_RALSL
+    grounding: UniProtKB:P52641
+  - node_id: prot_P39131
+    node_type: PROTEIN
+    label: MNAA_BACSU
+    grounding: UniProtKB:P39131
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UDP-N-acetyl-alpha-D-glucosamine is a substrate consumed by RHEA:17213 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17214
+      snippet: UDP-N-acetyl-alpha-D-glucosamine => UDP-N-acetyl-alpha-D-mannosamine
+      notes: Rhea's left-to-right directional reaction RHEA:17214 declares side 17213_L as its substrates
+        (rh:substrates); the master reaction RHEA:17213 is undirected. This participant is CHEBI:57705
+        with coefficient 1. Rhea cites PMID:38382015, PMID:12107153, PMID:15210128, PMID:2166030 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UDP-N-acetyl-alpha-D-mannosamine is a product released by RHEA:17213 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17214
+      snippet: UDP-N-acetyl-alpha-D-glucosamine => UDP-N-acetyl-alpha-D-mannosamine
+      notes: Rhea's left-to-right directional reaction RHEA:17214 declares side 17213_R as its products
+        (rh:products); the master reaction RHEA:17213 is undirected. This participant is CHEBI:68623 with
+        coefficient 1. Rhea cites PMID:38382015, PMID:12107153, PMID:15210128, PMID:2166030 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.3.14
+      snippet: EC:5.1.3.14 > GO:UDP-N-acetylglucosamine 2-epimerase activity ; GO:0008761
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008761 is itself a record
+        in this KB.
+  - subject: prot_P58600
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EPSC_RALN1 is an exemplar enzyme with EC 5.1.3.14 activity.
+    evidence:
+    - reference: EC:5.1.3.14
+      snippet: DR   P58600, EPSC_RALN1 ;  P52641, EPSC_RALSL ;  P39131, MNAA_BACSU ;
+      notes: ExPASy ENZYME entry EC 5.1.3.14 cross-references UniProtKB:P58600 (EPSC_RALN1) as a protein
+        with this activity.
+  - subject: prot_P52641
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EPSC_RALSL is an exemplar enzyme with EC 5.1.3.14 activity.
+    evidence:
+    - reference: EC:5.1.3.14
+      snippet: DR   P58600, EPSC_RALN1 ;  P52641, EPSC_RALSL ;  P39131, MNAA_BACSU ;
+      notes: ExPASy ENZYME entry EC 5.1.3.14 cross-references UniProtKB:P52641 (EPSC_RALSL) as a protein
+        with this activity.
+  - subject: prot_P39131
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MNAA_BACSU is an exemplar enzyme with EC 5.1.3.14 activity.
+    evidence:
+    - reference: EC:5.1.3.14
+      snippet: DR   P58600, EPSC_RALN1 ;  P52641, EPSC_RALSL ;  P39131, MNAA_BACSU ;
+      notes: ExPASy ENZYME entry EC 5.1.3.14 cross-references UniProtKB:P39131 (MNAA_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

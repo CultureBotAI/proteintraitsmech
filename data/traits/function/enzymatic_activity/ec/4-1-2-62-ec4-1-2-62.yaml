@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -37,4 +37,192 @@ definitions:
       Catalyses: (1) 5-deoxy-D-ribulose 1-phosphate = dihydroxyacetone phosphate + acetaldehyde. (2) 5-(methylsulfanyl)-D-ribulose 1-phosphate = 2-(methylsulfanyl)acetaldehyde + dihydroxyacetone phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-deoxyribulose 1-phosphate aldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.62. Rhea assigns 2 curated
+    reactions to EC 4.1.2.62. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 5-deoxy-D-ribulose 1-phosphate = dihydroxyacetone phosphate
+    + acetaldehyde. (2) 5-(methylsulfanyl)-D-ribulose 1-phosphate = 2-(methylsulfanyl)acetaldehyde + dihydroxyacetone
+    phosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 5-deoxyribulose 1-phosphate aldolase
+    grounding: EC:4.1.2.62
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 5-(methylsulfanyl)-D-ribulose 1-phosphate = 2-(methylsulfanyl)acetaldehyde +…
+    grounding: RHEA:56940
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 5-(methylsulfanyl)-D-ribulose 1-phosphate = 2-(methylsulfanyl)acetaldehyde
+      + dihydroxyacetone phosphate'
+  - node_id: rxn1_sub1
+    label: 5-(methylsulfanyl)-D-ribulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58548
+    description: Formula C6H11O7PS.
+  - node_id: rxn1_prd1
+    label: 2-(methylsulfanyl)acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:141184
+    description: Formula C3H6OS.
+  - node_id: rxn1_prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 5-deoxy-D-ribulose 1-phosphate = dihydroxyacetone phosphate + acetaldehyde
+    grounding: RHEA:61300
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 5-deoxy-D-ribulose 1-phosphate = dihydroxyacetone phosphate + acetaldehyde'
+  - node_id: rxn2_sub1
+    label: 5-deoxy-D-ribulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:144504
+    description: Formula C5H9O7P.
+  - node_id: rxn2_prd1
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: rxn2_prd2
+    label: acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15343
+    description: Formula C2H4O.
+  - node_id: prot_B7MMH7
+    node_type: PROTEIN
+    label: ALD2_ECO45
+    grounding: UniProtKB:B7MMH7
+  - node_id: prot_Q2RXI1
+    node_type: PROTEIN
+    label: ALD2_RHORT
+    grounding: UniProtKB:Q2RXI1
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:56940 is one of the 2 curated reactions Rhea assigns to EC 4.1.2.62; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:56940
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.62"/>
+      notes: The rh:ec triple on RHEA:56940 in rhea.rdf assigns that reaction to EC 4.1.2.62.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 5-(methylsulfanyl)-D-ribulose 1-phosphate is a substrate consumed by RHEA:56940 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:56941
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => 2-(methylsulfanyl)acetaldehyde + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:56941 declares side 56940_L as its substrates
+        (rh:substrates); the master reaction RHEA:56940 is undirected. This participant is CHEBI:58548
+        with coefficient 1. Rhea cites PMID:31950558, PMID:29133429 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 2-(methylsulfanyl)acetaldehyde is a product released by RHEA:56940 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56941
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => 2-(methylsulfanyl)acetaldehyde + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:56941 declares side 56940_R as its products
+        (rh:products); the master reaction RHEA:56940 is undirected. This participant is CHEBI:141184
+        with coefficient 1. Rhea cites PMID:31950558, PMID:29133429 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: dihydroxyacetone phosphate is a product released by RHEA:56940 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56941
+      snippet: 5-(methylsulfanyl)-D-ribulose 1-phosphate => 2-(methylsulfanyl)acetaldehyde + dihydroxyacetone
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:56941 declares side 56940_R as its products
+        (rh:products); the master reaction RHEA:56940 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:31950558, PMID:29133429 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:61300 is one of the 2 curated reactions Rhea assigns to EC 4.1.2.62; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:61300
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.62"/>
+      notes: The rh:ec triple on RHEA:61300 in rhea.rdf assigns that reaction to EC 4.1.2.62.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 5-deoxy-D-ribulose 1-phosphate is a substrate consumed by RHEA:61300 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:61301
+      snippet: 5-deoxy-D-ribulose 1-phosphate => dihydroxyacetone phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:61301 declares side 61300_L as its substrates
+        (rh:substrates); the master reaction RHEA:61300 is undirected. This participant is CHEBI:144504
+        with coefficient 1. Rhea cites PMID:31950558, PMID:30082730 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: dihydroxyacetone phosphate is a product released by RHEA:61300 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61301
+      snippet: 5-deoxy-D-ribulose 1-phosphate => dihydroxyacetone phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:61301 declares side 61300_R as its products
+        (rh:products); the master reaction RHEA:61300 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:31950558, PMID:30082730 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: acetaldehyde is a product released by RHEA:61300 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61301
+      snippet: 5-deoxy-D-ribulose 1-phosphate => dihydroxyacetone phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:61301 declares side 61300_R as its products
+        (rh:products); the master reaction RHEA:61300 is undirected. This participant is CHEBI:15343 with
+        coefficient 1. Rhea cites PMID:31950558, PMID:30082730 for this reaction.
+  - subject: prot_B7MMH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALD2_ECO45 is an exemplar enzyme with EC 4.1.2.62 activity.
+    evidence:
+    - reference: EC:4.1.2.62
+      snippet: DR   B7MMH7, ALD2_ECO45 ;  Q2RXI1, ALD2_RHORT ;
+      notes: ExPASy ENZYME entry EC 4.1.2.62 cross-references UniProtKB:B7MMH7 (ALD2_ECO45) as a protein
+        with this activity.
+  - subject: prot_Q2RXI1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALD2_RHORT is an exemplar enzyme with EC 4.1.2.62 activity.
+    evidence:
+    - reference: EC:4.1.2.62
+      snippet: DR   B7MMH7, ALD2_ECO45 ;  Q2RXI1, ALD2_RHORT ;
+      notes: ExPASy ENZYME entry EC 4.1.2.62 cross-references UniProtKB:Q2RXI1 (ALD2_RHORT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

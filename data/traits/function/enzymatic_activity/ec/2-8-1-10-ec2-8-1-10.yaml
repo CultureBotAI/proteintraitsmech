@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.1.-
 mapped_xrefs:
@@ -38,4 +38,255 @@ definitions:
       Catalyses: [ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate + 2-iminoacetate + 1-deoxy-D-xylulose 5-phosphate = [ThiS sulfur-carrier protein]-C-terminal Gly-Gly + 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)- ylidene]ethyl phosphate + 2 H2O + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thiazole synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.1.10. EC 2.8.1.10 maps to exactly
+    one curated Rhea reaction (RHEA:26297), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[ThiS sulfur-carrier
+    protein]-C-terminal-Gly-aminoethanethioate + 2-iminoacetate + 1-deoxy-D-xylulose 5-phosphate = [ThiS
+    sulfur-carrier protein]-C-terminal Gly-Gly + 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)- ylidene]ethyl
+    phosphate + 2 H2O + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: thiazole synthase
+    grounding: EC:2.8.1.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:19908
+    description: Rhea compound GENERIC:19908.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: C-terminal N-glycylaminoethanethioate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:19908 ([ThiS sulfur-carrier
+      protein]-C-terminal-Gly-aminoethanethioate); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:232372
+  - node_id: sub2
+    label: 2-iminoacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:77846
+    description: Formula C2H3NO2.
+  - node_id: sub3
+    label: 1-deoxy-D-xylulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57792
+    description: Formula C5H9O7P.
+  - node_id: prd1
+    label: '[ThiS sulfur-carrier protein]-C-terminal Gly-Gly'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12909
+    description: Rhea compound GENERIC:12909.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: C-terminal Gly-Gly residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12909 ([ThiS sulfur-carrier
+      protein]-C-terminal Gly-Gly); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90778
+  - node_id: prd2
+    label: 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:62899
+    description: Formula C7H7NO6PS.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: thiazole synthase activity
+    grounding: GO:1990107
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q3A7P5
+    node_type: PROTEIN
+    label: THIG1_SYNC1
+    grounding: UniProtKB:Q3A7P5
+  - node_id: prot_Q3A6Y9
+    node_type: PROTEIN
+    label: THIG2_SYNC1
+    grounding: UniProtKB:Q3A6Y9
+  - node_id: prot_B0C390
+    node_type: PROTEIN
+    label: THIG_ACAM1
+    grounding: UniProtKB:B0C390
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate is a substrate consumed
+      by RHEA:26297 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:26298
+      snippet: '[ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate + 2-iminoacetate + 1-deoxy-D-xylulose
+        5-phosphate => [ThiS sulfur-carrier protein]-C-terminal Gly-Gly + 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl
+        phosphate + 2 H2O + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:26298 declares side 26297_L as its substrates
+        (rh:substrates); the master reaction RHEA:26297 is undirected. This participant is GENERIC:19908
+        with coefficient 1. Rhea cites PMID:15489164, PMID:19216519, PMID:14567704, PMID:15362849 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: C-terminal N-glycylaminoethanethioate residue is the reactive part of [ThiS sulfur-carrier
+      protein]-C-terminal-Gly-aminoethanethioate.
+    evidence:
+    - reference: RHEA:26297
+      snippet: C-terminal N-glycylaminoethanethioate residue
+      notes: Rhea compound GENERIC:19908 ([ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate)
+        declares rh:reactivePart = C-terminal N-glycylaminoethanethioate residue (CHEBI:232372).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-iminoacetate is a substrate consumed by RHEA:26297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26298
+      snippet: '[ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate + 2-iminoacetate + 1-deoxy-D-xylulose
+        5-phosphate => [ThiS sulfur-carrier protein]-C-terminal Gly-Gly + 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl
+        phosphate + 2 H2O + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:26298 declares side 26297_L as its substrates
+        (rh:substrates); the master reaction RHEA:26297 is undirected. This participant is CHEBI:77846
+        with coefficient 1. Rhea cites PMID:15489164, PMID:19216519, PMID:14567704, PMID:15362849 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: 1-deoxy-D-xylulose 5-phosphate is a substrate consumed by RHEA:26297 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:26298
+      snippet: '[ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate + 2-iminoacetate + 1-deoxy-D-xylulose
+        5-phosphate => [ThiS sulfur-carrier protein]-C-terminal Gly-Gly + 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl
+        phosphate + 2 H2O + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:26298 declares side 26297_L as its substrates
+        (rh:substrates); the master reaction RHEA:26297 is undirected. This participant is CHEBI:57792
+        with coefficient 1. Rhea cites PMID:15489164, PMID:19216519, PMID:14567704, PMID:15362849 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[ThiS sulfur-carrier protein]-C-terminal Gly-Gly is a product released by RHEA:26297
+      (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:26298
+      snippet: '[ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate + 2-iminoacetate + 1-deoxy-D-xylulose
+        5-phosphate => [ThiS sulfur-carrier protein]-C-terminal Gly-Gly + 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl
+        phosphate + 2 H2O + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:26298 declares side 26297_R as its products
+        (rh:products); the master reaction RHEA:26297 is undirected. This participant is GENERIC:12909
+        with coefficient 1. Rhea cites PMID:15489164, PMID:19216519, PMID:14567704, PMID:15362849 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: C-terminal Gly-Gly residue is the reactive part of [ThiS sulfur-carrier protein]-C-terminal
+      Gly-Gly.
+    evidence:
+    - reference: RHEA:26297
+      snippet: C-terminal Gly-Gly residue
+      notes: Rhea compound GENERIC:12909 ([ThiS sulfur-carrier protein]-C-terminal Gly-Gly) declares rh:reactivePart
+        = C-terminal Gly-Gly residue (CHEBI:90778).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl phosphate is a product released
+      by RHEA:26297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26298
+      snippet: '[ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate + 2-iminoacetate + 1-deoxy-D-xylulose
+        5-phosphate => [ThiS sulfur-carrier protein]-C-terminal Gly-Gly + 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl
+        phosphate + 2 H2O + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:26298 declares side 26297_R as its products
+        (rh:products); the master reaction RHEA:26297 is undirected. This participant is CHEBI:62899 with
+        coefficient 1. Rhea cites PMID:15489164, PMID:19216519, PMID:14567704, PMID:15362849 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:26297 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:26298
+      snippet: '[ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate + 2-iminoacetate + 1-deoxy-D-xylulose
+        5-phosphate => [ThiS sulfur-carrier protein]-C-terminal Gly-Gly + 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl
+        phosphate + 2 H2O + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:26298 declares side 26297_R as its products
+        (rh:products); the master reaction RHEA:26297 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:15489164, PMID:19216519, PMID:14567704, PMID:15362849 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:26297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26298
+      snippet: '[ThiS sulfur-carrier protein]-C-terminal-Gly-aminoethanethioate + 2-iminoacetate + 1-deoxy-D-xylulose
+        5-phosphate => [ThiS sulfur-carrier protein]-C-terminal Gly-Gly + 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl
+        phosphate + 2 H2O + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:26298 declares side 26297_R as its products
+        (rh:products); the master reaction RHEA:26297 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:15489164, PMID:19216519, PMID:14567704, PMID:15362849 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.1.10
+      snippet: EC:2.8.1.10 > GO:thiazole synthase activity ; GO:1990107
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:1990107 is itself a record
+        in this KB.
+  - subject: prot_Q3A7P5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THIG1_SYNC1 is an exemplar enzyme with EC 2.8.1.10 activity.
+    evidence:
+    - reference: EC:2.8.1.10
+      snippet: DR   Q3A7P5, THIG1_SYNC1;  Q3A6Y9, THIG2_SYNC1;  B0C390, THIG_ACAM1 ;
+      notes: ExPASy ENZYME entry EC 2.8.1.10 cross-references UniProtKB:Q3A7P5 (THIG1_SYNC1) as a protein
+        with this activity.
+  - subject: prot_Q3A6Y9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THIG2_SYNC1 is an exemplar enzyme with EC 2.8.1.10 activity.
+    evidence:
+    - reference: EC:2.8.1.10
+      snippet: DR   Q3A7P5, THIG1_SYNC1;  Q3A6Y9, THIG2_SYNC1;  B0C390, THIG_ACAM1 ;
+      notes: ExPASy ENZYME entry EC 2.8.1.10 cross-references UniProtKB:Q3A6Y9 (THIG2_SYNC1) as a protein
+        with this activity.
+  - subject: prot_B0C390
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: THIG_ACAM1 is an exemplar enzyme with EC 2.8.1.10 activity.
+    evidence:
+    - reference: EC:2.8.1.10
+      snippet: DR   Q3A7P5, THIG1_SYNC1;  Q3A6Y9, THIG2_SYNC1;  B0C390, THIG_ACAM1 ;
+      notes: ExPASy ENZYME entry EC 2.8.1.10 cross-references UniProtKB:B0C390 (THIG_ACAM1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

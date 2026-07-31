@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.112
     mapping_source: rhea2ec
@@ -30,4 +30,146 @@ definitions:
       Catalyses the reaction: 2'-N-acetylparomamine + H2O = paromamine + acetate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2'-N-acetylparomamine + H2O = paromamine + acetate
+  description: Substrate-to-product chemistry of RHEA:34031, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34032 (rh:substrates → 34031_L, rh:products → 34031_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2'-N-acetylparomamine + H2O = paromamine + acetate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34031
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2''-N-acetylparomamine + H2O = paromamine + acetate'
+  - node_id: sub1
+    label: 2'-N-acetylparomamine
+    node_type: CHEMICAL
+    grounding: CHEBI:65010
+    description: Formula C14H29N3O8.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: paromamine
+    node_type: CHEMICAL
+    grounding: CHEBI:65015
+    description: Formula C12H28N3O7.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2'-N-acetylparomamine deacetylase
+    grounding: EC:3.5.1.112
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q4H4F3
+    node_type: PROTEIN
+    label: BTRD_NIACI
+    grounding: UniProtKB:Q4H4F3
+  - node_id: prot_Q53U10
+    node_type: PROTEIN
+    label: NEOL_STRFR
+    grounding: UniProtKB:Q53U10
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2'-N-acetylparomamine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34032
+      snippet: 2'-N-acetylparomamine + H2O => paromamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:34032 declares side 34031_L as its substrates
+        (rh:substrates); the master reaction RHEA:34031 is undirected. This participant is CHEBI:65010
+        with coefficient 1. Rhea cites PMID:17226887, PMID:18311744 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34032
+      snippet: 2'-N-acetylparomamine + H2O => paromamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:34032 declares side 34031_L as its substrates
+        (rh:substrates); the master reaction RHEA:34031 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17226887, PMID:18311744 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: paromamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34032
+      snippet: 2'-N-acetylparomamine + H2O => paromamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:34032 declares side 34031_R as its products
+        (rh:products); the master reaction RHEA:34031 is undirected. This participant is CHEBI:65015 with
+        coefficient 1. Rhea cites PMID:17226887, PMID:18311744 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34032
+      snippet: 2'-N-acetylparomamine + H2O => paromamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:34032 declares side 34031_R as its products
+        (rh:products); the master reaction RHEA:34031 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:17226887, PMID:18311744 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.112; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34031
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.112"/>
+      notes: The rh:ec triple on RHEA:34031 in rhea.rdf. EC 3.5.1.112 is itself a record in this KB.
+  - subject: prot_Q4H4F3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BTRD_NIACI is an exemplar enzyme carrying EC 3.5.1.112, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.112
+      snippet: DR   Q4H4F3, BTRD_NIACI ;  Q53U10, NEOL_STRFR ;
+      notes: ExPASy ENZYME entry EC 3.5.1.112 cross-references UniProtKB:Q4H4F3 (BTRD_NIACI) as a protein
+        with this activity.
+    - reference: RHEA:34031
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.112"/>
+      notes: Rhea assigns RHEA:34031 to EC 3.5.1.112, and EC 3.5.1.112 maps to exactly one Rhea master
+        reaction (RHEA:34031), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q53U10
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEOL_STRFR is an exemplar enzyme carrying EC 3.5.1.112, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.112
+      snippet: DR   Q4H4F3, BTRD_NIACI ;  Q53U10, NEOL_STRFR ;
+      notes: ExPASy ENZYME entry EC 3.5.1.112 cross-references UniProtKB:Q53U10 (NEOL_STRFR) as a protein
+        with this activity.
+    - reference: RHEA:34031
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.112"/>
+      notes: Rhea assigns RHEA:34031 to EC 3.5.1.112, and EC 3.5.1.112 maps to exactly one Rhea master
+        reaction (RHEA:34031), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

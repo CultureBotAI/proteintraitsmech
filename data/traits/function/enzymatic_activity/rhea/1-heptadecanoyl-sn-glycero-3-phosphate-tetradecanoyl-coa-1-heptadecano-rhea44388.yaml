@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:74554
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,98 @@ definitions:
       Catalyses the reaction: 1-heptadecanoyl-sn-glycero-3-phosphate + tetradecanoyl-CoA = 1-heptadecanoyl-2-tetradecanoyl-sn-glycero-3-phosphate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-heptadecanoyl-sn-glycero-3-phosphate + tetradecanoyl-CoA = 1-heptadecanoyl-2-tetradec…
+  description: Substrate-to-product chemistry of RHEA:44388, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:44389 (rh:substrates → 44388_L, rh:products → 44388_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 1-heptadecanoyl-sn-glycero-3-phosphate + tetradecanoyl-CoA = 1-heptadecanoyl…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:44388
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 1-heptadecanoyl-sn-glycero-3-phosphate + tetradecanoyl-CoA = 1-heptadecanoyl-2-tetradecanoyl-sn-glycero-3-phosphate
+      + CoA'
+  - node_id: sub1
+    label: 1-heptadecanoyl-sn-glycero-3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:74554
+    description: Formula C20H39O7P.
+  - node_id: sub2
+    label: tetradecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57385
+    description: Formula C35H58N7O17P3S.
+  - node_id: prd1
+    label: 1-heptadecanoyl-2-tetradecanoyl-sn-glycero-3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:84428
+    description: Formula C34H65O8P.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-heptadecanoyl-sn-glycero-3-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:44389
+      snippet: 1-heptadecanoyl-sn-glycero-3-phosphate + tetradecanoyl-CoA => 1-heptadecanoyl-2-tetradecanoyl-sn-glycero-3-phosphate
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44389 declares side 44388_L as its substrates
+        (rh:substrates); the master reaction RHEA:44388 is undirected. This participant is CHEBI:74554
+        with coefficient 1. Rhea cites PMID:20694142 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: tetradecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44389
+      snippet: 1-heptadecanoyl-sn-glycero-3-phosphate + tetradecanoyl-CoA => 1-heptadecanoyl-2-tetradecanoyl-sn-glycero-3-phosphate
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44389 declares side 44388_L as its substrates
+        (rh:substrates); the master reaction RHEA:44388 is undirected. This participant is CHEBI:57385
+        with coefficient 1. Rhea cites PMID:20694142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-heptadecanoyl-2-tetradecanoyl-sn-glycero-3-phosphate is a product released by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44389
+      snippet: 1-heptadecanoyl-sn-glycero-3-phosphate + tetradecanoyl-CoA => 1-heptadecanoyl-2-tetradecanoyl-sn-glycero-3-phosphate
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44389 declares side 44388_R as its products
+        (rh:products); the master reaction RHEA:44388 is undirected. This participant is CHEBI:84428 with
+        coefficient 1. Rhea cites PMID:20694142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44389
+      snippet: 1-heptadecanoyl-sn-glycero-3-phosphate + tetradecanoyl-CoA => 1-heptadecanoyl-2-tetradecanoyl-sn-glycero-3-phosphate
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:44389 declares side 44388_R as its products
+        (rh:products); the master reaction RHEA:44388 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:20694142 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

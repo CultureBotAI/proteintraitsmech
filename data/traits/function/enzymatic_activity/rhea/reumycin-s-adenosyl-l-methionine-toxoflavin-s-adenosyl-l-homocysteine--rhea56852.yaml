@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.1.1.349
     mapping_source: rhea2ec
@@ -30,4 +30,124 @@ definitions:
       Catalyses the reaction: reumycin + S-adenosyl-L-methionine = toxoflavin + S-adenosyl-L-homocysteine + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of reumycin + S-adenosyl-L-methionine = toxoflavin + S-adenosyl-L-homocysteine
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:56852, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:56853 (rh:substrates → 56852_L, rh:products → 56852_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of reumycin + S-adenosyl-L-methionine = toxoflavin + S-adenosyl-L-homocysteine…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:56852
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: reumycin + S-adenosyl-L-methionine = toxoflavin + S-adenosyl-L-homocysteine + H(+)'
+  - node_id: sub1
+    label: reumycin
+    node_type: CHEMICAL
+    grounding: CHEBI:121196
+    description: Formula C6H5N5O2.
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: toxoflavin
+    node_type: CHEMICAL
+    grounding: CHEBI:80729
+    description: Formula C7H7N5O2.
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: toxoflavin synthase
+    grounding: EC:2.1.1.349
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: reumycin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56853
+      snippet: reumycin + S-adenosyl-L-methionine => toxoflavin + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56853 declares side 56852_L as its substrates
+        (rh:substrates); the master reaction RHEA:56852 is undirected. This participant is CHEBI:121196
+        with coefficient 1. Rhea cites PMID:27070241 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56853
+      snippet: reumycin + S-adenosyl-L-methionine => toxoflavin + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56853 declares side 56852_L as its substrates
+        (rh:substrates); the master reaction RHEA:56852 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:27070241 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: toxoflavin is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56853
+      snippet: reumycin + S-adenosyl-L-methionine => toxoflavin + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56853 declares side 56852_R as its products
+        (rh:products); the master reaction RHEA:56852 is undirected. This participant is CHEBI:80729 with
+        coefficient 1. Rhea cites PMID:27070241 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56853
+      snippet: reumycin + S-adenosyl-L-methionine => toxoflavin + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56853 declares side 56852_R as its products
+        (rh:products); the master reaction RHEA:56852 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:27070241 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56853
+      snippet: reumycin + S-adenosyl-L-methionine => toxoflavin + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56853 declares side 56852_R as its products
+        (rh:products); the master reaction RHEA:56852 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:27070241 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.1.1.349; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:56852
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.349"/>
+      notes: The rh:ec triple on RHEA:56852 in rhea.rdf. EC 2.1.1.349 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

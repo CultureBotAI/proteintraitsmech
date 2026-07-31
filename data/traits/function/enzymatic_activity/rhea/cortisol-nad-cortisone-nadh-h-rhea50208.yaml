@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17650
     role: SUBSTRATE_OR_PRODUCT
@@ -41,4 +41,124 @@ definitions:
       Catalyses the reaction: cortisol + NAD(+) = cortisone + NADH + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cortisol + NAD(+) = cortisone + NADH + H(+)
+  description: Substrate-to-product chemistry of RHEA:50208, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50209 (rh:substrates → 50208_L, rh:products → 50208_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of cortisol + NAD(+) = cortisone + NADH + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50208
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: cortisol + NAD(+) = cortisone + NADH + H(+)'
+  - node_id: sub1
+    label: cortisol
+    node_type: CHEMICAL
+    grounding: CHEBI:17650
+    description: Formula C21H30O5.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: cortisone
+    node_type: CHEMICAL
+    grounding: CHEBI:16962
+    description: Formula C21H28O5.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 11-beta-hydroxysteroid dehydrogenase (NAD+) activity
+    grounding: GO:0070523
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cortisol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50209
+      snippet: cortisol + NAD(+) => cortisone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50209 declares side 50208_L as its substrates
+        (rh:substrates); the master reaction RHEA:50208 is undirected. This participant is CHEBI:17650
+        with coefficient 1. Rhea cites PMID:17314322, PMID:23685396, PMID:7859916, PMID:22796344 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50209
+      snippet: cortisol + NAD(+) => cortisone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50209 declares side 50208_L as its substrates
+        (rh:substrates); the master reaction RHEA:50208 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:17314322, PMID:23685396, PMID:7859916, PMID:22796344 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cortisone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50209
+      snippet: cortisol + NAD(+) => cortisone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50209 declares side 50208_R as its products
+        (rh:products); the master reaction RHEA:50208 is undirected. This participant is CHEBI:16962 with
+        coefficient 1. Rhea cites PMID:17314322, PMID:23685396, PMID:7859916, PMID:22796344 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50209
+      snippet: cortisol + NAD(+) => cortisone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50209 declares side 50208_R as its products
+        (rh:products); the master reaction RHEA:50208 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:17314322, PMID:23685396, PMID:7859916, PMID:22796344 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50209
+      snippet: cortisol + NAD(+) => cortisone + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:50209 declares side 50208_R as its products
+        (rh:products); the master reaction RHEA:50208 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:17314322, PMID:23685396, PMID:7859916, PMID:22796344 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:50208
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0070523"/>
+      notes: The rdfs:seeAlso triple on RHEA:50208 in rhea.rdf. GO term GO:0070523 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

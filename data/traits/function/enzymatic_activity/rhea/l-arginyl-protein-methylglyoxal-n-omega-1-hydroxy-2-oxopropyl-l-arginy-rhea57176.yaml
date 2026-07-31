@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29965
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,112 @@ definitions:
       Catalyses the reaction: L-arginyl-[protein] + methylglyoxal = N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[protein]
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-arginyl-[protein] + methylglyoxal = N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[prote…
+  description: Substrate-to-product chemistry of RHEA:57176, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57177 (rh:substrates → 57176_L, rh:products → 57176_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-arginyl-[protein] + methylglyoxal = N(omega)-(1-hydroxy-2-oxopropyl)-L-arg…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57176
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-arginyl-[protein] + methylglyoxal = N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[protein]'
+  - node_id: sub1
+    label: L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10532
+    description: Rhea compound GENERIC:10532.
+  - node_id: sub1_rp1
+    label: L-arginine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10532 (L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29965
+  - node_id: sub2
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+    description: Formula C3H4O2.
+  - node_id: prd1
+    label: N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12428
+    description: Rhea compound GENERIC:12428.
+  - node_id: prd1_rp1
+    label: N(omega)-(1-hydroxy-2-oxopropyl)-L-arginine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12428 (N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:131708
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arginyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:57177
+      snippet: L-arginyl-[protein] + methylglyoxal => N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:57177 declares side 57176_L as its substrates
+        (rh:substrates); the master reaction RHEA:57176 is undirected. This participant is GENERIC:10532
+        with coefficient 1. Rhea cites PMID:20963454, PMID:23334546, PMID:25416785, PMID:29231845 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-arginine residue is the reactive part of L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:57176
+      snippet: L-arginine residue
+      notes: Rhea compound GENERIC:10532 (L-arginyl-[protein]) declares rh:reactivePart = L-arginine residue
+        (CHEBI:29965), formula C6H13N4O.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: methylglyoxal is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57177
+      snippet: L-arginyl-[protein] + methylglyoxal => N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:57177 declares side 57176_L as its substrates
+        (rh:substrates); the master reaction RHEA:57176 is undirected. This participant is CHEBI:17158
+        with coefficient 1. Rhea cites PMID:20963454, PMID:23334546, PMID:25416785, PMID:29231845 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[protein] is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57177
+      snippet: L-arginyl-[protein] + methylglyoxal => N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:57177 declares side 57176_R as its products
+        (rh:products); the master reaction RHEA:57176 is undirected. This participant is GENERIC:12428
+        with coefficient 1. Rhea cites PMID:20963454, PMID:23334546, PMID:25416785, PMID:29231845 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(omega)-(1-hydroxy-2-oxopropyl)-L-arginine residue is the reactive part of N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:57176
+      snippet: N(omega)-(1-hydroxy-2-oxopropyl)-L-arginine residue
+      notes: Rhea compound GENERIC:12428 (N(omega)-(1-hydroxy-2-oxopropyl)-L-arginyl-[protein]) declares
+        rh:reactivePart = N(omega)-(1-hydroxy-2-oxopropyl)-L-arginine residue (CHEBI:131708), formula
+        C9H17N4O3.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

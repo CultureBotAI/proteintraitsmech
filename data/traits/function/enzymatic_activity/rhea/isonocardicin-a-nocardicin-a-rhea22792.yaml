@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.1.1.14
     mapping_source: rhea2ec
@@ -26,4 +26,90 @@ definitions:
       Catalyses the reaction: isonocardicin A = nocardicin A
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isonocardicin A = nocardicin A
+  description: Substrate-to-product chemistry of RHEA:22792, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22793 (rh:substrates → 22792_L, rh:products → 22792_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of isonocardicin A = nocardicin A
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22792
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: isonocardicin A = nocardicin A'
+  - node_id: sub1
+    label: isonocardicin A
+    node_type: CHEMICAL
+    grounding: CHEBI:77633
+    description: Formula C23H22N4O9.
+  - node_id: prd1
+    label: nocardicin A
+    node_type: CHEMICAL
+    grounding: CHEBI:77658
+    description: Formula C23H22N4O9.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: nocardicin-A epimerase activity
+    grounding: GO:0050143
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: nocardicin-A epimerase
+    grounding: EC:5.1.1.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: isonocardicin A is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22793
+      snippet: isonocardicin A => nocardicin A
+      notes: Rhea's left-to-right directional reaction RHEA:22793 declares side 22792_L as its substrates
+        (rh:substrates); the master reaction RHEA:22792 is undirected. This participant is CHEBI:77633
+        with coefficient 1. Rhea cites PMID:15629944, PMID:15252031 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: nocardicin A is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22793
+      snippet: isonocardicin A => nocardicin A
+      notes: Rhea's left-to-right directional reaction RHEA:22793 declares side 22792_R as its products
+        (rh:products); the master reaction RHEA:22792 is undirected. This participant is CHEBI:77658 with
+        coefficient 1. Rhea cites PMID:15629944, PMID:15252031 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:22792
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050143"/>
+      notes: The rdfs:seeAlso triple on RHEA:22792 in rhea.rdf. GO term GO:0050143 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.1.1.14; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22792
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.14"/>
+      notes: The rh:ec triple on RHEA:22792 in rhea.rdf. EC 5.1.1.14 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 definitions:
@@ -20,4 +20,91 @@ definitions:
       Catalyses: anthocyanin A8 + 1-O-(trans-sinapoyl)-beta-D-glucose = anthocyanin A11 + D-glucose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sinapoyl-beta-D-glucose:anthocyanin sinapoyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.n12. EC 2.3.1.n12 maps to
+    exactly one curated Rhea reaction (RHEA:35579), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "anthocyanin
+    A8 + 1-O-(trans-sinapoyl)-beta-D-glucose = anthocyanin A11 + D-glucose". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sinapoyl-beta-D-glucose:anthocyanin sinapoyltransferase
+    grounding: EC:2.3.1.n12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: anthocyanin A8
+    node_type: CHEMICAL
+    grounding: CHEBI:72650
+    description: Formula C50H55O30.
+  - node_id: sub2
+    label: 1-O-(trans-sinapoyl)-beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:16546
+    description: Formula C17H22O10.
+  - node_id: prd1
+    label: anthocyanin A11
+    node_type: CHEMICAL
+    grounding: CHEBI:72649
+    description: Formula C61H65O34.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: anthocyanin A8 is a substrate consumed by RHEA:35579 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35580
+      snippet: anthocyanin A8 + 1-O-(trans-sinapoyl)-beta-D-glucose => anthocyanin A11 + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:35580 declares side 35579_L as its substrates
+        (rh:substrates); the master reaction RHEA:35579 is undirected. This participant is CHEBI:72650
+        with coefficient 1. Rhea cites PMID:17600138 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 1-O-(trans-sinapoyl)-beta-D-glucose is a substrate consumed by RHEA:35579 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:35580
+      snippet: anthocyanin A8 + 1-O-(trans-sinapoyl)-beta-D-glucose => anthocyanin A11 + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:35580 declares side 35579_L as its substrates
+        (rh:substrates); the master reaction RHEA:35579 is undirected. This participant is CHEBI:16546
+        with coefficient 1. Rhea cites PMID:17600138 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: anthocyanin A11 is a product released by RHEA:35579 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35580
+      snippet: anthocyanin A8 + 1-O-(trans-sinapoyl)-beta-D-glucose => anthocyanin A11 + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:35580 declares side 35579_R as its products
+        (rh:products); the master reaction RHEA:35579 is undirected. This participant is CHEBI:72649 with
+        coefficient 1. Rhea cites PMID:17600138 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by RHEA:35579 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35580
+      snippet: anthocyanin A8 + 1-O-(trans-sinapoyl)-beta-D-glucose => anthocyanin A11 + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:35580 declares side 35579_R as its products
+        (rh:products); the master reaction RHEA:35579 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:17600138 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

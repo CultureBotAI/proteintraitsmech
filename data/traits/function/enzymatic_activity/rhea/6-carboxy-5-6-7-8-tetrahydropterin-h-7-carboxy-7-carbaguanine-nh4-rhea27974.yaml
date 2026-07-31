@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.3.99.3
     mapping_source: rhea2ec
@@ -28,4 +28,168 @@ definitions:
       Catalyses the reaction: 6-carboxy-5,6,7,8-tetrahydropterin + H(+) = 7-carboxy-7-carbaguanine + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-carboxy-5,6,7,8-tetrahydropterin + H(+) = 7-carboxy-7-carbaguanine +
+    NH4(+)
+  description: Substrate-to-product chemistry of RHEA:27974, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:27975 (rh:substrates → 27974_L, rh:products → 27974_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 6-carboxy-5,6,7,8-tetrahydropterin + H(+) = 7-carboxy-7-carbaguanine + NH4(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:27974
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 6-carboxy-5,6,7,8-tetrahydropterin + H(+) = 7-carboxy-7-carbaguanine + NH4(+)'
+  - node_id: sub1
+    label: 6-carboxy-5,6,7,8-tetrahydropterin
+    node_type: CHEMICAL
+    grounding: CHEBI:61032
+    description: Formula C7H8N5O3.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 7-carboxy-7-carbaguanine
+    node_type: CHEMICAL
+    grounding: CHEBI:61036
+    description: Formula C7H5N4O3.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 7-carboxy-7-deazaguanine synthase
+    grounding: EC:4.3.99.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A9CF16
+    node_type: PROTEIN
+    label: QUEE_AGRFC
+    grounding: UniProtKB:A9CF16
+  - node_id: prot_O67826
+    node_type: PROTEIN
+    label: QUEE_AQUAE
+    grounding: UniProtKB:O67826
+  - node_id: prot_O29808
+    node_type: PROTEIN
+    label: QUEE_ARCFU
+    grounding: UniProtKB:O29808
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 6-carboxy-5,6,7,8-tetrahydropterin is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27975
+      snippet: 6-carboxy-5,6,7,8-tetrahydropterin + H(+) => 7-carboxy-7-carbaguanine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27975 declares side 27974_L as its substrates
+        (rh:substrates); the master reaction RHEA:27974 is undirected. This participant is CHEBI:61032
+        with coefficient 1. Rhea cites PMID:19354300 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27975
+      snippet: 6-carboxy-5,6,7,8-tetrahydropterin + H(+) => 7-carboxy-7-carbaguanine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27975 declares side 27974_L as its substrates
+        (rh:substrates); the master reaction RHEA:27974 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:19354300 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 7-carboxy-7-carbaguanine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27975
+      snippet: 6-carboxy-5,6,7,8-tetrahydropterin + H(+) => 7-carboxy-7-carbaguanine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27975 declares side 27974_R as its products
+        (rh:products); the master reaction RHEA:27974 is undirected. This participant is CHEBI:61036 with
+        coefficient 1. Rhea cites PMID:19354300 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27975
+      snippet: 6-carboxy-5,6,7,8-tetrahydropterin + H(+) => 7-carboxy-7-carbaguanine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27975 declares side 27974_R as its products
+        (rh:products); the master reaction RHEA:27974 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:19354300 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.3.99.3; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:27974
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.99.3"/>
+      notes: The rh:ec triple on RHEA:27974 in rhea.rdf. EC 4.3.99.3 is itself a record in this KB.
+  - subject: prot_A9CF16
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: QUEE_AGRFC is an exemplar enzyme carrying EC 4.3.99.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.99.3
+      snippet: DR   A9CF16, QUEE_AGRFC ;  O67826, QUEE_AQUAE ;  O29808, QUEE_ARCFU ;
+      notes: ExPASy ENZYME entry EC 4.3.99.3 cross-references UniProtKB:A9CF16 (QUEE_AGRFC) as a protein
+        with this activity.
+    - reference: RHEA:27974
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.99.3"/>
+      notes: Rhea assigns RHEA:27974 to EC 4.3.99.3, and EC 4.3.99.3 maps to exactly one Rhea master reaction
+        (RHEA:27974), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O67826
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: QUEE_AQUAE is an exemplar enzyme carrying EC 4.3.99.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.99.3
+      snippet: DR   A9CF16, QUEE_AGRFC ;  O67826, QUEE_AQUAE ;  O29808, QUEE_ARCFU ;
+      notes: ExPASy ENZYME entry EC 4.3.99.3 cross-references UniProtKB:O67826 (QUEE_AQUAE) as a protein
+        with this activity.
+    - reference: RHEA:27974
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.99.3"/>
+      notes: Rhea assigns RHEA:27974 to EC 4.3.99.3, and EC 4.3.99.3 maps to exactly one Rhea master reaction
+        (RHEA:27974), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O29808
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: QUEE_ARCFU is an exemplar enzyme carrying EC 4.3.99.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.99.3
+      snippet: DR   A9CF16, QUEE_AGRFC ;  O67826, QUEE_AQUAE ;  O29808, QUEE_ARCFU ;
+      notes: ExPASy ENZYME entry EC 4.3.99.3 cross-references UniProtKB:O29808 (QUEE_ARCFU) as a protein
+        with this activity.
+    - reference: RHEA:27974
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.99.3"/>
+      notes: Rhea assigns RHEA:27974 to EC 4.3.99.3, and EC 4.3.99.3 maps to exactly one Rhea master reaction
+        (RHEA:27974), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

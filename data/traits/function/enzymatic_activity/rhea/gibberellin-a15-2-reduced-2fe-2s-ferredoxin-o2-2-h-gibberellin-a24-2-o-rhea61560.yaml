@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:143956
     role: SUBSTRATE_OR_PRODUCT
@@ -35,4 +35,182 @@ definitions:
       Catalyses the reaction: gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) = gibberellin A24 + 2 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) = gibberellin
+    A24 + 2 o…
+  description: Substrate-to-product chemistry of RHEA:61560, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:61561 (rh:substrates → 61560_L, rh:products → 61560_R), and Rhea
+    curates the reverse direction too. 4 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) = gibberelli…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:61560
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) = gibberellin A24
+      + 2 oxidized [2Fe-2S]-[ferredoxin] + 2 H2O'
+  - node_id: sub1
+    label: gibberellin A15
+    node_type: CHEMICAL
+    grounding: CHEBI:143956
+    description: Formula C20H26O5.
+  - node_id: sub2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: sub2_rp1
+    label: '[2Fe-2S](1+)'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: gibberellin A24
+    node_type: CHEMICAL
+    grounding: CHEBI:143957
+    description: Formula C20H24O5.
+  - node_id: prd2
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: prd2_rp1
+    label: '[2Fe-2S](2+)'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: gibberellin A15 is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61561
+      snippet: gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => gibberellin A24 + 2
+        oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:61561 declares side 61560_L as its substrates
+        (rh:substrates); the master reaction RHEA:61560 is undirected. This participant is CHEBI:143956
+        with coefficient 1. Rhea cites PMID:27842068, PMID:29517843, PMID:29875256 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [2Fe-2S]-[ferredoxin] is a substrate consumed by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:61561
+      snippet: gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => gibberellin A24 + 2
+        oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:61561 declares side 61560_L as its substrates
+        (rh:substrates); the master reaction RHEA:61560 is undirected. This participant is GENERIC:10001
+        with coefficient 2. Rhea cites PMID:27842068, PMID:29517843, PMID:29875256 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:61560
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738), formula Fe2S2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61561
+      snippet: gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => gibberellin A24 + 2
+        oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:61561 declares side 61560_L as its substrates
+        (rh:substrates); the master reaction RHEA:61560 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:27842068, PMID:29517843, PMID:29875256 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:61561
+      snippet: gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => gibberellin A24 + 2
+        oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:61561 declares side 61560_L as its substrates
+        (rh:substrates); the master reaction RHEA:61560 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:27842068, PMID:29517843, PMID:29875256 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: gibberellin A24 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61561
+      snippet: gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => gibberellin A24 + 2
+        oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:61561 declares side 61560_R as its products
+        (rh:products); the master reaction RHEA:61560 is undirected. This participant is CHEBI:143957
+        with coefficient 1. Rhea cites PMID:27842068, PMID:29517843, PMID:29875256 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [2Fe-2S]-[ferredoxin] is a product released by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:61561
+      snippet: gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => gibberellin A24 + 2
+        oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:61561 declares side 61560_R as its products
+        (rh:products); the master reaction RHEA:61560 is undirected. This participant is GENERIC:10000
+        with coefficient 2. Rhea cites PMID:27842068, PMID:29517843, PMID:29875256 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:61560
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737), formula Fe2S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:61561
+      snippet: gibberellin A15 + 2 reduced [2Fe-2S]-[ferredoxin] + O2 + 2 H(+) => gibberellin A24 + 2
+        oxidized [2Fe-2S]-[ferredoxin] + 2 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:61561 declares side 61560_R as its products
+        (rh:products); the master reaction RHEA:61560 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:27842068, PMID:29517843, PMID:29875256 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 xrefs:
@@ -40,4 +40,147 @@ definitions:
       Catalyses: AMP + H2O = D-ribose 5-phosphate + adenine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of AMP nucleosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.4. EC 3.2.2.4 maps to exactly
+    one curated Rhea reaction (RHEA:20129), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "AMP + H2O = D-ribose
+    5-phosphate + adenine". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: AMP nucleosidase
+    grounding: EC:3.2.2.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:78346
+    description: Formula C5H9O8P.
+  - node_id: prd2
+    label: adenine
+    node_type: CHEMICAL
+    grounding: CHEBI:16708
+    description: Formula C5H5N5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: AMP nucleosidase activity
+    grounding: GO:0008714
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0AE13
+    node_type: PROTEIN
+    label: AMN_ECO57
+    grounding: UniProtKB:P0AE13
+  - node_id: prot_P0AE12
+    node_type: PROTEIN
+    label: AMN_ECOLI
+    grounding: UniProtKB:P0AE12
+  - node_id: prot_P48636
+    node_type: PROTEIN
+    label: LOGH_PSEAE
+    grounding: UniProtKB:P48636
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: AMP is a substrate consumed by RHEA:20129 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20130
+      snippet: AMP + H2O => D-ribose 5-phosphate + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:20130 declares side 20129_L as its substrates
+        (rh:substrates); the master reaction RHEA:20129 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:7000783, PMID:13428783, PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:20129 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20130
+      snippet: AMP + H2O => D-ribose 5-phosphate + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:20130 declares side 20129_L as its substrates
+        (rh:substrates); the master reaction RHEA:20129 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7000783, PMID:13428783, PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-ribose 5-phosphate is a product released by RHEA:20129 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20130
+      snippet: AMP + H2O => D-ribose 5-phosphate + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:20130 declares side 20129_R as its products
+        (rh:products); the master reaction RHEA:20129 is undirected. This participant is CHEBI:78346 with
+        coefficient 1. Rhea cites PMID:7000783, PMID:13428783, PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: adenine is a product released by RHEA:20129 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20130
+      snippet: AMP + H2O => D-ribose 5-phosphate + adenine
+      notes: Rhea's left-to-right directional reaction RHEA:20130 declares side 20129_R as its products
+        (rh:products); the master reaction RHEA:20129 is undirected. This participant is CHEBI:16708 with
+        coefficient 1. Rhea cites PMID:7000783, PMID:13428783, PMID:27941785 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.2.4
+      snippet: EC:3.2.2.4 > GO:AMP nucleosidase activity ; GO:0008714
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008714 is itself a record
+        in this KB.
+  - subject: prot_P0AE13
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMN_ECO57 is an exemplar enzyme with EC 3.2.2.4 activity.
+    evidence:
+    - reference: EC:3.2.2.4
+      snippet: DR   P0AE13, AMN_ECO57  ;  P0AE12, AMN_ECOLI  ;  P48636, LOGH_PSEAE ;
+      notes: ExPASy ENZYME entry EC 3.2.2.4 cross-references UniProtKB:P0AE13 (AMN_ECO57) as a protein
+        with this activity.
+  - subject: prot_P0AE12
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMN_ECOLI is an exemplar enzyme with EC 3.2.2.4 activity.
+    evidence:
+    - reference: EC:3.2.2.4
+      snippet: DR   P0AE13, AMN_ECO57  ;  P0AE12, AMN_ECOLI  ;  P48636, LOGH_PSEAE ;
+      notes: ExPASy ENZYME entry EC 3.2.2.4 cross-references UniProtKB:P0AE12 (AMN_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P48636
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LOGH_PSEAE is an exemplar enzyme with EC 3.2.2.4 activity.
+    evidence:
+    - reference: EC:3.2.2.4
+      snippet: DR   P0AE13, AMN_ECO57  ;  P0AE12, AMN_ECOLI  ;  P48636, LOGH_PSEAE ;
+      notes: ExPASy ENZYME entry EC 3.2.2.4 cross-references UniProtKB:P48636 (LOGH_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.6.2.4
     mapping_source: rhea2ec
@@ -44,4 +44,175 @@ definitions:
       Catalyses the reaction: 2 oxidized [cytochrome P450] + NADPH = 2 reduced [cytochrome P450] + NADP(+) + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 oxidized [cytochrome P450] + NADPH = 2 reduced [cytochrome P450] + NADP(+)
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:24040, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24041 (rh:substrates → 24040_L, rh:products → 24040_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 oxidized [cytochrome P450] + NADPH = 2 reduced [cytochrome P450] + NADP(+)…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24040
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 oxidized [cytochrome P450] + NADPH = 2 reduced [cytochrome P450] + NADP(+) + H(+)'
+  - node_id: sub1
+    label: oxidized [cytochrome P450]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14627
+    description: Rhea compound GENERIC:14627.
+  - node_id: sub1_rp1
+    label: Fe(III)-heme b
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14627 (oxidized
+      [cytochrome P450]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:55376
+  - node_id: sub2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd1
+    label: reduced [cytochrome P450]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14628
+    description: Rhea compound GENERIC:14628.
+  - node_id: prd1_rp1
+    label: heme b
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14628 (reduced [cytochrome
+      P450]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:60344
+  - node_id: prd2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: NADPH-hemoprotein reductase activity
+    grounding: GO:0003958
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: NADPH--hemoprotein reductase
+    grounding: EC:1.6.2.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: oxidized [cytochrome P450] is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:24041
+      snippet: 2 oxidized [cytochrome P450] + NADPH => 2 reduced [cytochrome P450] + NADP(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24041 declares side 24040_L as its substrates
+        (rh:substrates); the master reaction RHEA:24040 is undirected. This participant is GENERIC:14627
+        with coefficient 2. Rhea cites PMID:12773143, PMID:4389465, PMID:11329262, PMID:14007123 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(III)-heme b is the reactive part of oxidized [cytochrome P450].
+    evidence:
+    - reference: RHEA:24040
+      snippet: Fe(III)-heme b
+      notes: Rhea compound GENERIC:14627 (oxidized [cytochrome P450]) declares rh:reactivePart = Fe(III)-heme
+        b (CHEBI:55376), formula C34H30FeN4O4.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADPH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24041
+      snippet: 2 oxidized [cytochrome P450] + NADPH => 2 reduced [cytochrome P450] + NADP(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24041 declares side 24040_L as its substrates
+        (rh:substrates); the master reaction RHEA:24040 is undirected. This participant is CHEBI:57783
+        with coefficient 1. Rhea cites PMID:12773143, PMID:4389465, PMID:11329262, PMID:14007123 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: reduced [cytochrome P450] is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:24041
+      snippet: 2 oxidized [cytochrome P450] + NADPH => 2 reduced [cytochrome P450] + NADP(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24041 declares side 24040_R as its products
+        (rh:products); the master reaction RHEA:24040 is undirected. This participant is GENERIC:14628
+        with coefficient 2. Rhea cites PMID:12773143, PMID:4389465, PMID:11329262, PMID:14007123 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: heme b is the reactive part of reduced [cytochrome P450].
+    evidence:
+    - reference: RHEA:24040
+      snippet: heme b
+      notes: Rhea compound GENERIC:14628 (reduced [cytochrome P450]) declares rh:reactivePart = heme b
+        (CHEBI:60344), formula C34H30FeN4O4.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADP(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24041
+      snippet: 2 oxidized [cytochrome P450] + NADPH => 2 reduced [cytochrome P450] + NADP(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24041 declares side 24040_R as its products
+        (rh:products); the master reaction RHEA:24040 is undirected. This participant is CHEBI:58349 with
+        coefficient 1. Rhea cites PMID:12773143, PMID:4389465, PMID:11329262, PMID:14007123 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24041
+      snippet: 2 oxidized [cytochrome P450] + NADPH => 2 reduced [cytochrome P450] + NADP(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24041 declares side 24040_R as its products
+        (rh:products); the master reaction RHEA:24040 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12773143, PMID:4389465, PMID:11329262, PMID:14007123 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:24040
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003958"/>
+      notes: The rdfs:seeAlso triple on RHEA:24040 in rhea.rdf. GO term GO:0003958 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.6.2.4; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24040
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.6.2.4"/>
+      notes: The rh:ec triple on RHEA:24040 in rhea.rdf. EC 1.6.2.4 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -32,4 +32,117 @@ definitions:
       Catalyses: fumigaclavine B + acetyl-CoA = fumigaclavine A + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fumigaclavine B O-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.205. EC 2.3.1.205 maps to
+    exactly one curated Rhea reaction (RHEA:34267), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "fumigaclavine
+    B + acetyl-CoA = fumigaclavine A + CoA". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fumigaclavine B O-acetyltransferase
+    grounding: EC:2.3.1.205
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: fumigaclavine B
+    node_type: CHEMICAL
+    grounding: CHEBI:67146
+    description: Formula C16H21N2O.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: fumigaclavine A
+    node_type: CHEMICAL
+    grounding: CHEBI:67145
+    description: Formula C18H23N2O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_Q4WZ64
+    node_type: PROTEIN
+    label: EASN_ASPFU
+    grounding: UniProtKB:Q4WZ64
+  - node_id: prot_W6Q0S4
+    node_type: PROTEIN
+    label: IFGH_PENRF
+    grounding: UniProtKB:W6Q0S4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: fumigaclavine B is a substrate consumed by RHEA:34267 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34268
+      snippet: fumigaclavine B + acetyl-CoA => fumigaclavine A + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:34268 declares side 34267_L as its substrates
+        (rh:substrates); the master reaction RHEA:34267 is undirected. This participant is CHEBI:67146
+        with coefficient 1. Rhea cites PMID:18678866, PMID:19672909 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:34267 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34268
+      snippet: fumigaclavine B + acetyl-CoA => fumigaclavine A + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:34268 declares side 34267_L as its substrates
+        (rh:substrates); the master reaction RHEA:34267 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:18678866, PMID:19672909 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: fumigaclavine A is a product released by RHEA:34267 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34268
+      snippet: fumigaclavine B + acetyl-CoA => fumigaclavine A + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:34268 declares side 34267_R as its products
+        (rh:products); the master reaction RHEA:34267 is undirected. This participant is CHEBI:67145 with
+        coefficient 1. Rhea cites PMID:18678866, PMID:19672909 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:34267 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34268
+      snippet: fumigaclavine B + acetyl-CoA => fumigaclavine A + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:34268 declares side 34267_R as its products
+        (rh:products); the master reaction RHEA:34267 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:18678866, PMID:19672909 for this reaction.
+  - subject: prot_Q4WZ64
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EASN_ASPFU is an exemplar enzyme with EC 2.3.1.205 activity.
+    evidence:
+    - reference: EC:2.3.1.205
+      snippet: DR   Q4WZ64, EASN_ASPFU ;  W6Q0S4, IFGH_PENRF ;
+      notes: ExPASy ENZYME entry EC 2.3.1.205 cross-references UniProtKB:Q4WZ64 (EASN_ASPFU) as a protein
+        with this activity.
+  - subject: prot_W6Q0S4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: IFGH_PENRF is an exemplar enzyme with EC 2.3.1.205 activity.
+    evidence:
+    - reference: EC:2.3.1.205
+      snippet: DR   Q4WZ64, EASN_ASPFU ;  W6Q0S4, IFGH_PENRF ;
+      notes: ExPASy ENZYME entry EC 2.3.1.205 cross-references UniProtKB:W6Q0S4 (IFGH_PENRF) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

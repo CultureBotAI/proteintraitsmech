@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:180678
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,107 @@ definitions:
       Catalyses the reaction: cremeomycin + AH2 = 2-hydroxy-4-methoxybenzoate + N2 + A
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cremeomycin + AH2 = 2-hydroxy-4-methoxybenzoate + N2 + A
+  description: Substrate-to-product chemistry of RHEA:70055, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:70056 (rh:substrates → 70055_L, rh:products → 70055_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of cremeomycin + AH2 = 2-hydroxy-4-methoxybenzoate + N2 + A
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:70055
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: cremeomycin + AH2 = 2-hydroxy-4-methoxybenzoate + N2 + A'
+  - node_id: sub1
+    label: cremeomycin
+    node_type: CHEMICAL
+    grounding: CHEBI:180678
+    description: Formula C8H5N2O4.
+  - node_id: sub2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: prd1
+    label: 2-hydroxy-4-methoxybenzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:188933
+    description: Formula C8H7O4.
+  - node_id: prd2
+    label: N2
+    node_type: CHEMICAL
+    grounding: CHEBI:17997
+    description: Formula N2.
+  - node_id: prd3
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cremeomycin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70056
+      snippet: cremeomycin + AH2 => 2-hydroxy-4-methoxybenzoate + N2 + A
+      notes: Rhea's left-to-right directional reaction RHEA:70056 declares side 70055_L as its substrates
+        (rh:substrates); the master reaction RHEA:70055 is undirected. This participant is CHEBI:180678
+        with coefficient 1. Rhea cites PMID:29771512 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: AH2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70056
+      snippet: cremeomycin + AH2 => 2-hydroxy-4-methoxybenzoate + N2 + A
+      notes: Rhea's left-to-right directional reaction RHEA:70056 declares side 70055_L as its substrates
+        (rh:substrates); the master reaction RHEA:70055 is undirected. This participant is CHEBI:17499
+        with coefficient 1. Rhea cites PMID:29771512 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-hydroxy-4-methoxybenzoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70056
+      snippet: cremeomycin + AH2 => 2-hydroxy-4-methoxybenzoate + N2 + A
+      notes: Rhea's left-to-right directional reaction RHEA:70056 declares side 70055_R as its products
+        (rh:products); the master reaction RHEA:70055 is undirected. This participant is CHEBI:188933
+        with coefficient 1. Rhea cites PMID:29771512 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: N2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70056
+      snippet: cremeomycin + AH2 => 2-hydroxy-4-methoxybenzoate + N2 + A
+      notes: Rhea's left-to-right directional reaction RHEA:70056 declares side 70055_R as its products
+        (rh:products); the master reaction RHEA:70055 is undirected. This participant is CHEBI:17997 with
+        coefficient 1. Rhea cites PMID:29771512 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: A is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70056
+      snippet: cremeomycin + AH2 => 2-hydroxy-4-methoxybenzoate + N2 + A
+      notes: Rhea's left-to-right directional reaction RHEA:70056 declares side 70055_R as its products
+        (rh:products); the master reaction RHEA:70055 is undirected. This participant is CHEBI:13193 with
+        coefficient 1. Rhea cites PMID:29771512 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

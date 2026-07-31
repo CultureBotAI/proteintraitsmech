@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -38,4 +38,39 @@ definitions:
       Catalyses: Milk clotting activity. Preferential cleavage of 8-Gly-|-Ser-9 in B chain of insulin most rapidly, followed by 11-Leu-|-Val-12, 19-Cys(SO(3)H)-|-Gly and 24-Phe-|-Phe-25. No action on Ac-Phe-Tyr(I)2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of physarolisin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.103. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "Milk clotting activity. Preferential cleavage of 8-Gly-|-Ser-9 in B chain of insulin most rapidly,
+    followed by 11-Leu-|-Val-12, 19-Cys(SO(3)H)-|-Gly and 24-Phe-|-Phe-25. No action on Ac-Phe-Tyr(I)2".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: physarolisin
+    grounding: EC:3.4.21.103
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q8MZS4
+    node_type: PROTEIN
+    label: PHYSA_BADPO
+    grounding: UniProtKB:Q8MZS4
+  edges:
+  - subject: prot_Q8MZS4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHYSA_BADPO is an exemplar enzyme with EC 3.4.21.103 activity.
+    evidence:
+    - reference: EC:3.4.21.103
+      snippet: DR   Q8MZS4, PHYSA_BADPO;
+      notes: ExPASy ENZYME entry EC 3.4.21.103 cross-references UniProtKB:Q8MZS4 (PHYSA_BADPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

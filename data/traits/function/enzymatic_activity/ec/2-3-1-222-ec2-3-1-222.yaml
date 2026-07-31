@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -36,4 +36,131 @@ definitions:
       Catalyses: propanoyl-CoA + phosphate = propanoyl phosphate + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphate propanoyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.222. EC 2.3.1.222 maps to
+    exactly one curated Rhea reaction (RHEA:28046), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "propanoyl-CoA
+    + phosphate = propanoyl phosphate + CoA". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphate propanoyltransferase
+    grounding: EC:2.3.1.222
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: propanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57392
+    description: Formula C24H36N7O17P3S.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: propanoyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58933
+    description: Formula C3H5O5P.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_A6TJX7
+    node_type: PROTEIN
+    label: PDUL_ALKMQ
+    grounding: UniProtKB:A6TJX7
+  - node_id: prot_B1VB71
+    node_type: PROTEIN
+    label: PDUL_CITFR
+    grounding: UniProtKB:B1VB71
+  - node_id: prot_A8AEM8
+    node_type: PROTEIN
+    label: PDUL_CITK8
+    grounding: UniProtKB:A8AEM8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: propanoyl-CoA is a substrate consumed by RHEA:28046 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28047
+      snippet: propanoyl-CoA + phosphate => propanoyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28047 declares side 28046_L as its substrates
+        (rh:substrates); the master reaction RHEA:28046 is undirected. This participant is CHEBI:57392
+        with coefficient 1. Rhea cites PMID:17158662 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:28046 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28047
+      snippet: propanoyl-CoA + phosphate => propanoyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28047 declares side 28046_L as its substrates
+        (rh:substrates); the master reaction RHEA:28046 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:17158662 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: propanoyl phosphate is a product released by RHEA:28046 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28047
+      snippet: propanoyl-CoA + phosphate => propanoyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28047 declares side 28046_R as its products
+        (rh:products); the master reaction RHEA:28046 is undirected. This participant is CHEBI:58933 with
+        coefficient 1. Rhea cites PMID:17158662 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:28046 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28047
+      snippet: propanoyl-CoA + phosphate => propanoyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:28047 declares side 28046_R as its products
+        (rh:products); the master reaction RHEA:28046 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:17158662 for this reaction.
+  - subject: prot_A6TJX7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDUL_ALKMQ is an exemplar enzyme with EC 2.3.1.222 activity.
+    evidence:
+    - reference: EC:2.3.1.222
+      snippet: DR   A6TJX7, PDUL_ALKMQ ;  B1VB71, PDUL_CITFR ;  A8AEM8, PDUL_CITK8 ;
+      notes: ExPASy ENZYME entry EC 2.3.1.222 cross-references UniProtKB:A6TJX7 (PDUL_ALKMQ) as a protein
+        with this activity.
+  - subject: prot_B1VB71
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDUL_CITFR is an exemplar enzyme with EC 2.3.1.222 activity.
+    evidence:
+    - reference: EC:2.3.1.222
+      snippet: DR   A6TJX7, PDUL_ALKMQ ;  B1VB71, PDUL_CITFR ;  A8AEM8, PDUL_CITK8 ;
+      notes: ExPASy ENZYME entry EC 2.3.1.222 cross-references UniProtKB:B1VB71 (PDUL_CITFR) as a protein
+        with this activity.
+  - subject: prot_A8AEM8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDUL_CITK8 is an exemplar enzyme with EC 2.3.1.222 activity.
+    evidence:
+    - reference: EC:2.3.1.222
+      snippet: DR   A6TJX7, PDUL_ALKMQ ;  B1VB71, PDUL_CITFR ;  A8AEM8, PDUL_CITK8 ;
+      notes: ExPASy ENZYME entry EC 2.3.1.222 cross-references UniProtKB:A8AEM8 (PDUL_CITK8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

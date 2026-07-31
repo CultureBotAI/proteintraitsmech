@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -28,4 +28,110 @@ definitions:
       Catalyses: a medium-chain primary fatty alcohol + a fatty acyl-CoA = a medium-chain alcohol wax ester + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of medium-chain-alcohol O-fatty-acyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.332. EC 2.3.1.332 maps to
+    exactly one curated Rhea reaction (RHEA:85935), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a medium-chain
+    primary fatty alcohol + a fatty acyl-CoA = a medium-chain alcohol wax ester + CoA". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: medium-chain-alcohol O-fatty-acyltransferase
+    grounding: EC:2.3.1.332
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a medium-chain primary fatty alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:142605
+    description: Formula CH3OR.
+  - node_id: sub2
+    label: a fatty acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:77636
+    description: Formula C22H31N7O17P3SR.
+  - node_id: prd1
+    label: a medium-chain alcohol wax ester
+    node_type: CHEMICAL
+    grounding: CHEBI:235322
+    description: Formula C2H2O2R2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_A3QME3
+    node_type: PROTEIN
+    label: WS1_PETHY
+    grounding: UniProtKB:A3QME3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a medium-chain primary fatty alcohol is a substrate consumed by RHEA:85935 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:85936
+      snippet: a medium-chain primary fatty alcohol + a fatty acyl-CoA => a medium-chain alcohol wax ester
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:85936 declares side 85935_L as its substrates
+        (rh:substrates); the master reaction RHEA:85935 is undirected. This participant is CHEBI:142605
+        with coefficient 1. Rhea cites PMID:17323080, PMID:15671038 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a fatty acyl-CoA is a substrate consumed by RHEA:85935 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85936
+      snippet: a medium-chain primary fatty alcohol + a fatty acyl-CoA => a medium-chain alcohol wax ester
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:85936 declares side 85935_L as its substrates
+        (rh:substrates); the master reaction RHEA:85935 is undirected. This participant is CHEBI:77636
+        with coefficient 1. Rhea cites PMID:17323080, PMID:15671038 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a medium-chain alcohol wax ester is a product released by RHEA:85935 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:85936
+      snippet: a medium-chain primary fatty alcohol + a fatty acyl-CoA => a medium-chain alcohol wax ester
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:85936 declares side 85935_R as its products
+        (rh:products); the master reaction RHEA:85935 is undirected. This participant is CHEBI:235322
+        with coefficient 1. Rhea cites PMID:17323080, PMID:15671038 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:85935 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85936
+      snippet: a medium-chain primary fatty alcohol + a fatty acyl-CoA => a medium-chain alcohol wax ester
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:85936 declares side 85935_R as its products
+        (rh:products); the master reaction RHEA:85935 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:17323080, PMID:15671038 for this reaction.
+  - subject: prot_A3QME3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: WS1_PETHY is an exemplar enzyme with EC 2.3.1.332 activity.
+    evidence:
+    - reference: EC:2.3.1.332
+      snippet: DR   A3QME3, WS1_PETHY  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.332 cross-references UniProtKB:A3QME3 (WS1_PETHY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

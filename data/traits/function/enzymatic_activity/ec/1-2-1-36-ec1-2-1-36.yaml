@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.2.1.-
 mapped_xrefs:
@@ -40,4 +40,310 @@ definitions:
       Catalyses: retinal + NAD(+) + H2O = retinoate + NADH + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of retinal dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.2.1.36. Rhea assigns 2 curated
+    reactions to EC 1.2.1.36. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "retinal + NAD(+) + H2O = retinoate + NADH + 2 H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: retinal dehydrogenase
+    grounding: EC:1.2.1.36
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of retinal + NAD(+) + H2O = retinoate + NADH + 2 H(+)
+    grounding: RHEA:16177
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: retinal + NAD(+) + H2O = retinoate + NADH + 2 H(+)'
+  - node_id: rxn1_sub1
+    label: retinal
+    node_type: CHEMICAL
+    grounding: CHEBI:15035
+    description: Formula C20H28O.
+  - node_id: rxn1_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn1_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: retinoate
+    node_type: CHEMICAL
+    grounding: CHEBI:15036
+    description: Formula C20H27O2.
+  - node_id: rxn1_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of all-trans-retinal + NAD(+) + H2O = all-trans-retinoate + NADH + 2 H(+)
+    grounding: RHEA:42080
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: all-trans-retinal + NAD(+) + H2O = all-trans-retinoate + NADH + 2 H(+)'
+  - node_id: rxn2_sub1
+    label: all-trans-retinal
+    node_type: CHEMICAL
+    grounding: CHEBI:17898
+    description: Formula C20H28O.
+  - node_id: rxn2_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn2_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: all-trans-retinoate
+    node_type: CHEMICAL
+    grounding: CHEBI:35291
+    description: Formula C20H27O2.
+  - node_id: rxn2_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: retinal dehydrogenase (NAD+) activity
+    grounding: GO:0001758
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P48644
+    node_type: PROTEIN
+    label: AL1A1_BOVIN
+    grounding: UniProtKB:P48644
+  - node_id: prot_P27463
+    node_type: PROTEIN
+    label: AL1A1_CHICK
+    grounding: UniProtKB:P27463
+  - node_id: prot_P15437
+    node_type: PROTEIN
+    label: AL1A1_HORSE
+    grounding: UniProtKB:P15437
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:16177 is one of the 2 curated reactions Rhea assigns to EC 1.2.1.36; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:16177
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.2.1.36"/>
+      notes: The rh:ec triple on RHEA:16177 in rhea.rdf assigns that reaction to EC 1.2.1.36.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: retinal is a substrate consumed by RHEA:16177 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16178
+      snippet: retinal + NAD(+) + H2O => retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16178 declares side 16177_L as its substrates
+        (rh:substrates); the master reaction RHEA:16177 is undirected. This participant is CHEBI:15035
+        with coefficient 1. Rhea cites PMID:7786847 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NAD(+) is a substrate consumed by RHEA:16177 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16178
+      snippet: retinal + NAD(+) + H2O => retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16178 declares side 16177_L as its substrates
+        (rh:substrates); the master reaction RHEA:16177 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:7786847 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: H2O is a substrate consumed by RHEA:16177 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16178
+      snippet: retinal + NAD(+) + H2O => retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16178 declares side 16177_L as its substrates
+        (rh:substrates); the master reaction RHEA:16177 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7786847 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: retinoate is a product released by RHEA:16177 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16178
+      snippet: retinal + NAD(+) + H2O => retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16178 declares side 16177_R as its products
+        (rh:products); the master reaction RHEA:16177 is undirected. This participant is CHEBI:15036 with
+        coefficient 1. Rhea cites PMID:7786847 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADH is a product released by RHEA:16177 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16178
+      snippet: retinal + NAD(+) + H2O => retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16178 declares side 16177_R as its products
+        (rh:products); the master reaction RHEA:16177 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:7786847 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:16177 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:16178
+      snippet: retinal + NAD(+) + H2O => retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16178 declares side 16177_R as its products
+        (rh:products); the master reaction RHEA:16177 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:7786847 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:42080 is one of the 2 curated reactions Rhea assigns to EC 1.2.1.36; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:42080
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.2.1.36"/>
+      notes: The rh:ec triple on RHEA:42080 in rhea.rdf assigns that reaction to EC 1.2.1.36.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: all-trans-retinal is a substrate consumed by RHEA:42080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42081
+      snippet: all-trans-retinal + NAD(+) + H2O => all-trans-retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42081 declares side 42080_L as its substrates
+        (rh:substrates); the master reaction RHEA:42080 is undirected. This participant is CHEBI:17898
+        with coefficient 1. Rhea cites PMID:4312676, PMID:12576512, PMID:27759097, PMID:7832787 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NAD(+) is a substrate consumed by RHEA:42080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42081
+      snippet: all-trans-retinal + NAD(+) + H2O => all-trans-retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42081 declares side 42080_L as its substrates
+        (rh:substrates); the master reaction RHEA:42080 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:4312676, PMID:12576512, PMID:27759097, PMID:7832787 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: H2O is a substrate consumed by RHEA:42080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42081
+      snippet: all-trans-retinal + NAD(+) + H2O => all-trans-retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42081 declares side 42080_L as its substrates
+        (rh:substrates); the master reaction RHEA:42080 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4312676, PMID:12576512, PMID:27759097, PMID:7832787 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: all-trans-retinoate is a product released by RHEA:42080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42081
+      snippet: all-trans-retinal + NAD(+) + H2O => all-trans-retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42081 declares side 42080_R as its products
+        (rh:products); the master reaction RHEA:42080 is undirected. This participant is CHEBI:35291 with
+        coefficient 1. Rhea cites PMID:4312676, PMID:12576512, PMID:27759097, PMID:7832787 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADH is a product released by RHEA:42080 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42081
+      snippet: all-trans-retinal + NAD(+) + H2O => all-trans-retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42081 declares side 42080_R as its products
+        (rh:products); the master reaction RHEA:42080 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:4312676, PMID:12576512, PMID:27759097, PMID:7832787 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:42080 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:42081
+      snippet: all-trans-retinal + NAD(+) + H2O => all-trans-retinoate + NADH + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42081 declares side 42080_R as its products
+        (rh:products); the master reaction RHEA:42080 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:4312676, PMID:12576512, PMID:27759097, PMID:7832787 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.2.1.36
+      snippet: EC:1.2.1.36 > GO:retinal dehydrogenase (NAD+) activity ; GO:0001758
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0001758 is itself a record
+        in this KB.
+  - subject: prot_P48644
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AL1A1_BOVIN is an exemplar enzyme with EC 1.2.1.36 activity.
+    evidence:
+    - reference: EC:1.2.1.36
+      snippet: DR   P48644, AL1A1_BOVIN;  P27463, AL1A1_CHICK;  P15437, AL1A1_HORSE;
+      notes: ExPASy ENZYME entry EC 1.2.1.36 cross-references UniProtKB:P48644 (AL1A1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P27463
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AL1A1_CHICK is an exemplar enzyme with EC 1.2.1.36 activity.
+    evidence:
+    - reference: EC:1.2.1.36
+      snippet: DR   P48644, AL1A1_BOVIN;  P27463, AL1A1_CHICK;  P15437, AL1A1_HORSE;
+      notes: ExPASy ENZYME entry EC 1.2.1.36 cross-references UniProtKB:P27463 (AL1A1_CHICK) as a protein
+        with this activity.
+  - subject: prot_P15437
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AL1A1_HORSE is an exemplar enzyme with EC 1.2.1.36 activity.
+    evidence:
+    - reference: EC:1.2.1.36
+      snippet: DR   P48644, AL1A1_BOVIN;  P27463, AL1A1_CHICK;  P15437, AL1A1_HORSE;
+      notes: ExPASy ENZYME entry EC 1.2.1.36 cross-references UniProtKB:P15437 (AL1A1_HORSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (18 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:11596
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,107 @@ definitions:
       Catalyses the reaction: 2-hydroxyglutarate + NAD(+) = 2-oxoglutarate + NADH + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-hydroxyglutarate + NAD(+) = 2-oxoglutarate + NADH + H(+)
+  description: Substrate-to-product chemistry of RHEA:13449, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:13450 (rh:substrates → 13449_L, rh:products → 13449_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-hydroxyglutarate + NAD(+) = 2-oxoglutarate + NADH + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:13449
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-hydroxyglutarate + NAD(+) = 2-oxoglutarate + NADH + H(+)'
+  - node_id: sub1
+    label: 2-hydroxyglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:11596
+    description: Formula C5H6O5.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-hydroxyglutarate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13450
+      snippet: 2-hydroxyglutarate + NAD(+) => 2-oxoglutarate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13450 declares side 13449_L as its substrates
+        (rh:substrates); the master reaction RHEA:13449 is undirected. This participant is CHEBI:11596
+        with coefficient 1. Rhea cites PMID:20690587, PMID:19348502 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13450
+      snippet: 2-hydroxyglutarate + NAD(+) => 2-oxoglutarate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13450 declares side 13449_L as its substrates
+        (rh:substrates); the master reaction RHEA:13449 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:20690587, PMID:19348502 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-oxoglutarate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13450
+      snippet: 2-hydroxyglutarate + NAD(+) => 2-oxoglutarate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13450 declares side 13449_R as its products
+        (rh:products); the master reaction RHEA:13449 is undirected. This participant is CHEBI:16810 with
+        coefficient 1. Rhea cites PMID:20690587, PMID:19348502 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13450
+      snippet: 2-hydroxyglutarate + NAD(+) => 2-oxoglutarate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13450 declares side 13449_R as its products
+        (rh:products); the master reaction RHEA:13449 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:20690587, PMID:19348502 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13450
+      snippet: 2-hydroxyglutarate + NAD(+) => 2-oxoglutarate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:13450 declares side 13449_R as its products
+        (rh:products); the master reaction RHEA:13449 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:20690587, PMID:19348502 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

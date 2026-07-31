@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -38,4 +38,149 @@ definitions:
       Catalyses: (E)-sinapate + UDP-alpha-D-glucose = 1-O-(trans-sinapoyl)-beta-D-glucose + UDP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sinapate 1-glucosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.120. EC 2.4.1.120 maps to
+    exactly one curated Rhea reaction (RHEA:13305), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(E)-sinapate
+    + UDP-alpha-D-glucose = 1-O-(trans-sinapoyl)-beta-D-glucose + UDP". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sinapate 1-glucosyltransferase
+    grounding: EC:2.4.1.120
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (E)-sinapate
+    node_type: CHEMICAL
+    grounding: CHEBI:30023
+    description: Formula C11H11O5.
+  - node_id: sub2
+    label: UDP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:58885
+    description: Formula C15H22N2O17P2.
+  - node_id: prd1
+    label: 1-O-(trans-sinapoyl)-beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:16546
+    description: Formula C17H22O10.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sinapate 1-glucosyltransferase activity
+    grounding: GO:0050284
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0A193AUF6
+    node_type: PROTEIN
+    label: GGT23_PUNGR
+    grounding: UniProtKB:A0A193AUF6
+  - node_id: prot_A0A193AU77
+    node_type: PROTEIN
+    label: GGT24_PUNGR
+    grounding: UniProtKB:A0A193AU77
+  - node_id: prot_Q5XF20
+    node_type: PROTEIN
+    label: U84A1_ARATH
+    grounding: UniProtKB:Q5XF20
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (E)-sinapate is a substrate consumed by RHEA:13305 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13306
+      snippet: (E)-sinapate + UDP-alpha-D-glucose => 1-O-(trans-sinapoyl)-beta-D-glucose + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:13306 declares side 13305_L as its substrates
+        (rh:substrates); the master reaction RHEA:13305 is undirected. This participant is CHEBI:30023
+        with coefficient 1. Rhea cites PMID:15053762 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-glucose is a substrate consumed by RHEA:13305 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13306
+      snippet: (E)-sinapate + UDP-alpha-D-glucose => 1-O-(trans-sinapoyl)-beta-D-glucose + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:13306 declares side 13305_L as its substrates
+        (rh:substrates); the master reaction RHEA:13305 is undirected. This participant is CHEBI:58885
+        with coefficient 1. Rhea cites PMID:15053762 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-O-(trans-sinapoyl)-beta-D-glucose is a product released by RHEA:13305 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:13306
+      snippet: (E)-sinapate + UDP-alpha-D-glucose => 1-O-(trans-sinapoyl)-beta-D-glucose + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:13306 declares side 13305_R as its products
+        (rh:products); the master reaction RHEA:13305 is undirected. This participant is CHEBI:16546 with
+        coefficient 1. Rhea cites PMID:15053762 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by RHEA:13305 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13306
+      snippet: (E)-sinapate + UDP-alpha-D-glucose => 1-O-(trans-sinapoyl)-beta-D-glucose + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:13306 declares side 13305_R as its products
+        (rh:products); the master reaction RHEA:13305 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:15053762 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.120
+      snippet: EC:2.4.1.120 > GO:sinapate 1-glucosyltransferase activity ; GO:0050284
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050284 is itself a record
+        in this KB.
+  - subject: prot_A0A193AUF6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GGT23_PUNGR is an exemplar enzyme with EC 2.4.1.120 activity.
+    evidence:
+    - reference: EC:2.4.1.120
+      snippet: DR   A0A193AUF6, GGT23_PUNGR;  A0A193AU77, GGT24_PUNGR;  Q5XF20, U84A1_ARATH;
+      notes: ExPASy ENZYME entry EC 2.4.1.120 cross-references UniProtKB:A0A193AUF6 (GGT23_PUNGR) as a
+        protein with this activity.
+  - subject: prot_A0A193AU77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GGT24_PUNGR is an exemplar enzyme with EC 2.4.1.120 activity.
+    evidence:
+    - reference: EC:2.4.1.120
+      snippet: DR   A0A193AUF6, GGT23_PUNGR;  A0A193AU77, GGT24_PUNGR;  Q5XF20, U84A1_ARATH;
+      notes: ExPASy ENZYME entry EC 2.4.1.120 cross-references UniProtKB:A0A193AU77 (GGT24_PUNGR) as a
+        protein with this activity.
+  - subject: prot_Q5XF20
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: U84A1_ARATH is an exemplar enzyme with EC 2.4.1.120 activity.
+    evidence:
+    - reference: EC:2.4.1.120
+      snippet: DR   A0A193AUF6, GGT23_PUNGR;  A0A193AU77, GGT24_PUNGR;  Q5XF20, U84A1_ARATH;
+      notes: ExPASy ENZYME entry EC 2.4.1.120 cross-references UniProtKB:Q5XF20 (U84A1_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

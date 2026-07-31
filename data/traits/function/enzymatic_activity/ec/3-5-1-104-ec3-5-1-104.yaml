@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -42,4 +42,66 @@ definitions:
       Catalyses: peptidoglycan-N-acetyl-D-glucosamine + H2O = peptidoglycan-D-glucosamine + acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptidoglycan-N-acetylglucosamine deacetylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.104. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "peptidoglycan-N-acetyl-D-glucosamine
+    + H2O = peptidoglycan-D-glucosamine + acetate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptidoglycan-N-acetylglucosamine deacetylase
+    grounding: EC:3.5.1.104
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q81EK9
+    node_type: PROTEIN
+    label: PGDA1_BACCR
+    grounding: UniProtKB:Q81EK9
+  - node_id: prot_Q81EJ6
+    node_type: PROTEIN
+    label: PGDA2_BACCR
+    grounding: UniProtKB:Q81EJ6
+  - node_id: prot_Q81AF4
+    node_type: PROTEIN
+    label: PGDA3_BACCR
+    grounding: UniProtKB:Q81AF4
+  edges:
+  - subject: prot_Q81EK9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGDA1_BACCR is an exemplar enzyme with EC 3.5.1.104 activity.
+    evidence:
+    - reference: EC:3.5.1.104
+      snippet: DR   Q81EK9, PGDA1_BACCR;  Q81EJ6, PGDA2_BACCR;  Q81AF4, PGDA3_BACCR;
+      notes: ExPASy ENZYME entry EC 3.5.1.104 cross-references UniProtKB:Q81EK9 (PGDA1_BACCR) as a protein
+        with this activity.
+  - subject: prot_Q81EJ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGDA2_BACCR is an exemplar enzyme with EC 3.5.1.104 activity.
+    evidence:
+    - reference: EC:3.5.1.104
+      snippet: DR   Q81EK9, PGDA1_BACCR;  Q81EJ6, PGDA2_BACCR;  Q81AF4, PGDA3_BACCR;
+      notes: ExPASy ENZYME entry EC 3.5.1.104 cross-references UniProtKB:Q81EJ6 (PGDA2_BACCR) as a protein
+        with this activity.
+  - subject: prot_Q81AF4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGDA3_BACCR is an exemplar enzyme with EC 3.5.1.104 activity.
+    evidence:
+    - reference: EC:3.5.1.104
+      snippet: DR   Q81EK9, PGDA1_BACCR;  Q81EJ6, PGDA2_BACCR;  Q81AF4, PGDA3_BACCR;
+      notes: ExPASy ENZYME entry EC 3.5.1.104 cross-references UniProtKB:Q81AF4 (PGDA3_BACCR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

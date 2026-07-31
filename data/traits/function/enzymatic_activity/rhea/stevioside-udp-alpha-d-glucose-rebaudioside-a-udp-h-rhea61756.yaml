@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:9271
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,123 @@ definitions:
       Catalyses the reaction: stevioside + UDP-alpha-D-glucose = rebaudioside A + UDP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of stevioside + UDP-alpha-D-glucose = rebaudioside A + UDP + H(+)
+  description: Substrate-to-product chemistry of RHEA:61756, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:61757 (rh:substrates → 61756_L, rh:products → 61756_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of stevioside + UDP-alpha-D-glucose = rebaudioside A + UDP + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:61756
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: stevioside + UDP-alpha-D-glucose = rebaudioside A + UDP + H(+)'
+  - node_id: sub1
+    label: stevioside
+    node_type: CHEMICAL
+    grounding: CHEBI:9271
+    description: Formula C38H60O18.
+  - node_id: sub2
+    label: UDP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:58885
+    description: Formula C15H22N2O17P2.
+  - node_id: prd1
+    label: rebaudioside A
+    node_type: CHEMICAL
+    grounding: CHEBI:145012
+    description: Formula C44H70O23.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: stevioside glucosyltransferase activity (rebaudioside A forming)
+    grounding: GO:0102381
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: stevioside is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61757
+      snippet: stevioside + UDP-alpha-D-glucose => rebaudioside A + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61757 declares side 61756_L as its substrates
+        (rh:substrates); the master reaction RHEA:61756 is undirected. This participant is CHEBI:9271
+        with coefficient 1. Rhea cites PMID:31182573, PMID:15610349, PMID:31324778 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-glucose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:61757
+      snippet: stevioside + UDP-alpha-D-glucose => rebaudioside A + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61757 declares side 61756_L as its substrates
+        (rh:substrates); the master reaction RHEA:61756 is undirected. This participant is CHEBI:58885
+        with coefficient 1. Rhea cites PMID:31182573, PMID:15610349, PMID:31324778 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: rebaudioside A is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61757
+      snippet: stevioside + UDP-alpha-D-glucose => rebaudioside A + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61757 declares side 61756_R as its products
+        (rh:products); the master reaction RHEA:61756 is undirected. This participant is CHEBI:145012
+        with coefficient 1. Rhea cites PMID:31182573, PMID:15610349, PMID:31324778 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61757
+      snippet: stevioside + UDP-alpha-D-glucose => rebaudioside A + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61757 declares side 61756_R as its products
+        (rh:products); the master reaction RHEA:61756 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:31182573, PMID:15610349, PMID:31324778 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61757
+      snippet: stevioside + UDP-alpha-D-glucose => rebaudioside A + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:61757 declares side 61756_R as its products
+        (rh:products); the master reaction RHEA:61756 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:31182573, PMID:15610349, PMID:31324778 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:61756
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102381"/>
+      notes: The rdfs:seeAlso triple on RHEA:61756 in rhea.rdf. GO term GO:0102381 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

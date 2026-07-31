@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -28,4 +28,88 @@ definitions:
       Catalyses: ent-copalyl diphosphate = dolabradiene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dolabradiene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.196. EC 4.2.3.196 maps to
+    exactly one curated Rhea reaction (RHEA:58160), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "ent-copalyl
+    diphosphate = dolabradiene + diphosphate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dolabradiene synthase
+    grounding: EC:4.2.3.196
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: ent-copalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58553
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: dolabradiene
+    node_type: CHEMICAL
+    grounding: CHEBI:141822
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A1D6KUI6
+    node_type: PROTEIN
+    label: KSL4_MAIZE
+    grounding: UniProtKB:A0A1D6KUI6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ent-copalyl diphosphate is a substrate consumed by RHEA:58160 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58161
+      snippet: ent-copalyl diphosphate => dolabradiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58161 declares side 58160_L as its substrates
+        (rh:substrates); the master reaction RHEA:58160 is undirected. This participant is CHEBI:58553
+        with coefficient 1. Rhea cites PMID:29475898 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dolabradiene is a product released by RHEA:58160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58161
+      snippet: ent-copalyl diphosphate => dolabradiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58161 declares side 58160_R as its products
+        (rh:products); the master reaction RHEA:58160 is undirected. This participant is CHEBI:141822
+        with coefficient 1. Rhea cites PMID:29475898 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:58160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58161
+      snippet: ent-copalyl diphosphate => dolabradiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58161 declares side 58160_R as its products
+        (rh:products); the master reaction RHEA:58160 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:29475898 for this reaction.
+  - subject: prot_A0A1D6KUI6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KSL4_MAIZE is an exemplar enzyme with EC 4.2.3.196 activity.
+    evidence:
+    - reference: EC:4.2.3.196
+      snippet: DR   A0A1D6KUI6, KSL4_MAIZE ;
+      notes: ExPASy ENZYME entry EC 4.2.3.196 cross-references UniProtKB:A0A1D6KUI6 (KSL4_MAIZE) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

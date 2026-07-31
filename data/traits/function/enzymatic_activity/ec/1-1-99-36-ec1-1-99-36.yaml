@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.99.-
 synonyms:
@@ -39,4 +39,217 @@ definitions:
       Catalyses: ethanol + A = acetaldehyde + AH2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alcohol dehydrogenase (nicotinoprotein)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.99.36. Rhea assigns 2 curated
+    reactions to EC 1.1.99.36. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "ethanol + A = acetaldehyde + AH2". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: alcohol dehydrogenase (nicotinoprotein)
+    grounding: EC:1.1.99.36
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of N,N-dimethyl-4-nitrosoaniline + ethanol = 4-(hydroxylamino)-N,N-dimethylanil…
+    grounding: RHEA:27538
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: N,N-dimethyl-4-nitrosoaniline + ethanol = 4-(hydroxylamino)-N,N-dimethylaniline
+      + acetaldehyde'
+  - node_id: rxn1_sub1
+    label: N,N-dimethyl-4-nitrosoaniline
+    node_type: CHEMICAL
+    grounding: CHEBI:59990
+    description: Formula C8H10N2O.
+  - node_id: rxn1_sub2
+    label: ethanol
+    node_type: CHEMICAL
+    grounding: CHEBI:16236
+    description: Formula C2H6O.
+  - node_id: rxn1_prd1
+    label: 4-(hydroxylamino)-N,N-dimethylaniline
+    node_type: CHEMICAL
+    grounding: CHEBI:59991
+    description: Formula C8H12N2O.
+  - node_id: rxn1_prd2
+    label: acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15343
+    description: Formula C2H4O.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of ethanol + A = acetaldehyde + AH2
+    grounding: RHEA:33567
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: ethanol + A = acetaldehyde + AH2'
+  - node_id: rxn2_sub1
+    label: ethanol
+    node_type: CHEMICAL
+    grounding: CHEBI:16236
+    description: Formula C2H6O.
+  - node_id: rxn2_sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: rxn2_prd1
+    label: acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15343
+    description: Formula C2H4O.
+  - node_id: rxn2_prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: prot_P80175
+    node_type: PROTEIN
+    label: ADHN_AMYME
+    grounding: UniProtKB:P80175
+  - node_id: prot_P81747
+    node_type: PROTEIN
+    label: ADHN_RHOER
+    grounding: UniProtKB:P81747
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:27538 is one of the 2 curated reactions Rhea assigns to EC 1.1.99.36; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:27538
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.99.36"/>
+      notes: The rh:ec triple on RHEA:27538 in rhea.rdf assigns that reaction to EC 1.1.99.36.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: N,N-dimethyl-4-nitrosoaniline is a substrate consumed by RHEA:27538 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27539
+      snippet: N,N-dimethyl-4-nitrosoaniline + ethanol => 4-(hydroxylamino)-N,N-dimethylaniline + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27539 declares side 27538_L as its substrates
+        (rh:substrates); the master reaction RHEA:27538 is undirected. This participant is CHEBI:59990
+        with coefficient 1. Rhea cites PMID:14690248, PMID:9485460, PMID:12827287 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ethanol is a substrate consumed by RHEA:27538 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27539
+      snippet: N,N-dimethyl-4-nitrosoaniline + ethanol => 4-(hydroxylamino)-N,N-dimethylaniline + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27539 declares side 27538_L as its substrates
+        (rh:substrates); the master reaction RHEA:27538 is undirected. This participant is CHEBI:16236
+        with coefficient 1. Rhea cites PMID:14690248, PMID:9485460, PMID:12827287 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 4-(hydroxylamino)-N,N-dimethylaniline is a product released by RHEA:27538 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:27539
+      snippet: N,N-dimethyl-4-nitrosoaniline + ethanol => 4-(hydroxylamino)-N,N-dimethylaniline + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27539 declares side 27538_R as its products
+        (rh:products); the master reaction RHEA:27538 is undirected. This participant is CHEBI:59991 with
+        coefficient 1. Rhea cites PMID:14690248, PMID:9485460, PMID:12827287 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: acetaldehyde is a product released by RHEA:27538 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27539
+      snippet: N,N-dimethyl-4-nitrosoaniline + ethanol => 4-(hydroxylamino)-N,N-dimethylaniline + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:27539 declares side 27538_R as its products
+        (rh:products); the master reaction RHEA:27538 is undirected. This participant is CHEBI:15343 with
+        coefficient 1. Rhea cites PMID:14690248, PMID:9485460, PMID:12827287 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:33567 is one of the 2 curated reactions Rhea assigns to EC 1.1.99.36; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:33567
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.99.36"/>
+      notes: The rh:ec triple on RHEA:33567 in rhea.rdf assigns that reaction to EC 1.1.99.36.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: ethanol is a substrate consumed by RHEA:33567 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33568
+      snippet: ethanol + A => acetaldehyde + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:33568 declares side 33567_L as its substrates
+        (rh:substrates); the master reaction RHEA:33567 is undirected. This participant is CHEBI:16236
+        with coefficient 1. Rhea cites PMID:14690248, PMID:8385013 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: A is a substrate consumed by RHEA:33567 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33568
+      snippet: ethanol + A => acetaldehyde + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:33568 declares side 33567_L as its substrates
+        (rh:substrates); the master reaction RHEA:33567 is undirected. This participant is CHEBI:13193
+        with coefficient 1. Rhea cites PMID:14690248, PMID:8385013 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: acetaldehyde is a product released by RHEA:33567 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33568
+      snippet: ethanol + A => acetaldehyde + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:33568 declares side 33567_R as its products
+        (rh:products); the master reaction RHEA:33567 is undirected. This participant is CHEBI:15343 with
+        coefficient 1. Rhea cites PMID:14690248, PMID:8385013 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: AH2 is a product released by RHEA:33567 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33568
+      snippet: ethanol + A => acetaldehyde + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:33568 declares side 33567_R as its products
+        (rh:products); the master reaction RHEA:33567 is undirected. This participant is CHEBI:17499 with
+        coefficient 1. Rhea cites PMID:14690248, PMID:8385013 for this reaction.
+  - subject: prot_P80175
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADHN_AMYME is an exemplar enzyme with EC 1.1.99.36 activity.
+    evidence:
+    - reference: EC:1.1.99.36
+      snippet: DR   P80175, ADHN_AMYME ;  P81747, ADHN_RHOER ;
+      notes: ExPASy ENZYME entry EC 1.1.99.36 cross-references UniProtKB:P80175 (ADHN_AMYME) as a protein
+        with this activity.
+  - subject: prot_P81747
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADHN_RHOER is an exemplar enzyme with EC 1.1.99.36 activity.
+    evidence:
+    - reference: EC:1.1.99.36
+      snippet: DR   P80175, ADHN_AMYME ;  P81747, ADHN_RHOER ;
+      notes: ExPASy ENZYME entry EC 1.1.99.36 cross-references UniProtKB:P81747 (ADHN_RHOER) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

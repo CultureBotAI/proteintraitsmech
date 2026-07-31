@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.19.6.-
 mapped_xrefs:
@@ -25,4 +25,243 @@ definitions:
       Catalyses: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O = 4 oxidized [flavodoxin] + H2 + 2 NH4(+) + 16 ADP + 16 phosphate + 18 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nitrogenase (flavodoxin)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.19.6.1. EC 1.19.6.1 maps to exactly
+    one curated Rhea reaction (RHEA:15645), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N2 + 4 reduced
+    [flavodoxin] + 16 ATP + 16 H2O = 4 oxidized [flavodoxin] + H2 + 2 NH4(+) + 16 ADP + 16 phosphate +
+    18 H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nitrogenase (flavodoxin)
+    grounding: EC:1.19.6.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N2
+    node_type: CHEMICAL
+    grounding: CHEBI:17997
+    description: Formula N2.
+  - node_id: sub2
+    label: reduced [flavodoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10622
+    description: Rhea compound GENERIC:10622.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: FMNH2
+    description: The reacting group Rhea names inside the generic participant GENERIC:10622 (reduced [flavodoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57618
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: sub4
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: oxidized [flavodoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10623
+    description: Rhea compound GENERIC:10623.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: FMN
+    description: The reacting group Rhea names inside the generic participant GENERIC:10623 (oxidized
+      [flavodoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58210
+  - node_id: prd2
+    label: H2
+    node_type: CHEMICAL
+    grounding: CHEBI:18276
+    description: Formula H2.
+  - node_id: prd3
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prd4
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd5
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd6
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: nitrogenase (flavodoxin) activity
+    grounding: GO:0050142
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N2 is a substrate consumed by RHEA:15645 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15646
+      snippet: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O => 4 oxidized [flavodoxin] + H2 + 2 NH4(+)
+        + 16 ADP + 16 phosphate + 18 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15646 declares side 15645_L as its substrates
+        (rh:substrates); the master reaction RHEA:15645 is undirected. This participant is CHEBI:17997
+        with coefficient 1. Rhea cites PMID:3907625 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [flavodoxin] is a substrate consumed by RHEA:15645 (stoichiometric coefficient
+      4).
+    evidence:
+    - reference: RHEA:15646
+      snippet: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O => 4 oxidized [flavodoxin] + H2 + 2 NH4(+)
+        + 16 ADP + 16 phosphate + 18 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15646 declares side 15645_L as its substrates
+        (rh:substrates); the master reaction RHEA:15645 is undirected. This participant is GENERIC:10622
+        with coefficient 4. Rhea cites PMID:3907625 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: FMNH2 is the reactive part of reduced [flavodoxin].
+    evidence:
+    - reference: RHEA:15645
+      snippet: FMNH2
+      notes: Rhea compound GENERIC:10622 (reduced [flavodoxin]) declares rh:reactivePart = FMNH2 (CHEBI:57618).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:15645 (stoichiometric coefficient 16).
+    evidence:
+    - reference: RHEA:15646
+      snippet: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O => 4 oxidized [flavodoxin] + H2 + 2 NH4(+)
+        + 16 ADP + 16 phosphate + 18 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15646 declares side 15645_L as its substrates
+        (rh:substrates); the master reaction RHEA:15645 is undirected. This participant is CHEBI:30616
+        with coefficient 16. Rhea cites PMID:3907625 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H2O is a substrate consumed by RHEA:15645 (stoichiometric coefficient 16).
+    evidence:
+    - reference: RHEA:15646
+      snippet: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O => 4 oxidized [flavodoxin] + H2 + 2 NH4(+)
+        + 16 ADP + 16 phosphate + 18 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15646 declares side 15645_L as its substrates
+        (rh:substrates); the master reaction RHEA:15645 is undirected. This participant is CHEBI:15377
+        with coefficient 16. Rhea cites PMID:3907625 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: oxidized [flavodoxin] is a product released by RHEA:15645 (stoichiometric coefficient
+      4).
+    evidence:
+    - reference: RHEA:15646
+      snippet: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O => 4 oxidized [flavodoxin] + H2 + 2 NH4(+)
+        + 16 ADP + 16 phosphate + 18 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15646 declares side 15645_R as its products
+        (rh:products); the master reaction RHEA:15645 is undirected. This participant is GENERIC:10623
+        with coefficient 4. Rhea cites PMID:3907625 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: FMN is the reactive part of oxidized [flavodoxin].
+    evidence:
+    - reference: RHEA:15645
+      snippet: FMN
+      notes: Rhea compound GENERIC:10623 (oxidized [flavodoxin]) declares rh:reactivePart = FMN (CHEBI:58210).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2 is a product released by RHEA:15645 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15646
+      snippet: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O => 4 oxidized [flavodoxin] + H2 + 2 NH4(+)
+        + 16 ADP + 16 phosphate + 18 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15646 declares side 15645_R as its products
+        (rh:products); the master reaction RHEA:15645 is undirected. This participant is CHEBI:18276 with
+        coefficient 1. Rhea cites PMID:3907625 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: NH4(+) is a product released by RHEA:15645 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:15646
+      snippet: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O => 4 oxidized [flavodoxin] + H2 + 2 NH4(+)
+        + 16 ADP + 16 phosphate + 18 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15646 declares side 15645_R as its products
+        (rh:products); the master reaction RHEA:15645 is undirected. This participant is CHEBI:28938 with
+        coefficient 2. Rhea cites PMID:3907625 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: ADP is a product released by RHEA:15645 (stoichiometric coefficient 16).
+    evidence:
+    - reference: RHEA:15646
+      snippet: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O => 4 oxidized [flavodoxin] + H2 + 2 NH4(+)
+        + 16 ADP + 16 phosphate + 18 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15646 declares side 15645_R as its products
+        (rh:products); the master reaction RHEA:15645 is undirected. This participant is CHEBI:456216
+        with coefficient 16. Rhea cites PMID:3907625 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd5
+    description: phosphate is a product released by RHEA:15645 (stoichiometric coefficient 16).
+    evidence:
+    - reference: RHEA:15646
+      snippet: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O => 4 oxidized [flavodoxin] + H2 + 2 NH4(+)
+        + 16 ADP + 16 phosphate + 18 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15646 declares side 15645_R as its products
+        (rh:products); the master reaction RHEA:15645 is undirected. This participant is CHEBI:43474 with
+        coefficient 16. Rhea cites PMID:3907625 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd6
+    description: H(+) is a product released by RHEA:15645 (stoichiometric coefficient 18).
+    evidence:
+    - reference: RHEA:15646
+      snippet: N2 + 4 reduced [flavodoxin] + 16 ATP + 16 H2O => 4 oxidized [flavodoxin] + H2 + 2 NH4(+)
+        + 16 ADP + 16 phosphate + 18 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15646 declares side 15645_R as its products
+        (rh:products); the master reaction RHEA:15645 is undirected. This participant is CHEBI:15378 with
+        coefficient 18. Rhea cites PMID:3907625 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.19.6.1
+      snippet: EC:1.19.6.1 > GO:nitrogenase (flavodoxin) activity ; GO:0050142
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050142 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

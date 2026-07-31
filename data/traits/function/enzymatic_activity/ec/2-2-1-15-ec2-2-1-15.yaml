@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.2.1.-
 synonyms:
@@ -37,4 +37,232 @@ definitions:
       Catalyses: (1) 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate = 4-deoxy- 4-sulfo-D-erythrose + D-xylulose 5-phosphate. (2) 4-deoxy-4-sulfo-D-erythrulose + D-glyceraldehyde 3-phosphate = sulfoacetaldehyde + D-xylulose 5-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-deoxy-6-sulfo-D-fructose transketolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.2.1.15. Rhea assigns 2 curated
+    reactions to EC 2.2.1.15. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate
+    = 4-deoxy- 4-sulfo-D-erythrose + D-xylulose 5-phosphate. (2) 4-deoxy-4-sulfo-D-erythrulose + D-glyceraldehyde
+    3-phosphate = sulfoacetaldehyde + D-xylulose 5-phosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 6-deoxy-6-sulfo-D-fructose transketolase
+    grounding: EC:2.2.1.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate = 4-deoxy-4-sulfo-…
+    grounding: RHEA:70803
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate = 4-deoxy-4-sulfo-D-erythrose
+      + D-xylulose 5-phosphate'
+  - node_id: rxn1_sub1
+    label: 6-deoxy-6-sulfo-D-fructose
+    node_type: CHEMICAL
+    grounding: CHEBI:77133
+    description: Formula C6H11O8S.
+  - node_id: rxn1_sub2
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: rxn1_prd1
+    label: 4-deoxy-4-sulfo-D-erythrose
+    node_type: CHEMICAL
+    grounding: CHEBI:189857
+    description: Formula C4H7O6S.
+  - node_id: rxn1_prd2
+    label: D-xylulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57737
+    description: Formula C5H9O8P.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 4-deoxy-4-sulfo-D-erythrulose + D-glyceraldehyde 3-phosphate = sulfoacetalde…
+    grounding: RHEA:70811
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 4-deoxy-4-sulfo-D-erythrulose + D-glyceraldehyde 3-phosphate = sulfoacetaldehyde
+      + D-xylulose 5-phosphate'
+  - node_id: rxn2_sub1
+    label: 4-deoxy-4-sulfo-D-erythrulose
+    node_type: CHEMICAL
+    grounding: CHEBI:190015
+    description: Formula C4H7O6S.
+  - node_id: rxn2_sub2
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: rxn2_prd1
+    label: sulfoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58246
+    description: Formula C2H3O4S.
+  - node_id: rxn2_prd2
+    label: D-xylulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57737
+    description: Formula C5H9O8P.
+  - node_id: prot_J0MXK0
+    node_type: PROTEIN
+    label: SQWG_CLOS9
+    grounding: UniProtKB:J0MXK0
+  - node_id: prot_J1H0Z7
+    node_type: PROTEIN
+    label: SQWH_CLOS9
+    grounding: UniProtKB:J1H0Z7
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:70803 is one of the 2 curated reactions Rhea assigns to EC 2.2.1.15; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:70803
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.2.1.15"/>
+      notes: The rh:ec triple on RHEA:70803 in rhea.rdf assigns that reaction to EC 2.2.1.15.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 6-deoxy-6-sulfo-D-fructose is a substrate consumed by RHEA:70803 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70804
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate => 4-deoxy-4-sulfo-D-erythrose
+        + D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:70804 declares side 70803_L as its substrates
+        (rh:substrates); the master reaction RHEA:70803 is undirected. This participant is CHEBI:77133
+        with coefficient 1.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: D-glyceraldehyde 3-phosphate is a substrate consumed by RHEA:70803 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70804
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate => 4-deoxy-4-sulfo-D-erythrose
+        + D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:70804 declares side 70803_L as its substrates
+        (rh:substrates); the master reaction RHEA:70803 is undirected. This participant is CHEBI:59776
+        with coefficient 1.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 4-deoxy-4-sulfo-D-erythrose is a product released by RHEA:70803 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70804
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate => 4-deoxy-4-sulfo-D-erythrose
+        + D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:70804 declares side 70803_R as its products
+        (rh:products); the master reaction RHEA:70803 is undirected. This participant is CHEBI:189857
+        with coefficient 1.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: D-xylulose 5-phosphate is a product released by RHEA:70803 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70804
+      snippet: 6-deoxy-6-sulfo-D-fructose + D-glyceraldehyde 3-phosphate => 4-deoxy-4-sulfo-D-erythrose
+        + D-xylulose 5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:70804 declares side 70803_R as its products
+        (rh:products); the master reaction RHEA:70803 is undirected. This participant is CHEBI:57737 with
+        coefficient 1.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:70811 is one of the 2 curated reactions Rhea assigns to EC 2.2.1.15; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:70811
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.2.1.15"/>
+      notes: The rh:ec triple on RHEA:70811 in rhea.rdf assigns that reaction to EC 2.2.1.15.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 4-deoxy-4-sulfo-D-erythrulose is a substrate consumed by RHEA:70811 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70812
+      snippet: 4-deoxy-4-sulfo-D-erythrulose + D-glyceraldehyde 3-phosphate => sulfoacetaldehyde + D-xylulose
+        5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:70812 declares side 70811_L as its substrates
+        (rh:substrates); the master reaction RHEA:70811 is undirected. This participant is CHEBI:190015
+        with coefficient 1.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: D-glyceraldehyde 3-phosphate is a substrate consumed by RHEA:70811 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70812
+      snippet: 4-deoxy-4-sulfo-D-erythrulose + D-glyceraldehyde 3-phosphate => sulfoacetaldehyde + D-xylulose
+        5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:70812 declares side 70811_L as its substrates
+        (rh:substrates); the master reaction RHEA:70811 is undirected. This participant is CHEBI:59776
+        with coefficient 1.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: sulfoacetaldehyde is a product released by RHEA:70811 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70812
+      snippet: 4-deoxy-4-sulfo-D-erythrulose + D-glyceraldehyde 3-phosphate => sulfoacetaldehyde + D-xylulose
+        5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:70812 declares side 70811_R as its products
+        (rh:products); the master reaction RHEA:70811 is undirected. This participant is CHEBI:58246 with
+        coefficient 1.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: D-xylulose 5-phosphate is a product released by RHEA:70811 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70812
+      snippet: 4-deoxy-4-sulfo-D-erythrulose + D-glyceraldehyde 3-phosphate => sulfoacetaldehyde + D-xylulose
+        5-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:70812 declares side 70811_R as its products
+        (rh:products); the master reaction RHEA:70811 is undirected. This participant is CHEBI:57737 with
+        coefficient 1.
+  - subject: prot_J0MXK0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQWG_CLOS9 is an exemplar enzyme with EC 2.2.1.15 activity.
+    evidence:
+    - reference: EC:2.2.1.15
+      snippet: DR   J0MXK0, SQWG_CLOS9 ;  J1H0Z7, SQWH_CLOS9 ;
+      notes: ExPASy ENZYME entry EC 2.2.1.15 cross-references UniProtKB:J0MXK0 (SQWG_CLOS9) as a protein
+        with this activity.
+  - subject: prot_J1H0Z7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SQWH_CLOS9 is an exemplar enzyme with EC 2.2.1.15 activity.
+    evidence:
+    - reference: EC:2.2.1.15
+      snippet: DR   J0MXK0, SQWG_CLOS9 ;  J1H0Z7, SQWH_CLOS9 ;
+      notes: ExPASy ENZYME entry EC 2.2.1.15 cross-references UniProtKB:J1H0Z7 (SQWH_CLOS9) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

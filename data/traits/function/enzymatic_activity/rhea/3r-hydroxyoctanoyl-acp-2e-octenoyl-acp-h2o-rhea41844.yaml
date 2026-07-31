@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78461
     role: SUBSTRATE_OR_PRODUCT
@@ -33,4 +33,128 @@ definitions:
       Catalyses the reaction: (3R)-hydroxyoctanoyl-[ACP] = (2E)-octenoyl-[ACP] + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (3R)-hydroxyoctanoyl-[ACP] = (2E)-octenoyl-[ACP] + H2O
+  description: Substrate-to-product chemistry of RHEA:41844, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:41845 (rh:substrates → 41844_L, rh:products → 41844_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (3R)-hydroxyoctanoyl-[ACP] = (2E)-octenoyl-[ACP] + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:41844
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (3R)-hydroxyoctanoyl-[ACP] = (2E)-octenoyl-[ACP] + H2O'
+  - node_id: sub1
+    label: (3R)-hydroxyoctanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9634
+    description: Rhea compound GENERIC:9634.
+  - node_id: sub1_rp1
+    label: O-(S-3R-hydroxyoctanoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9634 ((3R)-hydroxyoctanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78461
+  - node_id: prd1
+    label: (2E)-octenoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9635
+    description: Rhea compound GENERIC:9635.
+  - node_id: prd1_rp1
+    label: O-(S-(2E)-octenoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9635 ((2E)-octenoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78462
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (3R)-hydroxyacyl-[acyl-carrier-protein] dehydratase activity
+    grounding: GO:0019171
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (3R)-hydroxyoctanoyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:41845
+      snippet: (3R)-hydroxyoctanoyl-[ACP] => (2E)-octenoyl-[ACP] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:41845 declares side 41844_L as its substrates
+        (rh:substrates); the master reaction RHEA:41844 is undirected. This participant is GENERIC:9634
+        with coefficient 1. Rhea cites PMID:7567999, PMID:17804795, PMID:9356448, PMID:8910376 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-3R-hydroxyoctanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part
+      of (3R)-hydroxyoctanoyl-[ACP].
+    evidence:
+    - reference: RHEA:41844
+      snippet: O-(S-3R-hydroxyoctanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9634 ((3R)-hydroxyoctanoyl-[ACP]) declares rh:reactivePart = O-(S-3R-hydroxyoctanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78461), formula C22H39N3O10PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E)-octenoyl-[ACP] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:41845
+      snippet: (3R)-hydroxyoctanoyl-[ACP] => (2E)-octenoyl-[ACP] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:41845 declares side 41844_R as its products
+        (rh:products); the master reaction RHEA:41844 is undirected. This participant is GENERIC:9635
+        with coefficient 1. Rhea cites PMID:7567999, PMID:17804795, PMID:9356448, PMID:8910376 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-(2E)-octenoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of
+      (2E)-octenoyl-[ACP].
+    evidence:
+    - reference: RHEA:41844
+      snippet: O-(S-(2E)-octenoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9635 ((2E)-octenoyl-[ACP]) declares rh:reactivePart = O-(S-(2E)-octenoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78462), formula C22H37N3O9PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41845
+      snippet: (3R)-hydroxyoctanoyl-[ACP] => (2E)-octenoyl-[ACP] + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:41845 declares side 41844_R as its products
+        (rh:products); the master reaction RHEA:41844 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:7567999, PMID:17804795, PMID:9356448, PMID:8910376 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:41844
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0019171"/>
+      notes: The rdfs:seeAlso triple on RHEA:41844 in rhea.rdf. GO term GO:0019171 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

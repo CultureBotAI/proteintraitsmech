@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -31,4 +31,262 @@ definitions:
       Catalyses: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)- methylmalonyl-CoA + 6 NADPH + 9 H(+) = long-chain mycolipanoyl- [mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA + 3 H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mycolipanoate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.252. EC 2.3.1.252 maps to
+    exactly one curated Rhea reaction (RHEA:50344), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "holo-[mycolipanoate
+    synthase] + a long-chain fatty acyl-CoA + 3 (S)- methylmalonyl-CoA + 6 NADPH + 9 H(+) = long-chain
+    mycolipanoyl- [mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA + 3 H2O". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mycolipanoate synthase
+    grounding: EC:2.3.1.252
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: holo-[mycolipanoate synthase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12617
+    description: Rhea compound GENERIC:12617.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12617 (holo-[mycolipanoate
+      synthase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: sub2
+    label: a long-chain fatty acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:83139
+    description: Formula C22H31N7O17P3SR.
+  - node_id: sub3
+    label: (S)-methylmalonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57327
+    description: Formula C25H35N7O19P3S.
+  - node_id: sub4
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: sub5
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: long-chain mycolipanoyl-[mycolipanoate synthase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12618
+    description: Rhea compound GENERIC:12618.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-(S-[2S,4S,6S]-2,4,6-trimethyl-very-long-chain fatty acyl-pantetheine-4'-phosphoryl)serine
+      residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12618 (long-chain
+      mycolipanoyl-[mycolipanoate synthase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:132361
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd4
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd5
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_A0A089QRB9
+    node_type: PROTEIN
+    label: MSL3_MYCTU
+    grounding: UniProtKB:A0A089QRB9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: holo-[mycolipanoate synthase] is a substrate consumed by RHEA:50344 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50345
+      snippet: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)-methylmalonyl-CoA +
+        6 NADPH + 9 H(+) => long-chain mycolipanoyl-[mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA
+        + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50345 declares side 50344_L as its substrates
+        (rh:substrates); the master reaction RHEA:50344 is undirected. This participant is GENERIC:12617
+        with coefficient 1. Rhea cites PMID:11278910, PMID:12207710 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[mycolipanoate
+      synthase].
+    evidence:
+    - reference: RHEA:50344
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:12617 (holo-[mycolipanoate synthase]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a long-chain fatty acyl-CoA is a substrate consumed by RHEA:50344 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:50345
+      snippet: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)-methylmalonyl-CoA +
+        6 NADPH + 9 H(+) => long-chain mycolipanoyl-[mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA
+        + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50345 declares side 50344_L as its substrates
+        (rh:substrates); the master reaction RHEA:50344 is undirected. This participant is CHEBI:83139
+        with coefficient 1. Rhea cites PMID:11278910, PMID:12207710 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: (S)-methylmalonyl-CoA is a substrate consumed by RHEA:50344 (stoichiometric coefficient
+      3).
+    evidence:
+    - reference: RHEA:50345
+      snippet: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)-methylmalonyl-CoA +
+        6 NADPH + 9 H(+) => long-chain mycolipanoyl-[mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA
+        + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50345 declares side 50344_L as its substrates
+        (rh:substrates); the master reaction RHEA:50344 is undirected. This participant is CHEBI:57327
+        with coefficient 3. Rhea cites PMID:11278910, PMID:12207710 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: NADPH is a substrate consumed by RHEA:50344 (stoichiometric coefficient 6).
+    evidence:
+    - reference: RHEA:50345
+      snippet: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)-methylmalonyl-CoA +
+        6 NADPH + 9 H(+) => long-chain mycolipanoyl-[mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA
+        + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50345 declares side 50344_L as its substrates
+        (rh:substrates); the master reaction RHEA:50344 is undirected. This participant is CHEBI:57783
+        with coefficient 6. Rhea cites PMID:11278910, PMID:12207710 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub5
+    description: H(+) is a substrate consumed by RHEA:50344 (stoichiometric coefficient 9).
+    evidence:
+    - reference: RHEA:50345
+      snippet: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)-methylmalonyl-CoA +
+        6 NADPH + 9 H(+) => long-chain mycolipanoyl-[mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA
+        + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50345 declares side 50344_L as its substrates
+        (rh:substrates); the master reaction RHEA:50344 is undirected. This participant is CHEBI:15378
+        with coefficient 9. Rhea cites PMID:11278910, PMID:12207710 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: long-chain mycolipanoyl-[mycolipanoate synthase] is a product released by RHEA:50344
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50345
+      snippet: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)-methylmalonyl-CoA +
+        6 NADPH + 9 H(+) => long-chain mycolipanoyl-[mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA
+        + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50345 declares side 50344_R as its products
+        (rh:products); the master reaction RHEA:50344 is undirected. This participant is GENERIC:12618
+        with coefficient 1. Rhea cites PMID:11278910, PMID:12207710 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-[2S,4S,6S]-2,4,6-trimethyl-very-long-chain fatty acyl-pantetheine-4'-phosphoryl)serine
+      residue is the reactive part of long-chain mycolipanoyl-[mycolipanoate synthase].
+    evidence:
+    - reference: RHEA:50344
+      snippet: O-(S-[2S,4S,6S]-2,4,6-trimethyl-very-long-chain fatty acyl-pantetheine-4'-phosphoryl)serine
+        residue
+      notes: Rhea compound GENERIC:12618 (long-chain mycolipanoyl-[mycolipanoate synthase]) declares rh:reactivePart
+        = O-(S-[2S,4S,6S]-2,4,6-trimethyl-very-long-chain fatty acyl-pantetheine-4'-phosphoryl)serine
+        residue (CHEBI:132361).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:50344 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:50345
+      snippet: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)-methylmalonyl-CoA +
+        6 NADPH + 9 H(+) => long-chain mycolipanoyl-[mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA
+        + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50345 declares side 50344_R as its products
+        (rh:products); the master reaction RHEA:50344 is undirected. This participant is CHEBI:16526 with
+        coefficient 3. Rhea cites PMID:11278910, PMID:12207710 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: NADP(+) is a product released by RHEA:50344 (stoichiometric coefficient 6).
+    evidence:
+    - reference: RHEA:50345
+      snippet: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)-methylmalonyl-CoA +
+        6 NADPH + 9 H(+) => long-chain mycolipanoyl-[mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA
+        + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50345 declares side 50344_R as its products
+        (rh:products); the master reaction RHEA:50344 is undirected. This participant is CHEBI:58349 with
+        coefficient 6. Rhea cites PMID:11278910, PMID:12207710 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: CoA is a product released by RHEA:50344 (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:50345
+      snippet: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)-methylmalonyl-CoA +
+        6 NADPH + 9 H(+) => long-chain mycolipanoyl-[mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA
+        + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50345 declares side 50344_R as its products
+        (rh:products); the master reaction RHEA:50344 is undirected. This participant is CHEBI:57287 with
+        coefficient 4. Rhea cites PMID:11278910, PMID:12207710 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd5
+    description: H2O is a product released by RHEA:50344 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:50345
+      snippet: holo-[mycolipanoate synthase] + a long-chain fatty acyl-CoA + 3 (S)-methylmalonyl-CoA +
+        6 NADPH + 9 H(+) => long-chain mycolipanoyl-[mycolipanoate synthase] + 3 CO2 + 6 NADP(+) + 4 CoA
+        + 3 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:50345 declares side 50344_R as its products
+        (rh:products); the master reaction RHEA:50344 is undirected. This participant is CHEBI:15377 with
+        coefficient 3. Rhea cites PMID:11278910, PMID:12207710 for this reaction.
+  - subject: prot_A0A089QRB9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MSL3_MYCTU is an exemplar enzyme with EC 2.3.1.252 activity.
+    evidence:
+    - reference: EC:2.3.1.252
+      snippet: DR   A0A089QRB9, MSL3_MYCTU ;
+      notes: ExPASy ENZYME entry EC 2.3.1.252 cross-references UniProtKB:A0A089QRB9 (MSL3_MYCTU) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

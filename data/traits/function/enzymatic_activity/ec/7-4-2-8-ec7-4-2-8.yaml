@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.4.2.-
 xrefs:
@@ -39,4 +39,81 @@ definitions:
       Catalyses: ATP + H2O + cellular proteinSide 1 = ADP + phosphate + cellular proteinSide 2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-secreting ATPase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.4.2.8. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + H2O
+    + cellular proteinSide 1 = ADP + phosphate + cellular proteinSide 2".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-secreting ATPase
+    grounding: EC:7.4.2.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein-exporting ATPase activity
+    grounding: GO:0008564
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9ZLT4
+    node_type: PROTEIN
+    label: CAGE_HELPJ
+    grounding: UniProtKB:Q9ZLT4
+  - node_id: prot_Q48252
+    node_type: PROTEIN
+    label: CAGE_HELPY
+    grounding: UniProtKB:Q48252
+  - node_id: prot_P31741
+    node_type: PROTEIN
+    label: GSPE_AERHY
+    grounding: UniProtKB:P31741
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:7.4.2.8
+      snippet: EC:7.4.2.8 > GO:protein-exporting ATPase activity ; GO:0008564
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008564 is itself a record
+        in this KB.
+  - subject: prot_Q9ZLT4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAGE_HELPJ is an exemplar enzyme with EC 7.4.2.8 activity.
+    evidence:
+    - reference: EC:7.4.2.8
+      snippet: DR   Q9ZLT4, CAGE_HELPJ ;  Q48252, CAGE_HELPY ;  P31741, GSPE_AERHY ;
+      notes: ExPASy ENZYME entry EC 7.4.2.8 cross-references UniProtKB:Q9ZLT4 (CAGE_HELPJ) as a protein
+        with this activity.
+  - subject: prot_Q48252
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAGE_HELPY is an exemplar enzyme with EC 7.4.2.8 activity.
+    evidence:
+    - reference: EC:7.4.2.8
+      snippet: DR   Q9ZLT4, CAGE_HELPJ ;  Q48252, CAGE_HELPY ;  P31741, GSPE_AERHY ;
+      notes: ExPASy ENZYME entry EC 7.4.2.8 cross-references UniProtKB:Q48252 (CAGE_HELPY) as a protein
+        with this activity.
+  - subject: prot_P31741
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GSPE_AERHY is an exemplar enzyme with EC 7.4.2.8 activity.
+    evidence:
+    - reference: EC:7.4.2.8
+      snippet: DR   Q9ZLT4, CAGE_HELPJ ;  Q48252, CAGE_HELPY ;  P31741, GSPE_AERHY ;
+      notes: ExPASy ENZYME entry EC 7.4.2.8 cross-references UniProtKB:P31741 (GSPE_AERHY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

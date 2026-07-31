@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.10.3.-
 mapped_xrefs:
@@ -28,4 +28,120 @@ definitions:
       Catalyses: 4 (R)-torosachrysone + O2 = 2 phlegmacin + 2 H2O + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of torosachrysone 7,10'-coupling laccase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.10.3.18. EC 1.10.3.18 maps to
+    exactly one curated Rhea reaction (RHEA:86387), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4 (R)-torosachrysone
+    + O2 = 2 phlegmacin + 2 H2O + 2 H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: torosachrysone 7,10'-coupling laccase
+    grounding: EC:1.10.3.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-torosachrysone
+    node_type: CHEMICAL
+    grounding: CHEBI:212864
+    description: Formula C16H16O5.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: phlegmacin
+    node_type: CHEMICAL
+    grounding: CHEBI:233990
+    description: Formula C32H29O10.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_P0DYC3
+    node_type: PROTEIN
+    label: PHLC_TALSX
+    grounding: UniProtKB:P0DYC3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-torosachrysone is a substrate consumed by RHEA:86387 (stoichiometric coefficient
+      4).
+    evidence:
+    - reference: RHEA:86388
+      snippet: 4 (R)-torosachrysone + O2 => 2 phlegmacin + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:86388 declares side 86387_L as its substrates
+        (rh:substrates); the master reaction RHEA:86387 is undirected. This participant is CHEBI:212864
+        with coefficient 4. Rhea cites PMID:35274920 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:86387 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86388
+      snippet: 4 (R)-torosachrysone + O2 => 2 phlegmacin + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:86388 declares side 86387_L as its substrates
+        (rh:substrates); the master reaction RHEA:86387 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:35274920 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phlegmacin is a product released by RHEA:86387 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:86388
+      snippet: 4 (R)-torosachrysone + O2 => 2 phlegmacin + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:86388 declares side 86387_R as its products
+        (rh:products); the master reaction RHEA:86387 is undirected. This participant is CHEBI:233990
+        with coefficient 2. Rhea cites PMID:35274920 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:86387 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:86388
+      snippet: 4 (R)-torosachrysone + O2 => 2 phlegmacin + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:86388 declares side 86387_R as its products
+        (rh:products); the master reaction RHEA:86387 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:35274920 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:86387 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:86388
+      snippet: 4 (R)-torosachrysone + O2 => 2 phlegmacin + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:86388 declares side 86387_R as its products
+        (rh:products); the master reaction RHEA:86387 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:35274920 for this reaction.
+  - subject: prot_P0DYC3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PHLC_TALSX is an exemplar enzyme with EC 1.10.3.18 activity.
+    evidence:
+    - reference: EC:1.10.3.18
+      snippet: DR   P0DYC3, PHLC_TALSX ;
+      notes: ExPASy ENZYME entry EC 1.10.3.18 cross-references UniProtKB:P0DYC3 (PHLC_TALSX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

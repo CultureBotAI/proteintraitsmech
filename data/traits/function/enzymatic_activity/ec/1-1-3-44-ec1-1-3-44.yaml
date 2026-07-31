@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.3.-
 mapped_xrefs:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: 6'''-deamino-6'''-hydroxyneomycin C + O2 = 6'''-deamino-6'''-oxoneomycin C + H2O2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6'''-hydroxyneomycin C oxidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.3.44. EC 1.1.3.44 maps to exactly
+    one curated Rhea reaction (RHEA:34047), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "6''''''-deamino-6''''''-hydroxyneomycin
+    C + O2 = 6''''''-deamino-6''''''-oxoneomycin C + H2O2". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 6'''-hydroxyneomycin C oxidase
+    grounding: EC:1.1.3.44
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 6'''-deamino-6'''-hydroxyneomycin C
+    node_type: CHEMICAL
+    grounding: CHEBI:65031
+    description: Formula C23H50N5O14.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 6'''-deamino-6'''-oxoneomycin C
+    node_type: CHEMICAL
+    grounding: CHEBI:65068
+    description: Formula C23H48N5O14.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: prot_Q53U15
+    node_type: PROTEIN
+    label: NEOG_STRFR
+    grounding: UniProtKB:Q53U15
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 6'''-deamino-6'''-hydroxyneomycin C is a substrate consumed by RHEA:34047 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34048
+      snippet: 6'''-deamino-6'''-hydroxyneomycin C + O2 => 6'''-deamino-6'''-oxoneomycin C + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34048 declares side 34047_L as its substrates
+        (rh:substrates); the master reaction RHEA:34047 is undirected. This participant is CHEBI:65031
+        with coefficient 1. Rhea cites PMID:21689223, PMID:17206729 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:34047 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34048
+      snippet: 6'''-deamino-6'''-hydroxyneomycin C + O2 => 6'''-deamino-6'''-oxoneomycin C + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34048 declares side 34047_L as its substrates
+        (rh:substrates); the master reaction RHEA:34047 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:21689223, PMID:17206729 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 6'''-deamino-6'''-oxoneomycin C is a product released by RHEA:34047 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34048
+      snippet: 6'''-deamino-6'''-hydroxyneomycin C + O2 => 6'''-deamino-6'''-oxoneomycin C + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34048 declares side 34047_R as its products
+        (rh:products); the master reaction RHEA:34047 is undirected. This participant is CHEBI:65068 with
+        coefficient 1. Rhea cites PMID:21689223, PMID:17206729 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by RHEA:34047 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34048
+      snippet: 6'''-deamino-6'''-hydroxyneomycin C + O2 => 6'''-deamino-6'''-oxoneomycin C + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:34048 declares side 34047_R as its products
+        (rh:products); the master reaction RHEA:34047 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:21689223, PMID:17206729 for this reaction.
+  - subject: prot_Q53U15
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEOG_STRFR is an exemplar enzyme with EC 1.1.3.44 activity.
+    evidence:
+    - reference: EC:1.1.3.44
+      snippet: DR   Q53U15, NEOG_STRFR ;
+      notes: ExPASy ENZYME entry EC 1.1.3.44 cross-references UniProtKB:Q53U15 (NEOG_STRFR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

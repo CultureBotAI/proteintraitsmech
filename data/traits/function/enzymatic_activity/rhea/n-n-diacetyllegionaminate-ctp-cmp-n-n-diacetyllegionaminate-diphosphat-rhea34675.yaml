@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.7.82
     mapping_source: rhea2ec
@@ -30,4 +30,147 @@ definitions:
       Catalyses the reaction: N,N-diacetyllegionaminate + CTP = CMP-N,N-diacetyllegionaminate + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N,N-diacetyllegionaminate + CTP = CMP-N,N-diacetyllegionaminate + diphosphate
+  description: Substrate-to-product chemistry of RHEA:34675, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34676 (rh:substrates → 34675_L, rh:products → 34675_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N,N-diacetyllegionaminate + CTP = CMP-N,N-diacetyllegionaminate + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34675
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N,N-diacetyllegionaminate + CTP = CMP-N,N-diacetyllegionaminate + diphosphate'
+  - node_id: sub1
+    label: N,N-diacetyllegionaminate
+    node_type: CHEMICAL
+    grounding: CHEBI:68669
+    description: Formula C13H21N2O8.
+  - node_id: sub2
+    label: CTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37563
+    description: Formula C9H12N3O14P3.
+  - node_id: prd1
+    label: CMP-N,N-diacetyllegionaminate
+    node_type: CHEMICAL
+    grounding: CHEBI:68670
+    description: Formula C22H32N5O15P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: CMP-N,N'-diacetyllegionaminic acid synthase
+    grounding: EC:2.7.7.82
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q0P8S7
+    node_type: PROTEIN
+    label: NEUAH_CAMJE
+    grounding: UniProtKB:Q0P8S7
+  - node_id: prot_Q5ZXI0
+    node_type: PROTEIN
+    label: NEUAH_LEGPH
+    grounding: UniProtKB:Q5ZXI0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N,N-diacetyllegionaminate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34676
+      snippet: N,N-diacetyllegionaminate + CTP => CMP-N,N-diacetyllegionaminate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34676 declares side 34675_L as its substrates
+        (rh:substrates); the master reaction RHEA:34675 is undirected. This participant is CHEBI:68669
+        with coefficient 1. Rhea cites PMID:19282391, PMID:18275154 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34676
+      snippet: N,N-diacetyllegionaminate + CTP => CMP-N,N-diacetyllegionaminate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34676 declares side 34675_L as its substrates
+        (rh:substrates); the master reaction RHEA:34675 is undirected. This participant is CHEBI:37563
+        with coefficient 1. Rhea cites PMID:19282391, PMID:18275154 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: CMP-N,N-diacetyllegionaminate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34676
+      snippet: N,N-diacetyllegionaminate + CTP => CMP-N,N-diacetyllegionaminate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34676 declares side 34675_R as its products
+        (rh:products); the master reaction RHEA:34675 is undirected. This participant is CHEBI:68670 with
+        coefficient 1. Rhea cites PMID:19282391, PMID:18275154 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34676
+      snippet: N,N-diacetyllegionaminate + CTP => CMP-N,N-diacetyllegionaminate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34676 declares side 34675_R as its products
+        (rh:products); the master reaction RHEA:34675 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:19282391, PMID:18275154 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.7.82; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34675
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.7.82"/>
+      notes: The rh:ec triple on RHEA:34675 in rhea.rdf. EC 2.7.7.82 is itself a record in this KB.
+  - subject: prot_Q0P8S7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEUAH_CAMJE is an exemplar enzyme carrying EC 2.7.7.82, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.7.82
+      snippet: DR   Q0P8S7, NEUAH_CAMJE;  Q5ZXI0, NEUAH_LEGPH;
+      notes: ExPASy ENZYME entry EC 2.7.7.82 cross-references UniProtKB:Q0P8S7 (NEUAH_CAMJE) as a protein
+        with this activity.
+    - reference: RHEA:34675
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.7.82"/>
+      notes: Rhea assigns RHEA:34675 to EC 2.7.7.82, and EC 2.7.7.82 maps to exactly one Rhea master reaction
+        (RHEA:34675), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q5ZXI0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEUAH_LEGPH is an exemplar enzyme carrying EC 2.7.7.82, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.7.82
+      snippet: DR   Q0P8S7, NEUAH_CAMJE;  Q5ZXI0, NEUAH_LEGPH;
+      notes: ExPASy ENZYME entry EC 2.7.7.82 cross-references UniProtKB:Q5ZXI0 (NEUAH_LEGPH) as a protein
+        with this activity.
+    - reference: RHEA:34675
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.7.82"/>
+      notes: Rhea assigns RHEA:34675 to EC 2.7.7.82, and EC 2.7.7.82 maps to exactly one Rhea master reaction
+        (RHEA:34675), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

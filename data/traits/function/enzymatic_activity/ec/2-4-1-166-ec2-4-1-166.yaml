@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -25,4 +25,89 @@ definitions:
       Catalyses: 2 raffinose = 1(F)-alpha-D-galactosylraffinose + sucrose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of raffinose--raffinose alpha-galactosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.166. EC 2.4.1.166 maps to
+    exactly one curated Rhea reaction (RHEA:14125), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 raffinose
+    = 1(F)-alpha-D-galactosylraffinose + sucrose". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: raffinose--raffinose alpha-galactosyltransferase
+    grounding: EC:2.4.1.166
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: raffinose
+    node_type: CHEMICAL
+    grounding: CHEBI:16634
+    description: Formula C18H32O16.
+  - node_id: prd1
+    label: 1(F)-alpha-D-galactosylraffinose
+    node_type: CHEMICAL
+    grounding: CHEBI:27603
+    description: Formula C24H42O21.
+  - node_id: prd2
+    label: sucrose
+    node_type: CHEMICAL
+    grounding: CHEBI:17992
+    description: Formula C12H22O11.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: raffinose-raffinose alpha-galactotransferase activity
+    grounding: GO:0047234
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: raffinose is a substrate consumed by RHEA:14125 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:14126
+      snippet: 2 raffinose => 1(F)-alpha-D-galactosylraffinose + sucrose
+      notes: Rhea's left-to-right directional reaction RHEA:14126 declares side 14125_L as its substrates
+        (rh:substrates); the master reaction RHEA:14125 is undirected. This participant is CHEBI:16634
+        with coefficient 2. Rhea cites PMID:24253101 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1(F)-alpha-D-galactosylraffinose is a product released by RHEA:14125 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14126
+      snippet: 2 raffinose => 1(F)-alpha-D-galactosylraffinose + sucrose
+      notes: Rhea's left-to-right directional reaction RHEA:14126 declares side 14125_R as its products
+        (rh:products); the master reaction RHEA:14125 is undirected. This participant is CHEBI:27603 with
+        coefficient 1. Rhea cites PMID:24253101 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sucrose is a product released by RHEA:14125 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14126
+      snippet: 2 raffinose => 1(F)-alpha-D-galactosylraffinose + sucrose
+      notes: Rhea's left-to-right directional reaction RHEA:14126 declares side 14125_R as its products
+        (rh:products); the master reaction RHEA:14125 is undirected. This participant is CHEBI:17992 with
+        coefficient 1. Rhea cites PMID:24253101 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.166
+      snippet: EC:2.4.1.166 > GO:raffinose-raffinose alpha-galactotransferase activity ; GO:0047234
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047234 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

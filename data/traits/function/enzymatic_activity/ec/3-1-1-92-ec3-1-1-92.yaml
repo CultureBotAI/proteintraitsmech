@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 mapped_xrefs:
@@ -34,4 +34,149 @@ definitions:
       Catalyses: 4-sulfomuconolactone + H2O = maleylacetate + sulfite + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-sulfomuconolactone hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.92. EC 3.1.1.92 maps to exactly
+    one curated Rhea reaction (RHEA:33711), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-sulfomuconolactone
+    + H2O = maleylacetate + sulfite + 2 H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-sulfomuconolactone hydrolase
+    grounding: EC:3.1.1.92
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-sulfomuconolactone
+    node_type: CHEMICAL
+    grounding: CHEBI:20479
+    description: Formula C6H4O7S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: maleylacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16468
+    description: Formula C6H4O5.
+  - node_id: prd2
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 4-sulfomuconolactone hydrolase activity
+    grounding: GO:0102998
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A6XIG7
+    node_type: PROTEIN
+    label: SLMH_AGRRD
+    grounding: UniProtKB:A6XIG7
+  - node_id: prot_A6XIG6
+    node_type: PROTEIN
+    label: SLMH_HYDIT
+    grounding: UniProtKB:A6XIG6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-sulfomuconolactone is a substrate consumed by RHEA:33711 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33712
+      snippet: 4-sulfomuconolactone + H2O => maleylacetate + sulfite + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33712 declares side 33711_L as its substrates
+        (rh:substrates); the master reaction RHEA:33711 is undirected. This participant is CHEBI:20479
+        with coefficient 1. Rhea cites PMID:17660282 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:33711 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33712
+      snippet: 4-sulfomuconolactone + H2O => maleylacetate + sulfite + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33712 declares side 33711_L as its substrates
+        (rh:substrates); the master reaction RHEA:33711 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17660282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: maleylacetate is a product released by RHEA:33711 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33712
+      snippet: 4-sulfomuconolactone + H2O => maleylacetate + sulfite + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33712 declares side 33711_R as its products
+        (rh:products); the master reaction RHEA:33711 is undirected. This participant is CHEBI:16468 with
+        coefficient 1. Rhea cites PMID:17660282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfite is a product released by RHEA:33711 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33712
+      snippet: 4-sulfomuconolactone + H2O => maleylacetate + sulfite + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33712 declares side 33711_R as its products
+        (rh:products); the master reaction RHEA:33711 is undirected. This participant is CHEBI:17359 with
+        coefficient 1. Rhea cites PMID:17660282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:33711 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:33712
+      snippet: 4-sulfomuconolactone + H2O => maleylacetate + sulfite + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33712 declares side 33711_R as its products
+        (rh:products); the master reaction RHEA:33711 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:17660282 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.92
+      snippet: EC:3.1.1.92 > GO:4-sulfomuconolactone hydrolase activity ; GO:0102998
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102998 is itself a record
+        in this KB.
+  - subject: prot_A6XIG7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SLMH_AGRRD is an exemplar enzyme with EC 3.1.1.92 activity.
+    evidence:
+    - reference: EC:3.1.1.92
+      snippet: DR   A6XIG7, SLMH_AGRRD ;  A6XIG6, SLMH_HYDIT ;
+      notes: ExPASy ENZYME entry EC 3.1.1.92 cross-references UniProtKB:A6XIG7 (SLMH_AGRRD) as a protein
+        with this activity.
+  - subject: prot_A6XIG6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SLMH_HYDIT is an exemplar enzyme with EC 3.1.1.92 activity.
+    evidence:
+    - reference: EC:3.1.1.92
+      snippet: DR   A6XIG7, SLMH_AGRRD ;  A6XIG6, SLMH_HYDIT ;
+      notes: ExPASy ENZYME entry EC 3.1.1.92 cross-references UniProtKB:A6XIG6 (SLMH_HYDIT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

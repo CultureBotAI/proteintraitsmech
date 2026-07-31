@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.270
     mapping_source: rhea2ec
@@ -32,4 +32,206 @@ definitions:
       Catalyses the reaction: a lyso-ornithine lipid + a fatty acyl-[ACP] = an N(2)-[(3R)-3-(acyloxy)acyl]-L-ornithine lipid + holo-[ACP]
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a lyso-ornithine lipid + a fatty acyl-[ACP] = an N(2)-[(3R)-3-(acyloxy)acyl]-L-ornithin…
+  description: Substrate-to-product chemistry of RHEA:55760, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:55761 (rh:substrates → 55760_L, rh:products → 55760_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a lyso-ornithine lipid + a fatty acyl-[ACP] = an N(2)-[(3R)-3-(acyloxy)acyl]…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:55760
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a lyso-ornithine lipid + a fatty acyl-[ACP] = an N(2)-[(3R)-3-(acyloxy)acyl]-L-ornithine
+      lipid + holo-[ACP]'
+  - node_id: sub1
+    label: a lyso-ornithine lipid
+    node_type: CHEMICAL
+    grounding: CHEBI:138482
+    description: Formula C8H15N2O4R.
+  - node_id: sub2
+    label: a fatty acyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14125
+    description: Rhea compound GENERIC:14125.
+  - node_id: sub2_rp1
+    label: O-(S-fatty acylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14125 (a fatty acyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138651
+  - node_id: prd1
+    label: an N(2)-[(3R)-3-(acyloxy)acyl]-L-ornithine lipid
+    node_type: CHEMICAL
+    grounding: CHEBI:140663
+    description: Formula C9H14N2O5R2.
+  - node_id: prd2
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: prd2_rp1
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: lyso-ornithine lipid O-acyltransferase
+    grounding: EC:2.3.1.270
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q2YQS9
+    node_type: PROTEIN
+    label: OLSA_BRUA2
+    grounding: UniProtKB:Q2YQS9
+  - node_id: prot_Q9HW50
+    node_type: PROTEIN
+    label: OLSA_PSEAE
+    grounding: UniProtKB:Q9HW50
+  - node_id: prot_Q7APG1
+    node_type: PROTEIN
+    label: OLSA_RHIME
+    grounding: UniProtKB:Q7APG1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a lyso-ornithine lipid is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:55761
+      snippet: a lyso-ornithine lipid + a fatty acyl-[ACP] => an N(2)-[(3R)-3-(acyloxy)acyl]-L-ornithine
+        lipid + holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:55761 declares side 55760_L as its substrates
+        (rh:substrates); the master reaction RHEA:55760 is undirected. This participant is CHEBI:138482
+        with coefficient 1. Rhea cites PMID:21535098, PMID:17921310, PMID:12139618 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a fatty acyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:55761
+      snippet: a lyso-ornithine lipid + a fatty acyl-[ACP] => an N(2)-[(3R)-3-(acyloxy)acyl]-L-ornithine
+        lipid + holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:55761 declares side 55760_L as its substrates
+        (rh:substrates); the master reaction RHEA:55760 is undirected. This participant is GENERIC:14125
+        with coefficient 1. Rhea cites PMID:21535098, PMID:17921310, PMID:12139618 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: O-(S-fatty acylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of a
+      fatty acyl-[ACP].
+    evidence:
+    - reference: RHEA:55760
+      snippet: O-(S-fatty acylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:14125 (a fatty acyl-[ACP]) declares rh:reactivePart = O-(S-fatty acylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:138651), formula C15H24N3O9PSR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N(2)-[(3R)-3-(acyloxy)acyl]-L-ornithine lipid is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55761
+      snippet: a lyso-ornithine lipid + a fatty acyl-[ACP] => an N(2)-[(3R)-3-(acyloxy)acyl]-L-ornithine
+        lipid + holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:55761 declares side 55760_R as its products
+        (rh:products); the master reaction RHEA:55760 is undirected. This participant is CHEBI:140663
+        with coefficient 1. Rhea cites PMID:21535098, PMID:17921310, PMID:12139618 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: holo-[ACP] is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:55761
+      snippet: a lyso-ornithine lipid + a fatty acyl-[ACP] => an N(2)-[(3R)-3-(acyloxy)acyl]-L-ornithine
+        lipid + holo-[ACP]
+      notes: Rhea's left-to-right directional reaction RHEA:55761 declares side 55760_R as its products
+        (rh:products); the master reaction RHEA:55760 is undirected. This participant is GENERIC:9685
+        with coefficient 1. Rhea cites PMID:21535098, PMID:17921310, PMID:12139618 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:55760
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479), formula C14H25N3O8PS.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.270; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:55760
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.270"/>
+      notes: The rh:ec triple on RHEA:55760 in rhea.rdf. EC 2.3.1.270 is itself a record in this KB.
+  - subject: prot_Q2YQS9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLSA_BRUA2 is an exemplar enzyme carrying EC 2.3.1.270, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.270
+      snippet: DR   Q2YQS9, OLSA_BRUA2 ;  Q9HW50, OLSA_PSEAE ;  Q7APG1, OLSA_RHIME ;
+      notes: ExPASy ENZYME entry EC 2.3.1.270 cross-references UniProtKB:Q2YQS9 (OLSA_BRUA2) as a protein
+        with this activity.
+    - reference: RHEA:55760
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.270"/>
+      notes: Rhea assigns RHEA:55760 to EC 2.3.1.270, and EC 2.3.1.270 maps to exactly one Rhea master
+        reaction (RHEA:55760), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9HW50
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLSA_PSEAE is an exemplar enzyme carrying EC 2.3.1.270, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.270
+      snippet: DR   Q2YQS9, OLSA_BRUA2 ;  Q9HW50, OLSA_PSEAE ;  Q7APG1, OLSA_RHIME ;
+      notes: ExPASy ENZYME entry EC 2.3.1.270 cross-references UniProtKB:Q9HW50 (OLSA_PSEAE) as a protein
+        with this activity.
+    - reference: RHEA:55760
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.270"/>
+      notes: Rhea assigns RHEA:55760 to EC 2.3.1.270, and EC 2.3.1.270 maps to exactly one Rhea master
+        reaction (RHEA:55760), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q7APG1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLSA_RHIME is an exemplar enzyme carrying EC 2.3.1.270, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.270
+      snippet: DR   Q2YQS9, OLSA_BRUA2 ;  Q9HW50, OLSA_PSEAE ;  Q7APG1, OLSA_RHIME ;
+      notes: ExPASy ENZYME entry EC 2.3.1.270 cross-references UniProtKB:Q7APG1 (OLSA_RHIME) as a protein
+        with this activity.
+    - reference: RHEA:55760
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.270"/>
+      notes: Rhea assigns RHEA:55760 to EC 2.3.1.270, and EC 2.3.1.270 maps to exactly one Rhea master
+        reaction (RHEA:55760), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

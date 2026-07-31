@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -41,4 +41,132 @@ definitions:
       Catalyses: D-alanine + acetyl-CoA = (2R)-2-amino-4-oxopentanoate + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-amino-4-oxopentanoate thiolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.263. EC 2.3.1.263 maps to
+    exactly one curated Rhea reaction (RHEA:51436), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-alanine
+    + acetyl-CoA = (2R)-2-amino-4-oxopentanoate + CoA". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-amino-4-oxopentanoate thiolase
+    grounding: EC:2.3.1.263
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57416
+    description: Formula C3H7NO2.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: (2R)-2-amino-4-oxopentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:134102
+    description: Formula C5H9NO3.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_E3PY98
+    node_type: PROTEIN
+    label: ORTA_ACESD
+    grounding: UniProtKB:E3PY98
+  - node_id: prot_C1FW06
+    node_type: PROTEIN
+    label: ORTA_UNKP
+    grounding: UniProtKB:C1FW06
+  - node_id: prot_E3PY97
+    node_type: PROTEIN
+    label: ORTB_ACESD
+    grounding: UniProtKB:E3PY97
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-alanine is a substrate consumed by RHEA:51436 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51437
+      snippet: D-alanine + acetyl-CoA => (2R)-2-amino-4-oxopentanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:51437 declares side 51436_L as its substrates
+        (rh:substrates); the master reaction RHEA:51436 is undirected. This participant is CHEBI:57416
+        with coefficient 1. Rhea cites PMID:4407783, PMID:19251850 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:51436 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51437
+      snippet: D-alanine + acetyl-CoA => (2R)-2-amino-4-oxopentanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:51437 declares side 51436_L as its substrates
+        (rh:substrates); the master reaction RHEA:51436 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:4407783, PMID:19251850 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2R)-2-amino-4-oxopentanoate is a product released by RHEA:51436 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51437
+      snippet: D-alanine + acetyl-CoA => (2R)-2-amino-4-oxopentanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:51437 declares side 51436_R as its products
+        (rh:products); the master reaction RHEA:51436 is undirected. This participant is CHEBI:134102
+        with coefficient 1. Rhea cites PMID:4407783, PMID:19251850 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:51436 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51437
+      snippet: D-alanine + acetyl-CoA => (2R)-2-amino-4-oxopentanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:51437 declares side 51436_R as its products
+        (rh:products); the master reaction RHEA:51436 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:4407783, PMID:19251850 for this reaction.
+  - subject: prot_E3PY98
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ORTA_ACESD is an exemplar enzyme with EC 2.3.1.263 activity.
+    evidence:
+    - reference: EC:2.3.1.263
+      snippet: DR   E3PY98, ORTA_ACESD ;  C1FW06, ORTA_UNKP  ;  E3PY97, ORTB_ACESD ;
+      notes: ExPASy ENZYME entry EC 2.3.1.263 cross-references UniProtKB:E3PY98 (ORTA_ACESD) as a protein
+        with this activity.
+  - subject: prot_C1FW06
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ORTA_UNKP is an exemplar enzyme with EC 2.3.1.263 activity.
+    evidence:
+    - reference: EC:2.3.1.263
+      snippet: DR   E3PY98, ORTA_ACESD ;  C1FW06, ORTA_UNKP  ;  E3PY97, ORTB_ACESD ;
+      notes: ExPASy ENZYME entry EC 2.3.1.263 cross-references UniProtKB:C1FW06 (ORTA_UNKP) as a protein
+        with this activity.
+  - subject: prot_E3PY97
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ORTB_ACESD is an exemplar enzyme with EC 2.3.1.263 activity.
+    evidence:
+    - reference: EC:2.3.1.263
+      snippet: DR   E3PY98, ORTA_ACESD ;  C1FW06, ORTA_UNKP  ;  E3PY97, ORTB_ACESD ;
+      notes: ExPASy ENZYME entry EC 2.3.1.263 cross-references UniProtKB:E3PY97 (ORTB_ACESD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

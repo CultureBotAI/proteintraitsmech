@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -45,4 +45,149 @@ definitions:
       Catalyses: tetradecanoyl-CoA + acetyl-CoA = 3-oxohexadecanoyl-CoA + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetyl-CoA C-myristoyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.155. EC 2.3.1.155 maps to
+    exactly one curated Rhea reaction (RHEA:18161), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "tetradecanoyl-CoA
+    + acetyl-CoA = 3-oxohexadecanoyl-CoA + CoA". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acetyl-CoA C-myristoyltransferase
+    grounding: EC:2.3.1.155
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: tetradecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57385
+    description: Formula C35H58N7O17P3S.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: 3-oxohexadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57349
+    description: Formula C37H60N7O18P3S.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acetyl-CoA C-myristoyltransferase activity
+    grounding: GO:0050633
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P07857
+    node_type: PROTEIN
+    label: SCP2_BOVIN
+    grounding: UniProtKB:P07857
+  - node_id: prot_Q07598
+    node_type: PROTEIN
+    label: SCP2_CHICK
+    grounding: UniProtKB:Q07598
+  - node_id: prot_P22307
+    node_type: PROTEIN
+    label: SCP2_HUMAN
+    grounding: UniProtKB:P22307
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tetradecanoyl-CoA is a substrate consumed by RHEA:18161 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18162
+      snippet: tetradecanoyl-CoA + acetyl-CoA => 3-oxohexadecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18162 declares side 18161_L as its substrates
+        (rh:substrates); the master reaction RHEA:18161 is undirected. This participant is CHEBI:57385
+        with coefficient 1. Rhea cites PMID:8163672, PMID:7958339, PMID:8651282, PMID:1550553 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:18161 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18162
+      snippet: tetradecanoyl-CoA + acetyl-CoA => 3-oxohexadecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18162 declares side 18161_L as its substrates
+        (rh:substrates); the master reaction RHEA:18161 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:8163672, PMID:7958339, PMID:8651282, PMID:1550553 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-oxohexadecanoyl-CoA is a product released by RHEA:18161 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18162
+      snippet: tetradecanoyl-CoA + acetyl-CoA => 3-oxohexadecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18162 declares side 18161_R as its products
+        (rh:products); the master reaction RHEA:18161 is undirected. This participant is CHEBI:57349 with
+        coefficient 1. Rhea cites PMID:8163672, PMID:7958339, PMID:8651282, PMID:1550553 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:18161 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18162
+      snippet: tetradecanoyl-CoA + acetyl-CoA => 3-oxohexadecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:18162 declares side 18161_R as its products
+        (rh:products); the master reaction RHEA:18161 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:8163672, PMID:7958339, PMID:8651282, PMID:1550553 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.155
+      snippet: EC:2.3.1.155 > GO:acetyl-CoA C-myristoyltransferase activity ; GO:0050633
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050633 is itself a record
+        in this KB.
+  - subject: prot_P07857
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SCP2_BOVIN is an exemplar enzyme with EC 2.3.1.155 activity.
+    evidence:
+    - reference: EC:2.3.1.155
+      snippet: DR   P07857, SCP2_BOVIN ;  Q07598, SCP2_CHICK ;  P22307, SCP2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 2.3.1.155 cross-references UniProtKB:P07857 (SCP2_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q07598
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SCP2_CHICK is an exemplar enzyme with EC 2.3.1.155 activity.
+    evidence:
+    - reference: EC:2.3.1.155
+      snippet: DR   P07857, SCP2_BOVIN ;  Q07598, SCP2_CHICK ;  P22307, SCP2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 2.3.1.155 cross-references UniProtKB:Q07598 (SCP2_CHICK) as a protein
+        with this activity.
+  - subject: prot_P22307
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SCP2_HUMAN is an exemplar enzyme with EC 2.3.1.155 activity.
+    evidence:
+    - reference: EC:2.3.1.155
+      snippet: DR   P07857, SCP2_BOVIN ;  Q07598, SCP2_CHICK ;  P22307, SCP2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 2.3.1.155 cross-references UniProtKB:P22307 (SCP2_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

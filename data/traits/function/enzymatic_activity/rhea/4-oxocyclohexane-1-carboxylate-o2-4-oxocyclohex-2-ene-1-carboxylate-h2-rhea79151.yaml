@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.17.3.5
     mapping_source: rhea2ec
@@ -30,4 +30,128 @@ definitions:
       Catalyses the reaction: 4-oxocyclohexane-1-carboxylate + O2 = 4-oxocyclohex-2-ene-1-carboxylate + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-oxocyclohexane-1-carboxylate + O2 = 4-oxocyclohex-2-ene-1-carboxylate
+    + H2O2
+  description: Substrate-to-product chemistry of RHEA:79151, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79152 (rh:substrates → 79151_L, rh:products → 79151_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4-oxocyclohexane-1-carboxylate + O2 = 4-oxocyclohex-2-ene-1-carboxylate + H2…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79151
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4-oxocyclohexane-1-carboxylate + O2 = 4-oxocyclohex-2-ene-1-carboxylate + H2O2'
+  - node_id: sub1
+    label: 4-oxocyclohexane-1-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:15777
+    description: Formula C7H9O3.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 4-oxocyclohex-2-ene-1-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:229702
+    description: Formula C7H7O3.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 4-oxocyclohexanecarboxylate 2-dehydrogenase
+    grounding: EC:1.17.3.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P0DXE2
+    node_type: PROTEIN
+    label: CHCC1_SINCY
+    grounding: UniProtKB:P0DXE2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-oxocyclohexane-1-carboxylate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79152
+      snippet: 4-oxocyclohexane-1-carboxylate + O2 => 4-oxocyclohex-2-ene-1-carboxylate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:79152 declares side 79151_L as its substrates
+        (rh:substrates); the master reaction RHEA:79151 is undirected. This participant is CHEBI:15777
+        with coefficient 1. Rhea cites PMID:34583900, PMID:8281951 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79152
+      snippet: 4-oxocyclohexane-1-carboxylate + O2 => 4-oxocyclohex-2-ene-1-carboxylate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:79152 declares side 79151_L as its substrates
+        (rh:substrates); the master reaction RHEA:79151 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:34583900, PMID:8281951 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-oxocyclohex-2-ene-1-carboxylate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:79152
+      snippet: 4-oxocyclohexane-1-carboxylate + O2 => 4-oxocyclohex-2-ene-1-carboxylate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:79152 declares side 79151_R as its products
+        (rh:products); the master reaction RHEA:79151 is undirected. This participant is CHEBI:229702
+        with coefficient 1. Rhea cites PMID:34583900, PMID:8281951 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79152
+      snippet: 4-oxocyclohexane-1-carboxylate + O2 => 4-oxocyclohex-2-ene-1-carboxylate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:79152 declares side 79151_R as its products
+        (rh:products); the master reaction RHEA:79151 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:34583900, PMID:8281951 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.17.3.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:79151
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.17.3.5"/>
+      notes: The rh:ec triple on RHEA:79151 in rhea.rdf. EC 1.17.3.5 is itself a record in this KB.
+  - subject: prot_P0DXE2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHCC1_SINCY is an exemplar enzyme carrying EC 1.17.3.5, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.17.3.5
+      snippet: DR   P0DXE2, CHCC1_SINCY;
+      notes: ExPASy ENZYME entry EC 1.17.3.5 cross-references UniProtKB:P0DXE2 (CHCC1_SINCY) as a protein
+        with this activity.
+    - reference: RHEA:79151
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.17.3.5"/>
+      notes: Rhea assigns RHEA:79151 to EC 1.17.3.5, and EC 1.17.3.5 maps to exactly one Rhea master reaction
+        (RHEA:79151), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

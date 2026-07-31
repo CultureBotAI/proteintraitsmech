@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.2.-
 synonyms:
@@ -33,4 +33,73 @@ definitions:
       Catalyses: dTDP-4-dehydro-6-deoxy-alpha-D-glucose = dTDP-3-dehydro-6-deoxy-alpha-D- galactose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of TDP-4-oxo-6-deoxy-alpha-D-glucose-3,4-oxoisomerase (dTDP-3-dehydro-6-
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.2.3. EC 5.3.2.3 maps to exactly
+    one curated Rhea reaction (RHEA:31835), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dTDP-4-dehydro-6-deoxy-alpha-D-glucose
+    = dTDP-3-dehydro-6-deoxy-alpha-D- galactose". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: TDP-4-oxo-6-deoxy-alpha-D-glucose-3,4-oxoisomerase (dTDP-3-dehydro-6-
+    grounding: EC:5.3.2.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dTDP-4-dehydro-6-deoxy-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:57649
+    description: Formula C16H22N2O15P2.
+  - node_id: prd1
+    label: dTDP-3-dehydro-6-deoxy-alpha-D-galactose
+    node_type: CHEMICAL
+    grounding: CHEBI:63303
+    description: Formula C16H22N2O15P2.
+  - node_id: prot_Q6T1W8
+    node_type: PROTEIN
+    label: FDTA_ANETH
+    grounding: UniProtKB:Q6T1W8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTDP-4-dehydro-6-deoxy-alpha-D-glucose is a substrate consumed by RHEA:31835 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31836
+      snippet: dTDP-4-dehydro-6-deoxy-alpha-D-glucose => dTDP-3-dehydro-6-deoxy-alpha-D-galactose
+      notes: Rhea's left-to-right directional reaction RHEA:31836 declares side 31835_L as its substrates
+        (rh:substrates); the master reaction RHEA:31835 is undirected. This participant is CHEBI:57649
+        with coefficient 1. Rhea cites PMID:17459872, PMID:12740380 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dTDP-3-dehydro-6-deoxy-alpha-D-galactose is a product released by RHEA:31835 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31836
+      snippet: dTDP-4-dehydro-6-deoxy-alpha-D-glucose => dTDP-3-dehydro-6-deoxy-alpha-D-galactose
+      notes: Rhea's left-to-right directional reaction RHEA:31836 declares side 31835_R as its products
+        (rh:products); the master reaction RHEA:31835 is undirected. This participant is CHEBI:63303 with
+        coefficient 1. Rhea cites PMID:17459872, PMID:12740380 for this reaction.
+  - subject: prot_Q6T1W8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FDTA_ANETH is an exemplar enzyme with EC 5.3.2.3 activity.
+    evidence:
+    - reference: EC:5.3.2.3
+      snippet: DR   Q6T1W8, FDTA_ANETH ;
+      notes: ExPASy ENZYME entry EC 5.3.2.3 cross-references UniProtKB:Q6T1W8 (FDTA_ANETH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

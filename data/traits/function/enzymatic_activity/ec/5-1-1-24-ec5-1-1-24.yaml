@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.1.-
 mapped_xrefs:
@@ -36,4 +36,99 @@ definitions:
       Catalyses: L-histidine = D-histidine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of histidine racemase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.1.24. EC 5.1.1.24 maps to exactly
+    one curated Rhea reaction (RHEA:59188), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-histidine =
+    D-histidine". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: histidine racemase
+    grounding: EC:5.1.1.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57595
+    description: Formula C6H9N3O2.
+  - node_id: prd1
+    label: D-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:142967
+    description: Formula C6H9N3O2.
+  - node_id: prot_A0A0H3JU78
+    node_type: PROTEIN
+    label: CNTK_STAAM
+    grounding: UniProtKB:A0A0H3JU78
+  - node_id: prot_D5RFM4
+    node_type: PROTEIN
+    label: HISR_FUSN2
+    grounding: UniProtKB:D5RFM4
+  - node_id: prot_Q8RI81
+    node_type: PROTEIN
+    label: HISR_FUSNN
+    grounding: UniProtKB:Q8RI81
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-histidine is a substrate consumed by RHEA:59188 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59189
+      snippet: L-histidine => D-histidine
+      notes: Rhea's left-to-right directional reaction RHEA:59189 declares side 59188_L as its substrates
+        (rh:substrates); the master reaction RHEA:59188 is undirected. This participant is CHEBI:57595
+        with coefficient 1. Rhea cites PMID:27230378, PMID:24419381, PMID:39424140 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-histidine is a product released by RHEA:59188 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59189
+      snippet: L-histidine => D-histidine
+      notes: Rhea's left-to-right directional reaction RHEA:59189 declares side 59188_R as its products
+        (rh:products); the master reaction RHEA:59188 is undirected. This participant is CHEBI:142967
+        with coefficient 1. Rhea cites PMID:27230378, PMID:24419381, PMID:39424140 for this reaction.
+  - subject: prot_A0A0H3JU78
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CNTK_STAAM is an exemplar enzyme with EC 5.1.1.24 activity.
+    evidence:
+    - reference: EC:5.1.1.24
+      snippet: DR   A0A0H3JU78, CNTK_STAAM ;  D5RFM4, HISR_FUSN2 ;  Q8RI81, HISR_FUSNN ;
+      notes: ExPASy ENZYME entry EC 5.1.1.24 cross-references UniProtKB:A0A0H3JU78 (CNTK_STAAM) as a protein
+        with this activity.
+  - subject: prot_D5RFM4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HISR_FUSN2 is an exemplar enzyme with EC 5.1.1.24 activity.
+    evidence:
+    - reference: EC:5.1.1.24
+      snippet: DR   A0A0H3JU78, CNTK_STAAM ;  D5RFM4, HISR_FUSN2 ;  Q8RI81, HISR_FUSNN ;
+      notes: ExPASy ENZYME entry EC 5.1.1.24 cross-references UniProtKB:D5RFM4 (HISR_FUSN2) as a protein
+        with this activity.
+  - subject: prot_Q8RI81
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HISR_FUSNN is an exemplar enzyme with EC 5.1.1.24 activity.
+    evidence:
+    - reference: EC:5.1.1.24
+      snippet: DR   A0A0H3JU78, CNTK_STAAM ;  D5RFM4, HISR_FUSN2 ;  Q8RI81, HISR_FUSNN ;
+      notes: ExPASy ENZYME entry EC 5.1.1.24 cross-references UniProtKB:Q8RI81 (HISR_FUSNN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

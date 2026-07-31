@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.1.-
 synonyms:
@@ -43,4 +43,116 @@ definitions:
       Catalyses: L-rhamnopyranose = L-rhamnulose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-rhamnose isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.1.14. EC 5.3.1.14 maps to exactly
+    one curated Rhea reaction (RHEA:23160), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-rhamnopyranose
+    = L-rhamnulose". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-rhamnose isomerase
+    grounding: EC:5.3.1.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-rhamnopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:62346
+    description: Formula C6H12O5.
+  - node_id: prd1
+    label: L-rhamnulose
+    node_type: CHEMICAL
+    grounding: CHEBI:17897
+    description: Formula C6H12O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-rhamnose isomerase activity
+    grounding: GO:0008740
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5WL39
+    node_type: PROTEIN
+    label: RHAAB_SHOC1
+    grounding: UniProtKB:Q5WL39
+  - node_id: prot_O05264
+    node_type: PROTEIN
+    label: RHAA_BACSU
+    grounding: UniProtKB:O05264
+  - node_id: prot_Q8A1A2
+    node_type: PROTEIN
+    label: RHAA_BACTN
+    grounding: UniProtKB:Q8A1A2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-rhamnopyranose is a substrate consumed by RHEA:23160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23161
+      snippet: L-rhamnopyranose => L-rhamnulose
+      notes: Rhea's left-to-right directional reaction RHEA:23161 declares side 23160_L as its substrates
+        (rh:substrates); the master reaction RHEA:23160 is undirected. This participant is CHEBI:62346
+        with coefficient 1. Rhea cites PMID:17141803, PMID:20977999, PMID:38430263, PMID:20088877 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-rhamnulose is a product released by RHEA:23160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23161
+      snippet: L-rhamnopyranose => L-rhamnulose
+      notes: Rhea's left-to-right directional reaction RHEA:23161 declares side 23160_R as its products
+        (rh:products); the master reaction RHEA:23160 is undirected. This participant is CHEBI:17897 with
+        coefficient 1. Rhea cites PMID:17141803, PMID:20977999, PMID:38430263, PMID:20088877 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.1.14
+      snippet: EC:5.3.1.14 > GO:L-rhamnose isomerase activity ; GO:0008740
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008740 is itself a record
+        in this KB.
+  - subject: prot_Q5WL39
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHAAB_SHOC1 is an exemplar enzyme with EC 5.3.1.14 activity.
+    evidence:
+    - reference: EC:5.3.1.14
+      snippet: DR   Q5WL39, RHAAB_SHOC1;  O05264, RHAA_BACSU ;  Q8A1A2, RHAA_BACTN ;
+      notes: ExPASy ENZYME entry EC 5.3.1.14 cross-references UniProtKB:Q5WL39 (RHAAB_SHOC1) as a protein
+        with this activity.
+  - subject: prot_O05264
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHAA_BACSU is an exemplar enzyme with EC 5.3.1.14 activity.
+    evidence:
+    - reference: EC:5.3.1.14
+      snippet: DR   Q5WL39, RHAAB_SHOC1;  O05264, RHAA_BACSU ;  Q8A1A2, RHAA_BACTN ;
+      notes: ExPASy ENZYME entry EC 5.3.1.14 cross-references UniProtKB:O05264 (RHAA_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q8A1A2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RHAA_BACTN is an exemplar enzyme with EC 5.3.1.14 activity.
+    evidence:
+    - reference: EC:5.3.1.14
+      snippet: DR   Q5WL39, RHAAB_SHOC1;  O05264, RHAA_BACSU ;  Q8A1A2, RHAA_BACTN ;
+      notes: ExPASy ENZYME entry EC 5.3.1.14 cross-references UniProtKB:Q8A1A2 (RHAA_BACTN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

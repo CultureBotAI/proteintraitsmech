@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.2.-
 mapped_xrefs:
@@ -23,4 +23,106 @@ definitions:
       Catalyses: hydroxylamine + L-asparagine + H(+) = beta-L-aspartylhydroxamate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aspartyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.2.7. EC 2.3.2.7 maps to exactly
+    one curated Rhea reaction (RHEA:11252), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "hydroxylamine
+    + L-asparagine + H(+) = beta-L-aspartylhydroxamate + NH4(+)". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aspartyltransferase
+    grounding: EC:2.3.2.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: hydroxylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:15429
+    description: Formula H3NO.
+  - node_id: sub2
+    label: L-asparagine
+    node_type: CHEMICAL
+    grounding: CHEBI:58048
+    description: Formula C4H8N2O3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: beta-L-aspartylhydroxamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58902
+    description: Formula C4H8N2O4.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hydroxylamine is a substrate consumed by RHEA:11252 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11253
+      snippet: hydroxylamine + L-asparagine + H(+) => beta-L-aspartylhydroxamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11253 declares side 11252_L as its substrates
+        (rh:substrates); the master reaction RHEA:11252 is undirected. This participant is CHEBI:15429
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-asparagine is a substrate consumed by RHEA:11252 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11253
+      snippet: hydroxylamine + L-asparagine + H(+) => beta-L-aspartylhydroxamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11253 declares side 11252_L as its substrates
+        (rh:substrates); the master reaction RHEA:11252 is undirected. This participant is CHEBI:58048
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:11252 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11253
+      snippet: hydroxylamine + L-asparagine + H(+) => beta-L-aspartylhydroxamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11253 declares side 11252_L as its substrates
+        (rh:substrates); the master reaction RHEA:11252 is undirected. This participant is CHEBI:15378
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-L-aspartylhydroxamate is a product released by RHEA:11252 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11253
+      snippet: hydroxylamine + L-asparagine + H(+) => beta-L-aspartylhydroxamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11253 declares side 11252_R as its products
+        (rh:products); the master reaction RHEA:11252 is undirected. This participant is CHEBI:58902 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:11252 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11253
+      snippet: hydroxylamine + L-asparagine + H(+) => beta-L-aspartylhydroxamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11253 declares side 11252_R as its products
+        (rh:products); the master reaction RHEA:11252 is undirected. This participant is CHEBI:28938 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -51,4 +51,162 @@ definitions:
       Catalyses: an acylcholine + H2O = a carboxylate + choline + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cholinesterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.8. EC 3.1.1.8 maps to exactly
+    one curated Rhea reaction (RHEA:21964), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an acylcholine
+    + H2O = a carboxylate + choline + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cholinesterase
+    grounding: EC:3.1.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an acylcholine
+    node_type: CHEMICAL
+    grounding: CHEBI:35287
+    description: Formula C6H13NO2R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: prd2
+    label: choline
+    node_type: CHEMICAL
+    grounding: CHEBI:15354
+    description: Formula C5H14NO.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cholinesterase activity
+    grounding: GO:0004104
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q95000
+    node_type: PROTEIN
+    label: CHLE1_BRALA
+    grounding: UniProtKB:Q95000
+  - node_id: prot_Q95001
+    node_type: PROTEIN
+    label: CHLE2_BRALA
+    grounding: UniProtKB:Q95001
+  - node_id: prot_P32749
+    node_type: PROTEIN
+    label: CHLE_BOVIN
+    grounding: UniProtKB:P32749
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an acylcholine is a substrate consumed by RHEA:21964 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21965
+      snippet: an acylcholine + H2O => a carboxylate + choline + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21965 declares side 21964_L as its substrates
+        (rh:substrates); the master reaction RHEA:21964 is undirected. This participant is CHEBI:35287
+        with coefficient 1. Rhea cites PMID:19452557, PMID:19368529 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:21964 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21965
+      snippet: an acylcholine + H2O => a carboxylate + choline + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21965 declares side 21964_L as its substrates
+        (rh:substrates); the master reaction RHEA:21964 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19452557, PMID:19368529 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a carboxylate is a product released by RHEA:21964 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21965
+      snippet: an acylcholine + H2O => a carboxylate + choline + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21965 declares side 21964_R as its products
+        (rh:products); the master reaction RHEA:21964 is undirected. This participant is CHEBI:29067 with
+        coefficient 1. Rhea cites PMID:19452557, PMID:19368529 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: choline is a product released by RHEA:21964 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21965
+      snippet: an acylcholine + H2O => a carboxylate + choline + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21965 declares side 21964_R as its products
+        (rh:products); the master reaction RHEA:21964 is undirected. This participant is CHEBI:15354 with
+        coefficient 1. Rhea cites PMID:19452557, PMID:19368529 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:21964 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21965
+      snippet: an acylcholine + H2O => a carboxylate + choline + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21965 declares side 21964_R as its products
+        (rh:products); the master reaction RHEA:21964 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19452557, PMID:19368529 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.8
+      snippet: EC:3.1.1.8 > GO:cholinesterase activity ; GO:0004104
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004104 is itself a record
+        in this KB.
+  - subject: prot_Q95000
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHLE1_BRALA is an exemplar enzyme with EC 3.1.1.8 activity.
+    evidence:
+    - reference: EC:3.1.1.8
+      snippet: DR   Q95000, CHLE1_BRALA;  Q95001, CHLE2_BRALA;  P32749, CHLE_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.1.1.8 cross-references UniProtKB:Q95000 (CHLE1_BRALA) as a protein
+        with this activity.
+  - subject: prot_Q95001
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHLE2_BRALA is an exemplar enzyme with EC 3.1.1.8 activity.
+    evidence:
+    - reference: EC:3.1.1.8
+      snippet: DR   Q95000, CHLE1_BRALA;  Q95001, CHLE2_BRALA;  P32749, CHLE_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.1.1.8 cross-references UniProtKB:Q95001 (CHLE2_BRALA) as a protein
+        with this activity.
+  - subject: prot_P32749
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHLE_BOVIN is an exemplar enzyme with EC 3.1.1.8 activity.
+    evidence:
+    - reference: EC:3.1.1.8
+      snippet: DR   Q95000, CHLE1_BRALA;  Q95001, CHLE2_BRALA;  P32749, CHLE_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.1.1.8 cross-references UniProtKB:P32749 (CHLE_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.1.-
 synonyms:
@@ -47,4 +47,148 @@ definitions:
       Catalyses: oxaloacetate + phosphate = phosphoenolpyruvate + hydrogencarbonate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphoenolpyruvate carboxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.1.31. EC 4.1.1.31 maps to exactly
+    one curated Rhea reaction (RHEA:28370), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "oxaloacetate
+    + phosphate = phosphoenolpyruvate + hydrogencarbonate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoenolpyruvate carboxylase
+    grounding: EC:4.1.1.31
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: oxaloacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+    description: Formula C4H2O5.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: phosphoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+    description: Formula C3H2O6P.
+  - node_id: prd2
+    label: hydrogencarbonate
+    node_type: CHEMICAL
+    grounding: CHEBI:17544
+    description: Formula CHO3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphoenolpyruvate carboxylase activity
+    grounding: GO:0008964
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9MAH0
+    node_type: PROTEIN
+    label: CAPP1_ARATH
+    grounding: UniProtKB:Q9MAH0
+  - node_id: prot_P81831
+    node_type: PROTEIN
+    label: CAPP1_CHLRE
+    grounding: UniProtKB:P81831
+  - node_id: prot_Q01647
+    node_type: PROTEIN
+    label: CAPP1_FLAPR
+    grounding: UniProtKB:Q01647
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: oxaloacetate is a substrate consumed by RHEA:28370 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28371
+      snippet: oxaloacetate + phosphate => phosphoenolpyruvate + hydrogencarbonate
+      notes: Rhea's left-to-right directional reaction RHEA:28371 declares side 28370_L as its substrates
+        (rh:substrates); the master reaction RHEA:28370 is undirected. This participant is CHEBI:16452
+        with coefficient 1. Rhea cites PMID:10806233, PMID:7490260, PMID:9522466, PMID:7498490 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:28370 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28371
+      snippet: oxaloacetate + phosphate => phosphoenolpyruvate + hydrogencarbonate
+      notes: Rhea's left-to-right directional reaction RHEA:28371 declares side 28370_L as its substrates
+        (rh:substrates); the master reaction RHEA:28370 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:10806233, PMID:7490260, PMID:9522466, PMID:7498490 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: phosphoenolpyruvate is a product released by RHEA:28370 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28371
+      snippet: oxaloacetate + phosphate => phosphoenolpyruvate + hydrogencarbonate
+      notes: Rhea's left-to-right directional reaction RHEA:28371 declares side 28370_R as its products
+        (rh:products); the master reaction RHEA:28370 is undirected. This participant is CHEBI:58702 with
+        coefficient 1. Rhea cites PMID:10806233, PMID:7490260, PMID:9522466, PMID:7498490 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: hydrogencarbonate is a product released by RHEA:28370 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28371
+      snippet: oxaloacetate + phosphate => phosphoenolpyruvate + hydrogencarbonate
+      notes: Rhea's left-to-right directional reaction RHEA:28371 declares side 28370_R as its products
+        (rh:products); the master reaction RHEA:28370 is undirected. This participant is CHEBI:17544 with
+        coefficient 1. Rhea cites PMID:10806233, PMID:7490260, PMID:9522466, PMID:7498490 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.1.31
+      snippet: EC:4.1.1.31 > GO:phosphoenolpyruvate carboxylase activity ; GO:0008964
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008964 is itself a record
+        in this KB.
+  - subject: prot_Q9MAH0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAPP1_ARATH is an exemplar enzyme with EC 4.1.1.31 activity.
+    evidence:
+    - reference: EC:4.1.1.31
+      snippet: DR   Q9MAH0, CAPP1_ARATH;  P81831, CAPP1_CHLRE;  Q01647, CAPP1_FLAPR;
+      notes: ExPASy ENZYME entry EC 4.1.1.31 cross-references UniProtKB:Q9MAH0 (CAPP1_ARATH) as a protein
+        with this activity.
+  - subject: prot_P81831
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAPP1_CHLRE is an exemplar enzyme with EC 4.1.1.31 activity.
+    evidence:
+    - reference: EC:4.1.1.31
+      snippet: DR   Q9MAH0, CAPP1_ARATH;  P81831, CAPP1_CHLRE;  Q01647, CAPP1_FLAPR;
+      notes: ExPASy ENZYME entry EC 4.1.1.31 cross-references UniProtKB:P81831 (CAPP1_CHLRE) as a protein
+        with this activity.
+  - subject: prot_Q01647
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAPP1_FLAPR is an exemplar enzyme with EC 4.1.1.31 activity.
+    evidence:
+    - reference: EC:4.1.1.31
+      snippet: DR   Q9MAH0, CAPP1_ARATH;  P81831, CAPP1_CHLRE;  Q01647, CAPP1_FLAPR;
+      notes: ExPASy ENZYME entry EC 4.1.1.31 cross-references UniProtKB:Q01647 (CAPP1_FLAPR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

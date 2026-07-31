@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -35,4 +35,130 @@ definitions:
       Catalyses: (cis-prenyl)(n)-diphosphate + isopentenyl diphosphate = (cis- prenyl)(n+1)-diphosphate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of rubber cis-polyprenylcistransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.20. EC 2.5.1.20 maps to exactly
+    one curated Rhea reaction (RHEA:18801), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(cis-prenyl)(n)-diphosphate
+    + isopentenyl diphosphate = (cis- prenyl)(n+1)-diphosphate + diphosphate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: rubber cis-polyprenylcistransferase
+    grounding: EC:2.5.1.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (cis-prenyl)(n)-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:83374
+    xrefs:
+    - RHEA-COMP:10564
+    description: Rhea compound POLYMER:10564. Formula HO7P2(C5H8)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: isopentenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:128769
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: (cis-prenyl)(n+1)-diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:83374
+    xrefs:
+    - RHEA-COMP:14484
+    description: Rhea compound POLYMER:14484. Formula HO7P2(C5H8)<i><sub>n+1</sub></i>.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: rubber cis-polyprenylcistransferase activity
+    grounding: GO:0050267
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8W3U4
+    node_type: PROTEIN
+    label: HRT2_HEVBR
+    grounding: UniProtKB:Q8W3U4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (cis-prenyl)(n)-diphosphate is a substrate consumed by RHEA:18801 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18802
+      snippet: (cis-prenyl)(n)-diphosphate + isopentenyl diphosphate => (cis-prenyl)(n+1)-diphosphate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:18802 declares side 18801_L as its substrates
+        (rh:substrates); the master reaction RHEA:18801 is undirected. This participant is POLYMER:10564
+        with coefficient 1. Rhea cites PMID:16742418, PMID:14622254 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: isopentenyl diphosphate is a substrate consumed by RHEA:18801 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18802
+      snippet: (cis-prenyl)(n)-diphosphate + isopentenyl diphosphate => (cis-prenyl)(n+1)-diphosphate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:18802 declares side 18801_L as its substrates
+        (rh:substrates); the master reaction RHEA:18801 is undirected. This participant is CHEBI:128769
+        with coefficient 1. Rhea cites PMID:16742418, PMID:14622254 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (cis-prenyl)(n+1)-diphosphate is a product released by RHEA:18801 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18802
+      snippet: (cis-prenyl)(n)-diphosphate + isopentenyl diphosphate => (cis-prenyl)(n+1)-diphosphate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:18802 declares side 18801_R as its products
+        (rh:products); the master reaction RHEA:18801 is undirected. This participant is POLYMER:14484
+        with coefficient 1. Rhea cites PMID:16742418, PMID:14622254 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:18801 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18802
+      snippet: (cis-prenyl)(n)-diphosphate + isopentenyl diphosphate => (cis-prenyl)(n+1)-diphosphate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:18802 declares side 18801_R as its products
+        (rh:products); the master reaction RHEA:18801 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:16742418, PMID:14622254 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.20
+      snippet: EC:2.5.1.20 > GO:rubber cis-polyprenylcistransferase activity ; GO:0050267
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050267 is itself a record
+        in this KB.
+  - subject: prot_Q8W3U4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HRT2_HEVBR is an exemplar enzyme with EC 2.5.1.20 activity.
+    evidence:
+    - reference: EC:2.5.1.20
+      snippet: DR   Q8W3U4, HRT2_HEVBR ;
+      notes: ExPASy ENZYME entry EC 2.5.1.20 cross-references UniProtKB:Q8W3U4 (HRT2_HEVBR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

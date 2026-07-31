@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 mapped_xrefs:
@@ -30,4 +30,120 @@ definitions:
       Catalyses: loganate + S-adenosyl-L-methionine = loganin + S-adenosyl-L-homocysteine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of loganate O-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.50. EC 2.1.1.50 maps to exactly
+    one curated Rhea reaction (RHEA:12508), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "loganate + S-adenosyl-L-methionine
+    = loganin + S-adenosyl-L-homocysteine". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: loganate O-methyltransferase
+    grounding: EC:2.1.1.50
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: loganate
+    node_type: CHEMICAL
+    grounding: CHEBI:18052
+    description: Formula C16H23O10.
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: loganin
+    node_type: CHEMICAL
+    grounding: CHEBI:15771
+    description: Formula C17H26O10.
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: loganate O-methyltransferase activity
+    grounding: GO:0030749
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B2KPR3
+    node_type: PROTEIN
+    label: LAMT_CATRO
+    grounding: UniProtKB:B2KPR3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: loganate is a substrate consumed by RHEA:12508 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12509
+      snippet: loganate + S-adenosyl-L-methionine => loganin + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:12509 declares side 12508_L as its substrates
+        (rh:substrates); the master reaction RHEA:12508 is undirected. This participant is CHEBI:18052
+        with coefficient 1. Rhea cites PMID:4698228 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:12508 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12509
+      snippet: loganate + S-adenosyl-L-methionine => loganin + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:12509 declares side 12508_L as its substrates
+        (rh:substrates); the master reaction RHEA:12508 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:4698228 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: loganin is a product released by RHEA:12508 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12509
+      snippet: loganate + S-adenosyl-L-methionine => loganin + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:12509 declares side 12508_R as its products
+        (rh:products); the master reaction RHEA:12508 is undirected. This participant is CHEBI:15771 with
+        coefficient 1. Rhea cites PMID:4698228 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:12508 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12509
+      snippet: loganate + S-adenosyl-L-methionine => loganin + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:12509 declares side 12508_R as its products
+        (rh:products); the master reaction RHEA:12508 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:4698228 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.1.1.50
+      snippet: EC:2.1.1.50 > GO:loganate O-methyltransferase activity ; GO:0030749
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0030749 is itself a record
+        in this KB.
+  - subject: prot_B2KPR3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LAMT_CATRO is an exemplar enzyme with EC 2.1.1.50 activity.
+    evidence:
+    - reference: EC:2.1.1.50
+      snippet: DR   B2KPR3, LAMT_CATRO ;
+      notes: ExPASy ENZYME entry EC 2.1.1.50 cross-references UniProtKB:B2KPR3 (LAMT_CATRO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

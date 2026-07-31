@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:6.1.1.10
     mapping_source: rhea2ec
@@ -38,4 +38,251 @@ definitions:
       Catalyses the reaction: tRNA(Met) + L-methionine + ATP = L-methionyl-tRNA(Met) + AMP + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA(Met) + L-methionine + ATP = L-methionyl-tRNA(Met) + AMP + diphosphate
+  description: Substrate-to-product chemistry of RHEA:13481, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:13482 (rh:substrates → 13481_L, rh:products → 13481_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tRNA(Met) + L-methionine + ATP = L-methionyl-tRNA(Met) + AMP + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:13481
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tRNA(Met) + L-methionine + ATP = L-methionyl-tRNA(Met) + AMP + diphosphate'
+  - node_id: sub1
+    label: tRNA(Met)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9667
+    description: Rhea compound GENERIC:9667.
+  - node_id: sub1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9667 (tRNA(Met));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+    description: Formula C5H11NO2S.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-methionyl-tRNA(Met)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9698
+    description: Rhea compound GENERIC:9698.
+  - node_id: prd1_rp1
+    label: 3'-(L-methionyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9698 (L-methionyl-tRNA(Met));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78530
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: methionine-tRNA ligase activity
+    grounding: GO:0004825
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: methionine--tRNA ligase
+    grounding: EC:6.1.1.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A8ZQ66
+    node_type: PROTEIN
+    label: SYM1_ACAM1
+    grounding: UniProtKB:A8ZQ66
+  - node_id: prot_A8MG12
+    node_type: PROTEIN
+    label: SYM1_ALKOO
+    grounding: UniProtKB:A8MG12
+  - node_id: prot_A0RKM3
+    node_type: PROTEIN
+    label: SYM1_BACAH
+    grounding: UniProtKB:A0RKM3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Met) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13482
+      snippet: tRNA(Met) + L-methionine + ATP => L-methionyl-tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13482 declares side 13481_L as its substrates
+        (rh:substrates); the master reaction RHEA:13481 is undirected. This participant is GENERIC:9667
+        with coefficient 1. Rhea cites PMID:8895587, PMID:1409632, PMID:3312199, PMID:10966471 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Met).
+    evidence:
+    - reference: RHEA:13481
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9667 (tRNA(Met)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-methionine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13482
+      snippet: tRNA(Met) + L-methionine + ATP => L-methionyl-tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13482 declares side 13481_L as its substrates
+        (rh:substrates); the master reaction RHEA:13481 is undirected. This participant is CHEBI:57844
+        with coefficient 1. Rhea cites PMID:8895587, PMID:1409632, PMID:3312199, PMID:10966471 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13482
+      snippet: tRNA(Met) + L-methionine + ATP => L-methionyl-tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13482 declares side 13481_L as its substrates
+        (rh:substrates); the master reaction RHEA:13481 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:8895587, PMID:1409632, PMID:3312199, PMID:10966471 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-methionyl-tRNA(Met) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13482
+      snippet: tRNA(Met) + L-methionine + ATP => L-methionyl-tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13482 declares side 13481_R as its products
+        (rh:products); the master reaction RHEA:13481 is undirected. This participant is GENERIC:9698
+        with coefficient 1. Rhea cites PMID:8895587, PMID:1409632, PMID:3312199, PMID:10966471 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-methionyl)adenylyl group is the reactive part of L-methionyl-tRNA(Met).
+    evidence:
+    - reference: RHEA:13481
+      snippet: 3'-(L-methionyl)adenylyl group
+      notes: Rhea compound GENERIC:9698 (L-methionyl-tRNA(Met)) declares rh:reactivePart = 3'-(L-methionyl)adenylyl
+        group (CHEBI:78530), formula C15H22N6O7PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13482
+      snippet: tRNA(Met) + L-methionine + ATP => L-methionyl-tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13482 declares side 13481_R as its products
+        (rh:products); the master reaction RHEA:13481 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:8895587, PMID:1409632, PMID:3312199, PMID:10966471 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13482
+      snippet: tRNA(Met) + L-methionine + ATP => L-methionyl-tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13482 declares side 13481_R as its products
+        (rh:products); the master reaction RHEA:13481 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:8895587, PMID:1409632, PMID:3312199, PMID:10966471 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:13481
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004825"/>
+      notes: The rdfs:seeAlso triple on RHEA:13481 in rhea.rdf. GO term GO:0004825 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 6.1.1.10; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:13481
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.10"/>
+      notes: The rh:ec triple on RHEA:13481 in rhea.rdf. EC 6.1.1.10 is itself a record in this KB.
+  - subject: prot_A8ZQ66
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYM1_ACAM1 is an exemplar enzyme carrying EC 6.1.1.10, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.10
+      snippet: DR   A8ZQ66, SYM1_ACAM1 ;  A8MG12, SYM1_ALKOO ;  A0RKM3, SYM1_BACAH ;
+      notes: ExPASy ENZYME entry EC 6.1.1.10 cross-references UniProtKB:A8ZQ66 (SYM1_ACAM1) as a protein
+        with this activity.
+    - reference: RHEA:13481
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.10"/>
+      notes: Rhea assigns RHEA:13481 to EC 6.1.1.10, and EC 6.1.1.10 maps to exactly one Rhea master reaction
+        (RHEA:13481), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A8MG12
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYM1_ALKOO is an exemplar enzyme carrying EC 6.1.1.10, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.10
+      snippet: DR   A8ZQ66, SYM1_ACAM1 ;  A8MG12, SYM1_ALKOO ;  A0RKM3, SYM1_BACAH ;
+      notes: ExPASy ENZYME entry EC 6.1.1.10 cross-references UniProtKB:A8MG12 (SYM1_ALKOO) as a protein
+        with this activity.
+    - reference: RHEA:13481
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.10"/>
+      notes: Rhea assigns RHEA:13481 to EC 6.1.1.10, and EC 6.1.1.10 maps to exactly one Rhea master reaction
+        (RHEA:13481), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A0RKM3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYM1_BACAH is an exemplar enzyme carrying EC 6.1.1.10, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:6.1.1.10
+      snippet: DR   A8ZQ66, SYM1_ACAM1 ;  A8MG12, SYM1_ALKOO ;  A0RKM3, SYM1_BACAH ;
+      notes: ExPASy ENZYME entry EC 6.1.1.10 cross-references UniProtKB:A0RKM3 (SYM1_BACAH) as a protein
+        with this activity.
+    - reference: RHEA:13481
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.1.1.10"/>
+      notes: Rhea assigns RHEA:13481 to EC 6.1.1.10, and EC 6.1.1.10 maps to exactly one Rhea master reaction
+        (RHEA:13481), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

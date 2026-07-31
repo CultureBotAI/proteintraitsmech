@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.3.-
 mapped_xrefs:
@@ -38,4 +38,162 @@ definitions:
       Catalyses: acetyl phosphate + sulfite + H(+) = sulfoacetaldehyde + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sulfoacetaldehyde acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.3.15. EC 2.3.3.15 maps to exactly
+    one curated Rhea reaction (RHEA:24204), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "acetyl phosphate
+    + sulfite + H(+) = sulfoacetaldehyde + phosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sulfoacetaldehyde acetyltransferase
+    grounding: EC:2.3.3.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: acetyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:22191
+    description: Formula C2H3O5P.
+  - node_id: sub2
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: sulfoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58246
+    description: Formula C2H3O4S.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: sulfoacetaldehyde acetyltransferase activity
+    grounding: GO:0050487
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q84H41
+    node_type: PROTEIN
+    label: XSC_ALCXX
+    grounding: UniProtKB:Q84H41
+  - node_id: prot_Q84H44
+    node_type: PROTEIN
+    label: XSC_CASDE
+    grounding: UniProtKB:Q84H44
+  - node_id: prot_Q93PS3
+    node_type: PROTEIN
+    label: XSC_DESTI
+    grounding: UniProtKB:Q93PS3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acetyl phosphate is a substrate consumed by RHEA:24204 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24205
+      snippet: acetyl phosphate + sulfite + H(+) => sulfoacetaldehyde + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24205 declares side 24204_L as its substrates
+        (rh:substrates); the master reaction RHEA:24204 is undirected. This participant is CHEBI:22191
+        with coefficient 1. Rhea cites PMID:12358600 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sulfite is a substrate consumed by RHEA:24204 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24205
+      snippet: acetyl phosphate + sulfite + H(+) => sulfoacetaldehyde + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24205 declares side 24204_L as its substrates
+        (rh:substrates); the master reaction RHEA:24204 is undirected. This participant is CHEBI:17359
+        with coefficient 1. Rhea cites PMID:12358600 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:24204 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24205
+      snippet: acetyl phosphate + sulfite + H(+) => sulfoacetaldehyde + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24205 declares side 24204_L as its substrates
+        (rh:substrates); the master reaction RHEA:24204 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:12358600 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sulfoacetaldehyde is a product released by RHEA:24204 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24205
+      snippet: acetyl phosphate + sulfite + H(+) => sulfoacetaldehyde + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24205 declares side 24204_R as its products
+        (rh:products); the master reaction RHEA:24204 is undirected. This participant is CHEBI:58246 with
+        coefficient 1. Rhea cites PMID:12358600 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:24204 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24205
+      snippet: acetyl phosphate + sulfite + H(+) => sulfoacetaldehyde + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24205 declares side 24204_R as its products
+        (rh:products); the master reaction RHEA:24204 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:12358600 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.3.15
+      snippet: EC:2.3.3.15 > GO:sulfoacetaldehyde acetyltransferase activity ; GO:0050487
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050487 is itself a record
+        in this KB.
+  - subject: prot_Q84H41
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XSC_ALCXX is an exemplar enzyme with EC 2.3.3.15 activity.
+    evidence:
+    - reference: EC:2.3.3.15
+      snippet: DR   Q84H41, XSC_ALCXX  ;  Q84H44, XSC_CASDE  ;  Q93PS3, XSC_DESTI  ;
+      notes: ExPASy ENZYME entry EC 2.3.3.15 cross-references UniProtKB:Q84H41 (XSC_ALCXX) as a protein
+        with this activity.
+  - subject: prot_Q84H44
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XSC_CASDE is an exemplar enzyme with EC 2.3.3.15 activity.
+    evidence:
+    - reference: EC:2.3.3.15
+      snippet: DR   Q84H41, XSC_ALCXX  ;  Q84H44, XSC_CASDE  ;  Q93PS3, XSC_DESTI  ;
+      notes: ExPASy ENZYME entry EC 2.3.3.15 cross-references UniProtKB:Q84H44 (XSC_CASDE) as a protein
+        with this activity.
+  - subject: prot_Q93PS3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XSC_DESTI is an exemplar enzyme with EC 2.3.3.15 activity.
+    evidence:
+    - reference: EC:2.3.3.15
+      snippet: DR   Q84H41, XSC_ALCXX  ;  Q84H44, XSC_CASDE  ;  Q93PS3, XSC_DESTI  ;
+      notes: ExPASy ENZYME entry EC 2.3.3.15 cross-references UniProtKB:Q93PS3 (XSC_DESTI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

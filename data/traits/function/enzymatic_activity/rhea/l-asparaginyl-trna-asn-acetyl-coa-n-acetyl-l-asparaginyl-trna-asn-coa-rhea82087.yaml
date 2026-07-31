@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78515
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,125 @@ definitions:
       Catalyses the reaction: L-asparaginyl-tRNA(Asn) + acetyl-CoA = N-acetyl-L-asparaginyl-tRNA(Asn) + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-asparaginyl-tRNA(Asn) + acetyl-CoA = N-acetyl-L-asparaginyl-tRNA(Asn)
+    + CoA
+  description: Substrate-to-product chemistry of RHEA:82087, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:82088 (rh:substrates → 82087_L, rh:products → 82087_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-asparaginyl-tRNA(Asn) + acetyl-CoA = N-acetyl-L-asparaginyl-tRNA(Asn) + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:82087
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-asparaginyl-tRNA(Asn) + acetyl-CoA = N-acetyl-L-asparaginyl-tRNA(Asn) + CoA'
+  - node_id: sub1
+    label: L-asparaginyl-tRNA(Asn)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9674
+    description: Rhea compound GENERIC:9674.
+  - node_id: sub1_rp1
+    label: 3'-(L-asparaginyl)adenylyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9674 (L-asparaginyl-tRNA(Asn));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78515
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: N-acetyl-L-asparaginyl-tRNA(Asn)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:19810
+    description: Rhea compound GENERIC:19810.
+  - node_id: prd1_rp1
+    label: 3'-(N-acetyl-L-asparaginyl)adenylyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:19810 (N-acetyl-L-asparaginyl-tRNA(Asn));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:232075
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-asparaginyl-tRNA(Asn) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82088
+      snippet: L-asparaginyl-tRNA(Asn) + acetyl-CoA => N-acetyl-L-asparaginyl-tRNA(Asn) + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:82088 declares side 82087_L as its substrates
+        (rh:substrates); the master reaction RHEA:82087 is undirected. This participant is GENERIC:9674
+        with coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-asparaginyl)adenylyl group is the reactive part of L-asparaginyl-tRNA(Asn).
+    evidence:
+    - reference: RHEA:82087
+      snippet: 3'-(L-asparaginyl)adenylyl group
+      notes: Rhea compound GENERIC:9674 (L-asparaginyl-tRNA(Asn)) declares rh:reactivePart = 3'-(L-asparaginyl)adenylyl
+        group (CHEBI:78515), formula C14H18N7O8P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82088
+      snippet: L-asparaginyl-tRNA(Asn) + acetyl-CoA => N-acetyl-L-asparaginyl-tRNA(Asn) + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:82088 declares side 82087_L as its substrates
+        (rh:substrates); the master reaction RHEA:82087 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-acetyl-L-asparaginyl-tRNA(Asn) is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:82088
+      snippet: L-asparaginyl-tRNA(Asn) + acetyl-CoA => N-acetyl-L-asparaginyl-tRNA(Asn) + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:82088 declares side 82087_R as its products
+        (rh:products); the master reaction RHEA:82087 is undirected. This participant is GENERIC:19810
+        with coefficient 1. Rhea cites PMID:29777131 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(N-acetyl-L-asparaginyl)adenylyl residue is the reactive part of N-acetyl-L-asparaginyl-tRNA(Asn).
+    evidence:
+    - reference: RHEA:82087
+      snippet: 3'-(N-acetyl-L-asparaginyl)adenylyl residue
+      notes: Rhea compound GENERIC:19810 (N-acetyl-L-asparaginyl-tRNA(Asn)) declares rh:reactivePart =
+        3'-(N-acetyl-L-asparaginyl)adenylyl residue (CHEBI:232075), formula C16H20N7O9P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82088
+      snippet: L-asparaginyl-tRNA(Asn) + acetyl-CoA => N-acetyl-L-asparaginyl-tRNA(Asn) + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:82088 declares side 82087_R as its products
+        (rh:products); the master reaction RHEA:82087 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:29777131 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

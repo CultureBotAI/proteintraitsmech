@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:36257
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,90 @@ definitions:
       Catalyses the reaction: taurocholate + L-histidine = L-histidocholate + taurine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of taurocholate + L-histidine = L-histidocholate + taurine
+  description: Substrate-to-product chemistry of RHEA:79103, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79104 (rh:substrates → 79103_L, rh:products → 79103_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of taurocholate + L-histidine = L-histidocholate + taurine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79103
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: taurocholate + L-histidine = L-histidocholate + taurine'
+  - node_id: sub1
+    label: taurocholate
+    node_type: CHEMICAL
+    grounding: CHEBI:36257
+    description: Formula C26H44NO7S.
+  - node_id: sub2
+    label: L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57595
+    description: Formula C6H9N3O2.
+  - node_id: prd1
+    label: L-histidocholate
+    node_type: CHEMICAL
+    grounding: CHEBI:229712
+    description: Formula C30H46N3O6.
+  - node_id: prd2
+    label: taurine
+    node_type: CHEMICAL
+    grounding: CHEBI:507393
+    description: Formula C2H7NO3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: taurocholate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79104
+      snippet: taurocholate + L-histidine => L-histidocholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:79104 declares side 79103_L as its substrates
+        (rh:substrates); the master reaction RHEA:79103 is undirected. This participant is CHEBI:36257
+        with coefficient 1. Rhea cites PMID:38326608, PMID:38326609 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-histidine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79104
+      snippet: taurocholate + L-histidine => L-histidocholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:79104 declares side 79103_L as its substrates
+        (rh:substrates); the master reaction RHEA:79103 is undirected. This participant is CHEBI:57595
+        with coefficient 1. Rhea cites PMID:38326608, PMID:38326609 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-histidocholate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79104
+      snippet: taurocholate + L-histidine => L-histidocholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:79104 declares side 79103_R as its products
+        (rh:products); the master reaction RHEA:79103 is undirected. This participant is CHEBI:229712
+        with coefficient 1. Rhea cites PMID:38326608, PMID:38326609 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: taurine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79104
+      snippet: taurocholate + L-histidine => L-histidocholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:79104 declares side 79103_R as its products
+        (rh:products); the master reaction RHEA:79103 is undirected. This participant is CHEBI:507393
+        with coefficient 1. Rhea cites PMID:38326608, PMID:38326609 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:83069
     role: SUBSTRATE_OR_PRODUCT
@@ -33,4 +33,146 @@ definitions:
       Catalyses the reaction: a tRNA with a 3' CC end + ATP = a tRNA with a 3' CCA end + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a tRNA with a 3' CC end + ATP = a tRNA with a 3' CCA end + diphosphate
+  description: Substrate-to-product chemistry of RHEA:60012, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:60013 (rh:substrates → 60012_L, rh:products → 60012_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a tRNA with a 3' CC end + ATP = a tRNA with a 3' CCA end + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:60012
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a tRNA with a 3'' CC end + ATP = a tRNA with a 3'' CCA end + diphosphate'
+  - node_id: sub1
+    label: a tRNA with a 3' CC end
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15488
+    description: Rhea compound GENERIC:15488.
+  - node_id: sub1_rp1
+    label: tRNA 3'-terminal nucleotidyl-cytidyl-cytidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15488 (a tRNA with
+      a 3' CC end); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83069
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: a tRNA with a 3' CCA end
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10468
+    description: Rhea compound GENERIC:10468.
+  - node_id: prd1_rp1
+    label: tRNA 3'-terminal nucleotidyl-cytidyl-cytidyl-adenosine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10468 (a tRNA with
+      a 3' CCA end); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83071
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ATP:3'-cytidine-cytidine-tRNA adenylyltransferase activity
+    grounding: GO:0052929
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a tRNA with a 3' CC end is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60013
+      snippet: a tRNA with a 3' CC end + ATP => a tRNA with a 3' CCA end + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60013 declares side 60012_L as its substrates
+        (rh:substrates); the master reaction RHEA:60012 is undirected. This participant is GENERIC:15488
+        with coefficient 1. Rhea cites PMID:12370185, PMID:11701927, PMID:18952795, PMID:18523015 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: tRNA 3'-terminal nucleotidyl-cytidyl-cytidine residue is the reactive part of a tRNA
+      with a 3' CC end.
+    evidence:
+    - reference: RHEA:60012
+      snippet: tRNA 3'-terminal nucleotidyl-cytidyl-cytidine residue
+      notes: Rhea compound GENERIC:15488 (a tRNA with a 3' CC end) declares rh:reactivePart = tRNA 3'-terminal
+        nucleotidyl-cytidyl-cytidine residue (CHEBI:83069), formula C23H30N6O20P3R.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60013
+      snippet: a tRNA with a 3' CC end + ATP => a tRNA with a 3' CCA end + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60013 declares side 60012_L as its substrates
+        (rh:substrates); the master reaction RHEA:60012 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:12370185, PMID:11701927, PMID:18952795, PMID:18523015 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a tRNA with a 3' CCA end is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60013
+      snippet: a tRNA with a 3' CC end + ATP => a tRNA with a 3' CCA end + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60013 declares side 60012_R as its products
+        (rh:products); the master reaction RHEA:60012 is undirected. This participant is GENERIC:10468
+        with coefficient 1. Rhea cites PMID:12370185, PMID:11701927, PMID:18952795, PMID:18523015 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: tRNA 3'-terminal nucleotidyl-cytidyl-cytidyl-adenosine residue is the reactive part of
+      a tRNA with a 3' CCA end.
+    evidence:
+    - reference: RHEA:60012
+      snippet: tRNA 3'-terminal nucleotidyl-cytidyl-cytidyl-adenosine residue
+      notes: Rhea compound GENERIC:10468 (a tRNA with a 3' CCA end) declares rh:reactivePart = tRNA 3'-terminal
+        nucleotidyl-cytidyl-cytidyl-adenosine residue (CHEBI:83071), formula C33H41N11O26P4R.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60013
+      snippet: a tRNA with a 3' CC end + ATP => a tRNA with a 3' CCA end + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60013 declares side 60012_R as its products
+        (rh:products); the master reaction RHEA:60012 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:12370185, PMID:11701927, PMID:18952795, PMID:18523015 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:60012
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052929"/>
+      notes: The rdfs:seeAlso triple on RHEA:60012 in rhea.rdf. GO term GO:0052929 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

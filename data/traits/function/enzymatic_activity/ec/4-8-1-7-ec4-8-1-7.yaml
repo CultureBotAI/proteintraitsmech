@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.8.1.-
 synonyms:
@@ -31,4 +31,88 @@ definitions:
       Catalyses: (Z)-phenyl-N-(sulfonatooxy)methanimidothioate = benzyl thiocyanate + sulfate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phenyl-N-(sulfonatooxy)methanimidothioate sulfolyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.8.1.7. EC 4.8.1.7 maps to exactly
+    one curated Rhea reaction (RHEA:69312), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(Z)-phenyl-N-(sulfonatooxy)methanimidothioate
+    = benzyl thiocyanate + sulfate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phenyl-N-(sulfonatooxy)methanimidothioate sulfolyase
+    grounding: EC:4.8.1.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (Z)-phenyl-N-(sulfonatooxy)methanimidothioate
+    node_type: CHEMICAL
+    grounding: CHEBI:183061
+    description: Formula C8H7NO4S2.
+  - node_id: prd1
+    label: benzyl thiocyanate
+    node_type: CHEMICAL
+    grounding: CHEBI:16017
+    description: Formula C8H7NS.
+  - node_id: prd2
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  - node_id: prot_A1XLE2
+    node_type: PROTEIN
+    label: TFP_LEPSV
+    grounding: UniProtKB:A1XLE2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (Z)-phenyl-N-(sulfonatooxy)methanimidothioate is a substrate consumed by RHEA:69312 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:69313
+      snippet: (Z)-phenyl-N-(sulfonatooxy)methanimidothioate => benzyl thiocyanate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69313 declares side 69312_L as its substrates
+        (rh:substrates); the master reaction RHEA:69312 is undirected. This participant is CHEBI:183061
+        with coefficient 1. Rhea cites PMID:17139450 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: benzyl thiocyanate is a product released by RHEA:69312 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69313
+      snippet: (Z)-phenyl-N-(sulfonatooxy)methanimidothioate => benzyl thiocyanate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69313 declares side 69312_R as its products
+        (rh:products); the master reaction RHEA:69312 is undirected. This participant is CHEBI:16017 with
+        coefficient 1. Rhea cites PMID:17139450 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfate is a product released by RHEA:69312 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69313
+      snippet: (Z)-phenyl-N-(sulfonatooxy)methanimidothioate => benzyl thiocyanate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:69313 declares side 69312_R as its products
+        (rh:products); the master reaction RHEA:69312 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:17139450 for this reaction.
+  - subject: prot_A1XLE2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TFP_LEPSV is an exemplar enzyme with EC 4.8.1.7 activity.
+    evidence:
+    - reference: EC:4.8.1.7
+      snippet: DR   A1XLE2, TFP_LEPSV  ;
+      notes: ExPASy ENZYME entry EC 4.8.1.7 cross-references UniProtKB:A1XLE2 (TFP_LEPSV) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

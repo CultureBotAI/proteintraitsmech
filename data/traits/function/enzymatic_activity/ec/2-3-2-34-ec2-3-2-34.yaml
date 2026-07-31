@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.2.-
 synonyms:
@@ -41,4 +41,82 @@ definitions:
       Catalyses: [E1 NEDD8-activating enzyme]-S-[NEDD8 protein]-yl-L-cysteine + [E2 NEDD8- conjugating enzyme]-L-cysteine = [E1 NEDD8-activating enzyme]-L-cysteine + [E2 NEDD8-conjugating enzyme]-S-[NEDD8-protein]-yl-L-cysteine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of E2 NEDD8-conjugating enzyme
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.2.34. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "[E1 NEDD8-activating
+    enzyme]-S-[NEDD8 protein]-yl-L-cysteine + [E2 NEDD8- conjugating enzyme]-L-cysteine = [E1 NEDD8-activating
+    enzyme]-L-cysteine + [E2 NEDD8-conjugating enzyme]-S-[NEDD8-protein]-yl-L-cysteine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: E2 NEDD8-conjugating enzyme
+    grounding: EC:2.3.2.34
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: NEDD8 conjugating enzyme activity
+    grounding: GO:0061654
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9CY34
+    node_type: PROTEIN
+    label: UB2FA_MOUSE
+    grounding: UniProtKB:Q9CY34
+  - node_id: prot_Q3UWQ3
+    node_type: PROTEIN
+    label: UB2FB_MOUSE
+    grounding: UniProtKB:Q3UWQ3
+  - node_id: prot_A3KN22
+    node_type: PROTEIN
+    label: UBC12_BOVIN
+    grounding: UniProtKB:A3KN22
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.2.34
+      snippet: EC:2.3.2.34 > GO:NEDD8 conjugating enzyme activity ; GO:0061654
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0061654 is itself a record
+        in this KB.
+  - subject: prot_Q9CY34
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UB2FA_MOUSE is an exemplar enzyme with EC 2.3.2.34 activity.
+    evidence:
+    - reference: EC:2.3.2.34
+      snippet: DR   Q9CY34, UB2FA_MOUSE;  Q3UWQ3, UB2FB_MOUSE;  A3KN22, UBC12_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.3.2.34 cross-references UniProtKB:Q9CY34 (UB2FA_MOUSE) as a protein
+        with this activity.
+  - subject: prot_Q3UWQ3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UB2FB_MOUSE is an exemplar enzyme with EC 2.3.2.34 activity.
+    evidence:
+    - reference: EC:2.3.2.34
+      snippet: DR   Q9CY34, UB2FA_MOUSE;  Q3UWQ3, UB2FB_MOUSE;  A3KN22, UBC12_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.3.2.34 cross-references UniProtKB:Q3UWQ3 (UB2FB_MOUSE) as a protein
+        with this activity.
+  - subject: prot_A3KN22
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UBC12_BOVIN is an exemplar enzyme with EC 2.3.2.34 activity.
+    evidence:
+    - reference: EC:2.3.2.34
+      snippet: DR   Q9CY34, UB2FA_MOUSE;  Q3UWQ3, UB2FB_MOUSE;  A3KN22, UBC12_BOVIN;
+      notes: ExPASy ENZYME entry EC 2.3.2.34 cross-references UniProtKB:A3KN22 (UBC12_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

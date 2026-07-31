@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -36,4 +36,101 @@ definitions:
       Catalyses: (S)-2,3-epoxysqualene = (17Z)-protosta-17(20),24-dien-3beta-ol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protostadienol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.32. EC 5.4.99.32 maps to
+    exactly one curated Rhea reaction (RHEA:30987), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(S)-2,3-epoxysqualene
+    = (17Z)-protosta-17(20),24-dien-3beta-ol". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protostadienol synthase
+    grounding: EC:5.4.99.32
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (S)-2,3-epoxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:15441
+    description: Formula C30H50O.
+  - node_id: prd1
+    label: (17Z)-protosta-17(20),24-dien-3beta-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:62457
+    description: Formula C30H50O.
+  - node_id: prot_Q4WR16
+    node_type: PROTEIN
+    label: HELA_ASPFU
+    grounding: UniProtKB:Q4WR16
+  - node_id: prot_E4V6I8
+    node_type: PROTEIN
+    label: PDSA_ARTGP
+    grounding: UniProtKB:E4V6I8
+  - node_id: prot_A1CVK0
+    node_type: PROTEIN
+    label: PDSA_ASPF1
+    grounding: UniProtKB:A1CVK0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (S)-2,3-epoxysqualene is a substrate consumed by RHEA:30987 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30988
+      snippet: (S)-2,3-epoxysqualene => (17Z)-protosta-17(20),24-dien-3beta-ol
+      notes: Rhea's left-to-right directional reaction RHEA:30988 declares side 30987_L as its substrates
+        (rh:substrates); the master reaction RHEA:30987 is undirected. This participant is CHEBI:15441
+        with coefficient 1. Rhea cites PMID:19216560 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (17Z)-protosta-17(20),24-dien-3beta-ol is a product released by RHEA:30987 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:30988
+      snippet: (S)-2,3-epoxysqualene => (17Z)-protosta-17(20),24-dien-3beta-ol
+      notes: Rhea's left-to-right directional reaction RHEA:30988 declares side 30987_R as its products
+        (rh:products); the master reaction RHEA:30987 is undirected. This participant is CHEBI:62457 with
+        coefficient 1. Rhea cites PMID:19216560 for this reaction.
+  - subject: prot_Q4WR16
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HELA_ASPFU is an exemplar enzyme with EC 5.4.99.32 activity.
+    evidence:
+    - reference: EC:5.4.99.32
+      snippet: DR   Q4WR16, HELA_ASPFU ;  E4V6I8, PDSA_ARTGP ;  A1CVK0, PDSA_ASPF1 ;
+      notes: ExPASy ENZYME entry EC 5.4.99.32 cross-references UniProtKB:Q4WR16 (HELA_ASPFU) as a protein
+        with this activity.
+  - subject: prot_E4V6I8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDSA_ARTGP is an exemplar enzyme with EC 5.4.99.32 activity.
+    evidence:
+    - reference: EC:5.4.99.32
+      snippet: DR   Q4WR16, HELA_ASPFU ;  E4V6I8, PDSA_ARTGP ;  A1CVK0, PDSA_ASPF1 ;
+      notes: ExPASy ENZYME entry EC 5.4.99.32 cross-references UniProtKB:E4V6I8 (PDSA_ARTGP) as a protein
+        with this activity.
+  - subject: prot_A1CVK0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PDSA_ASPF1 is an exemplar enzyme with EC 5.4.99.32 activity.
+    evidence:
+    - reference: EC:5.4.99.32
+      snippet: DR   Q4WR16, HELA_ASPFU ;  E4V6I8, PDSA_ARTGP ;  A1CVK0, PDSA_ASPF1 ;
+      notes: ExPASy ENZYME entry EC 5.4.99.32 cross-references UniProtKB:A1CVK0 (PDSA_ASPF1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

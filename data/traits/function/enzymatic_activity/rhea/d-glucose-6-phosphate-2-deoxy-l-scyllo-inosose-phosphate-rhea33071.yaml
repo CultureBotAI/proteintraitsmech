@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.124
     mapping_source: rhea2ec
@@ -40,4 +40,152 @@ definitions:
       Catalyses the reaction: D-glucose 6-phosphate = 2-deoxy-L-scyllo-inosose + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-glucose 6-phosphate = 2-deoxy-L-scyllo-inosose + phosphate
+  description: Substrate-to-product chemistry of RHEA:33071, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33072 (rh:substrates → 33071_L, rh:products → 33071_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-glucose 6-phosphate = 2-deoxy-L-scyllo-inosose + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33071
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-glucose 6-phosphate = 2-deoxy-L-scyllo-inosose + phosphate'
+  - node_id: sub1
+    label: D-glucose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:61548
+    description: Formula C6H11O9P.
+  - node_id: prd1
+    label: 2-deoxy-L-scyllo-inosose
+    node_type: CHEMICAL
+    grounding: CHEBI:64796
+    description: Formula C6H10O5.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2-deoxy-scyllo-inosose synthase
+    grounding: EC:4.2.3.124
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q70KD0
+    node_type: PROTEIN
+    label: DOIS_MICEC
+    grounding: UniProtKB:Q70KD0
+  - node_id: prot_Q9S5E2
+    node_type: PROTEIN
+    label: DOIS_NIACI
+    grounding: UniProtKB:Q9S5E2
+  - node_id: prot_Q2MFP1
+    node_type: PROTEIN
+    label: DOIS_STREY
+    grounding: UniProtKB:Q2MFP1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-glucose 6-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33072
+      snippet: D-glucose 6-phosphate => 2-deoxy-L-scyllo-inosose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33072 declares side 33071_L as its substrates
+        (rh:substrates); the master reaction RHEA:33071 is undirected. This participant is CHEBI:61548
+        with coefficient 1. Rhea cites PMID:15788164, PMID:12224638, PMID:9207913, PMID:20530911 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-deoxy-L-scyllo-inosose is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33072
+      snippet: D-glucose 6-phosphate => 2-deoxy-L-scyllo-inosose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33072 declares side 33071_R as its products
+        (rh:products); the master reaction RHEA:33071 is undirected. This participant is CHEBI:64796 with
+        coefficient 1. Rhea cites PMID:15788164, PMID:12224638, PMID:9207913, PMID:20530911 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33072
+      snippet: D-glucose 6-phosphate => 2-deoxy-L-scyllo-inosose + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33072 declares side 33071_R as its products
+        (rh:products); the master reaction RHEA:33071 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:15788164, PMID:12224638, PMID:9207913, PMID:20530911 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.124; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:33071
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.124"/>
+      notes: The rh:ec triple on RHEA:33071 in rhea.rdf. EC 4.2.3.124 is itself a record in this KB.
+  - subject: prot_Q70KD0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DOIS_MICEC is an exemplar enzyme carrying EC 4.2.3.124, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.124
+      snippet: DR   Q70KD0, DOIS_MICEC ;  Q9S5E2, DOIS_NIACI ;  Q2MFP1, DOIS_STREY ;
+      notes: ExPASy ENZYME entry EC 4.2.3.124 cross-references UniProtKB:Q70KD0 (DOIS_MICEC) as a protein
+        with this activity.
+    - reference: RHEA:33071
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.124"/>
+      notes: Rhea assigns RHEA:33071 to EC 4.2.3.124, and EC 4.2.3.124 maps to exactly one Rhea master
+        reaction (RHEA:33071), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9S5E2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DOIS_NIACI is an exemplar enzyme carrying EC 4.2.3.124, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.124
+      snippet: DR   Q70KD0, DOIS_MICEC ;  Q9S5E2, DOIS_NIACI ;  Q2MFP1, DOIS_STREY ;
+      notes: ExPASy ENZYME entry EC 4.2.3.124 cross-references UniProtKB:Q9S5E2 (DOIS_NIACI) as a protein
+        with this activity.
+    - reference: RHEA:33071
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.124"/>
+      notes: Rhea assigns RHEA:33071 to EC 4.2.3.124, and EC 4.2.3.124 maps to exactly one Rhea master
+        reaction (RHEA:33071), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q2MFP1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DOIS_STREY is an exemplar enzyme carrying EC 4.2.3.124, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.124
+      snippet: DR   Q70KD0, DOIS_MICEC ;  Q9S5E2, DOIS_NIACI ;  Q2MFP1, DOIS_STREY ;
+      notes: ExPASy ENZYME entry EC 4.2.3.124 cross-references UniProtKB:Q2MFP1 (DOIS_STREY) as a protein
+        with this activity.
+    - reference: RHEA:33071
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.124"/>
+      notes: Rhea assigns RHEA:33071 to EC 4.2.3.124, and EC 4.2.3.124 maps to exactly one Rhea master
+        reaction (RHEA:33071), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

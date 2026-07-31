@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -34,4 +34,118 @@ definitions:
       Catalyses: peregrinol diphosphate = (13R)-9,13-epoxylabd-14-ene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 9,13-epoxylabda-14-ene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.189. EC 4.2.3.189 maps to
+    exactly one curated Rhea reaction (RHEA:54512), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "peregrinol
+    diphosphate = (13R)-9,13-epoxylabd-14-ene + diphosphate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 9,13-epoxylabda-14-ene synthase
+    grounding: EC:4.2.3.189
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: peregrinol diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:138232
+    description: Formula C20H35O8P2.
+  - node_id: prd1
+    label: (13R)-9,13-epoxylabd-14-ene
+    node_type: CHEMICAL
+    grounding: CHEBI:138233
+    description: Formula C20H34O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 9,13-epoxylabda-14-ene synthase activity
+    grounding: GO:0106239
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0A075FBG7
+    node_type: PROTEIN
+    label: ELS_MARVU
+    grounding: UniProtKB:A0A075FBG7
+  - node_id: prot_A0A2K9RFZ2
+    node_type: PROTEIN
+    label: TPS2_VITAC
+    grounding: UniProtKB:A0A2K9RFZ2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: peregrinol diphosphate is a substrate consumed by RHEA:54512 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54513
+      snippet: peregrinol diphosphate => (13R)-9,13-epoxylabd-14-ene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54513 declares side 54512_L as its substrates
+        (rh:substrates); the master reaction RHEA:54512 is undirected. This participant is CHEBI:138232
+        with coefficient 1. Rhea cites PMID:24990389, PMID:29315936 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (13R)-9,13-epoxylabd-14-ene is a product released by RHEA:54512 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54513
+      snippet: peregrinol diphosphate => (13R)-9,13-epoxylabd-14-ene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54513 declares side 54512_R as its products
+        (rh:products); the master reaction RHEA:54512 is undirected. This participant is CHEBI:138233
+        with coefficient 1. Rhea cites PMID:24990389, PMID:29315936 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:54512 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54513
+      snippet: peregrinol diphosphate => (13R)-9,13-epoxylabd-14-ene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54513 declares side 54512_R as its products
+        (rh:products); the master reaction RHEA:54512 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:24990389, PMID:29315936 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.189
+      snippet: EC:4.2.3.189 > GO:9,13-epoxylabda-14-ene synthase activity ; GO:0106239
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0106239 is itself a record
+        in this KB.
+  - subject: prot_A0A075FBG7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ELS_MARVU is an exemplar enzyme with EC 4.2.3.189 activity.
+    evidence:
+    - reference: EC:4.2.3.189
+      snippet: DR   A0A075FBG7, ELS_MARVU  ;  A0A2K9RFZ2, TPS2_VITAC ;
+      notes: ExPASy ENZYME entry EC 4.2.3.189 cross-references UniProtKB:A0A075FBG7 (ELS_MARVU) as a protein
+        with this activity.
+  - subject: prot_A0A2K9RFZ2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS2_VITAC is an exemplar enzyme with EC 4.2.3.189 activity.
+    evidence:
+    - reference: EC:4.2.3.189
+      snippet: DR   A0A075FBG7, ELS_MARVU  ;  A0A2K9RFZ2, TPS2_VITAC ;
+      notes: ExPASy ENZYME entry EC 4.2.3.189 cross-references UniProtKB:A0A2K9RFZ2 (TPS2_VITAC) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

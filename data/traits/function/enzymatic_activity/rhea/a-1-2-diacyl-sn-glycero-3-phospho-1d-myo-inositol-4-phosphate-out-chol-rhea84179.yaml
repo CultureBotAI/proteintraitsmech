@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58178
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,119 @@ definitions:
       Catalyses the reaction: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(out) + cholesterol(in) = a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(in) + cholesterol(out)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(out) +
+    cholesterol(in)…
+  description: 'Substrate-to-product chemistry of RHEA:84179, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:84180 (rh:substrates → 84179_L, rh:products → 84179_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(out) + chole…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:84179
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(out) + cholesterol(in)
+      = a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(in) + cholesterol(out)'
+  - node_id: sub1
+    label: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate) (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:58178
+    description: Formula C11H15O16P2R2.
+  - node_id: sub2
+    label: cholesterol (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:16113
+    description: Formula C27H46O.
+  - node_id: prd1
+    label: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate) (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:58178
+    description: Formula C11H15O16P2R2.
+  - node_id: prd2
+    label: cholesterol (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:16113
+    description: Formula C27H46O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphatidylinositol-4-phosphate-cholesterol exchange activity
+    grounding: GO:0160291
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate) is a substrate consumed
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84180
+      snippet: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(out) + cholesterol(in)
+        => a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(in) + cholesterol(out)
+      notes: Rhea's left-to-right directional reaction RHEA:84180 declares side 84179_L as its substrates
+        (rh:substrates); the master reaction RHEA:84179 is undirected. This participant is CHEBI:58178
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:29596003, PMID:28978670, PMID:24209621 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: cholesterol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84180
+      snippet: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(out) + cholesterol(in)
+        => a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(in) + cholesterol(out)
+      notes: Rhea's left-to-right directional reaction RHEA:84180 declares side 84179_L as its substrates
+        (rh:substrates); the master reaction RHEA:84179 is undirected. This participant is CHEBI:16113
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:29596003,
+        PMID:28978670, PMID:24209621 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate) is a product released
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84180
+      snippet: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(out) + cholesterol(in)
+        => a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(in) + cholesterol(out)
+      notes: Rhea's left-to-right directional reaction RHEA:84180 declares side 84179_R as its products
+        (rh:products); the master reaction RHEA:84179 is undirected. This participant is CHEBI:58178 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:29596003,
+        PMID:28978670, PMID:24209621 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: cholesterol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84180
+      snippet: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(out) + cholesterol(in)
+        => a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol 4-phosphate)(in) + cholesterol(out)
+      notes: Rhea's left-to-right directional reaction RHEA:84180 declares side 84179_R as its products
+        (rh:products); the master reaction RHEA:84179 is undirected. This participant is CHEBI:16113 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:29596003,
+        PMID:28978670, PMID:24209621 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:84179
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0160291"/>
+      notes: The rdfs:seeAlso triple on RHEA:84179 in rhea.rdf. GO term GO:0160291 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

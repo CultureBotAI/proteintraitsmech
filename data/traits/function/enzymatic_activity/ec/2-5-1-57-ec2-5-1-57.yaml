@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -51,4 +51,297 @@ definitions:
       Catalyses: an N-acyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O = an N-acylneuraminate 9-phosphate + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acylneuraminate-9-phosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.57. Rhea assigns 2 curated
+    reactions to EC 2.5.1.57. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "an N-acyl-D-mannosamine 6-phosphate + phosphoenolpyruvate
+    + H2O = an N-acylneuraminate 9-phosphate + phosphate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-acylneuraminate-9-phosphate synthase
+    grounding: EC:2.5.1.57
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an N-acyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O = an N-acyln…
+    grounding: RHEA:13421
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an N-acyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O = an N-acylneuraminate
+      9-phosphate + phosphate'
+  - node_id: rxn1_sub1
+    label: an N-acyl-D-mannosamine 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57666
+    description: Formula C7H11NO9PR.
+  - node_id: rxn1_sub2
+    label: phosphoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+    description: Formula C3H2O6P.
+  - node_id: rxn1_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: an N-acylneuraminate 9-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57537
+    description: Formula C10H14NO12PR.
+  - node_id: rxn1_prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of aldehydo-N-acetyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O = N-…
+    grounding: RHEA:80835
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: aldehydo-N-acetyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O
+      = N-acetylneuraminate 9-phosphate + phosphate'
+  - node_id: rxn2_sub1
+    label: aldehydo-N-acetyl-D-mannosamine 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58557
+    description: Formula C8H14NO9P.
+  - node_id: rxn2_sub2
+    label: phosphoenolpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:58702
+    description: Formula C3H2O6P.
+  - node_id: rxn2_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: N-acetylneuraminate 9-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:231734
+    description: Formula C11H17NO12P.
+  - node_id: rxn2_prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-acylneuraminate-9-phosphate synthase activity
+    grounding: GO:0047444
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9VG74
+    node_type: PROTEIN
+    label: SIAS_DROME
+    grounding: UniProtKB:Q9VG74
+  - node_id: prot_Q9NR45
+    node_type: PROTEIN
+    label: SIAS_HUMAN
+    grounding: UniProtKB:Q9NR45
+  - node_id: prot_Q99J77
+    node_type: PROTEIN
+    label: SIAS_MOUSE
+    grounding: UniProtKB:Q99J77
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:13421 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.57; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:13421
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.57"/>
+      notes: The rh:ec triple on RHEA:13421 in rhea.rdf assigns that reaction to EC 2.5.1.57.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: an N-acyl-D-mannosamine 6-phosphate is a substrate consumed by RHEA:13421 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:13422
+      snippet: an N-acyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O => an N-acylneuraminate
+        9-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13422 declares side 13421_L as its substrates
+        (rh:substrates); the master reaction RHEA:13421 is undirected. This participant is CHEBI:57666
+        with coefficient 1. Rhea cites PMID:10873658 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: phosphoenolpyruvate is a substrate consumed by RHEA:13421 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13422
+      snippet: an N-acyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O => an N-acylneuraminate
+        9-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13422 declares side 13421_L as its substrates
+        (rh:substrates); the master reaction RHEA:13421 is undirected. This participant is CHEBI:58702
+        with coefficient 1. Rhea cites PMID:10873658 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: H2O is a substrate consumed by RHEA:13421 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13422
+      snippet: an N-acyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O => an N-acylneuraminate
+        9-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13422 declares side 13421_L as its substrates
+        (rh:substrates); the master reaction RHEA:13421 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10873658 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: an N-acylneuraminate 9-phosphate is a product released by RHEA:13421 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:13422
+      snippet: an N-acyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O => an N-acylneuraminate
+        9-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13422 declares side 13421_R as its products
+        (rh:products); the master reaction RHEA:13421 is undirected. This participant is CHEBI:57537 with
+        coefficient 1. Rhea cites PMID:10873658 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: phosphate is a product released by RHEA:13421 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13422
+      snippet: an N-acyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O => an N-acylneuraminate
+        9-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13422 declares side 13421_R as its products
+        (rh:products); the master reaction RHEA:13421 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:10873658 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:80835 is one of the 2 curated reactions Rhea assigns to EC 2.5.1.57; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:80835
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.57"/>
+      notes: The rh:ec triple on RHEA:80835 in rhea.rdf assigns that reaction to EC 2.5.1.57.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: aldehydo-N-acetyl-D-mannosamine 6-phosphate is a substrate consumed by RHEA:80835 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:80836
+      snippet: aldehydo-N-acetyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O => N-acetylneuraminate
+        9-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:80836 declares side 80835_L as its substrates
+        (rh:substrates); the master reaction RHEA:80835 is undirected. This participant is CHEBI:58557
+        with coefficient 1. Rhea cites PMID:11886839, PMID:11886840, PMID:10873658, PMID:9254051 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: phosphoenolpyruvate is a substrate consumed by RHEA:80835 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80836
+      snippet: aldehydo-N-acetyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O => N-acetylneuraminate
+        9-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:80836 declares side 80835_L as its substrates
+        (rh:substrates); the master reaction RHEA:80835 is undirected. This participant is CHEBI:58702
+        with coefficient 1. Rhea cites PMID:11886839, PMID:11886840, PMID:10873658, PMID:9254051 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: H2O is a substrate consumed by RHEA:80835 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80836
+      snippet: aldehydo-N-acetyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O => N-acetylneuraminate
+        9-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:80836 declares side 80835_L as its substrates
+        (rh:substrates); the master reaction RHEA:80835 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11886839, PMID:11886840, PMID:10873658, PMID:9254051 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: N-acetylneuraminate 9-phosphate is a product released by RHEA:80835 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80836
+      snippet: aldehydo-N-acetyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O => N-acetylneuraminate
+        9-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:80836 declares side 80835_R as its products
+        (rh:products); the master reaction RHEA:80835 is undirected. This participant is CHEBI:231734
+        with coefficient 1. Rhea cites PMID:11886839, PMID:11886840, PMID:10873658, PMID:9254051 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: phosphate is a product released by RHEA:80835 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80836
+      snippet: aldehydo-N-acetyl-D-mannosamine 6-phosphate + phosphoenolpyruvate + H2O => N-acetylneuraminate
+        9-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:80836 declares side 80835_R as its products
+        (rh:products); the master reaction RHEA:80835 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:11886839, PMID:11886840, PMID:10873658, PMID:9254051 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.57
+      snippet: EC:2.5.1.57 > GO:N-acylneuraminate-9-phosphate synthase activity ; GO:0047444
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047444 is itself a record
+        in this KB.
+  - subject: prot_Q9VG74
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SIAS_DROME is an exemplar enzyme with EC 2.5.1.57 activity.
+    evidence:
+    - reference: EC:2.5.1.57
+      snippet: DR   Q9VG74, SIAS_DROME ;  Q9NR45, SIAS_HUMAN ;  Q99J77, SIAS_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.5.1.57 cross-references UniProtKB:Q9VG74 (SIAS_DROME) as a protein
+        with this activity.
+  - subject: prot_Q9NR45
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SIAS_HUMAN is an exemplar enzyme with EC 2.5.1.57 activity.
+    evidence:
+    - reference: EC:2.5.1.57
+      snippet: DR   Q9VG74, SIAS_DROME ;  Q9NR45, SIAS_HUMAN ;  Q99J77, SIAS_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.5.1.57 cross-references UniProtKB:Q9NR45 (SIAS_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q99J77
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SIAS_MOUSE is an exemplar enzyme with EC 2.5.1.57 activity.
+    evidence:
+    - reference: EC:2.5.1.57
+      snippet: DR   Q9VG74, SIAS_DROME ;  Q9NR45, SIAS_HUMAN ;  Q99J77, SIAS_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.5.1.57 cross-references UniProtKB:Q99J77 (SIAS_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

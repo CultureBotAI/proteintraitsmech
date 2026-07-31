@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.2.8
     mapping_source: rhea2ec
@@ -30,4 +30,152 @@ definitions:
       Catalyses the reaction: alpha-D-mannose 1-phosphate = D-mannose 6-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha-D-mannose 1-phosphate = D-mannose 6-phosphate
+  description: Substrate-to-product chemistry of RHEA:11140, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:11141 (rh:substrates → 11140_L, rh:products → 11140_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of alpha-D-mannose 1-phosphate = D-mannose 6-phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:11140
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: alpha-D-mannose 1-phosphate = D-mannose 6-phosphate'
+  - node_id: sub1
+    label: alpha-D-mannose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58409
+    description: Formula C6H11O9P.
+  - node_id: prd1
+    label: D-mannose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58735
+    description: Formula C6H11O9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphomannomutase activity
+    grounding: GO:0004615
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: phosphomannomutase
+    grounding: EC:5.4.2.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q02E40
+    node_type: PROTEIN
+    label: ALGC_PSEAB
+    grounding: UniProtKB:Q02E40
+  - node_id: prot_P26276
+    node_type: PROTEIN
+    label: ALGC_PSEAE
+    grounding: UniProtKB:P26276
+  - node_id: prot_Q88C93
+    node_type: PROTEIN
+    label: ALGC_PSEPK
+    grounding: UniProtKB:Q88C93
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: alpha-D-mannose 1-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11141
+      snippet: alpha-D-mannose 1-phosphate => D-mannose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11141 declares side 11140_L as its substrates
+        (rh:substrates); the master reaction RHEA:11140 is undirected. This participant is CHEBI:58409
+        with coefficient 1. Rhea cites PMID:8050998, PMID:9003801, PMID:15342576, PMID:16540464 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-mannose 6-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11141
+      snippet: alpha-D-mannose 1-phosphate => D-mannose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11141 declares side 11140_R as its products
+        (rh:products); the master reaction RHEA:11140 is undirected. This participant is CHEBI:58735 with
+        coefficient 1. Rhea cites PMID:8050998, PMID:9003801, PMID:15342576, PMID:16540464 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:11140
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004615"/>
+      notes: The rdfs:seeAlso triple on RHEA:11140 in rhea.rdf. GO term GO:0004615 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.2.8; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:11140
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.8"/>
+      notes: The rh:ec triple on RHEA:11140 in rhea.rdf. EC 5.4.2.8 is itself a record in this KB.
+  - subject: prot_Q02E40
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALGC_PSEAB is an exemplar enzyme carrying EC 5.4.2.8, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.2.8
+      snippet: DR   Q02E40, ALGC_PSEAB ;  P26276, ALGC_PSEAE ;  Q88C93, ALGC_PSEPK ;
+      notes: ExPASy ENZYME entry EC 5.4.2.8 cross-references UniProtKB:Q02E40 (ALGC_PSEAB) as a protein
+        with this activity.
+    - reference: RHEA:11140
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.8"/>
+      notes: Rhea assigns RHEA:11140 to EC 5.4.2.8, and EC 5.4.2.8 maps to exactly one Rhea master reaction
+        (RHEA:11140), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P26276
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALGC_PSEAE is an exemplar enzyme carrying EC 5.4.2.8, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.2.8
+      snippet: DR   Q02E40, ALGC_PSEAB ;  P26276, ALGC_PSEAE ;  Q88C93, ALGC_PSEPK ;
+      notes: ExPASy ENZYME entry EC 5.4.2.8 cross-references UniProtKB:P26276 (ALGC_PSEAE) as a protein
+        with this activity.
+    - reference: RHEA:11140
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.8"/>
+      notes: Rhea assigns RHEA:11140 to EC 5.4.2.8, and EC 5.4.2.8 maps to exactly one Rhea master reaction
+        (RHEA:11140), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q88C93
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALGC_PSEPK is an exemplar enzyme carrying EC 5.4.2.8, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.2.8
+      snippet: DR   Q02E40, ALGC_PSEAB ;  P26276, ALGC_PSEAE ;  Q88C93, ALGC_PSEPK ;
+      notes: ExPASy ENZYME entry EC 5.4.2.8 cross-references UniProtKB:Q88C93 (ALGC_PSEPK) as a protein
+        with this activity.
+    - reference: RHEA:11140
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.2.8"/>
+      notes: Rhea assigns RHEA:11140 to EC 5.4.2.8, and EC 5.4.2.8 maps to exactly one Rhea master reaction
+        (RHEA:11140), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

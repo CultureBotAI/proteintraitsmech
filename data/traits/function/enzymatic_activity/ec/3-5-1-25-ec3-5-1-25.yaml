@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 mapped_xrefs:
@@ -38,4 +38,150 @@ definitions:
       Catalyses: N-acetyl-D-glucosamine 6-phosphate + H2O = D-glucosamine 6-phosphate + acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-acetylglucosamine-6-phosphate deacetylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.25. EC 3.5.1.25 maps to exactly
+    one curated Rhea reaction (RHEA:22936), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-acetyl-D-glucosamine
+    6-phosphate + H2O = D-glucosamine 6-phosphate + acetate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: N-acetylglucosamine-6-phosphate deacetylase
+    grounding: EC:3.5.1.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-acetyl-D-glucosamine 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57513
+    description: Formula C8H14NO9P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-glucosamine 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58725
+    description: Formula C6H13NO8P.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-acetylglucosamine-6-phosphate deacetylase activity
+    grounding: GO:0008448
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0KYQ5
+    node_type: PROTEIN
+    label: AGAA2_SHESA
+    grounding: UniProtKB:A0KYQ5
+  - node_id: prot_O34450
+    node_type: PROTEIN
+    label: NAGA_BACSU
+    grounding: UniProtKB:O34450
+  - node_id: prot_A7MBC0
+    node_type: PROTEIN
+    label: NAGA_BOVIN
+    grounding: UniProtKB:A7MBC0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-acetyl-D-glucosamine 6-phosphate is a substrate consumed by RHEA:22936 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:22937
+      snippet: N-acetyl-D-glucosamine 6-phosphate + H2O => D-glucosamine 6-phosphate + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:22937 declares side 22936_L as its substrates
+        (rh:substrates); the master reaction RHEA:22936 is undirected. This participant is CHEBI:57513
+        with coefficient 1. Rhea cites PMID:17567047, PMID:8987551, PMID:4861885, PMID:9143339 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:22936 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22937
+      snippet: N-acetyl-D-glucosamine 6-phosphate + H2O => D-glucosamine 6-phosphate + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:22937 declares side 22936_L as its substrates
+        (rh:substrates); the master reaction RHEA:22936 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17567047, PMID:8987551, PMID:4861885, PMID:9143339 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-glucosamine 6-phosphate is a product released by RHEA:22936 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22937
+      snippet: N-acetyl-D-glucosamine 6-phosphate + H2O => D-glucosamine 6-phosphate + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:22937 declares side 22936_R as its products
+        (rh:products); the master reaction RHEA:22936 is undirected. This participant is CHEBI:58725 with
+        coefficient 1. Rhea cites PMID:17567047, PMID:8987551, PMID:4861885, PMID:9143339 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:22936 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22937
+      snippet: N-acetyl-D-glucosamine 6-phosphate + H2O => D-glucosamine 6-phosphate + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:22937 declares side 22936_R as its products
+        (rh:products); the master reaction RHEA:22936 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:17567047, PMID:8987551, PMID:4861885, PMID:9143339 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.25
+      snippet: EC:3.5.1.25 > GO:N-acetylglucosamine-6-phosphate deacetylase activity ; GO:0008448
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008448 is itself a record
+        in this KB.
+  - subject: prot_A0KYQ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGAA2_SHESA is an exemplar enzyme with EC 3.5.1.25 activity.
+    evidence:
+    - reference: EC:3.5.1.25
+      snippet: DR   A0KYQ5, AGAA2_SHESA;  O34450, NAGA_BACSU ;  A7MBC0, NAGA_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.25 cross-references UniProtKB:A0KYQ5 (AGAA2_SHESA) as a protein
+        with this activity.
+  - subject: prot_O34450
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NAGA_BACSU is an exemplar enzyme with EC 3.5.1.25 activity.
+    evidence:
+    - reference: EC:3.5.1.25
+      snippet: DR   A0KYQ5, AGAA2_SHESA;  O34450, NAGA_BACSU ;  A7MBC0, NAGA_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.25 cross-references UniProtKB:O34450 (NAGA_BACSU) as a protein
+        with this activity.
+  - subject: prot_A7MBC0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NAGA_BOVIN is an exemplar enzyme with EC 3.5.1.25 activity.
+    evidence:
+    - reference: EC:3.5.1.25
+      snippet: DR   A0KYQ5, AGAA2_SHESA;  O34450, NAGA_BACSU ;  A7MBC0, NAGA_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.5.1.25 cross-references UniProtKB:A7MBC0 (NAGA_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 synonyms:
@@ -53,4 +53,116 @@ definitions:
       Catalyses: D-glucose 6-phosphate = 1D-myo-inositol 3-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of inositol-3-phosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.4. EC 5.5.1.4 maps to exactly
+    one curated Rhea reaction (RHEA:10716), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-glucose 6-phosphate
+    = 1D-myo-inositol 3-phosphate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: inositol-3-phosphate synthase
+    grounding: EC:5.5.1.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-glucose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:61548
+    description: Formula C6H11O9P.
+  - node_id: prd1
+    label: 1D-myo-inositol 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58401
+    description: Formula C6H11O9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: inositol-3-phosphate synthase activity
+    grounding: GO:0004512
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q7ZXY0
+    node_type: PROTEIN
+    label: INO1A_XENLA
+    grounding: UniProtKB:Q7ZXY0
+  - node_id: prot_Q6DDT1
+    node_type: PROTEIN
+    label: INO1B_XENLA
+    grounding: UniProtKB:Q6DDT1
+  - node_id: prot_P42801
+    node_type: PROTEIN
+    label: INO1_ARATH
+    grounding: UniProtKB:P42801
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-glucose 6-phosphate is a substrate consumed by RHEA:10716 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10717
+      snippet: D-glucose 6-phosphate => 1D-myo-inositol 3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10717 declares side 10716_L as its substrates
+        (rh:substrates); the master reaction RHEA:10716 is undirected. This participant is CHEBI:61548
+        with coefficient 1. Rhea cites PMID:11121586, PMID:15024000, PMID:20215587 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1D-myo-inositol 3-phosphate is a product released by RHEA:10716 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10717
+      snippet: D-glucose 6-phosphate => 1D-myo-inositol 3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10717 declares side 10716_R as its products
+        (rh:products); the master reaction RHEA:10716 is undirected. This participant is CHEBI:58401 with
+        coefficient 1. Rhea cites PMID:11121586, PMID:15024000, PMID:20215587 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.5.1.4
+      snippet: EC:5.5.1.4 > GO:inositol-3-phosphate synthase activity ; GO:0004512
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004512 is itself a record
+        in this KB.
+  - subject: prot_Q7ZXY0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INO1A_XENLA is an exemplar enzyme with EC 5.5.1.4 activity.
+    evidence:
+    - reference: EC:5.5.1.4
+      snippet: DR   Q7ZXY0, INO1A_XENLA;  Q6DDT1, INO1B_XENLA;  P42801, INO1_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.5.1.4 cross-references UniProtKB:Q7ZXY0 (INO1A_XENLA) as a protein
+        with this activity.
+  - subject: prot_Q6DDT1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INO1B_XENLA is an exemplar enzyme with EC 5.5.1.4 activity.
+    evidence:
+    - reference: EC:5.5.1.4
+      snippet: DR   Q7ZXY0, INO1A_XENLA;  Q6DDT1, INO1B_XENLA;  P42801, INO1_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.5.1.4 cross-references UniProtKB:Q6DDT1 (INO1B_XENLA) as a protein
+        with this activity.
+  - subject: prot_P42801
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INO1_ARATH is an exemplar enzyme with EC 5.5.1.4 activity.
+    evidence:
+    - reference: EC:5.5.1.4
+      snippet: DR   Q7ZXY0, INO1A_XENLA;  Q6DDT1, INO1B_XENLA;  P42801, INO1_ARATH ;
+      notes: ExPASy ENZYME entry EC 5.5.1.4 cross-references UniProtKB:P42801 (INO1_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

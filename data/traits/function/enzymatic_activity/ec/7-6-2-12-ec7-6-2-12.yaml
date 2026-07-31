@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.6.2.-
 synonyms:
@@ -35,4 +35,68 @@ definitions:
       Catalyses: ATP + H2O + capsular polysaccharide-[capsular polysaccharide-binding protein]Side 1 = ADP + phosphate + capsular polysaccharideSide 2 + [capsular polysaccharide-binding protein]Side 1
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ABC-type capsular-polysaccharide transporter
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.6.2.12. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + H2O
+    + capsular polysaccharide-[capsular polysaccharide-binding protein]Side 1 = ADP + phosphate + capsular
+    polysaccharideSide 2 + [capsular polysaccharide-binding protein]Side 1".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type capsular-polysaccharide transporter
+    grounding: EC:7.6.2.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ABC-type capsular-polysaccharide transporter activity
+    grounding: GO:0015436
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P57013
+    node_type: PROTEIN
+    label: CTRD_NEIMA
+    grounding: UniProtKB:P57013
+  - node_id: prot_P32016
+    node_type: PROTEIN
+    label: CTRD_NEIMB
+    grounding: UniProtKB:P32016
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:7.6.2.12
+      snippet: EC:7.6.2.12 > GO:ABC-type capsular-polysaccharide transporter activity ; GO:0015436
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0015436 is itself a record
+        in this KB.
+  - subject: prot_P57013
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CTRD_NEIMA is an exemplar enzyme with EC 7.6.2.12 activity.
+    evidence:
+    - reference: EC:7.6.2.12
+      snippet: DR   P57013, CTRD_NEIMA ;  P32016, CTRD_NEIMB ;
+      notes: ExPASy ENZYME entry EC 7.6.2.12 cross-references UniProtKB:P57013 (CTRD_NEIMA) as a protein
+        with this activity.
+  - subject: prot_P32016
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CTRD_NEIMB is an exemplar enzyme with EC 7.6.2.12 activity.
+    evidence:
+    - reference: EC:7.6.2.12
+      snippet: DR   P57013, CTRD_NEIMA ;  P32016, CTRD_NEIMB ;
+      notes: ExPASy ENZYME entry EC 7.6.2.12 cross-references UniProtKB:P32016 (CTRD_NEIMB) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.1.-
 synonyms:
@@ -43,4 +43,200 @@ definitions:
       Catalyses: (1) L-phenylalanine = (E)-cinnamate + NH4(+). (2) L-tyrosine = (E)-4-coumarate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phenylalanine/tyrosine ammonia-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.1.25. Rhea assigns 2 curated
+    reactions to EC 4.3.1.25. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) L-phenylalanine = (E)-cinnamate + NH4(+). (2) L-tyrosine
+    = (E)-4-coumarate + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine/tyrosine ammonia-lyase
+    grounding: EC:4.3.1.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-phenylalanine = (E)-cinnamate + NH4(+)
+    grounding: RHEA:21384
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-phenylalanine = (E)-cinnamate + NH4(+)'
+  - node_id: rxn1_sub1
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: rxn1_prd1
+    label: (E)-cinnamate
+    node_type: CHEMICAL
+    grounding: CHEBI:15669
+    description: Formula C9H7O2.
+  - node_id: rxn1_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-tyrosine = (E)-4-coumarate + NH4(+)
+    grounding: RHEA:24906
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-tyrosine = (E)-4-coumarate + NH4(+)'
+  - node_id: rxn2_sub1
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+    description: Formula C9H11NO3.
+  - node_id: rxn2_prd1
+    label: (E)-4-coumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:12876
+    description: Formula C9H7O3.
+  - node_id: rxn2_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prot_P0DO55
+    node_type: PROTEIN
+    label: PAL1_FRIUN
+    grounding: UniProtKB:P0DO55
+  - node_id: prot_Q8VXG7
+    node_type: PROTEIN
+    label: PALY_MAIZE
+    grounding: UniProtKB:Q8VXG7
+  - node_id: prot_P11544
+    node_type: PROTEIN
+    label: PALY_RHOTO
+    grounding: UniProtKB:P11544
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:21384 is one of the 2 curated reactions Rhea assigns to EC 4.3.1.25; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:21384
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.25"/>
+      notes: The rh:ec triple on RHEA:21384 in rhea.rdf assigns that reaction to EC 4.3.1.25.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: L-phenylalanine is a substrate consumed by RHEA:21384 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21385
+      snippet: L-phenylalanine => (E)-cinnamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21385 declares side 21384_L as its substrates
+        (rh:substrates); the master reaction RHEA:21384 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:15350127, PMID:15276452, PMID:39339582, PMID:17612622 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (E)-cinnamate is a product released by RHEA:21384 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21385
+      snippet: L-phenylalanine => (E)-cinnamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21385 declares side 21384_R as its products
+        (rh:products); the master reaction RHEA:21384 is undirected. This participant is CHEBI:15669 with
+        coefficient 1. Rhea cites PMID:15350127, PMID:15276452, PMID:39339582, PMID:17612622 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NH4(+) is a product released by RHEA:21384 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21385
+      snippet: L-phenylalanine => (E)-cinnamate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21385 declares side 21384_R as its products
+        (rh:products); the master reaction RHEA:21384 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:15350127, PMID:15276452, PMID:39339582, PMID:17612622 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:24906 is one of the 2 curated reactions Rhea assigns to EC 4.3.1.25; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:24906
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.1.25"/>
+      notes: The rh:ec triple on RHEA:24906 in rhea.rdf assigns that reaction to EC 4.3.1.25.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: L-tyrosine is a substrate consumed by RHEA:24906 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24907
+      snippet: L-tyrosine => (E)-4-coumarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24907 declares side 24906_L as its substrates
+        (rh:substrates); the master reaction RHEA:24906 is undirected. This participant is CHEBI:58315
+        with coefficient 1. Rhea cites PMID:38474023, PMID:7185228, PMID:17185227, PMID:9008393 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (E)-4-coumarate is a product released by RHEA:24906 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24907
+      snippet: L-tyrosine => (E)-4-coumarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24907 declares side 24906_R as its products
+        (rh:products); the master reaction RHEA:24906 is undirected. This participant is CHEBI:12876 with
+        coefficient 1. Rhea cites PMID:38474023, PMID:7185228, PMID:17185227, PMID:9008393 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NH4(+) is a product released by RHEA:24906 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24907
+      snippet: L-tyrosine => (E)-4-coumarate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24907 declares side 24906_R as its products
+        (rh:products); the master reaction RHEA:24906 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:38474023, PMID:7185228, PMID:17185227, PMID:9008393 for this reaction.
+  - subject: prot_P0DO55
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAL1_FRIUN is an exemplar enzyme with EC 4.3.1.25 activity.
+    evidence:
+    - reference: EC:4.3.1.25
+      snippet: DR   P0DO55, PAL1_FRIUN ;  Q8VXG7, PALY_MAIZE ;  P11544, PALY_RHOTO ;
+      notes: ExPASy ENZYME entry EC 4.3.1.25 cross-references UniProtKB:P0DO55 (PAL1_FRIUN) as a protein
+        with this activity.
+  - subject: prot_Q8VXG7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PALY_MAIZE is an exemplar enzyme with EC 4.3.1.25 activity.
+    evidence:
+    - reference: EC:4.3.1.25
+      snippet: DR   P0DO55, PAL1_FRIUN ;  Q8VXG7, PALY_MAIZE ;  P11544, PALY_RHOTO ;
+      notes: ExPASy ENZYME entry EC 4.3.1.25 cross-references UniProtKB:Q8VXG7 (PALY_MAIZE) as a protein
+        with this activity.
+  - subject: prot_P11544
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PALY_RHOTO is an exemplar enzyme with EC 4.3.1.25 activity.
+    evidence:
+    - reference: EC:4.3.1.25
+      snippet: DR   P0DO55, PAL1_FRIUN ;  Q8VXG7, PALY_MAIZE ;  P11544, PALY_RHOTO ;
+      notes: ExPASy ENZYME entry EC 4.3.1.25 cross-references UniProtKB:P11544 (PALY_RHOTO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

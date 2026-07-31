@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:83624
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,129 @@ definitions:
       Catalyses the reaction: O-(5'-adenylyl)-L-tyrosyl-[protein] + ATP = O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyrosyl-[protein] + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of O-(5'-adenylyl)-L-tyrosyl-[protein] + ATP = O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyros…
+  description: Substrate-to-product chemistry of RHEA:66528, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:66529 (rh:substrates → 66528_L, rh:products → 66528_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of O-(5'-adenylyl)-L-tyrosyl-[protein] + ATP = O-[5'-(adenylyl-(5'->3')-adenyly…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:66528
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: O-(5''-adenylyl)-L-tyrosyl-[protein] + ATP = O-[5''-(adenylyl-(5''->3'')-adenylyl)]-L-tyrosyl-[protein]
+      + diphosphate'
+  - node_id: sub1
+    label: O-(5'-adenylyl)-L-tyrosyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13846
+    description: Rhea compound GENERIC:13846.
+  - node_id: sub1_rp1
+    label: L-tyrosine-O-adenyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13846 (O-(5'-adenylyl)-L-tyrosyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83624
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyrosyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17046
+    description: Rhea compound GENERIC:17046.
+  - node_id: prd1_rp1
+    label: O-[5'-(adenyl-(5'->3')-adenyl)]-L-tyrosine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17046 (O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyrosyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:167160
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: O-(5'-adenylyl)-L-tyrosyl-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:66529
+      snippet: O-(5'-adenylyl)-L-tyrosyl-[protein] + ATP => O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyrosyl-[protein]
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:66529 declares side 66528_L as its substrates
+        (rh:substrates); the master reaction RHEA:66528 is undirected. This participant is GENERIC:13846
+        with coefficient 1. Rhea cites PMID:33290744, PMID:33045733 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-tyrosine-O-adenyl residue is the reactive part of O-(5'-adenylyl)-L-tyrosyl-[protein].
+    evidence:
+    - reference: RHEA:66528
+      snippet: L-tyrosine-O-adenyl residue
+      notes: Rhea compound GENERIC:13846 (O-(5'-adenylyl)-L-tyrosyl-[protein]) declares rh:reactivePart
+        = L-tyrosine-O-adenyl residue (CHEBI:83624), formula C19H20N6O8P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66529
+      snippet: O-(5'-adenylyl)-L-tyrosyl-[protein] + ATP => O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyrosyl-[protein]
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:66529 declares side 66528_L as its substrates
+        (rh:substrates); the master reaction RHEA:66528 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:33290744, PMID:33045733 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyrosyl-[protein] is a product released by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66529
+      snippet: O-(5'-adenylyl)-L-tyrosyl-[protein] + ATP => O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyrosyl-[protein]
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:66529 declares side 66528_R as its products
+        (rh:products); the master reaction RHEA:66528 is undirected. This participant is GENERIC:17046
+        with coefficient 1. Rhea cites PMID:33290744, PMID:33045733 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[5'-(adenyl-(5'->3')-adenyl)]-L-tyrosine residue is the reactive part of O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyrosyl-[protein].
+    evidence:
+    - reference: RHEA:66528
+      snippet: O-[5'-(adenyl-(5'->3')-adenyl)]-L-tyrosine residue
+      notes: Rhea compound GENERIC:17046 (O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyrosyl-[protein]) declares
+        rh:reactivePart = O-[5'-(adenyl-(5'->3')-adenyl)]-L-tyrosine residue (CHEBI:167160), formula C29H31N11O14P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66529
+      snippet: O-(5'-adenylyl)-L-tyrosyl-[protein] + ATP => O-[5'-(adenylyl-(5'->3')-adenylyl)]-L-tyrosyl-[protein]
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:66529 declares side 66528_R as its products
+        (rh:products); the master reaction RHEA:66528 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:33290744, PMID:33045733 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

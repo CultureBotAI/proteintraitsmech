@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.1.-
 mapped_xrefs:
@@ -38,4 +38,114 @@ definitions:
       Catalyses: L-ornithine = D-ornithine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ornithine racemase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.1.12. EC 5.1.1.12 maps to exactly
+    one curated Rhea reaction (RHEA:11584), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-ornithine =
+    D-ornithine". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ornithine racemase
+    grounding: EC:5.1.1.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: prd1
+    label: D-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:57668
+    description: Formula C5H13N2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ornithine racemase activity
+    grounding: GO:0050157
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O68007
+    node_type: PROTEIN
+    label: BACB_BACLI
+    grounding: UniProtKB:O68007
+  - node_id: prot_Q9X1T3
+    node_type: PROTEIN
+    label: LYSRA_THEMA
+    grounding: UniProtKB:Q9X1T3
+  - node_id: prot_C1FW08
+    node_type: PROTEIN
+    label: ORR_ACESD
+    grounding: UniProtKB:C1FW08
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-ornithine is a substrate consumed by RHEA:11584 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11585
+      snippet: L-ornithine => D-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:11585 declares side 11584_L as its substrates
+        (rh:substrates); the master reaction RHEA:11584 is undirected. This participant is CHEBI:46911
+        with coefficient 1. Rhea cites PMID:10715017 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-ornithine is a product released by RHEA:11584 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11585
+      snippet: L-ornithine => D-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:11585 declares side 11584_R as its products
+        (rh:products); the master reaction RHEA:11584 is undirected. This participant is CHEBI:57668 with
+        coefficient 1. Rhea cites PMID:10715017 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.1.12
+      snippet: EC:5.1.1.12 > GO:ornithine racemase activity ; GO:0050157
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050157 is itself a record
+        in this KB.
+  - subject: prot_O68007
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BACB_BACLI is an exemplar enzyme with EC 5.1.1.12 activity.
+    evidence:
+    - reference: EC:5.1.1.12
+      snippet: DR   O68007, BACB_BACLI ;  Q9X1T3, LYSRA_THEMA;  C1FW08, ORR_ACESD  ;
+      notes: ExPASy ENZYME entry EC 5.1.1.12 cross-references UniProtKB:O68007 (BACB_BACLI) as a protein
+        with this activity.
+  - subject: prot_Q9X1T3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSRA_THEMA is an exemplar enzyme with EC 5.1.1.12 activity.
+    evidence:
+    - reference: EC:5.1.1.12
+      snippet: DR   O68007, BACB_BACLI ;  Q9X1T3, LYSRA_THEMA;  C1FW08, ORR_ACESD  ;
+      notes: ExPASy ENZYME entry EC 5.1.1.12 cross-references UniProtKB:Q9X1T3 (LYSRA_THEMA) as a protein
+        with this activity.
+  - subject: prot_C1FW08
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ORR_ACESD is an exemplar enzyme with EC 5.1.1.12 activity.
+    evidence:
+    - reference: EC:5.1.1.12
+      snippet: DR   O68007, BACB_BACLI ;  Q9X1T3, LYSRA_THEMA;  C1FW08, ORR_ACESD  ;
+      notes: ExPASy ENZYME entry EC 5.1.1.12 cross-references UniProtKB:C1FW08 (ORR_ACESD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

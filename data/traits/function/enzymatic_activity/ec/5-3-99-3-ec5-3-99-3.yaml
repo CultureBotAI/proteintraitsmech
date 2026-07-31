@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.99.-
 synonyms:
@@ -47,4 +47,116 @@ definitions:
       Catalyses: prostaglandin H2 = prostaglandin E2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of prostaglandin-E synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.99.3. EC 5.3.99.3 maps to exactly
+    one curated Rhea reaction (RHEA:12893), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "prostaglandin
+    H2 = prostaglandin E2". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: prostaglandin-E synthase
+    grounding: EC:5.3.99.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: prostaglandin H2
+    node_type: CHEMICAL
+    grounding: CHEBI:57405
+    description: Formula C20H31O5.
+  - node_id: prd1
+    label: prostaglandin E2
+    node_type: CHEMICAL
+    grounding: CHEBI:606564
+    description: Formula C20H31O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: prostaglandin-E synthase activity
+    grounding: GO:0050220
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q66LN0
+    node_type: PROTEIN
+    label: PGES2_BOVIN
+    grounding: UniProtKB:Q66LN0
+  - node_id: prot_Q7ZUC7
+    node_type: PROTEIN
+    label: PGES2_DANRE
+    grounding: UniProtKB:Q7ZUC7
+  - node_id: prot_Q9H7Z7
+    node_type: PROTEIN
+    label: PGES2_HUMAN
+    grounding: UniProtKB:Q9H7Z7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: prostaglandin H2 is a substrate consumed by RHEA:12893 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12894
+      snippet: prostaglandin H2 => prostaglandin E2
+      notes: Rhea's left-to-right directional reaction RHEA:12894 declares side 12893_L as its substrates
+        (rh:substrates); the master reaction RHEA:12893 is undirected. This participant is CHEBI:57405
+        with coefficient 1. Rhea cites PMID:16439136, PMID:12804604, PMID:11866447, PMID:10446427 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: prostaglandin E2 is a product released by RHEA:12893 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12894
+      snippet: prostaglandin H2 => prostaglandin E2
+      notes: Rhea's left-to-right directional reaction RHEA:12894 declares side 12893_R as its products
+        (rh:products); the master reaction RHEA:12893 is undirected. This participant is CHEBI:606564
+        with coefficient 1. Rhea cites PMID:16439136, PMID:12804604, PMID:11866447, PMID:10446427 for
+        this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.99.3
+      snippet: EC:5.3.99.3 > GO:prostaglandin-E synthase activity ; GO:0050220
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050220 is itself a record
+        in this KB.
+  - subject: prot_Q66LN0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGES2_BOVIN is an exemplar enzyme with EC 5.3.99.3 activity.
+    evidence:
+    - reference: EC:5.3.99.3
+      snippet: DR   Q66LN0, PGES2_BOVIN;  Q7ZUC7, PGES2_DANRE;  Q9H7Z7, PGES2_HUMAN;
+      notes: ExPASy ENZYME entry EC 5.3.99.3 cross-references UniProtKB:Q66LN0 (PGES2_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q7ZUC7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGES2_DANRE is an exemplar enzyme with EC 5.3.99.3 activity.
+    evidence:
+    - reference: EC:5.3.99.3
+      snippet: DR   Q66LN0, PGES2_BOVIN;  Q7ZUC7, PGES2_DANRE;  Q9H7Z7, PGES2_HUMAN;
+      notes: ExPASy ENZYME entry EC 5.3.99.3 cross-references UniProtKB:Q7ZUC7 (PGES2_DANRE) as a protein
+        with this activity.
+  - subject: prot_Q9H7Z7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PGES2_HUMAN is an exemplar enzyme with EC 5.3.99.3 activity.
+    evidence:
+    - reference: EC:5.3.99.3
+      snippet: DR   Q66LN0, PGES2_BOVIN;  Q7ZUC7, PGES2_DANRE;  Q9H7Z7, PGES2_HUMAN;
+      notes: ExPASy ENZYME entry EC 5.3.99.3 cross-references UniProtKB:Q9H7Z7 (PGES2_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

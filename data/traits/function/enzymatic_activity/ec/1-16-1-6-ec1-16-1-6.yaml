@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.16.1.-
 synonyms:
@@ -47,4 +47,256 @@ definitions:
       Catalyses: 2 cob(II)alamin-[cyanocobalamin reductase] + 2 hydrogen cyanide + NADP(+) = 2 cyanocob(III)alamin + 2 apo-[cyanocobalamin reductase] + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyanocobalamin reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.16.1.6. EC 1.16.1.6 maps to exactly
+    one curated Rhea reaction (RHEA:16113), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 cob(II)alamin-[cyanocobalamin
+    reductase] + 2 hydrogen cyanide + NADP(+) = 2 cyanocob(III)alamin + 2 apo-[cyanocobalamin reductase]
+    + NADPH + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cyanocobalamin reductase
+    grounding: EC:1.16.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: cob(II)alamin-[cyanocobalamin reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14717
+    description: Rhea compound GENERIC:14717.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: cob(II)alamin at position A
+    description: The reacting group Rhea names inside the generic participant GENERIC:14717 (cob(II)alamin-[cyanocobalamin
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:16304
+  - node_id: sub1_rp2
+    node_type: RESIDUE
+    label: an L-alpha amino acid residue at position B
+    description: The reacting group Rhea names inside the generic participant GENERIC:14717 (cob(II)alamin-[cyanocobalamin
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83228
+  - node_id: sub2
+    label: hydrogen cyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:18407
+    description: Formula CHN.
+  - node_id: sub3
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: cyanocob(III)alamin
+    node_type: CHEMICAL
+    grounding: CHEBI:17439
+    description: Formula C63H88CoN14O14P.
+  - node_id: prd2
+    label: apo-[cyanocobalamin reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14718
+    description: Rhea compound GENERIC:14718.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: an L-alpha amino acid residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:14718 (apo-[cyanocobalamin
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83228
+  - node_id: prd3
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cyanocobalamin reductase (cyanide-eliminating) (NADP+) activity
+    grounding: GO:0033787
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5E9C8
+    node_type: PROTEIN
+    label: MMAC_BOVIN
+    grounding: UniProtKB:Q5E9C8
+  - node_id: prot_Q5ZL21
+    node_type: PROTEIN
+    label: MMAC_CHICK
+    grounding: UniProtKB:Q5ZL21
+  - node_id: prot_Q5RFU5
+    node_type: PROTEIN
+    label: MMAC_DANRE
+    grounding: UniProtKB:Q5RFU5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cob(II)alamin-[cyanocobalamin reductase] is a substrate consumed by RHEA:16113 (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:16114
+      snippet: 2 cob(II)alamin-[cyanocobalamin reductase] + 2 hydrogen cyanide + NADP(+) => 2 cyanocob(III)alamin
+        + 2 apo-[cyanocobalamin reductase] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16114 declares side 16113_L as its substrates
+        (rh:substrates); the master reaction RHEA:16113 is undirected. This participant is GENERIC:14717
+        with coefficient 2. Rhea cites PMID:18779575, PMID:23270877, PMID:3134526, PMID:21697092 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: cob(II)alamin is the reactive part of cob(II)alamin-[cyanocobalamin reductase].
+    evidence:
+    - reference: RHEA:16113
+      snippet: cob(II)alamin
+      notes: Rhea compound GENERIC:14717 (cob(II)alamin-[cyanocobalamin reductase]) declares rh:reactivePart
+        at position A = cob(II)alamin (CHEBI:16304).
+  - subject: sub1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: an L-alpha amino acid residue is the reactive part of cob(II)alamin-[cyanocobalamin reductase].
+    evidence:
+    - reference: RHEA:16113
+      snippet: an L-alpha amino acid residue
+      notes: Rhea compound GENERIC:14717 (cob(II)alamin-[cyanocobalamin reductase]) declares rh:reactivePart
+        at position B = an L-alpha amino acid residue (CHEBI:83228).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen cyanide is a substrate consumed by RHEA:16113 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:16114
+      snippet: 2 cob(II)alamin-[cyanocobalamin reductase] + 2 hydrogen cyanide + NADP(+) => 2 cyanocob(III)alamin
+        + 2 apo-[cyanocobalamin reductase] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16114 declares side 16113_L as its substrates
+        (rh:substrates); the master reaction RHEA:16113 is undirected. This participant is CHEBI:18407
+        with coefficient 2. Rhea cites PMID:18779575, PMID:23270877, PMID:3134526, PMID:21697092 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: NADP(+) is a substrate consumed by RHEA:16113 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16114
+      snippet: 2 cob(II)alamin-[cyanocobalamin reductase] + 2 hydrogen cyanide + NADP(+) => 2 cyanocob(III)alamin
+        + 2 apo-[cyanocobalamin reductase] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16114 declares side 16113_L as its substrates
+        (rh:substrates); the master reaction RHEA:16113 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:18779575, PMID:23270877, PMID:3134526, PMID:21697092 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cyanocob(III)alamin is a product released by RHEA:16113 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:16114
+      snippet: 2 cob(II)alamin-[cyanocobalamin reductase] + 2 hydrogen cyanide + NADP(+) => 2 cyanocob(III)alamin
+        + 2 apo-[cyanocobalamin reductase] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16114 declares side 16113_R as its products
+        (rh:products); the master reaction RHEA:16113 is undirected. This participant is CHEBI:17439 with
+        coefficient 2. Rhea cites PMID:18779575, PMID:23270877, PMID:3134526, PMID:21697092 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: apo-[cyanocobalamin reductase] is a product released by RHEA:16113 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:16114
+      snippet: 2 cob(II)alamin-[cyanocobalamin reductase] + 2 hydrogen cyanide + NADP(+) => 2 cyanocob(III)alamin
+        + 2 apo-[cyanocobalamin reductase] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16114 declares side 16113_R as its products
+        (rh:products); the master reaction RHEA:16113 is undirected. This participant is GENERIC:14718
+        with coefficient 2. Rhea cites PMID:18779575, PMID:23270877, PMID:3134526, PMID:21697092 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: an L-alpha amino acid residue is the reactive part of apo-[cyanocobalamin reductase].
+    evidence:
+    - reference: RHEA:16113
+      snippet: an L-alpha amino acid residue
+      notes: Rhea compound GENERIC:14718 (apo-[cyanocobalamin reductase]) declares rh:reactivePart = an
+        L-alpha amino acid residue (CHEBI:83228).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: NADPH is a product released by RHEA:16113 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16114
+      snippet: 2 cob(II)alamin-[cyanocobalamin reductase] + 2 hydrogen cyanide + NADP(+) => 2 cyanocob(III)alamin
+        + 2 apo-[cyanocobalamin reductase] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16114 declares side 16113_R as its products
+        (rh:products); the master reaction RHEA:16113 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:18779575, PMID:23270877, PMID:3134526, PMID:21697092 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:16113 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16114
+      snippet: 2 cob(II)alamin-[cyanocobalamin reductase] + 2 hydrogen cyanide + NADP(+) => 2 cyanocob(III)alamin
+        + 2 apo-[cyanocobalamin reductase] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:16114 declares side 16113_R as its products
+        (rh:products); the master reaction RHEA:16113 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18779575, PMID:23270877, PMID:3134526, PMID:21697092 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.16.1.6
+      snippet: EC:1.16.1.6 > GO:cyanocobalamin reductase (cyanide-eliminating) (NADP+) activity ; GO:0033787
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033787 is itself a record
+        in this KB.
+  - subject: prot_Q5E9C8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMAC_BOVIN is an exemplar enzyme with EC 1.16.1.6 activity.
+    evidence:
+    - reference: EC:1.16.1.6
+      snippet: DR   Q5E9C8, MMAC_BOVIN ;  Q5ZL21, MMAC_CHICK ;  Q5RFU5, MMAC_DANRE ;
+      notes: ExPASy ENZYME entry EC 1.16.1.6 cross-references UniProtKB:Q5E9C8 (MMAC_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q5ZL21
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMAC_CHICK is an exemplar enzyme with EC 1.16.1.6 activity.
+    evidence:
+    - reference: EC:1.16.1.6
+      snippet: DR   Q5E9C8, MMAC_BOVIN ;  Q5ZL21, MMAC_CHICK ;  Q5RFU5, MMAC_DANRE ;
+      notes: ExPASy ENZYME entry EC 1.16.1.6 cross-references UniProtKB:Q5ZL21 (MMAC_CHICK) as a protein
+        with this activity.
+  - subject: prot_Q5RFU5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMAC_DANRE is an exemplar enzyme with EC 1.16.1.6 activity.
+    evidence:
+    - reference: EC:1.16.1.6
+      snippet: DR   Q5E9C8, MMAC_BOVIN ;  Q5ZL21, MMAC_CHICK ;  Q5RFU5, MMAC_DANRE ;
+      notes: ExPASy ENZYME entry EC 1.16.1.6 cross-references UniProtKB:Q5RFU5 (MMAC_DANRE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

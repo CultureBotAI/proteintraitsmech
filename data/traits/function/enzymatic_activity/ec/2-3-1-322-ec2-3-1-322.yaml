@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -32,4 +32,133 @@ definitions:
       Catalyses: rhazimol + acetyl-CoA = akuammiline + CoA + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of akuammiline synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.322. EC 2.3.1.322 maps to
+    exactly one curated Rhea reaction (RHEA:79623), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "rhazimol
+    + acetyl-CoA = akuammiline + CoA + H(+)". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: akuammiline synthase
+    grounding: EC:2.3.1.322
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: rhazimol
+    node_type: CHEMICAL
+    grounding: CHEBI:230474
+    description: Formula C21H25N2O3.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: akuammiline
+    node_type: CHEMICAL
+    grounding: CHEBI:141879
+    description: Formula C23H26N2O4.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A0A9E7S5E3
+    node_type: PROTEIN
+    label: AKS1_ALSSC
+    grounding: UniProtKB:A0A9E7S5E3
+  - node_id: prot_A0A9E7LUL3
+    node_type: PROTEIN
+    label: AKS2_ALSSC
+    grounding: UniProtKB:A0A9E7LUL3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: rhazimol is a substrate consumed by RHEA:79623 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79624
+      snippet: rhazimol + acetyl-CoA => akuammiline + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79624 declares side 79623_L as its substrates
+        (rh:substrates); the master reaction RHEA:79623 is undirected. This participant is CHEBI:230474
+        with coefficient 1. Rhea cites PMID:36349266 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:79623 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79624
+      snippet: rhazimol + acetyl-CoA => akuammiline + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79624 declares side 79623_L as its substrates
+        (rh:substrates); the master reaction RHEA:79623 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:36349266 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: akuammiline is a product released by RHEA:79623 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79624
+      snippet: rhazimol + acetyl-CoA => akuammiline + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79624 declares side 79623_R as its products
+        (rh:products); the master reaction RHEA:79623 is undirected. This participant is CHEBI:141879
+        with coefficient 1. Rhea cites PMID:36349266 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:79623 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79624
+      snippet: rhazimol + acetyl-CoA => akuammiline + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79624 declares side 79623_R as its products
+        (rh:products); the master reaction RHEA:79623 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:36349266 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:79623 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79624
+      snippet: rhazimol + acetyl-CoA => akuammiline + CoA + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79624 declares side 79623_R as its products
+        (rh:products); the master reaction RHEA:79623 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:36349266 for this reaction.
+  - subject: prot_A0A9E7S5E3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AKS1_ALSSC is an exemplar enzyme with EC 2.3.1.322 activity.
+    evidence:
+    - reference: EC:2.3.1.322
+      snippet: DR   A0A9E7S5E3, AKS1_ALSSC ;  A0A9E7LUL3, AKS2_ALSSC ;
+      notes: ExPASy ENZYME entry EC 2.3.1.322 cross-references UniProtKB:A0A9E7S5E3 (AKS1_ALSSC) as a
+        protein with this activity.
+  - subject: prot_A0A9E7LUL3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AKS2_ALSSC is an exemplar enzyme with EC 2.3.1.322 activity.
+    evidence:
+    - reference: EC:2.3.1.322
+      snippet: DR   A0A9E7S5E3, AKS1_ALSSC ;  A0A9E7LUL3, AKS2_ALSSC ;
+      notes: ExPASy ENZYME entry EC 2.3.1.322 cross-references UniProtKB:A0A9E7LUL3 (AKS2_ALSSC) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

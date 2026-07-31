@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 mapped_xrefs:
@@ -42,4 +42,220 @@ definitions:
       Catalyses: a carotenoid psi-end derivative = a carotenoid beta-end derivative
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lycopene beta-cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.19. Rhea assigns 4 curated
+    reactions to EC 5.5.1.19 (the first 3 are shown). No one substrate set is the class''s chemistry,
+    so each reaction is its own node — grounded to the Rhea record in this KB — and carries its own inputs
+    and outputs. ExPASy ENZYME states the catalysed reaction as: "a carotenoid psi-end derivative = a
+    carotenoid beta-end derivative". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lycopene beta-cyclase
+    grounding: EC:5.5.1.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of all-trans-lycopene = gamma-carotene
+    grounding: RHEA:32219
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: all-trans-lycopene = gamma-carotene'
+  - node_id: rxn1_sub1
+    label: all-trans-lycopene
+    node_type: CHEMICAL
+    grounding: CHEBI:15948
+    description: Formula C40H56.
+  - node_id: rxn1_prd1
+    label: gamma-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:27740
+    description: Formula C40H56.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of gamma-carotene = all-trans-beta-carotene
+    grounding: RHEA:32239
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: gamma-carotene = all-trans-beta-carotene'
+  - node_id: rxn2_sub1
+    label: gamma-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:27740
+    description: Formula C40H56.
+  - node_id: rxn2_prd1
+    label: all-trans-beta-carotene
+    node_type: CHEMICAL
+    grounding: CHEBI:17579
+    description: Formula C40H56.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a carotenoid psi-end derivative = a carotenoid beta-end derivative
+    grounding: RHEA:55620
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a carotenoid psi-end derivative = a carotenoid beta-end derivative'
+  - node_id: rxn3_sub1
+    label: a carotenoid psi-end derivative
+    node_type: CHEMICAL
+    grounding: CHEBI:139114
+    description: Formula C19H27R.
+  - node_id: rxn3_prd1
+    label: a carotenoid beta-end derivative
+    node_type: CHEMICAL
+    grounding: CHEBI:139120
+    description: Formula C19H27R.
+  - node_id: prot_B0R753
+    node_type: PROTEIN
+    label: CRTY_HALS3
+    grounding: UniProtKB:B0R753
+  - node_id: prot_Q9HNE5
+    node_type: PROTEIN
+    label: CRTY_HALSA
+    grounding: UniProtKB:Q9HNE5
+  - node_id: prot_P21687
+    node_type: PROTEIN
+    label: CRTY_PANAN
+    grounding: UniProtKB:P21687
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:32219 is one of the 4 curated reactions Rhea assigns to EC 5.5.1.19; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:32219
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.19"/>
+      notes: The rh:ec triple on RHEA:32219 in rhea.rdf assigns that reaction to EC 5.5.1.19.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: all-trans-lycopene is a substrate consumed by RHEA:32219 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32220
+      snippet: all-trans-lycopene => gamma-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:32220 declares side 32219_L as its substrates
+        (rh:substrates); the master reaction RHEA:32219 is undirected. This participant is CHEBI:15948
+        with coefficient 1. Rhea cites PMID:8344419, PMID:12003928, PMID:9328284, PMID:20460582 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: gamma-carotene is a product released by RHEA:32219 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32220
+      snippet: all-trans-lycopene => gamma-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:32220 declares side 32219_R as its products
+        (rh:products); the master reaction RHEA:32219 is undirected. This participant is CHEBI:27740 with
+        coefficient 1. Rhea cites PMID:8344419, PMID:12003928, PMID:9328284, PMID:20460582 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:32239 is one of the 4 curated reactions Rhea assigns to EC 5.5.1.19; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:32239
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.19"/>
+      notes: The rh:ec triple on RHEA:32239 in rhea.rdf assigns that reaction to EC 5.5.1.19.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: gamma-carotene is a substrate consumed by RHEA:32239 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32240
+      snippet: gamma-carotene => all-trans-beta-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:32240 declares side 32239_L as its substrates
+        (rh:substrates); the master reaction RHEA:32239 is undirected. This participant is CHEBI:27740
+        with coefficient 1. Rhea cites PMID:8344419, PMID:12003928, PMID:9328284, PMID:20460582 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: all-trans-beta-carotene is a product released by RHEA:32239 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32240
+      snippet: gamma-carotene => all-trans-beta-carotene
+      notes: Rhea's left-to-right directional reaction RHEA:32240 declares side 32239_R as its products
+        (rh:products); the master reaction RHEA:32239 is undirected. This participant is CHEBI:17579 with
+        coefficient 1. Rhea cites PMID:8344419, PMID:12003928, PMID:9328284, PMID:20460582 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:55620 is one of the 4 curated reactions Rhea assigns to EC 5.5.1.19; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:55620
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.19"/>
+      notes: The rh:ec triple on RHEA:55620 in rhea.rdf assigns that reaction to EC 5.5.1.19.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: a carotenoid psi-end derivative is a substrate consumed by RHEA:55620 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:55621
+      snippet: a carotenoid psi-end derivative => a carotenoid beta-end derivative
+      notes: Rhea's left-to-right directional reaction RHEA:55621 declares side 55620_L as its substrates
+        (rh:substrates); the master reaction RHEA:55620 is undirected. This participant is CHEBI:139114
+        with coefficient 1. Rhea cites PMID:7919981, PMID:11943208, PMID:20178989, PMID:17606904 for this
+        reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: a carotenoid beta-end derivative is a product released by RHEA:55620 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:55621
+      snippet: a carotenoid psi-end derivative => a carotenoid beta-end derivative
+      notes: Rhea's left-to-right directional reaction RHEA:55621 declares side 55620_R as its products
+        (rh:products); the master reaction RHEA:55620 is undirected. This participant is CHEBI:139120
+        with coefficient 1. Rhea cites PMID:7919981, PMID:11943208, PMID:20178989, PMID:17606904 for this
+        reaction.
+  - subject: prot_B0R753
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTY_HALS3 is an exemplar enzyme with EC 5.5.1.19 activity.
+    evidence:
+    - reference: EC:5.5.1.19
+      snippet: DR   B0R753, CRTY_HALS3 ;  Q9HNE5, CRTY_HALSA ;  P21687, CRTY_PANAN ;
+      notes: ExPASy ENZYME entry EC 5.5.1.19 cross-references UniProtKB:B0R753 (CRTY_HALS3) as a protein
+        with this activity.
+  - subject: prot_Q9HNE5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTY_HALSA is an exemplar enzyme with EC 5.5.1.19 activity.
+    evidence:
+    - reference: EC:5.5.1.19
+      snippet: DR   B0R753, CRTY_HALS3 ;  Q9HNE5, CRTY_HALSA ;  P21687, CRTY_PANAN ;
+      notes: ExPASy ENZYME entry EC 5.5.1.19 cross-references UniProtKB:Q9HNE5 (CRTY_HALSA) as a protein
+        with this activity.
+  - subject: prot_P21687
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTY_PANAN is an exemplar enzyme with EC 5.5.1.19 activity.
+    evidence:
+    - reference: EC:5.5.1.19
+      snippet: DR   B0R753, CRTY_HALS3 ;  Q9HNE5, CRTY_HALSA ;  P21687, CRTY_PANAN ;
+      notes: ExPASy ENZYME entry EC 5.5.1.19 cross-references UniProtKB:P21687 (CRTY_PANAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

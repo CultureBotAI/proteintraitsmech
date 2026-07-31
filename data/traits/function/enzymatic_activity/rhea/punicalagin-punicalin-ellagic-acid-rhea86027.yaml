@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.1.1.124
     mapping_source: rhea2ec
@@ -30,4 +30,89 @@ definitions:
       Catalyses the reaction: punicalagin = punicalin + ellagic acid
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of punicalagin = punicalin + ellagic acid
+  description: Substrate-to-product chemistry of RHEA:86027, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:86028 (rh:substrates → 86027_L, rh:products → 86027_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of punicalagin = punicalin + ellagic acid
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:86027
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: punicalagin = punicalin + ellagic acid'
+  - node_id: sub1
+    label: punicalagin
+    node_type: CHEMICAL
+    grounding: CHEBI:234435
+    description: Formula C48H24O30.
+  - node_id: prd1
+    label: punicalin
+    node_type: CHEMICAL
+    grounding: CHEBI:234446
+    description: Formula C34H20O22.
+  - node_id: prd2
+    label: ellagic acid
+    node_type: CHEMICAL
+    grounding: CHEBI:235343
+    description: Formula C14H4O8.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: ellagitannin acyl hydrolase
+    grounding: EC:3.1.1.124
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: punicalagin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86028
+      snippet: punicalagin => punicalin + ellagic acid
+      notes: Rhea's left-to-right directional reaction RHEA:86028 declares side 86027_L as its substrates
+        (rh:substrates); the master reaction RHEA:86027 is undirected. This participant is CHEBI:234435
+        with coefficient 1. Rhea cites PMID:26915983, PMID:33542933, PMID:34320742 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: punicalin is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86028
+      snippet: punicalagin => punicalin + ellagic acid
+      notes: Rhea's left-to-right directional reaction RHEA:86028 declares side 86027_R as its products
+        (rh:products); the master reaction RHEA:86027 is undirected. This participant is CHEBI:234446
+        with coefficient 1. Rhea cites PMID:26915983, PMID:33542933, PMID:34320742 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ellagic acid is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86028
+      snippet: punicalagin => punicalin + ellagic acid
+      notes: Rhea's left-to-right directional reaction RHEA:86028 declares side 86027_R as its products
+        (rh:products); the master reaction RHEA:86027 is undirected. This participant is CHEBI:235343
+        with coefficient 1. Rhea cites PMID:26915983, PMID:33542933, PMID:34320742 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.1.1.124; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:86027
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.1.124"/>
+      notes: The rh:ec triple on RHEA:86027 in rhea.rdf. EC 3.1.1.124 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

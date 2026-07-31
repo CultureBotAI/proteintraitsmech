@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.19.-
 synonyms:
@@ -41,4 +41,82 @@ definitions:
       Catalyses: Thiol-dependent hydrolysis of ester, thioester, amide, peptide and isopeptide bonds formed by the C-terminal Gly of ubiquitin (a 76-residue protein attached to proteins as an intracellular targeting signal)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ubiquitinyl hydrolase 1
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.19.12. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Thiol-dependent
+    hydrolysis of ester, thioester, amide, peptide and isopeptide bonds formed by the C-terminal Gly of
+    ubiquitin (a 76-residue protein attached to proteins as an intracellular targeting signal)".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ubiquitinyl hydrolase 1
+    grounding: EC:3.4.19.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cysteine-type deubiquitinase activity
+    grounding: GO:0004843
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9M391
+    node_type: PROTEIN
+    label: ATX3H_ARATH
+    grounding: UniProtKB:Q9M391
+  - node_id: prot_Q9H3M9
+    node_type: PROTEIN
+    label: ATX3L_HUMAN
+    grounding: UniProtKB:Q9H3M9
+  - node_id: prot_Q60XN1
+    node_type: PROTEIN
+    label: ATX3_CAEBR
+    grounding: UniProtKB:Q60XN1
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.19.12
+      snippet: EC:3.4.19.12 > GO:cysteine-type deubiquitinase activity ; GO:0004843
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004843 is itself a record
+        in this KB.
+  - subject: prot_Q9M391
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATX3H_ARATH is an exemplar enzyme with EC 3.4.19.12 activity.
+    evidence:
+    - reference: EC:3.4.19.12
+      snippet: DR   Q9M391, ATX3H_ARATH;  Q9H3M9, ATX3L_HUMAN;  Q60XN1, ATX3_CAEBR ;
+      notes: ExPASy ENZYME entry EC 3.4.19.12 cross-references UniProtKB:Q9M391 (ATX3H_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9H3M9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATX3L_HUMAN is an exemplar enzyme with EC 3.4.19.12 activity.
+    evidence:
+    - reference: EC:3.4.19.12
+      snippet: DR   Q9M391, ATX3H_ARATH;  Q9H3M9, ATX3L_HUMAN;  Q60XN1, ATX3_CAEBR ;
+      notes: ExPASy ENZYME entry EC 3.4.19.12 cross-references UniProtKB:Q9H3M9 (ATX3L_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q60XN1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATX3_CAEBR is an exemplar enzyme with EC 3.4.19.12 activity.
+    evidence:
+    - reference: EC:3.4.19.12
+      snippet: DR   Q9M391, ATX3H_ARATH;  Q9H3M9, ATX3L_HUMAN;  Q60XN1, ATX3_CAEBR ;
+      notes: ExPASy ENZYME entry EC 3.4.19.12 cross-references UniProtKB:Q60XN1 (ATX3_CAEBR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

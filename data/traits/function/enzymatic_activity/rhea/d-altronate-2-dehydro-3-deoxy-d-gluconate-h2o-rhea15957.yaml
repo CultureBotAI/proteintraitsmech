@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.7
     mapping_source: rhea2ec
@@ -28,4 +28,146 @@ definitions:
       Catalyses the reaction: D-altronate = 2-dehydro-3-deoxy-D-gluconate + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-altronate = 2-dehydro-3-deoxy-D-gluconate + H2O
+  description: Substrate-to-product chemistry of RHEA:15957, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:15958 (rh:substrates → 15957_L, rh:products → 15957_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-altronate = 2-dehydro-3-deoxy-D-gluconate + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:15957
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-altronate = 2-dehydro-3-deoxy-D-gluconate + H2O'
+  - node_id: sub1
+    label: D-altronate
+    node_type: CHEMICAL
+    grounding: CHEBI:17360
+    description: Formula C6H11O7.
+  - node_id: prd1
+    label: 2-dehydro-3-deoxy-D-gluconate
+    node_type: CHEMICAL
+    grounding: CHEBI:57990
+    description: Formula C6H9O6.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: altronate dehydratase activity
+    grounding: GO:0008789
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: altronate dehydratase
+    grounding: EC:4.2.1.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_O34673
+    node_type: PROTEIN
+    label: UXAA_BACSU
+    grounding: UniProtKB:O34673
+  - node_id: prot_P42604
+    node_type: PROTEIN
+    label: UXAA_ECOLI
+    grounding: UniProtKB:P42604
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-altronate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15958
+      snippet: D-altronate => 2-dehydro-3-deoxy-D-gluconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:15958 declares side 15957_L as its substrates
+        (rh:substrates); the master reaction RHEA:15957 is undirected. This participant is CHEBI:17360
+        with coefficient 1. Rhea cites PMID:3038546, PMID:13831814 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-dehydro-3-deoxy-D-gluconate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:15958
+      snippet: D-altronate => 2-dehydro-3-deoxy-D-gluconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:15958 declares side 15957_R as its products
+        (rh:products); the master reaction RHEA:15957 is undirected. This participant is CHEBI:57990 with
+        coefficient 1. Rhea cites PMID:3038546, PMID:13831814 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15958
+      snippet: D-altronate => 2-dehydro-3-deoxy-D-gluconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:15958 declares side 15957_R as its products
+        (rh:products); the master reaction RHEA:15957 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:3038546, PMID:13831814 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:15957
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008789"/>
+      notes: The rdfs:seeAlso triple on RHEA:15957 in rhea.rdf. GO term GO:0008789 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.7; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:15957
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.7"/>
+      notes: The rh:ec triple on RHEA:15957 in rhea.rdf. EC 4.2.1.7 is itself a record in this KB.
+  - subject: prot_O34673
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UXAA_BACSU is an exemplar enzyme carrying EC 4.2.1.7, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.7
+      snippet: DR   O34673, UXAA_BACSU ;  P42604, UXAA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.7 cross-references UniProtKB:O34673 (UXAA_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:15957
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.7"/>
+      notes: Rhea assigns RHEA:15957 to EC 4.2.1.7, and EC 4.2.1.7 maps to exactly one Rhea master reaction
+        (RHEA:15957), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P42604
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UXAA_ECOLI is an exemplar enzyme carrying EC 4.2.1.7, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.7
+      snippet: DR   O34673, UXAA_BACSU ;  P42604, UXAA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.7 cross-references UniProtKB:P42604 (UXAA_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:15957
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.7"/>
+      notes: Rhea assigns RHEA:15957 to EC 4.2.1.7, and EC 4.2.1.7 maps to exactly one Rhea master reaction
+        (RHEA:15957), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

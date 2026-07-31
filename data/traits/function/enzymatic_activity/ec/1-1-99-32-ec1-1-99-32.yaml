@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.99.-
 synonyms:
@@ -31,4 +31,103 @@ definitions:
       Catalyses: L-sorbopyranose + A = 1-dehydro-L-sorbose + AH2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-sorbose 1-dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.99.32. EC 1.1.99.32 maps to
+    exactly one curated Rhea reaction (RHEA:24878), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-sorbopyranose
+    + A = 1-dehydro-L-sorbose + AH2". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-sorbose 1-dehydrogenase
+    grounding: EC:1.1.99.32
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-sorbopyranose
+    node_type: CHEMICAL
+    grounding: CHEBI:48649
+    description: Formula C6H12O6.
+  - node_id: sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: prd1
+    label: 1-dehydro-L-sorbose
+    node_type: CHEMICAL
+    grounding: CHEBI:48657
+    description: Formula C6H10O6.
+  - node_id: prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  - node_id: prot_Q47944
+    node_type: PROTEIN
+    label: SDH_GLUOY
+    grounding: UniProtKB:Q47944
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-sorbopyranose is a substrate consumed by RHEA:24878 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24879
+      snippet: L-sorbopyranose + A => 1-dehydro-L-sorbose + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:24879 declares side 24878_L as its substrates
+        (rh:substrates); the master reaction RHEA:24878 is undirected. This participant is CHEBI:48649
+        with coefficient 1. Rhea cites PMID:27392874 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: A is a substrate consumed by RHEA:24878 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24879
+      snippet: L-sorbopyranose + A => 1-dehydro-L-sorbose + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:24879 declares side 24878_L as its substrates
+        (rh:substrates); the master reaction RHEA:24878 is undirected. This participant is CHEBI:13193
+        with coefficient 1. Rhea cites PMID:27392874 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-dehydro-L-sorbose is a product released by RHEA:24878 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24879
+      snippet: L-sorbopyranose + A => 1-dehydro-L-sorbose + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:24879 declares side 24878_R as its products
+        (rh:products); the master reaction RHEA:24878 is undirected. This participant is CHEBI:48657 with
+        coefficient 1. Rhea cites PMID:27392874 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AH2 is a product released by RHEA:24878 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24879
+      snippet: L-sorbopyranose + A => 1-dehydro-L-sorbose + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:24879 declares side 24878_R as its products
+        (rh:products); the master reaction RHEA:24878 is undirected. This participant is CHEBI:17499 with
+        coefficient 1. Rhea cites PMID:27392874 for this reaction.
+  - subject: prot_Q47944
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SDH_GLUOY is an exemplar enzyme with EC 1.1.99.32 activity.
+    evidence:
+    - reference: EC:1.1.99.32
+      snippet: DR   Q47944, SDH_GLUOY  ;
+      notes: ExPASy ENZYME entry EC 1.1.99.32 cross-references UniProtKB:Q47944 (SDH_GLUOY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

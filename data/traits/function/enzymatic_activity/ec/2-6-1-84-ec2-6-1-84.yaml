@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 synonyms:
@@ -31,4 +31,104 @@ definitions:
       Catalyses: L-arginine + pyruvate = 5-guanidino-2-oxopentanoate + L-alanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of arginine--pyruvate transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.84. EC 2.6.1.84 maps to exactly
+    one curated Rhea reaction (RHEA:13833), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-arginine +
+    pyruvate = 5-guanidino-2-oxopentanoate + L-alanine". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: arginine--pyruvate transaminase
+    grounding: EC:2.6.1.84
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd1
+    label: 5-guanidino-2-oxopentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58489
+    description: Formula C6H11N3O3.
+  - node_id: prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: prot_Q9HUI9
+    node_type: PROTEIN
+    label: ARUH_PSEAE
+    grounding: UniProtKB:Q9HUI9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arginine is a substrate consumed by RHEA:13833 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13834
+      snippet: L-arginine + pyruvate => 5-guanidino-2-oxopentanoate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:13834 declares side 13833_L as its substrates
+        (rh:substrates); the master reaction RHEA:13833 is undirected. This participant is CHEBI:32682
+        with coefficient 1. Rhea cites PMID:17416670, PMID:17416668 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: pyruvate is a substrate consumed by RHEA:13833 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13834
+      snippet: L-arginine + pyruvate => 5-guanidino-2-oxopentanoate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:13834 declares side 13833_L as its substrates
+        (rh:substrates); the master reaction RHEA:13833 is undirected. This participant is CHEBI:15361
+        with coefficient 1. Rhea cites PMID:17416670, PMID:17416668 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-guanidino-2-oxopentanoate is a product released by RHEA:13833 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13834
+      snippet: L-arginine + pyruvate => 5-guanidino-2-oxopentanoate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:13834 declares side 13833_R as its products
+        (rh:products); the master reaction RHEA:13833 is undirected. This participant is CHEBI:58489 with
+        coefficient 1. Rhea cites PMID:17416670, PMID:17416668 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-alanine is a product released by RHEA:13833 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13834
+      snippet: L-arginine + pyruvate => 5-guanidino-2-oxopentanoate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:13834 declares side 13833_R as its products
+        (rh:products); the master reaction RHEA:13833 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:17416670, PMID:17416668 for this reaction.
+  - subject: prot_Q9HUI9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARUH_PSEAE is an exemplar enzyme with EC 2.6.1.84 activity.
+    evidence:
+    - reference: EC:2.6.1.84
+      snippet: DR   Q9HUI9, ARUH_PSEAE ;
+      notes: ExPASy ENZYME entry EC 2.6.1.84 cross-references UniProtKB:Q9HUI9 (ARUH_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

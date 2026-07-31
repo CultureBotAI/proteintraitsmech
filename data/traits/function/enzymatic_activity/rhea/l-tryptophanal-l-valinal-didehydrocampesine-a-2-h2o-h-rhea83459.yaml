@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:233078
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,107 @@ definitions:
       Catalyses the reaction: L-tryptophanal + L-valinal = didehydrocampesine A + 2 H2O + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-tryptophanal + L-valinal = didehydrocampesine A + 2 H2O + H(+)
+  description: Substrate-to-product chemistry of RHEA:83459, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:83460 (rh:substrates → 83459_L, rh:products → 83459_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-tryptophanal + L-valinal = didehydrocampesine A + 2 H2O + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:83459
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-tryptophanal + L-valinal = didehydrocampesine A + 2 H2O + H(+)'
+  - node_id: sub1
+    label: L-tryptophanal
+    node_type: CHEMICAL
+    grounding: CHEBI:233078
+    description: Formula C11H13N2O.
+  - node_id: sub2
+    label: L-valinal
+    node_type: CHEMICAL
+    grounding: CHEBI:233077
+    description: Formula C5H12NO.
+  - node_id: prd1
+    label: didehydrocampesine A
+    node_type: CHEMICAL
+    grounding: CHEBI:233013
+    description: Formula C16H20N3.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tryptophanal is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83460
+      snippet: L-tryptophanal + L-valinal => didehydrocampesine A + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:83460 declares side 83459_L as its substrates
+        (rh:substrates); the master reaction RHEA:83459 is undirected. This participant is CHEBI:233078
+        with coefficient 1. Rhea cites PMID:38527935 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-valinal is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83460
+      snippet: L-tryptophanal + L-valinal => didehydrocampesine A + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:83460 declares side 83459_L as its substrates
+        (rh:substrates); the master reaction RHEA:83459 is undirected. This participant is CHEBI:233077
+        with coefficient 1. Rhea cites PMID:38527935 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: didehydrocampesine A is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:83460
+      snippet: L-tryptophanal + L-valinal => didehydrocampesine A + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:83460 declares side 83459_R as its products
+        (rh:products); the master reaction RHEA:83459 is undirected. This participant is CHEBI:233013
+        with coefficient 1. Rhea cites PMID:38527935 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:83460
+      snippet: L-tryptophanal + L-valinal => didehydrocampesine A + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:83460 declares side 83459_R as its products
+        (rh:products); the master reaction RHEA:83459 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:38527935 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83460
+      snippet: L-tryptophanal + L-valinal => didehydrocampesine A + 2 H2O + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:83460 declares side 83459_R as its products
+        (rh:products); the master reaction RHEA:83459 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:38527935 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

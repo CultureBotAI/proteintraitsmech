@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 synonyms:
@@ -39,4 +39,139 @@ definitions:
       Catalyses: [phosphate](n) + ADP = [phosphate](n+1) + AMP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of AMP-polyphosphate phosphotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.33. EC 2.7.4.33 maps to exactly
+    one curated Rhea reaction (RHEA:57820), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[phosphate](n)
+    + ADP = [phosphate](n+1) + AMP". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: AMP-polyphosphate phosphotransferase
+    grounding: EC:2.7.4.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[phosphate](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:16838
+    xrefs:
+    - RHEA-COMP:9859
+    description: Rhea compound POLYMER:9859. Formula HO(O3P)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd1
+    label: '[phosphate](n+1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:16838
+    xrefs:
+    - RHEA-COMP:14280
+    description: Rhea compound POLYMER:14280. Formula HO(O3P)<i><sub>n+1</sub></i>.
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prot_Q83XD3
+    node_type: PROTEIN
+    label: PK22_ACIJO
+    grounding: UniProtKB:Q83XD3
+  - node_id: prot_Q9HYF1
+    node_type: PROTEIN
+    label: PK22_PSEAE
+    grounding: UniProtKB:Q9HYF1
+  - node_id: prot_Q886D9
+    node_type: PROTEIN
+    label: PK22_PSESM
+    grounding: UniProtKB:Q886D9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[phosphate](n) is a substrate consumed by RHEA:57820 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:57821
+      snippet: '[phosphate](n) + ADP => [phosphate](n+1) + AMP'
+      notes: Rhea's left-to-right directional reaction RHEA:57821 declares side 57820_L as its substrates
+        (rh:substrates); the master reaction RHEA:57820 is undirected. This participant is POLYMER:9859
+        with coefficient 1. Rhea cites PMID:19001261, PMID:24532069, PMID:15262957, PMID:15716459 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ADP is a substrate consumed by RHEA:57820 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57821
+      snippet: '[phosphate](n) + ADP => [phosphate](n+1) + AMP'
+      notes: Rhea's left-to-right directional reaction RHEA:57821 declares side 57820_L as its substrates
+        (rh:substrates); the master reaction RHEA:57820 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:19001261, PMID:24532069, PMID:15262957, PMID:15716459 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[phosphate](n+1) is a product released by RHEA:57820 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:57821
+      snippet: '[phosphate](n) + ADP => [phosphate](n+1) + AMP'
+      notes: Rhea's left-to-right directional reaction RHEA:57821 declares side 57820_R as its products
+        (rh:products); the master reaction RHEA:57820 is undirected. This participant is POLYMER:14280
+        with coefficient 1. Rhea cites PMID:19001261, PMID:24532069, PMID:15262957, PMID:15716459 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:57820 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57821
+      snippet: '[phosphate](n) + ADP => [phosphate](n+1) + AMP'
+      notes: Rhea's left-to-right directional reaction RHEA:57821 declares side 57820_R as its products
+        (rh:products); the master reaction RHEA:57820 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:19001261, PMID:24532069, PMID:15262957, PMID:15716459 for
+        this reaction.
+  - subject: prot_Q83XD3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PK22_ACIJO is an exemplar enzyme with EC 2.7.4.33 activity.
+    evidence:
+    - reference: EC:2.7.4.33
+      snippet: DR   Q83XD3, PK22_ACIJO ;  Q9HYF1, PK22_PSEAE ;  Q886D9, PK22_PSESM ;
+      notes: ExPASy ENZYME entry EC 2.7.4.33 cross-references UniProtKB:Q83XD3 (PK22_ACIJO) as a protein
+        with this activity.
+  - subject: prot_Q9HYF1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PK22_PSEAE is an exemplar enzyme with EC 2.7.4.33 activity.
+    evidence:
+    - reference: EC:2.7.4.33
+      snippet: DR   Q83XD3, PK22_ACIJO ;  Q9HYF1, PK22_PSEAE ;  Q886D9, PK22_PSESM ;
+      notes: ExPASy ENZYME entry EC 2.7.4.33 cross-references UniProtKB:Q9HYF1 (PK22_PSEAE) as a protein
+        with this activity.
+  - subject: prot_Q886D9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PK22_PSESM is an exemplar enzyme with EC 2.7.4.33 activity.
+    evidence:
+    - reference: EC:2.7.4.33
+      snippet: DR   Q83XD3, PK22_ACIJO ;  Q9HYF1, PK22_PSEAE ;  Q886D9, PK22_PSESM ;
+      notes: ExPASy ENZYME entry EC 2.7.4.33 cross-references UniProtKB:Q886D9 (PK22_PSESM) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

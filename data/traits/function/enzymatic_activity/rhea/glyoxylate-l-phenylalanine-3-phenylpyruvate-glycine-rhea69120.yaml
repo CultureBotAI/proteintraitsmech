@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:36655
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,107 @@ definitions:
       Catalyses the reaction: glyoxylate + L-phenylalanine = 3-phenylpyruvate + glycine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glyoxylate + L-phenylalanine = 3-phenylpyruvate + glycine
+  description: Substrate-to-product chemistry of RHEA:69120, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69121 (rh:substrates → 69120_L, rh:products → 69120_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of glyoxylate + L-phenylalanine = 3-phenylpyruvate + glycine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69120
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: glyoxylate + L-phenylalanine = 3-phenylpyruvate + glycine'
+  - node_id: sub1
+    label: glyoxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:36655
+    description: Formula C2HO3.
+  - node_id: sub2
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: prd1
+    label: 3-phenylpyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:18005
+    description: Formula C9H7O3.
+  - node_id: prd2
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+    description: Formula C2H5NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aromatic-amino-acid:glyoxylate transaminase activity
+    grounding: GO:0047313
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: glyoxylate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69121
+      snippet: glyoxylate + L-phenylalanine => 3-phenylpyruvate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:69121 declares side 69120_L as its substrates
+        (rh:substrates); the master reaction RHEA:69120 is undirected. This participant is CHEBI:36655
+        with coefficient 1. Rhea cites PMID:38593075, PMID:18620547, PMID:12220660 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-phenylalanine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69121
+      snippet: glyoxylate + L-phenylalanine => 3-phenylpyruvate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:69121 declares side 69120_L as its substrates
+        (rh:substrates); the master reaction RHEA:69120 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:38593075, PMID:18620547, PMID:12220660 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-phenylpyruvate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69121
+      snippet: glyoxylate + L-phenylalanine => 3-phenylpyruvate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:69121 declares side 69120_R as its products
+        (rh:products); the master reaction RHEA:69120 is undirected. This participant is CHEBI:18005 with
+        coefficient 1. Rhea cites PMID:38593075, PMID:18620547, PMID:12220660 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glycine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69121
+      snippet: glyoxylate + L-phenylalanine => 3-phenylpyruvate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:69121 declares side 69120_R as its products
+        (rh:products); the master reaction RHEA:69120 is undirected. This participant is CHEBI:57305 with
+        coefficient 1. Rhea cites PMID:38593075, PMID:18620547, PMID:12220660 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:69120
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047313"/>
+      notes: The rdfs:seeAlso triple on RHEA:69120 in rhea.rdf. GO term GO:0047313 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:85008
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,78 @@ definitions:
       Catalyses the reaction: (E)-4-coumaroyl-CoA + H2O = 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (E)-4-coumaroyl-CoA + H2O = 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA
+  description: Substrate-to-product chemistry of RHEA:40991, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:40992 (rh:substrates → 40991_L, rh:products → 40991_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (E)-4-coumaroyl-CoA + H2O = 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:40991
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (E)-4-coumaroyl-CoA + H2O = 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA'
+  - node_id: sub1
+    label: (E)-4-coumaroyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:85008
+    description: Formula C30H38N7O18P3S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:73500
+    description: Formula C30H40N7O19P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (E)-4-coumaroyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:40992
+      snippet: (E)-4-coumaroyl-CoA + H2O => 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:40992 declares side 40991_L as its substrates
+        (rh:substrates); the master reaction RHEA:40991 is undirected. This participant is CHEBI:85008
+        with coefficient 1. Rhea cites PMID:10543794, PMID:18479250, PMID:22328668, PMID:9461612 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40992
+      snippet: (E)-4-coumaroyl-CoA + H2O => 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:40992 declares side 40991_L as its substrates
+        (rh:substrates); the master reaction RHEA:40991 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10543794, PMID:18479250, PMID:22328668, PMID:9461612 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:40992
+      snippet: (E)-4-coumaroyl-CoA + H2O => 3-hydroxy-3-(4-hydroxyphenyl)propanoyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:40992 declares side 40991_R as its products
+        (rh:products); the master reaction RHEA:40991 is undirected. This participant is CHEBI:73500 with
+        coefficient 1. Rhea cites PMID:10543794, PMID:18479250, PMID:22328668, PMID:9461612 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

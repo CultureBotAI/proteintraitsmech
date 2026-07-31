@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.68
     mapping_source: rhea2ec
@@ -30,4 +30,166 @@ definitions:
       Catalyses the reaction: L-fuconate = 2-dehydro-3-deoxy-L-fuconate + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-fuconate = 2-dehydro-3-deoxy-L-fuconate + H2O
+  description: Substrate-to-product chemistry of RHEA:22772, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22773 (rh:substrates → 22772_L, rh:products → 22772_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-fuconate = 2-dehydro-3-deoxy-L-fuconate + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22772
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-fuconate = 2-dehydro-3-deoxy-L-fuconate + H2O'
+  - node_id: sub1
+    label: L-fuconate
+    node_type: CHEMICAL
+    grounding: CHEBI:21291
+    description: Formula C6H11O6.
+  - node_id: prd1
+    label: 2-dehydro-3-deoxy-L-fuconate
+    node_type: CHEMICAL
+    grounding: CHEBI:37448
+    description: Formula C6H9O5.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-fuconate dehydratase activity
+    grounding: GO:0050023
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: L-fuconate dehydratase
+    grounding: EC:4.2.1.68
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q2KIA9
+    node_type: PROTEIN
+    label: ENOF1_BOVIN
+    grounding: UniProtKB:Q2KIA9
+  - node_id: prot_Q7L5Y1
+    node_type: PROTEIN
+    label: ENOF1_HUMAN
+    grounding: UniProtKB:Q7L5Y1
+  - node_id: prot_Q5RAT4
+    node_type: PROTEIN
+    label: ENOF1_PONAB
+    grounding: UniProtKB:Q5RAT4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-fuconate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22773
+      snippet: L-fuconate => 2-dehydro-3-deoxy-L-fuconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:22773 declares side 22772_L as its substrates
+        (rh:substrates); the master reaction RHEA:22772 is undirected. This participant is CHEBI:21291
+        with coefficient 1. Rhea cites PMID:5050937, PMID:24697329, PMID:17144652 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-dehydro-3-deoxy-L-fuconate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22773
+      snippet: L-fuconate => 2-dehydro-3-deoxy-L-fuconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:22773 declares side 22772_R as its products
+        (rh:products); the master reaction RHEA:22772 is undirected. This participant is CHEBI:37448 with
+        coefficient 1. Rhea cites PMID:5050937, PMID:24697329, PMID:17144652 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22773
+      snippet: L-fuconate => 2-dehydro-3-deoxy-L-fuconate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:22773 declares side 22772_R as its products
+        (rh:products); the master reaction RHEA:22772 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:5050937, PMID:24697329, PMID:17144652 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:22772
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050023"/>
+      notes: The rdfs:seeAlso triple on RHEA:22772 in rhea.rdf. GO term GO:0050023 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.68; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22772
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.68"/>
+      notes: The rh:ec triple on RHEA:22772 in rhea.rdf. EC 4.2.1.68 is itself a record in this KB.
+  - subject: prot_Q2KIA9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ENOF1_BOVIN is an exemplar enzyme carrying EC 4.2.1.68, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.68
+      snippet: DR   Q2KIA9, ENOF1_BOVIN;  Q7L5Y1, ENOF1_HUMAN;  Q5RAT4, ENOF1_PONAB;
+      notes: ExPASy ENZYME entry EC 4.2.1.68 cross-references UniProtKB:Q2KIA9 (ENOF1_BOVIN) as a protein
+        with this activity.
+    - reference: RHEA:22772
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.68"/>
+      notes: Rhea assigns RHEA:22772 to EC 4.2.1.68, and EC 4.2.1.68 maps to exactly one Rhea master reaction
+        (RHEA:22772), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q7L5Y1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ENOF1_HUMAN is an exemplar enzyme carrying EC 4.2.1.68, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.68
+      snippet: DR   Q2KIA9, ENOF1_BOVIN;  Q7L5Y1, ENOF1_HUMAN;  Q5RAT4, ENOF1_PONAB;
+      notes: ExPASy ENZYME entry EC 4.2.1.68 cross-references UniProtKB:Q7L5Y1 (ENOF1_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:22772
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.68"/>
+      notes: Rhea assigns RHEA:22772 to EC 4.2.1.68, and EC 4.2.1.68 maps to exactly one Rhea master reaction
+        (RHEA:22772), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q5RAT4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ENOF1_PONAB is an exemplar enzyme carrying EC 4.2.1.68, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.68
+      snippet: DR   Q2KIA9, ENOF1_BOVIN;  Q7L5Y1, ENOF1_HUMAN;  Q5RAT4, ENOF1_PONAB;
+      notes: ExPASy ENZYME entry EC 4.2.1.68 cross-references UniProtKB:Q5RAT4 (ENOF1_PONAB) as a protein
+        with this activity.
+    - reference: RHEA:22772
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.68"/>
+      notes: Rhea assigns RHEA:22772 to EC 4.2.1.68, and EC 4.2.1.68 maps to exactly one Rhea master reaction
+        (RHEA:22772), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

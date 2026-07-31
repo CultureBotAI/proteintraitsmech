@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17389
     role: SUBSTRATE_OR_PRODUCT
@@ -22,4 +22,108 @@ definitions:
       Catalyses the reaction: a 2-acylglycerol + an acyl-CoA = a 2,3-diacyl-sn-glycerol + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 2-acylglycerol + an acyl-CoA = a 2,3-diacyl-sn-glycerol + CoA
+  description: Substrate-to-product chemistry of RHEA:38467, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:38468 (rh:substrates → 38467_L, rh:products → 38467_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2-acylglycerol + an acyl-CoA = a 2,3-diacyl-sn-glycerol + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:38467
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 2-acylglycerol + an acyl-CoA = a 2,3-diacyl-sn-glycerol + CoA'
+  - node_id: sub1
+    label: a 2-acylglycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:17389
+    description: Formula C4H7O4R.
+  - node_id: sub2
+    label: an acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:58342
+    description: Formula C22H31N7O17P3SR.
+  - node_id: prd1
+    label: a 2,3-diacyl-sn-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:75524
+    description: Formula C5H6O5R2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-acylglycerol O-acyltransferase activity
+    grounding: GO:0003846
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2-acylglycerol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38468
+      snippet: a 2-acylglycerol + an acyl-CoA => a 2,3-diacyl-sn-glycerol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38468 declares side 38467_L as its substrates
+        (rh:substrates); the master reaction RHEA:38467 is undirected. This participant is CHEBI:17389
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: an acyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38468
+      snippet: a 2-acylglycerol + an acyl-CoA => a 2,3-diacyl-sn-glycerol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38468 declares side 38467_L as its substrates
+        (rh:substrates); the master reaction RHEA:38467 is undirected. This participant is CHEBI:58342
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 2,3-diacyl-sn-glycerol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38468
+      snippet: a 2-acylglycerol + an acyl-CoA => a 2,3-diacyl-sn-glycerol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38468 declares side 38467_R as its products
+        (rh:products); the master reaction RHEA:38467 is undirected. This participant is CHEBI:75524 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38468
+      snippet: a 2-acylglycerol + an acyl-CoA => a 2,3-diacyl-sn-glycerol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:38468 declares side 38467_R as its products
+        (rh:products); the master reaction RHEA:38467 is undirected. This participant is CHEBI:57287 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:38467
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003846"/>
+      notes: The rdfs:seeAlso triple on RHEA:38467 in rhea.rdf. GO term GO:0003846 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:193130
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,139 @@ definitions:
       Catalyses the reaction: L-homoseryl-tRNA(Ser) + H2O = tRNA(Ser) + L-homoserine + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-homoseryl-tRNA(Ser) + H2O = tRNA(Ser) + L-homoserine + H(+)
+  description: Substrate-to-product chemistry of RHEA:74255, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:74256 (rh:substrates → 74255_L, rh:products → 74255_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-homoseryl-tRNA(Ser) + H2O = tRNA(Ser) + L-homoserine + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:74255
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-homoseryl-tRNA(Ser) + H2O = tRNA(Ser) + L-homoserine + H(+)'
+  - node_id: sub1
+    label: L-homoseryl-tRNA(Ser)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18355
+    description: Rhea compound GENERIC:18355.
+  - node_id: sub1_rp1
+    label: 3'-(L-homoseryl)adenylyl residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18355 (L-homoseryl-tRNA(Ser));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:193130
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: tRNA(Ser)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9669
+    description: Rhea compound GENERIC:9669.
+  - node_id: prd1_rp1
+    label: AMP 3'-end residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9669 (tRNA(Ser));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: prd2
+    label: L-homoserine
+    node_type: CHEMICAL
+    grounding: CHEBI:57476
+    description: Formula C4H9NO3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-homoseryl-tRNA(Ser) is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74256
+      snippet: L-homoseryl-tRNA(Ser) + H2O => tRNA(Ser) + L-homoserine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74256 declares side 74255_L as its substrates
+        (rh:substrates); the master reaction RHEA:74255 is undirected. This participant is GENERIC:18355
+        with coefficient 1. Rhea cites PMID:25918376 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-homoseryl)adenylyl residue is the reactive part of L-homoseryl-tRNA(Ser).
+    evidence:
+    - reference: RHEA:74255
+      snippet: 3'-(L-homoseryl)adenylyl residue
+      notes: Rhea compound GENERIC:18355 (L-homoseryl-tRNA(Ser)) declares rh:reactivePart = 3'-(L-homoseryl)adenylyl
+        residue (CHEBI:193130), formula C14H20N6O8P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74256
+      snippet: L-homoseryl-tRNA(Ser) + H2O => tRNA(Ser) + L-homoserine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74256 declares side 74255_L as its substrates
+        (rh:substrates); the master reaction RHEA:74255 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:25918376 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tRNA(Ser) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74256
+      snippet: L-homoseryl-tRNA(Ser) + H2O => tRNA(Ser) + L-homoserine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74256 declares side 74255_R as its products
+        (rh:products); the master reaction RHEA:74255 is undirected. This participant is GENERIC:9669
+        with coefficient 1. Rhea cites PMID:25918376 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: AMP 3'-end residue is the reactive part of tRNA(Ser).
+    evidence:
+    - reference: RHEA:74255
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9669 (tRNA(Ser)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442),
+        formula C10H12N5O6P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-homoserine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74256
+      snippet: L-homoseryl-tRNA(Ser) + H2O => tRNA(Ser) + L-homoserine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74256 declares side 74255_R as its products
+        (rh:products); the master reaction RHEA:74255 is undirected. This participant is CHEBI:57476 with
+        coefficient 1. Rhea cites PMID:25918376 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74256
+      snippet: L-homoseryl-tRNA(Ser) + H2O => tRNA(Ser) + L-homoserine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:74256 declares side 74255_R as its products
+        (rh:products); the master reaction RHEA:74255 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:25918376 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

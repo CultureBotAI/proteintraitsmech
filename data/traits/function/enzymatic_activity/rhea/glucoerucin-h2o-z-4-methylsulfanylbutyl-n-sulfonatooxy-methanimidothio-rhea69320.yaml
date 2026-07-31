@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:5404
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,93 @@ definitions:
       Catalyses the reaction: glucoerucin + H2O = (Z)-4-methylsulfanylbutyl-N-(sulfonatooxy)methanimidothioate + D-glucose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucoerucin + H2O = (Z)-4-methylsulfanylbutyl-N-(sulfonatooxy)methanimidothioate
+    + D-gl…
+  description: Substrate-to-product chemistry of RHEA:69320, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69321 (rh:substrates → 69320_L, rh:products → 69320_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of glucoerucin + H2O = (Z)-4-methylsulfanylbutyl-N-(sulfonatooxy)methanimidothi…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69320
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: glucoerucin + H2O = (Z)-4-methylsulfanylbutyl-N-(sulfonatooxy)methanimidothioate
+      + D-glucose'
+  - node_id: sub1
+    label: glucoerucin
+    node_type: CHEMICAL
+    grounding: CHEBI:5404
+    description: Formula C12H22NO9S3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (Z)-4-methylsulfanylbutyl-N-(sulfonatooxy)methanimidothioate
+    node_type: CHEMICAL
+    grounding: CHEBI:183222
+    description: Formula C6H12NO4S3.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: glucoerucin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69321
+      snippet: glucoerucin + H2O => (Z)-4-methylsulfanylbutyl-N-(sulfonatooxy)methanimidothioate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69321 declares side 69320_L as its substrates
+        (rh:substrates); the master reaction RHEA:69320 is undirected. This participant is CHEBI:5404
+        with coefficient 1. Rhea cites PMID:21783213, PMID:17139450 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69321
+      snippet: glucoerucin + H2O => (Z)-4-methylsulfanylbutyl-N-(sulfonatooxy)methanimidothioate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69321 declares side 69320_L as its substrates
+        (rh:substrates); the master reaction RHEA:69320 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21783213, PMID:17139450 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (Z)-4-methylsulfanylbutyl-N-(sulfonatooxy)methanimidothioate is a product released by
+      this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69321
+      snippet: glucoerucin + H2O => (Z)-4-methylsulfanylbutyl-N-(sulfonatooxy)methanimidothioate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69321 declares side 69320_R as its products
+        (rh:products); the master reaction RHEA:69320 is undirected. This participant is CHEBI:183222
+        with coefficient 1. Rhea cites PMID:21783213, PMID:17139450 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69321
+      snippet: glucoerucin + H2O => (Z)-4-methylsulfanylbutyl-N-(sulfonatooxy)methanimidothioate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69321 declares side 69320_R as its products
+        (rh:products); the master reaction RHEA:69320 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:21783213, PMID:17139450 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

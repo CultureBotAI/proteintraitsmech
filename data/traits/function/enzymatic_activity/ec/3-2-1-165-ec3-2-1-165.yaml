@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -43,4 +43,82 @@ definitions:
       Catalyses: Hydrolysis of chitosan or chitosan oligosaccharides to remove successive D-glucosamine residues from the non-reducing termini
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of exo-1,4-beta-D-glucosaminidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.165. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of chitosan or chitosan oligosaccharides to remove successive D-glucosamine residues from the non-reducing
+    termini".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: exo-1,4-beta-D-glucosaminidase
+    grounding: EC:3.2.1.165
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: exo-1,4-beta-D-glucosaminidase activity
+    grounding: GO:0052761
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q56F26
+    node_type: PROTEIN
+    label: EBDG_AMYOR
+    grounding: UniProtKB:Q56F26
+  - node_id: prot_D4AUH1
+    node_type: PROTEIN
+    label: EBDG_ARTBC
+    grounding: UniProtKB:D4AUH1
+  - node_id: prot_C0LRA7
+    node_type: PROTEIN
+    label: EBDG_HYPVI
+    grounding: UniProtKB:C0LRA7
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.165
+      snippet: EC:3.2.1.165 > GO:exo-1,4-beta-D-glucosaminidase activity ; GO:0052761
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0052761 is itself a record
+        in this KB.
+  - subject: prot_Q56F26
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EBDG_AMYOR is an exemplar enzyme with EC 3.2.1.165 activity.
+    evidence:
+    - reference: EC:3.2.1.165
+      snippet: DR   Q56F26, EBDG_AMYOR ;  D4AUH1, EBDG_ARTBC ;  C0LRA7, EBDG_HYPVI ;
+      notes: ExPASy ENZYME entry EC 3.2.1.165 cross-references UniProtKB:Q56F26 (EBDG_AMYOR) as a protein
+        with this activity.
+  - subject: prot_D4AUH1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EBDG_ARTBC is an exemplar enzyme with EC 3.2.1.165 activity.
+    evidence:
+    - reference: EC:3.2.1.165
+      snippet: DR   Q56F26, EBDG_AMYOR ;  D4AUH1, EBDG_ARTBC ;  C0LRA7, EBDG_HYPVI ;
+      notes: ExPASy ENZYME entry EC 3.2.1.165 cross-references UniProtKB:D4AUH1 (EBDG_ARTBC) as a protein
+        with this activity.
+  - subject: prot_C0LRA7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EBDG_HYPVI is an exemplar enzyme with EC 3.2.1.165 activity.
+    evidence:
+    - reference: EC:3.2.1.165
+      snippet: DR   Q56F26, EBDG_AMYOR ;  D4AUH1, EBDG_ARTBC ;  C0LRA7, EBDG_HYPVI ;
+      notes: ExPASy ENZYME entry EC 3.2.1.165 cross-references UniProtKB:C0LRA7 (EBDG_HYPVI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

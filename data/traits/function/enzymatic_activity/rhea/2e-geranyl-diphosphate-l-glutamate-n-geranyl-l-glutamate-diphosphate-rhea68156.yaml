@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58057
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,92 @@ definitions:
       Catalyses the reaction: (2E)-geranyl diphosphate + L-glutamate = N-geranyl-L-glutamate + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E)-geranyl diphosphate + L-glutamate = N-geranyl-L-glutamate + diphosphate
+  description: Substrate-to-product chemistry of RHEA:68156, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:68157 (rh:substrates → 68156_L, rh:products → 68156_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E)-geranyl diphosphate + L-glutamate = N-geranyl-L-glutamate + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:68156
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E)-geranyl diphosphate + L-glutamate = N-geranyl-L-glutamate + diphosphate'
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: sub2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prd1
+    label: N-geranyl-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:172365
+    description: Formula C15H24NO4.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68157
+      snippet: (2E)-geranyl diphosphate + L-glutamate => N-geranyl-L-glutamate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68157 declares side 68156_L as its substrates
+        (rh:substrates); the master reaction RHEA:68156 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:30262498, PMID:32457155 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-glutamate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68157
+      snippet: (2E)-geranyl diphosphate + L-glutamate => N-geranyl-L-glutamate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68157 declares side 68156_L as its substrates
+        (rh:substrates); the master reaction RHEA:68156 is undirected. This participant is CHEBI:29985
+        with coefficient 1. Rhea cites PMID:30262498, PMID:32457155 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-geranyl-L-glutamate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68157
+      snippet: (2E)-geranyl diphosphate + L-glutamate => N-geranyl-L-glutamate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68157 declares side 68156_R as its products
+        (rh:products); the master reaction RHEA:68156 is undirected. This participant is CHEBI:172365
+        with coefficient 1. Rhea cites PMID:30262498, PMID:32457155 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68157
+      snippet: (2E)-geranyl diphosphate + L-glutamate => N-geranyl-L-glutamate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68157 declares side 68156_R as its products
+        (rh:products); the master reaction RHEA:68156 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:30262498, PMID:32457155 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

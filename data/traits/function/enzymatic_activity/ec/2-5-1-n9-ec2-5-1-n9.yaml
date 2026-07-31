@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -38,4 +38,154 @@ definitions:
       Catalyses: sn-glycerol 1-phosphate + all-trans-heptaprenyl diphosphate = 3-heptaprenyl-sn-glycero-1-phosphate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of heptaprenylglyceryl phosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.n9. EC 2.5.1.n9 maps to exactly
+    one curated Rhea reaction (RHEA:33495), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "sn-glycerol 1-phosphate
+    + all-trans-heptaprenyl diphosphate = 3-heptaprenyl-sn-glycero-1-phosphate + diphosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: heptaprenylglyceryl phosphate synthase
+    grounding: EC:2.5.1.n9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: sn-glycerol 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57685
+    description: Formula C3H7O6P.
+  - node_id: sub2
+    label: all-trans-heptaprenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58206
+    description: Formula C35H57O7P2.
+  - node_id: prd1
+    label: 3-heptaprenyl-sn-glycero-1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:64781
+    description: Formula C38H63O6P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: heptaprenylglyceryl phosphate synthase activity
+    grounding: GO:0120536
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B7GFU9
+    node_type: PROTEIN
+    label: PCRB_ANOFW
+    grounding: UniProtKB:B7GFU9
+  - node_id: prot_C3PBN9
+    node_type: PROTEIN
+    label: PCRB_BACAA
+    grounding: UniProtKB:C3PBN9
+  - node_id: prot_C3L541
+    node_type: PROTEIN
+    label: PCRB_BACAC
+    grounding: UniProtKB:C3L541
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sn-glycerol 1-phosphate is a substrate consumed by RHEA:33495 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33496
+      snippet: sn-glycerol 1-phosphate + all-trans-heptaprenyl diphosphate => 3-heptaprenyl-sn-glycero-1-phosphate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33496 declares side 33495_L as its substrates
+        (rh:substrates); the master reaction RHEA:33495 is undirected. This participant is CHEBI:57685
+        with coefficient 1. Rhea cites PMID:21761520 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: all-trans-heptaprenyl diphosphate is a substrate consumed by RHEA:33495 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33496
+      snippet: sn-glycerol 1-phosphate + all-trans-heptaprenyl diphosphate => 3-heptaprenyl-sn-glycero-1-phosphate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33496 declares side 33495_L as its substrates
+        (rh:substrates); the master reaction RHEA:33495 is undirected. This participant is CHEBI:58206
+        with coefficient 1. Rhea cites PMID:21761520 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-heptaprenyl-sn-glycero-1-phosphate is a product released by RHEA:33495 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33496
+      snippet: sn-glycerol 1-phosphate + all-trans-heptaprenyl diphosphate => 3-heptaprenyl-sn-glycero-1-phosphate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33496 declares side 33495_R as its products
+        (rh:products); the master reaction RHEA:33495 is undirected. This participant is CHEBI:64781 with
+        coefficient 1. Rhea cites PMID:21761520 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:33495 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33496
+      snippet: sn-glycerol 1-phosphate + all-trans-heptaprenyl diphosphate => 3-heptaprenyl-sn-glycero-1-phosphate
+        + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:33496 declares side 33495_R as its products
+        (rh:products); the master reaction RHEA:33495 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21761520 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.n9
+      snippet: EC:2.5.1.n9 > GO:heptaprenylglyceryl phosphate synthase activity ; GO:0120536
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0120536 is itself a record
+        in this KB.
+  - subject: prot_B7GFU9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PCRB_ANOFW is an exemplar enzyme with EC 2.5.1.n9 activity.
+    evidence:
+    - reference: EC:2.5.1.n9
+      snippet: DR   B7GFU9, PCRB_ANOFW ;  C3PBN9, PCRB_BACAA ;  C3L541, PCRB_BACAC ;
+      notes: ExPASy ENZYME entry EC 2.5.1.n9 cross-references UniProtKB:B7GFU9 (PCRB_ANOFW) as a protein
+        with this activity.
+  - subject: prot_C3PBN9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PCRB_BACAA is an exemplar enzyme with EC 2.5.1.n9 activity.
+    evidence:
+    - reference: EC:2.5.1.n9
+      snippet: DR   B7GFU9, PCRB_ANOFW ;  C3PBN9, PCRB_BACAA ;  C3L541, PCRB_BACAC ;
+      notes: ExPASy ENZYME entry EC 2.5.1.n9 cross-references UniProtKB:C3PBN9 (PCRB_BACAA) as a protein
+        with this activity.
+  - subject: prot_C3L541
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PCRB_BACAC is an exemplar enzyme with EC 2.5.1.n9 activity.
+    evidence:
+    - reference: EC:2.5.1.n9
+      snippet: DR   B7GFU9, PCRB_ANOFW ;  C3PBN9, PCRB_BACAA ;  C3L541, PCRB_BACAC ;
+      notes: ExPASy ENZYME entry EC 2.5.1.n9 cross-references UniProtKB:C3L541 (PCRB_BACAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

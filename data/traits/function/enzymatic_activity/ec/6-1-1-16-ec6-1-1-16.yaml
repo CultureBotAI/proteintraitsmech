@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.1.1.-
 synonyms:
@@ -45,4 +45,215 @@ definitions:
       Catalyses: tRNA(Cys) + L-cysteine + ATP = L-cysteinyl-tRNA(Cys) + AMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cysteine--tRNA ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.1.1.16. EC 6.1.1.16 maps to exactly
+    one curated Rhea reaction (RHEA:17773), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "tRNA(Cys) + L-cysteine
+    + ATP = L-cysteinyl-tRNA(Cys) + AMP + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cysteine--tRNA ligase
+    grounding: EC:6.1.1.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: tRNA(Cys)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9661
+    description: Rhea compound GENERIC:9661.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9661 (tRNA(Cys));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  - node_id: sub2
+    label: L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:35235
+    description: Formula C3H7NO2S.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: L-cysteinyl-tRNA(Cys)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9679
+    description: Rhea compound GENERIC:9679.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 3'-(L-cysteinyl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9679 (L-cysteinyl-tRNA(Cys));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78517
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cysteine-tRNA ligase activity
+    grounding: GO:0004817
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q0IZQ2
+    node_type: PROTEIN
+    label: CPS11_ORYSJ
+    grounding: UniProtKB:Q0IZQ2
+  - node_id: prot_A0A1D6LAG9
+    node_type: PROTEIN
+    label: CPS1_MAIZE
+    grounding: UniProtKB:A0A1D6LAG9
+  - node_id: prot_Q39A07
+    node_type: PROTEIN
+    label: SYC1_BURL3
+    grounding: UniProtKB:Q39A07
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tRNA(Cys) is a substrate consumed by RHEA:17773 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17774
+      snippet: tRNA(Cys) + L-cysteine + ATP => L-cysteinyl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17774 declares side 17773_L as its substrates
+        (rh:substrates); the master reaction RHEA:17773 is undirected. This participant is GENERIC:9661
+        with coefficient 1. Rhea cites PMID:14262440, PMID:8916927, PMID:10860750, PMID:15489861 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: AMP 3'-end residue is the reactive part of tRNA(Cys).
+    evidence:
+    - reference: RHEA:17773
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9661 (tRNA(Cys)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-cysteine is a substrate consumed by RHEA:17773 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17774
+      snippet: tRNA(Cys) + L-cysteine + ATP => L-cysteinyl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17774 declares side 17773_L as its substrates
+        (rh:substrates); the master reaction RHEA:17773 is undirected. This participant is CHEBI:35235
+        with coefficient 1. Rhea cites PMID:14262440, PMID:8916927, PMID:10860750, PMID:15489861 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:17773 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17774
+      snippet: tRNA(Cys) + L-cysteine + ATP => L-cysteinyl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17774 declares side 17773_L as its substrates
+        (rh:substrates); the master reaction RHEA:17773 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:14262440, PMID:8916927, PMID:10860750, PMID:15489861 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-cysteinyl-tRNA(Cys) is a product released by RHEA:17773 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17774
+      snippet: tRNA(Cys) + L-cysteine + ATP => L-cysteinyl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17774 declares side 17773_R as its products
+        (rh:products); the master reaction RHEA:17773 is undirected. This participant is GENERIC:9679
+        with coefficient 1. Rhea cites PMID:14262440, PMID:8916927, PMID:10860750, PMID:15489861 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(L-cysteinyl)adenylyl group is the reactive part of L-cysteinyl-tRNA(Cys).
+    evidence:
+    - reference: RHEA:17773
+      snippet: 3'-(L-cysteinyl)adenylyl group
+      notes: Rhea compound GENERIC:9679 (L-cysteinyl-tRNA(Cys)) declares rh:reactivePart = 3'-(L-cysteinyl)adenylyl
+        group (CHEBI:78517).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:17773 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17774
+      snippet: tRNA(Cys) + L-cysteine + ATP => L-cysteinyl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17774 declares side 17773_R as its products
+        (rh:products); the master reaction RHEA:17773 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:14262440, PMID:8916927, PMID:10860750, PMID:15489861 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:17773 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17774
+      snippet: tRNA(Cys) + L-cysteine + ATP => L-cysteinyl-tRNA(Cys) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:17774 declares side 17773_R as its products
+        (rh:products); the master reaction RHEA:17773 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:14262440, PMID:8916927, PMID:10860750, PMID:15489861 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.1.1.16
+      snippet: EC:6.1.1.16 > GO:cysteine-tRNA ligase activity ; GO:0004817
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004817 is itself a record
+        in this KB.
+  - subject: prot_Q0IZQ2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPS11_ORYSJ is an exemplar enzyme with EC 6.1.1.16 activity.
+    evidence:
+    - reference: EC:6.1.1.16
+      snippet: DR   Q0IZQ2, CPS11_ORYSJ;  A0A1D6LAG9, CPS1_MAIZE ;  Q39A07, SYC1_BURL3 ;
+      notes: ExPASy ENZYME entry EC 6.1.1.16 cross-references UniProtKB:Q0IZQ2 (CPS11_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_A0A1D6LAG9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPS1_MAIZE is an exemplar enzyme with EC 6.1.1.16 activity.
+    evidence:
+    - reference: EC:6.1.1.16
+      snippet: DR   Q0IZQ2, CPS11_ORYSJ;  A0A1D6LAG9, CPS1_MAIZE ;  Q39A07, SYC1_BURL3 ;
+      notes: ExPASy ENZYME entry EC 6.1.1.16 cross-references UniProtKB:A0A1D6LAG9 (CPS1_MAIZE) as a protein
+        with this activity.
+  - subject: prot_Q39A07
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SYC1_BURL3 is an exemplar enzyme with EC 6.1.1.16 activity.
+    evidence:
+    - reference: EC:6.1.1.16
+      snippet: DR   Q0IZQ2, CPS11_ORYSJ;  A0A1D6LAG9, CPS1_MAIZE ;  Q39A07, SYC1_BURL3 ;
+      notes: ExPASy ENZYME entry EC 6.1.1.16 cross-references UniProtKB:Q39A07 (SYC1_BURL3) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

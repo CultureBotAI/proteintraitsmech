@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58243
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,94 @@ definitions:
       Catalyses the reaction: adenosine 5'-phosphosulfate + ATP = P(1),P(4)-bis(5'-adenosyl) tetraphosphate + sulfate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of adenosine 5'-phosphosulfate + ATP = P(1),P(4)-bis(5'-adenosyl) tetraphosphate
+    + sulfate
+  description: Substrate-to-product chemistry of RHEA:86819, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:86820 (rh:substrates → 86819_L, rh:products → 86819_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of adenosine 5'-phosphosulfate + ATP = P(1),P(4)-bis(5'-adenosyl) tetraphosphat…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:86819
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: adenosine 5''-phosphosulfate + ATP = P(1),P(4)-bis(5''-adenosyl) tetraphosphate +
+      sulfate'
+  - node_id: sub1
+    label: adenosine 5'-phosphosulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:58243
+    description: Formula C10H12N5O10PS.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: P(1),P(4)-bis(5'-adenosyl) tetraphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58141
+    description: Formula C20H24N10O19P4.
+  - node_id: prd2
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: adenosine 5'-phosphosulfate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:86820
+      snippet: adenosine 5'-phosphosulfate + ATP => P(1),P(4)-bis(5'-adenosyl) tetraphosphate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:86820 declares side 86819_L as its substrates
+        (rh:substrates); the master reaction RHEA:86819 is undirected. This participant is CHEBI:58243
+        with coefficient 1. Rhea cites PMID:2840953 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86820
+      snippet: adenosine 5'-phosphosulfate + ATP => P(1),P(4)-bis(5'-adenosyl) tetraphosphate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:86820 declares side 86819_L as its substrates
+        (rh:substrates); the master reaction RHEA:86819 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:2840953 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: P(1),P(4)-bis(5'-adenosyl) tetraphosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:86820
+      snippet: adenosine 5'-phosphosulfate + ATP => P(1),P(4)-bis(5'-adenosyl) tetraphosphate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:86820 declares side 86819_R as its products
+        (rh:products); the master reaction RHEA:86819 is undirected. This participant is CHEBI:58141 with
+        coefficient 1. Rhea cites PMID:2840953 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86820
+      snippet: adenosine 5'-phosphosulfate + ATP => P(1),P(4)-bis(5'-adenosyl) tetraphosphate + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:86820 declares side 86819_R as its products
+        (rh:products); the master reaction RHEA:86819 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:2840953 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

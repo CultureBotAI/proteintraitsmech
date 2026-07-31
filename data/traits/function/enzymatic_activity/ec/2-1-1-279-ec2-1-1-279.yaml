@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.1.-
 synonyms:
@@ -37,4 +37,261 @@ definitions:
       Catalyses: (1) (E)-anol + S-adenosyl-L-methionine = (E)-anethole + S-adenosyl-L- homocysteine + H(+). (2) (E)-isoeugenol + S-adenosyl-L-methionine = (E)-isomethyleugenol + S-adenosyl-L-homocysteine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of trans-anol O-methyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.1.279. Rhea assigns 2 curated
+    reactions to EC 2.1.1.279. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (E)-anol + S-adenosyl-L-methionine = (E)-anethole +
+    S-adenosyl-L- homocysteine + H(+). (2) (E)-isoeugenol + S-adenosyl-L-methionine = (E)-isomethyleugenol
+    + S-adenosyl-L-homocysteine + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: trans-anol O-methyltransferase
+    grounding: EC:2.1.1.279
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (E)-isoeugenol + S-adenosyl-L-methionine = (E)-isomethyleugenol + S-adenosyl…
+    grounding: RHEA:17081
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (E)-isoeugenol + S-adenosyl-L-methionine = (E)-isomethyleugenol + S-adenosyl-L-homocysteine
+      + H(+)'
+  - node_id: rxn1_sub1
+    label: (E)-isoeugenol
+    node_type: CHEMICAL
+    grounding: CHEBI:50545
+    description: Formula C10H12O2.
+  - node_id: rxn1_sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: rxn1_prd1
+    label: (E)-isomethyleugenol
+    node_type: CHEMICAL
+    grounding: CHEBI:6877
+    description: Formula C11H14O2.
+  - node_id: rxn1_prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (E)-anol + S-adenosyl-L-methionine = (E)-anethole + S-adenosyl-L-homocystein…
+    grounding: RHEA:36247
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (E)-anol + S-adenosyl-L-methionine = (E)-anethole + S-adenosyl-L-homocysteine
+      + H(+)'
+  - node_id: rxn2_sub1
+    label: (E)-anol
+    node_type: CHEMICAL
+    grounding: CHEBI:73343
+    description: Formula C9H10O.
+  - node_id: rxn2_sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: rxn2_prd1
+    label: (E)-anethole
+    node_type: CHEMICAL
+    grounding: CHEBI:35616
+    description: Formula C10H12O.
+  - node_id: rxn2_prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_B8RCD3
+    node_type: PROTEIN
+    label: AIMT1_PIMAN
+    grounding: UniProtKB:B8RCD3
+  - node_id: prot_A0A5A4PXL6
+    node_type: PROTEIN
+    label: OMT1_ACOCL
+    grounding: UniProtKB:A0A5A4PXL6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:17081 is one of the 2 curated reactions Rhea assigns to EC 2.1.1.279; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:17081
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.279"/>
+      notes: The rh:ec triple on RHEA:17081 in rhea.rdf assigns that reaction to EC 2.1.1.279.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (E)-isoeugenol is a substrate consumed by RHEA:17081 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17082
+      snippet: (E)-isoeugenol + S-adenosyl-L-methionine => (E)-isomethyleugenol + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17082 declares side 17081_L as its substrates
+        (rh:substrates); the master reaction RHEA:17081 is undirected. This participant is CHEBI:50545
+        with coefficient 1. Rhea cites PMID:18987218, PMID:17998204, PMID:9439593, PMID:16233496 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:17081 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17082
+      snippet: (E)-isoeugenol + S-adenosyl-L-methionine => (E)-isomethyleugenol + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17082 declares side 17081_L as its substrates
+        (rh:substrates); the master reaction RHEA:17081 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:18987218, PMID:17998204, PMID:9439593, PMID:16233496 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (E)-isomethyleugenol is a product released by RHEA:17081 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17082
+      snippet: (E)-isoeugenol + S-adenosyl-L-methionine => (E)-isomethyleugenol + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17082 declares side 17081_R as its products
+        (rh:products); the master reaction RHEA:17081 is undirected. This participant is CHEBI:6877 with
+        coefficient 1. Rhea cites PMID:18987218, PMID:17998204, PMID:9439593, PMID:16233496 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:17081 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17082
+      snippet: (E)-isoeugenol + S-adenosyl-L-methionine => (E)-isomethyleugenol + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17082 declares side 17081_R as its products
+        (rh:products); the master reaction RHEA:17081 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:18987218, PMID:17998204, PMID:9439593, PMID:16233496 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:17081 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17082
+      snippet: (E)-isoeugenol + S-adenosyl-L-methionine => (E)-isomethyleugenol + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17082 declares side 17081_R as its products
+        (rh:products); the master reaction RHEA:17081 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18987218, PMID:17998204, PMID:9439593, PMID:16233496 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:36247 is one of the 2 curated reactions Rhea assigns to EC 2.1.1.279; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:36247
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.279"/>
+      notes: The rh:ec triple on RHEA:36247 in rhea.rdf assigns that reaction to EC 2.1.1.279.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (E)-anol is a substrate consumed by RHEA:36247 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36248
+      snippet: (E)-anol + S-adenosyl-L-methionine => (E)-anethole + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36248 declares side 36247_L as its substrates
+        (rh:substrates); the master reaction RHEA:36247 is undirected. This participant is CHEBI:73343
+        with coefficient 1. Rhea cites PMID:18987218, PMID:30471982 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:36247 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36248
+      snippet: (E)-anol + S-adenosyl-L-methionine => (E)-anethole + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36248 declares side 36247_L as its substrates
+        (rh:substrates); the master reaction RHEA:36247 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:18987218, PMID:30471982 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (E)-anethole is a product released by RHEA:36247 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36248
+      snippet: (E)-anol + S-adenosyl-L-methionine => (E)-anethole + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36248 declares side 36247_R as its products
+        (rh:products); the master reaction RHEA:36247 is undirected. This participant is CHEBI:35616 with
+        coefficient 1. Rhea cites PMID:18987218, PMID:30471982 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: S-adenosyl-L-homocysteine is a product released by RHEA:36247 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36248
+      snippet: (E)-anol + S-adenosyl-L-methionine => (E)-anethole + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36248 declares side 36247_R as its products
+        (rh:products); the master reaction RHEA:36247 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:18987218, PMID:30471982 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:36247 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36248
+      snippet: (E)-anol + S-adenosyl-L-methionine => (E)-anethole + S-adenosyl-L-homocysteine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36248 declares side 36247_R as its products
+        (rh:products); the master reaction RHEA:36247 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18987218, PMID:30471982 for this reaction.
+  - subject: prot_B8RCD3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AIMT1_PIMAN is an exemplar enzyme with EC 2.1.1.279 activity.
+    evidence:
+    - reference: EC:2.1.1.279
+      snippet: DR   B8RCD3, AIMT1_PIMAN;  A0A5A4PXL6, OMT1_ACOCL ;
+      notes: ExPASy ENZYME entry EC 2.1.1.279 cross-references UniProtKB:B8RCD3 (AIMT1_PIMAN) as a protein
+        with this activity.
+  - subject: prot_A0A5A4PXL6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OMT1_ACOCL is an exemplar enzyme with EC 2.1.1.279 activity.
+    evidence:
+    - reference: EC:2.1.1.279
+      snippet: DR   B8RCD3, AIMT1_PIMAN;  A0A5A4PXL6, OMT1_ACOCL ;
+      notes: ExPASy ENZYME entry EC 2.1.1.279 cross-references UniProtKB:A0A5A4PXL6 (OMT1_ACOCL) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

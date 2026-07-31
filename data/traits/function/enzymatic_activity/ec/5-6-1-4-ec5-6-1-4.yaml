@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.6.1.-
 synonyms:
@@ -35,4 +35,68 @@ definitions:
       Catalyses: ATP + H2O + a kinesin associated with a microtubule at position (n) = ADP + phosphate + a kinesin associated with a microtubule at position (n-1, toward the minus end)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of minus-end-directed kinesin ATPase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.6.1.4. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + H2O
+    + a kinesin associated with a microtubule at position (n) = ADP + phosphate + a kinesin associated
+    with a microtubule at position (n-1, toward the minus end)".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: minus-end-directed kinesin ATPase
+    grounding: EC:5.6.1.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: minus-end-directed microtubule motor activity
+    grounding: GO:0008569
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9US03
+    node_type: PROTEIN
+    label: KAR3_SCHPO
+    grounding: UniProtKB:Q9US03
+  - node_id: prot_P17119
+    node_type: PROTEIN
+    label: KAR3_YEAST
+    grounding: UniProtKB:P17119
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.6.1.4
+      snippet: EC:5.6.1.4 > GO:minus-end-directed microtubule motor activity ; GO:0008569
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008569 is itself a record
+        in this KB.
+  - subject: prot_Q9US03
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KAR3_SCHPO is an exemplar enzyme with EC 5.6.1.4 activity.
+    evidence:
+    - reference: EC:5.6.1.4
+      snippet: DR   Q9US03, KAR3_SCHPO ;  P17119, KAR3_YEAST ;
+      notes: ExPASy ENZYME entry EC 5.6.1.4 cross-references UniProtKB:Q9US03 (KAR3_SCHPO) as a protein
+        with this activity.
+  - subject: prot_P17119
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KAR3_YEAST is an exemplar enzyme with EC 5.6.1.4 activity.
+    evidence:
+    - reference: EC:5.6.1.4
+      snippet: DR   Q9US03, KAR3_SCHPO ;  P17119, KAR3_YEAST ;
+      notes: ExPASy ENZYME entry EC 5.6.1.4 cross-references UniProtKB:P17119 (KAR3_YEAST) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

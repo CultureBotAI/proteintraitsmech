@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 mapped_xrefs:
@@ -28,4 +28,120 @@ definitions:
       Catalyses: 2-hydroxyethylphosphonate + O2 = methylphosphonate + hydrogencarbonate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of methylphosphonate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.73. EC 1.13.11.73 maps to
+    exactly one curated Rhea reaction (RHEA:34615), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-hydroxyethylphosphonate
+    + O2 = methylphosphonate + hydrogencarbonate + H(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: methylphosphonate synthase
+    grounding: EC:1.13.11.73
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-hydroxyethylphosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:60991
+    description: Formula C2H6O4P.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: methylphosphonate
+    node_type: CHEMICAL
+    grounding: CHEBI:68684
+    description: Formula CH4O3P.
+  - node_id: prd2
+    label: hydrogencarbonate
+    node_type: CHEMICAL
+    grounding: CHEBI:17544
+    description: Formula CHO3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A9A1T2
+    node_type: PROTEIN
+    label: MPNS_NITMS
+    grounding: UniProtKB:A9A1T2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-hydroxyethylphosphonate is a substrate consumed by RHEA:34615 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34616
+      snippet: 2-hydroxyethylphosphonate + O2 => methylphosphonate + hydrogencarbonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34616 declares side 34615_L as its substrates
+        (rh:substrates); the master reaction RHEA:34615 is undirected. This participant is CHEBI:60991
+        with coefficient 1. Rhea cites PMID:22936780 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:34615 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34616
+      snippet: 2-hydroxyethylphosphonate + O2 => methylphosphonate + hydrogencarbonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34616 declares side 34615_L as its substrates
+        (rh:substrates); the master reaction RHEA:34615 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:22936780 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: methylphosphonate is a product released by RHEA:34615 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34616
+      snippet: 2-hydroxyethylphosphonate + O2 => methylphosphonate + hydrogencarbonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34616 declares side 34615_R as its products
+        (rh:products); the master reaction RHEA:34615 is undirected. This participant is CHEBI:68684 with
+        coefficient 1. Rhea cites PMID:22936780 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: hydrogencarbonate is a product released by RHEA:34615 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34616
+      snippet: 2-hydroxyethylphosphonate + O2 => methylphosphonate + hydrogencarbonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34616 declares side 34615_R as its products
+        (rh:products); the master reaction RHEA:34615 is undirected. This participant is CHEBI:17544 with
+        coefficient 1. Rhea cites PMID:22936780 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:34615 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34616
+      snippet: 2-hydroxyethylphosphonate + O2 => methylphosphonate + hydrogencarbonate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34616 declares side 34615_R as its products
+        (rh:products); the master reaction RHEA:34615 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:22936780 for this reaction.
+  - subject: prot_A9A1T2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MPNS_NITMS is an exemplar enzyme with EC 1.13.11.73 activity.
+    evidence:
+    - reference: EC:1.13.11.73
+      snippet: DR   A9A1T2, MPNS_NITMS ;
+      notes: ExPASy ENZYME entry EC 1.13.11.73 cross-references UniProtKB:A9A1T2 (MPNS_NITMS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

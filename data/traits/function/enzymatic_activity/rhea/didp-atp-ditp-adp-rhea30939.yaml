@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.4.6
     mapping_source: rhea2ec
@@ -25,4 +25,105 @@ definitions:
       Catalyses the reaction: dIDP + ATP = dITP + ADP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dIDP + ATP = dITP + ADP
+  description: Substrate-to-product chemistry of RHEA:30939, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30940 (rh:substrates → 30939_L, rh:products → 30939_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dIDP + ATP = dITP + ADP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30939
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dIDP + ATP = dITP + ADP'
+  - node_id: sub1
+    label: dIDP
+    node_type: CHEMICAL
+    grounding: CHEBI:62286
+    description: Formula C10H11N4O10P2.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: dITP
+    node_type: CHEMICAL
+    grounding: CHEBI:61382
+    description: Formula C10H11N4O13P3.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: nucleoside-diphosphate kinase
+    grounding: EC:2.7.4.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dIDP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30940
+      snippet: dIDP + ATP => dITP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:30940 declares side 30939_L as its substrates
+        (rh:substrates); the master reaction RHEA:30939 is undirected. This participant is CHEBI:62286
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30940
+      snippet: dIDP + ATP => dITP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:30940 declares side 30939_L as its substrates
+        (rh:substrates); the master reaction RHEA:30939 is undirected. This participant is CHEBI:30616
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dITP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30940
+      snippet: dIDP + ATP => dITP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:30940 declares side 30939_R as its products
+        (rh:products); the master reaction RHEA:30939 is undirected. This participant is CHEBI:61382 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30940
+      snippet: dIDP + ATP => dITP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:30940 declares side 30939_R as its products
+        (rh:products); the master reaction RHEA:30939 is undirected. This participant is CHEBI:456216
+        with coefficient 1.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.4.6; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:30939
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.4.6"/>
+      notes: The rh:ec triple on RHEA:30939 in rhea.rdf. EC 2.7.4.6 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

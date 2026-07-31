@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -23,4 +23,41 @@ definitions:
       Catalyses: beta-D-mannosylphosphodecaprenol + (1->6)-alpha-D-mannosyloligosaccharide = decaprenol phosphate + (1->6)-alpha-D-mannosyl-(1->6)-alpha-D-mannosyl- oligosaccharide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-mannosylphosphodecaprenol--mannooligosaccharide
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.199. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "beta-D-mannosylphosphodecaprenol
+    + (1->6)-alpha-D-mannosyloligosaccharide = decaprenol phosphate + (1->6)-alpha-D-mannosyl-(1->6)-alpha-D-mannosyl-
+    oligosaccharide".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-mannosylphosphodecaprenol--mannooligosaccharide
+    grounding: EC:2.4.1.199
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-mannosylphosphodecaprenol-mannooligosaccharide 6-mannosyltransferase activity
+    grounding: GO:0047252
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.199
+      snippet: EC:2.4.1.199 > GO:beta-mannosylphosphodecaprenol-mannooligosaccharide 6-mannosyltransferase
+        activity ; GO:0047252
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047252 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.14.-
 synonyms:
@@ -45,4 +45,81 @@ definitions:
       Catalyses: Release of an N-terminal dipeptide, Xaa-Yaa-|-Zaa-, except when Xaa is Arg or Lys, or Yaa or Zaa is Pro
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dipeptidyl-peptidase I
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.14.1. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of an N-terminal dipeptide, Xaa-Yaa-|-Zaa-, except when Xaa is Arg or Lys, or Yaa or Zaa is Pro".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dipeptidyl-peptidase I
+    grounding: EC:3.4.14.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dipeptidyl-peptidase activity
+    grounding: GO:0008239
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q3ZCJ8
+    node_type: PROTEIN
+    label: CATC_BOVIN
+    grounding: UniProtKB:Q3ZCJ8
+  - node_id: prot_O97578
+    node_type: PROTEIN
+    label: CATC_CANLF
+    grounding: UniProtKB:O97578
+  - node_id: prot_P53634
+    node_type: PROTEIN
+    label: CATC_HUMAN
+    grounding: UniProtKB:P53634
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.14.1
+      snippet: EC:3.4.14.1 > GO:dipeptidyl-peptidase activity ; GO:0008239
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008239 is itself a record
+        in this KB.
+  - subject: prot_Q3ZCJ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CATC_BOVIN is an exemplar enzyme with EC 3.4.14.1 activity.
+    evidence:
+    - reference: EC:3.4.14.1
+      snippet: DR   Q3ZCJ8, CATC_BOVIN ;  O97578, CATC_CANLF ;  P53634, CATC_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.14.1 cross-references UniProtKB:Q3ZCJ8 (CATC_BOVIN) as a protein
+        with this activity.
+  - subject: prot_O97578
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CATC_CANLF is an exemplar enzyme with EC 3.4.14.1 activity.
+    evidence:
+    - reference: EC:3.4.14.1
+      snippet: DR   Q3ZCJ8, CATC_BOVIN ;  O97578, CATC_CANLF ;  P53634, CATC_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.14.1 cross-references UniProtKB:O97578 (CATC_CANLF) as a protein
+        with this activity.
+  - subject: prot_P53634
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CATC_HUMAN is an exemplar enzyme with EC 3.4.14.1 activity.
+    evidence:
+    - reference: EC:3.4.14.1
+      snippet: DR   Q3ZCJ8, CATC_BOVIN ;  O97578, CATC_CANLF ;  P53634, CATC_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.14.1 cross-references UniProtKB:P53634 (CATC_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

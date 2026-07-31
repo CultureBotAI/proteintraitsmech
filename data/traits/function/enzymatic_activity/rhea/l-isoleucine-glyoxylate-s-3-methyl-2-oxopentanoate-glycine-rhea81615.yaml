@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58045
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: L-isoleucine + glyoxylate = (S)-3-methyl-2-oxopentanoate + glycine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-isoleucine + glyoxylate = (S)-3-methyl-2-oxopentanoate + glycine
+  description: Substrate-to-product chemistry of RHEA:81615, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:81616 (rh:substrates → 81615_L, rh:products → 81615_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-isoleucine + glyoxylate = (S)-3-methyl-2-oxopentanoate + glycine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:81615
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-isoleucine + glyoxylate = (S)-3-methyl-2-oxopentanoate + glycine'
+  - node_id: sub1
+    label: L-isoleucine
+    node_type: CHEMICAL
+    grounding: CHEBI:58045
+    description: Formula C6H13NO2.
+  - node_id: sub2
+    label: glyoxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:36655
+    description: Formula C2HO3.
+  - node_id: prd1
+    label: (S)-3-methyl-2-oxopentanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:35146
+    description: Formula C6H9O3.
+  - node_id: prd2
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+    description: Formula C2H5NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-isoleucine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81616
+      snippet: L-isoleucine + glyoxylate => (S)-3-methyl-2-oxopentanoate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:81616 declares side 81615_L as its substrates
+        (rh:substrates); the master reaction RHEA:81615 is undirected. This participant is CHEBI:58045
+        with coefficient 1. Rhea cites PMID:38593075 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: glyoxylate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81616
+      snippet: L-isoleucine + glyoxylate => (S)-3-methyl-2-oxopentanoate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:81616 declares side 81615_L as its substrates
+        (rh:substrates); the master reaction RHEA:81615 is undirected. This participant is CHEBI:36655
+        with coefficient 1. Rhea cites PMID:38593075 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-3-methyl-2-oxopentanoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81616
+      snippet: L-isoleucine + glyoxylate => (S)-3-methyl-2-oxopentanoate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:81616 declares side 81615_R as its products
+        (rh:products); the master reaction RHEA:81615 is undirected. This participant is CHEBI:35146 with
+        coefficient 1. Rhea cites PMID:38593075 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glycine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81616
+      snippet: L-isoleucine + glyoxylate => (S)-3-methyl-2-oxopentanoate + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:81616 declares side 81615_R as its products
+        (rh:products); the master reaction RHEA:81615 is undirected. This participant is CHEBI:57305 with
+        coefficient 1. Rhea cites PMID:38593075 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

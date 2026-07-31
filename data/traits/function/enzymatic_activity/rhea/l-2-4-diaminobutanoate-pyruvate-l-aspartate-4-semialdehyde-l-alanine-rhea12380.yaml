@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.6.1.46
     mapping_source: rhea2ec
@@ -28,4 +28,123 @@ definitions:
       Catalyses the reaction: L-2,4-diaminobutanoate + pyruvate = L-aspartate 4-semialdehyde + L-alanine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-2,4-diaminobutanoate + pyruvate = L-aspartate 4-semialdehyde + L-alanine
+  description: Substrate-to-product chemistry of RHEA:12380, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12381 (rh:substrates → 12380_L, rh:products → 12380_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-2,4-diaminobutanoate + pyruvate = L-aspartate 4-semialdehyde + L-alanine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12380
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-2,4-diaminobutanoate + pyruvate = L-aspartate 4-semialdehyde + L-alanine'
+  - node_id: sub1
+    label: L-2,4-diaminobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58761
+    description: Formula C4H11N2O2.
+  - node_id: sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd1
+    label: L-aspartate 4-semialdehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:537519
+    description: Formula C4H7NO3.
+  - node_id: prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-2,4-diaminobutyrate:pyruvate transaminase activity
+    grounding: GO:0047307
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: diaminobutyrate--pyruvate transaminase
+    grounding: EC:2.6.1.46
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-2,4-diaminobutanoate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12381
+      snippet: L-2,4-diaminobutanoate + pyruvate => L-aspartate 4-semialdehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:12381 declares side 12380_L as its substrates
+        (rh:substrates); the master reaction RHEA:12380 is undirected. This participant is CHEBI:58761
+        with coefficient 1. Rhea cites PMID:4390206 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: pyruvate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12381
+      snippet: L-2,4-diaminobutanoate + pyruvate => L-aspartate 4-semialdehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:12381 declares side 12380_L as its substrates
+        (rh:substrates); the master reaction RHEA:12380 is undirected. This participant is CHEBI:15361
+        with coefficient 1. Rhea cites PMID:4390206 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-aspartate 4-semialdehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12381
+      snippet: L-2,4-diaminobutanoate + pyruvate => L-aspartate 4-semialdehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:12381 declares side 12380_R as its products
+        (rh:products); the master reaction RHEA:12380 is undirected. This participant is CHEBI:537519
+        with coefficient 1. Rhea cites PMID:4390206 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-alanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12381
+      snippet: L-2,4-diaminobutanoate + pyruvate => L-aspartate 4-semialdehyde + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:12381 declares side 12380_R as its products
+        (rh:products); the master reaction RHEA:12380 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:4390206 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12380
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047307"/>
+      notes: The rdfs:seeAlso triple on RHEA:12380 in rhea.rdf. GO term GO:0047307 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.6.1.46; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12380
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.46"/>
+      notes: The rh:ec triple on RHEA:12380 in rhea.rdf. EC 2.6.1.46 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

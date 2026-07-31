@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.5.1.-
 synonyms:
@@ -37,4 +37,250 @@ definitions:
       Catalyses: 17,18-epoxy-17-hydroxycur-19-ene + NADP(+) = 18-hydroxynorfluorocurarine + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 18-hydroxynorfluorocurarine reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.5.1.57. Rhea assigns 2 curated
+    reactions to EC 1.5.1.57. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "17,18-epoxy-17-hydroxycur-19-ene + NADP(+) = 18-hydroxynorfluorocurarine
+    + NADPH + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 18-hydroxynorfluorocurarine reductase
+    grounding: EC:1.5.1.57
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (19E)-cur-19-en-17-al + NADP(+) = norfluorocurarine + NADPH + H(+)
+    grounding: RHEA:80903
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (19E)-cur-19-en-17-al + NADP(+) = norfluorocurarine + NADPH + H(+)'
+  - node_id: rxn1_sub1
+    label: (19E)-cur-19-en-17-al
+    node_type: CHEMICAL
+    grounding: CHEBI:231653
+    description: Formula C19H23N2O.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: norfluorocurarine
+    node_type: CHEMICAL
+    grounding: CHEBI:231650
+    description: Formula C19H21N2O.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 17,18-epoxy-17-hydroxycur-19-ene + NADP(+) = 18-hydroxynorfluorocurarine + N…
+    grounding: RHEA:80911
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 17,18-epoxy-17-hydroxycur-19-ene + NADP(+) = 18-hydroxynorfluorocurarine
+      + NADPH + H(+)'
+  - node_id: rxn2_sub1
+    label: 17,18-epoxy-17-hydroxycur-19-ene
+    node_type: CHEMICAL
+    grounding: CHEBI:231746
+    description: Formula C19H23N2O2.
+  - node_id: rxn2_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn2_prd1
+    label: 18-hydroxynorfluorocurarine
+    node_type: CHEMICAL
+    grounding: CHEBI:231652
+    description: Formula C19H21N2O2.
+  - node_id: rxn2_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_P0DO83
+    node_type: PROTEIN
+    label: WS_STRNX
+    grounding: UniProtKB:P0DO83
+  - node_id: prot_P0DXF9
+    node_type: PROTEIN
+    label: WS_STRYX
+    grounding: UniProtKB:P0DXF9
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:80903 is one of the 2 curated reactions Rhea assigns to EC 1.5.1.57; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:80903
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.1.57"/>
+      notes: The rh:ec triple on RHEA:80903 in rhea.rdf assigns that reaction to EC 1.5.1.57.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (19E)-cur-19-en-17-al is a substrate consumed by RHEA:80903 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80904
+      snippet: (19E)-cur-19-en-17-al + NADP(+) => norfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80904 declares side 80903_L as its substrates
+        (rh:substrates); the master reaction RHEA:80903 is undirected. This participant is CHEBI:231653
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:80903 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80904
+      snippet: (19E)-cur-19-en-17-al + NADP(+) => norfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80904 declares side 80903_L as its substrates
+        (rh:substrates); the master reaction RHEA:80903 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: norfluorocurarine is a product released by RHEA:80903 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80904
+      snippet: (19E)-cur-19-en-17-al + NADP(+) => norfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80904 declares side 80903_R as its products
+        (rh:products); the master reaction RHEA:80903 is undirected. This participant is CHEBI:231650
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:80903 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80904
+      snippet: (19E)-cur-19-en-17-al + NADP(+) => norfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80904 declares side 80903_R as its products
+        (rh:products); the master reaction RHEA:80903 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:80903 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80904
+      snippet: (19E)-cur-19-en-17-al + NADP(+) => norfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80904 declares side 80903_R as its products
+        (rh:products); the master reaction RHEA:80903 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:80911 is one of the 2 curated reactions Rhea assigns to EC 1.5.1.57; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:80911
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.1.57"/>
+      notes: The rh:ec triple on RHEA:80911 in rhea.rdf assigns that reaction to EC 1.5.1.57.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 17,18-epoxy-17-hydroxycur-19-ene is a substrate consumed by RHEA:80911 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:80912
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + NADP(+) => 18-hydroxynorfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80912 declares side 80911_L as its substrates
+        (rh:substrates); the master reaction RHEA:80911 is undirected. This participant is CHEBI:231746
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADP(+) is a substrate consumed by RHEA:80911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80912
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + NADP(+) => 18-hydroxynorfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80912 declares side 80911_L as its substrates
+        (rh:substrates); the master reaction RHEA:80911 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 18-hydroxynorfluorocurarine is a product released by RHEA:80911 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80912
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + NADP(+) => 18-hydroxynorfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80912 declares side 80911_R as its products
+        (rh:products); the master reaction RHEA:80911 is undirected. This participant is CHEBI:231652
+        with coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADPH is a product released by RHEA:80911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80912
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + NADP(+) => 18-hydroxynorfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80912 declares side 80911_R as its products
+        (rh:products); the master reaction RHEA:80911 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:80911 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80912
+      snippet: 17,18-epoxy-17-hydroxycur-19-ene + NADP(+) => 18-hydroxynorfluorocurarine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80912 declares side 80911_R as its products
+        (rh:products); the master reaction RHEA:80911 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:35794473 for this reaction.
+  - subject: prot_P0DO83
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: WS_STRNX is an exemplar enzyme with EC 1.5.1.57 activity.
+    evidence:
+    - reference: EC:1.5.1.57
+      snippet: DR   P0DO83, WS_STRNX   ;  P0DXF9, WS_STRYX   ;
+      notes: ExPASy ENZYME entry EC 1.5.1.57 cross-references UniProtKB:P0DO83 (WS_STRNX) as a protein
+        with this activity.
+  - subject: prot_P0DXF9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: WS_STRYX is an exemplar enzyme with EC 1.5.1.57 activity.
+    evidence:
+    - reference: EC:1.5.1.57
+      snippet: DR   P0DO83, WS_STRNX   ;  P0DXF9, WS_STRYX   ;
+      notes: ExPASy ENZYME entry EC 1.5.1.57 cross-references UniProtKB:P0DXF9 (WS_STRYX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.14.-
 synonyms:
@@ -35,4 +35,210 @@ definitions:
       Catalyses: abieta-7,13-dien-18-ol + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 = abieta-7,13-dien-18-oate + 2 oxidized [NADPH--hemoprotein reductase] + 3 H2O + 3 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of abieta-7,13-dien-18-ol hydroxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.14.145. EC 1.14.14.145 maps
+    to exactly one curated Rhea reaction (RHEA:26221), so that reaction''s substrates and products are
+    the class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "abieta-7,13-dien-18-ol
+    + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 = abieta-7,13-dien-18-oate + 2 oxidized [NADPH--hemoprotein
+    reductase] + 3 H2O + 3 H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: abieta-7,13-dien-18-ol hydroxylase
+    grounding: EC:1.14.14.145
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: abieta-7,13-dien-18-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:29510
+    description: Formula C20H32O.
+  - node_id: sub2
+    label: reduced [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11964
+    description: Rhea compound GENERIC:11964.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: FMNH2
+    description: The reacting group Rhea names inside the generic participant GENERIC:11964 (reduced [NADPH--hemoprotein
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57618
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: abieta-7,13-dien-18-oate
+    node_type: CHEMICAL
+    grounding: CHEBI:35680
+    description: Formula C20H29O2.
+  - node_id: prd2
+    label: oxidized [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11965
+    description: Rhea compound GENERIC:11965.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: FMN
+    description: The reacting group Rhea names inside the generic participant GENERIC:11965 (oxidized
+      [NADPH--hemoprotein reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58210
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: abieta-7,13-dien-18-ol hydroxylase activity
+    grounding: GO:0036204
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q50EK6
+    node_type: PROTEIN
+    label: C72B1_PINTA
+    grounding: UniProtKB:Q50EK6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: abieta-7,13-dien-18-ol is a substrate consumed by RHEA:26221 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26222
+      snippet: abieta-7,13-dien-18-ol + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => abieta-7,13-dien-18-oate
+        + 2 oxidized [NADPH--hemoprotein reductase] + 3 H2O + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26222 declares side 26221_L as its substrates
+        (rh:substrates); the master reaction RHEA:26221 is undirected. This participant is CHEBI:29510
+        with coefficient 1. Rhea cites PMID:12232380, PMID:8311462, PMID:15911762 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [NADPH--hemoprotein reductase] is a substrate consumed by RHEA:26221 (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:26222
+      snippet: abieta-7,13-dien-18-ol + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => abieta-7,13-dien-18-oate
+        + 2 oxidized [NADPH--hemoprotein reductase] + 3 H2O + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26222 declares side 26221_L as its substrates
+        (rh:substrates); the master reaction RHEA:26221 is undirected. This participant is GENERIC:11964
+        with coefficient 2. Rhea cites PMID:12232380, PMID:8311462, PMID:15911762 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: FMNH2 is the reactive part of reduced [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:26221
+      snippet: FMNH2
+      notes: Rhea compound GENERIC:11964 (reduced [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMNH2 (CHEBI:57618).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:26221 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:26222
+      snippet: abieta-7,13-dien-18-ol + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => abieta-7,13-dien-18-oate
+        + 2 oxidized [NADPH--hemoprotein reductase] + 3 H2O + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26222 declares side 26221_L as its substrates
+        (rh:substrates); the master reaction RHEA:26221 is undirected. This participant is CHEBI:15379
+        with coefficient 2. Rhea cites PMID:12232380, PMID:8311462, PMID:15911762 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: abieta-7,13-dien-18-oate is a product released by RHEA:26221 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26222
+      snippet: abieta-7,13-dien-18-ol + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => abieta-7,13-dien-18-oate
+        + 2 oxidized [NADPH--hemoprotein reductase] + 3 H2O + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26222 declares side 26221_R as its products
+        (rh:products); the master reaction RHEA:26221 is undirected. This participant is CHEBI:35680 with
+        coefficient 1. Rhea cites PMID:12232380, PMID:8311462, PMID:15911762 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [NADPH--hemoprotein reductase] is a product released by RHEA:26221 (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:26222
+      snippet: abieta-7,13-dien-18-ol + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => abieta-7,13-dien-18-oate
+        + 2 oxidized [NADPH--hemoprotein reductase] + 3 H2O + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26222 declares side 26221_R as its products
+        (rh:products); the master reaction RHEA:26221 is undirected. This participant is GENERIC:11965
+        with coefficient 2. Rhea cites PMID:12232380, PMID:8311462, PMID:15911762 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: FMN is the reactive part of oxidized [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:26221
+      snippet: FMN
+      notes: Rhea compound GENERIC:11965 (oxidized [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMN (CHEBI:58210).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:26221 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:26222
+      snippet: abieta-7,13-dien-18-ol + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => abieta-7,13-dien-18-oate
+        + 2 oxidized [NADPH--hemoprotein reductase] + 3 H2O + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26222 declares side 26221_R as its products
+        (rh:products); the master reaction RHEA:26221 is undirected. This participant is CHEBI:15377 with
+        coefficient 3. Rhea cites PMID:12232380, PMID:8311462, PMID:15911762 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:26221 (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:26222
+      snippet: abieta-7,13-dien-18-ol + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => abieta-7,13-dien-18-oate
+        + 2 oxidized [NADPH--hemoprotein reductase] + 3 H2O + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26222 declares side 26221_R as its products
+        (rh:products); the master reaction RHEA:26221 is undirected. This participant is CHEBI:15378 with
+        coefficient 3. Rhea cites PMID:12232380, PMID:8311462, PMID:15911762 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.14.14.145
+      snippet: EC:1.14.14.145 > GO:abieta-7,13-dien-18-ol hydroxylase activity ; GO:0036204
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0036204 is itself a record
+        in this KB.
+  - subject: prot_Q50EK6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: C72B1_PINTA is an exemplar enzyme with EC 1.14.14.145 activity.
+    evidence:
+    - reference: EC:1.14.14.145
+      snippet: DR   Q50EK6, C72B1_PINTA;
+      notes: ExPASy ENZYME entry EC 1.14.14.145 cross-references UniProtKB:Q50EK6 (C72B1_PINTA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

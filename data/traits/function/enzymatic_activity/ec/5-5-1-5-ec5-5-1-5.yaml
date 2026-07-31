@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 synonyms:
@@ -35,4 +35,88 @@ definitions:
       Catalyses: 3-carboxy-2,5-dihydro-5-oxofuran-2-acetate = 3-carboxy-cis,cis-muconate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of carboxy-cis,cis-muconate cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.5. EC 5.5.1.5 maps to exactly
+    one curated Rhea reaction (RHEA:14977), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-carboxy-2,5-dihydro-5-oxofuran-2-acetate
+    = 3-carboxy-cis,cis-muconate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: carboxy-cis,cis-muconate cyclase
+    grounding: EC:5.5.1.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-carboxy-2,5-dihydro-5-oxofuran-2-acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:57976
+    description: Formula C7H3O6.
+  - node_id: prd1
+    label: 3-carboxy-cis,cis-muconate
+    node_type: CHEMICAL
+    grounding: CHEBI:57496
+    description: Formula C7H3O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: carboxy-cis,cis-muconate cyclase activity
+    grounding: GO:0047768
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P38677
+    node_type: PROTEIN
+    label: CMLE_NEUCR
+    grounding: UniProtKB:P38677
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-carboxy-2,5-dihydro-5-oxofuran-2-acetate is a substrate consumed by RHEA:14977 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14978
+      snippet: 3-carboxy-2,5-dihydro-5-oxofuran-2-acetate => 3-carboxy-cis,cis-muconate
+      notes: Rhea's left-to-right directional reaction RHEA:14978 declares side 14977_L as its substrates
+        (rh:substrates); the master reaction RHEA:14977 is undirected. This participant is CHEBI:57976
+        with coefficient 1. Rhea cites PMID:15301541, PMID:11937053 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-carboxy-cis,cis-muconate is a product released by RHEA:14977 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14978
+      snippet: 3-carboxy-2,5-dihydro-5-oxofuran-2-acetate => 3-carboxy-cis,cis-muconate
+      notes: Rhea's left-to-right directional reaction RHEA:14978 declares side 14977_R as its products
+        (rh:products); the master reaction RHEA:14977 is undirected. This participant is CHEBI:57496 with
+        coefficient 1. Rhea cites PMID:15301541, PMID:11937053 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.5.1.5
+      snippet: EC:5.5.1.5 > GO:carboxy-cis,cis-muconate cyclase activity ; GO:0047768
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047768 is itself a record
+        in this KB.
+  - subject: prot_P38677
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CMLE_NEUCR is an exemplar enzyme with EC 5.5.1.5 activity.
+    evidence:
+    - reference: EC:5.5.1.5
+      snippet: DR   P38677, CMLE_NEUCR ;
+      notes: ExPASy ENZYME entry EC 5.5.1.5 cross-references UniProtKB:P38677 (CMLE_NEUCR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

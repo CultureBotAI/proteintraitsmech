@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.1.34
     mapping_source: rhea2ec
@@ -28,4 +28,135 @@ definitions:
       Catalyses the reaction: D-erythrulose 4-phosphate = D-erythrose 4-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-erythrulose 4-phosphate = D-erythrose 4-phosphate
+  description: Substrate-to-product chemistry of RHEA:48784, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48785 (rh:substrates → 48784_L, rh:products → 48784_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-erythrulose 4-phosphate = D-erythrose 4-phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48784
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-erythrulose 4-phosphate = D-erythrose 4-phosphate'
+  - node_id: sub1
+    label: D-erythrulose 4-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:90796
+    description: Formula C4H7O7P.
+  - node_id: prd1
+    label: D-erythrose 4-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:16897
+    description: Formula C4H7O7P.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: D-erythrulose 4-phosphate isomerase
+    grounding: EC:5.3.1.34
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0QXE5
+    node_type: PROTEIN
+    label: DERI1_MYCS2
+    grounding: UniProtKB:A0QXE5
+  - node_id: prot_A0R757
+    node_type: PROTEIN
+    label: DERI2_MYCS2
+    grounding: UniProtKB:A0R757
+  - node_id: prot_Q6D8V9
+    node_type: PROTEIN
+    label: DERI_PECAS
+    grounding: UniProtKB:Q6D8V9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-erythrulose 4-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48785
+      snippet: D-erythrulose 4-phosphate => D-erythrose 4-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:48785 declares side 48784_L as its substrates
+        (rh:substrates); the master reaction RHEA:48784 is undirected. This participant is CHEBI:90796
+        with coefficient 1. Rhea cites PMID:25453104, PMID:26560079, PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-erythrose 4-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48785
+      snippet: D-erythrulose 4-phosphate => D-erythrose 4-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:48785 declares side 48784_R as its products
+        (rh:products); the master reaction RHEA:48784 is undirected. This participant is CHEBI:16897 with
+        coefficient 1. Rhea cites PMID:25453104, PMID:26560079, PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.1.34; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:48784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.34"/>
+      notes: The rh:ec triple on RHEA:48784 in rhea.rdf. EC 5.3.1.34 is itself a record in this KB.
+  - subject: prot_A0QXE5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DERI1_MYCS2 is an exemplar enzyme carrying EC 5.3.1.34, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.34
+      snippet: DR   A0QXE5, DERI1_MYCS2;  A0R757, DERI2_MYCS2;  Q6D8V9, DERI_PECAS ;
+      notes: ExPASy ENZYME entry EC 5.3.1.34 cross-references UniProtKB:A0QXE5 (DERI1_MYCS2) as a protein
+        with this activity.
+    - reference: RHEA:48784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.34"/>
+      notes: Rhea assigns RHEA:48784 to EC 5.3.1.34, and EC 5.3.1.34 maps to exactly one Rhea master reaction
+        (RHEA:48784), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A0R757
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DERI2_MYCS2 is an exemplar enzyme carrying EC 5.3.1.34, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.34
+      snippet: DR   A0QXE5, DERI1_MYCS2;  A0R757, DERI2_MYCS2;  Q6D8V9, DERI_PECAS ;
+      notes: ExPASy ENZYME entry EC 5.3.1.34 cross-references UniProtKB:A0R757 (DERI2_MYCS2) as a protein
+        with this activity.
+    - reference: RHEA:48784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.34"/>
+      notes: Rhea assigns RHEA:48784 to EC 5.3.1.34, and EC 5.3.1.34 maps to exactly one Rhea master reaction
+        (RHEA:48784), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q6D8V9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DERI_PECAS is an exemplar enzyme carrying EC 5.3.1.34, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.34
+      snippet: DR   A0QXE5, DERI1_MYCS2;  A0R757, DERI2_MYCS2;  Q6D8V9, DERI_PECAS ;
+      notes: ExPASy ENZYME entry EC 5.3.1.34 cross-references UniProtKB:Q6D8V9 (DERI_PECAS) as a protein
+        with this activity.
+    - reference: RHEA:48784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.34"/>
+      notes: Rhea assigns RHEA:48784 to EC 5.3.1.34, and EC 5.3.1.34 maps to exactly one Rhea master reaction
+        (RHEA:48784), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

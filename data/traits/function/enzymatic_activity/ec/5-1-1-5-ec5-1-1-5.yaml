@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.1.-
 mapped_xrefs:
@@ -38,4 +38,114 @@ definitions:
       Catalyses: L-lysine = D-lysine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lysine racemase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.1.5. EC 5.1.1.5 maps to exactly
+    one curated Rhea reaction (RHEA:22864), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-lysine = D-lysine".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lysine racemase
+    grounding: EC:5.1.1.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:32551
+    description: Formula C6H15N2O2.
+  - node_id: prd1
+    label: D-lysine
+    node_type: CHEMICAL
+    grounding: CHEBI:32557
+    description: Formula C6H15N2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: lysine racemase activity
+    grounding: GO:0018113
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_M4GGR9
+    node_type: PROTEIN
+    label: LYR_PROMI
+    grounding: UniProtKB:M4GGR9
+  - node_id: prot_Q9X1T3
+    node_type: PROTEIN
+    label: LYSRA_THEMA
+    grounding: UniProtKB:Q9X1T3
+  - node_id: prot_Q04HB7
+    node_type: PROTEIN
+    label: LYSR_OENOB
+    grounding: UniProtKB:Q04HB7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-lysine is a substrate consumed by RHEA:22864 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22865
+      snippet: L-lysine => D-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:22865 declares side 22864_L as its substrates
+        (rh:substrates); the master reaction RHEA:22864 is undirected. This participant is CHEBI:32551
+        with coefficient 1. Rhea cites PMID:24419381, PMID:19300994 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-lysine is a product released by RHEA:22864 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22865
+      snippet: L-lysine => D-lysine
+      notes: Rhea's left-to-right directional reaction RHEA:22865 declares side 22864_R as its products
+        (rh:products); the master reaction RHEA:22864 is undirected. This participant is CHEBI:32557 with
+        coefficient 1. Rhea cites PMID:24419381, PMID:19300994 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.1.5
+      snippet: EC:5.1.1.5 > GO:lysine racemase activity ; GO:0018113
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018113 is itself a record
+        in this KB.
+  - subject: prot_M4GGR9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYR_PROMI is an exemplar enzyme with EC 5.1.1.5 activity.
+    evidence:
+    - reference: EC:5.1.1.5
+      snippet: DR   M4GGR9, LYR_PROMI  ;  Q9X1T3, LYSRA_THEMA;  Q04HB7, LYSR_OENOB ;
+      notes: ExPASy ENZYME entry EC 5.1.1.5 cross-references UniProtKB:M4GGR9 (LYR_PROMI) as a protein
+        with this activity.
+  - subject: prot_Q9X1T3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSRA_THEMA is an exemplar enzyme with EC 5.1.1.5 activity.
+    evidence:
+    - reference: EC:5.1.1.5
+      snippet: DR   M4GGR9, LYR_PROMI  ;  Q9X1T3, LYSRA_THEMA;  Q04HB7, LYSR_OENOB ;
+      notes: ExPASy ENZYME entry EC 5.1.1.5 cross-references UniProtKB:Q9X1T3 (LYSRA_THEMA) as a protein
+        with this activity.
+  - subject: prot_Q04HB7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSR_OENOB is an exemplar enzyme with EC 5.1.1.5 activity.
+    evidence:
+    - reference: EC:5.1.1.5
+      snippet: DR   M4GGR9, LYR_PROMI  ;  Q9X1T3, LYSRA_THEMA;  Q04HB7, LYSR_OENOB ;
+      notes: ExPASy ENZYME entry EC 5.1.1.5 cross-references UniProtKB:Q04HB7 (LYSR_OENOB) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

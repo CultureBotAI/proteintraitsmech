@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.99.-
 mapped_xrefs:
@@ -28,4 +28,76 @@ definitions:
       Catalyses: 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl phosphate = 2-(2-carboxy-4-methylthiazol-5-yl)ethyl phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thiazole tautomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.99.10. EC 5.3.99.10 maps to
+    exactly one curated Rhea reaction (RHEA:31459), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl
+    phosphate = 2-(2-carboxy-4-methylthiazol-5-yl)ethyl phosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: thiazole tautomerase
+    grounding: EC:5.3.99.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:62899
+    description: Formula C7H7NO6PS.
+  - node_id: prd1
+    label: 2-(2-carboxy-4-methylthiazol-5-yl)ethyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:62890
+    description: Formula C7H7NO6PS.
+  - node_id: prot_P25053
+    node_type: PROTEIN
+    label: TENI_BACSU
+    grounding: UniProtKB:P25053
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl phosphate is a substrate consumed
+      by RHEA:31459 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31460
+      snippet: 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl phosphate => 2-(2-carboxy-4-methylthiazol-5-yl)ethyl
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31460 declares side 31459_L as its substrates
+        (rh:substrates); the master reaction RHEA:31459 is undirected. This participant is CHEBI:62899
+        with coefficient 1. Rhea cites PMID:21534620 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-(2-carboxy-4-methylthiazol-5-yl)ethyl phosphate is a product released by RHEA:31459
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31460
+      snippet: 2-[(2R,5Z)-2-carboxy-4-methylthiazol-5(2H)-ylidene]ethyl phosphate => 2-(2-carboxy-4-methylthiazol-5-yl)ethyl
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31460 declares side 31459_R as its products
+        (rh:products); the master reaction RHEA:31459 is undirected. This participant is CHEBI:62890 with
+        coefficient 1. Rhea cites PMID:21534620 for this reaction.
+  - subject: prot_P25053
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TENI_BACSU is an exemplar enzyme with EC 5.3.99.10 activity.
+    evidence:
+    - reference: EC:5.3.99.10
+      snippet: DR   P25053, TENI_BACSU ;
+      notes: ExPASy ENZYME entry EC 5.3.99.10 cross-references UniProtKB:P25053 (TENI_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.16.2.1
     mapping_source: rhea2ec
@@ -24,4 +24,155 @@ definitions:
       Catalyses the reaction: Fe(3+) + Fe(II)-[cytochrome c] = Fe(2+) + Fe(III)-[cytochrome c]
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Fe(3+) + Fe(II)-[cytochrome c] = Fe(2+) + Fe(III)-[cytochrome c]
+  description: Substrate-to-product chemistry of RHEA:15617, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:15618 (rh:substrates → 15617_L, rh:products → 15617_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of Fe(3+) + Fe(II)-[cytochrome c] = Fe(2+) + Fe(III)-[cytochrome c]
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:15617
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: Fe(3+) + Fe(II)-[cytochrome c] = Fe(2+) + Fe(III)-[cytochrome c]'
+  - node_id: sub1
+    label: Fe(3+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29034
+    description: Formula Fe.
+  - node_id: sub2
+    label: Fe(II)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10350
+    description: Rhea compound GENERIC:10350.
+  - node_id: sub2_rp1
+    label: Fe(2+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10350 (Fe(II)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd1
+    label: Fe(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+    description: Formula Fe.
+  - node_id: prd2
+    label: Fe(III)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14399
+    description: Rhea compound GENERIC:14399.
+  - node_id: prd2_rp1
+    label: Fe(3+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14399 (Fe(III)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: iron-cytochrome-c reductase activity
+    grounding: GO:0047726
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: iron--cytochrome-c reductase
+    grounding: EC:1.16.2.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(3+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15618
+      snippet: Fe(3+) + Fe(II)-[cytochrome c] => Fe(2+) + Fe(III)-[cytochrome c]
+      notes: Rhea's left-to-right directional reaction RHEA:15618 declares side 15617_L as its substrates
+        (rh:substrates); the master reaction RHEA:15617 is undirected. This participant is CHEBI:29034
+        with coefficient 1. Rhea cites PMID:4288725 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: Fe(II)-[cytochrome c] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15618
+      snippet: Fe(3+) + Fe(II)-[cytochrome c] => Fe(2+) + Fe(III)-[cytochrome c]
+      notes: Rhea's left-to-right directional reaction RHEA:15618 declares side 15617_L as its substrates
+        (rh:substrates); the master reaction RHEA:15617 is undirected. This participant is GENERIC:10350
+        with coefficient 1. Rhea cites PMID:4288725 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: Fe(2+) is the reactive part of Fe(II)-[cytochrome c].
+    evidence:
+    - reference: RHEA:15617
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:10350 (Fe(II)-[cytochrome c]) declares rh:reactivePart = Fe(2+) (CHEBI:29033),
+        formula Fe.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Fe(2+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15618
+      snippet: Fe(3+) + Fe(II)-[cytochrome c] => Fe(2+) + Fe(III)-[cytochrome c]
+      notes: Rhea's left-to-right directional reaction RHEA:15618 declares side 15617_R as its products
+        (rh:products); the master reaction RHEA:15617 is undirected. This participant is CHEBI:29033 with
+        coefficient 1. Rhea cites PMID:4288725 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Fe(III)-[cytochrome c] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15618
+      snippet: Fe(3+) + Fe(II)-[cytochrome c] => Fe(2+) + Fe(III)-[cytochrome c]
+      notes: Rhea's left-to-right directional reaction RHEA:15618 declares side 15617_R as its products
+        (rh:products); the master reaction RHEA:15617 is undirected. This participant is GENERIC:14399
+        with coefficient 1. Rhea cites PMID:4288725 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c].
+    evidence:
+    - reference: RHEA:15617
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:14399 (Fe(III)-[cytochrome c]) declares rh:reactivePart = Fe(3+) (CHEBI:29034),
+        formula Fe.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:15617
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047726"/>
+      notes: The rdfs:seeAlso triple on RHEA:15617 in rhea.rdf. GO term GO:0047726 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.16.2.1; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:15617
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.16.2.1"/>
+      notes: The rh:ec triple on RHEA:15617 in rhea.rdf. EC 1.16.2.1 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

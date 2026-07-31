@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:28517
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,97 @@ definitions:
       Catalyses the reaction: biphenyl-2,2',3-triol + O2 = 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + 2 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of biphenyl-2,2',3-triol + O2 = 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dieno…
+  description: Substrate-to-product chemistry of RHEA:42464, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:42465 (rh:substrates → 42464_L, rh:products → 42464_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of biphenyl-2,2',3-triol + O2 = 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hex…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:42464
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: biphenyl-2,2'',3-triol + O2 = 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate
+      + 2 H(+)'
+  - node_id: sub1
+    label: biphenyl-2,2',3-triol
+    node_type: CHEMICAL
+    grounding: CHEBI:28517
+    description: Formula C12H10O3.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:79172
+    description: Formula C12H8O5.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: biphenyl-2,2',3-triol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42465
+      snippet: biphenyl-2,2',3-triol + O2 => 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42465 declares side 42464_L as its substrates
+        (rh:substrates); the master reaction RHEA:42464 is undirected. This participant is CHEBI:28517
+        with coefficient 1. Rhea cites PMID:8226678 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42465
+      snippet: biphenyl-2,2',3-triol + O2 => 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42465 declares side 42464_L as its substrates
+        (rh:substrates); the master reaction RHEA:42464 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:8226678 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate is a product released by
+      this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42465
+      snippet: biphenyl-2,2',3-triol + O2 => 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42465 declares side 42464_R as its products
+        (rh:products); the master reaction RHEA:42464 is undirected. This participant is CHEBI:79172 with
+        coefficient 1. Rhea cites PMID:8226678 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:42465
+      snippet: biphenyl-2,2',3-triol + O2 => 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate
+        + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42465 declares side 42464_R as its products
+        (rh:products); the master reaction RHEA:42464 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:8226678 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

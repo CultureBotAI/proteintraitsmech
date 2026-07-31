@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 canonical_examples:
@@ -29,4 +29,151 @@ definitions:
       Catalyses: L-tyrosyl-[protein] + GTP = O-(5'-guanylyl)-L-tyrosyl-[protein] + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of guanine phosphate-protein transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.n6. EC 2.7.7.n6 maps to exactly
+    one curated Rhea reaction (RHEA:54296), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-tyrosyl-[protein]
+    + GTP = O-(5''-guanylyl)-L-tyrosyl-[protein] + diphosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: guanine phosphate-protein transferase
+    grounding: EC:2.7.7.n6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-tyrosyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10136
+    description: Rhea compound GENERIC:10136.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-tyrosine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10136 (L-tyrosyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:46858
+  - node_id: sub2
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: prd1
+    label: O-(5'-guanylyl)-L-tyrosyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13848
+    description: Rhea compound GENERIC:13848.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-tyrosine-O-guanylyl residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13848 (O-(5'-guanylyl)-L-tyrosyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138114
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q5ZSQ3
+    node_type: PROTEIN
+    label: DRRA_LEGPH
+    grounding: UniProtKB:Q5ZSQ3
+  - node_id: prot_Q29ST3
+    node_type: PROTEIN
+    label: DRRA_LEGPN
+    grounding: UniProtKB:Q29ST3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tyrosyl-[protein] is a substrate consumed by RHEA:54296 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54297
+      snippet: L-tyrosyl-[protein] + GTP => O-(5'-guanylyl)-L-tyrosyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54297 declares side 54296_L as its substrates
+        (rh:substrates); the master reaction RHEA:54296 is undirected. This participant is GENERIC:10136
+        with coefficient 1. Rhea cites PMID:20651120 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-tyrosine residue is the reactive part of L-tyrosyl-[protein].
+    evidence:
+    - reference: RHEA:54296
+      snippet: L-tyrosine residue
+      notes: Rhea compound GENERIC:10136 (L-tyrosyl-[protein]) declares rh:reactivePart = L-tyrosine residue
+        (CHEBI:46858).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: GTP is a substrate consumed by RHEA:54296 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54297
+      snippet: L-tyrosyl-[protein] + GTP => O-(5'-guanylyl)-L-tyrosyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54297 declares side 54296_L as its substrates
+        (rh:substrates); the master reaction RHEA:54296 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:20651120 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-(5'-guanylyl)-L-tyrosyl-[protein] is a product released by RHEA:54296 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54297
+      snippet: L-tyrosyl-[protein] + GTP => O-(5'-guanylyl)-L-tyrosyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54297 declares side 54296_R as its products
+        (rh:products); the master reaction RHEA:54296 is undirected. This participant is GENERIC:13848
+        with coefficient 1. Rhea cites PMID:20651120 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-tyrosine-O-guanylyl residue is the reactive part of O-(5'-guanylyl)-L-tyrosyl-[protein].
+    evidence:
+    - reference: RHEA:54296
+      snippet: L-tyrosine-O-guanylyl residue
+      notes: Rhea compound GENERIC:13848 (O-(5'-guanylyl)-L-tyrosyl-[protein]) declares rh:reactivePart
+        = L-tyrosine-O-guanylyl residue (CHEBI:138114).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:54296 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54297
+      snippet: L-tyrosyl-[protein] + GTP => O-(5'-guanylyl)-L-tyrosyl-[protein] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54297 declares side 54296_R as its products
+        (rh:products); the master reaction RHEA:54296 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20651120 for this reaction.
+  - subject: prot_Q5ZSQ3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DRRA_LEGPH is an exemplar enzyme with EC 2.7.7.n6 activity.
+    evidence:
+    - reference: EC:2.7.7.n6
+      snippet: DR   Q5ZSQ3, DRRA_LEGPH ;  Q29ST3, DRRA_LEGPN ;
+      notes: ExPASy ENZYME entry EC 2.7.7.n6 cross-references UniProtKB:Q5ZSQ3 (DRRA_LEGPH) as a protein
+        with this activity.
+  - subject: prot_Q29ST3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DRRA_LEGPN is an exemplar enzyme with EC 2.7.7.n6 activity.
+    evidence:
+    - reference: EC:2.7.7.n6
+      snippet: DR   Q5ZSQ3, DRRA_LEGPH ;  Q29ST3, DRRA_LEGPN ;
+      notes: ExPASy ENZYME entry EC 2.7.7.n6 cross-references UniProtKB:Q29ST3 (DRRA_LEGPN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

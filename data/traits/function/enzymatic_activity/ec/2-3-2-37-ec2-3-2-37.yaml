@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.2.-
 mapped_xrefs:
@@ -23,4 +23,123 @@ definitions:
       Catalyses: L-aspartyl-tRNA(Asp) + ergosterol = 1-(ergostan-3beta-yl)-L-aspartate + tRNA(Asp)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ergosteryl-3beta-O-L-aspartate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.2.37. EC 2.3.2.37 maps to exactly
+    one curated Rhea reaction (RHEA:76555), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-aspartyl-tRNA(Asp)
+    + ergosterol = 1-(ergostan-3beta-yl)-L-aspartate + tRNA(Asp)". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ergosteryl-3beta-O-L-aspartate synthase
+    grounding: EC:2.3.2.37
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-aspartyl-tRNA(Asp)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9678
+    description: Rhea compound GENERIC:9678.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: 3'-O-adenylyl -L-aspartate group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9678 (L-aspartyl-tRNA(Asp));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78516
+  - node_id: sub2
+    label: ergosterol
+    node_type: CHEMICAL
+    grounding: CHEBI:16933
+    description: Formula C28H44O.
+  - node_id: prd1
+    label: 1-(ergostan-3beta-yl)-L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:195261
+    description: Formula C32H49NO4.
+  - node_id: prd2
+    label: tRNA(Asp)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9660
+    description: Rhea compound GENERIC:9660.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: AMP 3'-end residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9660 (tRNA(Asp));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78442
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-aspartyl-tRNA(Asp) is a substrate consumed by RHEA:76555 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:76556
+      snippet: L-aspartyl-tRNA(Asp) + ergosterol => 1-(ergostan-3beta-yl)-L-aspartate + tRNA(Asp)
+      notes: Rhea's left-to-right directional reaction RHEA:76556 declares side 76555_L as its substrates
+        (rh:substrates); the master reaction RHEA:76555 is undirected. This participant is GENERIC:9678
+        with coefficient 1. Rhea cites PMID:32541034 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-O-adenylyl -L-aspartate group is the reactive part of L-aspartyl-tRNA(Asp).
+    evidence:
+    - reference: RHEA:76555
+      snippet: 3'-O-adenylyl -L-aspartate group
+      notes: Rhea compound GENERIC:9678 (L-aspartyl-tRNA(Asp)) declares rh:reactivePart = 3'-O-adenylyl
+        -L-aspartate group (CHEBI:78516).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ergosterol is a substrate consumed by RHEA:76555 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76556
+      snippet: L-aspartyl-tRNA(Asp) + ergosterol => 1-(ergostan-3beta-yl)-L-aspartate + tRNA(Asp)
+      notes: Rhea's left-to-right directional reaction RHEA:76556 declares side 76555_L as its substrates
+        (rh:substrates); the master reaction RHEA:76555 is undirected. This participant is CHEBI:16933
+        with coefficient 1. Rhea cites PMID:32541034 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-(ergostan-3beta-yl)-L-aspartate is a product released by RHEA:76555 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:76556
+      snippet: L-aspartyl-tRNA(Asp) + ergosterol => 1-(ergostan-3beta-yl)-L-aspartate + tRNA(Asp)
+      notes: Rhea's left-to-right directional reaction RHEA:76556 declares side 76555_R as its products
+        (rh:products); the master reaction RHEA:76555 is undirected. This participant is CHEBI:195261
+        with coefficient 1. Rhea cites PMID:32541034 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: tRNA(Asp) is a product released by RHEA:76555 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76556
+      snippet: L-aspartyl-tRNA(Asp) + ergosterol => 1-(ergostan-3beta-yl)-L-aspartate + tRNA(Asp)
+      notes: Rhea's left-to-right directional reaction RHEA:76556 declares side 76555_R as its products
+        (rh:products); the master reaction RHEA:76555 is undirected. This participant is GENERIC:9660
+        with coefficient 1. Rhea cites PMID:32541034 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: AMP 3'-end residue is the reactive part of tRNA(Asp).
+    evidence:
+    - reference: RHEA:76555
+      snippet: AMP 3'-end residue
+      notes: Rhea compound GENERIC:9660 (tRNA(Asp)) declares rh:reactivePart = AMP 3'-end residue (CHEBI:78442).
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

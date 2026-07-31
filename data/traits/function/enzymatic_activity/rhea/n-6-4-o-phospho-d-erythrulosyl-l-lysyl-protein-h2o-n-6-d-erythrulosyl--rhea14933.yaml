@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:144623
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,129 @@ definitions:
       Catalyses the reaction: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein] + H2O = N(6)-(D-erythrulosyl)-L-lysyl-[protein] + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein] + H2O = N(6)-(D-erythrulosyl)-L-lys…
+  description: Substrate-to-product chemistry of RHEA:14933, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:14934 (rh:substrates → 14933_L, rh:products → 14933_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein] + H2O = N(6)-(D-erythrul…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:14933
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein] + H2O = N(6)-(D-erythrulosyl)-L-lysyl-[protein]
+      + phosphate'
+  - node_id: sub1
+    label: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15798
+    description: Rhea compound GENERIC:15798.
+  - node_id: sub1_rp1
+    label: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15798 (N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:144623
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N(6)-(D-erythrulosyl)-L-lysyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15794
+    description: Rhea compound GENERIC:15794.
+  - node_id: prd1_rp1
+    label: N(6)-(D-erythrulosyl)-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15794 (N(6)-(D-erythrulosyl)-L-lysyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:144587
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein] is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14934
+      snippet: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein] + H2O => N(6)-(D-erythrulosyl)-L-lysyl-[protein]
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14934 declares side 14933_L as its substrates
+        (rh:substrates); the master reaction RHEA:14933 is undirected. This participant is GENERIC:15798
+        with coefficient 1. Rhea cites PMID:15705060 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysine residue is the reactive part of N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:14933
+      snippet: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysine residue
+      notes: Rhea compound GENERIC:15798 (N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein]) declares
+        rh:reactivePart = N(6)-(4-O-phospho-D-erythrulosyl)-L-lysine residue (CHEBI:144623), formula C10H18N2O7P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14934
+      snippet: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein] + H2O => N(6)-(D-erythrulosyl)-L-lysyl-[protein]
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14934 declares side 14933_L as its substrates
+        (rh:substrates); the master reaction RHEA:14933 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15705060 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-(D-erythrulosyl)-L-lysyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:14934
+      snippet: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein] + H2O => N(6)-(D-erythrulosyl)-L-lysyl-[protein]
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14934 declares side 14933_R as its products
+        (rh:products); the master reaction RHEA:14933 is undirected. This participant is GENERIC:15794
+        with coefficient 1. Rhea cites PMID:15705060 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(6)-(D-erythrulosyl)-L-lysine residue is the reactive part of N(6)-(D-erythrulosyl)-L-lysyl-[protein].
+    evidence:
+    - reference: RHEA:14933
+      snippet: N(6)-(D-erythrulosyl)-L-lysine residue
+      notes: Rhea compound GENERIC:15794 (N(6)-(D-erythrulosyl)-L-lysyl-[protein]) declares rh:reactivePart
+        = N(6)-(D-erythrulosyl)-L-lysine residue (CHEBI:144587), formula C10H19N2O4.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14934
+      snippet: N(6)-(4-O-phospho-D-erythrulosyl)-L-lysyl-[protein] + H2O => N(6)-(D-erythrulosyl)-L-lysyl-[protein]
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14934 declares side 14933_R as its products
+        (rh:products); the master reaction RHEA:14933 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:15705060 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

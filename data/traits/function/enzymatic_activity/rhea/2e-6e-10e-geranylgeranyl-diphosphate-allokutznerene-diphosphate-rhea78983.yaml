@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.224
     mapping_source: rhea2ec
@@ -26,4 +26,110 @@ definitions:
       Catalyses the reaction: (2E,6E,10E)-geranylgeranyl diphosphate = allokutznerene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E,10E)-geranylgeranyl diphosphate = allokutznerene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:78983, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78984 (rh:substrates → 78983_L, rh:products → 78983_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E,10E)-geranylgeranyl diphosphate = allokutznerene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78983
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E,10E)-geranylgeranyl diphosphate = allokutznerene + diphosphate'
+  - node_id: sub1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: allokutznerene
+    node_type: CHEMICAL
+    grounding: CHEBI:219780
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: allokutznerene synthase
+    grounding: EC:4.2.3.224
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A1G9VRW7
+    node_type: PROTEIN
+    label: PMS_ALLAB
+    grounding: UniProtKB:A0A1G9VRW7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78984
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => allokutznerene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78984 declares side 78983_L as its substrates
+        (rh:substrates); the master reaction RHEA:78983 is undirected. This participant is CHEBI:58756
+        with coefficient 1. Rhea cites PMID:29758116 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: allokutznerene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78984
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => allokutznerene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78984 declares side 78983_R as its products
+        (rh:products); the master reaction RHEA:78983 is undirected. This participant is CHEBI:219780
+        with coefficient 1. Rhea cites PMID:29758116 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78984
+      snippet: (2E,6E,10E)-geranylgeranyl diphosphate => allokutznerene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78984 declares side 78983_R as its products
+        (rh:products); the master reaction RHEA:78983 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:29758116 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.224; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:78983
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.224"/>
+      notes: The rh:ec triple on RHEA:78983 in rhea.rdf. EC 4.2.3.224 is itself a record in this KB.
+  - subject: prot_A0A1G9VRW7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PMS_ALLAB is an exemplar enzyme carrying EC 4.2.3.224, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.224
+      snippet: DR   A0A1G9VRW7, PMS_ALLAB  ;
+      notes: ExPASy ENZYME entry EC 4.2.3.224 cross-references UniProtKB:A0A1G9VRW7 (PMS_ALLAB) as a protein
+        with this activity.
+    - reference: RHEA:78983
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.224"/>
+      notes: Rhea assigns RHEA:78983 to EC 4.2.3.224, and EC 4.2.3.224 maps to exactly one Rhea master
+        reaction (RHEA:78983), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

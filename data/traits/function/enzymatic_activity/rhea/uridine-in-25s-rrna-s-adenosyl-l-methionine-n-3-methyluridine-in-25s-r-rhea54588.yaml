@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.1.1.313
     mapping_source: rhea2ec
@@ -30,4 +30,165 @@ definitions:
       Catalyses the reaction: uridine in 25S rRNA + S-adenosyl-L-methionine = N(3)-methyluridine in 25S rRNA + S-adenosyl-L-homocysteine + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of uridine in 25S rRNA + S-adenosyl-L-methionine = N(3)-methyluridine in 25S
+    rRNA + S-aden…
+  description: Substrate-to-product chemistry of RHEA:54588, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:54589 (rh:substrates → 54588_L, rh:products → 54588_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of uridine in 25S rRNA + S-adenosyl-L-methionine = N(3)-methyluridine in 25S rR…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:54588
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: uridine in 25S rRNA + S-adenosyl-L-methionine = N(3)-methyluridine in 25S rRNA +
+      S-adenosyl-L-homocysteine + H(+)'
+  - node_id: sub1
+    label: uridine in 25S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13939
+    description: Rhea compound GENERIC:13939.
+  - node_id: sub1_rp1
+    label: UMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13939 (uridine in
+      25S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: N(3)-methyluridine in 25S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13940
+    description: Rhea compound GENERIC:13940.
+  - node_id: prd1_rp1
+    label: N(3)-methyluridine 5'-phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13940 (N(3)-methyluridine
+      in 25S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74502
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 25S rRNA (uracil(2634)-N(3))-methyltransferase
+    grounding: EC:2.1.1.313
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine in 25S rRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54589
+      snippet: uridine in 25S rRNA + S-adenosyl-L-methionine => N(3)-methyluridine in 25S rRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54589 declares side 54588_L as its substrates
+        (rh:substrates); the master reaction RHEA:54588 is undirected. This participant is GENERIC:13939
+        with coefficient 1. Rhea cites PMID:24335083 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine in 25S rRNA.
+    evidence:
+    - reference: RHEA:54588
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:13939 (uridine in 25S rRNA) declares rh:reactivePart = UMP residue
+        (CHEBI:65315), formula C9H10N2O8P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54589
+      snippet: uridine in 25S rRNA + S-adenosyl-L-methionine => N(3)-methyluridine in 25S rRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54589 declares side 54588_L as its substrates
+        (rh:substrates); the master reaction RHEA:54588 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:24335083 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(3)-methyluridine in 25S rRNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54589
+      snippet: uridine in 25S rRNA + S-adenosyl-L-methionine => N(3)-methyluridine in 25S rRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54589 declares side 54588_R as its products
+        (rh:products); the master reaction RHEA:54588 is undirected. This participant is GENERIC:13940
+        with coefficient 1. Rhea cites PMID:24335083 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(3)-methyluridine 5'-phosphate residue is the reactive part of N(3)-methyluridine in
+      25S rRNA.
+    evidence:
+    - reference: RHEA:54588
+      snippet: N(3)-methyluridine 5'-phosphate residue
+      notes: Rhea compound GENERIC:13940 (N(3)-methyluridine in 25S rRNA) declares rh:reactivePart = N(3)-methyluridine
+        5'-phosphate residue (CHEBI:74502), formula C10H12N2O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54589
+      snippet: uridine in 25S rRNA + S-adenosyl-L-methionine => N(3)-methyluridine in 25S rRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54589 declares side 54588_R as its products
+        (rh:products); the master reaction RHEA:54588 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:24335083 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54589
+      snippet: uridine in 25S rRNA + S-adenosyl-L-methionine => N(3)-methyluridine in 25S rRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54589 declares side 54588_R as its products
+        (rh:products); the master reaction RHEA:54588 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:24335083 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.1.1.313; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:54588
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.313"/>
+      notes: The rh:ec triple on RHEA:54588 in rhea.rdf. EC 2.1.1.313 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.3.-
 synonyms:
@@ -73,4 +73,260 @@ definitions:
       Catalyses: (1) 1D-myo-inositol 1,4,5-trisphosphate + H2O = 1D-myo-inositol 1,4- bisphosphate + phosphate. (2) 1D-myo-inositol 1,3,4,5-tetrakisphosphate + H2O = 1D-myo-inositol 1,3,4-trisphosphate + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of inositol-polyphosphate 5-phosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.3.56. Rhea assigns 2 curated
+    reactions to EC 3.1.3.56. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) 1D-myo-inositol 1,4,5-trisphosphate + H2O = 1D-myo-inositol
+    1,4- bisphosphate + phosphate. (2) 1D-myo-inositol 1,3,4,5-tetrakisphosphate + H2O = 1D-myo-inositol
+    1,3,4-trisphosphate + phosphate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: inositol-polyphosphate 5-phosphatase
+    grounding: EC:3.1.3.56
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 1D-myo-inositol 1,3,4,5-tetrakisphosphate + H2O = 1D-myo-inositol 1,3,4-tris…
+    grounding: RHEA:11392
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 1D-myo-inositol 1,3,4,5-tetrakisphosphate + H2O = 1D-myo-inositol 1,3,4-trisphosphate
+      + phosphate'
+  - node_id: rxn1_sub1
+    label: 1D-myo-inositol 1,3,4,5-tetrakisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57895
+    description: Formula C6H8O18P4.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: 1D-myo-inositol 1,3,4-trisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58414
+    description: Formula C6H9O15P3.
+  - node_id: rxn1_prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 1D-myo-inositol 1,4,5-trisphosphate + H2O = 1D-myo-inositol 1,4-bisphosphate…
+    grounding: RHEA:19797
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 1D-myo-inositol 1,4,5-trisphosphate + H2O = 1D-myo-inositol 1,4-bisphosphate
+      + phosphate'
+  - node_id: rxn2_sub1
+    label: 1D-myo-inositol 1,4,5-trisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:203600
+    description: Formula C6H9O15P3.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: 1D-myo-inositol 1,4-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58282
+    description: Formula C6H10O12P2.
+  - node_id: rxn2_prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: inositol-polyphosphate 5-phosphatase activity
+    grounding: GO:0004445
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q17848
+    node_type: PROTEIN
+    label: I5P1_CAEEL
+    grounding: UniProtKB:Q17848
+  - node_id: prot_Q29467
+    node_type: PROTEIN
+    label: I5P1_CANLF
+    grounding: UniProtKB:Q29467
+  - node_id: prot_Q14642
+    node_type: PROTEIN
+    label: I5P1_HUMAN
+    grounding: UniProtKB:Q14642
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:11392 is one of the 2 curated reactions Rhea assigns to EC 3.1.3.56; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:11392
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.3.56"/>
+      notes: The rh:ec triple on RHEA:11392 in rhea.rdf assigns that reaction to EC 3.1.3.56.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: 1D-myo-inositol 1,3,4,5-tetrakisphosphate is a substrate consumed by RHEA:11392 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11393
+      snippet: 1D-myo-inositol 1,3,4,5-tetrakisphosphate + H2O => 1D-myo-inositol 1,3,4-trisphosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11393 declares side 11392_L as its substrates
+        (rh:substrates); the master reaction RHEA:11392 is undirected. This participant is CHEBI:57895
+        with coefficient 1. Rhea cites PMID:9108392, PMID:11402208, PMID:10593988, PMID:8769125 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:11392 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11393
+      snippet: 1D-myo-inositol 1,3,4,5-tetrakisphosphate + H2O => 1D-myo-inositol 1,3,4-trisphosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11393 declares side 11392_L as its substrates
+        (rh:substrates); the master reaction RHEA:11392 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:9108392, PMID:11402208, PMID:10593988, PMID:8769125 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 1D-myo-inositol 1,3,4-trisphosphate is a product released by RHEA:11392 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11393
+      snippet: 1D-myo-inositol 1,3,4,5-tetrakisphosphate + H2O => 1D-myo-inositol 1,3,4-trisphosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11393 declares side 11392_R as its products
+        (rh:products); the master reaction RHEA:11392 is undirected. This participant is CHEBI:58414 with
+        coefficient 1. Rhea cites PMID:9108392, PMID:11402208, PMID:10593988, PMID:8769125 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: phosphate is a product released by RHEA:11392 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11393
+      snippet: 1D-myo-inositol 1,3,4,5-tetrakisphosphate + H2O => 1D-myo-inositol 1,3,4-trisphosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:11393 declares side 11392_R as its products
+        (rh:products); the master reaction RHEA:11392 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:9108392, PMID:11402208, PMID:10593988, PMID:8769125 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:19797 is one of the 2 curated reactions Rhea assigns to EC 3.1.3.56; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:19797
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.3.56"/>
+      notes: The rh:ec triple on RHEA:19797 in rhea.rdf assigns that reaction to EC 3.1.3.56.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: 1D-myo-inositol 1,4,5-trisphosphate is a substrate consumed by RHEA:19797 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:19798
+      snippet: 1D-myo-inositol 1,4,5-trisphosphate + H2O => 1D-myo-inositol 1,4-bisphosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19798 declares side 19797_L as its substrates
+        (rh:substrates); the master reaction RHEA:19797 is undirected. This participant is CHEBI:203600
+        with coefficient 1. Rhea cites PMID:36589890, PMID:33349335, PMID:11402208, PMID:10593988 for
+        this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:19797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19798
+      snippet: 1D-myo-inositol 1,4,5-trisphosphate + H2O => 1D-myo-inositol 1,4-bisphosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19798 declares side 19797_L as its substrates
+        (rh:substrates); the master reaction RHEA:19797 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:36589890, PMID:33349335, PMID:11402208, PMID:10593988 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 1D-myo-inositol 1,4-bisphosphate is a product released by RHEA:19797 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:19798
+      snippet: 1D-myo-inositol 1,4,5-trisphosphate + H2O => 1D-myo-inositol 1,4-bisphosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19798 declares side 19797_R as its products
+        (rh:products); the master reaction RHEA:19797 is undirected. This participant is CHEBI:58282 with
+        coefficient 1. Rhea cites PMID:36589890, PMID:33349335, PMID:11402208, PMID:10593988 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: phosphate is a product released by RHEA:19797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19798
+      snippet: 1D-myo-inositol 1,4,5-trisphosphate + H2O => 1D-myo-inositol 1,4-bisphosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19798 declares side 19797_R as its products
+        (rh:products); the master reaction RHEA:19797 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:36589890, PMID:33349335, PMID:11402208, PMID:10593988 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.3.56
+      snippet: EC:3.1.3.56 > GO:inositol-polyphosphate 5-phosphatase activity ; GO:0004445
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004445 is itself a record
+        in this KB.
+  - subject: prot_Q17848
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: I5P1_CAEEL is an exemplar enzyme with EC 3.1.3.56 activity.
+    evidence:
+    - reference: EC:3.1.3.56
+      snippet: DR   Q17848, I5P1_CAEEL ;  Q29467, I5P1_CANLF ;  Q14642, I5P1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.1.3.56 cross-references UniProtKB:Q17848 (I5P1_CAEEL) as a protein
+        with this activity.
+  - subject: prot_Q29467
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: I5P1_CANLF is an exemplar enzyme with EC 3.1.3.56 activity.
+    evidence:
+    - reference: EC:3.1.3.56
+      snippet: DR   Q17848, I5P1_CAEEL ;  Q29467, I5P1_CANLF ;  Q14642, I5P1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.1.3.56 cross-references UniProtKB:Q29467 (I5P1_CANLF) as a protein
+        with this activity.
+  - subject: prot_Q14642
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: I5P1_HUMAN is an exemplar enzyme with EC 3.1.3.56 activity.
+    evidence:
+    - reference: EC:3.1.3.56
+      snippet: DR   Q17848, I5P1_CAEEL ;  Q29467, I5P1_CANLF ;  Q14642, I5P1_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.1.3.56 cross-references UniProtKB:Q14642 (I5P1_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

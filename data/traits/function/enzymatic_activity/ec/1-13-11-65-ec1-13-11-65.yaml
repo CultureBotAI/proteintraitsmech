@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 mapped_xrefs:
@@ -34,4 +34,136 @@ definitions:
       Catalyses: all-trans-zeaxanthin + O2 = (3R)-11-cis-3-hydroxyretinal + (3R)-all- trans-3-hydroxyretinal
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of carotenoid isomerooxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.65. EC 1.13.11.65 maps to
+    exactly one curated Rhea reaction (RHEA:33931), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "all-trans-zeaxanthin
+    + O2 = (3R)-11-cis-3-hydroxyretinal + (3R)-all- trans-3-hydroxyretinal". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: carotenoid isomerooxygenase
+    grounding: EC:1.13.11.65
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: all-trans-zeaxanthin
+    node_type: CHEMICAL
+    grounding: CHEBI:27547
+    description: Formula C40H56O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (3R)-11-cis-3-hydroxyretinal
+    node_type: CHEMICAL
+    grounding: CHEBI:66898
+    description: Formula C20H28O2.
+  - node_id: prd2
+    label: (3R)-all-trans-3-hydroxyretinal
+    node_type: CHEMICAL
+    grounding: CHEBI:52228
+    description: Formula C20H28O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: carotenoid isomerooxygenase activity
+    grounding: GO:0106422
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9VFS2
+    node_type: PROTEIN
+    label: NINAB_DROME
+    grounding: UniProtKB:Q9VFS2
+  - node_id: prot_A8Y9I2
+    node_type: PROTEIN
+    label: NINAB_GALME
+    grounding: UniProtKB:A8Y9I2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-zeaxanthin is a substrate consumed by RHEA:33931 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33932
+      snippet: all-trans-zeaxanthin + O2 => (3R)-11-cis-3-hydroxyretinal + (3R)-all-trans-3-hydroxyretinal
+      notes: Rhea's left-to-right directional reaction RHEA:33932 declares side 33931_L as its substrates
+        (rh:substrates); the master reaction RHEA:33931 is undirected. This participant is CHEBI:27547
+        with coefficient 1. Rhea cites PMID:19020100, PMID:10766819 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:33931 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33932
+      snippet: all-trans-zeaxanthin + O2 => (3R)-11-cis-3-hydroxyretinal + (3R)-all-trans-3-hydroxyretinal
+      notes: Rhea's left-to-right directional reaction RHEA:33932 declares side 33931_L as its substrates
+        (rh:substrates); the master reaction RHEA:33931 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:19020100, PMID:10766819 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3R)-11-cis-3-hydroxyretinal is a product released by RHEA:33931 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33932
+      snippet: all-trans-zeaxanthin + O2 => (3R)-11-cis-3-hydroxyretinal + (3R)-all-trans-3-hydroxyretinal
+      notes: Rhea's left-to-right directional reaction RHEA:33932 declares side 33931_R as its products
+        (rh:products); the master reaction RHEA:33931 is undirected. This participant is CHEBI:66898 with
+        coefficient 1. Rhea cites PMID:19020100, PMID:10766819 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (3R)-all-trans-3-hydroxyretinal is a product released by RHEA:33931 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:33932
+      snippet: all-trans-zeaxanthin + O2 => (3R)-11-cis-3-hydroxyretinal + (3R)-all-trans-3-hydroxyretinal
+      notes: Rhea's left-to-right directional reaction RHEA:33932 declares side 33931_R as its products
+        (rh:products); the master reaction RHEA:33931 is undirected. This participant is CHEBI:52228 with
+        coefficient 1. Rhea cites PMID:19020100, PMID:10766819 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.65
+      snippet: EC:1.13.11.65 > GO:carotenoid isomerooxygenase activity ; GO:0106422
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0106422 is itself a record
+        in this KB.
+  - subject: prot_Q9VFS2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NINAB_DROME is an exemplar enzyme with EC 1.13.11.65 activity.
+    evidence:
+    - reference: EC:1.13.11.65
+      snippet: DR   Q9VFS2, NINAB_DROME;  A8Y9I2, NINAB_GALME;
+      notes: ExPASy ENZYME entry EC 1.13.11.65 cross-references UniProtKB:Q9VFS2 (NINAB_DROME) as a protein
+        with this activity.
+  - subject: prot_A8Y9I2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NINAB_GALME is an exemplar enzyme with EC 1.13.11.65 activity.
+    evidence:
+    - reference: EC:1.13.11.65
+      snippet: DR   Q9VFS2, NINAB_DROME;  A8Y9I2, NINAB_GALME;
+      notes: ExPASy ENZYME entry EC 1.13.11.65 cross-references UniProtKB:A8Y9I2 (NINAB_GALME) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

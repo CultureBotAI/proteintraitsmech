@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -34,4 +34,117 @@ definitions:
       Catalyses: (R)-lactoyl-CoA = acryloyl-CoA + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of lactoyl-CoA dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.54. EC 4.2.1.54 maps to exactly
+    one curated Rhea reaction (RHEA:34691), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-lactoyl-CoA
+    = acryloyl-CoA + H2O". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: lactoyl-CoA dehydratase
+    grounding: EC:4.2.1.54
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-lactoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:70980
+    description: Formula C24H36N7O18P3S.
+  - node_id: prd1
+    label: acryloyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57367
+    description: Formula C24H34N7O17P3S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: lactoyl-CoA dehydratase activity
+    grounding: GO:0018819
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_G3KIM4
+    node_type: PROTEIN
+    label: LCDA_ANAPI
+    grounding: UniProtKB:G3KIM4
+  - node_id: prot_G3KIM3
+    node_type: PROTEIN
+    label: LCDB_ANAPI
+    grounding: UniProtKB:G3KIM3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-lactoyl-CoA is a substrate consumed by RHEA:34691 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34692
+      snippet: (R)-lactoyl-CoA => acryloyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34692 declares side 34691_L as its substrates
+        (rh:substrates); the master reaction RHEA:34691 is undirected. This participant is CHEBI:70980
+        with coefficient 1. Rhea cites PMID:1597194, PMID:6586495, PMID:3026450, PMID:4055736 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: acryloyl-CoA is a product released by RHEA:34691 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34692
+      snippet: (R)-lactoyl-CoA => acryloyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34692 declares side 34691_R as its products
+        (rh:products); the master reaction RHEA:34691 is undirected. This participant is CHEBI:57367 with
+        coefficient 1. Rhea cites PMID:1597194, PMID:6586495, PMID:3026450, PMID:4055736 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:34691 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34692
+      snippet: (R)-lactoyl-CoA => acryloyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:34692 declares side 34691_R as its products
+        (rh:products); the master reaction RHEA:34691 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:1597194, PMID:6586495, PMID:3026450, PMID:4055736 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.54
+      snippet: EC:4.2.1.54 > GO:lactoyl-CoA dehydratase activity ; GO:0018819
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018819 is itself a record
+        in this KB.
+  - subject: prot_G3KIM4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCDA_ANAPI is an exemplar enzyme with EC 4.2.1.54 activity.
+    evidence:
+    - reference: EC:4.2.1.54
+      snippet: DR   G3KIM4, LCDA_ANAPI ;  G3KIM3, LCDB_ANAPI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.54 cross-references UniProtKB:G3KIM4 (LCDA_ANAPI) as a protein
+        with this activity.
+  - subject: prot_G3KIM3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCDB_ANAPI is an exemplar enzyme with EC 4.2.1.54 activity.
+    evidence:
+    - reference: EC:4.2.1.54
+      snippet: DR   G3KIM4, LCDA_ANAPI ;  G3KIM3, LCDB_ANAPI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.54 cross-references UniProtKB:G3KIM3 (LCDB_ANAPI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

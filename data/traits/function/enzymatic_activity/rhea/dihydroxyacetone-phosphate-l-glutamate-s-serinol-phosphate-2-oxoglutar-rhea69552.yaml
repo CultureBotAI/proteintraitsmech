@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57642
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: dihydroxyacetone phosphate + L-glutamate = (S)-serinol phosphate + 2-oxoglutarate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dihydroxyacetone phosphate + L-glutamate = (S)-serinol phosphate + 2-oxoglutarate
+  description: Substrate-to-product chemistry of RHEA:69552, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69553 (rh:substrates → 69552_L, rh:products → 69552_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dihydroxyacetone phosphate + L-glutamate = (S)-serinol phosphate + 2-oxoglut…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69552
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dihydroxyacetone phosphate + L-glutamate = (S)-serinol phosphate + 2-oxoglutarate'
+  - node_id: sub1
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: sub2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prd1
+    label: (S)-serinol phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:184377
+    description: Formula C3H9NO5P.
+  - node_id: prd2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dihydroxyacetone phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69553
+      snippet: dihydroxyacetone phosphate + L-glutamate => (S)-serinol phosphate + 2-oxoglutarate
+      notes: Rhea's left-to-right directional reaction RHEA:69553 declares side 69552_L as its substrates
+        (rh:substrates); the master reaction RHEA:69552 is undirected. This participant is CHEBI:57642
+        with coefficient 1. Rhea cites PMID:34505775 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-glutamate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69553
+      snippet: dihydroxyacetone phosphate + L-glutamate => (S)-serinol phosphate + 2-oxoglutarate
+      notes: Rhea's left-to-right directional reaction RHEA:69553 declares side 69552_L as its substrates
+        (rh:substrates); the master reaction RHEA:69552 is undirected. This participant is CHEBI:29985
+        with coefficient 1. Rhea cites PMID:34505775 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-serinol phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69553
+      snippet: dihydroxyacetone phosphate + L-glutamate => (S)-serinol phosphate + 2-oxoglutarate
+      notes: Rhea's left-to-right directional reaction RHEA:69553 declares side 69552_R as its products
+        (rh:products); the master reaction RHEA:69552 is undirected. This participant is CHEBI:184377
+        with coefficient 1. Rhea cites PMID:34505775 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 2-oxoglutarate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69553
+      snippet: dihydroxyacetone phosphate + L-glutamate => (S)-serinol phosphate + 2-oxoglutarate
+      notes: Rhea's left-to-right directional reaction RHEA:69553 declares side 69552_R as its products
+        (rh:products); the master reaction RHEA:69552 is undirected. This participant is CHEBI:16810 with
+        coefficient 1. Rhea cites PMID:34505775 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

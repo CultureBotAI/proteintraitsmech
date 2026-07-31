@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.99.-
 synonyms:
@@ -38,4 +38,67 @@ definitions:
       Catalyses: an archaeal dolichyl phosphooligosaccharide + [protein]-L-asparagine = an archaeal dolichyl phosphate + a glycoprotein with the oligosaccharide chain attached by N-beta-D-glycosyl linkage to a protein L-asparagine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dolichyl-phosphooligosaccharide-protein glycotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.99.21. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "an archaeal
+    dolichyl phosphooligosaccharide + [protein]-L-asparagine = an archaeal dolichyl phosphate + a glycoprotein
+    with the oligosaccharide chain attached by N-beta-D-glycosyl linkage to a protein L-asparagine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dolichyl-phosphooligosaccharide-protein glycotransferase
+    grounding: EC:2.4.99.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_O29918
+    node_type: PROTEIN
+    label: AGLB1_ARCFU
+    grounding: UniProtKB:O29918
+  - node_id: prot_Q8U4D2
+    node_type: PROTEIN
+    label: AGLB1_PYRFU
+    grounding: UniProtKB:Q8U4D2
+  - node_id: prot_O74088
+    node_type: PROTEIN
+    label: AGLB1_PYRHO
+    grounding: UniProtKB:O74088
+  edges:
+  - subject: prot_O29918
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGLB1_ARCFU is an exemplar enzyme with EC 2.4.99.21 activity.
+    evidence:
+    - reference: EC:2.4.99.21
+      snippet: DR   O29918, AGLB1_ARCFU;  Q8U4D2, AGLB1_PYRFU;  O74088, AGLB1_PYRHO;
+      notes: ExPASy ENZYME entry EC 2.4.99.21 cross-references UniProtKB:O29918 (AGLB1_ARCFU) as a protein
+        with this activity.
+  - subject: prot_Q8U4D2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGLB1_PYRFU is an exemplar enzyme with EC 2.4.99.21 activity.
+    evidence:
+    - reference: EC:2.4.99.21
+      snippet: DR   O29918, AGLB1_ARCFU;  Q8U4D2, AGLB1_PYRFU;  O74088, AGLB1_PYRHO;
+      notes: ExPASy ENZYME entry EC 2.4.99.21 cross-references UniProtKB:Q8U4D2 (AGLB1_PYRFU) as a protein
+        with this activity.
+  - subject: prot_O74088
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGLB1_PYRHO is an exemplar enzyme with EC 2.4.99.21 activity.
+    evidence:
+    - reference: EC:2.4.99.21
+      snippet: DR   O29918, AGLB1_ARCFU;  Q8U4D2, AGLB1_PYRFU;  O74088, AGLB1_PYRHO;
+      notes: ExPASy ENZYME entry EC 2.4.99.21 cross-references UniProtKB:O74088 (AGLB1_PYRHO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

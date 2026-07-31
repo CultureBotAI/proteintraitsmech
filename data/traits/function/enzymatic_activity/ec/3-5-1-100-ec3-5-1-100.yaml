@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -39,4 +39,285 @@ definitions:
       Catalyses: (1) (R)-piperazine-2-carboxamide + H2O = (R)-piperazine-2-carboxylate + NH4(+). (2) beta-alaninamide + H2O = beta-alanine + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (R)-amidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.100. Rhea assigns 4 curated
+    reactions to EC 3.5.1.100 (the first 3 are shown). No one substrate set is the class''s chemistry,
+    so each reaction is its own node — grounded to the Rhea record in this KB — and carries its own inputs
+    and outputs. ExPASy ENZYME states the catalysed reaction as: "(1) (R)-piperazine-2-carboxamide + H2O
+    = (R)-piperazine-2-carboxylate + NH4(+). (2) beta-alaninamide + H2O = beta-alanine + NH4(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (R)-amidase
+    grounding: EC:3.5.1.100
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (R)-piperazine-2-carboxamide + H2O = (R)-piperazine-2-carboxylate + NH4(+)
+    grounding: RHEA:26542
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (R)-piperazine-2-carboxamide + H2O = (R)-piperazine-2-carboxylate + NH4(+)'
+  - node_id: rxn1_sub1
+    label: (R)-piperazine-2-carboxamide
+    node_type: CHEMICAL
+    grounding: CHEBI:58916
+    description: Formula C5H12N3O.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: (R)-piperazine-2-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:58917
+    description: Formula C5H10N2O2.
+  - node_id: rxn1_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of beta-alaninamide + H2O = beta-alanine + NH4(+)
+    grounding: RHEA:26546
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: beta-alaninamide + H2O = beta-alanine + NH4(+)'
+  - node_id: rxn2_sub1
+    label: beta-alaninamide
+    node_type: CHEMICAL
+    grounding: CHEBI:58918
+    description: Formula C3H9N2O.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: beta-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57966
+    description: Formula C3H7NO2.
+  - node_id: rxn2_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (3R)-piperidine-3-carboxamide + H2O = (3R)-piperidine-3-carboxylate + NH4(+)
+    grounding: RHEA:27574
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (3R)-piperidine-3-carboxamide + H2O = (3R)-piperidine-3-carboxylate + NH4(+)'
+  - node_id: rxn3_sub1
+    label: (3R)-piperidine-3-carboxamide
+    node_type: CHEMICAL
+    grounding: CHEBI:60118
+    description: Formula C6H13N2O.
+  - node_id: rxn3_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3_prd1
+    label: (3R)-piperidine-3-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:60120
+    description: Formula C6H11NO2.
+  - node_id: rxn3_prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prot_Q75SP7
+    node_type: PROTEIN
+    label: RSAM_PSESP
+    grounding: UniProtKB:Q75SP7
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:26542 is one of the 4 curated reactions Rhea assigns to EC 3.5.1.100; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:26542
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.100"/>
+      notes: The rh:ec triple on RHEA:26542 in rhea.rdf assigns that reaction to EC 3.5.1.100.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (R)-piperazine-2-carboxamide is a substrate consumed by RHEA:26542 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26543
+      snippet: (R)-piperazine-2-carboxamide + H2O => (R)-piperazine-2-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26543 declares side 26542_L as its substrates
+        (rh:substrates); the master reaction RHEA:26542 is undirected. This participant is CHEBI:58916
+        with coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:26542 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26543
+      snippet: (R)-piperazine-2-carboxamide + H2O => (R)-piperazine-2-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26543 declares side 26542_L as its substrates
+        (rh:substrates); the master reaction RHEA:26542 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (R)-piperazine-2-carboxylate is a product released by RHEA:26542 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26543
+      snippet: (R)-piperazine-2-carboxamide + H2O => (R)-piperazine-2-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26543 declares side 26542_R as its products
+        (rh:products); the master reaction RHEA:26542 is undirected. This participant is CHEBI:58917 with
+        coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NH4(+) is a product released by RHEA:26542 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26543
+      snippet: (R)-piperazine-2-carboxamide + H2O => (R)-piperazine-2-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26543 declares side 26542_R as its products
+        (rh:products); the master reaction RHEA:26542 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:26546 is one of the 4 curated reactions Rhea assigns to EC 3.5.1.100; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:26546
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.100"/>
+      notes: The rh:ec triple on RHEA:26546 in rhea.rdf assigns that reaction to EC 3.5.1.100.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: beta-alaninamide is a substrate consumed by RHEA:26546 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26547
+      snippet: beta-alaninamide + H2O => beta-alanine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26547 declares side 26546_L as its substrates
+        (rh:substrates); the master reaction RHEA:26546 is undirected. This participant is CHEBI:58918
+        with coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:26546 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26547
+      snippet: beta-alaninamide + H2O => beta-alanine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26547 declares side 26546_L as its substrates
+        (rh:substrates); the master reaction RHEA:26546 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: beta-alanine is a product released by RHEA:26546 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26547
+      snippet: beta-alaninamide + H2O => beta-alanine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26547 declares side 26546_R as its products
+        (rh:products); the master reaction RHEA:26546 is undirected. This participant is CHEBI:57966 with
+        coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NH4(+) is a product released by RHEA:26546 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26547
+      snippet: beta-alaninamide + H2O => beta-alanine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:26547 declares side 26546_R as its products
+        (rh:products); the master reaction RHEA:26546 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:27574 is one of the 4 curated reactions Rhea assigns to EC 3.5.1.100; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:27574
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.100"/>
+      notes: The rh:ec triple on RHEA:27574 in rhea.rdf assigns that reaction to EC 3.5.1.100.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: (3R)-piperidine-3-carboxamide is a substrate consumed by RHEA:27574 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27575
+      snippet: (3R)-piperidine-3-carboxamide + H2O => (3R)-piperidine-3-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27575 declares side 27574_L as its substrates
+        (rh:substrates); the master reaction RHEA:27574 is undirected. This participant is CHEBI:60118
+        with coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: H2O is a substrate consumed by RHEA:27574 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27575
+      snippet: (3R)-piperidine-3-carboxamide + H2O => (3R)-piperidine-3-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27575 declares side 27574_L as its substrates
+        (rh:substrates); the master reaction RHEA:27574 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: (3R)-piperidine-3-carboxylate is a product released by RHEA:27574 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27575
+      snippet: (3R)-piperidine-3-carboxamide + H2O => (3R)-piperidine-3-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27575 declares side 27574_R as its products
+        (rh:products); the master reaction RHEA:27574 is undirected. This participant is CHEBI:60120 with
+        coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: NH4(+) is a product released by RHEA:27574 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27575
+      snippet: (3R)-piperidine-3-carboxamide + H2O => (3R)-piperidine-3-carboxylate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27575 declares side 27574_R as its products
+        (rh:products); the master reaction RHEA:27574 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:15066183 for this reaction.
+  - subject: prot_Q75SP7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RSAM_PSESP is an exemplar enzyme with EC 3.5.1.100 activity.
+    evidence:
+    - reference: EC:3.5.1.100
+      snippet: DR   Q75SP7, RSAM_PSESP ;
+      notes: ExPASy ENZYME entry EC 3.5.1.100 cross-references UniProtKB:Q75SP7 (RSAM_PSESP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

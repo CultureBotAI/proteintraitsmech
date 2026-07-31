@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.4.17.23
     mapping_source: rhea2ec
@@ -32,4 +32,166 @@ definitions:
       Catalyses the reaction: angiotensin II + H2O = angiotensin-(1-7) + L-phenylalanine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of angiotensin II + H2O = angiotensin-(1-7) + L-phenylalanine
+  description: Substrate-to-product chemistry of RHEA:26554, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:26555 (rh:substrates → 26554_L, rh:products → 26554_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of angiotensin II + H2O = angiotensin-(1-7) + L-phenylalanine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:26554
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: angiotensin II + H2O = angiotensin-(1-7) + L-phenylalanine'
+  - node_id: sub1
+    label: angiotensin II
+    node_type: CHEMICAL
+    grounding: CHEBI:58506
+    description: Formula C50H71N13O12.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: angiotensin-(1-7)
+    node_type: CHEMICAL
+    grounding: CHEBI:58922
+    description: Formula C41H62N12O11.
+  - node_id: prd2
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: angiotensin-converting enzyme 2
+    grounding: EC:3.4.17.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q58DD0
+    node_type: PROTEIN
+    label: ACE2_BOVIN
+    grounding: UniProtKB:Q58DD0
+  - node_id: prot_Q56H28
+    node_type: PROTEIN
+    label: ACE2_FELCA
+    grounding: UniProtKB:Q56H28
+  - node_id: prot_Q9BYF1
+    node_type: PROTEIN
+    label: ACE2_HUMAN
+    grounding: UniProtKB:Q9BYF1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: angiotensin II is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26555
+      snippet: angiotensin II + H2O => angiotensin-(1-7) + L-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:26555 declares side 26554_L as its substrates
+        (rh:substrates); the master reaction RHEA:26554 is undirected. This participant is CHEBI:58506
+        with coefficient 1. Rhea cites PMID:11815627, PMID:14754895, PMID:17897633 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26555
+      snippet: angiotensin II + H2O => angiotensin-(1-7) + L-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:26555 declares side 26554_L as its substrates
+        (rh:substrates); the master reaction RHEA:26554 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11815627, PMID:14754895, PMID:17897633 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: angiotensin-(1-7) is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26555
+      snippet: angiotensin II + H2O => angiotensin-(1-7) + L-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:26555 declares side 26554_R as its products
+        (rh:products); the master reaction RHEA:26554 is undirected. This participant is CHEBI:58922 with
+        coefficient 1. Rhea cites PMID:11815627, PMID:14754895, PMID:17897633 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-phenylalanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26555
+      snippet: angiotensin II + H2O => angiotensin-(1-7) + L-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:26555 declares side 26554_R as its products
+        (rh:products); the master reaction RHEA:26554 is undirected. This participant is CHEBI:58095 with
+        coefficient 1. Rhea cites PMID:11815627, PMID:14754895, PMID:17897633 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.4.17.23; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:26554
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.17.23"/>
+      notes: The rh:ec triple on RHEA:26554 in rhea.rdf. EC 3.4.17.23 is itself a record in this KB.
+  - subject: prot_Q58DD0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE2_BOVIN is an exemplar enzyme carrying EC 3.4.17.23, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.4.17.23
+      snippet: DR   Q58DD0, ACE2_BOVIN ;  Q56H28, ACE2_FELCA ;  Q9BYF1, ACE2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.17.23 cross-references UniProtKB:Q58DD0 (ACE2_BOVIN) as a protein
+        with this activity.
+    - reference: RHEA:26554
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.17.23"/>
+      notes: Rhea assigns RHEA:26554 to EC 3.4.17.23, and EC 3.4.17.23 maps to exactly one Rhea master
+        reaction (RHEA:26554), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q56H28
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE2_FELCA is an exemplar enzyme carrying EC 3.4.17.23, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.4.17.23
+      snippet: DR   Q58DD0, ACE2_BOVIN ;  Q56H28, ACE2_FELCA ;  Q9BYF1, ACE2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.17.23 cross-references UniProtKB:Q56H28 (ACE2_FELCA) as a protein
+        with this activity.
+    - reference: RHEA:26554
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.17.23"/>
+      notes: Rhea assigns RHEA:26554 to EC 3.4.17.23, and EC 3.4.17.23 maps to exactly one Rhea master
+        reaction (RHEA:26554), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9BYF1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE2_HUMAN is an exemplar enzyme carrying EC 3.4.17.23, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.4.17.23
+      snippet: DR   Q58DD0, ACE2_BOVIN ;  Q56H28, ACE2_FELCA ;  Q9BYF1, ACE2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.17.23 cross-references UniProtKB:Q9BYF1 (ACE2_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:26554
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.17.23"/>
+      notes: Rhea assigns RHEA:26554 to EC 3.4.17.23, and EC 3.4.17.23 maps to exactly one Rhea master
+        reaction (RHEA:26554), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

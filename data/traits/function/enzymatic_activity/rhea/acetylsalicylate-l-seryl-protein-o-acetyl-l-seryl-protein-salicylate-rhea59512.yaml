@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:13719
     role: SUBSTRATE_OR_PRODUCT
@@ -35,4 +35,128 @@ definitions:
       Catalyses the reaction: acetylsalicylate + L-seryl-[protein] = O-acetyl-L-seryl-[protein] + salicylate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetylsalicylate + L-seryl-[protein] = O-acetyl-L-seryl-[protein] + salicylate
+  description: Substrate-to-product chemistry of RHEA:59512, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59513 (rh:substrates → 59512_L, rh:products → 59512_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of acetylsalicylate + L-seryl-[protein] = O-acetyl-L-seryl-[protein] + salicyla…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59512
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: acetylsalicylate + L-seryl-[protein] = O-acetyl-L-seryl-[protein] + salicylate'
+  - node_id: sub1
+    label: acetylsalicylate
+    node_type: CHEMICAL
+    grounding: CHEBI:13719
+    description: Formula C9H7O4.
+  - node_id: sub2
+    label: L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9863
+    description: Rhea compound GENERIC:9863.
+  - node_id: sub2_rp1
+    label: L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9863 (L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: prd1
+    label: O-acetyl-L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15352
+    description: Rhea compound GENERIC:15352.
+  - node_id: prd1_rp1
+    label: O-acetyl-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15352 (O-acetyl-L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:141128
+  - node_id: prd2
+    label: salicylate
+    node_type: CHEMICAL
+    grounding: CHEBI:30762
+    description: Formula C7H5O3.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acetylsalicylate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59513
+      snippet: acetylsalicylate + L-seryl-[protein] => O-acetyl-L-seryl-[protein] + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:59513 declares side 59512_L as its substrates
+        (rh:substrates); the master reaction RHEA:59512 is undirected. This participant is CHEBI:13719
+        with coefficient 1. Rhea cites PMID:14592543, PMID:25514511, PMID:8175750, PMID:1601897 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-seryl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59513
+      snippet: acetylsalicylate + L-seryl-[protein] => O-acetyl-L-seryl-[protein] + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:59513 declares side 59512_L as its substrates
+        (rh:substrates); the master reaction RHEA:59512 is undirected. This participant is GENERIC:9863
+        with coefficient 1. Rhea cites PMID:14592543, PMID:25514511, PMID:8175750, PMID:1601897 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-serine residue is the reactive part of L-seryl-[protein].
+    evidence:
+    - reference: RHEA:59512
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:9863 (L-seryl-[protein]) declares rh:reactivePart = L-serine residue
+        (CHEBI:29999), formula C3H5NO2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-acetyl-L-seryl-[protein] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59513
+      snippet: acetylsalicylate + L-seryl-[protein] => O-acetyl-L-seryl-[protein] + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:59513 declares side 59512_R as its products
+        (rh:products); the master reaction RHEA:59512 is undirected. This participant is GENERIC:15352
+        with coefficient 1. Rhea cites PMID:14592543, PMID:25514511, PMID:8175750, PMID:1601897 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-acetyl-L-serine residue is the reactive part of O-acetyl-L-seryl-[protein].
+    evidence:
+    - reference: RHEA:59512
+      snippet: O-acetyl-L-serine residue
+      notes: Rhea compound GENERIC:15352 (O-acetyl-L-seryl-[protein]) declares rh:reactivePart = O-acetyl-L-serine
+        residue (CHEBI:141128), formula C5H7NO3.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: salicylate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59513
+      snippet: acetylsalicylate + L-seryl-[protein] => O-acetyl-L-seryl-[protein] + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:59513 declares side 59512_R as its products
+        (rh:products); the master reaction RHEA:59512 is undirected. This participant is CHEBI:30762 with
+        coefficient 1. Rhea cites PMID:14592543, PMID:25514511, PMID:8175750, PMID:1601897 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

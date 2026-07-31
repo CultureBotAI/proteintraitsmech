@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.6.1.-
 synonyms:
@@ -41,4 +41,81 @@ definitions:
       Catalyses: ATP + H2O + closed Cl(-) channel = ADP + phosphate + open Cl(-) channel
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of channel-conductance-controlling ATPase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.6.1.6. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + H2O
+    + closed Cl(-) channel = ADP + phosphate + open Cl(-) channel".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: channel-conductance-controlling ATPase
+    grounding: EC:5.6.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: intracellularly ATP-gated chloride channel activity
+    grounding: GO:0005260
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q07DV2
+    node_type: PROTEIN
+    label: CFTR_AOTNA
+    grounding: UniProtKB:Q07DV2
+  - node_id: prot_Q00PJ2
+    node_type: PROTEIN
+    label: CFTR_ATEAB
+    grounding: UniProtKB:Q00PJ2
+  - node_id: prot_Q09YK5
+    node_type: PROTEIN
+    label: CFTR_ATEGE
+    grounding: UniProtKB:Q09YK5
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.6.1.6
+      snippet: EC:5.6.1.6 > GO:intracellularly ATP-gated chloride channel activity ; GO:0005260
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0005260 is itself a record
+        in this KB.
+  - subject: prot_Q07DV2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CFTR_AOTNA is an exemplar enzyme with EC 5.6.1.6 activity.
+    evidence:
+    - reference: EC:5.6.1.6
+      snippet: DR   Q07DV2, CFTR_AOTNA ;  Q00PJ2, CFTR_ATEAB ;  Q09YK5, CFTR_ATEGE ;
+      notes: ExPASy ENZYME entry EC 5.6.1.6 cross-references UniProtKB:Q07DV2 (CFTR_AOTNA) as a protein
+        with this activity.
+  - subject: prot_Q00PJ2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CFTR_ATEAB is an exemplar enzyme with EC 5.6.1.6 activity.
+    evidence:
+    - reference: EC:5.6.1.6
+      snippet: DR   Q07DV2, CFTR_AOTNA ;  Q00PJ2, CFTR_ATEAB ;  Q09YK5, CFTR_ATEGE ;
+      notes: ExPASy ENZYME entry EC 5.6.1.6 cross-references UniProtKB:Q00PJ2 (CFTR_ATEAB) as a protein
+        with this activity.
+  - subject: prot_Q09YK5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CFTR_ATEGE is an exemplar enzyme with EC 5.6.1.6 activity.
+    evidence:
+    - reference: EC:5.6.1.6
+      snippet: DR   Q07DV2, CFTR_AOTNA ;  Q00PJ2, CFTR_ATEAB ;  Q09YK5, CFTR_ATEGE ;
+      notes: ExPASy ENZYME entry EC 5.6.1.6 cross-references UniProtKB:Q09YK5 (CFTR_ATEGE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

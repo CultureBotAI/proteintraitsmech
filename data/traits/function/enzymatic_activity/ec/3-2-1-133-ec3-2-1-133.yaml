@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -39,4 +39,82 @@ definitions:
       Catalyses: hydrolysis of (1->4)-alpha-D-glucosidic linkages in polysaccharides so as to remove successive alpha-maltose residues from the non-reducing ends of the chains
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucan 1,4-alpha-maltohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.133. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "hydrolysis
+    of (1->4)-alpha-D-glucosidic linkages in polysaccharides so as to remove successive alpha-maltose
+    residues from the non-reducing ends of the chains".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glucan 1,4-alpha-maltohydrolase
+    grounding: EC:3.2.1.133
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glucan 1,4-alpha-maltohydrolase activity
+    grounding: GO:0043897
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P32818
+    node_type: PROTEIN
+    label: AMYM_BACAD
+    grounding: UniProtKB:P32818
+  - node_id: prot_Q04977
+    node_type: PROTEIN
+    label: AMYM_BACLI
+    grounding: UniProtKB:Q04977
+  - node_id: prot_P19531
+    node_type: PROTEIN
+    label: AMYM_GEOSE
+    grounding: UniProtKB:P19531
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.133
+      snippet: EC:3.2.1.133 > GO:glucan 1,4-alpha-maltohydrolase activity ; GO:0043897
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043897 is itself a record
+        in this KB.
+  - subject: prot_P32818
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMYM_BACAD is an exemplar enzyme with EC 3.2.1.133 activity.
+    evidence:
+    - reference: EC:3.2.1.133
+      snippet: DR   P32818, AMYM_BACAD ;  Q04977, AMYM_BACLI ;  P19531, AMYM_GEOSE ;
+      notes: ExPASy ENZYME entry EC 3.2.1.133 cross-references UniProtKB:P32818 (AMYM_BACAD) as a protein
+        with this activity.
+  - subject: prot_Q04977
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMYM_BACLI is an exemplar enzyme with EC 3.2.1.133 activity.
+    evidence:
+    - reference: EC:3.2.1.133
+      snippet: DR   P32818, AMYM_BACAD ;  Q04977, AMYM_BACLI ;  P19531, AMYM_GEOSE ;
+      notes: ExPASy ENZYME entry EC 3.2.1.133 cross-references UniProtKB:Q04977 (AMYM_BACLI) as a protein
+        with this activity.
+  - subject: prot_P19531
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMYM_GEOSE is an exemplar enzyme with EC 3.2.1.133 activity.
+    evidence:
+    - reference: EC:3.2.1.133
+      snippet: DR   P32818, AMYM_BACAD ;  Q04977, AMYM_BACLI ;  P19531, AMYM_GEOSE ;
+      notes: ExPASy ENZYME entry EC 3.2.1.133 cross-references UniProtKB:P19531 (AMYM_GEOSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

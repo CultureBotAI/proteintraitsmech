@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.13.-
 synonyms:
@@ -47,4 +47,81 @@ definitions:
       Catalyses: ATP + protein L-histidine = ADP + protein N-phospho-L-histidine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of histidine kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.13.3. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + protein
+    L-histidine = ADP + protein N-phospho-L-histidine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: histidine kinase
+    grounding: EC:2.7.13.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: protein histidine kinase activity
+    grounding: GO:0004673
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q04943
+    node_type: PROTEIN
+    label: AFSQ2_STRCO
+    grounding: UniProtKB:Q04943
+  - node_id: prot_Q9SXL4
+    node_type: PROTEIN
+    label: AHK1_ARATH
+    grounding: UniProtKB:Q9SXL4
+  - node_id: prot_Q9C5U2
+    node_type: PROTEIN
+    label: AHK2_ARATH
+    grounding: UniProtKB:Q9C5U2
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.13.3
+      snippet: EC:2.7.13.3 > GO:protein histidine kinase activity ; GO:0004673
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004673 is itself a record
+        in this KB.
+  - subject: prot_Q04943
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFSQ2_STRCO is an exemplar enzyme with EC 2.7.13.3 activity.
+    evidence:
+    - reference: EC:2.7.13.3
+      snippet: DR   Q04943, AFSQ2_STRCO;  Q9SXL4, AHK1_ARATH ;  Q9C5U2, AHK2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.7.13.3 cross-references UniProtKB:Q04943 (AFSQ2_STRCO) as a protein
+        with this activity.
+  - subject: prot_Q9SXL4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHK1_ARATH is an exemplar enzyme with EC 2.7.13.3 activity.
+    evidence:
+    - reference: EC:2.7.13.3
+      snippet: DR   Q04943, AFSQ2_STRCO;  Q9SXL4, AHK1_ARATH ;  Q9C5U2, AHK2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.7.13.3 cross-references UniProtKB:Q9SXL4 (AHK1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9C5U2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AHK2_ARATH is an exemplar enzyme with EC 2.7.13.3 activity.
+    evidence:
+    - reference: EC:2.7.13.3
+      snippet: DR   Q04943, AFSQ2_STRCO;  Q9SXL4, AHK1_ARATH ;  Q9C5U2, AHK2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.7.13.3 cross-references UniProtKB:Q9C5U2 (AHK2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

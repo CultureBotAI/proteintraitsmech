@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.91
     mapping_source: rhea2ec
@@ -28,4 +28,142 @@ definitions:
       Catalyses the reaction: N-benzylformamide + H2O = benzylamine + formate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-benzylformamide + H2O = benzylamine + formate
+  description: Substrate-to-product chemistry of RHEA:12096, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12097 (rh:substrates → 12096_L, rh:products → 12096_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-benzylformamide + H2O = benzylamine + formate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12096
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-benzylformamide + H2O = benzylamine + formate'
+  - node_id: sub1
+    label: N-benzylformamide
+    node_type: CHEMICAL
+    grounding: CHEBI:41117
+    description: Formula C8H9NO.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: benzylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:225238
+    description: Formula C7H10N.
+  - node_id: prd2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-substituted formamide deformylase activity
+    grounding: GO:0033966
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: N-substituted formamide deformylase
+    grounding: EC:3.5.1.91
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q68AP4
+    node_type: PROTEIN
+    label: NFDA_ARTPS
+    grounding: UniProtKB:Q68AP4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-benzylformamide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12097
+      snippet: N-benzylformamide + H2O => benzylamine + formate
+      notes: Rhea's left-to-right directional reaction RHEA:12097 declares side 12096_L as its substrates
+        (rh:substrates); the master reaction RHEA:12096 is undirected. This participant is CHEBI:41117
+        with coefficient 1. Rhea cites PMID:15358859 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12097
+      snippet: N-benzylformamide + H2O => benzylamine + formate
+      notes: Rhea's left-to-right directional reaction RHEA:12097 declares side 12096_L as its substrates
+        (rh:substrates); the master reaction RHEA:12096 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15358859 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: benzylamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12097
+      snippet: N-benzylformamide + H2O => benzylamine + formate
+      notes: Rhea's left-to-right directional reaction RHEA:12097 declares side 12096_R as its products
+        (rh:products); the master reaction RHEA:12096 is undirected. This participant is CHEBI:225238
+        with coefficient 1. Rhea cites PMID:15358859 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: formate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12097
+      snippet: N-benzylformamide + H2O => benzylamine + formate
+      notes: Rhea's left-to-right directional reaction RHEA:12097 declares side 12096_R as its products
+        (rh:products); the master reaction RHEA:12096 is undirected. This participant is CHEBI:15740 with
+        coefficient 1. Rhea cites PMID:15358859 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12096
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0033966"/>
+      notes: The rdfs:seeAlso triple on RHEA:12096 in rhea.rdf. GO term GO:0033966 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.91; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12096
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.91"/>
+      notes: The rh:ec triple on RHEA:12096 in rhea.rdf. EC 3.5.1.91 is itself a record in this KB.
+  - subject: prot_Q68AP4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NFDA_ARTPS is an exemplar enzyme carrying EC 3.5.1.91, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.91
+      snippet: DR   Q68AP4, NFDA_ARTPS ;
+      notes: ExPASy ENZYME entry EC 3.5.1.91 cross-references UniProtKB:Q68AP4 (NFDA_ARTPS) as a protein
+        with this activity.
+    - reference: RHEA:12096
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.91"/>
+      notes: Rhea assigns RHEA:12096 to EC 3.5.1.91, and EC 3.5.1.91 maps to exactly one Rhea master reaction
+        (RHEA:12096), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

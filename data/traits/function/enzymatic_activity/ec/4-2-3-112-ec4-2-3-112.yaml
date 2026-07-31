@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 mapped_xrefs:
@@ -36,4 +36,132 @@ definitions:
       Catalyses: (2E)-geranyl diphosphate + H2O = (R)-alpha-terpineol + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (+)-alpha-terpineol synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.112. EC 4.2.3.112 maps to
+    exactly one curated Rhea reaction (RHEA:32555), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-geranyl
+    diphosphate + H2O = (R)-alpha-terpineol + diphosphate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-alpha-terpineol synthase
+    grounding: EC:4.2.3.112
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (R)-alpha-terpineol
+    node_type: CHEMICAL
+    grounding: CHEBI:300
+    description: Formula C10H18O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_R9QMR5
+    node_type: PROTEIN
+    label: ATERP_PINBN
+    grounding: UniProtKB:R9QMR5
+  - node_id: prot_B3TPQ7
+    node_type: PROTEIN
+    label: ATESY_MAGGA
+    grounding: UniProtKB:B3TPQ7
+  - node_id: prot_A0A8H8CFI5
+    node_type: PROTEIN
+    label: CUBD_PSICU
+    grounding: UniProtKB:A0A8H8CFI5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:32555 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32556
+      snippet: (2E)-geranyl diphosphate + H2O => (R)-alpha-terpineol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32556 declares side 32555_L as its substrates
+        (rh:substrates); the master reaction RHEA:32555 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:18467455, PMID:18541135 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:32555 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32556
+      snippet: (2E)-geranyl diphosphate + H2O => (R)-alpha-terpineol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32556 declares side 32555_L as its substrates
+        (rh:substrates); the master reaction RHEA:32555 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18467455, PMID:18541135 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R)-alpha-terpineol is a product released by RHEA:32555 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32556
+      snippet: (2E)-geranyl diphosphate + H2O => (R)-alpha-terpineol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32556 declares side 32555_R as its products
+        (rh:products); the master reaction RHEA:32555 is undirected. This participant is CHEBI:300 with
+        coefficient 1. Rhea cites PMID:18467455, PMID:18541135 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:32555 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32556
+      snippet: (2E)-geranyl diphosphate + H2O => (R)-alpha-terpineol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32556 declares side 32555_R as its products
+        (rh:products); the master reaction RHEA:32555 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:18467455, PMID:18541135 for this reaction.
+  - subject: prot_R9QMR5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATERP_PINBN is an exemplar enzyme with EC 4.2.3.112 activity.
+    evidence:
+    - reference: EC:4.2.3.112
+      snippet: DR   R9QMR5, ATERP_PINBN;  B3TPQ7, ATESY_MAGGA;  A0A8H8CFI5, CUBD_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.112 cross-references UniProtKB:R9QMR5 (ATERP_PINBN) as a protein
+        with this activity.
+  - subject: prot_B3TPQ7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ATESY_MAGGA is an exemplar enzyme with EC 4.2.3.112 activity.
+    evidence:
+    - reference: EC:4.2.3.112
+      snippet: DR   R9QMR5, ATERP_PINBN;  B3TPQ7, ATESY_MAGGA;  A0A8H8CFI5, CUBD_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.112 cross-references UniProtKB:B3TPQ7 (ATESY_MAGGA) as a protein
+        with this activity.
+  - subject: prot_A0A8H8CFI5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CUBD_PSICU is an exemplar enzyme with EC 4.2.3.112 activity.
+    evidence:
+    - reference: EC:4.2.3.112
+      snippet: DR   R9QMR5, ATERP_PINBN;  B3TPQ7, ATESY_MAGGA;  A0A8H8CFI5, CUBD_PSICU ;
+      notes: ExPASy ENZYME entry EC 4.2.3.112 cross-references UniProtKB:A0A8H8CFI5 (CUBD_PSICU) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

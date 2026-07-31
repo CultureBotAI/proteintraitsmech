@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.4.-
 synonyms:
@@ -28,4 +28,122 @@ definitions:
       Catalyses: a CMP-N-acyl-beta-neuraminate + H2O = an N-acylneuraminate + CMP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of CMP-N-acylneuraminate phosphodiesterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.4.40. EC 3.1.4.40 maps to exactly
+    one curated Rhea reaction (RHEA:20185), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a CMP-N-acyl-beta-neuraminate
+    + H2O = an N-acylneuraminate + CMP + H(+)". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: CMP-N-acylneuraminate phosphodiesterase
+    grounding: EC:3.1.4.40
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a CMP-N-acyl-beta-neuraminate
+    node_type: CHEMICAL
+    grounding: CHEBI:68671
+    description: Formula C19H26N4O16PR.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: an N-acylneuraminate
+    node_type: CHEMICAL
+    grounding: CHEBI:60073
+    description: Formula C10H15NO9R.
+  - node_id: prd2
+    label: CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:60377
+    description: Formula C9H12N3O8P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: CMP-N-acylneuraminate phosphodiesterase activity
+    grounding: GO:0047392
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a CMP-N-acyl-beta-neuraminate is a substrate consumed by RHEA:20185 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20186
+      snippet: a CMP-N-acyl-beta-neuraminate + H2O => an N-acylneuraminate + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20186 declares side 20185_L as its substrates
+        (rh:substrates); the master reaction RHEA:20185 is undirected. This participant is CHEBI:68671
+        with coefficient 1. Rhea cites PMID:4372219 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:20185 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20186
+      snippet: a CMP-N-acyl-beta-neuraminate + H2O => an N-acylneuraminate + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20186 declares side 20185_L as its substrates
+        (rh:substrates); the master reaction RHEA:20185 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4372219 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N-acylneuraminate is a product released by RHEA:20185 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20186
+      snippet: a CMP-N-acyl-beta-neuraminate + H2O => an N-acylneuraminate + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20186 declares side 20185_R as its products
+        (rh:products); the master reaction RHEA:20185 is undirected. This participant is CHEBI:60073 with
+        coefficient 1. Rhea cites PMID:4372219 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CMP is a product released by RHEA:20185 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20186
+      snippet: a CMP-N-acyl-beta-neuraminate + H2O => an N-acylneuraminate + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20186 declares side 20185_R as its products
+        (rh:products); the master reaction RHEA:20185 is undirected. This participant is CHEBI:60377 with
+        coefficient 1. Rhea cites PMID:4372219 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:20185 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20186
+      snippet: a CMP-N-acyl-beta-neuraminate + H2O => an N-acylneuraminate + CMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:20186 declares side 20185_R as its products
+        (rh:products); the master reaction RHEA:20185 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4372219 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.4.40
+      snippet: EC:3.1.4.40 > GO:CMP-N-acylneuraminate phosphodiesterase activity ; GO:0047392
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047392 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

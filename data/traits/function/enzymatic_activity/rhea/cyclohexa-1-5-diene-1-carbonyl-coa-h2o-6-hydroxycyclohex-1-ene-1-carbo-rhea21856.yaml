@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.100
     mapping_source: rhea2ec
@@ -32,4 +32,129 @@ definitions:
       Catalyses the reaction: cyclohexa-1,5-diene-1-carbonyl-CoA + H2O = 6-hydroxycyclohex-1-ene-1-carbonyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyclohexa-1,5-diene-1-carbonyl-CoA + H2O = 6-hydroxycyclohex-1-ene-1-carbonyl-CoA
+  description: Substrate-to-product chemistry of RHEA:21856, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:21857 (rh:substrates → 21856_L, rh:products → 21856_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of cyclohexa-1,5-diene-1-carbonyl-CoA + H2O = 6-hydroxycyclohex-1-ene-1-carbony…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21856
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: cyclohexa-1,5-diene-1-carbonyl-CoA + H2O = 6-hydroxycyclohex-1-ene-1-carbonyl-CoA'
+  - node_id: sub1
+    label: cyclohexa-1,5-diene-1-carbonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57374
+    description: Formula C28H38N7O17P3S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 6-hydroxycyclohex-1-ene-1-carbonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57361
+    description: Formula C28H40N7O18P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cyclohexa-1,5-dienecarbonyl-CoA hydratase activity
+    grounding: GO:0018823
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: cyclohexa-1,5-dienecarbonyl-CoA hydratase
+    grounding: EC:4.2.1.100
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_O87873
+    node_type: PROTEIN
+    label: DCH_THAAR
+    grounding: UniProtKB:O87873
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cyclohexa-1,5-diene-1-carbonyl-CoA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21857
+      snippet: cyclohexa-1,5-diene-1-carbonyl-CoA + H2O => 6-hydroxycyclohex-1-ene-1-carbonyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21857 declares side 21856_L as its substrates
+        (rh:substrates); the master reaction RHEA:21856 is undirected. This participant is CHEBI:57374
+        with coefficient 1. Rhea cites PMID:9738901, PMID:17122342, PMID:8436125, PMID:8990279 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21857
+      snippet: cyclohexa-1,5-diene-1-carbonyl-CoA + H2O => 6-hydroxycyclohex-1-ene-1-carbonyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21857 declares side 21856_L as its substrates
+        (rh:substrates); the master reaction RHEA:21856 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:9738901, PMID:17122342, PMID:8436125, PMID:8990279 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 6-hydroxycyclohex-1-ene-1-carbonyl-CoA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21857
+      snippet: cyclohexa-1,5-diene-1-carbonyl-CoA + H2O => 6-hydroxycyclohex-1-ene-1-carbonyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:21857 declares side 21856_R as its products
+        (rh:products); the master reaction RHEA:21856 is undirected. This participant is CHEBI:57361 with
+        coefficient 1. Rhea cites PMID:9738901, PMID:17122342, PMID:8436125, PMID:8990279 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:21856
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0018823"/>
+      notes: The rdfs:seeAlso triple on RHEA:21856 in rhea.rdf. GO term GO:0018823 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.100; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:21856
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.100"/>
+      notes: The rh:ec triple on RHEA:21856 in rhea.rdf. EC 4.2.1.100 is itself a record in this KB.
+  - subject: prot_O87873
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DCH_THAAR is an exemplar enzyme carrying EC 4.2.1.100, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.100
+      snippet: DR   O87873, DCH_THAAR  ;
+      notes: ExPASy ENZYME entry EC 4.2.1.100 cross-references UniProtKB:O87873 (DCH_THAAR) as a protein
+        with this activity.
+    - reference: RHEA:21856
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.100"/>
+      notes: Rhea assigns RHEA:21856 to EC 4.2.1.100, and EC 4.2.1.100 maps to exactly one Rhea master
+        reaction (RHEA:21856), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

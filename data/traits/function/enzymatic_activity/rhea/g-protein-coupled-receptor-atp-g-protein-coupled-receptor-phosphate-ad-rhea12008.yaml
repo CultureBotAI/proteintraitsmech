@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.11.16
     mapping_source: rhea2ec
@@ -38,4 +38,237 @@ definitions:
       Catalyses the reaction: [G protein-coupled receptor] + ATP = [G protein-coupled receptor]-phosphate + ADP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [G protein-coupled receptor] + ATP = [G protein-coupled receptor]-phosphate
+    + ADP + H(+)
+  description: Substrate-to-product chemistry of RHEA:12008, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12009 (rh:substrates → 12008_L, rh:products → 12008_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [G protein-coupled receptor] + ATP = [G protein-coupled receptor]-phosphate…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12008
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [G protein-coupled receptor] + ATP = [G protein-coupled receptor]-phosphate + ADP
+      + H(+)'
+  - node_id: sub1
+    label: '[G protein-coupled receptor]'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11260
+    description: Rhea compound GENERIC:11260.
+  - node_id: sub1_rp1
+    label: hydroxy group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11260 ([G protein-coupled
+      receptor]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:43176
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: '[G protein-coupled receptor]-phosphate'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11261
+    description: Rhea compound GENERIC:11261.
+  - node_id: prd1_rp1
+    label: phosphate group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11261 ([G protein-coupled
+      receptor]-phosphate); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:68546
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: G protein-coupled receptor kinase activity
+    grounding: GO:0004703
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: '[G-protein-coupled receptor] kinase'
+    grounding: EC:2.7.11.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P32865
+    node_type: PROTEIN
+    label: GPRK1_DROME
+    grounding: UniProtKB:P32865
+  - node_id: prot_P32866
+    node_type: PROTEIN
+    label: GPRK2_DROME
+    grounding: UniProtKB:P32866
+  - node_id: prot_Q622Z7
+    node_type: PROTEIN
+    label: GRK1_CAEBR
+    grounding: UniProtKB:Q622Z7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[G protein-coupled receptor] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:12009
+      snippet: '[G protein-coupled receptor] + ATP => [G protein-coupled receptor]-phosphate + ADP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:12009 declares side 12008_L as its substrates
+        (rh:substrates); the master reaction RHEA:12008 is undirected. This participant is GENERIC:11260
+        with coefficient 1. Rhea cites PMID:18193069, PMID:14654303, PMID:8288567, PMID:16676577 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: hydroxy group is the reactive part of [G protein-coupled receptor].
+    evidence:
+    - reference: RHEA:12008
+      snippet: hydroxy group
+      notes: Rhea compound GENERIC:11260 ([G protein-coupled receptor]) declares rh:reactivePart = hydroxy
+        group (CHEBI:43176), formula HO.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12009
+      snippet: '[G protein-coupled receptor] + ATP => [G protein-coupled receptor]-phosphate + ADP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:12009 declares side 12008_L as its substrates
+        (rh:substrates); the master reaction RHEA:12008 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:18193069, PMID:14654303, PMID:8288567, PMID:16676577 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[G protein-coupled receptor]-phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:12009
+      snippet: '[G protein-coupled receptor] + ATP => [G protein-coupled receptor]-phosphate + ADP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:12009 declares side 12008_R as its products
+        (rh:products); the master reaction RHEA:12008 is undirected. This participant is GENERIC:11261
+        with coefficient 1. Rhea cites PMID:18193069, PMID:14654303, PMID:8288567, PMID:16676577 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: phosphate group is the reactive part of [G protein-coupled receptor]-phosphate.
+    evidence:
+    - reference: RHEA:12008
+      snippet: phosphate group
+      notes: Rhea compound GENERIC:11261 ([G protein-coupled receptor]-phosphate) declares rh:reactivePart
+        = phosphate group (CHEBI:68546), formula O4P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12009
+      snippet: '[G protein-coupled receptor] + ATP => [G protein-coupled receptor]-phosphate + ADP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:12009 declares side 12008_R as its products
+        (rh:products); the master reaction RHEA:12008 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:18193069, PMID:14654303, PMID:8288567, PMID:16676577 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12009
+      snippet: '[G protein-coupled receptor] + ATP => [G protein-coupled receptor]-phosphate + ADP + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:12009 declares side 12008_R as its products
+        (rh:products); the master reaction RHEA:12008 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:18193069, PMID:14654303, PMID:8288567, PMID:16676577 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12008
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004703"/>
+      notes: The rdfs:seeAlso triple on RHEA:12008 in rhea.rdf. GO term GO:0004703 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.11.16; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12008
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.11.16"/>
+      notes: The rh:ec triple on RHEA:12008 in rhea.rdf. EC 2.7.11.16 is itself a record in this KB.
+  - subject: prot_P32865
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPRK1_DROME is an exemplar enzyme carrying EC 2.7.11.16, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.11.16
+      snippet: DR   P32865, GPRK1_DROME;  P32866, GPRK2_DROME;  Q622Z7, GRK1_CAEBR ;
+      notes: ExPASy ENZYME entry EC 2.7.11.16 cross-references UniProtKB:P32865 (GPRK1_DROME) as a protein
+        with this activity.
+    - reference: RHEA:12008
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.11.16"/>
+      notes: Rhea assigns RHEA:12008 to EC 2.7.11.16, and EC 2.7.11.16 maps to exactly one Rhea master
+        reaction (RHEA:12008), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P32866
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GPRK2_DROME is an exemplar enzyme carrying EC 2.7.11.16, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.11.16
+      snippet: DR   P32865, GPRK1_DROME;  P32866, GPRK2_DROME;  Q622Z7, GRK1_CAEBR ;
+      notes: ExPASy ENZYME entry EC 2.7.11.16 cross-references UniProtKB:P32866 (GPRK2_DROME) as a protein
+        with this activity.
+    - reference: RHEA:12008
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.11.16"/>
+      notes: Rhea assigns RHEA:12008 to EC 2.7.11.16, and EC 2.7.11.16 maps to exactly one Rhea master
+        reaction (RHEA:12008), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q622Z7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GRK1_CAEBR is an exemplar enzyme carrying EC 2.7.11.16, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.11.16
+      snippet: DR   P32865, GPRK1_DROME;  P32866, GPRK2_DROME;  Q622Z7, GRK1_CAEBR ;
+      notes: ExPASy ENZYME entry EC 2.7.11.16 cross-references UniProtKB:Q622Z7 (GRK1_CAEBR) as a protein
+        with this activity.
+    - reference: RHEA:12008
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.11.16"/>
+      notes: Rhea assigns RHEA:12008 to EC 2.7.11.16, and EC 2.7.11.16 maps to exactly one Rhea master
+        reaction (RHEA:12008), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

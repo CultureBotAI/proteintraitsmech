@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -33,4 +33,104 @@ definitions:
       Catalyses: N-cyclohexylformamide = cyclohexyl isocyanide + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyclohexyl-isocyanide hydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.103. EC 4.2.1.103 maps to
+    exactly one curated Rhea reaction (RHEA:18197), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-cyclohexylformamide
+    = cyclohexyl isocyanide + H2O". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cyclohexyl-isocyanide hydratase
+    grounding: EC:4.2.1.103
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-cyclohexylformamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17945
+    description: Formula C7H13NO.
+  - node_id: prd1
+    label: cyclohexyl isocyanide
+    node_type: CHEMICAL
+    grounding: CHEBI:17966
+    description: Formula C7H11N.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cyclohexyl-isocyanide hydratase activity
+    grounding: GO:0050549
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8G9F9
+    node_type: PROTEIN
+    label: INHA_PSEPU
+    grounding: UniProtKB:Q8G9F9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-cyclohexylformamide is a substrate consumed by RHEA:18197 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18198
+      snippet: N-cyclohexylformamide => cyclohexyl isocyanide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18198 declares side 18197_L as its substrates
+        (rh:substrates); the master reaction RHEA:18197 is undirected. This participant is CHEBI:17945
+        with coefficient 1. Rhea cites PMID:12244065, PMID:11306561 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cyclohexyl isocyanide is a product released by RHEA:18197 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18198
+      snippet: N-cyclohexylformamide => cyclohexyl isocyanide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18198 declares side 18197_R as its products
+        (rh:products); the master reaction RHEA:18197 is undirected. This participant is CHEBI:17966 with
+        coefficient 1. Rhea cites PMID:12244065, PMID:11306561 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:18197 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18198
+      snippet: N-cyclohexylformamide => cyclohexyl isocyanide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:18198 declares side 18197_R as its products
+        (rh:products); the master reaction RHEA:18197 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:12244065, PMID:11306561 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.103
+      snippet: EC:4.2.1.103 > GO:cyclohexyl-isocyanide hydratase activity ; GO:0050549
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050549 is itself a record
+        in this KB.
+  - subject: prot_Q8G9F9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: INHA_PSEPU is an exemplar enzyme with EC 4.2.1.103 activity.
+    evidence:
+    - reference: EC:4.2.1.103
+      snippet: DR   Q8G9F9, INHA_PSEPU ;
+      notes: ExPASy ENZYME entry EC 4.2.1.103 cross-references UniProtKB:Q8G9F9 (INHA_PSEPU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

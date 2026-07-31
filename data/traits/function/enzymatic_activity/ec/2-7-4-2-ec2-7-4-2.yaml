@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.4.-
 mapped_xrefs:
@@ -38,4 +38,151 @@ definitions:
       Catalyses: (R)-5-phosphomevalonate + ATP = (R)-5-diphosphomevalonate + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphomevalonate kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.4.2. EC 2.7.4.2 maps to exactly
+    one curated Rhea reaction (RHEA:16341), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-5-phosphomevalonate
+    + ATP = (R)-5-diphosphomevalonate + ADP". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphomevalonate kinase
+    grounding: EC:2.7.4.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-5-phosphomevalonate
+    node_type: CHEMICAL
+    grounding: CHEBI:58146
+    description: Formula C6H10O7P.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: (R)-5-diphosphomevalonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57557
+    description: Formula C6H10O10P2.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphomevalonate kinase activity
+    grounding: GO:0004631
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q4WV38
+    node_type: PROTEIN
+    label: ERG8_ASPFU
+    grounding: UniProtKB:Q4WV38
+  - node_id: prot_A0A1D8PLH0
+    node_type: PROTEIN
+    label: ERG8_CANAL
+    grounding: UniProtKB:A0A1D8PLH0
+  - node_id: prot_I1RZD0
+    node_type: PROTEIN
+    label: ERG8_GIBZE
+    grounding: UniProtKB:I1RZD0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-5-phosphomevalonate is a substrate consumed by RHEA:16341 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16342
+      snippet: (R)-5-phosphomevalonate + ATP => (R)-5-diphosphomevalonate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:16342 declares side 16341_L as its substrates
+        (rh:substrates); the master reaction RHEA:16341 is undirected. This participant is CHEBI:58146
+        with coefficient 1. Rhea cites PMID:23378249, PMID:2991707, PMID:8663599, PMID:17902708 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:16341 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16342
+      snippet: (R)-5-phosphomevalonate + ATP => (R)-5-diphosphomevalonate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:16342 declares side 16341_L as its substrates
+        (rh:substrates); the master reaction RHEA:16341 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:23378249, PMID:2991707, PMID:8663599, PMID:17902708 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R)-5-diphosphomevalonate is a product released by RHEA:16341 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16342
+      snippet: (R)-5-phosphomevalonate + ATP => (R)-5-diphosphomevalonate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:16342 declares side 16341_R as its products
+        (rh:products); the master reaction RHEA:16341 is undirected. This participant is CHEBI:57557 with
+        coefficient 1. Rhea cites PMID:23378249, PMID:2991707, PMID:8663599, PMID:17902708 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:16341 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16342
+      snippet: (R)-5-phosphomevalonate + ATP => (R)-5-diphosphomevalonate + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:16342 declares side 16341_R as its products
+        (rh:products); the master reaction RHEA:16341 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:23378249, PMID:2991707, PMID:8663599, PMID:17902708 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.4.2
+      snippet: EC:2.7.4.2 > GO:phosphomevalonate kinase activity ; GO:0004631
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004631 is itself a record
+        in this KB.
+  - subject: prot_Q4WV38
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ERG8_ASPFU is an exemplar enzyme with EC 2.7.4.2 activity.
+    evidence:
+    - reference: EC:2.7.4.2
+      snippet: DR   Q4WV38, ERG8_ASPFU ;  A0A1D8PLH0, ERG8_CANAL ;  I1RZD0, ERG8_GIBZE ;
+      notes: ExPASy ENZYME entry EC 2.7.4.2 cross-references UniProtKB:Q4WV38 (ERG8_ASPFU) as a protein
+        with this activity.
+  - subject: prot_A0A1D8PLH0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ERG8_CANAL is an exemplar enzyme with EC 2.7.4.2 activity.
+    evidence:
+    - reference: EC:2.7.4.2
+      snippet: DR   Q4WV38, ERG8_ASPFU ;  A0A1D8PLH0, ERG8_CANAL ;  I1RZD0, ERG8_GIBZE ;
+      notes: ExPASy ENZYME entry EC 2.7.4.2 cross-references UniProtKB:A0A1D8PLH0 (ERG8_CANAL) as a protein
+        with this activity.
+  - subject: prot_I1RZD0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ERG8_GIBZE is an exemplar enzyme with EC 2.7.4.2 activity.
+    evidence:
+    - reference: EC:2.7.4.2
+      snippet: DR   Q4WV38, ERG8_ASPFU ;  A0A1D8PLH0, ERG8_CANAL ;  I1RZD0, ERG8_GIBZE ;
+      notes: ExPASy ENZYME entry EC 2.7.4.2 cross-references UniProtKB:I1RZD0 (ERG8_GIBZE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

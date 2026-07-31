@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58756
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,77 @@ definitions:
       Catalyses the reaction: 2 (2E,6E,10E)-geranylgeranyl diphosphate = (1R,2R,3R)-prephytoene diphosphate + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 (2E,6E,10E)-geranylgeranyl diphosphate = (1R,2R,3R)-prephytoene diphosphate
+    + diphosp…
+  description: Substrate-to-product chemistry of RHEA:22296, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22297 (rh:substrates → 22296_L, rh:products → 22296_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 (2E,6E,10E)-geranylgeranyl diphosphate = (1R,2R,3R)-prephytoene diphosphat…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22296
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 (2E,6E,10E)-geranylgeranyl diphosphate = (1R,2R,3R)-prephytoene diphosphate + diphosphate'
+  - node_id: sub1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: (1R,2R,3R)-prephytoene diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58011
+    description: Formula C40H65O7P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:22297
+      snippet: 2 (2E,6E,10E)-geranylgeranyl diphosphate => (1R,2R,3R)-prephytoene diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22297 declares side 22296_L as its substrates
+        (rh:substrates); the master reaction RHEA:22296 is undirected. This participant is CHEBI:58756
+        with coefficient 2. Rhea cites PMID:4819767, PMID:7896759 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (1R,2R,3R)-prephytoene diphosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:22297
+      snippet: 2 (2E,6E,10E)-geranylgeranyl diphosphate => (1R,2R,3R)-prephytoene diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22297 declares side 22296_R as its products
+        (rh:products); the master reaction RHEA:22296 is undirected. This participant is CHEBI:58011 with
+        coefficient 1. Rhea cites PMID:4819767, PMID:7896759 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22297
+      snippet: 2 (2E,6E,10E)-geranylgeranyl diphosphate => (1R,2R,3R)-prephytoene diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22297 declares side 22296_R as its products
+        (rh:products); the master reaction RHEA:22296 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:4819767, PMID:7896759 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

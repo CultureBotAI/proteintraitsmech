@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.2.1.-
 mapped_xrefs:
@@ -32,4 +32,192 @@ definitions:
       Catalyses: holo-[peptidyl-carrier protein] + glycine + ATP = glycyl-[peptidyl- carrier protein] + AMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glyine--[glycyl-carrier protein] ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.2.1.66. EC 6.2.1.66 maps to exactly
+    one curated Rhea reaction (RHEA:61696), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "holo-[peptidyl-carrier
+    protein] + glycine + ATP = glycyl-[peptidyl- carrier protein] + AMP + diphosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glyine--[glycyl-carrier protein] ligase
+    grounding: EC:6.2.1.66
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: holo-[peptidyl-carrier protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11480
+    description: Rhea compound GENERIC:11480.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11480 (holo-[peptidyl-carrier
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: sub2
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+    description: Formula C2H5NO2.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: glycyl-[peptidyl-carrier protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15909
+    description: Rhea compound GENERIC:15909.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-(S-glycylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:15909 (glycyl-[peptidyl-carrier
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:144951
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_P45745
+    node_type: PROTEIN
+    label: DHBF_BACSU
+    grounding: UniProtKB:P45745
+  - node_id: prot_B0CN26
+    node_type: PROTEIN
+    label: SFMB_STRLA
+    grounding: UniProtKB:B0CN26
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: holo-[peptidyl-carrier protein] is a substrate consumed by RHEA:61696 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:61697
+      snippet: holo-[peptidyl-carrier protein] + glycine + ATP => glycyl-[peptidyl-carrier protein] +
+        AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:61697 declares side 61696_L as its substrates
+        (rh:substrates); the master reaction RHEA:61696 is undirected. This participant is GENERIC:11480
+        with coefficient 1. Rhea cites PMID:11112781, PMID:17981978 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[peptidyl-carrier
+      protein].
+    evidence:
+    - reference: RHEA:61696
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:11480 (holo-[peptidyl-carrier protein]) declares rh:reactivePart =
+        O-(pantetheine-4'-phosphoryl)-L-serine residue (CHEBI:64479).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: glycine is a substrate consumed by RHEA:61696 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61697
+      snippet: holo-[peptidyl-carrier protein] + glycine + ATP => glycyl-[peptidyl-carrier protein] +
+        AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:61697 declares side 61696_L as its substrates
+        (rh:substrates); the master reaction RHEA:61696 is undirected. This participant is CHEBI:57305
+        with coefficient 1. Rhea cites PMID:11112781, PMID:17981978 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:61696 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61697
+      snippet: holo-[peptidyl-carrier protein] + glycine + ATP => glycyl-[peptidyl-carrier protein] +
+        AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:61697 declares side 61696_L as its substrates
+        (rh:substrates); the master reaction RHEA:61696 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:11112781, PMID:17981978 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: glycyl-[peptidyl-carrier protein] is a product released by RHEA:61696 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:61697
+      snippet: holo-[peptidyl-carrier protein] + glycine + ATP => glycyl-[peptidyl-carrier protein] +
+        AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:61697 declares side 61696_R as its products
+        (rh:products); the master reaction RHEA:61696 is undirected. This participant is GENERIC:15909
+        with coefficient 1. Rhea cites PMID:11112781, PMID:17981978 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-glycylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of glycyl-[peptidyl-carrier
+      protein].
+    evidence:
+    - reference: RHEA:61696
+      snippet: O-(S-glycylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:15909 (glycyl-[peptidyl-carrier protein]) declares rh:reactivePart
+        = O-(S-glycylpantetheine-4'-phosphoryl)-L-serine residue (CHEBI:144951).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:61696 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61697
+      snippet: holo-[peptidyl-carrier protein] + glycine + ATP => glycyl-[peptidyl-carrier protein] +
+        AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:61697 declares side 61696_R as its products
+        (rh:products); the master reaction RHEA:61696 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:11112781, PMID:17981978 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:61696 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:61697
+      snippet: holo-[peptidyl-carrier protein] + glycine + ATP => glycyl-[peptidyl-carrier protein] +
+        AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:61697 declares side 61696_R as its products
+        (rh:products); the master reaction RHEA:61696 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:11112781, PMID:17981978 for this reaction.
+  - subject: prot_P45745
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DHBF_BACSU is an exemplar enzyme with EC 6.2.1.66 activity.
+    evidence:
+    - reference: EC:6.2.1.66
+      snippet: DR   P45745, DHBF_BACSU ;  B0CN26, SFMB_STRLA ;
+      notes: ExPASy ENZYME entry EC 6.2.1.66 cross-references UniProtKB:P45745 (DHBF_BACSU) as a protein
+        with this activity.
+  - subject: prot_B0CN26
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SFMB_STRLA is an exemplar enzyme with EC 6.2.1.66 activity.
+    evidence:
+    - reference: EC:6.2.1.66
+      snippet: DR   P45745, DHBF_BACSU ;  B0CN26, SFMB_STRLA ;
+      notes: ExPASy ENZYME entry EC 6.2.1.66 cross-references UniProtKB:B0CN26 (SFMB_STRLA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

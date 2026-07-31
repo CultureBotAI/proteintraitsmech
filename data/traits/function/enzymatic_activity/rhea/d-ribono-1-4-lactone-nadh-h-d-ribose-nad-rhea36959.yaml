@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:74168
     role: SUBSTRATE_OR_PRODUCT
@@ -24,4 +24,107 @@ definitions:
       Catalyses the reaction: D-ribono-1,4-lactone + NADH + H(+) = D-ribose + NAD(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-ribono-1,4-lactone + NADH + H(+) = D-ribose + NAD(+)
+  description: Substrate-to-product chemistry of RHEA:36959, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:36960 (rh:substrates → 36959_L, rh:products → 36959_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-ribono-1,4-lactone + NADH + H(+) = D-ribose + NAD(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:36959
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-ribono-1,4-lactone + NADH + H(+) = D-ribose + NAD(+)'
+  - node_id: sub1
+    label: D-ribono-1,4-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:74168
+    description: Formula C5H8O5.
+  - node_id: sub2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:47013
+    description: Formula C5H10O5.
+  - node_id: prd2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-ribono-1,4-lactone is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36960
+      snippet: D-ribono-1,4-lactone + NADH + H(+) => D-ribose + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36960 declares side 36959_L as its substrates
+        (rh:substrates); the master reaction RHEA:36959 is undirected. This participant is CHEBI:74168
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36960
+      snippet: D-ribono-1,4-lactone + NADH + H(+) => D-ribose + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36960 declares side 36959_L as its substrates
+        (rh:substrates); the master reaction RHEA:36959 is undirected. This participant is CHEBI:57945
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36960
+      snippet: D-ribono-1,4-lactone + NADH + H(+) => D-ribose + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36960 declares side 36959_L as its substrates
+        (rh:substrates); the master reaction RHEA:36959 is undirected. This participant is CHEBI:15378
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-ribose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36960
+      snippet: D-ribono-1,4-lactone + NADH + H(+) => D-ribose + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36960 declares side 36959_R as its products
+        (rh:products); the master reaction RHEA:36959 is undirected. This participant is CHEBI:47013 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NAD(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36960
+      snippet: D-ribono-1,4-lactone + NADH + H(+) => D-ribose + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36960 declares side 36959_R as its products
+        (rh:products); the master reaction RHEA:36959 is undirected. This participant is CHEBI:57540 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

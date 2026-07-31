@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.3
     mapping_source: rhea2ec
@@ -26,4 +26,150 @@ definitions:
       Catalyses the reaction: citrate = D-threo-isocitrate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of citrate = D-threo-isocitrate
+  description: Substrate-to-product chemistry of RHEA:10336, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:10337 (rh:substrates → 10336_L, rh:products → 10336_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of citrate = D-threo-isocitrate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10336
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: citrate = D-threo-isocitrate'
+  - node_id: sub1
+    label: citrate
+    node_type: CHEMICAL
+    grounding: CHEBI:16947
+    description: Formula C6H5O7.
+  - node_id: prd1
+    label: D-threo-isocitrate
+    node_type: CHEMICAL
+    grounding: CHEBI:15562
+    description: Formula C6H5O7.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aconitate hydratase activity
+    grounding: GO:0003994
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: aconitate hydratase
+    grounding: EC:4.2.1.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P09339
+    node_type: PROTEIN
+    label: ACNA_BACSU
+    grounding: UniProtKB:P09339
+  - node_id: prot_P70920
+    node_type: PROTEIN
+    label: ACNA_BRADU
+    grounding: UniProtKB:P70920
+  - node_id: prot_Q6NH63
+    node_type: PROTEIN
+    label: ACNA_CORDI
+    grounding: UniProtKB:Q6NH63
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: citrate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10337
+      snippet: citrate => D-threo-isocitrate
+      notes: Rhea's left-to-right directional reaction RHEA:10337 declares side 10336_L as its substrates
+        (rh:substrates); the master reaction RHEA:10336 is undirected. This participant is CHEBI:16947
+        with coefficient 1. Rhea cites PMID:13126098, PMID:8151704 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-threo-isocitrate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10337
+      snippet: citrate => D-threo-isocitrate
+      notes: Rhea's left-to-right directional reaction RHEA:10337 declares side 10336_R as its products
+        (rh:products); the master reaction RHEA:10336 is undirected. This participant is CHEBI:15562 with
+        coefficient 1. Rhea cites PMID:13126098, PMID:8151704 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:10336
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003994"/>
+      notes: The rdfs:seeAlso triple on RHEA:10336 in rhea.rdf. GO term GO:0003994 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.3; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:10336
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.3"/>
+      notes: The rh:ec triple on RHEA:10336 in rhea.rdf. EC 4.2.1.3 is itself a record in this KB.
+  - subject: prot_P09339
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACNA_BACSU is an exemplar enzyme carrying EC 4.2.1.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.3
+      snippet: DR   P09339, ACNA_BACSU ;  P70920, ACNA_BRADU ;  Q6NH63, ACNA_CORDI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.3 cross-references UniProtKB:P09339 (ACNA_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:10336
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.3"/>
+      notes: Rhea assigns RHEA:10336 to EC 4.2.1.3, and EC 4.2.1.3 maps to exactly one Rhea master reaction
+        (RHEA:10336), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P70920
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACNA_BRADU is an exemplar enzyme carrying EC 4.2.1.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.3
+      snippet: DR   P09339, ACNA_BACSU ;  P70920, ACNA_BRADU ;  Q6NH63, ACNA_CORDI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.3 cross-references UniProtKB:P70920 (ACNA_BRADU) as a protein
+        with this activity.
+    - reference: RHEA:10336
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.3"/>
+      notes: Rhea assigns RHEA:10336 to EC 4.2.1.3, and EC 4.2.1.3 maps to exactly one Rhea master reaction
+        (RHEA:10336), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q6NH63
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACNA_CORDI is an exemplar enzyme carrying EC 4.2.1.3, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.3
+      snippet: DR   P09339, ACNA_BACSU ;  P70920, ACNA_BRADU ;  Q6NH63, ACNA_CORDI ;
+      notes: ExPASy ENZYME entry EC 4.2.1.3 cross-references UniProtKB:Q6NH63 (ACNA_CORDI) as a protein
+        with this activity.
+    - reference: RHEA:10336
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.3"/>
+      notes: Rhea assigns RHEA:10336 to EC 4.2.1.3, and EC 4.2.1.3 maps to exactly one Rhea master reaction
+        (RHEA:10336), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

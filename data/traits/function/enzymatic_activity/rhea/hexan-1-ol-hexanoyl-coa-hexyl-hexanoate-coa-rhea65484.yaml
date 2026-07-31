@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:87393
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,90 @@ definitions:
       Catalyses the reaction: hexan-1-ol + hexanoyl-CoA = hexyl hexanoate + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hexan-1-ol + hexanoyl-CoA = hexyl hexanoate + CoA
+  description: Substrate-to-product chemistry of RHEA:65484, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:65485 (rh:substrates → 65484_L, rh:products → 65484_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of hexan-1-ol + hexanoyl-CoA = hexyl hexanoate + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:65484
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: hexan-1-ol + hexanoyl-CoA = hexyl hexanoate + CoA'
+  - node_id: sub1
+    label: hexan-1-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:87393
+    description: Formula C6H14O.
+  - node_id: sub2
+    label: hexanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:62620
+    description: Formula C27H42N7O17P3S.
+  - node_id: prd1
+    label: hexyl hexanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:156492
+    description: Formula C12H24O2.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hexan-1-ol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65485
+      snippet: hexan-1-ol + hexanoyl-CoA => hexyl hexanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:65485 declares side 65484_L as its substrates
+        (rh:substrates); the master reaction RHEA:65484 is undirected. This participant is CHEBI:87393
+        with coefficient 1. Rhea cites PMID:19691320, PMID:15955071 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hexanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65485
+      snippet: hexan-1-ol + hexanoyl-CoA => hexyl hexanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:65485 declares side 65484_L as its substrates
+        (rh:substrates); the master reaction RHEA:65484 is undirected. This participant is CHEBI:62620
+        with coefficient 1. Rhea cites PMID:19691320, PMID:15955071 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hexyl hexanoate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65485
+      snippet: hexan-1-ol + hexanoyl-CoA => hexyl hexanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:65485 declares side 65484_R as its products
+        (rh:products); the master reaction RHEA:65484 is undirected. This participant is CHEBI:156492
+        with coefficient 1. Rhea cites PMID:19691320, PMID:15955071 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65485
+      snippet: hexan-1-ol + hexanoyl-CoA => hexyl hexanoate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:65485 declares side 65484_R as its products
+        (rh:products); the master reaction RHEA:65484 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:19691320, PMID:15955071 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

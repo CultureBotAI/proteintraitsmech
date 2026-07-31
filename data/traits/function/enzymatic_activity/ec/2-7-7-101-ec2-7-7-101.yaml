@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 xrefs:
@@ -35,4 +35,66 @@ definitions:
       Catalyses: ssDNA + n NTP = ssDNA/pppN(pN)n-1 hybrid + (n-1) diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of DNA primase DnaG
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.101. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ssDNA +
+    n NTP = ssDNA/pppN(pN)n-1 hybrid + (n-1) diphosphate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: DNA primase DnaG
+    grounding: EC:2.7.7.101
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q9YA42
+    node_type: PROTEIN
+    label: DNAG_AERPE
+    grounding: UniProtKB:Q9YA42
+  - node_id: prot_O67465
+    node_type: PROTEIN
+    label: DNAG_AQUAE
+    grounding: UniProtKB:O67465
+  - node_id: prot_O28380
+    node_type: PROTEIN
+    label: DNAG_ARCFU
+    grounding: UniProtKB:O28380
+  edges:
+  - subject: prot_Q9YA42
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DNAG_AERPE is an exemplar enzyme with EC 2.7.7.101 activity.
+    evidence:
+    - reference: EC:2.7.7.101
+      snippet: DR   Q9YA42, DNAG_AERPE ;  O67465, DNAG_AQUAE ;  O28380, DNAG_ARCFU ;
+      notes: ExPASy ENZYME entry EC 2.7.7.101 cross-references UniProtKB:Q9YA42 (DNAG_AERPE) as a protein
+        with this activity.
+  - subject: prot_O67465
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DNAG_AQUAE is an exemplar enzyme with EC 2.7.7.101 activity.
+    evidence:
+    - reference: EC:2.7.7.101
+      snippet: DR   Q9YA42, DNAG_AERPE ;  O67465, DNAG_AQUAE ;  O28380, DNAG_ARCFU ;
+      notes: ExPASy ENZYME entry EC 2.7.7.101 cross-references UniProtKB:O67465 (DNAG_AQUAE) as a protein
+        with this activity.
+  - subject: prot_O28380
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DNAG_ARCFU is an exemplar enzyme with EC 2.7.7.101 activity.
+    evidence:
+    - reference: EC:2.7.7.101
+      snippet: DR   Q9YA42, DNAG_AERPE ;  O67465, DNAG_AQUAE ;  O28380, DNAG_ARCFU ;
+      notes: ExPASy ENZYME entry EC 2.7.7.101 cross-references UniProtKB:O28380 (DNAG_ARCFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

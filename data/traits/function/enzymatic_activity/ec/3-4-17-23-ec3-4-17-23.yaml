@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.17.-
 synonyms:
@@ -43,4 +43,131 @@ definitions:
       Catalyses: angiotensin II + H2O = angiotensin-(1-7) + L-phenylalanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of angiotensin-converting enzyme 2
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.17.23. EC 3.4.17.23 maps to
+    exactly one curated Rhea reaction (RHEA:26554), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "angiotensin
+    II + H2O = angiotensin-(1-7) + L-phenylalanine". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: angiotensin-converting enzyme 2
+    grounding: EC:3.4.17.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: angiotensin II
+    node_type: CHEMICAL
+    grounding: CHEBI:58506
+    description: Formula C50H71N13O12.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: angiotensin-(1-7)
+    node_type: CHEMICAL
+    grounding: CHEBI:58922
+    description: Formula C41H62N12O11.
+  - node_id: prd2
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: prot_Q58DD0
+    node_type: PROTEIN
+    label: ACE2_BOVIN
+    grounding: UniProtKB:Q58DD0
+  - node_id: prot_Q56H28
+    node_type: PROTEIN
+    label: ACE2_FELCA
+    grounding: UniProtKB:Q56H28
+  - node_id: prot_Q9BYF1
+    node_type: PROTEIN
+    label: ACE2_HUMAN
+    grounding: UniProtKB:Q9BYF1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: angiotensin II is a substrate consumed by RHEA:26554 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26555
+      snippet: angiotensin II + H2O => angiotensin-(1-7) + L-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:26555 declares side 26554_L as its substrates
+        (rh:substrates); the master reaction RHEA:26554 is undirected. This participant is CHEBI:58506
+        with coefficient 1. Rhea cites PMID:11815627, PMID:14754895, PMID:17897633 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:26554 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26555
+      snippet: angiotensin II + H2O => angiotensin-(1-7) + L-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:26555 declares side 26554_L as its substrates
+        (rh:substrates); the master reaction RHEA:26554 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11815627, PMID:14754895, PMID:17897633 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: angiotensin-(1-7) is a product released by RHEA:26554 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26555
+      snippet: angiotensin II + H2O => angiotensin-(1-7) + L-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:26555 declares side 26554_R as its products
+        (rh:products); the master reaction RHEA:26554 is undirected. This participant is CHEBI:58922 with
+        coefficient 1. Rhea cites PMID:11815627, PMID:14754895, PMID:17897633 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-phenylalanine is a product released by RHEA:26554 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26555
+      snippet: angiotensin II + H2O => angiotensin-(1-7) + L-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:26555 declares side 26554_R as its products
+        (rh:products); the master reaction RHEA:26554 is undirected. This participant is CHEBI:58095 with
+        coefficient 1. Rhea cites PMID:11815627, PMID:14754895, PMID:17897633 for this reaction.
+  - subject: prot_Q58DD0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE2_BOVIN is an exemplar enzyme with EC 3.4.17.23 activity.
+    evidence:
+    - reference: EC:3.4.17.23
+      snippet: DR   Q58DD0, ACE2_BOVIN ;  Q56H28, ACE2_FELCA ;  Q9BYF1, ACE2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.17.23 cross-references UniProtKB:Q58DD0 (ACE2_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q56H28
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE2_FELCA is an exemplar enzyme with EC 3.4.17.23 activity.
+    evidence:
+    - reference: EC:3.4.17.23
+      snippet: DR   Q58DD0, ACE2_BOVIN ;  Q56H28, ACE2_FELCA ;  Q9BYF1, ACE2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.17.23 cross-references UniProtKB:Q56H28 (ACE2_FELCA) as a protein
+        with this activity.
+  - subject: prot_Q9BYF1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACE2_HUMAN is an exemplar enzyme with EC 3.4.17.23 activity.
+    evidence:
+    - reference: EC:3.4.17.23
+      snippet: DR   Q58DD0, ACE2_BOVIN ;  Q56H28, ACE2_FELCA ;  Q9BYF1, ACE2_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.17.23 cross-references UniProtKB:Q9BYF1 (ACE2_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

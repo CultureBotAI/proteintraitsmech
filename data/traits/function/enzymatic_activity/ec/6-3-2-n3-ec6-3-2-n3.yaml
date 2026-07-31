@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.3.2.-
 synonyms:
@@ -32,4 +32,52 @@ definitions:
       Catalyses: ATP + [ISG15] + [protein]-lysine = AMP + diphosphate + [protein]-N- ISGyllysine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ISG15--protein ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.3.2.n3. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + [ISG15]
+    + [protein]-lysine = AMP + diphosphate + [protein]-N- ISGyllysine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ISG15--protein ligase
+    grounding: EC:6.3.2.n3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q14258
+    node_type: PROTEIN
+    label: TRI25_HUMAN
+    grounding: UniProtKB:Q14258
+  - node_id: prot_Q61510
+    node_type: PROTEIN
+    label: TRI25_MOUSE
+    grounding: UniProtKB:Q61510
+  edges:
+  - subject: prot_Q14258
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TRI25_HUMAN is an exemplar enzyme with EC 6.3.2.n3 activity.
+    evidence:
+    - reference: EC:6.3.2.n3
+      snippet: DR   Q14258, TRI25_HUMAN;  Q61510, TRI25_MOUSE;
+      notes: ExPASy ENZYME entry EC 6.3.2.n3 cross-references UniProtKB:Q14258 (TRI25_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q61510
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TRI25_MOUSE is an exemplar enzyme with EC 6.3.2.n3 activity.
+    evidence:
+    - reference: EC:6.3.2.n3
+      snippet: DR   Q14258, TRI25_HUMAN;  Q61510, TRI25_MOUSE;
+      notes: ExPASy ENZYME entry EC 6.3.2.n3 cross-references UniProtKB:Q61510 (TRI25_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

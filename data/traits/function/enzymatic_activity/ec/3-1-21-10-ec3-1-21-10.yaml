@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.21.-
 synonyms:
@@ -73,4 +73,82 @@ definitions:
       Catalyses: Endonucleolytic cleavage at a junction such as a reciprocal single- stranded crossover between two homologous DNA duplexes (Holliday junction)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of crossover junction endodeoxyribonuclease
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.21.10. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endonucleolytic
+    cleavage at a junction such as a reciprocal single- stranded crossover between two homologous DNA
+    duplexes (Holliday junction)".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: crossover junction endodeoxyribonuclease
+    grounding: EC:3.1.21.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: crossover junction DNA endonuclease activity
+    grounding: GO:0008821
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q10423
+    node_type: PROTEIN
+    label: CCE1_SCHPO
+    grounding: UniProtKB:Q10423
+  - node_id: prot_Q03702
+    node_type: PROTEIN
+    label: CCE1_YEAST
+    grounding: UniProtKB:Q03702
+  - node_id: prot_Q9C103
+    node_type: PROTEIN
+    label: EME1_SCHPO
+    grounding: UniProtKB:Q9C103
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.21.10
+      snippet: EC:3.1.21.10 > GO:crossover junction DNA endonuclease activity ; GO:0008821
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008821 is itself a record
+        in this KB.
+  - subject: prot_Q10423
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCE1_SCHPO is an exemplar enzyme with EC 3.1.21.10 activity.
+    evidence:
+    - reference: EC:3.1.21.10
+      snippet: DR   Q10423, CCE1_SCHPO ;  Q03702, CCE1_YEAST ;  Q9C103, EME1_SCHPO ;
+      notes: ExPASy ENZYME entry EC 3.1.21.10 cross-references UniProtKB:Q10423 (CCE1_SCHPO) as a protein
+        with this activity.
+  - subject: prot_Q03702
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCE1_YEAST is an exemplar enzyme with EC 3.1.21.10 activity.
+    evidence:
+    - reference: EC:3.1.21.10
+      snippet: DR   Q10423, CCE1_SCHPO ;  Q03702, CCE1_YEAST ;  Q9C103, EME1_SCHPO ;
+      notes: ExPASy ENZYME entry EC 3.1.21.10 cross-references UniProtKB:Q03702 (CCE1_YEAST) as a protein
+        with this activity.
+  - subject: prot_Q9C103
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EME1_SCHPO is an exemplar enzyme with EC 3.1.21.10 activity.
+    evidence:
+    - reference: EC:3.1.21.10
+      snippet: DR   Q10423, CCE1_SCHPO ;  Q03702, CCE1_YEAST ;  Q9C103, EME1_SCHPO ;
+      notes: ExPASy ENZYME entry EC 3.1.21.10 cross-references UniProtKB:Q9C103 (EME1_SCHPO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

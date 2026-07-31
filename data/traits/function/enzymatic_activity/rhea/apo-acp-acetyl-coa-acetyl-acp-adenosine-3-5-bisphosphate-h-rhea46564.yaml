@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:29999
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,140 @@ definitions:
       Catalyses the reaction: apo-[ACP] + acetyl-CoA = acetyl-[ACP] + adenosine 3',5'-bisphosphate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of apo-[ACP] + acetyl-CoA = acetyl-[ACP] + adenosine 3',5'-bisphosphate +
+    H(+)
+  description: Substrate-to-product chemistry of RHEA:46564, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:46565 (rh:substrates → 46564_L, rh:products → 46564_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of apo-[ACP] + acetyl-CoA = acetyl-[ACP] + adenosine 3',5'-bisphosphate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:46564
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: apo-[ACP] + acetyl-CoA = acetyl-[ACP] + adenosine 3'',5''-bisphosphate + H(+)'
+  - node_id: sub1
+    label: apo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9690
+    description: Rhea compound GENERIC:9690.
+  - node_id: sub1_rp1
+    label: L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9690 (apo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: acetyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9621
+    description: Rhea compound GENERIC:9621.
+  - node_id: prd1_rp1
+    label: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9621 (acetyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78446
+  - node_id: prd2
+    label: adenosine 3',5'-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58343
+    description: Formula C10H11N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: apo-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46565
+      snippet: apo-[ACP] + acetyl-CoA => acetyl-[ACP] + adenosine 3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46565 declares side 46564_L as its substrates
+        (rh:substrates); the master reaction RHEA:46564 is undirected. This participant is GENERIC:9690
+        with coefficient 1. Rhea cites PMID:12815048 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of apo-[ACP].
+    evidence:
+    - reference: RHEA:46564
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:9690 (apo-[ACP]) declares rh:reactivePart = L-serine residue (CHEBI:29999),
+        formula C3H5NO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46565
+      snippet: apo-[ACP] + acetyl-CoA => acetyl-[ACP] + adenosine 3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46565 declares side 46564_L as its substrates
+        (rh:substrates); the master reaction RHEA:46564 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:12815048 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: acetyl-[ACP] is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46565
+      snippet: apo-[ACP] + acetyl-CoA => acetyl-[ACP] + adenosine 3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46565 declares side 46564_R as its products
+        (rh:products); the master reaction RHEA:46564 is undirected. This participant is GENERIC:9621
+        with coefficient 1. Rhea cites PMID:12815048 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of acetyl-[ACP].
+    evidence:
+    - reference: RHEA:46564
+      snippet: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9621 (acetyl-[ACP]) declares rh:reactivePart = O-(S-acetylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78446), formula C16H27N3O9PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: adenosine 3',5'-bisphosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46565
+      snippet: apo-[ACP] + acetyl-CoA => acetyl-[ACP] + adenosine 3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46565 declares side 46564_R as its products
+        (rh:products); the master reaction RHEA:46564 is undirected. This participant is CHEBI:58343 with
+        coefficient 1. Rhea cites PMID:12815048 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46565
+      snippet: apo-[ACP] + acetyl-CoA => acetyl-[ACP] + adenosine 3',5'-bisphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:46565 declares side 46564_R as its products
+        (rh:products); the master reaction RHEA:46564 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12815048 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

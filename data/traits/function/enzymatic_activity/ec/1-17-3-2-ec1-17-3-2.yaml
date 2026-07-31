@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.17.3.-
 synonyms:
@@ -49,4 +49,362 @@ definitions:
       Catalyses: xanthine + O2 + H2O = urate + H2O2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of xanthine oxidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.17.3.2. Rhea assigns 3 curated
+    reactions to EC 1.17.3.2. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "xanthine + O2 + H2O = urate + H2O2". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: xanthine oxidase
+    grounding: EC:1.17.3.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of xanthine + O2 + H2O = urate + H2O2
+    grounding: RHEA:21132
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: xanthine + O2 + H2O = urate + H2O2'
+  - node_id: rxn1_sub1
+    label: xanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17712
+    description: Formula C5H4N4O2.
+  - node_id: rxn1_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn1_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: urate
+    node_type: CHEMICAL
+    grounding: CHEBI:17775
+    description: Formula C5H4N4O3.
+  - node_id: rxn1_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of hypoxanthine + O2 + H2O = xanthine + H2O2
+    grounding: RHEA:68012
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: hypoxanthine + O2 + H2O = xanthine + H2O2'
+  - node_id: rxn2_sub1
+    label: hypoxanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17368
+    description: Formula C5H4N4O.
+  - node_id: rxn2_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn2_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: xanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17712
+    description: Formula C5H4N4O2.
+  - node_id: rxn2_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of 6,8-dihydroxypurine + O2 + H2O = urate + H2O2
+    grounding: RHEA:68028
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: 6,8-dihydroxypurine + O2 + H2O = urate + H2O2'
+  - node_id: rxn3_sub1
+    label: 6,8-dihydroxypurine
+    node_type: CHEMICAL
+    grounding: CHEBI:165832
+    description: Formula C5H4N4O2.
+  - node_id: rxn3_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn3_sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3_prd1
+    label: urate
+    node_type: CHEMICAL
+    grounding: CHEBI:17775
+    description: Formula C5H4N4O3.
+  - node_id: rxn3_prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: prot_P80457
+    node_type: PROTEIN
+    label: XDH_BOVIN
+    grounding: UniProtKB:P80457
+  - node_id: prot_P47990
+    node_type: PROTEIN
+    label: XDH_CHICK
+    grounding: UniProtKB:P47990
+  - node_id: prot_Q9MYW6
+    node_type: PROTEIN
+    label: XDH_FELCA
+    grounding: UniProtKB:Q9MYW6
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:21132 is one of the 3 curated reactions Rhea assigns to EC 1.17.3.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:21132
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.17.3.2"/>
+      notes: The rh:ec triple on RHEA:21132 in rhea.rdf assigns that reaction to EC 1.17.3.2.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: xanthine is a substrate consumed by RHEA:21132 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21133
+      snippet: xanthine + O2 + H2O => urate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:21133 declares side 21132_L as its substrates
+        (rh:substrates); the master reaction RHEA:21132 is undirected. This participant is CHEBI:17712
+        with coefficient 1. Rhea cites PMID:17301077, PMID:19388706, PMID:18513323, PMID:20050623 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: O2 is a substrate consumed by RHEA:21132 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21133
+      snippet: xanthine + O2 + H2O => urate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:21133 declares side 21132_L as its substrates
+        (rh:substrates); the master reaction RHEA:21132 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:17301077, PMID:19388706, PMID:18513323, PMID:20050623 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub3
+    description: H2O is a substrate consumed by RHEA:21132 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21133
+      snippet: xanthine + O2 + H2O => urate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:21133 declares side 21132_L as its substrates
+        (rh:substrates); the master reaction RHEA:21132 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17301077, PMID:19388706, PMID:18513323, PMID:20050623 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: urate is a product released by RHEA:21132 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21133
+      snippet: xanthine + O2 + H2O => urate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:21133 declares side 21132_R as its products
+        (rh:products); the master reaction RHEA:21132 is undirected. This participant is CHEBI:17775 with
+        coefficient 1. Rhea cites PMID:17301077, PMID:19388706, PMID:18513323, PMID:20050623 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H2O2 is a product released by RHEA:21132 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21133
+      snippet: xanthine + O2 + H2O => urate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:21133 declares side 21132_R as its products
+        (rh:products); the master reaction RHEA:21132 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:17301077, PMID:19388706, PMID:18513323, PMID:20050623 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:68012 is one of the 3 curated reactions Rhea assigns to EC 1.17.3.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:68012
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.17.3.2"/>
+      notes: The rh:ec triple on RHEA:68012 in rhea.rdf assigns that reaction to EC 1.17.3.2.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: hypoxanthine is a substrate consumed by RHEA:68012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68013
+      snippet: hypoxanthine + O2 + H2O => xanthine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:68013 declares side 68012_L as its substrates
+        (rh:substrates); the master reaction RHEA:68012 is undirected. This participant is CHEBI:17368
+        with coefficient 1. Rhea cites PMID:20615869, PMID:23116398 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: O2 is a substrate consumed by RHEA:68012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68013
+      snippet: hypoxanthine + O2 + H2O => xanthine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:68013 declares side 68012_L as its substrates
+        (rh:substrates); the master reaction RHEA:68012 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:20615869, PMID:23116398 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub3
+    description: H2O is a substrate consumed by RHEA:68012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68013
+      snippet: hypoxanthine + O2 + H2O => xanthine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:68013 declares side 68012_L as its substrates
+        (rh:substrates); the master reaction RHEA:68012 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:20615869, PMID:23116398 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: xanthine is a product released by RHEA:68012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68013
+      snippet: hypoxanthine + O2 + H2O => xanthine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:68013 declares side 68012_R as its products
+        (rh:products); the master reaction RHEA:68012 is undirected. This participant is CHEBI:17712 with
+        coefficient 1. Rhea cites PMID:20615869, PMID:23116398 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H2O2 is a product released by RHEA:68012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68013
+      snippet: hypoxanthine + O2 + H2O => xanthine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:68013 declares side 68012_R as its products
+        (rh:products); the master reaction RHEA:68012 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:20615869, PMID:23116398 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:68028 is one of the 3 curated reactions Rhea assigns to EC 1.17.3.2; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:68028
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.17.3.2"/>
+      notes: The rh:ec triple on RHEA:68028 in rhea.rdf assigns that reaction to EC 1.17.3.2.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: 6,8-dihydroxypurine is a substrate consumed by RHEA:68028 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68029
+      snippet: 6,8-dihydroxypurine + O2 + H2O => urate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:68029 declares side 68028_L as its substrates
+        (rh:substrates); the master reaction RHEA:68028 is undirected. This participant is CHEBI:165832
+        with coefficient 1. Rhea cites PMID:20615869 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: O2 is a substrate consumed by RHEA:68028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68029
+      snippet: 6,8-dihydroxypurine + O2 + H2O => urate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:68029 declares side 68028_L as its substrates
+        (rh:substrates); the master reaction RHEA:68028 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:20615869 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub3
+    description: H2O is a substrate consumed by RHEA:68028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68029
+      snippet: 6,8-dihydroxypurine + O2 + H2O => urate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:68029 declares side 68028_L as its substrates
+        (rh:substrates); the master reaction RHEA:68028 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:20615869 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: urate is a product released by RHEA:68028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68029
+      snippet: 6,8-dihydroxypurine + O2 + H2O => urate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:68029 declares side 68028_R as its products
+        (rh:products); the master reaction RHEA:68028 is undirected. This participant is CHEBI:17775 with
+        coefficient 1. Rhea cites PMID:20615869 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: H2O2 is a product released by RHEA:68028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68029
+      snippet: 6,8-dihydroxypurine + O2 + H2O => urate + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:68029 declares side 68028_R as its products
+        (rh:products); the master reaction RHEA:68028 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:20615869 for this reaction.
+  - subject: prot_P80457
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XDH_BOVIN is an exemplar enzyme with EC 1.17.3.2 activity.
+    evidence:
+    - reference: EC:1.17.3.2
+      snippet: DR   P80457, XDH_BOVIN  ;  P47990, XDH_CHICK  ;  Q9MYW6, XDH_FELCA  ;
+      notes: ExPASy ENZYME entry EC 1.17.3.2 cross-references UniProtKB:P80457 (XDH_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P47990
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XDH_CHICK is an exemplar enzyme with EC 1.17.3.2 activity.
+    evidence:
+    - reference: EC:1.17.3.2
+      snippet: DR   P80457, XDH_BOVIN  ;  P47990, XDH_CHICK  ;  Q9MYW6, XDH_FELCA  ;
+      notes: ExPASy ENZYME entry EC 1.17.3.2 cross-references UniProtKB:P47990 (XDH_CHICK) as a protein
+        with this activity.
+  - subject: prot_Q9MYW6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XDH_FELCA is an exemplar enzyme with EC 1.17.3.2 activity.
+    evidence:
+    - reference: EC:1.17.3.2
+      snippet: DR   P80457, XDH_BOVIN  ;  P47990, XDH_CHICK  ;  Q9MYW6, XDH_FELCA  ;
+      notes: ExPASy ENZYME entry EC 1.17.3.2 cross-references UniProtKB:Q9MYW6 (XDH_FELCA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (21 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

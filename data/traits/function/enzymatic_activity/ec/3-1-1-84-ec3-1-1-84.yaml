@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -39,4 +39,150 @@ definitions:
       Catalyses: cocaine + H2O = ecgonine methyl ester + benzoate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cocaine esterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.84. EC 3.1.1.84 maps to exactly
+    one curated Rhea reaction (RHEA:27506), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "cocaine + H2O
+    = ecgonine methyl ester + benzoate + H(+)". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cocaine esterase
+    grounding: EC:3.1.1.84
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: cocaine
+    node_type: CHEMICAL
+    grounding: CHEBI:60056
+    description: Formula C17H22NO4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: ecgonine methyl ester
+    node_type: CHEMICAL
+    grounding: CHEBI:59908
+    description: Formula C10H18NO3.
+  - node_id: prd2
+    label: benzoate
+    node_type: CHEMICAL
+    grounding: CHEBI:16150
+    description: Formula C7H5O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q9L9D7
+    node_type: PROTEIN
+    label: COCE_RHOSM
+    grounding: UniProtKB:Q9L9D7
+  - node_id: prot_O00748
+    node_type: PROTEIN
+    label: EST2_HUMAN
+    grounding: UniProtKB:O00748
+  - node_id: prot_P14943
+    node_type: PROTEIN
+    label: EST2_RABIT
+    grounding: UniProtKB:P14943
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cocaine is a substrate consumed by RHEA:27506 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27507
+      snippet: cocaine + H2O => ecgonine methyl ester + benzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27507 declares side 27506_L as its substrates
+        (rh:substrates); the master reaction RHEA:27506 is undirected. This participant is CHEBI:60056
+        with coefficient 1. Rhea cites PMID:10698749, PMID:1551831, PMID:18987161, PMID:11742345 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:27506 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27507
+      snippet: cocaine + H2O => ecgonine methyl ester + benzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27507 declares side 27506_L as its substrates
+        (rh:substrates); the master reaction RHEA:27506 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10698749, PMID:1551831, PMID:18987161, PMID:11742345 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ecgonine methyl ester is a product released by RHEA:27506 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:27507
+      snippet: cocaine + H2O => ecgonine methyl ester + benzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27507 declares side 27506_R as its products
+        (rh:products); the master reaction RHEA:27506 is undirected. This participant is CHEBI:59908 with
+        coefficient 1. Rhea cites PMID:10698749, PMID:1551831, PMID:18987161, PMID:11742345 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: benzoate is a product released by RHEA:27506 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27507
+      snippet: cocaine + H2O => ecgonine methyl ester + benzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27507 declares side 27506_R as its products
+        (rh:products); the master reaction RHEA:27506 is undirected. This participant is CHEBI:16150 with
+        coefficient 1. Rhea cites PMID:10698749, PMID:1551831, PMID:18987161, PMID:11742345 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:27506 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27507
+      snippet: cocaine + H2O => ecgonine methyl ester + benzoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:27507 declares side 27506_R as its products
+        (rh:products); the master reaction RHEA:27506 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:10698749, PMID:1551831, PMID:18987161, PMID:11742345 for this reaction.
+  - subject: prot_Q9L9D7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: COCE_RHOSM is an exemplar enzyme with EC 3.1.1.84 activity.
+    evidence:
+    - reference: EC:3.1.1.84
+      snippet: DR   Q9L9D7, COCE_RHOSM ;  O00748, EST2_HUMAN ;  P14943, EST2_RABIT ;
+      notes: ExPASy ENZYME entry EC 3.1.1.84 cross-references UniProtKB:Q9L9D7 (COCE_RHOSM) as a protein
+        with this activity.
+  - subject: prot_O00748
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EST2_HUMAN is an exemplar enzyme with EC 3.1.1.84 activity.
+    evidence:
+    - reference: EC:3.1.1.84
+      snippet: DR   Q9L9D7, COCE_RHOSM ;  O00748, EST2_HUMAN ;  P14943, EST2_RABIT ;
+      notes: ExPASy ENZYME entry EC 3.1.1.84 cross-references UniProtKB:O00748 (EST2_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P14943
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EST2_RABIT is an exemplar enzyme with EC 3.1.1.84 activity.
+    evidence:
+    - reference: EC:3.1.1.84
+      snippet: DR   Q9L9D7, COCE_RHOSM ;  O00748, EST2_HUMAN ;  P14943, EST2_RABIT ;
+      notes: ExPASy ENZYME entry EC 3.1.1.84 cross-references UniProtKB:P14943 (EST2_RABIT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

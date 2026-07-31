@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:50058
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,140 @@ definitions:
       Catalyses the reaction: [protein]-disulfide + 2 L-cysteine = [protein]-dithiol + L-cystine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [protein]-disulfide + 2 L-cysteine = [protein]-dithiol + L-cystine
+  description: Substrate-to-product chemistry of RHEA:86267, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:86268 (rh:substrates → 86267_L, rh:products → 86267_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [protein]-disulfide + 2 L-cysteine = [protein]-dithiol + L-cystine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:86267
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [protein]-disulfide + 2 L-cysteine = [protein]-dithiol + L-cystine'
+  - node_id: sub1
+    label: '[protein]-disulfide'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10593
+    description: Rhea compound GENERIC:10593.
+  - node_id: sub1_rp1
+    label: L-cystine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10593 ([protein]-disulfide);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:50058
+  - node_id: sub2
+    label: L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:35235
+    description: Formula C3H7NO2S.
+  - node_id: prd1
+    label: '[protein]-dithiol'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10594
+    description: Rhea compound GENERIC:10594.
+  - node_id: prd1_rp1
+    label: L-cysteine residue at position C1
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10594 ([protein]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1_rp2
+    label: L-cysteine residue at position C2
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10594 ([protein]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd2
+    label: L-cystine
+    node_type: CHEMICAL
+    grounding: CHEBI:35491
+    description: Formula C6H12N2O4S2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[protein]-disulfide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:86268
+      snippet: '[protein]-disulfide + 2 L-cysteine => [protein]-dithiol + L-cystine'
+      notes: Rhea's left-to-right directional reaction RHEA:86268 declares side 86267_L as its substrates
+        (rh:substrates); the master reaction RHEA:86267 is undirected. This participant is GENERIC:10593
+        with coefficient 1. Rhea cites PMID:10852914 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cystine residue is the reactive part of [protein]-disulfide.
+    evidence:
+    - reference: RHEA:86267
+      snippet: L-cystine residue
+      notes: Rhea compound GENERIC:10593 ([protein]-disulfide) declares rh:reactivePart = L-cystine residue
+        (CHEBI:50058), formula C6H8N2O2S2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-cysteine is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:86268
+      snippet: '[protein]-disulfide + 2 L-cysteine => [protein]-dithiol + L-cystine'
+      notes: Rhea's left-to-right directional reaction RHEA:86268 declares side 86267_L as its substrates
+        (rh:substrates); the master reaction RHEA:86267 is undirected. This participant is CHEBI:35235
+        with coefficient 2. Rhea cites PMID:10852914 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[protein]-dithiol is a product released by this reaction (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:86268
+      snippet: '[protein]-disulfide + 2 L-cysteine => [protein]-dithiol + L-cystine'
+      notes: Rhea's left-to-right directional reaction RHEA:86268 declares side 86267_R as its products
+        (rh:products); the master reaction RHEA:86267 is undirected. This participant is GENERIC:10594
+        with coefficient 1. Rhea cites PMID:10852914 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of [protein]-dithiol.
+    evidence:
+    - reference: RHEA:86267
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10594 ([protein]-dithiol) declares rh:reactivePart at position C1 =
+        L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: prd1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of [protein]-dithiol.
+    evidence:
+    - reference: RHEA:86267
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10594 ([protein]-dithiol) declares rh:reactivePart at position C2 =
+        L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-cystine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86268
+      snippet: '[protein]-disulfide + 2 L-cysteine => [protein]-dithiol + L-cystine'
+      notes: Rhea's left-to-right directional reaction RHEA:86268 declares side 86267_R as its products
+        (rh:products); the master reaction RHEA:86267 is undirected. This participant is CHEBI:35491 with
+        coefficient 1. Rhea cites PMID:10852914 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 synonyms:
@@ -43,4 +43,268 @@ definitions:
       Catalyses: an all-trans-retinyl ester + H2O = 11-cis-retinol + a fatty acid + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of retinoid isomerohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.64. Rhea assigns 2 curated
+    reactions to EC 3.1.1.64. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "an all-trans-retinyl ester + H2O = 11-cis-retinol + a fatty
+    acid + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: retinoid isomerohydrolase
+    grounding: EC:3.1.1.64
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an all-trans-retinyl ester + H2O = 11-cis-retinol + a fatty acid + H(+)
+    grounding: RHEA:31771
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an all-trans-retinyl ester + H2O = 11-cis-retinol + a fatty acid + H(+)'
+  - node_id: rxn1_sub1
+    label: an all-trans-retinyl ester
+    node_type: CHEMICAL
+    grounding: CHEBI:63410
+    description: Formula C21H29O2R.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: 11-cis-retinol
+    node_type: CHEMICAL
+    grounding: CHEBI:16302
+    description: Formula C20H30O.
+  - node_id: rxn1_prd2
+    label: a fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:28868
+    description: Formula CO2R.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of all-trans-retinyl hexadecanoate + H2O = 11-cis-retinol + hexadecanoate + H(+)
+    grounding: RHEA:31775
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: all-trans-retinyl hexadecanoate + H2O = 11-cis-retinol + hexadecanoate
+      + H(+)'
+  - node_id: rxn2_sub1
+    label: all-trans-retinyl hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:17616
+    description: Formula C36H60O2.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: 11-cis-retinol
+    node_type: CHEMICAL
+    grounding: CHEBI:16302
+    description: Formula C20H30O.
+  - node_id: rxn2_prd2
+    label: hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:7896
+    description: Formula C16H31O2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q6PBW5
+    node_type: PROTEIN
+    label: RP65A_DANRE
+    grounding: UniProtKB:Q6PBW5
+  - node_id: prot_A9C3R8
+    node_type: PROTEIN
+    label: RP65C_DANRE
+    grounding: UniProtKB:A9C3R8
+  - node_id: prot_Q9YI25
+    node_type: PROTEIN
+    label: RPE65_AMBTI
+    grounding: UniProtKB:Q9YI25
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:31771 is one of the 2 curated reactions Rhea assigns to EC 3.1.1.64; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31771
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.1.64"/>
+      notes: The rh:ec triple on RHEA:31771 in rhea.rdf assigns that reaction to EC 3.1.1.64.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: an all-trans-retinyl ester is a substrate consumed by RHEA:31771 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31772
+      snippet: an all-trans-retinyl ester + H2O => 11-cis-retinol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31772 declares side 31771_L as its substrates
+        (rh:substrates); the master reaction RHEA:31771 is undirected. This participant is CHEBI:63410
+        with coefficient 1. Rhea cites PMID:19490105, PMID:16116091, PMID:19805034, PMID:20100834 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:31771 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31772
+      snippet: an all-trans-retinyl ester + H2O => 11-cis-retinol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31772 declares side 31771_L as its substrates
+        (rh:substrates); the master reaction RHEA:31771 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19490105, PMID:16116091, PMID:19805034, PMID:20100834 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: 11-cis-retinol is a product released by RHEA:31771 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31772
+      snippet: an all-trans-retinyl ester + H2O => 11-cis-retinol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31772 declares side 31771_R as its products
+        (rh:products); the master reaction RHEA:31771 is undirected. This participant is CHEBI:16302 with
+        coefficient 1. Rhea cites PMID:19490105, PMID:16116091, PMID:19805034, PMID:20100834 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: a fatty acid is a product released by RHEA:31771 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31772
+      snippet: an all-trans-retinyl ester + H2O => 11-cis-retinol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31772 declares side 31771_R as its products
+        (rh:products); the master reaction RHEA:31771 is undirected. This participant is CHEBI:28868 with
+        coefficient 1. Rhea cites PMID:19490105, PMID:16116091, PMID:19805034, PMID:20100834 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:31771 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31772
+      snippet: an all-trans-retinyl ester + H2O => 11-cis-retinol + a fatty acid + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31772 declares side 31771_R as its products
+        (rh:products); the master reaction RHEA:31771 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19490105, PMID:16116091, PMID:19805034, PMID:20100834 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:31775 is one of the 2 curated reactions Rhea assigns to EC 3.1.1.64; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31775
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.1.64"/>
+      notes: The rh:ec triple on RHEA:31775 in rhea.rdf assigns that reaction to EC 3.1.1.64.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: all-trans-retinyl hexadecanoate is a substrate consumed by RHEA:31775 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31776
+      snippet: all-trans-retinyl hexadecanoate + H2O => 11-cis-retinol + hexadecanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31776 declares side 31775_L as its substrates
+        (rh:substrates); the master reaction RHEA:31775 is undirected. This participant is CHEBI:17616
+        with coefficient 1. Rhea cites PMID:19490105, PMID:25112876, PMID:3793734 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:31775 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31776
+      snippet: all-trans-retinyl hexadecanoate + H2O => 11-cis-retinol + hexadecanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31776 declares side 31775_L as its substrates
+        (rh:substrates); the master reaction RHEA:31775 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19490105, PMID:25112876, PMID:3793734 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 11-cis-retinol is a product released by RHEA:31775 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31776
+      snippet: all-trans-retinyl hexadecanoate + H2O => 11-cis-retinol + hexadecanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31776 declares side 31775_R as its products
+        (rh:products); the master reaction RHEA:31775 is undirected. This participant is CHEBI:16302 with
+        coefficient 1. Rhea cites PMID:19490105, PMID:25112876, PMID:3793734 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: hexadecanoate is a product released by RHEA:31775 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31776
+      snippet: all-trans-retinyl hexadecanoate + H2O => 11-cis-retinol + hexadecanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31776 declares side 31775_R as its products
+        (rh:products); the master reaction RHEA:31775 is undirected. This participant is CHEBI:7896 with
+        coefficient 1. Rhea cites PMID:19490105, PMID:25112876, PMID:3793734 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:31775 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31776
+      snippet: all-trans-retinyl hexadecanoate + H2O => 11-cis-retinol + hexadecanoate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:31776 declares side 31775_R as its products
+        (rh:products); the master reaction RHEA:31775 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:19490105, PMID:25112876, PMID:3793734 for this reaction.
+  - subject: prot_Q6PBW5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RP65A_DANRE is an exemplar enzyme with EC 3.1.1.64 activity.
+    evidence:
+    - reference: EC:3.1.1.64
+      snippet: DR   Q6PBW5, RP65A_DANRE;  A9C3R8, RP65C_DANRE;  Q9YI25, RPE65_AMBTI;
+      notes: ExPASy ENZYME entry EC 3.1.1.64 cross-references UniProtKB:Q6PBW5 (RP65A_DANRE) as a protein
+        with this activity.
+  - subject: prot_A9C3R8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RP65C_DANRE is an exemplar enzyme with EC 3.1.1.64 activity.
+    evidence:
+    - reference: EC:3.1.1.64
+      snippet: DR   Q6PBW5, RP65A_DANRE;  A9C3R8, RP65C_DANRE;  Q9YI25, RPE65_AMBTI;
+      notes: ExPASy ENZYME entry EC 3.1.1.64 cross-references UniProtKB:A9C3R8 (RP65C_DANRE) as a protein
+        with this activity.
+  - subject: prot_Q9YI25
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RPE65_AMBTI is an exemplar enzyme with EC 3.1.1.64 activity.
+    evidence:
+    - reference: EC:3.1.1.64
+      snippet: DR   Q6PBW5, RP65A_DANRE;  A9C3R8, RP65C_DANRE;  Q9YI25, RPE65_AMBTI;
+      notes: ExPASy ENZYME entry EC 3.1.1.64 cross-references UniProtKB:Q9YI25 (RPE65_AMBTI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

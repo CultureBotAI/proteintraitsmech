@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -34,4 +34,53 @@ definitions:
       Catalyses: Cleavage of 3-Asn-|-Gln-4, 10-His-|-Leu-11 and 14-Ala-|-Leu-15 in the insulin B chain, and the bond Z-Gly-Pro-|-Leu-Gly-Pro in a small molecule substrate of microbial collagenase
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of trimerelysin II
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.53. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleavage
+    of 3-Asn-|-Gln-4, 10-His-|-Leu-11 and 14-Ala-|-Leu-15 in the insulin B chain, and the bond Z-Gly-Pro-|-Leu-Gly-Pro
+    in a small molecule substrate of microbial collagenase".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: trimerelysin II
+    grounding: EC:3.4.24.53
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P20165
+    node_type: PROTEIN
+    label: VM1T2_PROFL
+    grounding: UniProtKB:P20165
+  - node_id: prot_P14530
+    node_type: PROTEIN
+    label: VM2HA_PROFL
+    grounding: UniProtKB:P14530
+  edges:
+  - subject: prot_P20165
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VM1T2_PROFL is an exemplar enzyme with EC 3.4.24.53 activity.
+    evidence:
+    - reference: EC:3.4.24.53
+      snippet: DR   P20165, VM1T2_PROFL;  P14530, VM2HA_PROFL;
+      notes: ExPASy ENZYME entry EC 3.4.24.53 cross-references UniProtKB:P20165 (VM1T2_PROFL) as a protein
+        with this activity.
+  - subject: prot_P14530
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VM2HA_PROFL is an exemplar enzyme with EC 3.4.24.53 activity.
+    evidence:
+    - reference: EC:3.4.24.53
+      snippet: DR   P20165, VM1T2_PROFL;  P14530, VM2HA_PROFL;
+      notes: ExPASy ENZYME entry EC 3.4.24.53 cross-references UniProtKB:P14530 (VM2HA_PROFL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

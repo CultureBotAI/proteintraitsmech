@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:66945
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,77 @@ definitions:
       Catalyses the reaction: 4-nitro-6-oxohepta-2,4-dienedioate = 2-oxo-3-(5-oxofuran-2-ylidene)propanoate + nitrite
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-nitro-6-oxohepta-2,4-dienedioate = 2-oxo-3-(5-oxofuran-2-ylidene)propanoate
+    + nitrite
+  description: Substrate-to-product chemistry of RHEA:34235, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34236 (rh:substrates → 34235_L, rh:products → 34235_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4-nitro-6-oxohepta-2,4-dienedioate = 2-oxo-3-(5-oxofuran-2-ylidene)propanoat…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34235
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4-nitro-6-oxohepta-2,4-dienedioate = 2-oxo-3-(5-oxofuran-2-ylidene)propanoate + nitrite'
+  - node_id: sub1
+    label: 4-nitro-6-oxohepta-2,4-dienedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:66945
+    description: Formula C7H3NO7.
+  - node_id: prd1
+    label: 2-oxo-3-(5-oxofuran-2-ylidene)propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:65081
+    description: Formula C7H3O5.
+  - node_id: prd2
+    label: nitrite
+    node_type: CHEMICAL
+    grounding: CHEBI:16301
+    description: Formula NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-nitro-6-oxohepta-2,4-dienedioate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34236
+      snippet: 4-nitro-6-oxohepta-2,4-dienedioate => 2-oxo-3-(5-oxofuran-2-ylidene)propanoate + nitrite
+      notes: Rhea's left-to-right directional reaction RHEA:34236 declares side 34235_L as its substrates
+        (rh:substrates); the master reaction RHEA:34235 is undirected. This participant is CHEBI:66945
+        with coefficient 1. Rhea cites PMID:20081004, PMID:21498645 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-oxo-3-(5-oxofuran-2-ylidene)propanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34236
+      snippet: 4-nitro-6-oxohepta-2,4-dienedioate => 2-oxo-3-(5-oxofuran-2-ylidene)propanoate + nitrite
+      notes: Rhea's left-to-right directional reaction RHEA:34236 declares side 34235_R as its products
+        (rh:products); the master reaction RHEA:34235 is undirected. This participant is CHEBI:65081 with
+        coefficient 1. Rhea cites PMID:20081004, PMID:21498645 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nitrite is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34236
+      snippet: 4-nitro-6-oxohepta-2,4-dienedioate => 2-oxo-3-(5-oxofuran-2-ylidene)propanoate + nitrite
+      notes: Rhea's left-to-right directional reaction RHEA:34236 declares side 34235_R as its products
+        (rh:products); the master reaction RHEA:34235 is undirected. This participant is CHEBI:16301 with
+        coefficient 1. Rhea cites PMID:20081004, PMID:21498645 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

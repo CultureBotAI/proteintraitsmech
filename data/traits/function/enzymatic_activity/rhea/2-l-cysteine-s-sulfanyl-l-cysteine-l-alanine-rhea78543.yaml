@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:35235
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,75 @@ definitions:
       Catalyses the reaction: 2 L-cysteine = S-sulfanyl-L-cysteine + L-alanine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 L-cysteine = S-sulfanyl-L-cysteine + L-alanine
+  description: Substrate-to-product chemistry of RHEA:78543, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78544 (rh:substrates → 78543_L, rh:products → 78543_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 L-cysteine = S-sulfanyl-L-cysteine + L-alanine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78543
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 L-cysteine = S-sulfanyl-L-cysteine + L-alanine'
+  - node_id: sub1
+    label: L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:35235
+    description: Formula C3H7NO2S.
+  - node_id: prd1
+    label: S-sulfanyl-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:58591
+    description: Formula C3H7NO2S2.
+  - node_id: prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cysteine is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:78544
+      snippet: 2 L-cysteine => S-sulfanyl-L-cysteine + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:78544 declares side 78543_L as its substrates
+        (rh:substrates); the master reaction RHEA:78543 is undirected. This participant is CHEBI:35235
+        with coefficient 2. Rhea cites PMID:29079736, PMID:29748969 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-sulfanyl-L-cysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78544
+      snippet: 2 L-cysteine => S-sulfanyl-L-cysteine + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:78544 declares side 78543_R as its products
+        (rh:products); the master reaction RHEA:78543 is undirected. This participant is CHEBI:58591 with
+        coefficient 1. Rhea cites PMID:29079736, PMID:29748969 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-alanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78544
+      snippet: 2 L-cysteine => S-sulfanyl-L-cysteine + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:78544 declares side 78543_R as its products
+        (rh:products); the master reaction RHEA:78543 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:29079736, PMID:29748969 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

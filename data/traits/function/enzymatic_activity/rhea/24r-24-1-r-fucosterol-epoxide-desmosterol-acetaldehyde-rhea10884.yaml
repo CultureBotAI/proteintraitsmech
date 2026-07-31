@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.2.33
     mapping_source: rhea2ec
@@ -26,4 +26,106 @@ definitions:
       Catalyses the reaction: (24R,24(1)R)-fucosterol epoxide = desmosterol + acetaldehyde
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (24R,24(1)R)-fucosterol epoxide = desmosterol + acetaldehyde
+  description: Substrate-to-product chemistry of RHEA:10884, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:10885 (rh:substrates → 10884_L, rh:products → 10884_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (24R,24(1)R)-fucosterol epoxide = desmosterol + acetaldehyde
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10884
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (24R,24(1)R)-fucosterol epoxide = desmosterol + acetaldehyde'
+  - node_id: sub1
+    label: (24R,24(1)R)-fucosterol epoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:15577
+    description: Formula C29H48O2.
+  - node_id: prd1
+    label: desmosterol
+    node_type: CHEMICAL
+    grounding: CHEBI:17737
+    description: Formula C27H44O.
+  - node_id: prd2
+    label: acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15343
+    description: Formula C2H4O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: fucosterol-epoxide lyase activity
+    grounding: GO:0047906
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: fucosterol-epoxide lyase
+    grounding: EC:4.1.2.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (24R,24(1)R)-fucosterol epoxide is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:10885
+      snippet: (24R,24(1)R)-fucosterol epoxide => desmosterol + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:10885 declares side 10884_L as its substrates
+        (rh:substrates); the master reaction RHEA:10884 is undirected. This participant is CHEBI:15577
+        with coefficient 1. Rhea cites PMID:3913328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: desmosterol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10885
+      snippet: (24R,24(1)R)-fucosterol epoxide => desmosterol + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:10885 declares side 10884_R as its products
+        (rh:products); the master reaction RHEA:10884 is undirected. This participant is CHEBI:17737 with
+        coefficient 1. Rhea cites PMID:3913328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetaldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10885
+      snippet: (24R,24(1)R)-fucosterol epoxide => desmosterol + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:10885 declares side 10884_R as its products
+        (rh:products); the master reaction RHEA:10884 is undirected. This participant is CHEBI:15343 with
+        coefficient 1. Rhea cites PMID:3913328 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:10884
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047906"/>
+      notes: The rdfs:seeAlso triple on RHEA:10884 in rhea.rdf. GO term GO:0047906 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.2.33; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:10884
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.33"/>
+      notes: The rh:ec triple on RHEA:10884 in rhea.rdf. EC 4.1.2.33 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

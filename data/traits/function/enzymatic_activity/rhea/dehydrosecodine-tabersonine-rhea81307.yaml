@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.5.1.38
     mapping_source: rhea2ec
@@ -28,4 +28,114 @@ definitions:
       Catalyses the reaction: dehydrosecodine = (-)-tabersonine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dehydrosecodine = (-)-tabersonine
+  description: Substrate-to-product chemistry of RHEA:81307, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:81308 (rh:substrates → 81307_L, rh:products → 81307_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dehydrosecodine = (-)-tabersonine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:81307
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dehydrosecodine = (-)-tabersonine'
+  - node_id: sub1
+    label: dehydrosecodine
+    node_type: CHEMICAL
+    grounding: CHEBI:146237
+    description: Formula C21H25N2O2.
+  - node_id: prd1
+    label: (-)-tabersonine
+    node_type: CHEMICAL
+    grounding: CHEBI:57893
+    description: Formula C21H25N2O2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: tabersonine synthase
+    grounding: EC:5.5.1.38
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A5B8X6S2
+    node_type: PROTEIN
+    label: TABS_TABIB
+    grounding: UniProtKB:A0A5B8X6S2
+  - node_id: prot_A0A2P1GIW3
+    node_type: PROTEIN
+    label: TS_CATRO
+    grounding: UniProtKB:A0A2P1GIW3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dehydrosecodine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81308
+      snippet: dehydrosecodine => (-)-tabersonine
+      notes: Rhea's left-to-right directional reaction RHEA:81308 declares side 81307_L as its substrates
+        (rh:substrates); the master reaction RHEA:81307 is undirected. This participant is CHEBI:146237
+        with coefficient 1. Rhea cites PMID:29724909, PMID:32066966, PMID:38319969 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-tabersonine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81308
+      snippet: dehydrosecodine => (-)-tabersonine
+      notes: Rhea's left-to-right directional reaction RHEA:81308 declares side 81307_R as its products
+        (rh:products); the master reaction RHEA:81307 is undirected. This participant is CHEBI:57893 with
+        coefficient 1. Rhea cites PMID:29724909, PMID:32066966, PMID:38319969 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.5.1.38; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:81307
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.38"/>
+      notes: The rh:ec triple on RHEA:81307 in rhea.rdf. EC 5.5.1.38 is itself a record in this KB.
+  - subject: prot_A0A5B8X6S2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TABS_TABIB is an exemplar enzyme carrying EC 5.5.1.38, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.5.1.38
+      snippet: DR   A0A5B8X6S2, TABS_TABIB ;  A0A2P1GIW3, TS_CATRO   ;
+      notes: ExPASy ENZYME entry EC 5.5.1.38 cross-references UniProtKB:A0A5B8X6S2 (TABS_TABIB) as a protein
+        with this activity.
+    - reference: RHEA:81307
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.38"/>
+      notes: Rhea assigns RHEA:81307 to EC 5.5.1.38, and EC 5.5.1.38 maps to exactly one Rhea master reaction
+        (RHEA:81307), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A0A2P1GIW3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TS_CATRO is an exemplar enzyme carrying EC 5.5.1.38, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.5.1.38
+      snippet: DR   A0A5B8X6S2, TABS_TABIB ;  A0A2P1GIW3, TS_CATRO   ;
+      notes: ExPASy ENZYME entry EC 5.5.1.38 cross-references UniProtKB:A0A2P1GIW3 (TS_CATRO) as a protein
+        with this activity.
+    - reference: RHEA:81307
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.5.1.38"/>
+      notes: Rhea assigns RHEA:81307 to EC 5.5.1.38, and EC 5.5.1.38 maps to exactly one Rhea master reaction
+        (RHEA:81307), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.99.-
 mapped_xrefs:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: (2Z,4E)-2-aminomuconate + H2O = (2Z,4E)-2-hydroxyhexa-2,4-dienedioate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-aminomuconate deaminase (2-hydroxymuconate-forming)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.99.11. EC 3.5.99.11 maps to
+    exactly one curated Rhea reaction (RHEA:49460), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2Z,4E)-2-aminomuconate
+    + H2O = (2Z,4E)-2-hydroxyhexa-2,4-dienedioate + NH4(+)". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-aminomuconate deaminase (2-hydroxymuconate-forming)
+    grounding: EC:3.5.99.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2Z,4E)-2-aminomuconate
+    node_type: CHEMICAL
+    grounding: CHEBI:77859
+    description: Formula C6H6NO4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (2Z,4E)-2-hydroxyhexa-2,4-dienedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:28080
+    description: Formula C6H4O5.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: prot_Q09KQ6
+    node_type: PROTEIN
+    label: CNBZ_COMTE
+    grounding: UniProtKB:Q09KQ6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2Z,4E)-2-aminomuconate is a substrate consumed by RHEA:49460 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49461
+      snippet: (2Z,4E)-2-aminomuconate + H2O => (2Z,4E)-2-hydroxyhexa-2,4-dienedioate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49461 declares side 49460_L as its substrates
+        (rh:substrates); the master reaction RHEA:49460 is undirected. This participant is CHEBI:77859
+        with coefficient 1. Rhea cites PMID:17259310, PMID:16517619 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:49460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49461
+      snippet: (2Z,4E)-2-aminomuconate + H2O => (2Z,4E)-2-hydroxyhexa-2,4-dienedioate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49461 declares side 49460_L as its substrates
+        (rh:substrates); the master reaction RHEA:49460 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17259310, PMID:16517619 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2Z,4E)-2-hydroxyhexa-2,4-dienedioate is a product released by RHEA:49460 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:49461
+      snippet: (2Z,4E)-2-aminomuconate + H2O => (2Z,4E)-2-hydroxyhexa-2,4-dienedioate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49461 declares side 49460_R as its products
+        (rh:products); the master reaction RHEA:49460 is undirected. This participant is CHEBI:28080 with
+        coefficient 1. Rhea cites PMID:17259310, PMID:16517619 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:49460 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49461
+      snippet: (2Z,4E)-2-aminomuconate + H2O => (2Z,4E)-2-hydroxyhexa-2,4-dienedioate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49461 declares side 49460_R as its products
+        (rh:products); the master reaction RHEA:49460 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:17259310, PMID:16517619 for this reaction.
+  - subject: prot_Q09KQ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CNBZ_COMTE is an exemplar enzyme with EC 3.5.99.11 activity.
+    evidence:
+    - reference: EC:3.5.99.11
+      snippet: DR   Q09KQ6, CNBZ_COMTE ;
+      notes: ExPASy ENZYME entry EC 3.5.99.11 cross-references UniProtKB:Q09KQ6 (CNBZ_COMTE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.5.1.-
 mapped_xrefs:
@@ -30,4 +30,137 @@ definitions:
       Catalyses: thioglycolate + 3-chloro-L-alanine = S-carboxymethyl-L-cysteine + chloride + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-carboxymethylcysteine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.5.1.5. EC 4.5.1.5 maps to exactly
+    one curated Rhea reaction (RHEA:22868), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "thioglycolate
+    + 3-chloro-L-alanine = S-carboxymethyl-L-cysteine + chloride + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: S-carboxymethylcysteine synthase
+    grounding: EC:4.5.1.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: thioglycolate
+    node_type: CHEMICAL
+    grounding: CHEBI:30066
+    description: Formula C2H3O2S.
+  - node_id: sub2
+    label: 3-chloro-L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58132
+    description: Formula C3H6ClNO2.
+  - node_id: prd1
+    label: S-carboxymethyl-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57662
+    description: Formula C5H8NO4S.
+  - node_id: prd2
+    label: chloride
+    node_type: CHEMICAL
+    grounding: CHEBI:17996
+    description: Formula Cl.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: S-carboxymethylcysteine synthase activity
+    grounding: GO:0050272
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0ABK5
+    node_type: PROTEIN
+    label: CYSK_ECOLI
+    grounding: UniProtKB:P0ABK5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: thioglycolate is a substrate consumed by RHEA:22868 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22869
+      snippet: thioglycolate + 3-chloro-L-alanine => S-carboxymethyl-L-cysteine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22869 declares side 22868_L as its substrates
+        (rh:substrates); the master reaction RHEA:22868 is undirected. This participant is CHEBI:30066
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 3-chloro-L-alanine is a substrate consumed by RHEA:22868 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22869
+      snippet: thioglycolate + 3-chloro-L-alanine => S-carboxymethyl-L-cysteine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22869 declares side 22868_L as its substrates
+        (rh:substrates); the master reaction RHEA:22868 is undirected. This participant is CHEBI:58132
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-carboxymethyl-L-cysteine is a product released by RHEA:22868 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22869
+      snippet: thioglycolate + 3-chloro-L-alanine => S-carboxymethyl-L-cysteine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22869 declares side 22868_R as its products
+        (rh:products); the master reaction RHEA:22868 is undirected. This participant is CHEBI:57662 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: chloride is a product released by RHEA:22868 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22869
+      snippet: thioglycolate + 3-chloro-L-alanine => S-carboxymethyl-L-cysteine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22869 declares side 22868_R as its products
+        (rh:products); the master reaction RHEA:22868 is undirected. This participant is CHEBI:17996 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:22868 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22869
+      snippet: thioglycolate + 3-chloro-L-alanine => S-carboxymethyl-L-cysteine + chloride + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22869 declares side 22868_R as its products
+        (rh:products); the master reaction RHEA:22868 is undirected. This participant is CHEBI:15378 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.5.1.5
+      snippet: EC:4.5.1.5 > GO:S-carboxymethylcysteine synthase activity ; GO:0050272
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050272 is itself a record
+        in this KB.
+  - subject: prot_P0ABK5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYSK_ECOLI is an exemplar enzyme with EC 4.5.1.5 activity.
+    evidence:
+    - reference: EC:4.5.1.5
+      snippet: DR   P0ABK5, CYSK_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.5.1.5 cross-references UniProtKB:P0ABK5 (CYSK_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

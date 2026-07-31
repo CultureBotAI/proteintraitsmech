@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:33722
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,182 @@ definitions:
       Catalyses the reaction: 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O = aminoacetaldehyde + 2 reduced [4Fe-4S]-[ferredoxin] + sulfite + 3 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O = aminoacetaldehyde +
+    2 reduced [4Fe-4…
+  description: Substrate-to-product chemistry of RHEA:80635, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80636 (rh:substrates → 80635_L, rh:products → 80635_R), and Rhea
+    curates the reverse direction too. 3 substrates, 4 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O = aminoacetaldehyde + 2 red…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80635
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O = aminoacetaldehyde + 2 reduced
+      [4Fe-4S]-[ferredoxin] + sulfite + 3 H(+)'
+  - node_id: sub1
+    label: oxidized [4Fe-4S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18797
+    description: Rhea compound GENERIC:18797.
+  - node_id: sub1_rp1
+    label: '[4Fe-4S](2+) cluster'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18797 (oxidized
+      [4Fe-4S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33722
+  - node_id: sub2
+    label: taurine
+    node_type: CHEMICAL
+    grounding: CHEBI:507393
+    description: Formula C2H7NO3S.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: aminoacetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:58213
+    description: Formula C2H6NO.
+  - node_id: prd2
+    label: reduced [4Fe-4S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18798
+    description: Rhea compound GENERIC:18798.
+  - node_id: prd2_rp1
+    label: '[4Fe-4S](1+) cluster'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18798 (reduced [4Fe-4S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33723
+  - node_id: prd3
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: oxidized [4Fe-4S]-[ferredoxin] is a substrate consumed by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:80636
+      snippet: 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O => aminoacetaldehyde + 2 reduced [4Fe-4S]-[ferredoxin]
+        + sulfite + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80636 declares side 80635_L as its substrates
+        (rh:substrates); the master reaction RHEA:80635 is undirected. This participant is GENERIC:18797
+        with coefficient 2. Rhea cites PMID:36269456 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: '[4Fe-4S](2+) cluster is the reactive part of oxidized [4Fe-4S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:80635
+      snippet: '[4Fe-4S](2+) cluster'
+      notes: Rhea compound GENERIC:18797 (oxidized [4Fe-4S]-[ferredoxin]) declares rh:reactivePart = [4Fe-4S](2+)
+        cluster (CHEBI:33722), formula Fe4S4.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: taurine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80636
+      snippet: 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O => aminoacetaldehyde + 2 reduced [4Fe-4S]-[ferredoxin]
+        + sulfite + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80636 declares side 80635_L as its substrates
+        (rh:substrates); the master reaction RHEA:80635 is undirected. This participant is CHEBI:507393
+        with coefficient 1. Rhea cites PMID:36269456 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80636
+      snippet: 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O => aminoacetaldehyde + 2 reduced [4Fe-4S]-[ferredoxin]
+        + sulfite + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80636 declares side 80635_L as its substrates
+        (rh:substrates); the master reaction RHEA:80635 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:36269456 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: aminoacetaldehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80636
+      snippet: 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O => aminoacetaldehyde + 2 reduced [4Fe-4S]-[ferredoxin]
+        + sulfite + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80636 declares side 80635_R as its products
+        (rh:products); the master reaction RHEA:80635 is undirected. This participant is CHEBI:58213 with
+        coefficient 1. Rhea cites PMID:36269456 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: reduced [4Fe-4S]-[ferredoxin] is a product released by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:80636
+      snippet: 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O => aminoacetaldehyde + 2 reduced [4Fe-4S]-[ferredoxin]
+        + sulfite + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80636 declares side 80635_R as its products
+        (rh:products); the master reaction RHEA:80635 is undirected. This participant is GENERIC:18798
+        with coefficient 2. Rhea cites PMID:36269456 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[4Fe-4S](1+) cluster is the reactive part of reduced [4Fe-4S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:80635
+      snippet: '[4Fe-4S](1+) cluster'
+      notes: Rhea compound GENERIC:18798 (reduced [4Fe-4S]-[ferredoxin]) declares rh:reactivePart = [4Fe-4S](1+)
+        cluster (CHEBI:33723), formula Fe4S4.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: sulfite is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80636
+      snippet: 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O => aminoacetaldehyde + 2 reduced [4Fe-4S]-[ferredoxin]
+        + sulfite + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80636 declares side 80635_R as its products
+        (rh:products); the master reaction RHEA:80635 is undirected. This participant is CHEBI:17359 with
+        coefficient 1. Rhea cites PMID:36269456 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:80636
+      snippet: 2 oxidized [4Fe-4S]-[ferredoxin] + taurine + H2O => aminoacetaldehyde + 2 reduced [4Fe-4S]-[ferredoxin]
+        + sulfite + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80636 declares side 80635_R as its products
+        (rh:products); the master reaction RHEA:80635 is undirected. This participant is CHEBI:15378 with
+        coefficient 3. Rhea cites PMID:36269456 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

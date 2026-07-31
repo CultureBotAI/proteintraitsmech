@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.2.-
 synonyms:
@@ -41,4 +41,167 @@ definitions:
       Catalyses: a [peptide]-C-terminal (2S)-2-hydroxyglycine = a [peptide]-C-terminal amide + glyoxylate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of peptidylamidoglycolate lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.2.5. EC 4.3.2.5 maps to exactly
+    one curated Rhea reaction (RHEA:20924), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a [peptide]-C-terminal
+    (2S)-2-hydroxyglycine = a [peptide]-C-terminal amide + glyoxylate". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: peptidylamidoglycolate lyase
+    grounding: EC:4.3.2.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a [peptide]-C-terminal (2S)-2-hydroxyglycine
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15321
+    description: Rhea compound GENERIC:15321.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: C-terminal Xaa-(2S)-2-hydroxyglycine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:15321 (a [peptide]-C-terminal
+      (2S)-2-hydroxyglycine); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142768
+  - node_id: prd1
+    label: a [peptide]-C-terminal amide
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13485
+    description: Rhea compound GENERIC:13485.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: C-terminal alpha-amino-acid amide residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13485 (a [peptide]-C-terminal
+      amide); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:137001
+  - node_id: prd2
+    label: glyoxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:36655
+    description: Formula C2HO3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: peptidylamidoglycolate lyase activity
+    grounding: GO:0004598
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P08478
+    node_type: PROTEIN
+    label: AMDA_XENLA
+    grounding: UniProtKB:P08478
+  - node_id: prot_P12890
+    node_type: PROTEIN
+    label: AMDB_XENLA
+    grounding: UniProtKB:P12890
+  - node_id: prot_P83388
+    node_type: PROTEIN
+    label: AMDL_CAEEL
+    grounding: UniProtKB:P83388
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a [peptide]-C-terminal (2S)-2-hydroxyglycine is a substrate consumed by RHEA:20924 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20925
+      snippet: a [peptide]-C-terminal (2S)-2-hydroxyglycine => a [peptide]-C-terminal amide + glyoxylate
+      notes: Rhea's left-to-right directional reaction RHEA:20925 declares side 20924_L as its substrates
+        (rh:substrates); the master reaction RHEA:20924 is undirected. This participant is GENERIC:15321
+        with coefficient 1. Rhea cites PMID:15198673, PMID:2207061, PMID:9405058 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: C-terminal Xaa-(2S)-2-hydroxyglycine residue is the reactive part of a [peptide]-C-terminal
+      (2S)-2-hydroxyglycine.
+    evidence:
+    - reference: RHEA:20924
+      snippet: C-terminal Xaa-(2S)-2-hydroxyglycine residue
+      notes: Rhea compound GENERIC:15321 (a [peptide]-C-terminal (2S)-2-hydroxyglycine) declares rh:reactivePart
+        = C-terminal Xaa-(2S)-2-hydroxyglycine residue (CHEBI:142768).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a [peptide]-C-terminal amide is a product released by RHEA:20924 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20925
+      snippet: a [peptide]-C-terminal (2S)-2-hydroxyglycine => a [peptide]-C-terminal amide + glyoxylate
+      notes: Rhea's left-to-right directional reaction RHEA:20925 declares side 20924_R as its products
+        (rh:products); the master reaction RHEA:20924 is undirected. This participant is GENERIC:13485
+        with coefficient 1. Rhea cites PMID:15198673, PMID:2207061, PMID:9405058 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: C-terminal alpha-amino-acid amide residue is the reactive part of a [peptide]-C-terminal
+      amide.
+    evidence:
+    - reference: RHEA:20924
+      snippet: C-terminal alpha-amino-acid amide residue
+      notes: Rhea compound GENERIC:13485 (a [peptide]-C-terminal amide) declares rh:reactivePart = C-terminal
+        alpha-amino-acid amide residue (CHEBI:137001).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glyoxylate is a product released by RHEA:20924 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20925
+      snippet: a [peptide]-C-terminal (2S)-2-hydroxyglycine => a [peptide]-C-terminal amide + glyoxylate
+      notes: Rhea's left-to-right directional reaction RHEA:20925 declares side 20924_R as its products
+        (rh:products); the master reaction RHEA:20924 is undirected. This participant is CHEBI:36655 with
+        coefficient 1. Rhea cites PMID:15198673, PMID:2207061, PMID:9405058 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.3.2.5
+      snippet: EC:4.3.2.5 > GO:peptidylamidoglycolate lyase activity ; GO:0004598
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004598 is itself a record
+        in this KB.
+  - subject: prot_P08478
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMDA_XENLA is an exemplar enzyme with EC 4.3.2.5 activity.
+    evidence:
+    - reference: EC:4.3.2.5
+      snippet: DR   P08478, AMDA_XENLA ;  P12890, AMDB_XENLA ;  P83388, AMDL_CAEEL ;
+      notes: ExPASy ENZYME entry EC 4.3.2.5 cross-references UniProtKB:P08478 (AMDA_XENLA) as a protein
+        with this activity.
+  - subject: prot_P12890
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMDB_XENLA is an exemplar enzyme with EC 4.3.2.5 activity.
+    evidence:
+    - reference: EC:4.3.2.5
+      snippet: DR   P08478, AMDA_XENLA ;  P12890, AMDB_XENLA ;  P83388, AMDL_CAEEL ;
+      notes: ExPASy ENZYME entry EC 4.3.2.5 cross-references UniProtKB:P12890 (AMDB_XENLA) as a protein
+        with this activity.
+  - subject: prot_P83388
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMDL_CAEEL is an exemplar enzyme with EC 4.3.2.5 activity.
+    evidence:
+    - reference: EC:4.3.2.5
+      snippet: DR   P08478, AMDA_XENLA ;  P12890, AMDB_XENLA ;  P83388, AMDL_CAEEL ;
+      notes: ExPASy ENZYME entry EC 4.3.2.5 cross-references UniProtKB:P83388 (AMDL_CAEEL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

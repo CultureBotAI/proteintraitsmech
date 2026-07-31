@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.156
     mapping_source: rhea2ec
@@ -28,4 +28,166 @@ definitions:
       Catalyses the reaction: presqualene diphosphate + H2O = hydroxysqualene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of presqualene diphosphate + H2O = hydroxysqualene + diphosphate
+  description: Substrate-to-product chemistry of RHEA:47984, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:47985 (rh:substrates → 47984_L, rh:products → 47984_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of presqualene diphosphate + H2O = hydroxysqualene + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:47984
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: presqualene diphosphate + H2O = hydroxysqualene + diphosphate'
+  - node_id: sub1
+    label: presqualene diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57310
+    description: Formula C30H49O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: hydroxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:88123
+    description: Formula C30H50O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxysqualene synthase
+    grounding: EC:4.2.3.156
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q6N3F1
+    node_type: PROTEIN
+    label: HPNC_RHOPA
+    grounding: UniProtKB:Q6N3F1
+  - node_id: prot_P55351
+    node_type: PROTEIN
+    label: HPNC_SINFN
+    grounding: UniProtKB:P55351
+  - node_id: prot_Q5NP67
+    node_type: PROTEIN
+    label: HPNC_ZYMMO
+    grounding: UniProtKB:Q5NP67
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: presqualene diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:47985
+      snippet: presqualene diphosphate + H2O => hydroxysqualene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:47985 declares side 47984_L as its substrates
+        (rh:substrates); the master reaction RHEA:47984 is undirected. This participant is CHEBI:57310
+        with coefficient 1. Rhea cites PMID:26258173 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47985
+      snippet: presqualene diphosphate + H2O => hydroxysqualene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:47985 declares side 47984_L as its substrates
+        (rh:substrates); the master reaction RHEA:47984 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:26258173 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: hydroxysqualene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47985
+      snippet: presqualene diphosphate + H2O => hydroxysqualene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:47985 declares side 47984_R as its products
+        (rh:products); the master reaction RHEA:47984 is undirected. This participant is CHEBI:88123 with
+        coefficient 1. Rhea cites PMID:26258173 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47985
+      snippet: presqualene diphosphate + H2O => hydroxysqualene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:47985 declares side 47984_R as its products
+        (rh:products); the master reaction RHEA:47984 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:26258173 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.156; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:47984
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.156"/>
+      notes: The rh:ec triple on RHEA:47984 in rhea.rdf. EC 4.2.3.156 is itself a record in this KB.
+  - subject: prot_Q6N3F1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPNC_RHOPA is an exemplar enzyme carrying EC 4.2.3.156, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.156
+      snippet: DR   Q6N3F1, HPNC_RHOPA ;  P55351, HPNC_SINFN ;  Q5NP67, HPNC_ZYMMO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.156 cross-references UniProtKB:Q6N3F1 (HPNC_RHOPA) as a protein
+        with this activity.
+    - reference: RHEA:47984
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.156"/>
+      notes: Rhea assigns RHEA:47984 to EC 4.2.3.156, and EC 4.2.3.156 maps to exactly one Rhea master
+        reaction (RHEA:47984), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P55351
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPNC_SINFN is an exemplar enzyme carrying EC 4.2.3.156, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.156
+      snippet: DR   Q6N3F1, HPNC_RHOPA ;  P55351, HPNC_SINFN ;  Q5NP67, HPNC_ZYMMO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.156 cross-references UniProtKB:P55351 (HPNC_SINFN) as a protein
+        with this activity.
+    - reference: RHEA:47984
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.156"/>
+      notes: Rhea assigns RHEA:47984 to EC 4.2.3.156, and EC 4.2.3.156 maps to exactly one Rhea master
+        reaction (RHEA:47984), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q5NP67
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPNC_ZYMMO is an exemplar enzyme carrying EC 4.2.3.156, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.156
+      snippet: DR   Q6N3F1, HPNC_RHOPA ;  P55351, HPNC_SINFN ;  Q5NP67, HPNC_ZYMMO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.156 cross-references UniProtKB:Q5NP67 (HPNC_ZYMMO) as a protein
+        with this activity.
+    - reference: RHEA:47984
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.156"/>
+      notes: Rhea assigns RHEA:47984 to EC 4.2.3.156, and EC 4.2.3.156 maps to exactly one Rhea master
+        reaction (RHEA:47984), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

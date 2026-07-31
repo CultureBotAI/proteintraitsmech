@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.4.2.31
     mapping_source: rhea2ec
@@ -34,4 +34,178 @@ definitions:
       Catalyses the reaction: L-arginyl-[protein] + NAD(+) = N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + nicotinamide + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-arginyl-[protein] + NAD(+) = N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein]
+    + nicotinam…
+  description: Substrate-to-product chemistry of RHEA:19149, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:19150 (rh:substrates → 19149_L, rh:products → 19149_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-arginyl-[protein] + NAD(+) = N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein]…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:19149
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-arginyl-[protein] + NAD(+) = N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + nicotinamide
+      + H(+)'
+  - node_id: sub1
+    label: L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10532
+    description: Rhea compound GENERIC:10532.
+  - node_id: sub1_rp1
+    label: L-arginine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10532 (L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29965
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15087
+    description: Rhea compound GENERIC:15087.
+  - node_id: prd1_rp1
+    label: N(omega)-(ADP-D-ribosyl)-L-arginine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15087 (N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142554
+  - node_id: prd2
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+    description: Formula C6H6N2O.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: NAD+-protein-arginine ADP-ribosyltransferase activity
+    grounding: GO:0106274
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: NAD(+)--protein-arginine ADP-ribosyltransferase
+    grounding: EC:2.4.2.31
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arginyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19150
+      snippet: L-arginyl-[protein] + NAD(+) => N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + nicotinamide
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19150 declares side 19149_L as its substrates
+        (rh:substrates); the master reaction RHEA:19149 is undirected. This participant is GENERIC:10532
+        with coefficient 1. Rhea cites PMID:11011142, PMID:16627471, PMID:12727863 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-arginine residue is the reactive part of L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:19149
+      snippet: L-arginine residue
+      notes: Rhea compound GENERIC:10532 (L-arginyl-[protein]) declares rh:reactivePart = L-arginine residue
+        (CHEBI:29965), formula C6H13N4O.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19150
+      snippet: L-arginyl-[protein] + NAD(+) => N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + nicotinamide
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19150 declares side 19149_L as its substrates
+        (rh:substrates); the master reaction RHEA:19149 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:11011142, PMID:16627471, PMID:12727863 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:19150
+      snippet: L-arginyl-[protein] + NAD(+) => N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + nicotinamide
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19150 declares side 19149_R as its products
+        (rh:products); the master reaction RHEA:19149 is undirected. This participant is GENERIC:15087
+        with coefficient 1. Rhea cites PMID:11011142, PMID:16627471, PMID:12727863 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(omega)-(ADP-D-ribosyl)-L-arginine residue is the reactive part of N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein].
+    evidence:
+    - reference: RHEA:19149
+      snippet: N(omega)-(ADP-D-ribosyl)-L-arginine residue
+      notes: Rhea compound GENERIC:15087 (N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein]) declares rh:reactivePart
+        = N(omega)-(ADP-D-ribosyl)-L-arginine residue (CHEBI:142554), formula C21H32N9O14P2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nicotinamide is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19150
+      snippet: L-arginyl-[protein] + NAD(+) => N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + nicotinamide
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19150 declares side 19149_R as its products
+        (rh:products); the master reaction RHEA:19149 is undirected. This participant is CHEBI:17154 with
+        coefficient 1. Rhea cites PMID:11011142, PMID:16627471, PMID:12727863 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19150
+      snippet: L-arginyl-[protein] + NAD(+) => N(omega)-(ADP-D-ribosyl)-L-arginyl-[protein] + nicotinamide
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19150 declares side 19149_R as its products
+        (rh:products); the master reaction RHEA:19149 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11011142, PMID:16627471, PMID:12727863 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:19149
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0106274"/>
+      notes: The rdfs:seeAlso triple on RHEA:19149 in rhea.rdf. GO term GO:0106274 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.4.2.31; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:19149
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.2.31"/>
+      notes: The rh:ec triple on RHEA:19149 in rhea.rdf. EC 2.4.2.31 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

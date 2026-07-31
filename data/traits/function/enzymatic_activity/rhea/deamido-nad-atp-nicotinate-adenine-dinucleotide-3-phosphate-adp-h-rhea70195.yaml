@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.1.236
     mapping_source: rhea2ec
@@ -30,4 +30,123 @@ definitions:
       Catalyses the reaction: deamido-NAD(+) + ATP = nicotinate-adenine dinucleotide 3'-phosphate + ADP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of deamido-NAD(+) + ATP = nicotinate-adenine dinucleotide 3'-phosphate + ADP
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:70195, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:70196 (rh:substrates → 70195_L, rh:products → 70195_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of deamido-NAD(+) + ATP = nicotinate-adenine dinucleotide 3'-phosphate + ADP +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:70195
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: deamido-NAD(+) + ATP = nicotinate-adenine dinucleotide 3''-phosphate + ADP + H(+)'
+  - node_id: sub1
+    label: deamido-NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58437
+    description: Formula C21H24N6O15P2.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: nicotinate-adenine dinucleotide 3'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:189005
+    description: Formula C21H23N6O18P3.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: NAD(+) 3'-kinase
+    grounding: EC:2.7.1.236
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: deamido-NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70196
+      snippet: deamido-NAD(+) + ATP => nicotinate-adenine dinucleotide 3'-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70196 declares side 70195_L as its substrates
+        (rh:substrates); the master reaction RHEA:70195 is undirected. This participant is CHEBI:58437
+        with coefficient 1. Rhea cites PMID:27621317 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70196
+      snippet: deamido-NAD(+) + ATP => nicotinate-adenine dinucleotide 3'-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70196 declares side 70195_L as its substrates
+        (rh:substrates); the master reaction RHEA:70195 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:27621317 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: nicotinate-adenine dinucleotide 3'-phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:70196
+      snippet: deamido-NAD(+) + ATP => nicotinate-adenine dinucleotide 3'-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70196 declares side 70195_R as its products
+        (rh:products); the master reaction RHEA:70195 is undirected. This participant is CHEBI:189005
+        with coefficient 1. Rhea cites PMID:27621317 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70196
+      snippet: deamido-NAD(+) + ATP => nicotinate-adenine dinucleotide 3'-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70196 declares side 70195_R as its products
+        (rh:products); the master reaction RHEA:70195 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:27621317 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70196
+      snippet: deamido-NAD(+) + ATP => nicotinate-adenine dinucleotide 3'-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70196 declares side 70195_R as its products
+        (rh:products); the master reaction RHEA:70195 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:27621317 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.1.236; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:70195
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.236"/>
+      notes: The rh:ec triple on RHEA:70195 in rhea.rdf. EC 2.7.1.236 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

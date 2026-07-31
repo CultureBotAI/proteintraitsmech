@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.17.1.-
 mapped_xrefs:
@@ -34,4 +34,132 @@ definitions:
       Catalyses: formate + NADP(+) = CO2 + NADPH
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of formate dehydrogenase (NADP(+))
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.17.1.10. EC 1.17.1.10 maps to
+    exactly one curated Rhea reaction (RHEA:12000), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "formate
+    + NADP(+) = CO2 + NADPH". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: formate dehydrogenase (NADP(+))
+    grounding: EC:1.17.1.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: formate dehydrogenase (NADP+) activity
+    grounding: GO:0047899
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P77908
+    node_type: PROTEIN
+    label: FDHA_NEOTH
+    grounding: UniProtKB:P77908
+  - node_id: prot_P77907
+    node_type: PROTEIN
+    label: FDHB_NEOTH
+    grounding: UniProtKB:P77907
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: formate is a substrate consumed by RHEA:12000 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12001
+      snippet: formate + NADP(+) => CO2 + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:12001 declares side 12000_L as its substrates
+        (rh:substrates); the master reaction RHEA:12000 is undirected. This participant is CHEBI:15740
+        with coefficient 1. Rhea cites PMID:4154039, PMID:6822536 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by RHEA:12000 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12001
+      snippet: formate + NADP(+) => CO2 + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:12001 declares side 12000_L as its substrates
+        (rh:substrates); the master reaction RHEA:12000 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:4154039, PMID:6822536 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: CO2 is a product released by RHEA:12000 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12001
+      snippet: formate + NADP(+) => CO2 + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:12001 declares side 12000_R as its products
+        (rh:products); the master reaction RHEA:12000 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:4154039, PMID:6822536 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by RHEA:12000 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12001
+      snippet: formate + NADP(+) => CO2 + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:12001 declares side 12000_R as its products
+        (rh:products); the master reaction RHEA:12000 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:4154039, PMID:6822536 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.17.1.10
+      snippet: EC:1.17.1.10 > GO:formate dehydrogenase (NADP+) activity ; GO:0047899
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047899 is itself a record
+        in this KB.
+  - subject: prot_P77908
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FDHA_NEOTH is an exemplar enzyme with EC 1.17.1.10 activity.
+    evidence:
+    - reference: EC:1.17.1.10
+      snippet: DR   P77908, FDHA_NEOTH ;  P77907, FDHB_NEOTH ;
+      notes: ExPASy ENZYME entry EC 1.17.1.10 cross-references UniProtKB:P77908 (FDHA_NEOTH) as a protein
+        with this activity.
+  - subject: prot_P77907
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FDHB_NEOTH is an exemplar enzyme with EC 1.17.1.10 activity.
+    evidence:
+    - reference: EC:1.17.1.10
+      snippet: DR   P77908, FDHA_NEOTH ;  P77907, FDHB_NEOTH ;
+      notes: ExPASy ENZYME entry EC 1.17.1.10 cross-references UniProtKB:P77907 (FDHB_NEOTH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

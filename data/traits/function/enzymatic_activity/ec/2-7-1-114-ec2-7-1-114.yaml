@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -28,4 +28,104 @@ definitions:
       Catalyses: thymidine + AMP = dTMP + adenosine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of AMP--thymidine kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.114. EC 2.7.1.114 maps to
+    exactly one curated Rhea reaction (RHEA:14913), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "thymidine
+    + AMP = dTMP + adenosine". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: AMP--thymidine kinase
+    grounding: EC:2.7.1.114
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: thymidine
+    node_type: CHEMICAL
+    grounding: CHEBI:17748
+    description: Formula C10H14N2O5.
+  - node_id: sub2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd1
+    label: dTMP
+    node_type: CHEMICAL
+    grounding: CHEBI:63528
+    description: Formula C10H13N2O8P.
+  - node_id: prd2
+    label: adenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:16335
+    description: Formula C10H13N5O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: AMP-thymidine kinase activity
+    grounding: GO:0047667
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: thymidine is a substrate consumed by RHEA:14913 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14914
+      snippet: thymidine + AMP => dTMP + adenosine
+      notes: Rhea's left-to-right directional reaction RHEA:14914 declares side 14913_L as its substrates
+        (rh:substrates); the master reaction RHEA:14913 is undirected. This participant is CHEBI:17748
+        with coefficient 1. Rhea cites PMID:6267178, PMID:6293576 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: AMP is a substrate consumed by RHEA:14913 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14914
+      snippet: thymidine + AMP => dTMP + adenosine
+      notes: Rhea's left-to-right directional reaction RHEA:14914 declares side 14913_L as its substrates
+        (rh:substrates); the master reaction RHEA:14913 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:6267178, PMID:6293576 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dTMP is a product released by RHEA:14913 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14914
+      snippet: thymidine + AMP => dTMP + adenosine
+      notes: Rhea's left-to-right directional reaction RHEA:14914 declares side 14913_R as its products
+        (rh:products); the master reaction RHEA:14913 is undirected. This participant is CHEBI:63528 with
+        coefficient 1. Rhea cites PMID:6267178, PMID:6293576 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: adenosine is a product released by RHEA:14913 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14914
+      snippet: thymidine + AMP => dTMP + adenosine
+      notes: Rhea's left-to-right directional reaction RHEA:14914 declares side 14913_R as its products
+        (rh:products); the master reaction RHEA:14913 is undirected. This participant is CHEBI:16335 with
+        coefficient 1. Rhea cites PMID:6267178, PMID:6293576 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.1.114
+      snippet: EC:2.7.1.114 > GO:AMP-thymidine kinase activity ; GO:0047667
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047667 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

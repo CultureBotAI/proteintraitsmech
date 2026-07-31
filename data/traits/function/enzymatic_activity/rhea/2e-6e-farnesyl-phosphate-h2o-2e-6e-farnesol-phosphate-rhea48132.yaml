@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:88226
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,91 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl phosphate + H2O = (2E,6E)-farnesol + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl phosphate + H2O = (2E,6E)-farnesol + phosphate
+  description: Substrate-to-product chemistry of RHEA:48132, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48133 (rh:substrates → 48132_L, rh:products → 48132_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl phosphate + H2O = (2E,6E)-farnesol + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48132
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl phosphate + H2O = (2E,6E)-farnesol + phosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:88226
+    description: Formula C15H25O4P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (2E,6E)-farnesol
+    node_type: CHEMICAL
+    grounding: CHEBI:16619
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:48133
+      snippet: (2E,6E)-farnesyl phosphate + H2O => (2E,6E)-farnesol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:48133 declares side 48132_L as its substrates
+        (rh:substrates); the master reaction RHEA:48132 is undirected. This participant is CHEBI:88226
+        with coefficient 1. Rhea cites PMID:19168029, PMID:20110354 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48133
+      snippet: (2E,6E)-farnesyl phosphate + H2O => (2E,6E)-farnesol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:48133 declares side 48132_L as its substrates
+        (rh:substrates); the master reaction RHEA:48132 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19168029, PMID:20110354 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E,6E)-farnesol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48133
+      snippet: (2E,6E)-farnesyl phosphate + H2O => (2E,6E)-farnesol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:48133 declares side 48132_R as its products
+        (rh:products); the master reaction RHEA:48132 is undirected. This participant is CHEBI:16619 with
+        coefficient 1. Rhea cites PMID:19168029, PMID:20110354 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48133
+      snippet: (2E,6E)-farnesyl phosphate + H2O => (2E,6E)-farnesol + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:48133 declares side 48132_R as its products
+        (rh:products); the master reaction RHEA:48132 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:19168029, PMID:20110354 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

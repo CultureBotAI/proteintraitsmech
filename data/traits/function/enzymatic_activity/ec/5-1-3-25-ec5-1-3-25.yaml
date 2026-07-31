@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.3.-
 synonyms:
@@ -31,4 +31,73 @@ definitions:
       Catalyses: dTDP-6-deoxy-beta-L-talose = dTDP-beta-L-rhamnose
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dTDP-L-rhamnose 4-epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.3.25. EC 5.1.3.25 maps to exactly
+    one curated Rhea reaction (RHEA:34451), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dTDP-6-deoxy-beta-L-talose
+    = dTDP-beta-L-rhamnose". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: dTDP-L-rhamnose 4-epimerase
+    grounding: EC:5.1.3.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dTDP-6-deoxy-beta-L-talose
+    node_type: CHEMICAL
+    grounding: CHEBI:68576
+    description: Formula C16H24N2O15P2.
+  - node_id: prd1
+    label: dTDP-beta-L-rhamnose
+    node_type: CHEMICAL
+    grounding: CHEBI:57510
+    description: Formula C16H24N2O15P2.
+  - node_id: prot_Q2SYH7
+    node_type: PROTEIN
+    label: WBIB_BURTA
+    grounding: UniProtKB:Q2SYH7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTDP-6-deoxy-beta-L-talose is a substrate consumed by RHEA:34451 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34452
+      snippet: dTDP-6-deoxy-beta-L-talose => dTDP-beta-L-rhamnose
+      notes: Rhea's left-to-right directional reaction RHEA:34452 declares side 34451_L as its substrates
+        (rh:substrates); the master reaction RHEA:34451 is undirected. This participant is CHEBI:68576
+        with coefficient 1. Rhea cites PMID:21640586 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dTDP-beta-L-rhamnose is a product released by RHEA:34451 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34452
+      snippet: dTDP-6-deoxy-beta-L-talose => dTDP-beta-L-rhamnose
+      notes: Rhea's left-to-right directional reaction RHEA:34452 declares side 34451_R as its products
+        (rh:products); the master reaction RHEA:34451 is undirected. This participant is CHEBI:57510 with
+        coefficient 1. Rhea cites PMID:21640586 for this reaction.
+  - subject: prot_Q2SYH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: WBIB_BURTA is an exemplar enzyme with EC 5.1.3.25 activity.
+    evidence:
+    - reference: EC:5.1.3.25
+      snippet: DR   Q2SYH7, WBIB_BURTA ;
+      notes: ExPASy ENZYME entry EC 5.1.3.25 cross-references UniProtKB:Q2SYH7 (WBIB_BURTA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

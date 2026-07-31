@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:66957
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,91 @@ definitions:
       Catalyses the reaction: 3,5,7-trioxododecanoyl-CoA = olivetol + CO2 + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3,5,7-trioxododecanoyl-CoA = olivetol + CO2 + CoA
+  description: Substrate-to-product chemistry of RHEA:20261, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20262 (rh:substrates → 20261_L, rh:products → 20261_R), and Rhea
+    curates the reverse direction too. 1 substrate, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3,5,7-trioxododecanoyl-CoA = olivetol + CO2 + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20261
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3,5,7-trioxododecanoyl-CoA = olivetol + CO2 + CoA'
+  - node_id: sub1
+    label: 3,5,7-trioxododecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:66957
+    description: Formula C33H48N7O20P3S.
+  - node_id: prd1
+    label: olivetol
+    node_type: CHEMICAL
+    grounding: CHEBI:66960
+    description: Formula C11H16O2.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3,5,7-trioxododecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20262
+      snippet: 3,5,7-trioxododecanoyl-CoA => olivetol + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20262 declares side 20261_L as its substrates
+        (rh:substrates); the master reaction RHEA:20261 is undirected. This participant is CHEBI:66957
+        with coefficient 1. Rhea cites PMID:22802619, PMID:31605668, PMID:19454282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: olivetol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20262
+      snippet: 3,5,7-trioxododecanoyl-CoA => olivetol + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20262 declares side 20261_R as its products
+        (rh:products); the master reaction RHEA:20261 is undirected. This participant is CHEBI:66960 with
+        coefficient 1. Rhea cites PMID:22802619, PMID:31605668, PMID:19454282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20262
+      snippet: 3,5,7-trioxododecanoyl-CoA => olivetol + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20262 declares side 20261_R as its products
+        (rh:products); the master reaction RHEA:20261 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:22802619, PMID:31605668, PMID:19454282 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20262
+      snippet: 3,5,7-trioxododecanoyl-CoA => olivetol + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20262 declares side 20261_R as its products
+        (rh:products); the master reaction RHEA:20261 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:22802619, PMID:31605668, PMID:19454282 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

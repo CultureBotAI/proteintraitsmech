@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.3.2.9
     mapping_source: rhea2ec
@@ -36,4 +36,110 @@ definitions:
       Catalyses the reaction: cis-stilbene oxide + H2O = (1R,2R)-hydrobenzoin
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cis-stilbene oxide + H2O = (1R,2R)-hydrobenzoin
+  description: Substrate-to-product chemistry of RHEA:23900, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:23901 (rh:substrates → 23900_L, rh:products → 23900_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of cis-stilbene oxide + H2O = (1R,2R)-hydrobenzoin
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23900
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: cis-stilbene oxide + H2O = (1R,2R)-hydrobenzoin'
+  - node_id: sub1
+    label: cis-stilbene oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:50004
+    description: Formula C14H12O.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (1R,2R)-hydrobenzoin
+    node_type: CHEMICAL
+    grounding: CHEBI:50014
+    description: Formula C14H14O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cis-stilbene-oxide hydrolase activity
+    grounding: GO:0033961
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: microsomal epoxide hydrolase
+    grounding: EC:3.3.2.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cis-stilbene oxide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23901
+      snippet: cis-stilbene oxide + H2O => (1R,2R)-hydrobenzoin
+      notes: Rhea's left-to-right directional reaction RHEA:23901 declares side 23900_L as its substrates
+        (rh:substrates); the master reaction RHEA:23900 is undirected. This participant is CHEBI:50004
+        with coefficient 1. Rhea cites PMID:11154734, PMID:15822179, PMID:15748653, PMID:12020347 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23901
+      snippet: cis-stilbene oxide + H2O => (1R,2R)-hydrobenzoin
+      notes: Rhea's left-to-right directional reaction RHEA:23901 declares side 23900_L as its substrates
+        (rh:substrates); the master reaction RHEA:23900 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11154734, PMID:15822179, PMID:15748653, PMID:12020347 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (1R,2R)-hydrobenzoin is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23901
+      snippet: cis-stilbene oxide + H2O => (1R,2R)-hydrobenzoin
+      notes: Rhea's left-to-right directional reaction RHEA:23901 declares side 23900_R as its products
+        (rh:products); the master reaction RHEA:23900 is undirected. This participant is CHEBI:50014 with
+        coefficient 1. Rhea cites PMID:11154734, PMID:15822179, PMID:15748653, PMID:12020347 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:23900
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0033961"/>
+      notes: The rdfs:seeAlso triple on RHEA:23900 in rhea.rdf. GO term GO:0033961 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.3.2.9; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:23900
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.3.2.9"/>
+      notes: The rh:ec triple on RHEA:23900 in rhea.rdf. EC 3.3.2.9 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

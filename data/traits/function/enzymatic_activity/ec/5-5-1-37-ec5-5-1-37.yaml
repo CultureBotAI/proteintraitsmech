@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 mapped_xrefs:
@@ -28,4 +28,71 @@ definitions:
       Catalyses: dehydrosecodine = catharanthine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of catharanthine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.37. EC 5.5.1.37 maps to exactly
+    one curated Rhea reaction (RHEA:81311), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "dehydrosecodine
+    = catharanthine". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: catharanthine synthase
+    grounding: EC:5.5.1.37
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dehydrosecodine
+    node_type: CHEMICAL
+    grounding: CHEBI:146237
+    description: Formula C21H25N2O2.
+  - node_id: prd1
+    label: catharanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:142675
+    description: Formula C21H25N2O2.
+  - node_id: prot_A0A2P1GIW2
+    node_type: PROTEIN
+    label: CS_CATRO
+    grounding: UniProtKB:A0A2P1GIW2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dehydrosecodine is a substrate consumed by RHEA:81311 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81312
+      snippet: dehydrosecodine => catharanthine
+      notes: Rhea's left-to-right directional reaction RHEA:81312 declares side 81311_L as its substrates
+        (rh:substrates); the master reaction RHEA:81311 is undirected. This participant is CHEBI:146237
+        with coefficient 1. Rhea cites PMID:29724909, PMID:32066966, PMID:38319969 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: catharanthine is a product released by RHEA:81311 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81312
+      snippet: dehydrosecodine => catharanthine
+      notes: Rhea's left-to-right directional reaction RHEA:81312 declares side 81311_R as its products
+        (rh:products); the master reaction RHEA:81311 is undirected. This participant is CHEBI:142675
+        with coefficient 1. Rhea cites PMID:29724909, PMID:32066966, PMID:38319969 for this reaction.
+  - subject: prot_A0A2P1GIW2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CS_CATRO is an exemplar enzyme with EC 5.5.1.37 activity.
+    evidence:
+    - reference: EC:5.5.1.37
+      snippet: DR   A0A2P1GIW2, CS_CATRO   ;
+      notes: ExPASy ENZYME entry EC 5.5.1.37 cross-references UniProtKB:A0A2P1GIW2 (CS_CATRO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

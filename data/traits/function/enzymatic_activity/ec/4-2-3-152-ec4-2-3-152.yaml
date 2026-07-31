@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -39,4 +39,117 @@ definitions:
       Catalyses: D-sedoheptulose 7-phosphate = 2-epi-5-epi-valiolone + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-epi-5-epi-valiolone synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.152. EC 4.2.3.152 maps to
+    exactly one curated Rhea reaction (RHEA:44184), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-sedoheptulose
+    7-phosphate = 2-epi-5-epi-valiolone + phosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-epi-5-epi-valiolone synthase
+    grounding: EC:4.2.3.152
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-sedoheptulose 7-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57483
+    description: Formula C7H13O10P.
+  - node_id: prd1
+    label: 2-epi-5-epi-valiolone
+    node_type: CHEMICAL
+    grounding: CHEBI:84187
+    description: Formula C7H12O6.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prot_Q9ZAE9
+    node_type: PROTEIN
+    label: ACBC_ACTS5
+    grounding: UniProtKB:Q9ZAE9
+  - node_id: prot_A1YPR2
+    node_type: PROTEIN
+    label: CETA_ACTSX
+    grounding: UniProtKB:A1YPR2
+  - node_id: prot_E3FKM2
+    node_type: PROTEIN
+    label: EEVS_STIAD
+    grounding: UniProtKB:E3FKM2
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-sedoheptulose 7-phosphate is a substrate consumed by RHEA:44184 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44185
+      snippet: D-sedoheptulose 7-phosphate => 2-epi-5-epi-valiolone + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:44185 declares side 44184_L as its substrates
+        (rh:substrates); the master reaction RHEA:44184 is undirected. This participant is CHEBI:57483
+        with coefficient 1. Rhea cites PMID:17335096, PMID:11463258, PMID:23857509 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-epi-5-epi-valiolone is a product released by RHEA:44184 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:44185
+      snippet: D-sedoheptulose 7-phosphate => 2-epi-5-epi-valiolone + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:44185 declares side 44184_R as its products
+        (rh:products); the master reaction RHEA:44184 is undirected. This participant is CHEBI:84187 with
+        coefficient 1. Rhea cites PMID:17335096, PMID:11463258, PMID:23857509 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:44184 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:44185
+      snippet: D-sedoheptulose 7-phosphate => 2-epi-5-epi-valiolone + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:44185 declares side 44184_R as its products
+        (rh:products); the master reaction RHEA:44184 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:17335096, PMID:11463258, PMID:23857509 for this reaction.
+  - subject: prot_Q9ZAE9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACBC_ACTS5 is an exemplar enzyme with EC 4.2.3.152 activity.
+    evidence:
+    - reference: EC:4.2.3.152
+      snippet: DR   Q9ZAE9, ACBC_ACTS5 ;  A1YPR2, CETA_ACTSX ;  E3FKM2, EEVS_STIAD ;
+      notes: ExPASy ENZYME entry EC 4.2.3.152 cross-references UniProtKB:Q9ZAE9 (ACBC_ACTS5) as a protein
+        with this activity.
+  - subject: prot_A1YPR2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CETA_ACTSX is an exemplar enzyme with EC 4.2.3.152 activity.
+    evidence:
+    - reference: EC:4.2.3.152
+      snippet: DR   Q9ZAE9, ACBC_ACTS5 ;  A1YPR2, CETA_ACTSX ;  E3FKM2, EEVS_STIAD ;
+      notes: ExPASy ENZYME entry EC 4.2.3.152 cross-references UniProtKB:A1YPR2 (CETA_ACTSX) as a protein
+        with this activity.
+  - subject: prot_E3FKM2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EEVS_STIAD is an exemplar enzyme with EC 4.2.3.152 activity.
+    evidence:
+    - reference: EC:4.2.3.152
+      snippet: DR   Q9ZAE9, ACBC_ACTS5 ;  A1YPR2, CETA_ACTSX ;  E3FKM2, EEVS_STIAD ;
+      notes: ExPASy ENZYME entry EC 4.2.3.152 cross-references UniProtKB:E3FKM2 (EEVS_STIAD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

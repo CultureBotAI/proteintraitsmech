@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:15354
     role: SUBSTRATE_OR_PRODUCT
@@ -39,4 +39,110 @@ definitions:
       Catalyses the reaction: choline + O2 = betaine aldehyde + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of choline + O2 = betaine aldehyde + H2O2
+  description: Substrate-to-product chemistry of RHEA:13505, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:13506 (rh:substrates → 13505_L, rh:products → 13505_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of choline + O2 = betaine aldehyde + H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:13505
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: choline + O2 = betaine aldehyde + H2O2'
+  - node_id: sub1
+    label: choline
+    node_type: CHEMICAL
+    grounding: CHEBI:15354
+    description: Formula C5H14NO.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: betaine aldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15710
+    description: Formula C5H12NO.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: choline:oxygen 1-oxidoreductase activity
+    grounding: GO:0033713
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: choline is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13506
+      snippet: choline + O2 => betaine aldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:13506 declares side 13505_L as its substrates
+        (rh:substrates); the master reaction RHEA:13505 is undirected. This participant is CHEBI:15354
+        with coefficient 1. Rhea cites PMID:12466265, PMID:12637017, PMID:14678796, PMID:15369826 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13506
+      snippet: choline + O2 => betaine aldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:13506 declares side 13505_L as its substrates
+        (rh:substrates); the master reaction RHEA:13505 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:12466265, PMID:12637017, PMID:14678796, PMID:15369826 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: betaine aldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13506
+      snippet: choline + O2 => betaine aldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:13506 declares side 13505_R as its products
+        (rh:products); the master reaction RHEA:13505 is undirected. This participant is CHEBI:15710 with
+        coefficient 1. Rhea cites PMID:12466265, PMID:12637017, PMID:14678796, PMID:15369826 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13506
+      snippet: choline + O2 => betaine aldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:13506 declares side 13505_R as its products
+        (rh:products); the master reaction RHEA:13505 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:12466265, PMID:12637017, PMID:14678796, PMID:15369826 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:13505
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0033713"/>
+      notes: The rdfs:seeAlso triple on RHEA:13505 in rhea.rdf. GO term GO:0033713 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

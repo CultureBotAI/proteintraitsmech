@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:145675
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,63 @@ definitions:
       Catalyses the reaction: 1-hydroxy-3-{[2-(1,1-dimethylallyl)-indol-3-yl]methyl}-4H,6H,7H,8H-pyrrolo[1,2-a]pyrazine = (+)-premalbrancheamide
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1-hydroxy-3-{[2-(1,1-dimethylallyl)-indol-3-yl]methyl}-4H,6H,7H,8H-pyrrolo[1,2-a]pyrazi…
+  description: Substrate-to-product chemistry of RHEA:62304, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:62305 (rh:substrates → 62304_L, rh:products → 62304_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 1-hydroxy-3-{[2-(1,1-dimethylallyl)-indol-3-yl]methyl}-4H,6H,7H,8H-pyrrolo[1…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:62304
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 1-hydroxy-3-{[2-(1,1-dimethylallyl)-indol-3-yl]methyl}-4H,6H,7H,8H-pyrrolo[1,2-a]pyrazine
+      = (+)-premalbrancheamide'
+  - node_id: sub1
+    label: 1-hydroxy-3-{[2-(1,1-dimethylallyl)-indol-3-yl]methyl}-4H,6H,7H,8H-pyrrolo[1,2-a]pyrazine
+    node_type: CHEMICAL
+    grounding: CHEBI:145675
+    description: Formula C21H26N3O.
+  - node_id: prd1
+    label: (+)-premalbrancheamide
+    node_type: CHEMICAL
+    grounding: CHEBI:145658
+    description: Formula C21H26N3O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1-hydroxy-3-{[2-(1,1-dimethylallyl)-indol-3-yl]methyl}-4H,6H,7H,8H-pyrrolo[1,2-a]pyrazine
+      is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:62305
+      snippet: 1-hydroxy-3-{[2-(1,1-dimethylallyl)-indol-3-yl]methyl}-4H,6H,7H,8H-pyrrolo[1,2-a]pyrazine
+        => (+)-premalbrancheamide
+      notes: Rhea's left-to-right directional reaction RHEA:62305 declares side 62304_L as its substrates
+        (rh:substrates); the master reaction RHEA:62304 is undirected. This participant is CHEBI:145675
+        with coefficient 1. Rhea cites PMID:31548667 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-premalbrancheamide is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:62305
+      snippet: 1-hydroxy-3-{[2-(1,1-dimethylallyl)-indol-3-yl]methyl}-4H,6H,7H,8H-pyrrolo[1,2-a]pyrazine
+        => (+)-premalbrancheamide
+      notes: Rhea's left-to-right directional reaction RHEA:62305 declares side 62304_R as its products
+        (rh:products); the master reaction RHEA:62304 is undirected. This participant is CHEBI:145658
+        with coefficient 1. Rhea cites PMID:31548667 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

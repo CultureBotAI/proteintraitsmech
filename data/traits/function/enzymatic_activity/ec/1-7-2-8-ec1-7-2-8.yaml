@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.7.2.-
 mapped_xrefs:
@@ -30,4 +30,172 @@ definitions:
       Catalyses: hydrazine + 4 Fe(III)-[cytochrome c] = N2 + 4 Fe(II)-[cytochrome c] + 4 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydrazine dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.7.2.8. EC 1.7.2.8 maps to exactly
+    one curated Rhea reaction (RHEA:23232), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "hydrazine + 4
+    Fe(III)-[cytochrome c] = N2 + 4 Fe(II)-[cytochrome c] + 4 H(+)". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hydrazine dehydrogenase
+    grounding: EC:1.7.2.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: hydrazine
+    node_type: CHEMICAL
+    grounding: CHEBI:15571
+    description: Formula H4N2.
+  - node_id: sub2
+    label: Fe(III)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14399
+    description: Rhea compound GENERIC:14399.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: Fe(3+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:14399 (Fe(III)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: prd1
+    label: N2
+    node_type: CHEMICAL
+    grounding: CHEBI:17997
+    description: Formula N2.
+  - node_id: prd2
+    label: Fe(II)-[cytochrome c]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10350
+    description: Rhea compound GENERIC:10350.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: Fe(2+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:10350 (Fe(II)-[cytochrome
+      c]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: hydrazine dehydrogenase activity
+    grounding: GO:0140287
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q1PW30
+    node_type: PROTEIN
+    label: HDH_KUEST
+    grounding: UniProtKB:Q1PW30
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: hydrazine is a substrate consumed by RHEA:23232 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23233
+      snippet: hydrazine + 4 Fe(III)-[cytochrome c] => N2 + 4 Fe(II)-[cytochrome c] + 4 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23233 declares side 23232_L as its substrates
+        (rh:substrates); the master reaction RHEA:23232 is undirected. This participant is CHEBI:15571
+        with coefficient 1. Rhea cites PMID:10820012, PMID:21964329, PMID:23210799, PMID:11404106 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: Fe(III)-[cytochrome c] is a substrate consumed by RHEA:23232 (stoichiometric coefficient
+      4).
+    evidence:
+    - reference: RHEA:23233
+      snippet: hydrazine + 4 Fe(III)-[cytochrome c] => N2 + 4 Fe(II)-[cytochrome c] + 4 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23233 declares side 23232_L as its substrates
+        (rh:substrates); the master reaction RHEA:23232 is undirected. This participant is GENERIC:14399
+        with coefficient 4. Rhea cites PMID:10820012, PMID:21964329, PMID:23210799, PMID:11404106 for
+        this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: Fe(3+) is the reactive part of Fe(III)-[cytochrome c].
+    evidence:
+    - reference: RHEA:23232
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:14399 (Fe(III)-[cytochrome c]) declares rh:reactivePart = Fe(3+) (CHEBI:29034).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N2 is a product released by RHEA:23232 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23233
+      snippet: hydrazine + 4 Fe(III)-[cytochrome c] => N2 + 4 Fe(II)-[cytochrome c] + 4 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23233 declares side 23232_R as its products
+        (rh:products); the master reaction RHEA:23232 is undirected. This participant is CHEBI:17997 with
+        coefficient 1. Rhea cites PMID:10820012, PMID:21964329, PMID:23210799, PMID:11404106 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Fe(II)-[cytochrome c] is a product released by RHEA:23232 (stoichiometric coefficient
+      4).
+    evidence:
+    - reference: RHEA:23233
+      snippet: hydrazine + 4 Fe(III)-[cytochrome c] => N2 + 4 Fe(II)-[cytochrome c] + 4 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23233 declares side 23232_R as its products
+        (rh:products); the master reaction RHEA:23232 is undirected. This participant is GENERIC:10350
+        with coefficient 4. Rhea cites PMID:10820012, PMID:21964329, PMID:23210799, PMID:11404106 for
+        this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: Fe(2+) is the reactive part of Fe(II)-[cytochrome c].
+    evidence:
+    - reference: RHEA:23232
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:10350 (Fe(II)-[cytochrome c]) declares rh:reactivePart = Fe(2+) (CHEBI:29033).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:23232 (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:23233
+      snippet: hydrazine + 4 Fe(III)-[cytochrome c] => N2 + 4 Fe(II)-[cytochrome c] + 4 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23233 declares side 23232_R as its products
+        (rh:products); the master reaction RHEA:23232 is undirected. This participant is CHEBI:15378 with
+        coefficient 4. Rhea cites PMID:10820012, PMID:21964329, PMID:23210799, PMID:11404106 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.7.2.8
+      snippet: EC:1.7.2.8 > GO:hydrazine dehydrogenase activity ; GO:0140287
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0140287 is itself a record
+        in this KB.
+  - subject: prot_Q1PW30
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HDH_KUEST is an exemplar enzyme with EC 1.7.2.8 activity.
+    evidence:
+    - reference: EC:1.7.2.8
+      snippet: DR   Q1PW30, HDH_KUEST  ;
+      notes: ExPASy ENZYME entry EC 1.7.2.8 cross-references UniProtKB:Q1PW30 (HDH_KUEST) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

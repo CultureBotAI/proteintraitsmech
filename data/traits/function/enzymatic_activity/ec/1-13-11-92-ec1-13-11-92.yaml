@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 mapped_xrefs:
@@ -52,4 +52,286 @@ definitions:
       Catalyses: a 1,2-saturated fatty acid + O2 = a (2R)-2-hydroperoxy fatty acid
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fatty acid alpha-dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.92. Rhea assigns 8 curated
+    reactions to EC 1.13.11.92 (the first 3 are shown). No one substrate set is the class''s chemistry,
+    so each reaction is its own node — grounded to the Rhea record in this KB — and carries its own inputs
+    and outputs. ExPASy ENZYME states the catalysed reaction as: "a 1,2-saturated fatty acid + O2 = a
+    (2R)-2-hydroperoxy fatty acid". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fatty acid alpha-dioxygenase
+    grounding: EC:1.13.11.92
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (9Z,12Z,15Z)-octadecatrienoate + O2 = (R)-2-hydroperoxy-(9Z,12Z,15Z)-octadec…
+    grounding: RHEA:16329
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (9Z,12Z,15Z)-octadecatrienoate + O2 = (R)-2-hydroperoxy-(9Z,12Z,15Z)-octadecatrienoate'
+  - node_id: rxn1_sub1
+    label: (9Z,12Z,15Z)-octadecatrienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:32387
+    description: Formula C18H29O2.
+  - node_id: rxn1_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn1_prd1
+    label: (R)-2-hydroperoxy-(9Z,12Z,15Z)-octadecatrienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:76161
+    description: Formula C18H29O4.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a 1,2-saturated fatty acid + O2 = a (2R)-2-hydroperoxy fatty acid
+    grounding: RHEA:63508
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a 1,2-saturated fatty acid + O2 = a (2R)-2-hydroperoxy fatty acid'
+  - node_id: rxn2_sub1
+    label: a 1,2-saturated fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:83955
+    description: Formula C2H2O2R.
+  - node_id: rxn2_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn2_prd1
+    label: a (2R)-2-hydroperoxy fatty acid
+    node_type: CHEMICAL
+    grounding: CHEBI:147340
+    description: Formula C2H2O4R.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of hexadecanoate + O2 = (2R)-2-hydroperoxyhexadecanoate
+    grounding: RHEA:63836
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: hexadecanoate + O2 = (2R)-2-hydroperoxyhexadecanoate'
+  - node_id: rxn3_sub1
+    label: hexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:7896
+    description: Formula C16H31O2.
+  - node_id: rxn3_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn3_prd1
+    label: (2R)-2-hydroperoxyhexadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:149616
+    description: Formula C16H31O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: fatty acid alpha-dioxygenase activity
+    grounding: GO:0102672
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9SGH6
+    node_type: PROTEIN
+    label: DOX1_ARATH
+    grounding: UniProtKB:Q9SGH6
+  - node_id: prot_Q2QRV3
+    node_type: PROTEIN
+    label: PIOX_ORYSJ
+    grounding: UniProtKB:Q2QRV3
+  - node_id: prot_Q5GQ66
+    node_type: PROTEIN
+    label: PIOX_PEA
+    grounding: UniProtKB:Q5GQ66
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:16329 is one of the 8 curated reactions Rhea assigns to EC 1.13.11.92; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:16329
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.92"/>
+      notes: The rh:ec triple on RHEA:16329 in rhea.rdf assigns that reaction to EC 1.13.11.92.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (9Z,12Z,15Z)-octadecatrienoate is a substrate consumed by RHEA:16329 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16330
+      snippet: (9Z,12Z,15Z)-octadecatrienoate + O2 => (R)-2-hydroperoxy-(9Z,12Z,15Z)-octadecatrienoate
+      notes: Rhea's left-to-right directional reaction RHEA:16330 declares side 16329_L as its substrates
+        (rh:substrates); the master reaction RHEA:16329 is undirected. This participant is CHEBI:32387
+        with coefficient 1. Rhea cites PMID:10455113 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: O2 is a substrate consumed by RHEA:16329 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16330
+      snippet: (9Z,12Z,15Z)-octadecatrienoate + O2 => (R)-2-hydroperoxy-(9Z,12Z,15Z)-octadecatrienoate
+      notes: Rhea's left-to-right directional reaction RHEA:16330 declares side 16329_L as its substrates
+        (rh:substrates); the master reaction RHEA:16329 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:10455113 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (R)-2-hydroperoxy-(9Z,12Z,15Z)-octadecatrienoate is a product released by RHEA:16329
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16330
+      snippet: (9Z,12Z,15Z)-octadecatrienoate + O2 => (R)-2-hydroperoxy-(9Z,12Z,15Z)-octadecatrienoate
+      notes: Rhea's left-to-right directional reaction RHEA:16330 declares side 16329_R as its products
+        (rh:products); the master reaction RHEA:16329 is undirected. This participant is CHEBI:76161 with
+        coefficient 1. Rhea cites PMID:10455113 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:63508 is one of the 8 curated reactions Rhea assigns to EC 1.13.11.92; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:63508
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.92"/>
+      notes: The rh:ec triple on RHEA:63508 in rhea.rdf assigns that reaction to EC 1.13.11.92.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: a 1,2-saturated fatty acid is a substrate consumed by RHEA:63508 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63509
+      snippet: a 1,2-saturated fatty acid + O2 => a (2R)-2-hydroperoxy fatty acid
+      notes: Rhea's left-to-right directional reaction RHEA:63509 declares side 63508_L as its substrates
+        (rh:substrates); the master reaction RHEA:63508 is undirected. This participant is CHEBI:83955
+        with coefficient 1. Rhea cites PMID:15100225, PMID:10455113, PMID:18760499, PMID:10938370 for
+        this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: O2 is a substrate consumed by RHEA:63508 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63509
+      snippet: a 1,2-saturated fatty acid + O2 => a (2R)-2-hydroperoxy fatty acid
+      notes: Rhea's left-to-right directional reaction RHEA:63509 declares side 63508_L as its substrates
+        (rh:substrates); the master reaction RHEA:63508 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:15100225, PMID:10455113, PMID:18760499, PMID:10938370 for
+        this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: a (2R)-2-hydroperoxy fatty acid is a product released by RHEA:63508 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63509
+      snippet: a 1,2-saturated fatty acid + O2 => a (2R)-2-hydroperoxy fatty acid
+      notes: Rhea's left-to-right directional reaction RHEA:63509 declares side 63508_R as its products
+        (rh:products); the master reaction RHEA:63508 is undirected. This participant is CHEBI:147340
+        with coefficient 1. Rhea cites PMID:15100225, PMID:10455113, PMID:18760499, PMID:10938370 for
+        this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:63836 is one of the 8 curated reactions Rhea assigns to EC 1.13.11.92; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:63836
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.92"/>
+      notes: The rh:ec triple on RHEA:63836 in rhea.rdf assigns that reaction to EC 1.13.11.92.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: hexadecanoate is a substrate consumed by RHEA:63836 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63837
+      snippet: hexadecanoate + O2 => (2R)-2-hydroperoxyhexadecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:63837 declares side 63836_L as its substrates
+        (rh:substrates); the master reaction RHEA:63836 is undirected. This participant is CHEBI:7896
+        with coefficient 1. Rhea cites PMID:15100225, PMID:10455113, PMID:18760499, PMID:10938370 for
+        this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: O2 is a substrate consumed by RHEA:63836 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63837
+      snippet: hexadecanoate + O2 => (2R)-2-hydroperoxyhexadecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:63837 declares side 63836_L as its substrates
+        (rh:substrates); the master reaction RHEA:63836 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:15100225, PMID:10455113, PMID:18760499, PMID:10938370 for
+        this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: (2R)-2-hydroperoxyhexadecanoate is a product released by RHEA:63836 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63837
+      snippet: hexadecanoate + O2 => (2R)-2-hydroperoxyhexadecanoate
+      notes: Rhea's left-to-right directional reaction RHEA:63837 declares side 63836_R as its products
+        (rh:products); the master reaction RHEA:63836 is undirected. This participant is CHEBI:149616
+        with coefficient 1. Rhea cites PMID:15100225, PMID:10455113, PMID:18760499, PMID:10938370 for
+        this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.92
+      snippet: EC:1.13.11.92 > GO:fatty acid alpha-dioxygenase activity ; GO:0102672
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102672 is itself a record
+        in this KB.
+  - subject: prot_Q9SGH6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DOX1_ARATH is an exemplar enzyme with EC 1.13.11.92 activity.
+    evidence:
+    - reference: EC:1.13.11.92
+      snippet: DR   Q9SGH6, DOX1_ARATH ;  Q2QRV3, PIOX_ORYSJ ;  Q5GQ66, PIOX_PEA   ;
+      notes: ExPASy ENZYME entry EC 1.13.11.92 cross-references UniProtKB:Q9SGH6 (DOX1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q2QRV3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PIOX_ORYSJ is an exemplar enzyme with EC 1.13.11.92 activity.
+    evidence:
+    - reference: EC:1.13.11.92
+      snippet: DR   Q9SGH6, DOX1_ARATH ;  Q2QRV3, PIOX_ORYSJ ;  Q5GQ66, PIOX_PEA   ;
+      notes: ExPASy ENZYME entry EC 1.13.11.92 cross-references UniProtKB:Q2QRV3 (PIOX_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_Q5GQ66
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PIOX_PEA is an exemplar enzyme with EC 1.13.11.92 activity.
+    evidence:
+    - reference: EC:1.13.11.92
+      snippet: DR   Q9SGH6, DOX1_ARATH ;  Q2QRV3, PIOX_ORYSJ ;  Q5GQ66, PIOX_PEA   ;
+      notes: ExPASy ENZYME entry EC 1.13.11.92 cross-references UniProtKB:Q5GQ66 (PIOX_PEA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

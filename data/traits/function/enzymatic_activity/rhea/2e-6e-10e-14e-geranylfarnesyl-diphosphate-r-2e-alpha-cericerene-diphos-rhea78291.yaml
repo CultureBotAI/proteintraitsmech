@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.219
     mapping_source: rhea2ec
@@ -26,4 +26,112 @@ definitions:
       Catalyses the reaction: (2E,6E,10E,14E)-geranylfarnesyl diphosphate = (R,2E)-alpha-cericerene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E,10E,14E)-geranylfarnesyl diphosphate = (R,2E)-alpha-cericerene +
+    diphosphate
+  description: Substrate-to-product chemistry of RHEA:78291, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78292 (rh:substrates → 78291_L, rh:products → 78291_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E,10E,14E)-geranylfarnesyl diphosphate = (R,2E)-alpha-cericerene + diph…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78291
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E,10E,14E)-geranylfarnesyl diphosphate = (R,2E)-alpha-cericerene + diphosphate'
+  - node_id: sub1
+    label: (2E,6E,10E,14E)-geranylfarnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57907
+    description: Formula C25H41O7P2.
+  - node_id: prd1
+    label: (R,2E)-alpha-cericerene
+    node_type: CHEMICAL
+    grounding: CHEBI:228261
+    description: Formula C25H40.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (2E)-alpha-cericerene synthase
+    grounding: EC:4.2.3.219
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A0P0ZD79
+    node_type: PROTEIN
+    label: EVVS_EMEVA
+    grounding: UniProtKB:A0A0P0ZD79
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E,14E)-geranylfarnesyl diphosphate is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78292
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => (R,2E)-alpha-cericerene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78292 declares side 78291_L as its substrates
+        (rh:substrates); the master reaction RHEA:78291 is undirected. This participant is CHEBI:57907
+        with coefficient 1. Rhea cites PMID:26546087 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R,2E)-alpha-cericerene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:78292
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => (R,2E)-alpha-cericerene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78292 declares side 78291_R as its products
+        (rh:products); the master reaction RHEA:78291 is undirected. This participant is CHEBI:228261
+        with coefficient 1. Rhea cites PMID:26546087 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78292
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => (R,2E)-alpha-cericerene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78292 declares side 78291_R as its products
+        (rh:products); the master reaction RHEA:78291 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:26546087 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.219; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:78291
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.219"/>
+      notes: The rh:ec triple on RHEA:78291 in rhea.rdf. EC 4.2.3.219 is itself a record in this KB.
+  - subject: prot_A0A0P0ZD79
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EVVS_EMEVA is an exemplar enzyme carrying EC 4.2.3.219, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.219
+      snippet: DR   A0A0P0ZD79, EVVS_EMEVA ;
+      notes: ExPASy ENZYME entry EC 4.2.3.219 cross-references UniProtKB:A0A0P0ZD79 (EVVS_EMEVA) as a
+        protein with this activity.
+    - reference: RHEA:78291
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.219"/>
+      notes: Rhea assigns RHEA:78291 to EC 4.2.3.219, and EC 4.2.3.219 maps to exactly one Rhea master
+        reaction (RHEA:78291), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.3.-
 synonyms:
@@ -43,4 +43,147 @@ definitions:
       Catalyses: N-formimidoyl-L-glutamate + H2O = formamide + L-glutamate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of formimidoylglutamase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.3.8. EC 3.5.3.8 maps to exactly
+    one curated Rhea reaction (RHEA:22492), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-formimidoyl-L-glutamate
+    + H2O = formamide + L-glutamate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: formimidoylglutamase
+    grounding: EC:3.5.3.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-formimidoyl-L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:58928
+    description: Formula C6H9N2O4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: formamide
+    node_type: CHEMICAL
+    grounding: CHEBI:16397
+    description: Formula CH3NO.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: formimidoylglutamase activity
+    grounding: GO:0050415
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B7V9J1
+    node_type: PROTEIN
+    label: HUTGL_PSEA8
+    grounding: UniProtKB:B7V9J1
+  - node_id: prot_Q02PY1
+    node_type: PROTEIN
+    label: HUTGL_PSEAB
+    grounding: UniProtKB:Q02PY1
+  - node_id: prot_Q9HZ59
+    node_type: PROTEIN
+    label: HUTGL_PSEAE
+    grounding: UniProtKB:Q9HZ59
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-formimidoyl-L-glutamate is a substrate consumed by RHEA:22492 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22493
+      snippet: N-formimidoyl-L-glutamate + H2O => formamide + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:22493 declares side 22492_L as its substrates
+        (rh:substrates); the master reaction RHEA:22492 is undirected. This participant is CHEBI:58928
+        with coefficient 1. Rhea cites PMID:4990470, PMID:24261485, PMID:5845833 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:22492 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22493
+      snippet: N-formimidoyl-L-glutamate + H2O => formamide + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:22493 declares side 22492_L as its substrates
+        (rh:substrates); the master reaction RHEA:22492 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4990470, PMID:24261485, PMID:5845833 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: formamide is a product released by RHEA:22492 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22493
+      snippet: N-formimidoyl-L-glutamate + H2O => formamide + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:22493 declares side 22492_R as its products
+        (rh:products); the master reaction RHEA:22492 is undirected. This participant is CHEBI:16397 with
+        coefficient 1. Rhea cites PMID:4990470, PMID:24261485, PMID:5845833 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by RHEA:22492 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22493
+      snippet: N-formimidoyl-L-glutamate + H2O => formamide + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:22493 declares side 22492_R as its products
+        (rh:products); the master reaction RHEA:22492 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:4990470, PMID:24261485, PMID:5845833 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.3.8
+      snippet: EC:3.5.3.8 > GO:formimidoylglutamase activity ; GO:0050415
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050415 is itself a record
+        in this KB.
+  - subject: prot_B7V9J1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTGL_PSEA8 is an exemplar enzyme with EC 3.5.3.8 activity.
+    evidence:
+    - reference: EC:3.5.3.8
+      snippet: DR   B7V9J1, HUTGL_PSEA8;  Q02PY1, HUTGL_PSEAB;  Q9HZ59, HUTGL_PSEAE;
+      notes: ExPASy ENZYME entry EC 3.5.3.8 cross-references UniProtKB:B7V9J1 (HUTGL_PSEA8) as a protein
+        with this activity.
+  - subject: prot_Q02PY1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTGL_PSEAB is an exemplar enzyme with EC 3.5.3.8 activity.
+    evidence:
+    - reference: EC:3.5.3.8
+      snippet: DR   B7V9J1, HUTGL_PSEA8;  Q02PY1, HUTGL_PSEAB;  Q9HZ59, HUTGL_PSEAE;
+      notes: ExPASy ENZYME entry EC 3.5.3.8 cross-references UniProtKB:Q02PY1 (HUTGL_PSEAB) as a protein
+        with this activity.
+  - subject: prot_Q9HZ59
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HUTGL_PSEAE is an exemplar enzyme with EC 3.5.3.8 activity.
+    evidence:
+    - reference: EC:3.5.3.8
+      snippet: DR   B7V9J1, HUTGL_PSEA8;  Q02PY1, HUTGL_PSEAB;  Q9HZ59, HUTGL_PSEAE;
+      notes: ExPASy ENZYME entry EC 3.5.3.8 cross-references UniProtKB:Q9HZ59 (HUTGL_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

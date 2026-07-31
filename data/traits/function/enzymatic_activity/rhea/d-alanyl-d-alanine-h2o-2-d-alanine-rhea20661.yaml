@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.4.13.22
     mapping_source: rhea2ec
@@ -38,4 +38,168 @@ definitions:
       Catalyses the reaction: D-alanyl-D-alanine + H2O = 2 D-alanine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-alanyl-D-alanine + H2O = 2 D-alanine
+  description: Substrate-to-product chemistry of RHEA:20661, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20662 (rh:substrates → 20661_L, rh:products → 20661_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-alanyl-D-alanine + H2O = 2 D-alanine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20661
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-alanyl-D-alanine + H2O = 2 D-alanine'
+  - node_id: sub1
+    label: D-alanyl-D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57822
+    description: Formula C6H12N2O3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: D-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57416
+    description: Formula C3H7NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: D-Ala-D-Ala dipeptidase activity
+    grounding: GO:0160237
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: D-Ala-D-Ala dipeptidase
+    grounding: EC:3.4.13.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P77790
+    node_type: PROTEIN
+    label: DDPX_ECOLI
+    grounding: UniProtKB:P77790
+  - node_id: prot_P74268
+    node_type: PROTEIN
+    label: DDPX_SYNY3
+    grounding: UniProtKB:P74268
+  - node_id: prot_Q9JN36
+    node_type: PROTEIN
+    label: VANXY_ENTGA
+    grounding: UniProtKB:Q9JN36
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-alanyl-D-alanine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20662
+      snippet: D-alanyl-D-alanine + H2O => 2 D-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:20662 declares side 20661_L as its substrates
+        (rh:substrates); the master reaction RHEA:20661 is undirected. This participant is CHEBI:57822
+        with coefficient 1. Rhea cites PMID:17017774, PMID:9702193, PMID:9751644, PMID:11881895 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20662
+      snippet: D-alanyl-D-alanine + H2O => 2 D-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:20662 declares side 20661_L as its substrates
+        (rh:substrates); the master reaction RHEA:20661 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17017774, PMID:9702193, PMID:9751644, PMID:11881895 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-alanine is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:20662
+      snippet: D-alanyl-D-alanine + H2O => 2 D-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:20662 declares side 20661_R as its products
+        (rh:products); the master reaction RHEA:20661 is undirected. This participant is CHEBI:57416 with
+        coefficient 2. Rhea cites PMID:17017774, PMID:9702193, PMID:9751644, PMID:11881895 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:20661
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0160237"/>
+      notes: The rdfs:seeAlso triple on RHEA:20661 in rhea.rdf. GO term GO:0160237 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.4.13.22; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:20661
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.13.22"/>
+      notes: The rh:ec triple on RHEA:20661 in rhea.rdf. EC 3.4.13.22 is itself a record in this KB.
+  - subject: prot_P77790
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DDPX_ECOLI is an exemplar enzyme carrying EC 3.4.13.22, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.4.13.22
+      snippet: DR   P77790, DDPX_ECOLI ;  P74268, DDPX_SYNY3 ;  Q9JN36, VANXY_ENTGA;
+      notes: ExPASy ENZYME entry EC 3.4.13.22 cross-references UniProtKB:P77790 (DDPX_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:20661
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.13.22"/>
+      notes: Rhea assigns RHEA:20661 to EC 3.4.13.22, and EC 3.4.13.22 maps to exactly one Rhea master
+        reaction (RHEA:20661), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P74268
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DDPX_SYNY3 is an exemplar enzyme carrying EC 3.4.13.22, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.4.13.22
+      snippet: DR   P77790, DDPX_ECOLI ;  P74268, DDPX_SYNY3 ;  Q9JN36, VANXY_ENTGA;
+      notes: ExPASy ENZYME entry EC 3.4.13.22 cross-references UniProtKB:P74268 (DDPX_SYNY3) as a protein
+        with this activity.
+    - reference: RHEA:20661
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.13.22"/>
+      notes: Rhea assigns RHEA:20661 to EC 3.4.13.22, and EC 3.4.13.22 maps to exactly one Rhea master
+        reaction (RHEA:20661), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9JN36
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: VANXY_ENTGA is an exemplar enzyme carrying EC 3.4.13.22, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.4.13.22
+      snippet: DR   P77790, DDPX_ECOLI ;  P74268, DDPX_SYNY3 ;  Q9JN36, VANXY_ENTGA;
+      notes: ExPASy ENZYME entry EC 3.4.13.22 cross-references UniProtKB:Q9JN36 (VANXY_ENTGA) as a protein
+        with this activity.
+    - reference: RHEA:20661
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.13.22"/>
+      notes: Rhea assigns RHEA:20661 to EC 3.4.13.22, and EC 3.4.13.22 maps to exactly one Rhea master
+        reaction (RHEA:20661), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

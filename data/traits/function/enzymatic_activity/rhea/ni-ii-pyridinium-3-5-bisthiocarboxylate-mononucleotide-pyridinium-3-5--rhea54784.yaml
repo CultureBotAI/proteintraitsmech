@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.99.1.12
     mapping_source: rhea2ec
@@ -26,4 +26,155 @@ definitions:
       Catalyses the reaction: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide = pyridinium-3,5-bisthiocarboxylate mononucleotide + Ni(2+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide = pyridinium-3,5-bisthiocarboxy…
+  description: Substrate-to-product chemistry of RHEA:54784, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:54785 (rh:substrates → 54784_L, rh:products → 54784_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide = pyridinium-3,5-bis…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:54784
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide = pyridinium-3,5-bisthiocarboxylate
+      mononucleotide + Ni(2+)'
+  - node_id: sub1
+    label: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide
+    node_type: CHEMICAL
+    grounding: CHEBI:137373
+    description: Formula C12H11NNiO9PS2.
+  - node_id: prd1
+    label: pyridinium-3,5-bisthiocarboxylate mononucleotide
+    node_type: CHEMICAL
+    grounding: CHEBI:137372
+    description: Formula C12H11NO9PS2.
+  - node_id: prd2
+    label: Ni(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:49786
+    description: Formula Ni.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: pyridinium-3,5-bisthiocarboxylic acid mononucleotide nickel chelatase
+    grounding: EC:4.99.1.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A3DCC8
+    node_type: PROTEIN
+    label: LARC_ACET2
+    grounding: UniProtKB:A3DCC8
+  - node_id: prot_B2ULM9
+    node_type: PROTEIN
+    label: LARC_AKKM8
+    grounding: UniProtKB:B2ULM9
+  - node_id: prot_A6TKJ0
+    node_type: PROTEIN
+    label: LARC_ALKMQ
+    grounding: UniProtKB:A6TKJ0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide is a substrate consumed by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54785
+      snippet: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide => pyridinium-3,5-bisthiocarboxylate
+        mononucleotide + Ni(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:54785 declares side 54784_L as its substrates
+        (rh:substrates); the master reaction RHEA:54784 is undirected. This participant is CHEBI:137373
+        with coefficient 1. Rhea cites PMID:27114550 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pyridinium-3,5-bisthiocarboxylate mononucleotide is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54785
+      snippet: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide => pyridinium-3,5-bisthiocarboxylate
+        mononucleotide + Ni(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:54785 declares side 54784_R as its products
+        (rh:products); the master reaction RHEA:54784 is undirected. This participant is CHEBI:137372
+        with coefficient 1. Rhea cites PMID:27114550 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Ni(2+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54785
+      snippet: Ni(II)-pyridinium-3,5-bisthiocarboxylate mononucleotide => pyridinium-3,5-bisthiocarboxylate
+        mononucleotide + Ni(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:54785 declares side 54784_R as its products
+        (rh:products); the master reaction RHEA:54784 is undirected. This participant is CHEBI:49786 with
+        coefficient 1. Rhea cites PMID:27114550 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.99.1.12; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:54784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.99.1.12"/>
+      notes: The rh:ec triple on RHEA:54784 in rhea.rdf. EC 4.99.1.12 is itself a record in this KB.
+  - subject: prot_A3DCC8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LARC_ACET2 is an exemplar enzyme carrying EC 4.99.1.12, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.99.1.12
+      snippet: DR   A3DCC8, LARC_ACET2 ;  B2ULM9, LARC_AKKM8 ;  A6TKJ0, LARC_ALKMQ ;
+      notes: ExPASy ENZYME entry EC 4.99.1.12 cross-references UniProtKB:A3DCC8 (LARC_ACET2) as a protein
+        with this activity.
+    - reference: RHEA:54784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.99.1.12"/>
+      notes: Rhea assigns RHEA:54784 to EC 4.99.1.12, and EC 4.99.1.12 maps to exactly one Rhea master
+        reaction (RHEA:54784), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_B2ULM9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LARC_AKKM8 is an exemplar enzyme carrying EC 4.99.1.12, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.99.1.12
+      snippet: DR   A3DCC8, LARC_ACET2 ;  B2ULM9, LARC_AKKM8 ;  A6TKJ0, LARC_ALKMQ ;
+      notes: ExPASy ENZYME entry EC 4.99.1.12 cross-references UniProtKB:B2ULM9 (LARC_AKKM8) as a protein
+        with this activity.
+    - reference: RHEA:54784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.99.1.12"/>
+      notes: Rhea assigns RHEA:54784 to EC 4.99.1.12, and EC 4.99.1.12 maps to exactly one Rhea master
+        reaction (RHEA:54784), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A6TKJ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LARC_ALKMQ is an exemplar enzyme carrying EC 4.99.1.12, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.99.1.12
+      snippet: DR   A3DCC8, LARC_ACET2 ;  B2ULM9, LARC_AKKM8 ;  A6TKJ0, LARC_ALKMQ ;
+      notes: ExPASy ENZYME entry EC 4.99.1.12 cross-references UniProtKB:A6TKJ0 (LARC_ALKMQ) as a protein
+        with this activity.
+    - reference: RHEA:54784
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.99.1.12"/>
+      notes: Rhea assigns RHEA:54784 to EC 4.99.1.12, and EC 4.99.1.12 maps to exactly one Rhea master
+        reaction (RHEA:54784), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

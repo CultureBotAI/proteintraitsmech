@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:155889
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,64 @@ definitions:
       Catalyses the reaction: 3-[(2E,4E,8S,10E,12Z)-4,8-dimethyltetradeca-2,4,10,12-tetraenoyl]-4-hydroxy-5-(4-hydroxyphenyl)-1,2-dihydropyridin-2-one = 8-epi-ilicicolin H
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-[(2E,4E,8S,10E,12Z)-4,8-dimethyltetradeca-2,4,10,12-tetraenoyl]-4-hydroxy-5-(4-hydrox…
+  description: Substrate-to-product chemistry of RHEA:64556, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:64557 (rh:substrates → 64556_L, rh:products → 64556_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-[(2E,4E,8S,10E,12Z)-4,8-dimethyltetradeca-2,4,10,12-tetraenoyl]-4-hydroxy-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:64556
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-[(2E,4E,8S,10E,12Z)-4,8-dimethyltetradeca-2,4,10,12-tetraenoyl]-4-hydroxy-5-(4-hydroxyphenyl)-1,2-dihydropyridin-2-one
+      = 8-epi-ilicicolin H'
+  - node_id: sub1
+    label: 3-[(2E,4E,8S,10E,12Z)-4,8-dimethyltetradeca-2,4,10,12-tetraenoyl]-4-hydroxy-5-(4-hydroxyp…
+    node_type: CHEMICAL
+    grounding: CHEBI:155889
+    description: 'Full Rhea name: 3-[(2E,4E,8S,10E,12Z)-4,8-dimethyltetradeca-2,4,10,12-tetraenoyl]-4-hydroxy-5-(4-hydroxyphenyl)-1,2-dihydropyridin-2-one
+      Formula C27H31NO4.'
+  - node_id: prd1
+    label: 8-epi-ilicicolin H
+    node_type: CHEMICAL
+    grounding: CHEBI:155888
+    description: Formula C27H31NO4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-[(2E,4E,8S,10E,12Z)-4,8-dimethyltetradeca-2,4,10,12-tetraenoyl]-4-hydroxy-5-(4-hydroxyphenyl)-1,2-dihydropyridin-2-one
+      is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64557
+      snippet: 3-[(2E,4E,8S,10E,12Z)-4,8-dimethyltetradeca-2,4,10,12-tetraenoyl]-4-hydroxy-5-(4-hydroxyphenyl)-1,2-dihydropyridin-2-one
+        => 8-epi-ilicicolin H
+      notes: Rhea's left-to-right directional reaction RHEA:64557 declares side 64556_L as its substrates
+        (rh:substrates); the master reaction RHEA:64556 is undirected. This participant is CHEBI:155889
+        with coefficient 1. Rhea cites PMID:30905148 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 8-epi-ilicicolin H is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:64557
+      snippet: 3-[(2E,4E,8S,10E,12Z)-4,8-dimethyltetradeca-2,4,10,12-tetraenoyl]-4-hydroxy-5-(4-hydroxyphenyl)-1,2-dihydropyridin-2-one
+        => 8-epi-ilicicolin H
+      notes: Rhea's left-to-right directional reaction RHEA:64557 declares side 64556_R as its products
+        (rh:products); the master reaction RHEA:64556 is undirected. This participant is CHEBI:155888
+        with coefficient 1. Rhea cites PMID:30905148 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

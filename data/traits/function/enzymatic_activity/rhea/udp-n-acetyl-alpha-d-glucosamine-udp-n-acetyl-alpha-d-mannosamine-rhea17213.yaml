@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.1.3.14
     mapping_source: rhea2ec
@@ -34,4 +34,152 @@ definitions:
       Catalyses the reaction: UDP-N-acetyl-alpha-D-glucosamine = UDP-N-acetyl-alpha-D-mannosamine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-N-acetyl-alpha-D-glucosamine = UDP-N-acetyl-alpha-D-mannosamine
+  description: Substrate-to-product chemistry of RHEA:17213, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17214 (rh:substrates → 17213_L, rh:products → 17213_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of UDP-N-acetyl-alpha-D-glucosamine = UDP-N-acetyl-alpha-D-mannosamine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17213
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: UDP-N-acetyl-alpha-D-glucosamine = UDP-N-acetyl-alpha-D-mannosamine'
+  - node_id: sub1
+    label: UDP-N-acetyl-alpha-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57705
+    description: Formula C17H25N3O17P2.
+  - node_id: prd1
+    label: UDP-N-acetyl-alpha-D-mannosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:68623
+    description: Formula C17H25N3O17P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-N-acetylglucosamine 2-epimerase activity
+    grounding: GO:0008761
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-N-acetylglucosamine 2-epimerase (non-hydrolyzing)
+    grounding: EC:5.1.3.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P58600
+    node_type: PROTEIN
+    label: EPSC_RALN1
+    grounding: UniProtKB:P58600
+  - node_id: prot_P52641
+    node_type: PROTEIN
+    label: EPSC_RALSL
+    grounding: UniProtKB:P52641
+  - node_id: prot_P39131
+    node_type: PROTEIN
+    label: MNAA_BACSU
+    grounding: UniProtKB:P39131
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UDP-N-acetyl-alpha-D-glucosamine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17214
+      snippet: UDP-N-acetyl-alpha-D-glucosamine => UDP-N-acetyl-alpha-D-mannosamine
+      notes: Rhea's left-to-right directional reaction RHEA:17214 declares side 17213_L as its substrates
+        (rh:substrates); the master reaction RHEA:17213 is undirected. This participant is CHEBI:57705
+        with coefficient 1. Rhea cites PMID:38382015, PMID:12107153, PMID:15210128, PMID:2166030 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UDP-N-acetyl-alpha-D-mannosamine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17214
+      snippet: UDP-N-acetyl-alpha-D-glucosamine => UDP-N-acetyl-alpha-D-mannosamine
+      notes: Rhea's left-to-right directional reaction RHEA:17214 declares side 17213_R as its products
+        (rh:products); the master reaction RHEA:17213 is undirected. This participant is CHEBI:68623 with
+        coefficient 1. Rhea cites PMID:38382015, PMID:12107153, PMID:15210128, PMID:2166030 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17213
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008761"/>
+      notes: The rdfs:seeAlso triple on RHEA:17213 in rhea.rdf. GO term GO:0008761 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.1.3.14; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17213
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.14"/>
+      notes: The rh:ec triple on RHEA:17213 in rhea.rdf. EC 5.1.3.14 is itself a record in this KB.
+  - subject: prot_P58600
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EPSC_RALN1 is an exemplar enzyme carrying EC 5.1.3.14, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.14
+      snippet: DR   P58600, EPSC_RALN1 ;  P52641, EPSC_RALSL ;  P39131, MNAA_BACSU ;
+      notes: ExPASy ENZYME entry EC 5.1.3.14 cross-references UniProtKB:P58600 (EPSC_RALN1) as a protein
+        with this activity.
+    - reference: RHEA:17213
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.14"/>
+      notes: Rhea assigns RHEA:17213 to EC 5.1.3.14, and EC 5.1.3.14 maps to exactly one Rhea master reaction
+        (RHEA:17213), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P52641
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EPSC_RALSL is an exemplar enzyme carrying EC 5.1.3.14, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.14
+      snippet: DR   P58600, EPSC_RALN1 ;  P52641, EPSC_RALSL ;  P39131, MNAA_BACSU ;
+      notes: ExPASy ENZYME entry EC 5.1.3.14 cross-references UniProtKB:P52641 (EPSC_RALSL) as a protein
+        with this activity.
+    - reference: RHEA:17213
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.14"/>
+      notes: Rhea assigns RHEA:17213 to EC 5.1.3.14, and EC 5.1.3.14 maps to exactly one Rhea master reaction
+        (RHEA:17213), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P39131
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MNAA_BACSU is an exemplar enzyme carrying EC 5.1.3.14, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.14
+      snippet: DR   P58600, EPSC_RALN1 ;  P52641, EPSC_RALSL ;  P39131, MNAA_BACSU ;
+      notes: ExPASy ENZYME entry EC 5.1.3.14 cross-references UniProtKB:P39131 (MNAA_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:17213
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.14"/>
+      notes: Rhea assigns RHEA:17213 to EC 5.1.3.14, and EC 5.1.3.14 maps to exactly one Rhea master reaction
+        (RHEA:17213), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -39,4 +39,82 @@ definitions:
       Catalyses: Release of N-terminal transit peptides from precursor proteins imported into the mitochondrion, typically with Arg in position P2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mitochondrial processing peptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.64. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of N-terminal transit peptides from precursor proteins imported into the mitochondrion, typically
+    with Arg in position P2".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mitochondrial processing peptidase
+    grounding: EC:3.4.24.64
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: signal peptidase activity
+    grounding: GO:0009003
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q42290
+    node_type: PROTEIN
+    label: MPPB_ARATH
+    grounding: UniProtKB:Q42290
+  - node_id: prot_Q00302
+    node_type: PROTEIN
+    label: MPPB_BLAEM
+    grounding: UniProtKB:Q00302
+  - node_id: prot_Q3SZ71
+    node_type: PROTEIN
+    label: MPPB_BOVIN
+    grounding: UniProtKB:Q3SZ71
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.24.64
+      snippet: EC:3.4.24.64 > GO:signal peptidase activity ; GO:0009003
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0009003 is itself a record
+        in this KB.
+  - subject: prot_Q42290
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MPPB_ARATH is an exemplar enzyme with EC 3.4.24.64 activity.
+    evidence:
+    - reference: EC:3.4.24.64
+      snippet: DR   Q42290, MPPB_ARATH ;  Q00302, MPPB_BLAEM ;  Q3SZ71, MPPB_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.4.24.64 cross-references UniProtKB:Q42290 (MPPB_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q00302
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MPPB_BLAEM is an exemplar enzyme with EC 3.4.24.64 activity.
+    evidence:
+    - reference: EC:3.4.24.64
+      snippet: DR   Q42290, MPPB_ARATH ;  Q00302, MPPB_BLAEM ;  Q3SZ71, MPPB_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.4.24.64 cross-references UniProtKB:Q00302 (MPPB_BLAEM) as a protein
+        with this activity.
+  - subject: prot_Q3SZ71
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MPPB_BOVIN is an exemplar enzyme with EC 3.4.24.64 activity.
+    evidence:
+    - reference: EC:3.4.24.64
+      snippet: DR   Q42290, MPPB_ARATH ;  Q00302, MPPB_BLAEM ;  Q3SZ71, MPPB_BOVIN ;
+      notes: ExPASy ENZYME entry EC 3.4.24.64 cross-references UniProtKB:Q3SZ71 (MPPB_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

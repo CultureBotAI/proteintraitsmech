@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.11.-
 synonyms:
@@ -49,4 +49,81 @@ definitions:
       Catalyses: Release of an N-terminal amino acid, preferentially alanine, from a wide range of peptides, amides and arylamides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cytosol alanyl aminopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.11.14. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of an N-terminal amino acid, preferentially alanine, from a wide range of peptides, amides and arylamides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cytosol alanyl aminopeptidase
+    grounding: EC:3.4.11.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alanyl aminopeptidase activity
+    grounding: GO:0016285
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8H0S9
+    node_type: PROTEIN
+    label: PSA_ARATH
+    grounding: UniProtKB:Q8H0S9
+  - node_id: prot_Q4TT88
+    node_type: PROTEIN
+    label: PSA_CAEEL
+    grounding: UniProtKB:Q4TT88
+  - node_id: prot_P55786
+    node_type: PROTEIN
+    label: PSA_HUMAN
+    grounding: UniProtKB:P55786
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.11.14
+      snippet: EC:3.4.11.14 > GO:alanyl aminopeptidase activity ; GO:0016285
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016285 is itself a record
+        in this KB.
+  - subject: prot_Q8H0S9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSA_ARATH is an exemplar enzyme with EC 3.4.11.14 activity.
+    evidence:
+    - reference: EC:3.4.11.14
+      snippet: DR   Q8H0S9, PSA_ARATH  ;  Q4TT88, PSA_CAEEL  ;  P55786, PSA_HUMAN  ;
+      notes: ExPASy ENZYME entry EC 3.4.11.14 cross-references UniProtKB:Q8H0S9 (PSA_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q4TT88
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSA_CAEEL is an exemplar enzyme with EC 3.4.11.14 activity.
+    evidence:
+    - reference: EC:3.4.11.14
+      snippet: DR   Q8H0S9, PSA_ARATH  ;  Q4TT88, PSA_CAEEL  ;  P55786, PSA_HUMAN  ;
+      notes: ExPASy ENZYME entry EC 3.4.11.14 cross-references UniProtKB:Q4TT88 (PSA_CAEEL) as a protein
+        with this activity.
+  - subject: prot_P55786
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSA_HUMAN is an exemplar enzyme with EC 3.4.11.14 activity.
+    evidence:
+    - reference: EC:3.4.11.14
+      snippet: DR   Q8H0S9, PSA_ARATH  ;  Q4TT88, PSA_CAEEL  ;  P55786, PSA_HUMAN  ;
+      notes: ExPASy ENZYME entry EC 3.4.11.14 cross-references UniProtKB:P55786 (PSA_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

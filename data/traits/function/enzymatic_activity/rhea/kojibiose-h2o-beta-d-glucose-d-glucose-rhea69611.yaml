@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.1.216
     mapping_source: rhea2ec
@@ -30,4 +30,145 @@ definitions:
       Catalyses the reaction: kojibiose + H2O = beta-D-glucose + D-glucose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of kojibiose + H2O = beta-D-glucose + D-glucose
+  description: Substrate-to-product chemistry of RHEA:69611, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69612 (rh:substrates → 69611_L, rh:products → 69611_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of kojibiose + H2O = beta-D-glucose + D-glucose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69611
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: kojibiose + H2O = beta-D-glucose + D-glucose'
+  - node_id: sub1
+    label: kojibiose
+    node_type: CHEMICAL
+    grounding: CHEBI:142460
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: beta-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:15903
+    description: Formula C6H12O6.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: kojibiose hydrolase
+    grounding: EC:3.2.1.216
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A5FBJ5
+    node_type: PROTEIN
+    label: KJASE_FLAJ1
+    grounding: UniProtKB:A5FBJ5
+  - node_id: prot_A0A1H1XG33
+    node_type: PROTEIN
+    label: KJASE_MUCMA
+    grounding: UniProtKB:A0A1H1XG33
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: kojibiose is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69612
+      snippet: kojibiose + H2O => beta-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69612 declares side 69611_L as its substrates
+        (rh:substrates); the master reaction RHEA:69611 is undirected. This participant is CHEBI:142460
+        with coefficient 1. Rhea cites PMID:34684901, PMID:34728215 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69612
+      snippet: kojibiose + H2O => beta-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69612 declares side 69611_L as its substrates
+        (rh:substrates); the master reaction RHEA:69611 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:34684901, PMID:34728215 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-glucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69612
+      snippet: kojibiose + H2O => beta-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69612 declares side 69611_R as its products
+        (rh:products); the master reaction RHEA:69611 is undirected. This participant is CHEBI:15903 with
+        coefficient 1. Rhea cites PMID:34684901, PMID:34728215 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69612
+      snippet: kojibiose + H2O => beta-D-glucose + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:69612 declares side 69611_R as its products
+        (rh:products); the master reaction RHEA:69611 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:34684901, PMID:34728215 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.1.216; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:69611
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.216"/>
+      notes: The rh:ec triple on RHEA:69611 in rhea.rdf. EC 3.2.1.216 is itself a record in this KB.
+  - subject: prot_A5FBJ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KJASE_FLAJ1 is an exemplar enzyme carrying EC 3.2.1.216, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.216
+      snippet: DR   A5FBJ5, KJASE_FLAJ1;  A0A1H1XG33, KJASE_MUCMA;
+      notes: ExPASy ENZYME entry EC 3.2.1.216 cross-references UniProtKB:A5FBJ5 (KJASE_FLAJ1) as a protein
+        with this activity.
+    - reference: RHEA:69611
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.216"/>
+      notes: Rhea assigns RHEA:69611 to EC 3.2.1.216, and EC 3.2.1.216 maps to exactly one Rhea master
+        reaction (RHEA:69611), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A0A1H1XG33
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KJASE_MUCMA is an exemplar enzyme carrying EC 3.2.1.216, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.216
+      snippet: DR   A5FBJ5, KJASE_FLAJ1;  A0A1H1XG33, KJASE_MUCMA;
+      notes: ExPASy ENZYME entry EC 3.2.1.216 cross-references UniProtKB:A0A1H1XG33 (KJASE_MUCMA) as a
+        protein with this activity.
+    - reference: RHEA:69611
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.216"/>
+      notes: Rhea assigns RHEA:69611 to EC 3.2.1.216, and EC 3.2.1.216 maps to exactly one Rhea master
+        reaction (RHEA:69611), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

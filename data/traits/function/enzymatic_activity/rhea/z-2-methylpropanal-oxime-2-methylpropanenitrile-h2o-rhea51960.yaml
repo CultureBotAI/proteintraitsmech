@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:61144
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,76 @@ definitions:
       Catalyses the reaction: (Z)-2-methylpropanal oxime = 2-methylpropanenitrile + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (Z)-2-methylpropanal oxime = 2-methylpropanenitrile + H2O
+  description: Substrate-to-product chemistry of RHEA:51960, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:51961 (rh:substrates → 51960_L, rh:products → 51960_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (Z)-2-methylpropanal oxime = 2-methylpropanenitrile + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:51960
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (Z)-2-methylpropanal oxime = 2-methylpropanenitrile + H2O'
+  - node_id: sub1
+    label: (Z)-2-methylpropanal oxime
+    node_type: CHEMICAL
+    grounding: CHEBI:61144
+    description: Formula C4H9NO.
+  - node_id: prd1
+    label: 2-methylpropanenitrile
+    node_type: CHEMICAL
+    grounding: CHEBI:28638
+    description: Formula C4H7N.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (Z)-2-methylpropanal oxime is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51961
+      snippet: (Z)-2-methylpropanal oxime => 2-methylpropanenitrile + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:51961 declares side 51960_L as its substrates
+        (rh:substrates); the master reaction RHEA:51960 is undirected. This participant is CHEBI:61144
+        with coefficient 1. Rhea cites PMID:21045121 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-methylpropanenitrile is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:51961
+      snippet: (Z)-2-methylpropanal oxime => 2-methylpropanenitrile + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:51961 declares side 51960_R as its products
+        (rh:products); the master reaction RHEA:51960 is undirected. This participant is CHEBI:28638 with
+        coefficient 1. Rhea cites PMID:21045121 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51961
+      snippet: (Z)-2-methylpropanal oxime => 2-methylpropanenitrile + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:51961 declares side 51960_R as its products
+        (rh:products); the master reaction RHEA:51960 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:21045121 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

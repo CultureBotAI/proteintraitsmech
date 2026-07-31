@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.5.1.-
 canonical_examples:
@@ -33,4 +33,68 @@ definitions:
       Catalyses: (1) ATP + (deoxyribonucleotide)n-3'-hydroxyl + 5'-phospho- (deoxyribonucleotide)m = (deoxyribonucleotide)n+m + AMP + diphosphate. (2) NAD(+) + (deoxyribonucleotide)n-3'-hydroxyl + 5'-phospho- (deoxyribonucleotide)m = (deoxyribonucleotide)n+m + AMP + beta- nicotinamide D-nucleotide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of DNA ligase (ATP or NAD(+))
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.5.1.6. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "(1) ATP
+    + (deoxyribonucleotide)n-3''-hydroxyl + 5''-phospho- (deoxyribonucleotide)m = (deoxyribonucleotide)n+m
+    + AMP + diphosphate. (2) NAD(+) + (deoxyribonucleotide)n-3''-hydroxyl + 5''-phospho- (deoxyribonucleotide)m
+    = (deoxyribonucleotide)n+m + AMP + beta- nicotinamide D-nucleotide".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: DNA ligase (ATP or NAD(+))
+    grounding: EC:6.5.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q9HH07
+    node_type: PROTEIN
+    label: DNLI_THEFM
+    grounding: UniProtKB:Q9HH07
+  - node_id: prot_Q9HHC4
+    node_type: PROTEIN
+    label: DNLI_THEKO
+    grounding: UniProtKB:Q9HHC4
+  - node_id: prot_B6YTR4
+    node_type: PROTEIN
+    label: DNLI_THEON
+    grounding: UniProtKB:B6YTR4
+  edges:
+  - subject: prot_Q9HH07
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DNLI_THEFM is an exemplar enzyme with EC 6.5.1.6 activity.
+    evidence:
+    - reference: EC:6.5.1.6
+      snippet: DR   Q9HH07, DNLI_THEFM ;  Q9HHC4, DNLI_THEKO ;  B6YTR4, DNLI_THEON ;
+      notes: ExPASy ENZYME entry EC 6.5.1.6 cross-references UniProtKB:Q9HH07 (DNLI_THEFM) as a protein
+        with this activity.
+  - subject: prot_Q9HHC4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DNLI_THEKO is an exemplar enzyme with EC 6.5.1.6 activity.
+    evidence:
+    - reference: EC:6.5.1.6
+      snippet: DR   Q9HH07, DNLI_THEFM ;  Q9HHC4, DNLI_THEKO ;  B6YTR4, DNLI_THEON ;
+      notes: ExPASy ENZYME entry EC 6.5.1.6 cross-references UniProtKB:Q9HHC4 (DNLI_THEKO) as a protein
+        with this activity.
+  - subject: prot_B6YTR4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DNLI_THEON is an exemplar enzyme with EC 6.5.1.6 activity.
+    evidence:
+    - reference: EC:6.5.1.6
+      snippet: DR   Q9HH07, DNLI_THEFM ;  Q9HHC4, DNLI_THEKO ;  B6YTR4, DNLI_THEON ;
+      notes: ExPASy ENZYME entry EC 6.5.1.6 cross-references UniProtKB:B6YTR4 (DNLI_THEON) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

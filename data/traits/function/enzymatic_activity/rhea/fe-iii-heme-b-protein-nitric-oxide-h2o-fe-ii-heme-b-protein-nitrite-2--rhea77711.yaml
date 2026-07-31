@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:55376
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,164 @@ definitions:
       Catalyses the reaction: Fe(III)-heme b-[protein] + nitric oxide + H2O = Fe(II)-heme b-[protein] + nitrite + 2 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Fe(III)-heme b-[protein] + nitric oxide + H2O = Fe(II)-heme b-[protein]
+    + nitrite + 2 H…
+  description: Substrate-to-product chemistry of RHEA:77711, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77712 (rh:substrates → 77711_L, rh:products → 77711_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of Fe(III)-heme b-[protein] + nitric oxide + H2O = Fe(II)-heme b-[protein] + ni…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77711
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: Fe(III)-heme b-[protein] + nitric oxide + H2O = Fe(II)-heme b-[protein] + nitrite
+      + 2 H(+)'
+  - node_id: sub1
+    label: Fe(III)-heme b-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18976
+    description: Rhea compound GENERIC:18976.
+  - node_id: sub1_rp1
+    label: Fe(III)-heme b
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18976 (Fe(III)-heme
+      b-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:55376
+  - node_id: sub2
+    label: nitric oxide
+    node_type: CHEMICAL
+    grounding: CHEBI:16480
+    description: Formula NO.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: Fe(II)-heme b-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18975
+    description: Rhea compound GENERIC:18975.
+  - node_id: prd1_rp1
+    label: heme b
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18975 (Fe(II)-heme
+      b-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:60344
+  - node_id: prd2
+    label: nitrite
+    node_type: CHEMICAL
+    grounding: CHEBI:16301
+    description: Formula NO2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(III)-heme b-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77712
+      snippet: Fe(III)-heme b-[protein] + nitric oxide + H2O => Fe(II)-heme b-[protein] + nitrite + 2
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77712 declares side 77711_L as its substrates
+        (rh:substrates); the master reaction RHEA:77711 is undirected. This participant is GENERIC:18976
+        with coefficient 1. Rhea cites PMID:21495624, PMID:16041407 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(III)-heme b is the reactive part of Fe(III)-heme b-[protein].
+    evidence:
+    - reference: RHEA:77711
+      snippet: Fe(III)-heme b
+      notes: Rhea compound GENERIC:18976 (Fe(III)-heme b-[protein]) declares rh:reactivePart = Fe(III)-heme
+        b (CHEBI:55376), formula C34H30FeN4O4.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: nitric oxide is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77712
+      snippet: Fe(III)-heme b-[protein] + nitric oxide + H2O => Fe(II)-heme b-[protein] + nitrite + 2
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77712 declares side 77711_L as its substrates
+        (rh:substrates); the master reaction RHEA:77711 is undirected. This participant is CHEBI:16480
+        with coefficient 1. Rhea cites PMID:21495624, PMID:16041407 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77712
+      snippet: Fe(III)-heme b-[protein] + nitric oxide + H2O => Fe(II)-heme b-[protein] + nitrite + 2
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77712 declares side 77711_L as its substrates
+        (rh:substrates); the master reaction RHEA:77711 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21495624, PMID:16041407 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Fe(II)-heme b-[protein] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77712
+      snippet: Fe(III)-heme b-[protein] + nitric oxide + H2O => Fe(II)-heme b-[protein] + nitrite + 2
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77712 declares side 77711_R as its products
+        (rh:products); the master reaction RHEA:77711 is undirected. This participant is GENERIC:18975
+        with coefficient 1. Rhea cites PMID:21495624, PMID:16041407 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: heme b is the reactive part of Fe(II)-heme b-[protein].
+    evidence:
+    - reference: RHEA:77711
+      snippet: heme b
+      notes: Rhea compound GENERIC:18975 (Fe(II)-heme b-[protein]) declares rh:reactivePart = heme b (CHEBI:60344),
+        formula C34H30FeN4O4.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nitrite is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77712
+      snippet: Fe(III)-heme b-[protein] + nitric oxide + H2O => Fe(II)-heme b-[protein] + nitrite + 2
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77712 declares side 77711_R as its products
+        (rh:products); the master reaction RHEA:77711 is undirected. This participant is CHEBI:16301 with
+        coefficient 1. Rhea cites PMID:21495624, PMID:16041407 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:77712
+      snippet: Fe(III)-heme b-[protein] + nitric oxide + H2O => Fe(II)-heme b-[protein] + nitrite + 2
+        H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:77712 declares side 77711_R as its products
+        (rh:products); the master reaction RHEA:77711 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:21495624, PMID:16041407 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

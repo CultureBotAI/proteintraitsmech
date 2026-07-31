@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.3.1.-
 mapped_xrefs:
@@ -40,4 +40,278 @@ definitions:
       Catalyses: (1) (4Z,15Z)-bilirubin IXalpha + NADP(+) = biliverdin IXalpha + NADPH + H(+). (2) (4Z,15Z)-bilirubin IXalpha + NAD(+) = biliverdin IXalpha + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of biliverdin reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.3.1.24. Rhea assigns 2 curated
+    reactions to EC 1.3.1.24. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (4Z,15Z)-bilirubin IXalpha + NADP(+) = biliverdin IXalpha
+    + NADPH + H(+). (2) (4Z,15Z)-bilirubin IXalpha + NAD(+) = biliverdin IXalpha + NADH + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: biliverdin reductase
+    grounding: EC:1.3.1.24
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (4Z,15Z)-bilirubin IXalpha + NADP(+) = biliverdin IXalpha + NADPH + H(+)
+    grounding: RHEA:15793
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (4Z,15Z)-bilirubin IXalpha + NADP(+) = biliverdin IXalpha + NADPH + H(+)'
+  - node_id: rxn1_sub1
+    label: (4Z,15Z)-bilirubin IXalpha
+    node_type: CHEMICAL
+    grounding: CHEBI:57977
+    description: Formula C33H34N4O6.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: biliverdin IXalpha
+    node_type: CHEMICAL
+    grounding: CHEBI:57991
+    description: Formula C33H32N4O6.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (4Z,15Z)-bilirubin IXalpha + NAD(+) = biliverdin IXalpha + NADH + H(+)
+    grounding: RHEA:15797
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (4Z,15Z)-bilirubin IXalpha + NAD(+) = biliverdin IXalpha + NADH + H(+)'
+  - node_id: rxn2_sub1
+    label: (4Z,15Z)-bilirubin IXalpha
+    node_type: CHEMICAL
+    grounding: CHEBI:57977
+    description: Formula C33H34N4O6.
+  - node_id: rxn2_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn2_prd1
+    label: biliverdin IXalpha
+    node_type: CHEMICAL
+    grounding: CHEBI:57991
+    description: Formula C33H32N4O6.
+  - node_id: rxn2_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: biliverdin reductase [NAD(P)H] activity
+    grounding: GO:0004074
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P53004
+    node_type: PROTEIN
+    label: BIEA_HUMAN
+    grounding: UniProtKB:P53004
+  - node_id: prot_Q9CY64
+    node_type: PROTEIN
+    label: BIEA_MOUSE
+    grounding: UniProtKB:Q9CY64
+  - node_id: prot_P46844
+    node_type: PROTEIN
+    label: BIEA_RAT
+    grounding: UniProtKB:P46844
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:15793 is one of the 2 curated reactions Rhea assigns to EC 1.3.1.24; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:15793
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.1.24"/>
+      notes: The rh:ec triple on RHEA:15793 in rhea.rdf assigns that reaction to EC 1.3.1.24.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (4Z,15Z)-bilirubin IXalpha is a substrate consumed by RHEA:15793 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15794
+      snippet: (4Z,15Z)-bilirubin IXalpha + NADP(+) => biliverdin IXalpha + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15794 declares side 15793_L as its substrates
+        (rh:substrates); the master reaction RHEA:15793 is undirected. This participant is CHEBI:57977
+        with coefficient 1. Rhea cites PMID:4378982 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:15793 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15794
+      snippet: (4Z,15Z)-bilirubin IXalpha + NADP(+) => biliverdin IXalpha + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15794 declares side 15793_L as its substrates
+        (rh:substrates); the master reaction RHEA:15793 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:4378982 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: biliverdin IXalpha is a product released by RHEA:15793 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15794
+      snippet: (4Z,15Z)-bilirubin IXalpha + NADP(+) => biliverdin IXalpha + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15794 declares side 15793_R as its products
+        (rh:products); the master reaction RHEA:15793 is undirected. This participant is CHEBI:57991 with
+        coefficient 1. Rhea cites PMID:4378982 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:15793 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15794
+      snippet: (4Z,15Z)-bilirubin IXalpha + NADP(+) => biliverdin IXalpha + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15794 declares side 15793_R as its products
+        (rh:products); the master reaction RHEA:15793 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:4378982 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:15793 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15794
+      snippet: (4Z,15Z)-bilirubin IXalpha + NADP(+) => biliverdin IXalpha + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15794 declares side 15793_R as its products
+        (rh:products); the master reaction RHEA:15793 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4378982 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:15797 is one of the 2 curated reactions Rhea assigns to EC 1.3.1.24; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:15797
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.1.24"/>
+      notes: The rh:ec triple on RHEA:15797 in rhea.rdf assigns that reaction to EC 1.3.1.24.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (4Z,15Z)-bilirubin IXalpha is a substrate consumed by RHEA:15797 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15798
+      snippet: (4Z,15Z)-bilirubin IXalpha + NAD(+) => biliverdin IXalpha + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15798 declares side 15797_L as its substrates
+        (rh:substrates); the master reaction RHEA:15797 is undirected. This participant is CHEBI:57977
+        with coefficient 1. Rhea cites PMID:4378982 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NAD(+) is a substrate consumed by RHEA:15797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15798
+      snippet: (4Z,15Z)-bilirubin IXalpha + NAD(+) => biliverdin IXalpha + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15798 declares side 15797_L as its substrates
+        (rh:substrates); the master reaction RHEA:15797 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:4378982 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: biliverdin IXalpha is a product released by RHEA:15797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15798
+      snippet: (4Z,15Z)-bilirubin IXalpha + NAD(+) => biliverdin IXalpha + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15798 declares side 15797_R as its products
+        (rh:products); the master reaction RHEA:15797 is undirected. This participant is CHEBI:57991 with
+        coefficient 1. Rhea cites PMID:4378982 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADH is a product released by RHEA:15797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15798
+      snippet: (4Z,15Z)-bilirubin IXalpha + NAD(+) => biliverdin IXalpha + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15798 declares side 15797_R as its products
+        (rh:products); the master reaction RHEA:15797 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:4378982 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:15797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15798
+      snippet: (4Z,15Z)-bilirubin IXalpha + NAD(+) => biliverdin IXalpha + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:15798 declares side 15797_R as its products
+        (rh:products); the master reaction RHEA:15797 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4378982 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.3.1.24
+      snippet: EC:1.3.1.24 > GO:biliverdin reductase [NAD(P)H] activity ; GO:0004074
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004074 is itself a record
+        in this KB.
+  - subject: prot_P53004
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BIEA_HUMAN is an exemplar enzyme with EC 1.3.1.24 activity.
+    evidence:
+    - reference: EC:1.3.1.24
+      snippet: DR   P53004, BIEA_HUMAN ;  Q9CY64, BIEA_MOUSE ;  P46844, BIEA_RAT   ;
+      notes: ExPASy ENZYME entry EC 1.3.1.24 cross-references UniProtKB:P53004 (BIEA_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9CY64
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BIEA_MOUSE is an exemplar enzyme with EC 1.3.1.24 activity.
+    evidence:
+    - reference: EC:1.3.1.24
+      snippet: DR   P53004, BIEA_HUMAN ;  Q9CY64, BIEA_MOUSE ;  P46844, BIEA_RAT   ;
+      notes: ExPASy ENZYME entry EC 1.3.1.24 cross-references UniProtKB:Q9CY64 (BIEA_MOUSE) as a protein
+        with this activity.
+  - subject: prot_P46844
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BIEA_RAT is an exemplar enzyme with EC 1.3.1.24 activity.
+    evidence:
+    - reference: EC:1.3.1.24
+      snippet: DR   P53004, BIEA_HUMAN ;  Q9CY64, BIEA_MOUSE ;  P46844, BIEA_RAT   ;
+      notes: ExPASy ENZYME entry EC 1.3.1.24 cross-references UniProtKB:P46844 (BIEA_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

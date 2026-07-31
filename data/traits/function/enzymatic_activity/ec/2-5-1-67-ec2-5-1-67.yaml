@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -37,4 +37,121 @@ definitions:
       Catalyses: 2 dimethylallyl diphosphate = (R,R)-chrysanthemyl diphosphate + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chrysanthemyl diphosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.67. EC 2.5.1.67 maps to exactly
+    one curated Rhea reaction (RHEA:14009), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 dimethylallyl
+    diphosphate = (R,R)-chrysanthemyl diphosphate + diphosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: chrysanthemyl diphosphate synthase
+    grounding: EC:2.5.1.67
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: (R,R)-chrysanthemyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58819
+    description: Formula C10H17O7P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: chrysanthemyl diphosphate synthase activity
+    grounding: GO:0033849
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q7XYS8
+    node_type: PROTEIN
+    label: CHRDS_ARTSI
+    grounding: UniProtKB:Q7XYS8
+  - node_id: prot_P0C565
+    node_type: PROTEIN
+    label: CHRYS_TANCI
+    grounding: UniProtKB:P0C565
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:14009 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:14010
+      snippet: 2 dimethylallyl diphosphate => (R,R)-chrysanthemyl diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14010 declares side 14009_L as its substrates
+        (rh:substrates); the master reaction RHEA:14009 is undirected. This participant is CHEBI:57623
+        with coefficient 2. Rhea cites PMID:12782626, PMID:12783539, PMID:25378387, PMID:11287653 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R,R)-chrysanthemyl diphosphate is a product released by RHEA:14009 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14010
+      snippet: 2 dimethylallyl diphosphate => (R,R)-chrysanthemyl diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14010 declares side 14009_R as its products
+        (rh:products); the master reaction RHEA:14009 is undirected. This participant is CHEBI:58819 with
+        coefficient 1. Rhea cites PMID:12782626, PMID:12783539, PMID:25378387, PMID:11287653 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:14009 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14010
+      snippet: 2 dimethylallyl diphosphate => (R,R)-chrysanthemyl diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14010 declares side 14009_R as its products
+        (rh:products); the master reaction RHEA:14009 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:12782626, PMID:12783539, PMID:25378387, PMID:11287653 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.67
+      snippet: EC:2.5.1.67 > GO:chrysanthemyl diphosphate synthase activity ; GO:0033849
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033849 is itself a record
+        in this KB.
+  - subject: prot_Q7XYS8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHRDS_ARTSI is an exemplar enzyme with EC 2.5.1.67 activity.
+    evidence:
+    - reference: EC:2.5.1.67
+      snippet: DR   Q7XYS8, CHRDS_ARTSI;  P0C565, CHRYS_TANCI;
+      notes: ExPASy ENZYME entry EC 2.5.1.67 cross-references UniProtKB:Q7XYS8 (CHRDS_ARTSI) as a protein
+        with this activity.
+  - subject: prot_P0C565
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CHRYS_TANCI is an exemplar enzyme with EC 2.5.1.67 activity.
+    evidence:
+    - reference: EC:2.5.1.67
+      snippet: DR   Q7XYS8, CHRDS_ARTSI;  P0C565, CHRYS_TANCI;
+      notes: ExPASy ENZYME entry EC 2.5.1.67 cross-references UniProtKB:P0C565 (CHRYS_TANCI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

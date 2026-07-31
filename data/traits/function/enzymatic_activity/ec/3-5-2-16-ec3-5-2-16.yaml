@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.2.-
 synonyms:
@@ -30,4 +30,104 @@ definitions:
       Catalyses: maleimide + H2O = maleamate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of maleimide hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.2.16. EC 3.5.2.16 maps to exactly
+    one curated Rhea reaction (RHEA:24476), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "maleimide + H2O
+    = maleamate + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: maleimide hydrolase
+    grounding: EC:3.5.2.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: maleimide
+    node_type: CHEMICAL
+    grounding: CHEBI:16072
+    description: Formula C4H3NO2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: maleamate
+    node_type: CHEMICAL
+    grounding: CHEBI:16146
+    description: Formula C4H4NO3.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: maleimide hydrolase activity
+    grounding: GO:0050539
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: maleimide is a substrate consumed by RHEA:24476 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24477
+      snippet: maleimide + H2O => maleamate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24477 declares side 24476_L as its substrates
+        (rh:substrates); the master reaction RHEA:24476 is undirected. This participant is CHEBI:16072
+        with coefficient 1. Rhea cites PMID:9030755 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:24476 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24477
+      snippet: maleimide + H2O => maleamate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24477 declares side 24476_L as its substrates
+        (rh:substrates); the master reaction RHEA:24476 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:9030755 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: maleamate is a product released by RHEA:24476 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24477
+      snippet: maleimide + H2O => maleamate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24477 declares side 24476_R as its products
+        (rh:products); the master reaction RHEA:24476 is undirected. This participant is CHEBI:16146 with
+        coefficient 1. Rhea cites PMID:9030755 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:24476 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24477
+      snippet: maleimide + H2O => maleamate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:24477 declares side 24476_R as its products
+        (rh:products); the master reaction RHEA:24476 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:9030755 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.2.16
+      snippet: EC:3.5.2.16 > GO:maleimide hydrolase activity ; GO:0050539
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050539 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

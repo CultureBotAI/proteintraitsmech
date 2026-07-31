@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:140495
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,142 @@ definitions:
       Catalyses the reaction: 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein] + H2O = 3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein] + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[…
+  description: Substrate-to-product chemistry of RHEA:56512, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:56513 (rh:substrates → 56512_L, rh:products → 56512_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:56512
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein]
+      + H2O = 3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein]
+      + phosphate'
+  - node_id: sub1
+    label: 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[pr…
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14559
+    description: 'Rhea compound GENERIC:14559. Full Rhea name: 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein]'
+  - node_id: sub1_rp1
+    label: O(3)-(beta-D-glucuronosyl-(1->3)-beta-D-galactosyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-2-O-phospho-xylosyl)-L-serine
+      residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14559 (3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:140495
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12573
+    description: Rhea compound GENERIC:12573.
+  - node_id: prd1_rp1
+    label: 3-O-(beta-D-glucuronosyl-(1->3)-beta-D-galactosyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-xylosyl)-L-serine
+      residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12573 (3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:132093
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein]
+      is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56513
+      snippet: 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein]
+        + H2O => 3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein]
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:56513 declares side 56512_L as its substrates
+        (rh:substrates); the master reaction RHEA:56512 is undirected. This participant is GENERIC:14559
+        with coefficient 1. Rhea cites PMID:24425863 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O(3)-(beta-D-glucuronosyl-(1->3)-beta-D-galactosyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-2-O-phospho-xylosyl)-L-serine
+      residue is the reactive part of 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein].
+    evidence:
+    - reference: RHEA:56512
+      snippet: O(3)-(beta-D-glucuronosyl-(1->3)-beta-D-galactosyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-2-O-phospho-xylosyl)-L-serine
+        residue
+      notes: Rhea compound GENERIC:14559 (3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein])
+        declares rh:reactivePart = O(3)-(beta-D-glucuronosyl-(1->3)-beta-D-galactosyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-2-O-phospho-xylosyl)-L-serine
+        residue (CHEBI:140495), formula C26H39NO25P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56513
+      snippet: 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein]
+        + H2O => 3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein]
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:56513 declares side 56512_L as its substrates
+        (rh:substrates); the master reaction RHEA:56512 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:24425863 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein]
+      is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56513
+      snippet: 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein]
+        + H2O => 3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein]
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:56513 declares side 56512_R as its products
+        (rh:products); the master reaction RHEA:56512 is undirected. This participant is GENERIC:12573
+        with coefficient 1. Rhea cites PMID:24425863 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3-O-(beta-D-glucuronosyl-(1->3)-beta-D-galactosyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-xylosyl)-L-serine
+      residue is the reactive part of 3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein].
+    evidence:
+    - reference: RHEA:56512
+      snippet: 3-O-(beta-D-glucuronosyl-(1->3)-beta-D-galactosyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-xylosyl)-L-serine
+        residue
+      notes: Rhea compound GENERIC:12573 (3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein])
+        declares rh:reactivePart = 3-O-(beta-D-glucuronosyl-(1->3)-beta-D-galactosyl-(1->3)-beta-D-galactosyl-(1->4)-beta-D-xylosyl)-L-serine
+        residue (CHEBI:132093), formula C26H40NO22.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56513
+      snippet: 3-O-[beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-2-O-P-Xyl]-L-seryl-[protein]
+        + H2O => 3-O-(beta-D-GlcA-(1->3)-beta-D-Gal-(1->3)-beta-D-Gal-(1->4)-beta-D-Xyl)-L-seryl-[protein]
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:56513 declares side 56512_R as its products
+        (rh:products); the master reaction RHEA:56512 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:24425863 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

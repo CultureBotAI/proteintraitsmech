@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.79
     mapping_source: rhea2ec
@@ -30,4 +30,162 @@ definitions:
       Catalyses the reaction: D-maltose + acetyl-CoA = 1-O-acetylmaltose + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-maltose + acetyl-CoA = 1-O-acetylmaltose + CoA
+  description: Substrate-to-product chemistry of RHEA:10456, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:10457 (rh:substrates → 10456_L, rh:products → 10456_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-maltose + acetyl-CoA = 1-O-acetylmaltose + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10456
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-maltose + acetyl-CoA = 1-O-acetylmaltose + CoA'
+  - node_id: sub1
+    label: D-maltose
+    node_type: CHEMICAL
+    grounding: CHEBI:17306
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: 1-O-acetylmaltose
+    node_type: CHEMICAL
+    grounding: CHEBI:13714
+    description: Formula C14H24O12.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: maltose O-acetyltransferase activity
+    grounding: GO:0008925
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: maltose O-acetyltransferase
+    grounding: EC:2.3.1.79
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P37515
+    node_type: PROTEIN
+    label: MAA_BACSU
+    grounding: UniProtKB:P37515
+  - node_id: prot_P77791
+    node_type: PROTEIN
+    label: MAA_ECOLI
+    grounding: UniProtKB:P77791
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-maltose is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10457
+      snippet: D-maltose + acetyl-CoA => 1-O-acetylmaltose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10457 declares side 10456_L as its substrates
+        (rh:substrates); the master reaction RHEA:10456 is undirected. This participant is CHEBI:17306
+        with coefficient 1. Rhea cites PMID:12731863, PMID:1856235 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10457
+      snippet: D-maltose + acetyl-CoA => 1-O-acetylmaltose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10457 declares side 10456_L as its substrates
+        (rh:substrates); the master reaction RHEA:10456 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:12731863, PMID:1856235 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-O-acetylmaltose is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10457
+      snippet: D-maltose + acetyl-CoA => 1-O-acetylmaltose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10457 declares side 10456_R as its products
+        (rh:products); the master reaction RHEA:10456 is undirected. This participant is CHEBI:13714 with
+        coefficient 1. Rhea cites PMID:12731863, PMID:1856235 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10457
+      snippet: D-maltose + acetyl-CoA => 1-O-acetylmaltose + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:10457 declares side 10456_R as its products
+        (rh:products); the master reaction RHEA:10456 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:12731863, PMID:1856235 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:10456
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008925"/>
+      notes: The rdfs:seeAlso triple on RHEA:10456 in rhea.rdf. GO term GO:0008925 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.79; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:10456
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.79"/>
+      notes: The rh:ec triple on RHEA:10456 in rhea.rdf. EC 2.3.1.79 is itself a record in this KB.
+  - subject: prot_P37515
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAA_BACSU is an exemplar enzyme carrying EC 2.3.1.79, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.79
+      snippet: DR   P37515, MAA_BACSU  ;  P77791, MAA_ECOLI  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.79 cross-references UniProtKB:P37515 (MAA_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:10456
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.79"/>
+      notes: Rhea assigns RHEA:10456 to EC 2.3.1.79, and EC 2.3.1.79 maps to exactly one Rhea master reaction
+        (RHEA:10456), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P77791
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MAA_ECOLI is an exemplar enzyme carrying EC 2.3.1.79, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.3.1.79
+      snippet: DR   P37515, MAA_BACSU  ;  P77791, MAA_ECOLI  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.79 cross-references UniProtKB:P77791 (MAA_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:10456
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.79"/>
+      notes: Rhea assigns RHEA:10456 to EC 2.3.1.79, and EC 2.3.1.79 maps to exactly one Rhea master reaction
+        (RHEA:10456), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

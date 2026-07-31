@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -31,4 +31,89 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = 5-epi-alpha-selinene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-epi-alpha-selinene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.90. EC 4.2.3.90 maps to exactly
+    one curated Rhea reaction (RHEA:31819), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = 5-epi-alpha-selinene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 5-epi-alpha-selinene synthase
+    grounding: EC:4.2.3.90
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: 5-epi-alpha-selinene
+    node_type: CHEMICAL
+    grounding: CHEBI:63445
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_B2J4A4
+    node_type: PROTEIN
+    label: GERAS_NOSP7
+    grounding: UniProtKB:B2J4A4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:31819 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31820
+      snippet: (2E,6E)-farnesyl diphosphate => 5-epi-alpha-selinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31820 declares side 31819_L as its substrates
+        (rh:substrates); the master reaction RHEA:31819 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:18658271 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-epi-alpha-selinene is a product released by RHEA:31819 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31820
+      snippet: (2E,6E)-farnesyl diphosphate => 5-epi-alpha-selinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31820 declares side 31819_R as its products
+        (rh:products); the master reaction RHEA:31819 is undirected. This participant is CHEBI:63445 with
+        coefficient 1. Rhea cites PMID:18658271 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:31819 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31820
+      snippet: (2E,6E)-farnesyl diphosphate => 5-epi-alpha-selinene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31820 declares side 31819_R as its products
+        (rh:products); the master reaction RHEA:31819 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:18658271 for this reaction.
+  - subject: prot_B2J4A4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GERAS_NOSP7 is an exemplar enzyme with EC 4.2.3.90 activity.
+    evidence:
+    - reference: EC:4.2.3.90
+      snippet: DR   B2J4A4, GERAS_NOSP7;
+      notes: ExPASy ENZYME entry EC 4.2.3.90 cross-references UniProtKB:B2J4A4 (GERAS_NOSP7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

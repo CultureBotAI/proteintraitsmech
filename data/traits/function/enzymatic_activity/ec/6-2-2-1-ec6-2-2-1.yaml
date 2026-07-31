@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.2.2.-
 mapped_xrefs:
@@ -23,4 +23,162 @@ definitions:
       Catalyses: glycyl-[methyl-coenzyme M reductase] + hydrogen sulfide + ATP = thioglycyl-[methyl-coenzyme M reductase] + ADP + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of thioglycine synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.2.2.1. EC 6.2.2.1 maps to exactly
+    one curated Rhea reaction (RHEA:64160), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "glycyl-[methyl-coenzyme
+    M reductase] + hydrogen sulfide + ATP = thioglycyl-[methyl-coenzyme M reductase] + ADP + phosphate".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: thioglycine synthase
+    grounding: EC:6.2.2.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: glycyl-[methyl-coenzyme M reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:16535
+    description: Rhea compound GENERIC:16535.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: glycine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:16535 (glycyl-[methyl-coenzyme
+      M reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29947
+  - node_id: sub2
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: thioglycyl-[methyl-coenzyme M reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:16536
+    description: Rhea compound GENERIC:16536.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: thioglycine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:16536 (thioglycyl-[methyl-coenzyme
+      M reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:149715
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: glycyl-[methyl-coenzyme M reductase] is a substrate consumed by RHEA:64160 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:64161
+      snippet: glycyl-[methyl-coenzyme M reductase] + hydrogen sulfide + ATP => thioglycyl-[methyl-coenzyme
+        M reductase] + ADP + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64161 declares side 64160_L as its substrates
+        (rh:substrates); the master reaction RHEA:64160 is undirected. This participant is GENERIC:16535
+        with coefficient 1. Rhea cites PMID:28880150, PMID:31139720, PMID:29507203 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: glycine residue is the reactive part of glycyl-[methyl-coenzyme M reductase].
+    evidence:
+    - reference: RHEA:64160
+      snippet: glycine residue
+      notes: Rhea compound GENERIC:16535 (glycyl-[methyl-coenzyme M reductase]) declares rh:reactivePart
+        = glycine residue (CHEBI:29947).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hydrogen sulfide is a substrate consumed by RHEA:64160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64161
+      snippet: glycyl-[methyl-coenzyme M reductase] + hydrogen sulfide + ATP => thioglycyl-[methyl-coenzyme
+        M reductase] + ADP + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64161 declares side 64160_L as its substrates
+        (rh:substrates); the master reaction RHEA:64160 is undirected. This participant is CHEBI:29919
+        with coefficient 1. Rhea cites PMID:28880150, PMID:31139720, PMID:29507203 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:64160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64161
+      snippet: glycyl-[methyl-coenzyme M reductase] + hydrogen sulfide + ATP => thioglycyl-[methyl-coenzyme
+        M reductase] + ADP + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64161 declares side 64160_L as its substrates
+        (rh:substrates); the master reaction RHEA:64160 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:28880150, PMID:31139720, PMID:29507203 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: thioglycyl-[methyl-coenzyme M reductase] is a product released by RHEA:64160 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:64161
+      snippet: glycyl-[methyl-coenzyme M reductase] + hydrogen sulfide + ATP => thioglycyl-[methyl-coenzyme
+        M reductase] + ADP + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64161 declares side 64160_R as its products
+        (rh:products); the master reaction RHEA:64160 is undirected. This participant is GENERIC:16536
+        with coefficient 1. Rhea cites PMID:28880150, PMID:31139720, PMID:29507203 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: thioglycine residue is the reactive part of thioglycyl-[methyl-coenzyme M reductase].
+    evidence:
+    - reference: RHEA:64160
+      snippet: thioglycine residue
+      notes: Rhea compound GENERIC:16536 (thioglycyl-[methyl-coenzyme M reductase]) declares rh:reactivePart
+        = thioglycine residue (CHEBI:149715).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:64160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64161
+      snippet: glycyl-[methyl-coenzyme M reductase] + hydrogen sulfide + ATP => thioglycyl-[methyl-coenzyme
+        M reductase] + ADP + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64161 declares side 64160_R as its products
+        (rh:products); the master reaction RHEA:64160 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:28880150, PMID:31139720, PMID:29507203 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: phosphate is a product released by RHEA:64160 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:64161
+      snippet: glycyl-[methyl-coenzyme M reductase] + hydrogen sulfide + ATP => thioglycyl-[methyl-coenzyme
+        M reductase] + ADP + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:64161 declares side 64160_R as its products
+        (rh:products); the master reaction RHEA:64160 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:28880150, PMID:31139720, PMID:29507203 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

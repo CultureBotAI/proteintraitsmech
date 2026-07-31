@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.1.3.13
     mapping_source: rhea2ec
@@ -34,4 +34,152 @@ definitions:
       Catalyses the reaction: dTDP-4-dehydro-6-deoxy-alpha-D-glucose = dTDP-4-dehydro-beta-L-rhamnose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dTDP-4-dehydro-6-deoxy-alpha-D-glucose = dTDP-4-dehydro-beta-L-rhamnose
+  description: Substrate-to-product chemistry of RHEA:16969, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:16970 (rh:substrates → 16969_L, rh:products → 16969_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dTDP-4-dehydro-6-deoxy-alpha-D-glucose = dTDP-4-dehydro-beta-L-rhamnose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:16969
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dTDP-4-dehydro-6-deoxy-alpha-D-glucose = dTDP-4-dehydro-beta-L-rhamnose'
+  - node_id: sub1
+    label: dTDP-4-dehydro-6-deoxy-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:57649
+    description: Formula C16H22N2O15P2.
+  - node_id: prd1
+    label: dTDP-4-dehydro-beta-L-rhamnose
+    node_type: CHEMICAL
+    grounding: CHEBI:62830
+    description: Formula C16H22N2O15P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dTDP-4-dehydrorhamnose 3,5-epimerase activity
+    grounding: GO:0008830
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: dTDP-4-dehydrorhamnose 3,5-epimerase
+    grounding: EC:5.1.3.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9LQ04
+    node_type: PROTEIN
+    label: RMLCD_ARATH
+    grounding: UniProtKB:Q9LQ04
+  - node_id: prot_P37745
+    node_type: PROTEIN
+    label: RMLC_ECOLI
+    grounding: UniProtKB:P37745
+  - node_id: prot_O27818
+    node_type: PROTEIN
+    label: RMLC_METTH
+    grounding: UniProtKB:O27818
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTDP-4-dehydro-6-deoxy-alpha-D-glucose is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16970
+      snippet: dTDP-4-dehydro-6-deoxy-alpha-D-glucose => dTDP-4-dehydro-beta-L-rhamnose
+      notes: Rhea's left-to-right directional reaction RHEA:16970 declares side 16969_L as its substrates
+        (rh:substrates); the master reaction RHEA:16969 is undirected. This participant is CHEBI:57649
+        with coefficient 1. Rhea cites PMID:30600561, PMID:17046787, PMID:4199258, PMID:15020741 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dTDP-4-dehydro-beta-L-rhamnose is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16970
+      snippet: dTDP-4-dehydro-6-deoxy-alpha-D-glucose => dTDP-4-dehydro-beta-L-rhamnose
+      notes: Rhea's left-to-right directional reaction RHEA:16970 declares side 16969_R as its products
+        (rh:products); the master reaction RHEA:16969 is undirected. This participant is CHEBI:62830 with
+        coefficient 1. Rhea cites PMID:30600561, PMID:17046787, PMID:4199258, PMID:15020741 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:16969
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008830"/>
+      notes: The rdfs:seeAlso triple on RHEA:16969 in rhea.rdf. GO term GO:0008830 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.1.3.13; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:16969
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.13"/>
+      notes: The rh:ec triple on RHEA:16969 in rhea.rdf. EC 5.1.3.13 is itself a record in this KB.
+  - subject: prot_Q9LQ04
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RMLCD_ARATH is an exemplar enzyme carrying EC 5.1.3.13, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.13
+      snippet: DR   Q9LQ04, RMLCD_ARATH;  P37745, RMLC_ECOLI ;  O27818, RMLC_METTH ;
+      notes: ExPASy ENZYME entry EC 5.1.3.13 cross-references UniProtKB:Q9LQ04 (RMLCD_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:16969
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.13"/>
+      notes: Rhea assigns RHEA:16969 to EC 5.1.3.13, and EC 5.1.3.13 maps to exactly one Rhea master reaction
+        (RHEA:16969), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P37745
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RMLC_ECOLI is an exemplar enzyme carrying EC 5.1.3.13, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.13
+      snippet: DR   Q9LQ04, RMLCD_ARATH;  P37745, RMLC_ECOLI ;  O27818, RMLC_METTH ;
+      notes: ExPASy ENZYME entry EC 5.1.3.13 cross-references UniProtKB:P37745 (RMLC_ECOLI) as a protein
+        with this activity.
+    - reference: RHEA:16969
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.13"/>
+      notes: Rhea assigns RHEA:16969 to EC 5.1.3.13, and EC 5.1.3.13 maps to exactly one Rhea master reaction
+        (RHEA:16969), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O27818
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RMLC_METTH is an exemplar enzyme carrying EC 5.1.3.13, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.13
+      snippet: DR   Q9LQ04, RMLCD_ARATH;  P37745, RMLC_ECOLI ;  O27818, RMLC_METTH ;
+      notes: ExPASy ENZYME entry EC 5.1.3.13 cross-references UniProtKB:O27818 (RMLC_METTH) as a protein
+        with this activity.
+    - reference: RHEA:16969
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.13"/>
+      notes: Rhea assigns RHEA:16969 to EC 5.1.3.13, and EC 5.1.3.13 maps to exactly one Rhea master reaction
+        (RHEA:16969), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

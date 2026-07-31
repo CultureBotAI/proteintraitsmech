@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.1.1.19
     mapping_source: rhea2ec
@@ -28,4 +28,95 @@ definitions:
       Catalyses the reaction: O-ureido-L-serine = O-ureido-D-serine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of O-ureido-L-serine = O-ureido-D-serine
+  description: Substrate-to-product chemistry of RHEA:36707, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:36708 (rh:substrates → 36707_L, rh:products → 36707_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of O-ureido-L-serine = O-ureido-D-serine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:36707
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: O-ureido-L-serine = O-ureido-D-serine'
+  - node_id: sub1
+    label: O-ureido-L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:73389
+    description: Formula C4H9N3O4.
+  - node_id: prd1
+    label: O-ureido-D-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:74158
+    description: Formula C4H9N3O4.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: O-ureido-serine racemase
+    grounding: EC:5.1.1.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_D2Z026
+    node_type: PROTEIN
+    label: DCSC_STRLA
+    grounding: UniProtKB:D2Z026
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: O-ureido-L-serine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36708
+      snippet: O-ureido-L-serine => O-ureido-D-serine
+      notes: Rhea's left-to-right directional reaction RHEA:36708 declares side 36707_L as its substrates
+        (rh:substrates); the master reaction RHEA:36707 is undirected. This participant is CHEBI:73389
+        with coefficient 1. Rhea cites PMID:20086163, PMID:22307920, PMID:23529730 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-ureido-D-serine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36708
+      snippet: O-ureido-L-serine => O-ureido-D-serine
+      notes: Rhea's left-to-right directional reaction RHEA:36708 declares side 36707_R as its products
+        (rh:products); the master reaction RHEA:36707 is undirected. This participant is CHEBI:74158 with
+        coefficient 1. Rhea cites PMID:20086163, PMID:22307920, PMID:23529730 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.1.1.19; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:36707
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.19"/>
+      notes: The rh:ec triple on RHEA:36707 in rhea.rdf. EC 5.1.1.19 is itself a record in this KB.
+  - subject: prot_D2Z026
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DCSC_STRLA is an exemplar enzyme carrying EC 5.1.1.19, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.1.19
+      snippet: DR   D2Z026, DCSC_STRLA ;
+      notes: ExPASy ENZYME entry EC 5.1.1.19 cross-references UniProtKB:D2Z026 (DCSC_STRLA) as a protein
+        with this activity.
+    - reference: RHEA:36707
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.19"/>
+      notes: Rhea assigns RHEA:36707 to EC 5.1.1.19, and EC 5.1.1.19 maps to exactly one Rhea master reaction
+        (RHEA:36707), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

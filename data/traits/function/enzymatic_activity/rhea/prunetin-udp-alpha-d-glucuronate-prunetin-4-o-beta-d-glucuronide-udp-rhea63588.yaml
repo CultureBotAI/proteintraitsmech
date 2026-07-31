@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:147403
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,93 @@ definitions:
       Catalyses the reaction: prunetin + UDP-alpha-D-glucuronate = prunetin-4'-O-beta-D-glucuronide + UDP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of prunetin + UDP-alpha-D-glucuronate = prunetin-4'-O-beta-D-glucuronide +
+    UDP
+  description: Substrate-to-product chemistry of RHEA:63588, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63589 (rh:substrates → 63588_L, rh:products → 63588_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of prunetin + UDP-alpha-D-glucuronate = prunetin-4'-O-beta-D-glucuronide + UDP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63588
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: prunetin + UDP-alpha-D-glucuronate = prunetin-4''-O-beta-D-glucuronide + UDP'
+  - node_id: sub1
+    label: prunetin
+    node_type: CHEMICAL
+    grounding: CHEBI:147403
+    description: Formula C16H11O5.
+  - node_id: sub2
+    label: UDP-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58052
+    description: Formula C15H19N2O18P2.
+  - node_id: prd1
+    label: prunetin-4'-O-beta-D-glucuronide
+    node_type: CHEMICAL
+    grounding: CHEBI:147404
+    description: Formula C22H19O11.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: prunetin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63589
+      snippet: prunetin + UDP-alpha-D-glucuronate => prunetin-4'-O-beta-D-glucuronide + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:63589 declares side 63588_L as its substrates
+        (rh:substrates); the master reaction RHEA:63588 is undirected. This participant is CHEBI:147403
+        with coefficient 1. Rhea cites PMID:18052087, PMID:19545173 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-glucuronate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63589
+      snippet: prunetin + UDP-alpha-D-glucuronate => prunetin-4'-O-beta-D-glucuronide + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:63589 declares side 63588_L as its substrates
+        (rh:substrates); the master reaction RHEA:63588 is undirected. This participant is CHEBI:58052
+        with coefficient 1. Rhea cites PMID:18052087, PMID:19545173 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: prunetin-4'-O-beta-D-glucuronide is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:63589
+      snippet: prunetin + UDP-alpha-D-glucuronate => prunetin-4'-O-beta-D-glucuronide + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:63589 declares side 63588_R as its products
+        (rh:products); the master reaction RHEA:63588 is undirected. This participant is CHEBI:147404
+        with coefficient 1. Rhea cites PMID:18052087, PMID:19545173 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63589
+      snippet: prunetin + UDP-alpha-D-glucuronate => prunetin-4'-O-beta-D-glucuronide + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:63589 declares side 63588_R as its products
+        (rh:products); the master reaction RHEA:63588 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:18052087, PMID:19545173 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

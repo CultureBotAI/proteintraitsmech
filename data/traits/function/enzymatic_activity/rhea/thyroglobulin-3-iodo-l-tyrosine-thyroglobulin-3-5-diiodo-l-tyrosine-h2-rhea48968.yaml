@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.11.1.8
     mapping_source: rhea2ec
@@ -44,4 +44,234 @@ definitions:
       Catalyses the reaction: [thyroglobulin]-3-iodo-L-tyrosine + [thyroglobulin]-3,5-diiodo-L-tyrosine + H2O2 = [thyroglobulin]-3,3',5-triiodo-L-thyronine + [thyroglobulin]-dehydroalanine + 2 H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [thyroglobulin]-3-iodo-L-tyrosine + [thyroglobulin]-3,5-diiodo-L-tyrosine
+    + H2O2 = [thy…
+  description: Substrate-to-product chemistry of RHEA:48968, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:48969 (rh:substrates → 48968_L, rh:products → 48968_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [thyroglobulin]-3-iodo-L-tyrosine + [thyroglobulin]-3,5-diiodo-L-tyrosine +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:48968
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [thyroglobulin]-3-iodo-L-tyrosine + [thyroglobulin]-3,5-diiodo-L-tyrosine + H2O2
+      = [thyroglobulin]-3,3'',5-triiodo-L-thyronine + [thyroglobulin]-dehydroalanine + 2 H2O'
+  - node_id: sub1
+    label: '[thyroglobulin]-3-iodo-L-tyrosine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12275
+    description: Rhea compound GENERIC:12275.
+  - node_id: sub1_rp1
+    label: 3-iodo-L-tyrosine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12275 ([thyroglobulin]-3-iodo-L-tyrosine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90870
+  - node_id: sub2
+    label: '[thyroglobulin]-3,5-diiodo-L-tyrosine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12276
+    description: Rhea compound GENERIC:12276.
+  - node_id: sub2_rp1
+    label: 3,5-diiodo-L-tyrosine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12276 ([thyroglobulin]-3,5-diiodo-L-tyrosine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90871
+  - node_id: sub3
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: prd1
+    label: '[thyroglobulin]-3,3'',5-triiodo-L-thyronine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12279
+    description: Rhea compound GENERIC:12279.
+  - node_id: prd1_rp1
+    label: 3,3',5-triiodo-L-thyronine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12279 ([thyroglobulin]-3,3',5-triiodo-L-thyronine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90874
+  - node_id: prd2
+    label: '[thyroglobulin]-dehydroalanine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12278
+    description: Rhea compound GENERIC:12278.
+  - node_id: prd2_rp1
+    label: dehydroalanine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12278 ([thyroglobulin]-dehydroalanine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:90873
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: iodide peroxidase activity
+    grounding: GO:0004447
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: iodide peroxidase
+    grounding: EC:1.11.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[thyroglobulin]-3-iodo-L-tyrosine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:48969
+      snippet: '[thyroglobulin]-3-iodo-L-tyrosine + [thyroglobulin]-3,5-diiodo-L-tyrosine + H2O2 => [thyroglobulin]-3,3'',5-triiodo-L-thyronine
+        + [thyroglobulin]-dehydroalanine + 2 H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:48969 declares side 48968_L as its substrates
+        (rh:substrates); the master reaction RHEA:48968 is undirected. This participant is GENERIC:12275
+        with coefficient 1. Rhea cites PMID:7142155, PMID:8448141, PMID:16098474, PMID:6706930 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3-iodo-L-tyrosine residue is the reactive part of [thyroglobulin]-3-iodo-L-tyrosine.
+    evidence:
+    - reference: RHEA:48968
+      snippet: 3-iodo-L-tyrosine residue
+      notes: Rhea compound GENERIC:12275 ([thyroglobulin]-3-iodo-L-tyrosine) declares rh:reactivePart
+        = 3-iodo-L-tyrosine residue (CHEBI:90870), formula C9H8INO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: '[thyroglobulin]-3,5-diiodo-L-tyrosine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:48969
+      snippet: '[thyroglobulin]-3-iodo-L-tyrosine + [thyroglobulin]-3,5-diiodo-L-tyrosine + H2O2 => [thyroglobulin]-3,3'',5-triiodo-L-thyronine
+        + [thyroglobulin]-dehydroalanine + 2 H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:48969 declares side 48968_L as its substrates
+        (rh:substrates); the master reaction RHEA:48968 is undirected. This participant is GENERIC:12276
+        with coefficient 1. Rhea cites PMID:7142155, PMID:8448141, PMID:16098474, PMID:6706930 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: 3,5-diiodo-L-tyrosine residue is the reactive part of [thyroglobulin]-3,5-diiodo-L-tyrosine.
+    evidence:
+    - reference: RHEA:48968
+      snippet: 3,5-diiodo-L-tyrosine residue
+      notes: Rhea compound GENERIC:12276 ([thyroglobulin]-3,5-diiodo-L-tyrosine) declares rh:reactivePart
+        = 3,5-diiodo-L-tyrosine residue (CHEBI:90871), formula C9H7I2NO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:48969
+      snippet: '[thyroglobulin]-3-iodo-L-tyrosine + [thyroglobulin]-3,5-diiodo-L-tyrosine + H2O2 => [thyroglobulin]-3,3'',5-triiodo-L-thyronine
+        + [thyroglobulin]-dehydroalanine + 2 H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:48969 declares side 48968_L as its substrates
+        (rh:substrates); the master reaction RHEA:48968 is undirected. This participant is CHEBI:16240
+        with coefficient 1. Rhea cites PMID:7142155, PMID:8448141, PMID:16098474, PMID:6706930 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[thyroglobulin]-3,3'',5-triiodo-L-thyronine is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:48969
+      snippet: '[thyroglobulin]-3-iodo-L-tyrosine + [thyroglobulin]-3,5-diiodo-L-tyrosine + H2O2 => [thyroglobulin]-3,3'',5-triiodo-L-thyronine
+        + [thyroglobulin]-dehydroalanine + 2 H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:48969 declares side 48968_R as its products
+        (rh:products); the master reaction RHEA:48968 is undirected. This participant is GENERIC:12279
+        with coefficient 1. Rhea cites PMID:7142155, PMID:8448141, PMID:16098474, PMID:6706930 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3,3',5-triiodo-L-thyronine residue is the reactive part of [thyroglobulin]-3,3',5-triiodo-L-thyronine.
+    evidence:
+    - reference: RHEA:48968
+      snippet: 3,3',5-triiodo-L-thyronine residue
+      notes: Rhea compound GENERIC:12279 ([thyroglobulin]-3,3',5-triiodo-L-thyronine) declares rh:reactivePart
+        = 3,3',5-triiodo-L-thyronine residue (CHEBI:90874), formula C15H10I3NO3.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: '[thyroglobulin]-dehydroalanine is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:48969
+      snippet: '[thyroglobulin]-3-iodo-L-tyrosine + [thyroglobulin]-3,5-diiodo-L-tyrosine + H2O2 => [thyroglobulin]-3,3'',5-triiodo-L-thyronine
+        + [thyroglobulin]-dehydroalanine + 2 H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:48969 declares side 48968_R as its products
+        (rh:products); the master reaction RHEA:48968 is undirected. This participant is GENERIC:12278
+        with coefficient 1. Rhea cites PMID:7142155, PMID:8448141, PMID:16098474, PMID:6706930 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: dehydroalanine residue is the reactive part of [thyroglobulin]-dehydroalanine.
+    evidence:
+    - reference: RHEA:48968
+      snippet: dehydroalanine residue
+      notes: Rhea compound GENERIC:12278 ([thyroglobulin]-dehydroalanine) declares rh:reactivePart = dehydroalanine
+        residue (CHEBI:90873), formula C3H3NO.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:48969
+      snippet: '[thyroglobulin]-3-iodo-L-tyrosine + [thyroglobulin]-3,5-diiodo-L-tyrosine + H2O2 => [thyroglobulin]-3,3'',5-triiodo-L-thyronine
+        + [thyroglobulin]-dehydroalanine + 2 H2O'
+      notes: Rhea's left-to-right directional reaction RHEA:48969 declares side 48968_R as its products
+        (rh:products); the master reaction RHEA:48968 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:7142155, PMID:8448141, PMID:16098474, PMID:6706930 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:48968
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004447"/>
+      notes: The rdfs:seeAlso triple on RHEA:48968 in rhea.rdf. GO term GO:0004447 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.11.1.8; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:48968
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.11.1.8"/>
+      notes: The rh:ec triple on RHEA:48968 in rhea.rdf. EC 1.11.1.8 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

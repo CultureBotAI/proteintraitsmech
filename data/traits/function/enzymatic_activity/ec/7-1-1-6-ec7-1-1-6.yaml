@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:7.1.1.-
 synonyms:
@@ -41,4 +41,221 @@ definitions:
       Catalyses: 2 oxidized [plastocyanin] + a plastoquinol + 2 H(+)(in) = 2 reduced [plastocyanin] + a plastoquinone + 4 H(+)(out)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of plastoquinol--plastocyanin reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:7.1.1.6. EC 7.1.1.6 maps to exactly
+    one curated Rhea reaction (RHEA:22148), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 oxidized [plastocyanin]
+    + a plastoquinol + 2 H(+)(in) = 2 reduced [plastocyanin] + a plastoquinone + 4 H(+)(out)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: plastoquinol--plastocyanin reductase
+    grounding: EC:7.1.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: oxidized [plastocyanin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10040
+    description: Rhea compound GENERIC:10040.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: Cu(2+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:10040 (oxidized
+      [plastocyanin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29036
+  - node_id: sub2
+    label: a plastoquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:62192
+    xrefs:
+    - RHEA-COMP:9561
+    description: Rhea compound POLYMER:9561. Formula C8H10O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: sub3
+    label: H(+) (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: reduced [plastocyanin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10039
+    description: Rhea compound GENERIC:10039.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: Cu(+)
+    description: The reacting group Rhea names inside the generic participant GENERIC:10039 (reduced [plastocyanin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:49552
+  - node_id: prd2
+    label: a plastoquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:17757
+    xrefs:
+    - RHEA-COMP:9562
+    description: Rhea compound POLYMER:9562. Formula C8H8O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: prd3
+    label: H(+) (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: plastoquinol--plastocyanin reductase activity
+    grounding: GO:0009496
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9ZR03
+    node_type: PROTEIN
+    label: UCRIA_ARATH
+    grounding: UniProtKB:Q9ZR03
+  - node_id: prot_Q7XYM4
+    node_type: PROTEIN
+    label: UCRIA_BIGNA
+    grounding: UniProtKB:Q7XYM4
+  - node_id: prot_P49728
+    node_type: PROTEIN
+    label: UCRIA_CHLRE
+    grounding: UniProtKB:P49728
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: oxidized [plastocyanin] is a substrate consumed by RHEA:22148 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:22149
+      snippet: 2 oxidized [plastocyanin] + a plastoquinol + 2 H(+)(in) => 2 reduced [plastocyanin] + a
+        plastoquinone + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:22149 declares side 22148_L as its substrates
+        (rh:substrates); the master reaction RHEA:22148 is undirected. This participant is GENERIC:10040
+        with coefficient 2. Rhea cites PMID:16787635, PMID:6269845 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Cu(2+) is the reactive part of oxidized [plastocyanin].
+    evidence:
+    - reference: RHEA:22148
+      snippet: Cu(2+)
+      notes: Rhea compound GENERIC:10040 (oxidized [plastocyanin]) declares rh:reactivePart = Cu(2+) (CHEBI:29036).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a plastoquinol is a substrate consumed by RHEA:22148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22149
+      snippet: 2 oxidized [plastocyanin] + a plastoquinol + 2 H(+)(in) => 2 reduced [plastocyanin] + a
+        plastoquinone + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:22149 declares side 22148_L as its substrates
+        (rh:substrates); the master reaction RHEA:22148 is undirected. This participant is POLYMER:9561
+        with coefficient 1. Rhea cites PMID:16787635, PMID:6269845 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:22148 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:22149
+      snippet: 2 oxidized [plastocyanin] + a plastoquinol + 2 H(+)(in) => 2 reduced [plastocyanin] + a
+        plastoquinone + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:22149 declares side 22148_L as its substrates
+        (rh:substrates); the master reaction RHEA:22148 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:16787635, PMID:6269845 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: reduced [plastocyanin] is a product released by RHEA:22148 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:22149
+      snippet: 2 oxidized [plastocyanin] + a plastoquinol + 2 H(+)(in) => 2 reduced [plastocyanin] + a
+        plastoquinone + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:22149 declares side 22148_R as its products
+        (rh:products); the master reaction RHEA:22148 is undirected. This participant is GENERIC:10039
+        with coefficient 2. Rhea cites PMID:16787635, PMID:6269845 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Cu(+) is the reactive part of reduced [plastocyanin].
+    evidence:
+    - reference: RHEA:22148
+      snippet: Cu(+)
+      notes: Rhea compound GENERIC:10039 (reduced [plastocyanin]) declares rh:reactivePart = Cu(+) (CHEBI:49552).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a plastoquinone is a product released by RHEA:22148 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22149
+      snippet: 2 oxidized [plastocyanin] + a plastoquinol + 2 H(+)(in) => 2 reduced [plastocyanin] + a
+        plastoquinone + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:22149 declares side 22148_R as its products
+        (rh:products); the master reaction RHEA:22148 is undirected. This participant is POLYMER:9562
+        with coefficient 1. Rhea cites PMID:16787635, PMID:6269845 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:22148 (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:22149
+      snippet: 2 oxidized [plastocyanin] + a plastoquinol + 2 H(+)(in) => 2 reduced [plastocyanin] + a
+        plastoquinone + 4 H(+)(out)
+      notes: Rhea's left-to-right directional reaction RHEA:22149 declares side 22148_R as its products
+        (rh:products); the master reaction RHEA:22148 is undirected. This participant is CHEBI:15378 with
+        coefficient 4. Rhea cites PMID:16787635, PMID:6269845 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:7.1.1.6
+      snippet: EC:7.1.1.6 > GO:plastoquinol--plastocyanin reductase activity ; GO:0009496
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0009496 is itself a record
+        in this KB.
+  - subject: prot_Q9ZR03
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UCRIA_ARATH is an exemplar enzyme with EC 7.1.1.6 activity.
+    evidence:
+    - reference: EC:7.1.1.6
+      snippet: DR   Q9ZR03, UCRIA_ARATH;  Q7XYM4, UCRIA_BIGNA;  P49728, UCRIA_CHLRE;
+      notes: ExPASy ENZYME entry EC 7.1.1.6 cross-references UniProtKB:Q9ZR03 (UCRIA_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q7XYM4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UCRIA_BIGNA is an exemplar enzyme with EC 7.1.1.6 activity.
+    evidence:
+    - reference: EC:7.1.1.6
+      snippet: DR   Q9ZR03, UCRIA_ARATH;  Q7XYM4, UCRIA_BIGNA;  P49728, UCRIA_CHLRE;
+      notes: ExPASy ENZYME entry EC 7.1.1.6 cross-references UniProtKB:Q7XYM4 (UCRIA_BIGNA) as a protein
+        with this activity.
+  - subject: prot_P49728
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UCRIA_CHLRE is an exemplar enzyme with EC 7.1.1.6 activity.
+    evidence:
+    - reference: EC:7.1.1.6
+      snippet: DR   Q9ZR03, UCRIA_ARATH;  Q7XYM4, UCRIA_BIGNA;  P49728, UCRIA_CHLRE;
+      notes: ExPASy ENZYME entry EC 7.1.1.6 cross-references UniProtKB:P49728 (UCRIA_CHLRE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

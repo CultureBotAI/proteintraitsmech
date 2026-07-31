@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -30,4 +30,91 @@ definitions:
       Catalyses: leachianone G + dimethylallyl diphosphate = sophoraflavanone G + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of leachianone-G 2''-dimethylallyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.71. EC 2.5.1.71 maps to exactly
+    one curated Rhea reaction (RHEA:10852), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "leachianone G
+    + dimethylallyl diphosphate = sophoraflavanone G + diphosphate". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: leachianone-G 2''-dimethylallyltransferase
+    grounding: EC:2.5.1.71
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: leachianone G
+    node_type: CHEMICAL
+    grounding: CHEBI:50208
+    description: Formula C20H20O6.
+  - node_id: sub2
+    label: dimethylallyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57623
+    description: Formula C5H9O7P2.
+  - node_id: prd1
+    label: sophoraflavanone G
+    node_type: CHEMICAL
+    grounding: CHEBI:50209
+    description: Formula C25H28O6.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: leachianone G is a substrate consumed by RHEA:10852 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10853
+      snippet: leachianone G + dimethylallyl diphosphate => sophoraflavanone G + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10853 declares side 10852_L as its substrates
+        (rh:substrates); the master reaction RHEA:10852 is undirected. This participant is CHEBI:50208
+        with coefficient 1. Rhea cites PMID:14551337 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dimethylallyl diphosphate is a substrate consumed by RHEA:10852 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10853
+      snippet: leachianone G + dimethylallyl diphosphate => sophoraflavanone G + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10853 declares side 10852_L as its substrates
+        (rh:substrates); the master reaction RHEA:10852 is undirected. This participant is CHEBI:57623
+        with coefficient 1. Rhea cites PMID:14551337 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sophoraflavanone G is a product released by RHEA:10852 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10853
+      snippet: leachianone G + dimethylallyl diphosphate => sophoraflavanone G + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10853 declares side 10852_R as its products
+        (rh:products); the master reaction RHEA:10852 is undirected. This participant is CHEBI:50209 with
+        coefficient 1. Rhea cites PMID:14551337 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:10852 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10853
+      snippet: leachianone G + dimethylallyl diphosphate => sophoraflavanone G + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:10853 declares side 10852_R as its products
+        (rh:products); the master reaction RHEA:10852 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:14551337 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

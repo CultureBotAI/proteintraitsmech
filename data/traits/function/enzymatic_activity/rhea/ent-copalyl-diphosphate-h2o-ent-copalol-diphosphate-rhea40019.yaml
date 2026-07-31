@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58553
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: ent-copalyl diphosphate + H2O = (-)-ent-copalol + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ent-copalyl diphosphate + H2O = (-)-ent-copalol + diphosphate
+  description: Substrate-to-product chemistry of RHEA:40019, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:40020 (rh:substrates → 40019_L, rh:products → 40019_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of ent-copalyl diphosphate + H2O = (-)-ent-copalol + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:40019
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: ent-copalyl diphosphate + H2O = (-)-ent-copalol + diphosphate'
+  - node_id: sub1
+    label: ent-copalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58553
+    description: Formula C20H33O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (-)-ent-copalol
+    node_type: CHEMICAL
+    grounding: CHEBI:76950
+    description: Formula C20H34O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ent-copalyl diphosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:40020
+      snippet: ent-copalyl diphosphate + H2O => (-)-ent-copalol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:40020 declares side 40019_L as its substrates
+        (rh:substrates); the master reaction RHEA:40019 is undirected. This participant is CHEBI:58553
+        with coefficient 1. Rhea cites PMID:21290071 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40020
+      snippet: ent-copalyl diphosphate + H2O => (-)-ent-copalol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:40020 declares side 40019_L as its substrates
+        (rh:substrates); the master reaction RHEA:40019 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21290071 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-ent-copalol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40020
+      snippet: ent-copalyl diphosphate + H2O => (-)-ent-copalol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:40020 declares side 40019_R as its products
+        (rh:products); the master reaction RHEA:40019 is undirected. This participant is CHEBI:76950 with
+        coefficient 1. Rhea cites PMID:21290071 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40020
+      snippet: ent-copalyl diphosphate + H2O => (-)-ent-copalol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:40020 declares side 40019_R as its products
+        (rh:products); the master reaction RHEA:40019 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21290071 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

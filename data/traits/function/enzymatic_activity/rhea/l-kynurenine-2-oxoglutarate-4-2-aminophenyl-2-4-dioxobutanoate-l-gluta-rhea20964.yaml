@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57959
     role: SUBSTRATE_OR_PRODUCT
@@ -35,4 +35,96 @@ definitions:
       Catalyses the reaction: L-kynurenine + 2-oxoglutarate = 4-(2-aminophenyl)-2,4-dioxobutanoate + L-glutamate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-kynurenine + 2-oxoglutarate = 4-(2-aminophenyl)-2,4-dioxobutanoate +
+    L-glutamate
+  description: Substrate-to-product chemistry of RHEA:20964, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20965 (rh:substrates → 20964_L, rh:products → 20964_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-kynurenine + 2-oxoglutarate = 4-(2-aminophenyl)-2,4-dioxobutanoate + L-glu…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20964
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-kynurenine + 2-oxoglutarate = 4-(2-aminophenyl)-2,4-dioxobutanoate + L-glutamate'
+  - node_id: sub1
+    label: L-kynurenine
+    node_type: CHEMICAL
+    grounding: CHEBI:57959
+    description: Formula C10H12N2O3.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: 4-(2-aminophenyl)-2,4-dioxobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:58147
+    description: Formula C10H8NO4.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-kynurenine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20965
+      snippet: L-kynurenine + 2-oxoglutarate => 4-(2-aminophenyl)-2,4-dioxobutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:20965 declares side 20964_L as its substrates
+        (rh:substrates); the master reaction RHEA:20964 is undirected. This participant is CHEBI:57959
+        with coefficient 1. Rhea cites PMID:18620547, PMID:30873412, PMID:13449053, PMID:13357462 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20965
+      snippet: L-kynurenine + 2-oxoglutarate => 4-(2-aminophenyl)-2,4-dioxobutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:20965 declares side 20964_L as its substrates
+        (rh:substrates); the master reaction RHEA:20964 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:18620547, PMID:30873412, PMID:13449053, PMID:13357462 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-(2-aminophenyl)-2,4-dioxobutanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20965
+      snippet: L-kynurenine + 2-oxoglutarate => 4-(2-aminophenyl)-2,4-dioxobutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:20965 declares side 20964_R as its products
+        (rh:products); the master reaction RHEA:20964 is undirected. This participant is CHEBI:58147 with
+        coefficient 1. Rhea cites PMID:18620547, PMID:30873412, PMID:13449053, PMID:13357462 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20965
+      snippet: L-kynurenine + 2-oxoglutarate => 4-(2-aminophenyl)-2,4-dioxobutanoate + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:20965 declares side 20964_R as its products
+        (rh:products); the master reaction RHEA:20964 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:18620547, PMID:30873412, PMID:13449053, PMID:13357462 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

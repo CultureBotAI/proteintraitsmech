@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.3.-
 synonyms:
@@ -37,4 +37,138 @@ definitions:
       Catalyses: (R)-2-benzylsuccinate + succinyl-CoA = (R)-2-benzylsuccinyl-CoA + succinate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of succinyl-CoA:(R)-benzylsuccinate CoA-transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.3.15. EC 2.8.3.15 maps to exactly
+    one curated Rhea reaction (RHEA:16469), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-2-benzylsuccinate
+    + succinyl-CoA = (R)-2-benzylsuccinyl-CoA + succinate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: succinyl-CoA:(R)-benzylsuccinate CoA-transferase
+    grounding: EC:2.8.3.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-2-benzylsuccinate
+    node_type: CHEMICAL
+    grounding: CHEBI:58692
+    description: Formula C11H10O4.
+  - node_id: sub2
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: prd1
+    label: (R)-2-benzylsuccinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57253
+    description: Formula C32H41N7O19P3S.
+  - node_id: prd2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: succinyl-CoA:(R)-benzylsuccinate CoA-transferase activity
+    grounding: GO:0033877
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9KJF0
+    node_type: PROTEIN
+    label: BBSE_THAAR
+    grounding: UniProtKB:Q9KJF0
+  - node_id: prot_Q9KJE9
+    node_type: PROTEIN
+    label: BBSF_THAAR
+    grounding: UniProtKB:Q9KJE9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-2-benzylsuccinate is a substrate consumed by RHEA:16469 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16470
+      snippet: (R)-2-benzylsuccinate + succinyl-CoA => (R)-2-benzylsuccinyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:16470 declares side 16469_L as its substrates
+        (rh:substrates); the master reaction RHEA:16469 is undirected. This participant is CHEBI:58692
+        with coefficient 1. Rhea cites PMID:11418570, PMID:27102732, PMID:10589736, PMID:11749953 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: succinyl-CoA is a substrate consumed by RHEA:16469 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16470
+      snippet: (R)-2-benzylsuccinate + succinyl-CoA => (R)-2-benzylsuccinyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:16470 declares side 16469_L as its substrates
+        (rh:substrates); the master reaction RHEA:16469 is undirected. This participant is CHEBI:57292
+        with coefficient 1. Rhea cites PMID:11418570, PMID:27102732, PMID:10589736, PMID:11749953 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (R)-2-benzylsuccinyl-CoA is a product released by RHEA:16469 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16470
+      snippet: (R)-2-benzylsuccinate + succinyl-CoA => (R)-2-benzylsuccinyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:16470 declares side 16469_R as its products
+        (rh:products); the master reaction RHEA:16469 is undirected. This participant is CHEBI:57253 with
+        coefficient 1. Rhea cites PMID:11418570, PMID:27102732, PMID:10589736, PMID:11749953 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinate is a product released by RHEA:16469 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16470
+      snippet: (R)-2-benzylsuccinate + succinyl-CoA => (R)-2-benzylsuccinyl-CoA + succinate
+      notes: Rhea's left-to-right directional reaction RHEA:16470 declares side 16469_R as its products
+        (rh:products); the master reaction RHEA:16469 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:11418570, PMID:27102732, PMID:10589736, PMID:11749953 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.3.15
+      snippet: EC:2.8.3.15 > GO:succinyl-CoA:(R)-benzylsuccinate CoA-transferase activity ; GO:0033877
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033877 is itself a record
+        in this KB.
+  - subject: prot_Q9KJF0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BBSE_THAAR is an exemplar enzyme with EC 2.8.3.15 activity.
+    evidence:
+    - reference: EC:2.8.3.15
+      snippet: DR   Q9KJF0, BBSE_THAAR ;  Q9KJE9, BBSF_THAAR ;
+      notes: ExPASy ENZYME entry EC 2.8.3.15 cross-references UniProtKB:Q9KJF0 (BBSE_THAAR) as a protein
+        with this activity.
+  - subject: prot_Q9KJE9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BBSF_THAAR is an exemplar enzyme with EC 2.8.3.15 activity.
+    evidence:
+    - reference: EC:2.8.3.15
+      snippet: DR   Q9KJF0, BBSE_THAAR ;  Q9KJE9, BBSF_THAAR ;
+      notes: ExPASy ENZYME entry EC 2.8.3.15 cross-references UniProtKB:Q9KJE9 (BBSF_THAAR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

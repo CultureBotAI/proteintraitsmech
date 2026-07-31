@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 mapped_xrefs:
@@ -36,4 +36,81 @@ definitions:
       Catalyses: Deacetylation of xylans and xylo-oligosaccharides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetylxylan esterase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.72. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Deacetylation
+    of xylans and xylo-oligosaccharides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: acetylxylan esterase
+    grounding: EC:3.1.1.72
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acetylxylan esterase activity
+    grounding: GO:0046555
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q92194
+    node_type: PROTEIN
+    label: AXE1_ASPAW
+    grounding: UniProtKB:Q92194
+  - node_id: prot_A1CSZ8
+    node_type: PROTEIN
+    label: AXE1_ASPCL
+    grounding: UniProtKB:A1CSZ8
+  - node_id: prot_A1DBP9
+    node_type: PROTEIN
+    label: AXE1_ASPF1
+    grounding: UniProtKB:A1DBP9
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.1.72
+      snippet: EC:3.1.1.72 > GO:acetylxylan esterase activity ; GO:0046555
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0046555 is itself a record
+        in this KB.
+  - subject: prot_Q92194
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AXE1_ASPAW is an exemplar enzyme with EC 3.1.1.72 activity.
+    evidence:
+    - reference: EC:3.1.1.72
+      snippet: DR   Q92194, AXE1_ASPAW ;  A1CSZ8, AXE1_ASPCL ;  A1DBP9, AXE1_ASPF1 ;
+      notes: ExPASy ENZYME entry EC 3.1.1.72 cross-references UniProtKB:Q92194 (AXE1_ASPAW) as a protein
+        with this activity.
+  - subject: prot_A1CSZ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AXE1_ASPCL is an exemplar enzyme with EC 3.1.1.72 activity.
+    evidence:
+    - reference: EC:3.1.1.72
+      snippet: DR   Q92194, AXE1_ASPAW ;  A1CSZ8, AXE1_ASPCL ;  A1DBP9, AXE1_ASPF1 ;
+      notes: ExPASy ENZYME entry EC 3.1.1.72 cross-references UniProtKB:A1CSZ8 (AXE1_ASPCL) as a protein
+        with this activity.
+  - subject: prot_A1DBP9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AXE1_ASPF1 is an exemplar enzyme with EC 3.1.1.72 activity.
+    evidence:
+    - reference: EC:3.1.1.72
+      snippet: DR   Q92194, AXE1_ASPAW ;  A1CSZ8, AXE1_ASPCL ;  A1DBP9, AXE1_ASPF1 ;
+      notes: ExPASy ENZYME entry EC 3.1.1.72 cross-references UniProtKB:A1DBP9 (AXE1_ASPF1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

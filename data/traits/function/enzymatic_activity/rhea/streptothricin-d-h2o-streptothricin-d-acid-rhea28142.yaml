@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.2.19
     mapping_source: rhea2ec
@@ -28,4 +28,91 @@ definitions:
       Catalyses the reaction: streptothricin D + H2O = streptothricin D acid
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of streptothricin D + H2O = streptothricin D acid
+  description: Substrate-to-product chemistry of RHEA:28142, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28143 (rh:substrates → 28142_L, rh:products → 28142_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of streptothricin D + H2O = streptothricin D acid
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28142
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: streptothricin D + H2O = streptothricin D acid'
+  - node_id: sub1
+    label: streptothricin D
+    node_type: CHEMICAL
+    grounding: CHEBI:60829
+    description: Formula C31H63N12O10.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: streptothricin D acid
+    node_type: CHEMICAL
+    grounding: CHEBI:60839
+    description: Formula C31H65N12O11.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: streptothricin hydrolase
+    grounding: EC:3.5.2.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: streptothricin D is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28143
+      snippet: streptothricin D + H2O => streptothricin D acid
+      notes: Rhea's left-to-right directional reaction RHEA:28143 declares side 28142_L as its substrates
+        (rh:substrates); the master reaction RHEA:28142 is undirected. This participant is CHEBI:60829
+        with coefficient 1. Rhea cites PMID:19897889, PMID:16641084 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28143
+      snippet: streptothricin D + H2O => streptothricin D acid
+      notes: Rhea's left-to-right directional reaction RHEA:28143 declares side 28142_L as its substrates
+        (rh:substrates); the master reaction RHEA:28142 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:19897889, PMID:16641084 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: streptothricin D acid is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:28143
+      snippet: streptothricin D + H2O => streptothricin D acid
+      notes: Rhea's left-to-right directional reaction RHEA:28143 declares side 28142_R as its products
+        (rh:products); the master reaction RHEA:28142 is undirected. This participant is CHEBI:60839 with
+        coefficient 1. Rhea cites PMID:19897889, PMID:16641084 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.2.19; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28142
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.2.19"/>
+      notes: The rh:ec triple on RHEA:28142 in rhea.rdf. EC 3.5.2.19 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

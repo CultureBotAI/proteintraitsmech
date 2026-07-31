@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:138063
     role: SUBSTRATE_OR_PRODUCT
@@ -37,4 +37,93 @@ definitions:
       Catalyses the reaction: coelenterazine h dioxetanone = excited coelenteramide h monoanion + CO2 + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of coelenterazine h dioxetanone = excited coelenteramide h monoanion + CO2
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:54124, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:54125 (rh:substrates → 54124_L, rh:products → 54124_R), and Rhea
+    curates the reverse direction too. 1 substrate, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of coelenterazine h dioxetanone = excited coelenteramide h monoanion + CO2 + H(…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:54124
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: coelenterazine h dioxetanone = excited coelenteramide h monoanion + CO2 + H(+)'
+  - node_id: sub1
+    label: coelenterazine h dioxetanone
+    node_type: CHEMICAL
+    grounding: CHEBI:138063
+    description: Formula C26H21N3O4.
+  - node_id: prd1
+    label: excited coelenteramide h monoanion
+    node_type: CHEMICAL
+    grounding: CHEBI:138275
+    description: Formula C25H20N3O2.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: coelenterazine h dioxetanone is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54125
+      snippet: coelenterazine h dioxetanone => excited coelenteramide h monoanion + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54125 declares side 54124_L as its substrates
+        (rh:substrates); the master reaction RHEA:54124 is undirected. This participant is CHEBI:138063
+        with coefficient 1. Rhea cites PMID:236561, PMID:237531, PMID:17980388, PMID:33174 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: excited coelenteramide h monoanion is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54125
+      snippet: coelenterazine h dioxetanone => excited coelenteramide h monoanion + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54125 declares side 54124_R as its products
+        (rh:products); the master reaction RHEA:54124 is undirected. This participant is CHEBI:138275
+        with coefficient 1. Rhea cites PMID:236561, PMID:237531, PMID:17980388, PMID:33174 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54125
+      snippet: coelenterazine h dioxetanone => excited coelenteramide h monoanion + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54125 declares side 54124_R as its products
+        (rh:products); the master reaction RHEA:54124 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:236561, PMID:237531, PMID:17980388, PMID:33174 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54125
+      snippet: coelenterazine h dioxetanone => excited coelenteramide h monoanion + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:54125 declares side 54124_R as its products
+        (rh:products); the master reaction RHEA:54124 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:236561, PMID:237531, PMID:17980388, PMID:33174 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

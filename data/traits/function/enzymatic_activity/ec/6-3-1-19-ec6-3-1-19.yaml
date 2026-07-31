@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.3.1.-
 synonyms:
@@ -42,4 +42,67 @@ definitions:
       Catalyses: ATP + [prokaryotic ubiquitin-like protein]-L-glutamate + [protein]-L- lysine = ADP + phosphate + N(6)-([prokaryotic ubiquitin-like protein]- gamma-L-glutamyl)-[protein]-L-lysine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of prokaryotic ubiquitin-like protein ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.3.1.19. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP + [prokaryotic
+    ubiquitin-like protein]-L-glutamate + [protein]-L- lysine = ADP + phosphate + N(6)-([prokaryotic ubiquitin-like
+    protein]- gamma-L-glutamyl)-[protein]-L-lysine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: prokaryotic ubiquitin-like protein ligase
+    grounding: EC:6.3.1.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P72263
+    node_type: PROTEIN
+    label: PAFA1_RHOER
+    grounding: UniProtKB:P72263
+  - node_id: prot_P72270
+    node_type: PROTEIN
+    label: PAFA2_RHOER
+    grounding: UniProtKB:P72270
+  - node_id: prot_A0LU53
+    node_type: PROTEIN
+    label: PAFA_ACIC1
+    grounding: UniProtKB:A0LU53
+  edges:
+  - subject: prot_P72263
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAFA1_RHOER is an exemplar enzyme with EC 6.3.1.19 activity.
+    evidence:
+    - reference: EC:6.3.1.19
+      snippet: DR   P72263, PAFA1_RHOER;  P72270, PAFA2_RHOER;  A0LU53, PAFA_ACIC1 ;
+      notes: ExPASy ENZYME entry EC 6.3.1.19 cross-references UniProtKB:P72263 (PAFA1_RHOER) as a protein
+        with this activity.
+  - subject: prot_P72270
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAFA2_RHOER is an exemplar enzyme with EC 6.3.1.19 activity.
+    evidence:
+    - reference: EC:6.3.1.19
+      snippet: DR   P72263, PAFA1_RHOER;  P72270, PAFA2_RHOER;  A0LU53, PAFA_ACIC1 ;
+      notes: ExPASy ENZYME entry EC 6.3.1.19 cross-references UniProtKB:P72270 (PAFA2_RHOER) as a protein
+        with this activity.
+  - subject: prot_A0LU53
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAFA_ACIC1 is an exemplar enzyme with EC 6.3.1.19 activity.
+    evidence:
+    - reference: EC:6.3.1.19
+      snippet: DR   P72263, PAFA1_RHOER;  P72270, PAFA2_RHOER;  A0LU53, PAFA_ACIC1 ;
+      notes: ExPASy ENZYME entry EC 6.3.1.19 cross-references UniProtKB:A0LU53 (PAFA_ACIC1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

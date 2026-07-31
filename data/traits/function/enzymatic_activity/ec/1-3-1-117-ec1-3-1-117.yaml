@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.3.1.-
 synonyms:
@@ -28,4 +28,221 @@ definitions:
       Catalyses: (1) dihydro-4-coumaroyl-CoA + NADP(+) = (E)-4-coumaroyl-CoA + NADPH + H(+). (2) dihydroferuloyl-CoA + NADP(+) = (E)-feruloyl-CoA + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydroxycinnamoyl-CoA reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.3.1.117. Rhea assigns 2 curated
+    reactions to EC 1.3.1.117. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) dihydro-4-coumaroyl-CoA + NADP(+) = (E)-4-coumaroyl-CoA
+    + NADPH + H(+). (2) dihydroferuloyl-CoA + NADP(+) = (E)-feruloyl-CoA + NADPH + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxycinnamoyl-CoA reductase
+    grounding: EC:1.3.1.117
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of dihydro-4-coumaroyl-CoA + NADP(+) = (E)-4-coumaroyl-CoA + NADPH + H(+)
+    grounding: RHEA:56672
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: dihydro-4-coumaroyl-CoA + NADP(+) = (E)-4-coumaroyl-CoA + NADPH + H(+)'
+  - node_id: rxn1_sub1
+    label: dihydro-4-coumaroyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:140639
+    description: Formula C30H40N7O18P3S.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: (E)-4-coumaroyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:85008
+    description: Formula C30H38N7O18P3S.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of dihydroferuloyl-CoA + NADP(+) = (E)-feruloyl-CoA + NADPH + H(+)
+    grounding: RHEA:56676
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: dihydroferuloyl-CoA + NADP(+) = (E)-feruloyl-CoA + NADPH + H(+)'
+  - node_id: rxn2_sub1
+    label: dihydroferuloyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:140640
+    description: Formula C31H42N7O19P3S.
+  - node_id: rxn2_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn2_prd1
+    label: (E)-feruloyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:87305
+    description: Formula C31H40N7O19P3S.
+  - node_id: rxn2_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:56672 is one of the 2 curated reactions Rhea assigns to EC 1.3.1.117; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:56672
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.1.117"/>
+      notes: The rh:ec triple on RHEA:56672 in rhea.rdf assigns that reaction to EC 1.3.1.117.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: dihydro-4-coumaroyl-CoA is a substrate consumed by RHEA:56672 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56673
+      snippet: dihydro-4-coumaroyl-CoA + NADP(+) => (E)-4-coumaroyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56673 declares side 56672_L as its substrates
+        (rh:substrates); the master reaction RHEA:56672 is undirected. This participant is CHEBI:140639
+        with coefficient 1. Rhea cites PMID:25152451 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:56672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56673
+      snippet: dihydro-4-coumaroyl-CoA + NADP(+) => (E)-4-coumaroyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56673 declares side 56672_L as its substrates
+        (rh:substrates); the master reaction RHEA:56672 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:25152451 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (E)-4-coumaroyl-CoA is a product released by RHEA:56672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56673
+      snippet: dihydro-4-coumaroyl-CoA + NADP(+) => (E)-4-coumaroyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56673 declares side 56672_R as its products
+        (rh:products); the master reaction RHEA:56672 is undirected. This participant is CHEBI:85008 with
+        coefficient 1. Rhea cites PMID:25152451 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:56672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56673
+      snippet: dihydro-4-coumaroyl-CoA + NADP(+) => (E)-4-coumaroyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56673 declares side 56672_R as its products
+        (rh:products); the master reaction RHEA:56672 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:25152451 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:56672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56673
+      snippet: dihydro-4-coumaroyl-CoA + NADP(+) => (E)-4-coumaroyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56673 declares side 56672_R as its products
+        (rh:products); the master reaction RHEA:56672 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:25152451 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:56676 is one of the 2 curated reactions Rhea assigns to EC 1.3.1.117; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:56676
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.1.117"/>
+      notes: The rh:ec triple on RHEA:56676 in rhea.rdf assigns that reaction to EC 1.3.1.117.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: dihydroferuloyl-CoA is a substrate consumed by RHEA:56676 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56677
+      snippet: dihydroferuloyl-CoA + NADP(+) => (E)-feruloyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56677 declares side 56676_L as its substrates
+        (rh:substrates); the master reaction RHEA:56676 is undirected. This participant is CHEBI:140640
+        with coefficient 1. Rhea cites PMID:25152451 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NADP(+) is a substrate consumed by RHEA:56676 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56677
+      snippet: dihydroferuloyl-CoA + NADP(+) => (E)-feruloyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56677 declares side 56676_L as its substrates
+        (rh:substrates); the master reaction RHEA:56676 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:25152451 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (E)-feruloyl-CoA is a product released by RHEA:56676 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56677
+      snippet: dihydroferuloyl-CoA + NADP(+) => (E)-feruloyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56677 declares side 56676_R as its products
+        (rh:products); the master reaction RHEA:56676 is undirected. This participant is CHEBI:87305 with
+        coefficient 1. Rhea cites PMID:25152451 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADPH is a product released by RHEA:56676 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56677
+      snippet: dihydroferuloyl-CoA + NADP(+) => (E)-feruloyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56677 declares side 56676_R as its products
+        (rh:products); the master reaction RHEA:56676 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:25152451 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:56676 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56677
+      snippet: dihydroferuloyl-CoA + NADP(+) => (E)-feruloyl-CoA + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:56677 declares side 56676_R as its products
+        (rh:products); the master reaction RHEA:56676 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:25152451 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

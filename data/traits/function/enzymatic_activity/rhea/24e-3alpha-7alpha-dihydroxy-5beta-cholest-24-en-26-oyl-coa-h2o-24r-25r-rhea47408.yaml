@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:87700
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,76 @@ definitions:
       Catalyses the reaction: (24E)-3alpha,7alpha-dihydroxy-5beta-cholest-24-en-26-oyl-CoA + H2O = (24R,25R)-3alpha,7alpha,24-trihydroxy-5beta-cholestan-26-oyl-CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (24E)-3alpha,7alpha-dihydroxy-5beta-cholest-24-en-26-oyl-CoA + H2O = (24R,25R)-3alpha,7…
+  description: Substrate-to-product chemistry of RHEA:47408, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:47409 (rh:substrates → 47408_L, rh:products → 47408_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (24E)-3alpha,7alpha-dihydroxy-5beta-cholest-24-en-26-oyl-CoA + H2O = (24R,25…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:47408
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (24E)-3alpha,7alpha-dihydroxy-5beta-cholest-24-en-26-oyl-CoA + H2O = (24R,25R)-3alpha,7alpha,24-trihydroxy-5beta-cholestan-26-oyl-CoA'
+  - node_id: sub1
+    label: (24E)-3alpha,7alpha-dihydroxy-5beta-cholest-24-en-26-oyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:87700
+    description: Formula C48H74N7O19P3S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (24R,25R)-3alpha,7alpha,24-trihydroxy-5beta-cholestan-26-oyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:87702
+    description: Formula C48H76N7O20P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (24E)-3alpha,7alpha-dihydroxy-5beta-cholest-24-en-26-oyl-CoA is a substrate consumed
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47409
+      snippet: (24E)-3alpha,7alpha-dihydroxy-5beta-cholest-24-en-26-oyl-CoA + H2O => (24R,25R)-3alpha,7alpha,24-trihydroxy-5beta-cholestan-26-oyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:47409 declares side 47408_L as its substrates
+        (rh:substrates); the master reaction RHEA:47408 is undirected. This participant is CHEBI:87700
+        with coefficient 1. Rhea cites PMID:11146090 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47409
+      snippet: (24E)-3alpha,7alpha-dihydroxy-5beta-cholest-24-en-26-oyl-CoA + H2O => (24R,25R)-3alpha,7alpha,24-trihydroxy-5beta-cholestan-26-oyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:47409 declares side 47408_L as its substrates
+        (rh:substrates); the master reaction RHEA:47408 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11146090 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (24R,25R)-3alpha,7alpha,24-trihydroxy-5beta-cholestan-26-oyl-CoA is a product released
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:47409
+      snippet: (24E)-3alpha,7alpha-dihydroxy-5beta-cholest-24-en-26-oyl-CoA + H2O => (24R,25R)-3alpha,7alpha,24-trihydroxy-5beta-cholestan-26-oyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:47409 declares side 47408_R as its products
+        (rh:products); the master reaction RHEA:47408 is undirected. This participant is CHEBI:87702 with
+        coefficient 1. Rhea cites PMID:11146090 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

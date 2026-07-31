@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.11.-
 synonyms:
@@ -47,4 +47,223 @@ definitions:
       Catalyses: L-lysyl-[collagen] + 2-oxoglutarate + O2 = (5R)-5-hydroxy-L-lysyl- [collagen] + succinate + CO2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of procollagen-lysine 5-dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.11.4. EC 1.14.11.4 maps to
+    exactly one curated Rhea reaction (RHEA:16569), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-lysyl-[collagen]
+    + 2-oxoglutarate + O2 = (5R)-5-hydroxy-L-lysyl- [collagen] + succinate + CO2". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: procollagen-lysine 5-dioxygenase
+    grounding: EC:1.14.11.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-lysyl-[collagen]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12751
+    description: Rhea compound GENERIC:12751.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-lysine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12751 (L-lysyl-[collagen]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29969
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (5R)-5-hydroxy-L-lysyl-[collagen]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12752
+    description: Rhea compound GENERIC:12752.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: (5R)-5-hydroxy-L-lysine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12752 ((5R)-5-hydroxy-L-lysyl-[collagen]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:133442
+  - node_id: prd2
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: prd3
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: procollagen-lysine 5-dioxygenase activity
+    grounding: GO:0008475
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O77588
+    node_type: PROTEIN
+    label: PLOD1_BOVIN
+    grounding: UniProtKB:O77588
+  - node_id: prot_P24802
+    node_type: PROTEIN
+    label: PLOD1_CHICK
+    grounding: UniProtKB:P24802
+  - node_id: prot_Q02809
+    node_type: PROTEIN
+    label: PLOD1_HUMAN
+    grounding: UniProtKB:Q02809
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-lysyl-[collagen] is a substrate consumed by RHEA:16569 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16570
+      snippet: L-lysyl-[collagen] + 2-oxoglutarate + O2 => (5R)-5-hydroxy-L-lysyl-[collagen] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:16570 declares side 16569_L as its substrates
+        (rh:substrates); the master reaction RHEA:16569 is undirected. This participant is GENERIC:12751
+        with coefficient 1. Rhea cites PMID:6033801, PMID:6766066, PMID:11071784, PMID:5244754 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-lysine residue is the reactive part of L-lysyl-[collagen].
+    evidence:
+    - reference: RHEA:16569
+      snippet: L-lysine residue
+      notes: Rhea compound GENERIC:12751 (L-lysyl-[collagen]) declares rh:reactivePart = L-lysine residue
+        (CHEBI:29969).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:16569 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16570
+      snippet: L-lysyl-[collagen] + 2-oxoglutarate + O2 => (5R)-5-hydroxy-L-lysyl-[collagen] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:16570 declares side 16569_L as its substrates
+        (rh:substrates); the master reaction RHEA:16569 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:6033801, PMID:6766066, PMID:11071784, PMID:5244754 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:16569 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16570
+      snippet: L-lysyl-[collagen] + 2-oxoglutarate + O2 => (5R)-5-hydroxy-L-lysyl-[collagen] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:16570 declares side 16569_L as its substrates
+        (rh:substrates); the master reaction RHEA:16569 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:6033801, PMID:6766066, PMID:11071784, PMID:5244754 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (5R)-5-hydroxy-L-lysyl-[collagen] is a product released by RHEA:16569 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16570
+      snippet: L-lysyl-[collagen] + 2-oxoglutarate + O2 => (5R)-5-hydroxy-L-lysyl-[collagen] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:16570 declares side 16569_R as its products
+        (rh:products); the master reaction RHEA:16569 is undirected. This participant is GENERIC:12752
+        with coefficient 1. Rhea cites PMID:6033801, PMID:6766066, PMID:11071784, PMID:5244754 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: (5R)-5-hydroxy-L-lysine residue is the reactive part of (5R)-5-hydroxy-L-lysyl-[collagen].
+    evidence:
+    - reference: RHEA:16569
+      snippet: (5R)-5-hydroxy-L-lysine residue
+      notes: Rhea compound GENERIC:12752 ((5R)-5-hydroxy-L-lysyl-[collagen]) declares rh:reactivePart
+        = (5R)-5-hydroxy-L-lysine residue (CHEBI:133442).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: succinate is a product released by RHEA:16569 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16570
+      snippet: L-lysyl-[collagen] + 2-oxoglutarate + O2 => (5R)-5-hydroxy-L-lysyl-[collagen] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:16570 declares side 16569_R as its products
+        (rh:products); the master reaction RHEA:16569 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:6033801, PMID:6766066, PMID:11071784, PMID:5244754 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CO2 is a product released by RHEA:16569 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16570
+      snippet: L-lysyl-[collagen] + 2-oxoglutarate + O2 => (5R)-5-hydroxy-L-lysyl-[collagen] + succinate
+        + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:16570 declares side 16569_R as its products
+        (rh:products); the master reaction RHEA:16569 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:6033801, PMID:6766066, PMID:11071784, PMID:5244754 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.14.11.4
+      snippet: EC:1.14.11.4 > GO:procollagen-lysine 5-dioxygenase activity ; GO:0008475
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008475 is itself a record
+        in this KB.
+  - subject: prot_O77588
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLOD1_BOVIN is an exemplar enzyme with EC 1.14.11.4 activity.
+    evidence:
+    - reference: EC:1.14.11.4
+      snippet: DR   O77588, PLOD1_BOVIN;  P24802, PLOD1_CHICK;  Q02809, PLOD1_HUMAN;
+      notes: ExPASy ENZYME entry EC 1.14.11.4 cross-references UniProtKB:O77588 (PLOD1_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P24802
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLOD1_CHICK is an exemplar enzyme with EC 1.14.11.4 activity.
+    evidence:
+    - reference: EC:1.14.11.4
+      snippet: DR   O77588, PLOD1_BOVIN;  P24802, PLOD1_CHICK;  Q02809, PLOD1_HUMAN;
+      notes: ExPASy ENZYME entry EC 1.14.11.4 cross-references UniProtKB:P24802 (PLOD1_CHICK) as a protein
+        with this activity.
+  - subject: prot_Q02809
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLOD1_HUMAN is an exemplar enzyme with EC 1.14.11.4 activity.
+    evidence:
+    - reference: EC:1.14.11.4
+      snippet: DR   O77588, PLOD1_BOVIN;  P24802, PLOD1_CHICK;  Q02809, PLOD1_HUMAN;
+      notes: ExPASy ENZYME entry EC 1.14.11.4 cross-references UniProtKB:Q02809 (PLOD1_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

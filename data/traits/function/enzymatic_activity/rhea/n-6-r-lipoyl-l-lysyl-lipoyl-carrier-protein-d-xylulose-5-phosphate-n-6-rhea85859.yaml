@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:83099
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,135 @@ definitions:
       Catalyses the reaction: N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein] + D-xylulose 5-phosphate = N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier protein] + D-glyceraldehyde 3-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein] + D-xylulose 5-phosphate
+    = N(6)-{(R)…
+  description: Substrate-to-product chemistry of RHEA:85859, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:85860 (rh:substrates → 85859_L, rh:products → 85859_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein] + D-xylulose 5-phosphate…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:85859
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein] + D-xylulose 5-phosphate = N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier
+      protein] + D-glyceraldehyde 3-phosphate'
+  - node_id: sub1
+    label: N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10502
+    description: Rhea compound GENERIC:10502.
+  - node_id: sub1_rp1
+    label: N(6)-[(R)-lipoyl]-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10502 (N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83099
+  - node_id: sub2
+    label: D-xylulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57737
+    description: Formula C5H9O8P.
+  - node_id: prd1
+    label: N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:20674
+    description: Rhea compound GENERIC:20674.
+  - node_id: prd1_rp1
+    label: N(8)-[(R)-S(8)-(glycoloyl)dihydrolipoyl]-L-lysine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:20674 (N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:234580
+  - node_id: prd2
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein] is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85860
+      snippet: N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein] + D-xylulose 5-phosphate => N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier
+        protein] + D-glyceraldehyde 3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:85860 declares side 85859_L as its substrates
+        (rh:substrates); the master reaction RHEA:85859 is undirected. This participant is GENERIC:10502
+        with coefficient 1. Rhea cites PMID:22586110 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(6)-[(R)-lipoyl]-L-lysine residue is the reactive part of N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier
+      protein].
+    evidence:
+    - reference: RHEA:85859
+      snippet: N(6)-[(R)-lipoyl]-L-lysine residue
+      notes: Rhea compound GENERIC:10502 (N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein]) declares
+        rh:reactivePart = N(6)-[(R)-lipoyl]-L-lysine residue (CHEBI:83099), formula C14H24N2O2S2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: D-xylulose 5-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:85860
+      snippet: N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein] + D-xylulose 5-phosphate => N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier
+        protein] + D-glyceraldehyde 3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:85860 declares side 85859_L as its substrates
+        (rh:substrates); the master reaction RHEA:85859 is undirected. This participant is CHEBI:57737
+        with coefficient 1. Rhea cites PMID:22586110 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier protein] is a product
+      released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85860
+      snippet: N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein] + D-xylulose 5-phosphate => N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier
+        protein] + D-glyceraldehyde 3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:85860 declares side 85859_R as its products
+        (rh:products); the master reaction RHEA:85859 is undirected. This participant is GENERIC:20674
+        with coefficient 1. Rhea cites PMID:22586110 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(8)-[(R)-S(8)-(glycoloyl)dihydrolipoyl]-L-lysine residue is the reactive part of N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier
+      protein].
+    evidence:
+    - reference: RHEA:85859
+      snippet: N(8)-[(R)-S(8)-(glycoloyl)dihydrolipoyl]-L-lysine residue
+      notes: Rhea compound GENERIC:20674 (N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier
+        protein]) declares rh:reactivePart = N(8)-[(R)-S(8)-(glycoloyl)dihydrolipoyl]-L-lysine residue
+        (CHEBI:234580), formula C16H28N2O4S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glyceraldehyde 3-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:85860
+      snippet: N(6)-[(R)-lipoyl]-L-lysyl-[lipoyl-carrier protein] + D-xylulose 5-phosphate => N(6)-{(R)-S(8)-glycoloyldihydrolipoyl}-L-lysyl-[lipoyl-carrier
+        protein] + D-glyceraldehyde 3-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:85860 declares side 85859_R as its products
+        (rh:products); the master reaction RHEA:85859 is undirected. This participant is CHEBI:59776 with
+        coefficient 1. Rhea cites PMID:22586110 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

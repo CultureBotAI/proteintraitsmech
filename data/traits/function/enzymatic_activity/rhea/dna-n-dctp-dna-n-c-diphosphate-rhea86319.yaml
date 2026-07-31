@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:173112
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,112 @@ definitions:
       Catalyses the reaction: DNA(n) + dCTP = DNA(n)-C + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of DNA(n) + dCTP = DNA(n)-C + diphosphate
+  description: Substrate-to-product chemistry of RHEA:86319, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:86320 (rh:substrates → 86319_L, rh:products → 86319_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of DNA(n) + dCTP = DNA(n)-C + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:86319
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: DNA(n) + dCTP = DNA(n)-C + diphosphate'
+  - node_id: sub1
+    label: DNA(n)
+    node_type: CHEMICAL
+    grounding: CHEBI:173112
+    xrefs:
+    - RHEA-COMP:17339
+    description: Rhea compound POLYMER:17339. Formula H2O(C5H7O5PR)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: dCTP
+    node_type: CHEMICAL
+    grounding: CHEBI:61481
+    description: Formula C9H12N3O13P3.
+  - node_id: prd1
+    label: DNA(n)-C
+    node_type: CHEMICAL
+    grounding: CHEBI:235524
+    xrefs:
+    - RHEA-COMP:20773
+    description: Rhea compound POLYMER:20773. Formula C9H13N3O7P(C5H7O5PR)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: DNA polymerase activity
+    grounding: GO:0034061
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: DNA(n) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86320
+      snippet: DNA(n) + dCTP => DNA(n)-C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:86320 declares side 86319_L as its substrates
+        (rh:substrates); the master reaction RHEA:86319 is undirected. This participant is POLYMER:17339
+        with coefficient 1. Rhea cites PMID:8751446, PMID:10536157, PMID:11711549 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: dCTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86320
+      snippet: DNA(n) + dCTP => DNA(n)-C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:86320 declares side 86319_L as its substrates
+        (rh:substrates); the master reaction RHEA:86319 is undirected. This participant is CHEBI:61481
+        with coefficient 1. Rhea cites PMID:8751446, PMID:10536157, PMID:11711549 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: DNA(n)-C is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86320
+      snippet: DNA(n) + dCTP => DNA(n)-C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:86320 declares side 86319_R as its products
+        (rh:products); the master reaction RHEA:86319 is undirected. This participant is POLYMER:20773
+        with coefficient 1. Rhea cites PMID:8751446, PMID:10536157, PMID:11711549 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:86320
+      snippet: DNA(n) + dCTP => DNA(n)-C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:86320 declares side 86319_R as its products
+        (rh:products); the master reaction RHEA:86319 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:8751446, PMID:10536157, PMID:11711549 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:86319
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0034061"/>
+      notes: The rdfs:seeAlso triple on RHEA:86319 in rhea.rdf. GO term GO:0034061 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

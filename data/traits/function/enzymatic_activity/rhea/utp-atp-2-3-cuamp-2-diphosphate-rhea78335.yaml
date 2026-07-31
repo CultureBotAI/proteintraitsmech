@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:46398
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,90 @@ definitions:
       Catalyses the reaction: UTP + ATP = 2',3'-cUAMP + 2 diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UTP + ATP = 2',3'-cUAMP + 2 diphosphate
+  description: Substrate-to-product chemistry of RHEA:78335, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:78336 (rh:substrates → 78335_L, rh:products → 78335_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of UTP + ATP = 2',3'-cUAMP + 2 diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:78335
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: UTP + ATP = 2'',3''-cUAMP + 2 diphosphate'
+  - node_id: sub1
+    label: UTP
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+    description: Formula C9H11N2O15P3.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: 2',3'-cUAMP
+    node_type: CHEMICAL
+    grounding: CHEBI:228269
+    description: Formula C19H21N7O14P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78336
+      snippet: UTP + ATP => 2',3'-cUAMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78336 declares side 78335_L as its substrates
+        (rh:substrates); the master reaction RHEA:78335 is undirected. This participant is CHEBI:46398
+        with coefficient 1. Rhea cites PMID:37379839 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78336
+      snippet: UTP + ATP => 2',3'-cUAMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78336 declares side 78335_L as its substrates
+        (rh:substrates); the master reaction RHEA:78335 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:37379839 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2',3'-cUAMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78336
+      snippet: UTP + ATP => 2',3'-cUAMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78336 declares side 78335_R as its products
+        (rh:products); the master reaction RHEA:78335 is undirected. This participant is CHEBI:228269
+        with coefficient 1. Rhea cites PMID:37379839 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:78336
+      snippet: UTP + ATP => 2',3'-cUAMP + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:78336 declares side 78335_R as its products
+        (rh:products); the master reaction RHEA:78335 is undirected. This participant is CHEBI:33019 with
+        coefficient 2. Rhea cites PMID:37379839 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

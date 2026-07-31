@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.14.15.6
     mapping_source: rhea2ec
@@ -44,4 +44,294 @@ definitions:
       Catalyses the reaction: 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) = 4-methylpentanal + pregnenolone + 6 oxidized [adrenodoxin] + 4 H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) = 4-methylpentanal
+    + pregnenolone…
+  description: Substrate-to-product chemistry of RHEA:35739, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:35740 (rh:substrates → 35739_L, rh:products → 35739_R), and Rhea
+    curates the reverse direction too. 4 substrates, 4 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) = 4-methylpentanal + p…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:35739
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) = 4-methylpentanal + pregnenolone
+      + 6 oxidized [adrenodoxin] + 4 H2O'
+  - node_id: sub1
+    label: reduced [adrenodoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9998
+    description: Rhea compound GENERIC:9998.
+  - node_id: sub1_rp1
+    label: '[2Fe-2S](1+)'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9998 (reduced [adrenodoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: sub2
+    label: cholesterol
+    node_type: CHEMICAL
+    grounding: CHEBI:16113
+    description: Formula C27H46O.
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 4-methylpentanal
+    node_type: CHEMICAL
+    grounding: CHEBI:17998
+    description: Formula C6H12O.
+  - node_id: prd2
+    label: pregnenolone
+    node_type: CHEMICAL
+    grounding: CHEBI:16581
+    description: Formula C21H32O2.
+  - node_id: prd3
+    label: oxidized [adrenodoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9999
+    description: Rhea compound GENERIC:9999.
+  - node_id: prd3_rp1
+    label: '[2Fe-2S](2+)'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9999 (oxidized [adrenodoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd4
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cholesterol monooxygenase (side-chain-cleaving) activity
+    grounding: GO:0008386
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: cholesterol monooxygenase (side-chain-cleaving)
+    grounding: EC:1.14.15.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P00189
+    node_type: PROTEIN
+    label: CP11A_BOVIN
+    grounding: UniProtKB:P00189
+  - node_id: prot_P79153
+    node_type: PROTEIN
+    label: CP11A_CAPHI
+    grounding: UniProtKB:P79153
+  - node_id: prot_O46515
+    node_type: PROTEIN
+    label: CP11A_HORSE
+    grounding: UniProtKB:O46515
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: reduced [adrenodoxin] is a substrate consumed by this reaction (stoichiometric coefficient
+      6).
+    evidence:
+    - reference: RHEA:35740
+      snippet: 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) => 4-methylpentanal + pregnenolone
+        + 6 oxidized [adrenodoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35740 declares side 35739_L as its substrates
+        (rh:substrates); the master reaction RHEA:35739 is undirected. This participant is GENERIC:9998
+        with coefficient 6. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: '[2Fe-2S](1+) is the reactive part of reduced [adrenodoxin].'
+    evidence:
+    - reference: RHEA:35739
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:9998 (reduced [adrenodoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738), formula Fe2S2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: cholesterol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35740
+      snippet: 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) => 4-methylpentanal + pregnenolone
+        + 6 oxidized [adrenodoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35740 declares side 35739_L as its substrates
+        (rh:substrates); the master reaction RHEA:35739 is undirected. This participant is CHEBI:16113
+        with coefficient 1. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:35740
+      snippet: 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) => 4-methylpentanal + pregnenolone
+        + 6 oxidized [adrenodoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35740 declares side 35739_L as its substrates
+        (rh:substrates); the master reaction RHEA:35739 is undirected. This participant is CHEBI:15379
+        with coefficient 3. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 6).
+    evidence:
+    - reference: RHEA:35740
+      snippet: 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) => 4-methylpentanal + pregnenolone
+        + 6 oxidized [adrenodoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35740 declares side 35739_L as its substrates
+        (rh:substrates); the master reaction RHEA:35739 is undirected. This participant is CHEBI:15378
+        with coefficient 6. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-methylpentanal is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35740
+      snippet: 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) => 4-methylpentanal + pregnenolone
+        + 6 oxidized [adrenodoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35740 declares side 35739_R as its products
+        (rh:products); the master reaction RHEA:35739 is undirected. This participant is CHEBI:17998 with
+        coefficient 1. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pregnenolone is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35740
+      snippet: 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) => 4-methylpentanal + pregnenolone
+        + 6 oxidized [adrenodoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35740 declares side 35739_R as its products
+        (rh:products); the master reaction RHEA:35739 is undirected. This participant is CHEBI:16581 with
+        coefficient 1. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: oxidized [adrenodoxin] is a product released by this reaction (stoichiometric coefficient
+      6).
+    evidence:
+    - reference: RHEA:35740
+      snippet: 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) => 4-methylpentanal + pregnenolone
+        + 6 oxidized [adrenodoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35740 declares side 35739_R as its products
+        (rh:products); the master reaction RHEA:35739 is undirected. This participant is GENERIC:9999
+        with coefficient 6. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this
+        reaction.
+  - subject: prd3_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd3
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [adrenodoxin].'
+    evidence:
+    - reference: RHEA:35739
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:9999 (oxidized [adrenodoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737), formula Fe2S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H2O is a product released by this reaction (stoichiometric coefficient 4).
+    evidence:
+    - reference: RHEA:35740
+      snippet: 6 reduced [adrenodoxin] + cholesterol + 3 O2 + 6 H(+) => 4-methylpentanal + pregnenolone
+        + 6 oxidized [adrenodoxin] + 4 H2O
+      notes: Rhea's left-to-right directional reaction RHEA:35740 declares side 35739_R as its products
+        (rh:products); the master reaction RHEA:35739 is undirected. This participant is CHEBI:15377 with
+        coefficient 4. Rhea cites PMID:21159775, PMID:21636783, PMID:1238395, PMID:3011431 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:35739
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008386"/>
+      notes: The rdfs:seeAlso triple on RHEA:35739 in rhea.rdf. GO term GO:0008386 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.14.15.6; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:35739
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.14.15.6"/>
+      notes: The rh:ec triple on RHEA:35739 in rhea.rdf. EC 1.14.15.6 is itself a record in this KB.
+  - subject: prot_P00189
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP11A_BOVIN is an exemplar enzyme carrying EC 1.14.15.6, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.14.15.6
+      snippet: DR   P00189, CP11A_BOVIN;  P79153, CP11A_CAPHI;  O46515, CP11A_HORSE;
+      notes: ExPASy ENZYME entry EC 1.14.15.6 cross-references UniProtKB:P00189 (CP11A_BOVIN) as a protein
+        with this activity.
+    - reference: RHEA:35739
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.14.15.6"/>
+      notes: Rhea assigns RHEA:35739 to EC 1.14.15.6, and EC 1.14.15.6 maps to exactly one Rhea master
+        reaction (RHEA:35739), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P79153
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP11A_CAPHI is an exemplar enzyme carrying EC 1.14.15.6, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.14.15.6
+      snippet: DR   P00189, CP11A_BOVIN;  P79153, CP11A_CAPHI;  O46515, CP11A_HORSE;
+      notes: ExPASy ENZYME entry EC 1.14.15.6 cross-references UniProtKB:P79153 (CP11A_CAPHI) as a protein
+        with this activity.
+    - reference: RHEA:35739
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.14.15.6"/>
+      notes: Rhea assigns RHEA:35739 to EC 1.14.15.6, and EC 1.14.15.6 maps to exactly one Rhea master
+        reaction (RHEA:35739), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_O46515
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP11A_HORSE is an exemplar enzyme carrying EC 1.14.15.6, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.14.15.6
+      snippet: DR   P00189, CP11A_BOVIN;  P79153, CP11A_CAPHI;  O46515, CP11A_HORSE;
+      notes: ExPASy ENZYME entry EC 1.14.15.6 cross-references UniProtKB:O46515 (CP11A_HORSE) as a protein
+        with this activity.
+    - reference: RHEA:35739
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.14.15.6"/>
+      notes: Rhea assigns RHEA:35739 to EC 1.14.15.6, and EC 1.14.15.6 maps to exactly one Rhea master
+        reaction (RHEA:35739), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

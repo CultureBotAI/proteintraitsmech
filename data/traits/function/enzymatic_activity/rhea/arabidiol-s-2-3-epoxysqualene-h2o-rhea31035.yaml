@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.124
     mapping_source: rhea2ec
@@ -28,4 +28,126 @@ definitions:
       Catalyses the reaction: arabidiol = (S)-2,3-epoxysqualene + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of arabidiol = (S)-2,3-epoxysqualene + H2O
+  description: Substrate-to-product chemistry of RHEA:31035, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:31036 (rh:substrates → 31035_L, rh:products → 31035_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of arabidiol = (S)-2,3-epoxysqualene + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:31035
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: arabidiol = (S)-2,3-epoxysqualene + H2O'
+  - node_id: sub1
+    label: arabidiol
+    node_type: CHEMICAL
+    grounding: CHEBI:62417
+    description: Formula C30H52O2.
+  - node_id: prd1
+    label: (S)-2,3-epoxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:15441
+    description: Formula C30H50O.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: arabidiol synthase activity
+    grounding: GO:0034075
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: arabidiol synthase
+    grounding: EC:4.2.1.124
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9FR95
+    node_type: PROTEIN
+    label: PEN1_ARATH
+    grounding: UniProtKB:Q9FR95
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: arabidiol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31036
+      snippet: arabidiol => (S)-2,3-epoxysqualene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31036 declares side 31035_L as its substrates
+        (rh:substrates); the master reaction RHEA:31035 is undirected. This participant is CHEBI:62417
+        with coefficient 1. Rhea cites PMID:16774269, PMID:17474751 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-2,3-epoxysqualene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31036
+      snippet: arabidiol => (S)-2,3-epoxysqualene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31036 declares side 31035_R as its products
+        (rh:products); the master reaction RHEA:31035 is undirected. This participant is CHEBI:15441 with
+        coefficient 1. Rhea cites PMID:16774269, PMID:17474751 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31036
+      snippet: arabidiol => (S)-2,3-epoxysqualene + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:31036 declares side 31035_R as its products
+        (rh:products); the master reaction RHEA:31035 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:16774269, PMID:17474751 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:31035
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0034075"/>
+      notes: The rdfs:seeAlso triple on RHEA:31035 in rhea.rdf. GO term GO:0034075 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.124; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:31035
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.124"/>
+      notes: The rh:ec triple on RHEA:31035 in rhea.rdf. EC 4.2.1.124 is itself a record in this KB.
+  - subject: prot_Q9FR95
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEN1_ARATH is an exemplar enzyme carrying EC 4.2.1.124, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.124
+      snippet: DR   Q9FR95, PEN1_ARATH ;
+      notes: ExPASy ENZYME entry EC 4.2.1.124 cross-references UniProtKB:Q9FR95 (PEN1_ARATH) as a protein
+        with this activity.
+    - reference: RHEA:31035
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.124"/>
+      notes: Rhea assigns RHEA:31035 to EC 4.2.1.124, and EC 4.2.1.124 maps to exactly one Rhea master
+        reaction (RHEA:31035), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

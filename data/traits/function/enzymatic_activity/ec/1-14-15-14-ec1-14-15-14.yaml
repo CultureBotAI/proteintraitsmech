@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.15.-
 synonyms:
@@ -36,4 +36,67 @@ definitions:
       Catalyses: a methyl-branched lipid + O2 + 2 reduced ferredoxin [iron-sulfur] cluster + 2 H(+) = an omega-hydroxy-methyl-branched lipid + H2O + 2 oxidized ferredoxin [iron-sulfur] cluster
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of methyl-branched lipid omega-hydroxylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.15.14. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "a methyl-branched lipid + O2 + 2 reduced ferredoxin [iron-sulfur] cluster + 2 H(+) = an omega-hydroxy-methyl-branched
+    lipid + H2O + 2 oxidized ferredoxin [iron-sulfur] cluster".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: methyl-branched lipid omega-hydroxylase
+    grounding: EC:1.14.15.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P0A517
+    node_type: PROTEIN
+    label: CP124_MYCBO
+    grounding: UniProtKB:P0A517
+  - node_id: prot_P9WPP2
+    node_type: PROTEIN
+    label: CP124_MYCTO
+    grounding: UniProtKB:P9WPP2
+  - node_id: prot_P9WPP3
+    node_type: PROTEIN
+    label: CP124_MYCTU
+    grounding: UniProtKB:P9WPP3
+  edges:
+  - subject: prot_P0A517
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP124_MYCBO is an exemplar enzyme with EC 1.14.15.14 activity.
+    evidence:
+    - reference: EC:1.14.15.14
+      snippet: DR   P0A517, CP124_MYCBO;  P9WPP2, CP124_MYCTO;  P9WPP3, CP124_MYCTU;
+      notes: ExPASy ENZYME entry EC 1.14.15.14 cross-references UniProtKB:P0A517 (CP124_MYCBO) as a protein
+        with this activity.
+  - subject: prot_P9WPP2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP124_MYCTO is an exemplar enzyme with EC 1.14.15.14 activity.
+    evidence:
+    - reference: EC:1.14.15.14
+      snippet: DR   P0A517, CP124_MYCBO;  P9WPP2, CP124_MYCTO;  P9WPP3, CP124_MYCTU;
+      notes: ExPASy ENZYME entry EC 1.14.15.14 cross-references UniProtKB:P9WPP2 (CP124_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WPP3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CP124_MYCTU is an exemplar enzyme with EC 1.14.15.14 activity.
+    evidence:
+    - reference: EC:1.14.15.14
+      snippet: DR   P0A517, CP124_MYCBO;  P9WPP2, CP124_MYCTO;  P9WPP3, CP124_MYCTU;
+      notes: ExPASy ENZYME entry EC 1.14.15.14 cross-references UniProtKB:P9WPP3 (CP124_MYCTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.5.1.103
     mapping_source: rhea2ec
@@ -36,4 +36,154 @@ definitions:
       Catalyses the reaction: 2 (2E,6E)-farnesyl diphosphate = presqualene diphosphate + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 (2E,6E)-farnesyl diphosphate = presqualene diphosphate + diphosphate
+  description: Substrate-to-product chemistry of RHEA:22672, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22673 (rh:substrates → 22672_L, rh:products → 22672_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 (2E,6E)-farnesyl diphosphate = presqualene diphosphate + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22672
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 (2E,6E)-farnesyl diphosphate = presqualene diphosphate + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: presqualene diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57310
+    description: Formula C30H49O7P2.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: presqualene diphosphate synthase
+    grounding: EC:2.5.1.103
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q6N3F2
+    node_type: PROTEIN
+    label: HPND_RHOPA
+    grounding: UniProtKB:Q6N3F2
+  - node_id: prot_P55350
+    node_type: PROTEIN
+    label: HPND_SINFN
+    grounding: UniProtKB:P55350
+  - node_id: prot_H2VFR7
+    node_type: PROTEIN
+    label: HPND_ZYMMO
+    grounding: UniProtKB:H2VFR7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:22673
+      snippet: 2 (2E,6E)-farnesyl diphosphate => presqualene diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22673 declares side 22672_L as its substrates
+        (rh:substrates); the master reaction RHEA:22672 is undirected. This participant is CHEBI:175763
+        with coefficient 2. Rhea cites PMID:16020541, PMID:16269684, PMID:24531458, PMID:12426357 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: presqualene diphosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22673
+      snippet: 2 (2E,6E)-farnesyl diphosphate => presqualene diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22673 declares side 22672_R as its products
+        (rh:products); the master reaction RHEA:22672 is undirected. This participant is CHEBI:57310 with
+        coefficient 1. Rhea cites PMID:16020541, PMID:16269684, PMID:24531458, PMID:12426357 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22673
+      snippet: 2 (2E,6E)-farnesyl diphosphate => presqualene diphosphate + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22673 declares side 22672_R as its products
+        (rh:products); the master reaction RHEA:22672 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:16020541, PMID:16269684, PMID:24531458, PMID:12426357 for this
+        reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.5.1.103; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22672
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.103"/>
+      notes: The rh:ec triple on RHEA:22672 in rhea.rdf. EC 2.5.1.103 is itself a record in this KB.
+  - subject: prot_Q6N3F2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPND_RHOPA is an exemplar enzyme carrying EC 2.5.1.103, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.103
+      snippet: DR   Q6N3F2, HPND_RHOPA ;  P55350, HPND_SINFN ;  H2VFR7, HPND_ZYMMO ;
+      notes: ExPASy ENZYME entry EC 2.5.1.103 cross-references UniProtKB:Q6N3F2 (HPND_RHOPA) as a protein
+        with this activity.
+    - reference: RHEA:22672
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.103"/>
+      notes: Rhea assigns RHEA:22672 to EC 2.5.1.103, and EC 2.5.1.103 maps to exactly one Rhea master
+        reaction (RHEA:22672), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_P55350
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPND_SINFN is an exemplar enzyme carrying EC 2.5.1.103, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.103
+      snippet: DR   Q6N3F2, HPND_RHOPA ;  P55350, HPND_SINFN ;  H2VFR7, HPND_ZYMMO ;
+      notes: ExPASy ENZYME entry EC 2.5.1.103 cross-references UniProtKB:P55350 (HPND_SINFN) as a protein
+        with this activity.
+    - reference: RHEA:22672
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.103"/>
+      notes: Rhea assigns RHEA:22672 to EC 2.5.1.103, and EC 2.5.1.103 maps to exactly one Rhea master
+        reaction (RHEA:22672), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_H2VFR7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPND_ZYMMO is an exemplar enzyme carrying EC 2.5.1.103, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.103
+      snippet: DR   Q6N3F2, HPND_RHOPA ;  P55350, HPND_SINFN ;  H2VFR7, HPND_ZYMMO ;
+      notes: ExPASy ENZYME entry EC 2.5.1.103 cross-references UniProtKB:H2VFR7 (HPND_ZYMMO) as a protein
+        with this activity.
+    - reference: RHEA:22672
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.103"/>
+      notes: Rhea assigns RHEA:22672 to EC 2.5.1.103, and EC 2.5.1.103 maps to exactly one Rhea master
+        reaction (RHEA:22672), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

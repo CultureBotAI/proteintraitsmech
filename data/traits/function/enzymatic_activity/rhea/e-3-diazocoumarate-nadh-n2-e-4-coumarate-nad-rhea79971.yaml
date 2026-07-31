@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:229673
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,107 @@ definitions:
       Catalyses the reaction: (E)-3-diazocoumarate + NADH = N2 + (E)-4-coumarate + NAD(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (E)-3-diazocoumarate + NADH = N2 + (E)-4-coumarate + NAD(+)
+  description: Substrate-to-product chemistry of RHEA:79971, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79972 (rh:substrates → 79971_L, rh:products → 79971_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (E)-3-diazocoumarate + NADH = N2 + (E)-4-coumarate + NAD(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79971
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (E)-3-diazocoumarate + NADH = N2 + (E)-4-coumarate + NAD(+)'
+  - node_id: sub1
+    label: (E)-3-diazocoumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:229673
+    description: Formula C9H6N2O3.
+  - node_id: sub2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd1
+    label: N2
+    node_type: CHEMICAL
+    grounding: CHEBI:17997
+    description: Formula N2.
+  - node_id: prd2
+    label: (E)-4-coumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:12876
+    description: Formula C9H7O3.
+  - node_id: prd3
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (E)-3-diazocoumarate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:79972
+      snippet: (E)-3-diazocoumarate + NADH => N2 + (E)-4-coumarate + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79972 declares side 79971_L as its substrates
+        (rh:substrates); the master reaction RHEA:79971 is undirected. This participant is CHEBI:229673
+        with coefficient 1. Rhea cites PMID:36115045 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79972
+      snippet: (E)-3-diazocoumarate + NADH => N2 + (E)-4-coumarate + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79972 declares side 79971_L as its substrates
+        (rh:substrates); the master reaction RHEA:79971 is undirected. This participant is CHEBI:57945
+        with coefficient 1. Rhea cites PMID:36115045 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79972
+      snippet: (E)-3-diazocoumarate + NADH => N2 + (E)-4-coumarate + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79972 declares side 79971_R as its products
+        (rh:products); the master reaction RHEA:79971 is undirected. This participant is CHEBI:17997 with
+        coefficient 1. Rhea cites PMID:36115045 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (E)-4-coumarate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79972
+      snippet: (E)-3-diazocoumarate + NADH => N2 + (E)-4-coumarate + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79972 declares side 79971_R as its products
+        (rh:products); the master reaction RHEA:79971 is undirected. This participant is CHEBI:12876 with
+        coefficient 1. Rhea cites PMID:36115045 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: NAD(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79972
+      snippet: (E)-3-diazocoumarate + NADH => N2 + (E)-4-coumarate + NAD(+)
+      notes: Rhea's left-to-right directional reaction RHEA:79972 declares side 79971_R as its products
+        (rh:products); the master reaction RHEA:79971 is undirected. This participant is CHEBI:57540 with
+        coefficient 1. Rhea cites PMID:36115045 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

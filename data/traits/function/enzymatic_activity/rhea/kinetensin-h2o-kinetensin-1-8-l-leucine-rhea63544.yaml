@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:147364
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,90 @@ definitions:
       Catalyses the reaction: kinetensin + H2O = kinetensin-(1-8) + L-leucine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of kinetensin + H2O = kinetensin-(1-8) + L-leucine
+  description: Substrate-to-product chemistry of RHEA:63544, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63545 (rh:substrates → 63544_L, rh:products → 63544_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of kinetensin + H2O = kinetensin-(1-8) + L-leucine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63544
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: kinetensin + H2O = kinetensin-(1-8) + L-leucine'
+  - node_id: sub1
+    label: kinetensin
+    node_type: CHEMICAL
+    grounding: CHEBI:147364
+    description: Formula C56H87N17O11.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: kinetensin-(1-8)
+    node_type: CHEMICAL
+    grounding: CHEBI:147365
+    description: Formula C50H76N16O10.
+  - node_id: prd2
+    label: L-leucine
+    node_type: CHEMICAL
+    grounding: CHEBI:57427
+    description: Formula C6H13NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: kinetensin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63545
+      snippet: kinetensin + H2O => kinetensin-(1-8) + L-leucine
+      notes: Rhea's left-to-right directional reaction RHEA:63545 declares side 63544_L as its substrates
+        (rh:substrates); the master reaction RHEA:63544 is undirected. This participant is CHEBI:147364
+        with coefficient 1. Rhea cites PMID:10969042 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63545
+      snippet: kinetensin + H2O => kinetensin-(1-8) + L-leucine
+      notes: Rhea's left-to-right directional reaction RHEA:63545 declares side 63544_L as its substrates
+        (rh:substrates); the master reaction RHEA:63544 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10969042 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: kinetensin-(1-8) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63545
+      snippet: kinetensin + H2O => kinetensin-(1-8) + L-leucine
+      notes: Rhea's left-to-right directional reaction RHEA:63545 declares side 63544_R as its products
+        (rh:products); the master reaction RHEA:63544 is undirected. This participant is CHEBI:147365
+        with coefficient 1. Rhea cites PMID:10969042 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-leucine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63545
+      snippet: kinetensin + H2O => kinetensin-(1-8) + L-leucine
+      notes: Rhea's left-to-right directional reaction RHEA:63545 declares side 63544_R as its products
+        (rh:products); the master reaction RHEA:63544 is undirected. This participant is CHEBI:57427 with
+        coefficient 1. Rhea cites PMID:10969042 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

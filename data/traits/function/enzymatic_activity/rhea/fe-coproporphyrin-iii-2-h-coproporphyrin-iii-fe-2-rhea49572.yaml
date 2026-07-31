@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.99.1.9
     mapping_source: rhea2ec
@@ -34,4 +34,170 @@ definitions:
       Catalyses the reaction: Fe-coproporphyrin III + 2 H(+) = coproporphyrin III + Fe(2+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Fe-coproporphyrin III + 2 H(+) = coproporphyrin III + Fe(2+)
+  description: Substrate-to-product chemistry of RHEA:49572, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:49573 (rh:substrates → 49572_L, rh:products → 49572_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of Fe-coproporphyrin III + 2 H(+) = coproporphyrin III + Fe(2+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:49572
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: Fe-coproporphyrin III + 2 H(+) = coproporphyrin III + Fe(2+)'
+  - node_id: sub1
+    label: Fe-coproporphyrin III
+    node_type: CHEMICAL
+    grounding: CHEBI:68438
+    description: Formula C36H32FeN4O8.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: coproporphyrin III
+    node_type: CHEMICAL
+    grounding: CHEBI:131725
+    description: Formula C36H34N4O8.
+  - node_id: prd2
+    label: Fe(2+)
+    node_type: CHEMICAL
+    grounding: CHEBI:29033
+    description: Formula Fe.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: coproporphyrin ferrochelatase
+    grounding: EC:4.99.1.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q81U22
+    node_type: PROTEIN
+    label: CPFC1_BACAN
+    grounding: UniProtKB:Q81U22
+  - node_id: prot_Q73C98
+    node_type: PROTEIN
+    label: CPFC1_BACC1
+    grounding: UniProtKB:Q73C98
+  - node_id: prot_Q81GW5
+    node_type: PROTEIN
+    label: CPFC1_BACCR
+    grounding: UniProtKB:Q81GW5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe-coproporphyrin III is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49573
+      snippet: Fe-coproporphyrin III + 2 H(+) => coproporphyrin III + Fe(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:49573 declares side 49572_L as its substrates
+        (rh:substrates); the master reaction RHEA:49572 is undirected. This participant is CHEBI:68438
+        with coefficient 1. Rhea cites PMID:25646457, PMID:21052751, PMID:8119288, PMID:9384565 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:49573
+      snippet: Fe-coproporphyrin III + 2 H(+) => coproporphyrin III + Fe(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:49573 declares side 49572_L as its substrates
+        (rh:substrates); the master reaction RHEA:49572 is undirected. This participant is CHEBI:15378
+        with coefficient 2. Rhea cites PMID:25646457, PMID:21052751, PMID:8119288, PMID:9384565 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: coproporphyrin III is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49573
+      snippet: Fe-coproporphyrin III + 2 H(+) => coproporphyrin III + Fe(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:49573 declares side 49572_R as its products
+        (rh:products); the master reaction RHEA:49572 is undirected. This participant is CHEBI:131725
+        with coefficient 1. Rhea cites PMID:25646457, PMID:21052751, PMID:8119288, PMID:9384565 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: Fe(2+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49573
+      snippet: Fe-coproporphyrin III + 2 H(+) => coproporphyrin III + Fe(2+)
+      notes: Rhea's left-to-right directional reaction RHEA:49573 declares side 49572_R as its products
+        (rh:products); the master reaction RHEA:49572 is undirected. This participant is CHEBI:29033 with
+        coefficient 1. Rhea cites PMID:25646457, PMID:21052751, PMID:8119288, PMID:9384565 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.99.1.9; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:49572
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.99.1.9"/>
+      notes: The rh:ec triple on RHEA:49572 in rhea.rdf. EC 4.99.1.9 is itself a record in this KB.
+  - subject: prot_Q81U22
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPFC1_BACAN is an exemplar enzyme carrying EC 4.99.1.9, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.99.1.9
+      snippet: DR   Q81U22, CPFC1_BACAN;  Q73C98, CPFC1_BACC1;  Q81GW5, CPFC1_BACCR;
+      notes: ExPASy ENZYME entry EC 4.99.1.9 cross-references UniProtKB:Q81U22 (CPFC1_BACAN) as a protein
+        with this activity.
+    - reference: RHEA:49572
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.99.1.9"/>
+      notes: Rhea assigns RHEA:49572 to EC 4.99.1.9, and EC 4.99.1.9 maps to exactly one Rhea master reaction
+        (RHEA:49572), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q73C98
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPFC1_BACC1 is an exemplar enzyme carrying EC 4.99.1.9, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.99.1.9
+      snippet: DR   Q81U22, CPFC1_BACAN;  Q73C98, CPFC1_BACC1;  Q81GW5, CPFC1_BACCR;
+      notes: ExPASy ENZYME entry EC 4.99.1.9 cross-references UniProtKB:Q73C98 (CPFC1_BACC1) as a protein
+        with this activity.
+    - reference: RHEA:49572
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.99.1.9"/>
+      notes: Rhea assigns RHEA:49572 to EC 4.99.1.9, and EC 4.99.1.9 maps to exactly one Rhea master reaction
+        (RHEA:49572), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q81GW5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CPFC1_BACCR is an exemplar enzyme carrying EC 4.99.1.9, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.99.1.9
+      snippet: DR   Q81U22, CPFC1_BACAN;  Q73C98, CPFC1_BACC1;  Q81GW5, CPFC1_BACCR;
+      notes: ExPASy ENZYME entry EC 4.99.1.9 cross-references UniProtKB:Q81GW5 (CPFC1_BACCR) as a protein
+        with this activity.
+    - reference: RHEA:49572
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.99.1.9"/>
+      notes: Rhea assigns RHEA:49572 to EC 4.99.1.9, and EC 4.99.1.9 maps to exactly one Rhea master reaction
+        (RHEA:49572), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

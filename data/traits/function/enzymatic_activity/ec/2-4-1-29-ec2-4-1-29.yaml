@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -30,4 +30,133 @@ definitions:
       Catalyses: [(1->4)-beta-D-glucosyl](n) + GDP-alpha-D-glucose = [(1->4)-beta-D- glucosyl](n+1) + GDP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cellulose synthase (GDP-forming)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.29. EC 2.4.1.29 maps to exactly
+    one curated Rhea reaction (RHEA:17797), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[(1->4)-beta-D-glucosyl](n)
+    + GDP-alpha-D-glucose = [(1->4)-beta-D- glucosyl](n+1) + GDP + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cellulose synthase (GDP-forming)
+    grounding: EC:2.4.1.29
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[(1->4)-beta-D-glucosyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:18246
+    xrefs:
+    - RHEA-COMP:10033
+    description: Rhea compound POLYMER:10033. Formula H2O(C6H10O5)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: GDP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:62230
+    description: Formula C16H23N5O16P2.
+  - node_id: prd1
+    label: '[(1->4)-beta-D-glucosyl](n+1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:18246
+    xrefs:
+    - RHEA-COMP:10034
+    description: Rhea compound POLYMER:10034. Formula H2O(C6H10O5)<i><sub>n+1</sub></i>.
+  - node_id: prd2
+    label: GDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+    description: Formula C10H12N5O11P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cellulose synthase (GDP-forming) activity
+    grounding: GO:0016761
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[(1->4)-beta-D-glucosyl](n) is a substrate consumed by RHEA:17797 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:17798
+      snippet: '[(1->4)-beta-D-glucosyl](n) + GDP-alpha-D-glucose => [(1->4)-beta-D-glucosyl](n+1) + GDP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:17798 declares side 17797_L as its substrates
+        (rh:substrates); the master reaction RHEA:17797 is undirected. This participant is POLYMER:10033
+        with coefficient 1. Rhea cites PMID:4317490, PMID:5824571 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: GDP-alpha-D-glucose is a substrate consumed by RHEA:17797 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17798
+      snippet: '[(1->4)-beta-D-glucosyl](n) + GDP-alpha-D-glucose => [(1->4)-beta-D-glucosyl](n+1) + GDP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:17798 declares side 17797_L as its substrates
+        (rh:substrates); the master reaction RHEA:17797 is undirected. This participant is CHEBI:62230
+        with coefficient 1. Rhea cites PMID:4317490, PMID:5824571 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[(1->4)-beta-D-glucosyl](n+1) is a product released by RHEA:17797 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:17798
+      snippet: '[(1->4)-beta-D-glucosyl](n) + GDP-alpha-D-glucose => [(1->4)-beta-D-glucosyl](n+1) + GDP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:17798 declares side 17797_R as its products
+        (rh:products); the master reaction RHEA:17797 is undirected. This participant is POLYMER:10034
+        with coefficient 1. Rhea cites PMID:4317490, PMID:5824571 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: GDP is a product released by RHEA:17797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17798
+      snippet: '[(1->4)-beta-D-glucosyl](n) + GDP-alpha-D-glucose => [(1->4)-beta-D-glucosyl](n+1) + GDP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:17798 declares side 17797_R as its products
+        (rh:products); the master reaction RHEA:17797 is undirected. This participant is CHEBI:58189 with
+        coefficient 1. Rhea cites PMID:4317490, PMID:5824571 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:17797 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17798
+      snippet: '[(1->4)-beta-D-glucosyl](n) + GDP-alpha-D-glucose => [(1->4)-beta-D-glucosyl](n+1) + GDP
+        + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:17798 declares side 17797_R as its products
+        (rh:products); the master reaction RHEA:17797 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4317490, PMID:5824571 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.29
+      snippet: EC:2.4.1.29 > GO:cellulose synthase (GDP-forming) activity ; GO:0016761
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016761 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

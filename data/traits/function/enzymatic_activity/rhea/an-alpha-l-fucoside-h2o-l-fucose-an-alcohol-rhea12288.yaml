@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.1.51
     mapping_source: rhea2ec
@@ -32,4 +32,182 @@ definitions:
       Catalyses the reaction: an alpha-L-fucoside + H2O = L-fucose + an alcohol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an alpha-L-fucoside + H2O = L-fucose + an alcohol
+  description: Substrate-to-product chemistry of RHEA:12288, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12289 (rh:substrates → 12288_L, rh:products → 12288_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an alpha-L-fucoside + H2O = L-fucose + an alcohol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12288
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an alpha-L-fucoside + H2O = L-fucose + an alcohol'
+  - node_id: sub1
+    label: an alpha-L-fucoside
+    node_type: CHEMICAL
+    grounding: CHEBI:28349
+    description: Formula C6H11O5R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-fucose
+    node_type: CHEMICAL
+    grounding: CHEBI:2181
+    description: Formula C6H12O5.
+  - node_id: prd2
+    label: an alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:30879
+    description: Formula HOR.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-L-fucosidase activity
+    grounding: GO:0004560
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: alpha-L-fucosidase
+    grounding: EC:3.2.1.51
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A2R797
+    node_type: PROTEIN
+    label: AFCA_ASPNC
+    grounding: UniProtKB:A2R797
+  - node_id: prot_Q2USL3
+    node_type: PROTEIN
+    label: AFCA_ASPOR
+    grounding: UniProtKB:Q2USL3
+  - node_id: prot_Q5AU81
+    node_type: PROTEIN
+    label: AFCA_EMENI
+    grounding: UniProtKB:Q5AU81
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an alpha-L-fucoside is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12289
+      snippet: an alpha-L-fucoside + H2O => L-fucose + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:12289 declares side 12288_L as its substrates
+        (rh:substrates); the master reaction RHEA:12288 is undirected. This participant is CHEBI:28349
+        with coefficient 1. Rhea cites PMID:13761578, PMID:5672520, PMID:7458 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12289
+      snippet: an alpha-L-fucoside + H2O => L-fucose + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:12289 declares side 12288_L as its substrates
+        (rh:substrates); the master reaction RHEA:12288 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:13761578, PMID:5672520, PMID:7458 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-fucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12289
+      snippet: an alpha-L-fucoside + H2O => L-fucose + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:12289 declares side 12288_R as its products
+        (rh:products); the master reaction RHEA:12288 is undirected. This participant is CHEBI:2181 with
+        coefficient 1. Rhea cites PMID:13761578, PMID:5672520, PMID:7458 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: an alcohol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12289
+      snippet: an alpha-L-fucoside + H2O => L-fucose + an alcohol
+      notes: Rhea's left-to-right directional reaction RHEA:12289 declares side 12288_R as its products
+        (rh:products); the master reaction RHEA:12288 is undirected. This participant is CHEBI:30879 with
+        coefficient 1. Rhea cites PMID:13761578, PMID:5672520, PMID:7458 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12288
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004560"/>
+      notes: The rdfs:seeAlso triple on RHEA:12288 in rhea.rdf. GO term GO:0004560 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.1.51; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12288
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.51"/>
+      notes: The rh:ec triple on RHEA:12288 in rhea.rdf. EC 3.2.1.51 is itself a record in this KB.
+  - subject: prot_A2R797
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFCA_ASPNC is an exemplar enzyme carrying EC 3.2.1.51, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.51
+      snippet: DR   A2R797, AFCA_ASPNC ;  Q2USL3, AFCA_ASPOR ;  Q5AU81, AFCA_EMENI ;
+      notes: ExPASy ENZYME entry EC 3.2.1.51 cross-references UniProtKB:A2R797 (AFCA_ASPNC) as a protein
+        with this activity.
+    - reference: RHEA:12288
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.51"/>
+      notes: Rhea assigns RHEA:12288 to EC 3.2.1.51, and EC 3.2.1.51 maps to exactly one Rhea master reaction
+        (RHEA:12288), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q2USL3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFCA_ASPOR is an exemplar enzyme carrying EC 3.2.1.51, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.51
+      snippet: DR   A2R797, AFCA_ASPNC ;  Q2USL3, AFCA_ASPOR ;  Q5AU81, AFCA_EMENI ;
+      notes: ExPASy ENZYME entry EC 3.2.1.51 cross-references UniProtKB:Q2USL3 (AFCA_ASPOR) as a protein
+        with this activity.
+    - reference: RHEA:12288
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.51"/>
+      notes: Rhea assigns RHEA:12288 to EC 3.2.1.51, and EC 3.2.1.51 maps to exactly one Rhea master reaction
+        (RHEA:12288), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q5AU81
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AFCA_EMENI is an exemplar enzyme carrying EC 3.2.1.51, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.51
+      snippet: DR   A2R797, AFCA_ASPNC ;  Q2USL3, AFCA_ASPOR ;  Q5AU81, AFCA_EMENI ;
+      notes: ExPASy ENZYME entry EC 3.2.1.51 cross-references UniProtKB:Q5AU81 (AFCA_EMENI) as a protein
+        with this activity.
+    - reference: RHEA:12288
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.51"/>
+      notes: Rhea assigns RHEA:12288 to EC 3.2.1.51, and EC 3.2.1.51 maps to exactly one Rhea master reaction
+        (RHEA:12288), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.2.1.-
 synonyms:
@@ -45,4 +45,100 @@ definitions:
       Catalyses: 7,7',9,9'-tetra-cis-lycopene = all-trans-lycopene
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of prolycopene isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.2.1.13. EC 5.2.1.13 maps to exactly
+    one curated Rhea reaction (RHEA:30971), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "7,7'',9,9''-tetra-cis-lycopene
+    = all-trans-lycopene". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: prolycopene isomerase
+    grounding: EC:5.2.1.13
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 7,7',9,9'-tetra-cis-lycopene
+    node_type: CHEMICAL
+    grounding: CHEBI:62466
+    description: Formula C40H56.
+  - node_id: prd1
+    label: all-trans-lycopene
+    node_type: CHEMICAL
+    grounding: CHEBI:15948
+    description: Formula C40H56.
+  - node_id: prot_Q52QW3
+    node_type: PROTEIN
+    label: CRTS1_ONCHC
+    grounding: UniProtKB:Q52QW3
+  - node_id: prot_Q52QW2
+    node_type: PROTEIN
+    label: CRTS2_ONCHC
+    grounding: UniProtKB:Q52QW2
+  - node_id: prot_Q9M9Y8
+    node_type: PROTEIN
+    label: CRTSO_ARATH
+    grounding: UniProtKB:Q9M9Y8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 7,7',9,9'-tetra-cis-lycopene is a substrate consumed by RHEA:30971 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:30972
+      snippet: 7,7',9,9'-tetra-cis-lycopene => all-trans-lycopene
+      notes: Rhea's left-to-right directional reaction RHEA:30972 declares side 30971_L as its substrates
+        (rh:substrates); the master reaction RHEA:30971 is undirected. This participant is CHEBI:62466
+        with coefficient 1. Rhea cites PMID:11884678, PMID:20221689, PMID:21161331 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: all-trans-lycopene is a product released by RHEA:30971 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30972
+      snippet: 7,7',9,9'-tetra-cis-lycopene => all-trans-lycopene
+      notes: Rhea's left-to-right directional reaction RHEA:30972 declares side 30971_R as its products
+        (rh:products); the master reaction RHEA:30971 is undirected. This participant is CHEBI:15948 with
+        coefficient 1. Rhea cites PMID:11884678, PMID:20221689, PMID:21161331 for this reaction.
+  - subject: prot_Q52QW3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTS1_ONCHC is an exemplar enzyme with EC 5.2.1.13 activity.
+    evidence:
+    - reference: EC:5.2.1.13
+      snippet: DR   Q52QW3, CRTS1_ONCHC;  Q52QW2, CRTS2_ONCHC;  Q9M9Y8, CRTSO_ARATH;
+      notes: ExPASy ENZYME entry EC 5.2.1.13 cross-references UniProtKB:Q52QW3 (CRTS1_ONCHC) as a protein
+        with this activity.
+  - subject: prot_Q52QW2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTS2_ONCHC is an exemplar enzyme with EC 5.2.1.13 activity.
+    evidence:
+    - reference: EC:5.2.1.13
+      snippet: DR   Q52QW3, CRTS1_ONCHC;  Q52QW2, CRTS2_ONCHC;  Q9M9Y8, CRTSO_ARATH;
+      notes: ExPASy ENZYME entry EC 5.2.1.13 cross-references UniProtKB:Q52QW2 (CRTS2_ONCHC) as a protein
+        with this activity.
+  - subject: prot_Q9M9Y8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTSO_ARATH is an exemplar enzyme with EC 5.2.1.13 activity.
+    evidence:
+    - reference: EC:5.2.1.13
+      snippet: DR   Q52QW3, CRTS1_ONCHC;  Q52QW2, CRTS2_ONCHC;  Q9M9Y8, CRTSO_ARATH;
+      notes: ExPASy ENZYME entry EC 5.2.1.13 cross-references UniProtKB:Q9M9Y8 (CRTSO_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

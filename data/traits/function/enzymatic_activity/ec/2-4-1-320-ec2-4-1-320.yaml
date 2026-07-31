@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -28,4 +28,111 @@ definitions:
       Catalyses: 4-O-beta-D-mannopyranosyl-N-acetyl-D-glucosamine + phosphate = alpha-D- mannose 1-phosphate + N-acetyl-D-glucosamine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1,4-beta-mannosyl-N-acetylglucosamine phosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.320. EC 2.4.1.320 maps to
+    exactly one curated Rhea reaction (RHEA:13145), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-O-beta-D-mannopyranosyl-N-acetyl-D-glucosamine
+    + phosphate = alpha-D- mannose 1-phosphate + N-acetyl-D-glucosamine". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 1,4-beta-mannosyl-N-acetylglucosamine phosphorylase
+    grounding: EC:2.4.1.320
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-O-beta-D-mannopyranosyl-N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:76821
+    description: Formula C14H25NO11.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: alpha-D-mannose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58409
+    description: Formula C6H11O9P.
+  - node_id: prd2
+    label: N-acetyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:506227
+    description: Formula C8H15NO6.
+  - node_id: prot_Q8A8Y4
+    node_type: PROTEIN
+    label: BMAGP_BACTN
+    grounding: UniProtKB:Q8A8Y4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-O-beta-D-mannopyranosyl-N-acetyl-D-glucosamine is a substrate consumed by RHEA:13145
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13146
+      snippet: 4-O-beta-D-mannopyranosyl-N-acetyl-D-glucosamine + phosphate => alpha-D-mannose 1-phosphate
+        + N-acetyl-D-glucosamine
+      notes: Rhea's left-to-right directional reaction RHEA:13146 declares side 13145_L as its substrates
+        (rh:substrates); the master reaction RHEA:13145 is undirected. This participant is CHEBI:76821
+        with coefficient 1. Rhea cites PMID:23943617 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:13145 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13146
+      snippet: 4-O-beta-D-mannopyranosyl-N-acetyl-D-glucosamine + phosphate => alpha-D-mannose 1-phosphate
+        + N-acetyl-D-glucosamine
+      notes: Rhea's left-to-right directional reaction RHEA:13146 declares side 13145_L as its substrates
+        (rh:substrates); the master reaction RHEA:13145 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:23943617 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-mannose 1-phosphate is a product released by RHEA:13145 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13146
+      snippet: 4-O-beta-D-mannopyranosyl-N-acetyl-D-glucosamine + phosphate => alpha-D-mannose 1-phosphate
+        + N-acetyl-D-glucosamine
+      notes: Rhea's left-to-right directional reaction RHEA:13146 declares side 13145_R as its products
+        (rh:products); the master reaction RHEA:13145 is undirected. This participant is CHEBI:58409 with
+        coefficient 1. Rhea cites PMID:23943617 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: N-acetyl-D-glucosamine is a product released by RHEA:13145 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:13146
+      snippet: 4-O-beta-D-mannopyranosyl-N-acetyl-D-glucosamine + phosphate => alpha-D-mannose 1-phosphate
+        + N-acetyl-D-glucosamine
+      notes: Rhea's left-to-right directional reaction RHEA:13146 declares side 13145_R as its products
+        (rh:products); the master reaction RHEA:13145 is undirected. This participant is CHEBI:506227
+        with coefficient 1. Rhea cites PMID:23943617 for this reaction.
+  - subject: prot_Q8A8Y4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BMAGP_BACTN is an exemplar enzyme with EC 2.4.1.320 activity.
+    evidence:
+    - reference: EC:2.4.1.320
+      snippet: DR   Q8A8Y4, BMAGP_BACTN;
+      notes: ExPASy ENZYME entry EC 2.4.1.320 cross-references UniProtKB:Q8A8Y4 (BMAGP_BACTN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

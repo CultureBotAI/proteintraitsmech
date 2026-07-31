@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -38,4 +38,148 @@ definitions:
       Catalyses: uridine(2605) in 23S rRNA = pseudouridine(2605) in 23S rRNA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 23S rRNA pseudouridine(2605) synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.22. EC 5.4.99.22 maps to
+    exactly one curated Rhea reaction (RHEA:42520), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "uridine(2605)
+    in 23S rRNA = pseudouridine(2605) in 23S rRNA". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 23S rRNA pseudouridine(2605) synthase
+    grounding: EC:5.4.99.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: uridine(2605) in 23S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10095
+    description: Rhea compound GENERIC:10095.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: UMP residue at position 2605
+    description: The reacting group Rhea names inside the generic participant GENERIC:10095 (uridine(2605)
+      in 23S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65315
+  - node_id: prd1
+    label: pseudouridine(2605) in 23S rRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10096
+    description: Rhea compound GENERIC:10096.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: psi-uridine residue at position 2605
+    description: The reacting group Rhea names inside the generic participant GENERIC:10096 (pseudouridine(2605)
+      in 23S rRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:65314
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 23S rRNA pseudouridine(2605) synthase activity
+    grounding: GO:0160139
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P35159
+    node_type: PROTEIN
+    label: RLUB_BACSU
+    grounding: UniProtKB:P35159
+  - node_id: prot_P57369
+    node_type: PROTEIN
+    label: RLUB_BUCAI
+    grounding: UniProtKB:P57369
+  - node_id: prot_P42395
+    node_type: PROTEIN
+    label: RLUB_BUCAP
+    grounding: UniProtKB:P42395
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: uridine(2605) in 23S rRNA is a substrate consumed by RHEA:42520 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42521
+      snippet: uridine(2605) in 23S rRNA => pseudouridine(2605) in 23S rRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42521 declares side 42520_L as its substrates
+        (rh:substrates); the master reaction RHEA:42520 is undirected. This participant is GENERIC:10095
+        with coefficient 1. Rhea cites PMID:11720289, PMID:17337586 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: UMP residue is the reactive part of uridine(2605) in 23S rRNA.
+    evidence:
+    - reference: RHEA:42520
+      snippet: UMP residue
+      notes: Rhea compound GENERIC:10095 (uridine(2605) in 23S rRNA) declares rh:reactivePart at position
+        2605 = UMP residue (CHEBI:65315).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pseudouridine(2605) in 23S rRNA is a product released by RHEA:42520 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42521
+      snippet: uridine(2605) in 23S rRNA => pseudouridine(2605) in 23S rRNA
+      notes: Rhea's left-to-right directional reaction RHEA:42521 declares side 42520_R as its products
+        (rh:products); the master reaction RHEA:42520 is undirected. This participant is GENERIC:10096
+        with coefficient 1. Rhea cites PMID:11720289, PMID:17337586 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: psi-uridine residue is the reactive part of pseudouridine(2605) in 23S rRNA.
+    evidence:
+    - reference: RHEA:42520
+      snippet: psi-uridine residue
+      notes: Rhea compound GENERIC:10096 (pseudouridine(2605) in 23S rRNA) declares rh:reactivePart at
+        position 2605 = psi-uridine residue (CHEBI:65314).
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.22
+      snippet: EC:5.4.99.22 > GO:23S rRNA pseudouridine(2605) synthase activity ; GO:0160139
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0160139 is itself a record
+        in this KB.
+  - subject: prot_P35159
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RLUB_BACSU is an exemplar enzyme with EC 5.4.99.22 activity.
+    evidence:
+    - reference: EC:5.4.99.22
+      snippet: DR   P35159, RLUB_BACSU ;  P57369, RLUB_BUCAI ;  P42395, RLUB_BUCAP ;
+      notes: ExPASy ENZYME entry EC 5.4.99.22 cross-references UniProtKB:P35159 (RLUB_BACSU) as a protein
+        with this activity.
+  - subject: prot_P57369
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RLUB_BUCAI is an exemplar enzyme with EC 5.4.99.22 activity.
+    evidence:
+    - reference: EC:5.4.99.22
+      snippet: DR   P35159, RLUB_BACSU ;  P57369, RLUB_BUCAI ;  P42395, RLUB_BUCAP ;
+      notes: ExPASy ENZYME entry EC 5.4.99.22 cross-references UniProtKB:P57369 (RLUB_BUCAI) as a protein
+        with this activity.
+  - subject: prot_P42395
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RLUB_BUCAP is an exemplar enzyme with EC 5.4.99.22 activity.
+    evidence:
+    - reference: EC:5.4.99.22
+      snippet: DR   P35159, RLUB_BACSU ;  P57369, RLUB_BUCAI ;  P42395, RLUB_BUCAP ;
+      notes: ExPASy ENZYME entry EC 5.4.99.22 cross-references UniProtKB:P42395 (RLUB_BUCAP) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

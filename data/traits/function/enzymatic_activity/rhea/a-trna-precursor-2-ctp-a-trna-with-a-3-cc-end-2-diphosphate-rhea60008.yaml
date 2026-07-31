@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:74896
     role: SUBSTRATE_OR_PRODUCT
@@ -33,4 +33,145 @@ definitions:
       Catalyses the reaction: a tRNA precursor + 2 CTP = a tRNA with a 3' CC end + 2 diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a tRNA precursor + 2 CTP = a tRNA with a 3' CC end + 2 diphosphate
+  description: Substrate-to-product chemistry of RHEA:60008, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:60009 (rh:substrates → 60008_L, rh:products → 60008_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a tRNA precursor + 2 CTP = a tRNA with a 3' CC end + 2 diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:60008
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a tRNA precursor + 2 CTP = a tRNA with a 3'' CC end + 2 diphosphate'
+  - node_id: sub1
+    label: a tRNA precursor
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10465
+    description: Rhea compound GENERIC:10465.
+  - node_id: sub1_rp1
+    label: a 3'-terminal ribonucleotide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10465 (a tRNA precursor);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74896
+  - node_id: sub2
+    label: CTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37563
+    description: Formula C9H12N3O14P3.
+  - node_id: prd1
+    label: a tRNA with a 3' CC end
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:15488
+    description: Rhea compound GENERIC:15488.
+  - node_id: prd1_rp1
+    label: tRNA 3'-terminal nucleotidyl-cytidyl-cytidine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15488 (a tRNA with
+      a 3' CC end); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83069
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: CC tRNA cytidylyltransferase activity
+    grounding: GO:0052927
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a tRNA precursor is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60009
+      snippet: a tRNA precursor + 2 CTP => a tRNA with a 3' CC end + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60009 declares side 60008_L as its substrates
+        (rh:substrates); the master reaction RHEA:60008 is undirected. This participant is GENERIC:10465
+        with coefficient 1. Rhea cites PMID:12370185, PMID:11701927, PMID:18952795, PMID:18523015 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: a 3'-terminal ribonucleotide residue is the reactive part of a tRNA precursor.
+    evidence:
+    - reference: RHEA:60008
+      snippet: a 3'-terminal ribonucleotide residue
+      notes: Rhea compound GENERIC:10465 (a tRNA precursor) declares rh:reactivePart = a 3'-terminal ribonucleotide
+        residue (CHEBI:74896), formula C5H8O6PR.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: CTP is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:60009
+      snippet: a tRNA precursor + 2 CTP => a tRNA with a 3' CC end + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60009 declares side 60008_L as its substrates
+        (rh:substrates); the master reaction RHEA:60008 is undirected. This participant is CHEBI:37563
+        with coefficient 2. Rhea cites PMID:12370185, PMID:11701927, PMID:18952795, PMID:18523015 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a tRNA with a 3' CC end is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60009
+      snippet: a tRNA precursor + 2 CTP => a tRNA with a 3' CC end + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60009 declares side 60008_R as its products
+        (rh:products); the master reaction RHEA:60008 is undirected. This participant is GENERIC:15488
+        with coefficient 1. Rhea cites PMID:12370185, PMID:11701927, PMID:18952795, PMID:18523015 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: tRNA 3'-terminal nucleotidyl-cytidyl-cytidine residue is the reactive part of a tRNA
+      with a 3' CC end.
+    evidence:
+    - reference: RHEA:60008
+      snippet: tRNA 3'-terminal nucleotidyl-cytidyl-cytidine residue
+      notes: Rhea compound GENERIC:15488 (a tRNA with a 3' CC end) declares rh:reactivePart = tRNA 3'-terminal
+        nucleotidyl-cytidyl-cytidine residue (CHEBI:83069), formula C23H30N6O20P3R.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:60009
+      snippet: a tRNA precursor + 2 CTP => a tRNA with a 3' CC end + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:60009 declares side 60008_R as its products
+        (rh:products); the master reaction RHEA:60008 is undirected. This participant is CHEBI:33019 with
+        coefficient 2. Rhea cites PMID:12370185, PMID:11701927, PMID:18952795, PMID:18523015 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:60008
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052927"/>
+      notes: The rdfs:seeAlso triple on RHEA:60008 in rhea.rdf. GO term GO:0052927 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -43,4 +43,82 @@ definitions:
       Catalyses: Selective cleavage of Arg-|-Ser bond in complement component C3 alpha- chain to form C3a and C3b, and Arg-|-Xaa bond in complement component C5 alpha-chain to form C5a and C5b
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of classical-complement-pathway C3/C5 convertase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.43. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Selective
+    cleavage of Arg-|-Ser bond in complement component C3 alpha- chain to form C3a and C3b, and Arg-|-Xaa
+    bond in complement component C5 alpha-chain to form C5a and C5b".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: classical-complement-pathway C3/C5 convertase
+    grounding: EC:3.4.21.43
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: serine-type endopeptidase activity
+    grounding: GO:0004252
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q3SYW2
+    node_type: PROTEIN
+    label: CO2_BOVIN
+    grounding: UniProtKB:Q3SYW2
+  - node_id: prot_Q863A0
+    node_type: PROTEIN
+    label: CO2_GORGO
+    grounding: UniProtKB:Q863A0
+  - node_id: prot_P06681
+    node_type: PROTEIN
+    label: CO2_HUMAN
+    grounding: UniProtKB:P06681
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.21.43
+      snippet: EC:3.4.21.43 > GO:serine-type endopeptidase activity ; GO:0004252
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004252 is itself a record
+        in this KB.
+  - subject: prot_Q3SYW2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CO2_BOVIN is an exemplar enzyme with EC 3.4.21.43 activity.
+    evidence:
+    - reference: EC:3.4.21.43
+      snippet: DR   Q3SYW2, CO2_BOVIN  ;  Q863A0, CO2_GORGO  ;  P06681, CO2_HUMAN  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.43 cross-references UniProtKB:Q3SYW2 (CO2_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q863A0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CO2_GORGO is an exemplar enzyme with EC 3.4.21.43 activity.
+    evidence:
+    - reference: EC:3.4.21.43
+      snippet: DR   Q3SYW2, CO2_BOVIN  ;  Q863A0, CO2_GORGO  ;  P06681, CO2_HUMAN  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.43 cross-references UniProtKB:Q863A0 (CO2_GORGO) as a protein
+        with this activity.
+  - subject: prot_P06681
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CO2_HUMAN is an exemplar enzyme with EC 3.4.21.43 activity.
+    evidence:
+    - reference: EC:3.4.21.43
+      snippet: DR   Q3SYW2, CO2_BOVIN  ;  Q863A0, CO2_GORGO  ;  P06681, CO2_HUMAN  ;
+      notes: ExPASy ENZYME entry EC 3.4.21.43 cross-references UniProtKB:P06681 (CO2_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

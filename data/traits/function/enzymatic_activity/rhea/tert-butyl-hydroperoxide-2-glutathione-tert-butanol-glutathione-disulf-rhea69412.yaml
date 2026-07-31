@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:64090
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,110 @@ definitions:
       Catalyses the reaction: tert-butyl hydroperoxide + 2 glutathione = tert-butanol + glutathione disulfide + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tert-butyl hydroperoxide + 2 glutathione = tert-butanol + glutathione disulfide
+    + H2O
+  description: Substrate-to-product chemistry of RHEA:69412, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:69413 (rh:substrates → 69412_L, rh:products → 69412_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of tert-butyl hydroperoxide + 2 glutathione = tert-butanol + glutathione disulf…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:69412
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: tert-butyl hydroperoxide + 2 glutathione = tert-butanol + glutathione disulfide +
+      H2O'
+  - node_id: sub1
+    label: tert-butyl hydroperoxide
+    node_type: CHEMICAL
+    grounding: CHEBI:64090
+    description: Formula C4H10O2.
+  - node_id: sub2
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: prd1
+    label: tert-butanol
+    node_type: CHEMICAL
+    grounding: CHEBI:45895
+    description: Formula C4H10O.
+  - node_id: prd2
+    label: glutathione disulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:58297
+    description: Formula C20H30N6O12S2.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: tert-butyl hydroperoxide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69413
+      snippet: tert-butyl hydroperoxide + 2 glutathione => tert-butanol + glutathione disulfide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:69413 declares side 69412_L as its substrates
+        (rh:substrates); the master reaction RHEA:69412 is undirected. This participant is CHEBI:64090
+        with coefficient 1. Rhea cites PMID:1897960, PMID:36608588 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: glutathione is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:69413
+      snippet: tert-butyl hydroperoxide + 2 glutathione => tert-butanol + glutathione disulfide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:69413 declares side 69412_L as its substrates
+        (rh:substrates); the master reaction RHEA:69412 is undirected. This participant is CHEBI:57925
+        with coefficient 2. Rhea cites PMID:1897960, PMID:36608588 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: tert-butanol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69413
+      snippet: tert-butyl hydroperoxide + 2 glutathione => tert-butanol + glutathione disulfide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:69413 declares side 69412_R as its products
+        (rh:products); the master reaction RHEA:69412 is undirected. This participant is CHEBI:45895 with
+        coefficient 1. Rhea cites PMID:1897960, PMID:36608588 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glutathione disulfide is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:69413
+      snippet: tert-butyl hydroperoxide + 2 glutathione => tert-butanol + glutathione disulfide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:69413 declares side 69412_R as its products
+        (rh:products); the master reaction RHEA:69412 is undirected. This participant is CHEBI:58297 with
+        coefficient 1. Rhea cites PMID:1897960, PMID:36608588 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:69413
+      snippet: tert-butyl hydroperoxide + 2 glutathione => tert-butanol + glutathione disulfide + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:69413 declares side 69412_R as its products
+        (rh:products); the master reaction RHEA:69412 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:1897960, PMID:36608588 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

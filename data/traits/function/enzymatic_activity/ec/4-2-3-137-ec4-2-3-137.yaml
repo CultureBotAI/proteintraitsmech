@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -35,4 +35,103 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = (E)-2-epi-beta-caryophyllene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (E)-2-epi-beta-caryophyllene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.137. EC 4.2.3.137 maps to
+    exactly one curated Rhea reaction (RHEA:34703), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = (E)-2-epi-beta-caryophyllene + diphosphate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (E)-2-epi-beta-caryophyllene synthase
+    grounding: EC:4.2.3.137
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (E)-2-epi-beta-caryophyllene
+    node_type: CHEMICAL
+    grounding: CHEBI:68667
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_J9QS25
+    node_type: PROTEIN
+    label: MTS26_SELML
+    grounding: UniProtKB:J9QS25
+  - node_id: prot_A0A5S9I252
+    node_type: PROTEIN
+    label: TATC6_TRIAV
+    grounding: UniProtKB:A0A5S9I252
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:34703 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34704
+      snippet: (2E,6E)-farnesyl diphosphate => (E)-2-epi-beta-caryophyllene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34704 declares side 34703_L as its substrates
+        (rh:substrates); the master reaction RHEA:34703 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:31418991, PMID:22908266, PMID:30254228 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (E)-2-epi-beta-caryophyllene is a product released by RHEA:34703 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34704
+      snippet: (2E,6E)-farnesyl diphosphate => (E)-2-epi-beta-caryophyllene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34704 declares side 34703_R as its products
+        (rh:products); the master reaction RHEA:34703 is undirected. This participant is CHEBI:68667 with
+        coefficient 1. Rhea cites PMID:31418991, PMID:22908266, PMID:30254228 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:34703 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34704
+      snippet: (2E,6E)-farnesyl diphosphate => (E)-2-epi-beta-caryophyllene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34704 declares side 34703_R as its products
+        (rh:products); the master reaction RHEA:34703 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:31418991, PMID:22908266, PMID:30254228 for this reaction.
+  - subject: prot_J9QS25
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTS26_SELML is an exemplar enzyme with EC 4.2.3.137 activity.
+    evidence:
+    - reference: EC:4.2.3.137
+      snippet: DR   J9QS25, MTS26_SELML;  A0A5S9I252, TATC6_TRIAV;
+      notes: ExPASy ENZYME entry EC 4.2.3.137 cross-references UniProtKB:J9QS25 (MTS26_SELML) as a protein
+        with this activity.
+  - subject: prot_A0A5S9I252
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TATC6_TRIAV is an exemplar enzyme with EC 4.2.3.137 activity.
+    evidence:
+    - reference: EC:4.2.3.137
+      snippet: DR   J9QS25, MTS26_SELML;  A0A5S9I252, TATC6_TRIAV;
+      notes: ExPASy ENZYME entry EC 4.2.3.137 cross-references UniProtKB:A0A5S9I252 (TATC6_TRIAV) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

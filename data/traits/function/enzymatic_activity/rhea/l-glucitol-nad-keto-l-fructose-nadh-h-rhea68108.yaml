@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.1.1.15
     mapping_source: rhea2ec
@@ -30,4 +30,121 @@ definitions:
       Catalyses the reaction: L-glucitol + NAD(+) = keto-L-fructose + NADH + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-glucitol + NAD(+) = keto-L-fructose + NADH + H(+)
+  description: Substrate-to-product chemistry of RHEA:68108, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:68109 (rh:substrates → 68108_L, rh:products → 68108_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-glucitol + NAD(+) = keto-L-fructose + NADH + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:68108
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-glucitol + NAD(+) = keto-L-fructose + NADH + H(+)'
+  - node_id: sub1
+    label: L-glucitol
+    node_type: CHEMICAL
+    grounding: CHEBI:28789
+    description: Formula C6H14O6.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: keto-L-fructose
+    node_type: CHEMICAL
+    grounding: CHEBI:37724
+    description: Formula C6H12O6.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: D-iditol 2-dehydrogenase
+    grounding: EC:1.1.1.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-glucitol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68109
+      snippet: L-glucitol + NAD(+) => keto-L-fructose + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68109 declares side 68108_L as its substrates
+        (rh:substrates); the master reaction RHEA:68108 is undirected. This participant is CHEBI:28789
+        with coefficient 1. Rhea cites PMID:13373783 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68109
+      snippet: L-glucitol + NAD(+) => keto-L-fructose + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68109 declares side 68108_L as its substrates
+        (rh:substrates); the master reaction RHEA:68108 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:13373783 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: keto-L-fructose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68109
+      snippet: L-glucitol + NAD(+) => keto-L-fructose + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68109 declares side 68108_R as its products
+        (rh:products); the master reaction RHEA:68108 is undirected. This participant is CHEBI:37724 with
+        coefficient 1. Rhea cites PMID:13373783 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68109
+      snippet: L-glucitol + NAD(+) => keto-L-fructose + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68109 declares side 68108_R as its products
+        (rh:products); the master reaction RHEA:68108 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:13373783 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68109
+      snippet: L-glucitol + NAD(+) => keto-L-fructose + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:68109 declares side 68108_R as its products
+        (rh:products); the master reaction RHEA:68108 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:13373783 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.1.1.15; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:68108
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.15"/>
+      notes: The rh:ec triple on RHEA:68108 in rhea.rdf. EC 1.1.1.15 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

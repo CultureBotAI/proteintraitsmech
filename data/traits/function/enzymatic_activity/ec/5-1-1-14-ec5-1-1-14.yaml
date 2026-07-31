@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.1.-
 mapped_xrefs:
@@ -32,4 +32,151 @@ definitions:
       Catalyses: (1) isonocardicin C = nocardicin C. (2) isonocardicin A = nocardicin A
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nocardicin-A epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.1.14. Rhea assigns 2 curated
+    reactions to EC 5.1.1.14. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) isonocardicin C = nocardicin C. (2) isonocardicin A
+    = nocardicin A". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: nocardicin-A epimerase
+    grounding: EC:5.1.1.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of isonocardicin A = nocardicin A
+    grounding: RHEA:22792
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: isonocardicin A = nocardicin A'
+  - node_id: rxn1_sub1
+    label: isonocardicin A
+    node_type: CHEMICAL
+    grounding: CHEBI:77633
+    description: Formula C23H22N4O9.
+  - node_id: rxn1_prd1
+    label: nocardicin A
+    node_type: CHEMICAL
+    grounding: CHEBI:77658
+    description: Formula C23H22N4O9.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of isonocardicin C = nocardicin C
+    grounding: RHEA:42132
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: isonocardicin C = nocardicin C'
+  - node_id: rxn2_sub1
+    label: isonocardicin C
+    node_type: CHEMICAL
+    grounding: CHEBI:131920
+    description: Formula C23H26N4O8.
+  - node_id: rxn2_prd1
+    label: nocardicin C
+    node_type: CHEMICAL
+    grounding: CHEBI:131948
+    description: Formula C23H26N4O8.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: nocardicin-A epimerase activity
+    grounding: GO:0050143
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5J1R2
+    node_type: PROTEIN
+    label: NOCJ_NOCUT
+    grounding: UniProtKB:Q5J1R2
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:22792 is one of the 2 curated reactions Rhea assigns to EC 5.1.1.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:22792
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.14"/>
+      notes: The rh:ec triple on RHEA:22792 in rhea.rdf assigns that reaction to EC 5.1.1.14.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: isonocardicin A is a substrate consumed by RHEA:22792 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22793
+      snippet: isonocardicin A => nocardicin A
+      notes: Rhea's left-to-right directional reaction RHEA:22793 declares side 22792_L as its substrates
+        (rh:substrates); the master reaction RHEA:22792 is undirected. This participant is CHEBI:77633
+        with coefficient 1. Rhea cites PMID:15629944, PMID:15252031 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: nocardicin A is a product released by RHEA:22792 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22793
+      snippet: isonocardicin A => nocardicin A
+      notes: Rhea's left-to-right directional reaction RHEA:22793 declares side 22792_R as its products
+        (rh:products); the master reaction RHEA:22792 is undirected. This participant is CHEBI:77658 with
+        coefficient 1. Rhea cites PMID:15629944, PMID:15252031 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:42132 is one of the 2 curated reactions Rhea assigns to EC 5.1.1.14; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:42132
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.1.14"/>
+      notes: The rh:ec triple on RHEA:42132 in rhea.rdf assigns that reaction to EC 5.1.1.14.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: isonocardicin C is a substrate consumed by RHEA:42132 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42133
+      snippet: isonocardicin C => nocardicin C
+      notes: Rhea's left-to-right directional reaction RHEA:42133 declares side 42132_L as its substrates
+        (rh:substrates); the master reaction RHEA:42132 is undirected. This participant is CHEBI:131920
+        with coefficient 1. Rhea cites PMID:15629944, PMID:15252031 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: nocardicin C is a product released by RHEA:42132 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42133
+      snippet: isonocardicin C => nocardicin C
+      notes: Rhea's left-to-right directional reaction RHEA:42133 declares side 42132_R as its products
+        (rh:products); the master reaction RHEA:42132 is undirected. This participant is CHEBI:131948
+        with coefficient 1. Rhea cites PMID:15629944, PMID:15252031 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.1.14
+      snippet: EC:5.1.1.14 > GO:nocardicin-A epimerase activity ; GO:0050143
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050143 is itself a record
+        in this KB.
+  - subject: prot_Q5J1R2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NOCJ_NOCUT is an exemplar enzyme with EC 5.1.1.14 activity.
+    evidence:
+    - reference: EC:5.1.1.14
+      snippet: DR   Q5J1R2, NOCJ_NOCUT ;
+      notes: ExPASy ENZYME entry EC 5.1.1.14 cross-references UniProtKB:Q5J1R2 (NOCJ_NOCUT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58315
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,74 @@ definitions:
       Catalyses the reaction: L-tyrosine = D-tyrosine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-tyrosine = D-tyrosine
+  description: Substrate-to-product chemistry of RHEA:59808, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59809 (rh:substrates → 59808_L, rh:products → 59808_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-tyrosine = D-tyrosine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59808
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-tyrosine = D-tyrosine'
+  - node_id: sub1
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+    description: Formula C9H11NO3.
+  - node_id: prd1
+    label: D-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58570
+    description: Formula C9H11NO3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: amino-acid racemase activity
+    grounding: GO:0047661
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tyrosine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59809
+      snippet: L-tyrosine => D-tyrosine
+      notes: Rhea's left-to-right directional reaction RHEA:59809 declares side 59808_L as its substrates
+        (rh:substrates); the master reaction RHEA:59808 is undirected. This participant is CHEBI:58315
+        with coefficient 1. Rhea cites PMID:28894939 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-tyrosine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59809
+      snippet: L-tyrosine => D-tyrosine
+      notes: Rhea's left-to-right directional reaction RHEA:59809 declares side 59808_R as its products
+        (rh:products); the master reaction RHEA:59808 is undirected. This participant is CHEBI:58570 with
+        coefficient 1. Rhea cites PMID:28894939 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:59808
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047661"/>
+      notes: The rdfs:seeAlso triple on RHEA:59808 in rhea.rdf. GO term GO:0047661 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

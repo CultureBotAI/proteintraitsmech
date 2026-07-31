@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.3.12
     mapping_source: rhea2ec
@@ -30,4 +30,151 @@ definitions:
       Catalyses the reaction: L-dopachrome = 5,6-dihydroxyindole-2-carboxylate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-dopachrome = 5,6-dihydroxyindole-2-carboxylate
+  description: Substrate-to-product chemistry of RHEA:13041, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:13042 (rh:substrates → 13041_L, rh:products → 13041_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-dopachrome = 5,6-dihydroxyindole-2-carboxylate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:13041
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-dopachrome = 5,6-dihydroxyindole-2-carboxylate'
+  - node_id: sub1
+    label: L-dopachrome
+    node_type: CHEMICAL
+    grounding: CHEBI:57509
+    description: Formula C9H6NO4.
+  - node_id: prd1
+    label: 5,6-dihydroxyindole-2-carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:16875
+    description: Formula C9H6NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: dopachrome isomerase activity
+    grounding: GO:0004167
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: L-dopachrome isomerase
+    grounding: EC:5.3.3.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q963F7
+    node_type: PROTEIN
+    label: MIFH1_ONCVO
+    grounding: UniProtKB:Q963F7
+  - node_id: prot_P91850
+    node_type: PROTEIN
+    label: MIFH_BRUMA
+    grounding: UniProtKB:P91850
+  - node_id: prot_P81530
+    node_type: PROTEIN
+    label: MIFH_TRIMR
+    grounding: UniProtKB:P81530
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-dopachrome is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13042
+      snippet: L-dopachrome => 5,6-dihydroxyindole-2-carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:13042 declares side 13041_L as its substrates
+        (rh:substrates); the master reaction RHEA:13041 is undirected. This participant is CHEBI:57509
+        with coefficient 1. Rhea cites PMID:11439086, PMID:19188446, PMID:9794786, PMID:8573077 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5,6-dihydroxyindole-2-carboxylate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:13042
+      snippet: L-dopachrome => 5,6-dihydroxyindole-2-carboxylate
+      notes: Rhea's left-to-right directional reaction RHEA:13042 declares side 13041_R as its products
+        (rh:products); the master reaction RHEA:13041 is undirected. This participant is CHEBI:16875 with
+        coefficient 1. Rhea cites PMID:11439086, PMID:19188446, PMID:9794786, PMID:8573077 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:13041
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004167"/>
+      notes: The rdfs:seeAlso triple on RHEA:13041 in rhea.rdf. GO term GO:0004167 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.3.12; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:13041
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.12"/>
+      notes: The rh:ec triple on RHEA:13041 in rhea.rdf. EC 5.3.3.12 is itself a record in this KB.
+  - subject: prot_Q963F7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MIFH1_ONCVO is an exemplar enzyme carrying EC 5.3.3.12, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.3.12
+      snippet: DR   Q963F7, MIFH1_ONCVO;  P91850, MIFH_BRUMA ;  P81530, MIFH_TRIMR ;
+      notes: ExPASy ENZYME entry EC 5.3.3.12 cross-references UniProtKB:Q963F7 (MIFH1_ONCVO) as a protein
+        with this activity.
+    - reference: RHEA:13041
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.12"/>
+      notes: Rhea assigns RHEA:13041 to EC 5.3.3.12, and EC 5.3.3.12 maps to exactly one Rhea master reaction
+        (RHEA:13041), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P91850
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MIFH_BRUMA is an exemplar enzyme carrying EC 5.3.3.12, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.3.12
+      snippet: DR   Q963F7, MIFH1_ONCVO;  P91850, MIFH_BRUMA ;  P81530, MIFH_TRIMR ;
+      notes: ExPASy ENZYME entry EC 5.3.3.12 cross-references UniProtKB:P91850 (MIFH_BRUMA) as a protein
+        with this activity.
+    - reference: RHEA:13041
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.12"/>
+      notes: Rhea assigns RHEA:13041 to EC 5.3.3.12, and EC 5.3.3.12 maps to exactly one Rhea master reaction
+        (RHEA:13041), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P81530
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MIFH_TRIMR is an exemplar enzyme carrying EC 5.3.3.12, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.3.12
+      snippet: DR   Q963F7, MIFH1_ONCVO;  P91850, MIFH_BRUMA ;  P81530, MIFH_TRIMR ;
+      notes: ExPASy ENZYME entry EC 5.3.3.12 cross-references UniProtKB:P81530 (MIFH_TRIMR) as a protein
+        with this activity.
+    - reference: RHEA:13041
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.3.12"/>
+      notes: Rhea assigns RHEA:13041 to EC 5.3.3.12, and EC 5.3.3.12 maps to exactly one Rhea master reaction
+        (RHEA:13041), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

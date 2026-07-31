@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.3.-
 synonyms:
@@ -26,4 +26,194 @@ definitions:
       Catalyses: a 3-oxoacyl-[ACP] + acetyl-[ACP] + H2O = a 3-carboxymethyl-3-hydroxy- acyl-[ACP] + holo-[ACP] + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-carboxymethyl-3-hydroxy-acyl-[ACP] synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.3.22. EC 2.3.3.22 maps to exactly
+    one curated Rhea reaction (RHEA:78795), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 3-oxoacyl-[ACP]
+    + acetyl-[ACP] + H2O = a 3-carboxymethyl-3-hydroxy- acyl-[ACP] + holo-[ACP] + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-carboxymethyl-3-hydroxy-acyl-[ACP] synthase
+    grounding: EC:2.3.3.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 3-oxoacyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9916
+    description: Rhea compound GENERIC:9916.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-(S-3-oxoacylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9916 (a 3-oxoacyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78776
+  - node_id: sub2
+    label: acetyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9621
+    description: Rhea compound GENERIC:9621.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9621 (acetyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78446
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 3-carboxymethyl-3-hydroxy-acyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:19144
+    description: Rhea compound GENERIC:19144.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-(S-3-carboxymethyl-3-hydroxyacylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:19144 (a 3-carboxymethyl-3-hydroxy-acyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:228215
+  - node_id: prd2
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3-oxoacyl-[ACP] is a substrate consumed by RHEA:78795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78796
+      snippet: a 3-oxoacyl-[ACP] + acetyl-[ACP] + H2O => a 3-carboxymethyl-3-hydroxy-acyl-[ACP] + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78796 declares side 78795_L as its substrates
+        (rh:substrates); the master reaction RHEA:78795 is undirected. This participant is GENERIC:9916
+        with coefficient 1. Rhea cites PMID:27573844, PMID:21035732 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-3-oxoacylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of a 3-oxoacyl-[ACP].
+    evidence:
+    - reference: RHEA:78795
+      snippet: O-(S-3-oxoacylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9916 (a 3-oxoacyl-[ACP]) declares rh:reactivePart = O-(S-3-oxoacylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78776).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-[ACP] is a substrate consumed by RHEA:78795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78796
+      snippet: a 3-oxoacyl-[ACP] + acetyl-[ACP] + H2O => a 3-carboxymethyl-3-hydroxy-acyl-[ACP] + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78796 declares side 78795_L as its substrates
+        (rh:substrates); the master reaction RHEA:78795 is undirected. This participant is GENERIC:9621
+        with coefficient 1. Rhea cites PMID:27573844, PMID:21035732 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of acetyl-[ACP].
+    evidence:
+    - reference: RHEA:78795
+      snippet: O-(S-acetylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9621 (acetyl-[ACP]) declares rh:reactivePart = O-(S-acetylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78446).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by RHEA:78795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78796
+      snippet: a 3-oxoacyl-[ACP] + acetyl-[ACP] + H2O => a 3-carboxymethyl-3-hydroxy-acyl-[ACP] + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78796 declares side 78795_L as its substrates
+        (rh:substrates); the master reaction RHEA:78795 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:27573844, PMID:21035732 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3-carboxymethyl-3-hydroxy-acyl-[ACP] is a product released by RHEA:78795 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78796
+      snippet: a 3-oxoacyl-[ACP] + acetyl-[ACP] + H2O => a 3-carboxymethyl-3-hydroxy-acyl-[ACP] + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78796 declares side 78795_R as its products
+        (rh:products); the master reaction RHEA:78795 is undirected. This participant is GENERIC:19144
+        with coefficient 1. Rhea cites PMID:27573844, PMID:21035732 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-3-carboxymethyl-3-hydroxyacylpantetheine-4'-phosphoryl)-L-serine residue is the
+      reactive part of a 3-carboxymethyl-3-hydroxy-acyl-[ACP].
+    evidence:
+    - reference: RHEA:78795
+      snippet: O-(S-3-carboxymethyl-3-hydroxyacylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:19144 (a 3-carboxymethyl-3-hydroxy-acyl-[ACP]) declares rh:reactivePart
+        = O-(S-3-carboxymethyl-3-hydroxyacylpantetheine-4'-phosphoryl)-L-serine residue (CHEBI:228215).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: holo-[ACP] is a product released by RHEA:78795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78796
+      snippet: a 3-oxoacyl-[ACP] + acetyl-[ACP] + H2O => a 3-carboxymethyl-3-hydroxy-acyl-[ACP] + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78796 declares side 78795_R as its products
+        (rh:products); the master reaction RHEA:78795 is undirected. This participant is GENERIC:9685
+        with coefficient 1. Rhea cites PMID:27573844, PMID:21035732 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:78795
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:78795 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78796
+      snippet: a 3-oxoacyl-[ACP] + acetyl-[ACP] + H2O => a 3-carboxymethyl-3-hydroxy-acyl-[ACP] + holo-[ACP]
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:78796 declares side 78795_R as its products
+        (rh:products); the master reaction RHEA:78795 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:27573844, PMID:21035732 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

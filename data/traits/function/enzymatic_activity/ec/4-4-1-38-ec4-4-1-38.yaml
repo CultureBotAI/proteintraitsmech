@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.4.1.-
 mapped_xrefs:
@@ -36,4 +36,132 @@ definitions:
       Catalyses: 2-hydroxyethane-1-sulfonate = acetaldehyde + sulfite + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isethionate sulfite-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.4.1.38. EC 4.4.1.38 maps to exactly
+    one curated Rhea reaction (RHEA:60452), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2-hydroxyethane-1-sulfonate
+    = acetaldehyde + sulfite + H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: isethionate sulfite-lyase
+    grounding: EC:4.4.1.38
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 2-hydroxyethane-1-sulfonate
+    node_type: CHEMICAL
+    grounding: CHEBI:61904
+    description: Formula C2H5O4S.
+  - node_id: prd1
+    label: acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15343
+    description: Formula C2H4O.
+  - node_id: prd2
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_E5Y378
+    node_type: PROTEIN
+    label: ISLA_BILW3
+    grounding: UniProtKB:E5Y378
+  - node_id: prot_B8J0R1
+    node_type: PROTEIN
+    label: ISLA_DESDA
+    grounding: UniProtKB:B8J0R1
+  - node_id: prot_Q727N1
+    node_type: PROTEIN
+    label: ISLA_NITV2
+    grounding: UniProtKB:Q727N1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-hydroxyethane-1-sulfonate is a substrate consumed by RHEA:60452 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:60453
+      snippet: 2-hydroxyethane-1-sulfonate => acetaldehyde + sulfite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:60453 declares side 60452_L as its substrates
+        (rh:substrates); the master reaction RHEA:60452 is undirected. This participant is CHEBI:61904
+        with coefficient 1. Rhea cites PMID:30718429, PMID:30962433 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: acetaldehyde is a product released by RHEA:60452 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60453
+      snippet: 2-hydroxyethane-1-sulfonate => acetaldehyde + sulfite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:60453 declares side 60452_R as its products
+        (rh:products); the master reaction RHEA:60452 is undirected. This participant is CHEBI:15343 with
+        coefficient 1. Rhea cites PMID:30718429, PMID:30962433 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfite is a product released by RHEA:60452 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60453
+      snippet: 2-hydroxyethane-1-sulfonate => acetaldehyde + sulfite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:60453 declares side 60452_R as its products
+        (rh:products); the master reaction RHEA:60452 is undirected. This participant is CHEBI:17359 with
+        coefficient 1. Rhea cites PMID:30718429, PMID:30962433 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:60452 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60453
+      snippet: 2-hydroxyethane-1-sulfonate => acetaldehyde + sulfite + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:60453 declares side 60452_R as its products
+        (rh:products); the master reaction RHEA:60452 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:30718429, PMID:30962433 for this reaction.
+  - subject: prot_E5Y378
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ISLA_BILW3 is an exemplar enzyme with EC 4.4.1.38 activity.
+    evidence:
+    - reference: EC:4.4.1.38
+      snippet: DR   E5Y378, ISLA_BILW3 ;  B8J0R1, ISLA_DESDA ;  Q727N1, ISLA_NITV2 ;
+      notes: ExPASy ENZYME entry EC 4.4.1.38 cross-references UniProtKB:E5Y378 (ISLA_BILW3) as a protein
+        with this activity.
+  - subject: prot_B8J0R1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ISLA_DESDA is an exemplar enzyme with EC 4.4.1.38 activity.
+    evidence:
+    - reference: EC:4.4.1.38
+      snippet: DR   E5Y378, ISLA_BILW3 ;  B8J0R1, ISLA_DESDA ;  Q727N1, ISLA_NITV2 ;
+      notes: ExPASy ENZYME entry EC 4.4.1.38 cross-references UniProtKB:B8J0R1 (ISLA_DESDA) as a protein
+        with this activity.
+  - subject: prot_Q727N1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ISLA_NITV2 is an exemplar enzyme with EC 4.4.1.38 activity.
+    evidence:
+    - reference: EC:4.4.1.38
+      snippet: DR   E5Y378, ISLA_BILW3 ;  B8J0R1, ISLA_DESDA ;  Q727N1, ISLA_NITV2 ;
+      notes: ExPASy ENZYME entry EC 4.4.1.38 cross-references UniProtKB:Q727N1 (ISLA_NITV2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

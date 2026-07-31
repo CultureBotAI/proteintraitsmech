@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -51,4 +51,69 @@ definitions:
       Catalyses: Endolytic cleavage of (1->4)-beta-galactosaminic bonds between N-acetylgalactosamine and either D-glucuronic acid or L-iduronic acid to produce a mixture of Delta(4)-unsaturated oligosaccharides of different sizes that are ultimately degraded to Delta(4)-unsaturated tetra- and disaccharides
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chondroitin-sulfate-ABC endolyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.20. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endolytic
+    cleavage of (1->4)-beta-galactosaminic bonds between N-acetylgalactosamine and either D-glucuronic
+    acid or L-iduronic acid to produce a mixture of Delta(4)-unsaturated oligosaccharides of different
+    sizes that are ultimately degraded to Delta(4)-unsaturated tetra- and disaccharides".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: chondroitin-sulfate-ABC endolyase
+    grounding: EC:4.2.2.20
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: chondroitin-sulfate-ABC endolyase activity
+    grounding: GO:0034000
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P59807
+    node_type: PROTEIN
+    label: CABC1_PROVU
+    grounding: UniProtKB:P59807
+  - node_id: prot_T2KMH5
+    node_type: PROTEIN
+    label: PLH29_FORAG
+    grounding: UniProtKB:T2KMH5
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.20
+      snippet: EC:4.2.2.20 > GO:chondroitin-sulfate-ABC endolyase activity ; GO:0034000
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0034000 is itself a record
+        in this KB.
+  - subject: prot_P59807
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CABC1_PROVU is an exemplar enzyme with EC 4.2.2.20 activity.
+    evidence:
+    - reference: EC:4.2.2.20
+      snippet: DR   P59807, CABC1_PROVU;  T2KMH5, PLH29_FORAG;
+      notes: ExPASy ENZYME entry EC 4.2.2.20 cross-references UniProtKB:P59807 (CABC1_PROVU) as a protein
+        with this activity.
+  - subject: prot_T2KMH5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLH29_FORAG is an exemplar enzyme with EC 4.2.2.20 activity.
+    evidence:
+    - reference: EC:4.2.2.20
+      snippet: DR   P59807, CABC1_PROVU;  T2KMH5, PLH29_FORAG;
+      notes: ExPASy ENZYME entry EC 4.2.2.20 cross-references UniProtKB:T2KMH5 (PLH29_FORAG) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

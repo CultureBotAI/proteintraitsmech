@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.98
     mapping_source: rhea2ec
@@ -30,4 +30,122 @@ definitions:
       Catalyses the reaction: chlorogenate + D-glucarate = 2-O-caffeoylglucarate + L-quinate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chlorogenate + D-glucarate = 2-O-caffeoylglucarate + L-quinate
+  description: Substrate-to-product chemistry of RHEA:23204, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:23205 (rh:substrates → 23204_L, rh:products → 23204_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of chlorogenate + D-glucarate = 2-O-caffeoylglucarate + L-quinate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23204
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: chlorogenate + D-glucarate = 2-O-caffeoylglucarate + L-quinate'
+  - node_id: sub1
+    label: chlorogenate
+    node_type: CHEMICAL
+    grounding: CHEBI:57644
+    description: Formula C16H17O9.
+  - node_id: sub2
+    label: D-glucarate
+    node_type: CHEMICAL
+    grounding: CHEBI:30612
+    description: Formula C6H8O8.
+  - node_id: prd1
+    label: 2-O-caffeoylglucarate
+    node_type: CHEMICAL
+    grounding: CHEBI:58157
+    description: Formula C15H14O11.
+  - node_id: prd2
+    label: L-quinate
+    node_type: CHEMICAL
+    grounding: CHEBI:29751
+    description: Formula C7H11O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: chlorogenate-glucarate O-hydroxycinnamoyltransferase activity
+    grounding: GO:0047204
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: chlorogenate--glucarate O-hydroxycinnamoyltransferase
+    grounding: EC:2.3.1.98
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: chlorogenate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23205
+      snippet: chlorogenate + D-glucarate => 2-O-caffeoylglucarate + L-quinate
+      notes: Rhea's left-to-right directional reaction RHEA:23205 declares side 23204_L as its substrates
+        (rh:substrates); the master reaction RHEA:23204 is undirected. This participant is CHEBI:57644
+        with coefficient 1. Rhea cites PMID:16665274, PMID:16667263 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: D-glucarate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23205
+      snippet: chlorogenate + D-glucarate => 2-O-caffeoylglucarate + L-quinate
+      notes: Rhea's left-to-right directional reaction RHEA:23205 declares side 23204_L as its substrates
+        (rh:substrates); the master reaction RHEA:23204 is undirected. This participant is CHEBI:30612
+        with coefficient 1. Rhea cites PMID:16665274, PMID:16667263 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-O-caffeoylglucarate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23205
+      snippet: chlorogenate + D-glucarate => 2-O-caffeoylglucarate + L-quinate
+      notes: Rhea's left-to-right directional reaction RHEA:23205 declares side 23204_R as its products
+        (rh:products); the master reaction RHEA:23204 is undirected. This participant is CHEBI:58157 with
+        coefficient 1. Rhea cites PMID:16665274, PMID:16667263 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-quinate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23205
+      snippet: chlorogenate + D-glucarate => 2-O-caffeoylglucarate + L-quinate
+      notes: Rhea's left-to-right directional reaction RHEA:23205 declares side 23204_R as its products
+        (rh:products); the master reaction RHEA:23204 is undirected. This participant is CHEBI:29751 with
+        coefficient 1. Rhea cites PMID:16665274, PMID:16667263 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:23204
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047204"/>
+      notes: The rdfs:seeAlso triple on RHEA:23204 in rhea.rdf. GO term GO:0047204 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.98; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:23204
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.98"/>
+      notes: The rh:ec triple on RHEA:23204 in rhea.rdf. EC 2.3.1.98 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

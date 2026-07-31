@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.7.69
     mapping_source: rhea2ec
@@ -32,4 +32,111 @@ definitions:
       Catalyses the reaction: GDP-alpha-D-glucose + alpha-D-mannose 1-phosphate = alpha-D-glucose 1-phosphate + GDP-alpha-D-mannose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of GDP-alpha-D-glucose + alpha-D-mannose 1-phosphate = alpha-D-glucose 1-phosphate
+    + GDP-a…
+  description: Substrate-to-product chemistry of RHEA:66032, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:66033 (rh:substrates → 66032_L, rh:products → 66032_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of GDP-alpha-D-glucose + alpha-D-mannose 1-phosphate = alpha-D-glucose 1-phosph…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:66032
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: GDP-alpha-D-glucose + alpha-D-mannose 1-phosphate = alpha-D-glucose 1-phosphate +
+      GDP-alpha-D-mannose'
+  - node_id: sub1
+    label: GDP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:62230
+    description: Formula C16H23N5O16P2.
+  - node_id: sub2
+    label: alpha-D-mannose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58409
+    description: Formula C6H11O9P.
+  - node_id: prd1
+    label: alpha-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58601
+    description: Formula C6H11O9P.
+  - node_id: prd2
+    label: GDP-alpha-D-mannose
+    node_type: CHEMICAL
+    grounding: CHEBI:57527
+    description: Formula C16H23N5O16P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 'GDP-L-galactose/GDP-D-glucose: hexose 1-phosphate guanylyltransferase'
+    grounding: EC:2.7.7.69
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: GDP-alpha-D-glucose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66033
+      snippet: GDP-alpha-D-glucose + alpha-D-mannose 1-phosphate => alpha-D-glucose 1-phosphate + GDP-alpha-D-mannose
+      notes: Rhea's left-to-right directional reaction RHEA:66033 declares side 66032_L as its substrates
+        (rh:substrates); the master reaction RHEA:66032 is undirected. This participant is CHEBI:62230
+        with coefficient 1. Rhea cites PMID:17950389, PMID:18463094, PMID:17462988 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: alpha-D-mannose 1-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:66033
+      snippet: GDP-alpha-D-glucose + alpha-D-mannose 1-phosphate => alpha-D-glucose 1-phosphate + GDP-alpha-D-mannose
+      notes: Rhea's left-to-right directional reaction RHEA:66033 declares side 66032_L as its substrates
+        (rh:substrates); the master reaction RHEA:66032 is undirected. This participant is CHEBI:58409
+        with coefficient 1. Rhea cites PMID:17950389, PMID:18463094, PMID:17462988 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-glucose 1-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66033
+      snippet: GDP-alpha-D-glucose + alpha-D-mannose 1-phosphate => alpha-D-glucose 1-phosphate + GDP-alpha-D-mannose
+      notes: Rhea's left-to-right directional reaction RHEA:66033 declares side 66032_R as its products
+        (rh:products); the master reaction RHEA:66032 is undirected. This participant is CHEBI:58601 with
+        coefficient 1. Rhea cites PMID:17950389, PMID:18463094, PMID:17462988 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: GDP-alpha-D-mannose is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66033
+      snippet: GDP-alpha-D-glucose + alpha-D-mannose 1-phosphate => alpha-D-glucose 1-phosphate + GDP-alpha-D-mannose
+      notes: Rhea's left-to-right directional reaction RHEA:66033 declares side 66032_R as its products
+        (rh:products); the master reaction RHEA:66032 is undirected. This participant is CHEBI:57527 with
+        coefficient 1. Rhea cites PMID:17950389, PMID:18463094, PMID:17462988 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.7.69; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:66032
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.7.69"/>
+      notes: The rh:ec triple on RHEA:66032 in rhea.rdf. EC 2.7.7.69 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

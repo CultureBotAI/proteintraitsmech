@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.7.1.-
 mapped_xrefs:
@@ -28,4 +28,105 @@ definitions:
       Catalyses: bornane-2,6-dione + H2O = [(1S)-4-hydroxy-2,2,3-trimethylcyclopent-3- enyl]acetate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-oxocamphor hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.7.1.18. EC 3.7.1.18 maps to exactly
+    one curated Rhea reaction (RHEA:33415), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "bornane-2,6-dione
+    + H2O = [(1S)-4-hydroxy-2,2,3-trimethylcyclopent-3- enyl]acetate + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 6-oxocamphor hydrolase
+    grounding: EC:3.7.1.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: bornane-2,6-dione
+    node_type: CHEMICAL
+    grounding: CHEBI:64893
+    description: Formula C10H14O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: '[(1S)-4-hydroxy-2,2,3-trimethylcyclopent-3-enyl]acetate'
+    node_type: CHEMICAL
+    grounding: CHEBI:64894
+    description: Formula C10H15O3.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q93TU6
+    node_type: PROTEIN
+    label: CAMK_RHOSO
+    grounding: UniProtKB:Q93TU6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: bornane-2,6-dione is a substrate consumed by RHEA:33415 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33416
+      snippet: bornane-2,6-dione + H2O => [(1S)-4-hydroxy-2,2,3-trimethylcyclopent-3-enyl]acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33416 declares side 33415_L as its substrates
+        (rh:substrates); the master reaction RHEA:33415 is undirected. This participant is CHEBI:64893
+        with coefficient 1. Rhea cites PMID:11278926, PMID:15138275 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:33415 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33416
+      snippet: bornane-2,6-dione + H2O => [(1S)-4-hydroxy-2,2,3-trimethylcyclopent-3-enyl]acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33416 declares side 33415_L as its substrates
+        (rh:substrates); the master reaction RHEA:33415 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:11278926, PMID:15138275 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[(1S)-4-hydroxy-2,2,3-trimethylcyclopent-3-enyl]acetate is a product released by RHEA:33415
+      (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:33416
+      snippet: bornane-2,6-dione + H2O => [(1S)-4-hydroxy-2,2,3-trimethylcyclopent-3-enyl]acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33416 declares side 33415_R as its products
+        (rh:products); the master reaction RHEA:33415 is undirected. This participant is CHEBI:64894 with
+        coefficient 1. Rhea cites PMID:11278926, PMID:15138275 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by RHEA:33415 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33416
+      snippet: bornane-2,6-dione + H2O => [(1S)-4-hydroxy-2,2,3-trimethylcyclopent-3-enyl]acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:33416 declares side 33415_R as its products
+        (rh:products); the master reaction RHEA:33415 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11278926, PMID:15138275 for this reaction.
+  - subject: prot_Q93TU6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAMK_RHOSO is an exemplar enzyme with EC 3.7.1.18 activity.
+    evidence:
+    - reference: EC:3.7.1.18
+      snippet: DR   Q93TU6, CAMK_RHOSO ;
+      notes: ExPASy ENZYME entry EC 3.7.1.18 cross-references UniProtKB:Q93TU6 (CAMK_RHOSO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

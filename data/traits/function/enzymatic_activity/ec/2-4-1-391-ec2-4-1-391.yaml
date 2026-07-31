@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -28,4 +28,111 @@ definitions:
       Catalyses: a D-glucoside + [(1->2)-beta-D-glucosyl](n) = a beta-D-glucosyl-(1->2)-D- glucoside + [(1->2)-beta-D-glucosyl](n-1)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-1,2-glucosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.391. EC 2.4.1.391 maps to
+    exactly one curated Rhea reaction (RHEA:78691), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a D-glucoside
+    + [(1->2)-beta-D-glucosyl](n) = a beta-D-glucosyl-(1->2)-D- glucoside + [(1->2)-beta-D-glucosyl](n-1)".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-1,2-glucosyltransferase
+    grounding: EC:2.4.1.391
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a D-glucoside
+    node_type: CHEMICAL
+    grounding: CHEBI:35436
+    description: Formula C6H11O6R.
+  - node_id: sub2
+    label: '[(1->2)-beta-D-glucosyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:27517
+    xrefs:
+    - RHEA-COMP:11881
+    description: Rhea compound POLYMER:11881. Formula H2O(C6H10O5)<i><sub>n</sub></i>.
+  - node_id: prd1
+    label: a beta-D-glucosyl-(1->2)-D-glucoside
+    node_type: CHEMICAL
+    grounding: CHEBI:229541
+    description: Formula C12H21O11R.
+  - node_id: prd2
+    label: '[(1->2)-beta-D-glucosyl](n-1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:27517
+    xrefs:
+    - RHEA-COMP:11882
+    description: Rhea compound POLYMER:11882. Formula H2O(C6H10O5)<i><sub>n-1</sub></i>.
+  - node_id: prot_I0AIT9
+    node_type: PROTEIN
+    label: B12GT_IGNAJ
+    grounding: UniProtKB:I0AIT9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a D-glucoside is a substrate consumed by RHEA:78691 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78692
+      snippet: a D-glucoside + [(1->2)-beta-D-glucosyl](n) => a beta-D-glucosyl-(1->2)-D-glucoside + [(1->2)-beta-D-glucosyl](n-1)
+      notes: Rhea's left-to-right directional reaction RHEA:78692 declares side 78691_L as its substrates
+        (rh:substrates); the master reaction RHEA:78691 is undirected. This participant is CHEBI:35436
+        with coefficient 1. Rhea cites PMID:35065074 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: '[(1->2)-beta-D-glucosyl](n) is a substrate consumed by RHEA:78691 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:78692
+      snippet: a D-glucoside + [(1->2)-beta-D-glucosyl](n) => a beta-D-glucosyl-(1->2)-D-glucoside + [(1->2)-beta-D-glucosyl](n-1)
+      notes: Rhea's left-to-right directional reaction RHEA:78692 declares side 78691_L as its substrates
+        (rh:substrates); the master reaction RHEA:78691 is undirected. This participant is POLYMER:11881
+        with coefficient 1. Rhea cites PMID:35065074 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a beta-D-glucosyl-(1->2)-D-glucoside is a product released by RHEA:78691 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:78692
+      snippet: a D-glucoside + [(1->2)-beta-D-glucosyl](n) => a beta-D-glucosyl-(1->2)-D-glucoside + [(1->2)-beta-D-glucosyl](n-1)
+      notes: Rhea's left-to-right directional reaction RHEA:78692 declares side 78691_R as its products
+        (rh:products); the master reaction RHEA:78691 is undirected. This participant is CHEBI:229541
+        with coefficient 1. Rhea cites PMID:35065074 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: '[(1->2)-beta-D-glucosyl](n-1) is a product released by RHEA:78691 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:78692
+      snippet: a D-glucoside + [(1->2)-beta-D-glucosyl](n) => a beta-D-glucosyl-(1->2)-D-glucoside + [(1->2)-beta-D-glucosyl](n-1)
+      notes: Rhea's left-to-right directional reaction RHEA:78692 declares side 78691_R as its products
+        (rh:products); the master reaction RHEA:78691 is undirected. This participant is POLYMER:11882
+        with coefficient 1. Rhea cites PMID:35065074 for this reaction.
+  - subject: prot_I0AIT9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: B12GT_IGNAJ is an exemplar enzyme with EC 2.4.1.391 activity.
+    evidence:
+    - reference: EC:2.4.1.391
+      snippet: DR   I0AIT9, B12GT_IGNAJ;
+      notes: ExPASy ENZYME entry EC 2.4.1.391 cross-references UniProtKB:I0AIT9 (B12GT_IGNAJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

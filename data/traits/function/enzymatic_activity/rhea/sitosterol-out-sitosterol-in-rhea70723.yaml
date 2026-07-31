@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:27693
     role: SUBSTRATE_OR_PRODUCT
@@ -19,4 +19,61 @@ definitions:
       Catalyses the reaction: sitosterol(out) = sitosterol(in)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sitosterol(out) = sitosterol(in)
+  description: 'Substrate-to-product chemistry of RHEA:70723, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:70724 (rh:substrates → 70723_L, rh:products → 70723_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of sitosterol(out) = sitosterol(in)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:70723
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: sitosterol(out) = sitosterol(in)'
+  - node_id: sub1
+    label: sitosterol (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:27693
+    description: Formula C29H50O.
+  - node_id: prd1
+    label: sitosterol (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:27693
+    description: Formula C29H50O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sitosterol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70724
+      snippet: sitosterol(out) => sitosterol(in)
+      notes: Rhea's left-to-right directional reaction RHEA:70724 declares side 70723_L as its substrates
+        (rh:substrates); the master reaction RHEA:70723 is undirected. This participant is CHEBI:27693
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:17135346 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sitosterol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70724
+      snippet: sitosterol(out) => sitosterol(in)
+      notes: Rhea's left-to-right directional reaction RHEA:70724 declares side 70723_R as its products
+        (rh:products); the master reaction RHEA:70723 is undirected. This participant is CHEBI:27693 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:17135346
+        for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

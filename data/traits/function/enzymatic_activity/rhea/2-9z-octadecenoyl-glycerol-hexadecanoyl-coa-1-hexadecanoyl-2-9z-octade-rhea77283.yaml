@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:73990
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,114 @@ definitions:
       Catalyses the reaction: 2-(9Z-octadecenoyl)-glycerol + hexadecanoyl-CoA = 1-hexadecanoyl-2-(9Z-octadecenoyl)-glycerol + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-(9Z-octadecenoyl)-glycerol + hexadecanoyl-CoA = 1-hexadecanoyl-2-(9Z-octadecenoyl)-gl…
+  description: Substrate-to-product chemistry of RHEA:77283, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77284 (rh:substrates → 77283_L, rh:products → 77283_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-(9Z-octadecenoyl)-glycerol + hexadecanoyl-CoA = 1-hexadecanoyl-2-(9Z-octad…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77283
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-(9Z-octadecenoyl)-glycerol + hexadecanoyl-CoA = 1-hexadecanoyl-2-(9Z-octadecenoyl)-glycerol
+      + CoA'
+  - node_id: sub1
+    label: 2-(9Z-octadecenoyl)-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:73990
+    description: Formula C21H40O4.
+  - node_id: sub2
+    label: hexadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57379
+    description: Formula C37H62N7O17P3S.
+  - node_id: prd1
+    label: 1-hexadecanoyl-2-(9Z-octadecenoyl)-glycerol
+    node_type: CHEMICAL
+    grounding: CHEBI:75585
+    description: Formula C37H70O5.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-acylglycerol O-acyltransferase activity
+    grounding: GO:0003846
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-(9Z-octadecenoyl)-glycerol is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:77284
+      snippet: 2-(9Z-octadecenoyl)-glycerol + hexadecanoyl-CoA => 1-hexadecanoyl-2-(9Z-octadecenoyl)-glycerol
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:77284 declares side 77283_L as its substrates
+        (rh:substrates); the master reaction RHEA:77283 is undirected. This participant is CHEBI:73990
+        with coefficient 1. Rhea cites PMID:12621063 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hexadecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:77284
+      snippet: 2-(9Z-octadecenoyl)-glycerol + hexadecanoyl-CoA => 1-hexadecanoyl-2-(9Z-octadecenoyl)-glycerol
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:77284 declares side 77283_L as its substrates
+        (rh:substrates); the master reaction RHEA:77283 is undirected. This participant is CHEBI:57379
+        with coefficient 1. Rhea cites PMID:12621063 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-hexadecanoyl-2-(9Z-octadecenoyl)-glycerol is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:77284
+      snippet: 2-(9Z-octadecenoyl)-glycerol + hexadecanoyl-CoA => 1-hexadecanoyl-2-(9Z-octadecenoyl)-glycerol
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:77284 declares side 77283_R as its products
+        (rh:products); the master reaction RHEA:77283 is undirected. This participant is CHEBI:75585 with
+        coefficient 1. Rhea cites PMID:12621063 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77284
+      snippet: 2-(9Z-octadecenoyl)-glycerol + hexadecanoyl-CoA => 1-hexadecanoyl-2-(9Z-octadecenoyl)-glycerol
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:77284 declares side 77283_R as its products
+        (rh:products); the master reaction RHEA:77283 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:12621063 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:77283
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003846"/>
+      notes: The rdfs:seeAlso triple on RHEA:77283 in rhea.rdf. GO term GO:0003846 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 synonyms:
@@ -41,4 +41,207 @@ definitions:
       Catalyses: 4-demethylwyosine(37) in tRNA(Phe) + S-adenosyl-L-methionine = 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37) in tRNA(Phe) + S-methyl-5'-thioadenosine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNA(Phe) (4-demethylwyosine(37)-C(7)) aminocarboxypropyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.114. EC 2.5.1.114 maps to
+    exactly one curated Rhea reaction (RHEA:36355), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-demethylwyosine(37)
+    in tRNA(Phe) + S-adenosyl-L-methionine = 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37) in
+    tRNA(Phe) + S-methyl-5''-thioadenosine + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA(Phe) (4-demethylwyosine(37)-C(7)) aminocarboxypropyltransferase
+    grounding: EC:2.5.1.114
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-demethylwyosine(37) in tRNA(Phe)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10164
+    description: Rhea compound GENERIC:10164.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: 4-demethylwyosine residue at position 37
+    description: The reacting group Rhea names inside the generic participant GENERIC:10164 (4-demethylwyosine(37)
+      in tRNA(Phe)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64315
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37) in tRNA(Phe)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10378
+    description: Rhea compound GENERIC:10378.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine 5'-phosphate residue at position 37
+    description: The reacting group Rhea names inside the generic participant GENERIC:10378 (4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37)
+      in tRNA(Phe)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:73550
+  - node_id: prd2
+    label: S-methyl-5'-thioadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17509
+    description: Formula C11H15N5O3S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tRNA 4-demethylwyosine alpha-amino-alpha-carboxypropyltransferase activity
+    grounding: GO:0102522
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8W4K1
+    node_type: PROTEIN
+    label: TYW23_ARATH
+    grounding: UniProtKB:Q8W4K1
+  - node_id: prot_Q8H4D4
+    node_type: PROTEIN
+    label: TYW23_ORYSJ
+    grounding: UniProtKB:Q8H4D4
+  - node_id: prot_Q58D65
+    node_type: PROTEIN
+    label: TYW2_BOVIN
+    grounding: UniProtKB:Q58D65
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-demethylwyosine(37) in tRNA(Phe) is a substrate consumed by RHEA:36355 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36356
+      snippet: 4-demethylwyosine(37) in tRNA(Phe) + S-adenosyl-L-methionine => 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37)
+        in tRNA(Phe) + S-methyl-5'-thioadenosine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36356 declares side 36355_L as its substrates
+        (rh:substrates); the master reaction RHEA:36355 is undirected. This participant is GENERIC:10164
+        with coefficient 1. Rhea cites PMID:22761755, PMID:19717466 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 4-demethylwyosine residue is the reactive part of 4-demethylwyosine(37) in tRNA(Phe).
+    evidence:
+    - reference: RHEA:36355
+      snippet: 4-demethylwyosine residue
+      notes: Rhea compound GENERIC:10164 (4-demethylwyosine(37) in tRNA(Phe)) declares rh:reactivePart
+        at position 37 = 4-demethylwyosine residue (CHEBI:64315).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:36355 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36356
+      snippet: 4-demethylwyosine(37) in tRNA(Phe) + S-adenosyl-L-methionine => 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37)
+        in tRNA(Phe) + S-methyl-5'-thioadenosine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36356 declares side 36355_L as its substrates
+        (rh:substrates); the master reaction RHEA:36355 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:22761755, PMID:19717466 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37) in tRNA(Phe) is a product released
+      by RHEA:36355 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36356
+      snippet: 4-demethylwyosine(37) in tRNA(Phe) + S-adenosyl-L-methionine => 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37)
+        in tRNA(Phe) + S-methyl-5'-thioadenosine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36356 declares side 36355_R as its products
+        (rh:products); the master reaction RHEA:36355 is undirected. This participant is GENERIC:10378
+        with coefficient 1. Rhea cites PMID:22761755, PMID:19717466 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine 5'-phosphate residue is the reactive
+      part of 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37) in tRNA(Phe).
+    evidence:
+    - reference: RHEA:36355
+      snippet: 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine 5'-phosphate residue
+      notes: Rhea compound GENERIC:10378 (4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37) in tRNA(Phe))
+        declares rh:reactivePart at position 37 = 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine 5'-phosphate
+        residue (CHEBI:73550).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-methyl-5'-thioadenosine is a product released by RHEA:36355 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36356
+      snippet: 4-demethylwyosine(37) in tRNA(Phe) + S-adenosyl-L-methionine => 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37)
+        in tRNA(Phe) + S-methyl-5'-thioadenosine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36356 declares side 36355_R as its products
+        (rh:products); the master reaction RHEA:36355 is undirected. This participant is CHEBI:17509 with
+        coefficient 1. Rhea cites PMID:22761755, PMID:19717466 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:36355 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36356
+      snippet: 4-demethylwyosine(37) in tRNA(Phe) + S-adenosyl-L-methionine => 4-demethyl-7-[(3S)-3-amino-3-carboxypropyl]wyosine(37)
+        in tRNA(Phe) + S-methyl-5'-thioadenosine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36356 declares side 36355_R as its products
+        (rh:products); the master reaction RHEA:36355 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:22761755, PMID:19717466 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.114
+      snippet: EC:2.5.1.114 > GO:tRNA 4-demethylwyosine alpha-amino-alpha-carboxypropyltransferase activity
+        ; GO:0102522
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102522 is itself a record
+        in this KB.
+  - subject: prot_Q8W4K1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TYW23_ARATH is an exemplar enzyme with EC 2.5.1.114 activity.
+    evidence:
+    - reference: EC:2.5.1.114
+      snippet: DR   Q8W4K1, TYW23_ARATH;  Q8H4D4, TYW23_ORYSJ;  Q58D65, TYW2_BOVIN ;
+      notes: ExPASy ENZYME entry EC 2.5.1.114 cross-references UniProtKB:Q8W4K1 (TYW23_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q8H4D4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TYW23_ORYSJ is an exemplar enzyme with EC 2.5.1.114 activity.
+    evidence:
+    - reference: EC:2.5.1.114
+      snippet: DR   Q8W4K1, TYW23_ARATH;  Q8H4D4, TYW23_ORYSJ;  Q58D65, TYW2_BOVIN ;
+      notes: ExPASy ENZYME entry EC 2.5.1.114 cross-references UniProtKB:Q8H4D4 (TYW23_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_Q58D65
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TYW2_BOVIN is an exemplar enzyme with EC 2.5.1.114 activity.
+    evidence:
+    - reference: EC:2.5.1.114
+      snippet: DR   Q8W4K1, TYW23_ARATH;  Q8H4D4, TYW23_ORYSJ;  Q58D65, TYW2_BOVIN ;
+      notes: ExPASy ENZYME entry EC 2.5.1.114 cross-references UniProtKB:Q58D65 (TYW2_BOVIN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.11.-
 synonyms:
@@ -55,4 +55,206 @@ definitions:
       Catalyses: L-threonyl-[myosin heavy-chain] + ATP = O-phospho-L-threonyl-[myosin heavy-chain] + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [myosin heavy-chain] kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.11.7. EC 2.7.11.7 maps to exactly
+    one curated Rhea reaction (RHEA:11424), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-threonyl-[myosin
+    heavy-chain] + ATP = O-phospho-L-threonyl-[myosin heavy-chain] + ADP + H(+)". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[myosin heavy-chain] kinase'
+    grounding: EC:2.7.11.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-threonyl-[myosin heavy-chain]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13718
+    description: Rhea compound GENERIC:13718.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-threonine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13718 (L-threonyl-[myosin
+      heavy-chain]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:30013
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: O-phospho-L-threonyl-[myosin heavy-chain]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13719
+    description: Rhea compound GENERIC:13719.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-phospho-L-threonine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13719 (O-phospho-L-threonyl-[myosin
+      heavy-chain]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:61977
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: myosin heavy chain kinase activity
+    grounding: GO:0016905
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P42527
+    node_type: PROTEIN
+    label: MHCKA_DICDI
+    grounding: UniProtKB:P42527
+  - node_id: prot_P90648
+    node_type: PROTEIN
+    label: MHCKB_DICDI
+    grounding: UniProtKB:P90648
+  - node_id: prot_Q8MY12
+    node_type: PROTEIN
+    label: MHCKC_DICDI
+    grounding: UniProtKB:Q8MY12
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-threonyl-[myosin heavy-chain] is a substrate consumed by RHEA:11424 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11425
+      snippet: L-threonyl-[myosin heavy-chain] + ATP => O-phospho-L-threonyl-[myosin heavy-chain] + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11425 declares side 11424_L as its substrates
+        (rh:substrates); the master reaction RHEA:11424 is undirected. This participant is GENERIC:13718
+        with coefficient 1. Rhea cites PMID:2822719, PMID:1321427, PMID:2168881, PMID:2549052 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-threonine residue is the reactive part of L-threonyl-[myosin heavy-chain].
+    evidence:
+    - reference: RHEA:11424
+      snippet: L-threonine residue
+      notes: Rhea compound GENERIC:13718 (L-threonyl-[myosin heavy-chain]) declares rh:reactivePart =
+        L-threonine residue (CHEBI:30013).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:11424 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11425
+      snippet: L-threonyl-[myosin heavy-chain] + ATP => O-phospho-L-threonyl-[myosin heavy-chain] + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11425 declares side 11424_L as its substrates
+        (rh:substrates); the master reaction RHEA:11424 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:2822719, PMID:1321427, PMID:2168881, PMID:2549052 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-phospho-L-threonyl-[myosin heavy-chain] is a product released by RHEA:11424 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11425
+      snippet: L-threonyl-[myosin heavy-chain] + ATP => O-phospho-L-threonyl-[myosin heavy-chain] + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11425 declares side 11424_R as its products
+        (rh:products); the master reaction RHEA:11424 is undirected. This participant is GENERIC:13719
+        with coefficient 1. Rhea cites PMID:2822719, PMID:1321427, PMID:2168881, PMID:2549052 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-phospho-L-threonine residue is the reactive part of O-phospho-L-threonyl-[myosin heavy-chain].
+    evidence:
+    - reference: RHEA:11424
+      snippet: O-phospho-L-threonine residue
+      notes: Rhea compound GENERIC:13719 (O-phospho-L-threonyl-[myosin heavy-chain]) declares rh:reactivePart
+        = O-phospho-L-threonine residue (CHEBI:61977).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:11424 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11425
+      snippet: L-threonyl-[myosin heavy-chain] + ATP => O-phospho-L-threonyl-[myosin heavy-chain] + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11425 declares side 11424_R as its products
+        (rh:products); the master reaction RHEA:11424 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:2822719, PMID:1321427, PMID:2168881, PMID:2549052 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:11424 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11425
+      snippet: L-threonyl-[myosin heavy-chain] + ATP => O-phospho-L-threonyl-[myosin heavy-chain] + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11425 declares side 11424_R as its products
+        (rh:products); the master reaction RHEA:11424 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:2822719, PMID:1321427, PMID:2168881, PMID:2549052 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.11.7
+      snippet: EC:2.7.11.7 > GO:myosin heavy chain kinase activity ; GO:0016905
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016905 is itself a record
+        in this KB.
+  - subject: prot_P42527
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MHCKA_DICDI is an exemplar enzyme with EC 2.7.11.7 activity.
+    evidence:
+    - reference: EC:2.7.11.7
+      snippet: DR   P42527, MHCKA_DICDI;  P90648, MHCKB_DICDI;  Q8MY12, MHCKC_DICDI;
+      notes: ExPASy ENZYME entry EC 2.7.11.7 cross-references UniProtKB:P42527 (MHCKA_DICDI) as a protein
+        with this activity.
+  - subject: prot_P90648
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MHCKB_DICDI is an exemplar enzyme with EC 2.7.11.7 activity.
+    evidence:
+    - reference: EC:2.7.11.7
+      snippet: DR   P42527, MHCKA_DICDI;  P90648, MHCKB_DICDI;  Q8MY12, MHCKC_DICDI;
+      notes: ExPASy ENZYME entry EC 2.7.11.7 cross-references UniProtKB:P90648 (MHCKB_DICDI) as a protein
+        with this activity.
+  - subject: prot_Q8MY12
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MHCKC_DICDI is an exemplar enzyme with EC 2.7.11.7 activity.
+    evidence:
+    - reference: EC:2.7.11.7
+      snippet: DR   P42527, MHCKA_DICDI;  P90648, MHCKB_DICDI;  Q8MY12, MHCKC_DICDI;
+      notes: ExPASy ENZYME entry EC 2.7.11.7 cross-references UniProtKB:Q8MY12 (MHCKC_DICDI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:37565
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,106 @@ definitions:
       Catalyses the reaction: GTP + H2O = guanosine + triphosphate + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of GTP + H2O = guanosine + triphosphate + H(+)
+  description: Substrate-to-product chemistry of RHEA:30559, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30560 (rh:substrates → 30559_L, rh:products → 30559_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of GTP + H2O = guanosine + triphosphate + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30559
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: GTP + H2O = guanosine + triphosphate + H(+)'
+  - node_id: sub1
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: guanosine
+    node_type: CHEMICAL
+    grounding: CHEBI:16750
+    description: Formula C10H13N5O5.
+  - node_id: prd2
+    label: triphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:18036
+    description: Formula O10P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: GTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30560
+      snippet: GTP + H2O => guanosine + triphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30560 declares side 30559_L as its substrates
+        (rh:substrates); the master reaction RHEA:30559 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:2826481, PMID:13563461 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30560
+      snippet: GTP + H2O => guanosine + triphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30560 declares side 30559_L as its substrates
+        (rh:substrates); the master reaction RHEA:30559 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:2826481, PMID:13563461 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: guanosine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30560
+      snippet: GTP + H2O => guanosine + triphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30560 declares side 30559_R as its products
+        (rh:products); the master reaction RHEA:30559 is undirected. This participant is CHEBI:16750 with
+        coefficient 1. Rhea cites PMID:2826481, PMID:13563461 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: triphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30560
+      snippet: GTP + H2O => guanosine + triphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30560 declares side 30559_R as its products
+        (rh:products); the master reaction RHEA:30559 is undirected. This participant is CHEBI:18036 with
+        coefficient 1. Rhea cites PMID:2826481, PMID:13563461 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30560
+      snippet: GTP + H2O => guanosine + triphosphate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:30560 declares side 30559_R as its products
+        (rh:products); the master reaction RHEA:30559 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:2826481, PMID:13563461 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.4.1.64
     mapping_source: rhea2ec
@@ -28,4 +28,163 @@ definitions:
       Catalyses the reaction: alpha,alpha-trehalose + phosphate = beta-D-glucose 1-phosphate + D-glucose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of alpha,alpha-trehalose + phosphate = beta-D-glucose 1-phosphate + D-glucose
+  description: Substrate-to-product chemistry of RHEA:23512, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:23513 (rh:substrates → 23512_L, rh:products → 23512_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of alpha,alpha-trehalose + phosphate = beta-D-glucose 1-phosphate + D-glucose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23512
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: alpha,alpha-trehalose + phosphate = beta-D-glucose 1-phosphate + D-glucose'
+  - node_id: sub1
+    label: alpha,alpha-trehalose
+    node_type: CHEMICAL
+    grounding: CHEBI:16551
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: beta-D-glucose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57684
+    description: Formula C6H11O9P.
+  - node_id: prd2
+    label: D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:4167
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alpha,alpha-trehalose phosphorylase activity
+    grounding: GO:0047656
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: alpha,alpha-trehalose phosphorylase
+    grounding: EC:2.4.1.64
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8GRC3
+    node_type: PROTEIN
+    label: TREP_GEOSE
+    grounding: UniProtKB:Q8GRC3
+  - node_id: prot_Q8L164
+    node_type: PROTEIN
+    label: TREP_THEBR
+    grounding: UniProtKB:Q8L164
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: alpha,alpha-trehalose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23513
+      snippet: alpha,alpha-trehalose + phosphate => beta-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:23513 declares side 23512_L as its substrates
+        (rh:substrates); the master reaction RHEA:23512 is undirected. This participant is CHEBI:16551
+        with coefficient 1. Rhea cites PMID:12400680 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23513
+      snippet: alpha,alpha-trehalose + phosphate => beta-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:23513 declares side 23512_L as its substrates
+        (rh:substrates); the master reaction RHEA:23512 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:12400680 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-glucose 1-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23513
+      snippet: alpha,alpha-trehalose + phosphate => beta-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:23513 declares side 23512_R as its products
+        (rh:products); the master reaction RHEA:23512 is undirected. This participant is CHEBI:57684 with
+        coefficient 1. Rhea cites PMID:12400680 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-glucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23513
+      snippet: alpha,alpha-trehalose + phosphate => beta-D-glucose 1-phosphate + D-glucose
+      notes: Rhea's left-to-right directional reaction RHEA:23513 declares side 23512_R as its products
+        (rh:products); the master reaction RHEA:23512 is undirected. This participant is CHEBI:4167 with
+        coefficient 1. Rhea cites PMID:12400680 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:23512
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047656"/>
+      notes: The rdfs:seeAlso triple on RHEA:23512 in rhea.rdf. GO term GO:0047656 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.4.1.64; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:23512
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.64"/>
+      notes: The rh:ec triple on RHEA:23512 in rhea.rdf. EC 2.4.1.64 is itself a record in this KB.
+  - subject: prot_Q8GRC3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TREP_GEOSE is an exemplar enzyme carrying EC 2.4.1.64, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.4.1.64
+      snippet: DR   Q8GRC3, TREP_GEOSE ;  Q8L164, TREP_THEBR ;
+      notes: ExPASy ENZYME entry EC 2.4.1.64 cross-references UniProtKB:Q8GRC3 (TREP_GEOSE) as a protein
+        with this activity.
+    - reference: RHEA:23512
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.64"/>
+      notes: Rhea assigns RHEA:23512 to EC 2.4.1.64, and EC 2.4.1.64 maps to exactly one Rhea master reaction
+        (RHEA:23512), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q8L164
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TREP_THEBR is an exemplar enzyme carrying EC 2.4.1.64, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.4.1.64
+      snippet: DR   Q8GRC3, TREP_GEOSE ;  Q8L164, TREP_THEBR ;
+      notes: ExPASy ENZYME entry EC 2.4.1.64 cross-references UniProtKB:Q8L164 (TREP_THEBR) as a protein
+        with this activity.
+    - reference: RHEA:23512
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.64"/>
+      notes: Rhea assigns RHEA:23512 to EC 2.4.1.64, and EC 2.4.1.64 maps to exactly one Rhea master reaction
+        (RHEA:23512), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

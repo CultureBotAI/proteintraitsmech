@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -43,4 +43,134 @@ definitions:
       Catalyses: (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 = (15S)-hydroperoxy- (5Z,8Z,11Z,13E)-eicosatetraenoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of arachidonate 15-lipoxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.33. EC 1.13.11.33 maps to
+    exactly one curated Rhea reaction (RHEA:16869), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(5Z,8Z,11Z,14Z)-eicosatetraenoate
+    + O2 = (15S)-hydroperoxy- (5Z,8Z,11Z,13E)-eicosatetraenoate". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: arachidonate 15-lipoxygenase
+    grounding: EC:1.13.11.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (5Z,8Z,11Z,14Z)-eicosatetraenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:32395
+    description: Formula C20H31O2.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57446
+    description: Formula C20H31O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: arachidonate 15-lipoxygenase activity
+    grounding: GO:0050473
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P18054
+    node_type: PROTEIN
+    label: LOX12_HUMAN
+    grounding: UniProtKB:P18054
+  - node_id: prot_P39655
+    node_type: PROTEIN
+    label: LOX12_MOUSE
+    grounding: UniProtKB:P39655
+  - node_id: prot_F1LQ70
+    node_type: PROTEIN
+    label: LOX12_RAT
+    grounding: UniProtKB:F1LQ70
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (5Z,8Z,11Z,14Z)-eicosatetraenoate is a substrate consumed by RHEA:16869 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:16870
+      snippet: (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 => (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:16870 declares side 16869_L as its substrates
+        (rh:substrates); the master reaction RHEA:16869 is undirected. This participant is CHEBI:32395
+        with coefficient 1. Rhea cites PMID:1539676, PMID:8305485, PMID:24282679, PMID:23382512 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:16869 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16870
+      snippet: (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 => (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:16870 declares side 16869_L as its substrates
+        (rh:substrates); the master reaction RHEA:16869 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:1539676, PMID:8305485, PMID:24282679, PMID:23382512 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate is a product released by RHEA:16869
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16870
+      snippet: (5Z,8Z,11Z,14Z)-eicosatetraenoate + O2 => (15S)-hydroperoxy-(5Z,8Z,11Z,13E)-eicosatetraenoate
+      notes: Rhea's left-to-right directional reaction RHEA:16870 declares side 16869_R as its products
+        (rh:products); the master reaction RHEA:16869 is undirected. This participant is CHEBI:57446 with
+        coefficient 1. Rhea cites PMID:1539676, PMID:8305485, PMID:24282679, PMID:23382512 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.33
+      snippet: EC:1.13.11.33 > GO:arachidonate 15-lipoxygenase activity ; GO:0050473
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050473 is itself a record
+        in this KB.
+  - subject: prot_P18054
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LOX12_HUMAN is an exemplar enzyme with EC 1.13.11.33 activity.
+    evidence:
+    - reference: EC:1.13.11.33
+      snippet: DR   P18054, LOX12_HUMAN;  P39655, LOX12_MOUSE;  F1LQ70, LOX12_RAT  ;
+      notes: ExPASy ENZYME entry EC 1.13.11.33 cross-references UniProtKB:P18054 (LOX12_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P39655
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LOX12_MOUSE is an exemplar enzyme with EC 1.13.11.33 activity.
+    evidence:
+    - reference: EC:1.13.11.33
+      snippet: DR   P18054, LOX12_HUMAN;  P39655, LOX12_MOUSE;  F1LQ70, LOX12_RAT  ;
+      notes: ExPASy ENZYME entry EC 1.13.11.33 cross-references UniProtKB:P39655 (LOX12_MOUSE) as a protein
+        with this activity.
+  - subject: prot_F1LQ70
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LOX12_RAT is an exemplar enzyme with EC 1.13.11.33 activity.
+    evidence:
+    - reference: EC:1.13.11.33
+      snippet: DR   P18054, LOX12_HUMAN;  P39655, LOX12_MOUSE;  F1LQ70, LOX12_RAT  ;
+      notes: ExPASy ENZYME entry EC 1.13.11.33 cross-references UniProtKB:F1LQ70 (LOX12_RAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

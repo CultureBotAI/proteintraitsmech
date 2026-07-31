@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.6.1.-
 synonyms:
@@ -43,4 +43,148 @@ definitions:
       Catalyses: 3-oxopropanoate + L-alanine = beta-alanine + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-alanine--pyruvate transaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.6.1.18. EC 2.6.1.18 maps to exactly
+    one curated Rhea reaction (RHEA:14077), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3-oxopropanoate
+    + L-alanine = beta-alanine + pyruvate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-alanine--pyruvate transaminase
+    grounding: EC:2.6.1.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3-oxopropanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:33190
+    description: Formula C3H3O3.
+  - node_id: sub2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: prd1
+    label: beta-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57966
+    description: Formula C3H7NO2.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-alanine:pyruvate transaminase activity
+    grounding: GO:0016223
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q17QF0
+    node_type: PROTEIN
+    label: AGT2_BOVIN
+    grounding: UniProtKB:Q17QF0
+  - node_id: prot_Q9BYV1
+    node_type: PROTEIN
+    label: AGT2_HUMAN
+    grounding: UniProtKB:Q9BYV1
+  - node_id: prot_Q3UEG6
+    node_type: PROTEIN
+    label: AGT2_MOUSE
+    grounding: UniProtKB:Q3UEG6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-oxopropanoate is a substrate consumed by RHEA:14077 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14078
+      snippet: 3-oxopropanoate + L-alanine => beta-alanine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:14078 declares side 14077_L as its substrates
+        (rh:substrates); the master reaction RHEA:14077 is undirected. This participant is CHEBI:33190
+        with coefficient 1. Rhea cites PMID:21622750, PMID:18239415, PMID:6822556, PMID:23519665 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-alanine is a substrate consumed by RHEA:14077 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14078
+      snippet: 3-oxopropanoate + L-alanine => beta-alanine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:14078 declares side 14077_L as its substrates
+        (rh:substrates); the master reaction RHEA:14077 is undirected. This participant is CHEBI:57972
+        with coefficient 1. Rhea cites PMID:21622750, PMID:18239415, PMID:6822556, PMID:23519665 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-alanine is a product released by RHEA:14077 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14078
+      snippet: 3-oxopropanoate + L-alanine => beta-alanine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:14078 declares side 14077_R as its products
+        (rh:products); the master reaction RHEA:14077 is undirected. This participant is CHEBI:57966 with
+        coefficient 1. Rhea cites PMID:21622750, PMID:18239415, PMID:6822556, PMID:23519665 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:14077 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14078
+      snippet: 3-oxopropanoate + L-alanine => beta-alanine + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:14078 declares side 14077_R as its products
+        (rh:products); the master reaction RHEA:14077 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:21622750, PMID:18239415, PMID:6822556, PMID:23519665 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.6.1.18
+      snippet: EC:2.6.1.18 > GO:beta-alanine:pyruvate transaminase activity ; GO:0016223
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016223 is itself a record
+        in this KB.
+  - subject: prot_Q17QF0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGT2_BOVIN is an exemplar enzyme with EC 2.6.1.18 activity.
+    evidence:
+    - reference: EC:2.6.1.18
+      snippet: DR   Q17QF0, AGT2_BOVIN ;  Q9BYV1, AGT2_HUMAN ;  Q3UEG6, AGT2_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.6.1.18 cross-references UniProtKB:Q17QF0 (AGT2_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q9BYV1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGT2_HUMAN is an exemplar enzyme with EC 2.6.1.18 activity.
+    evidence:
+    - reference: EC:2.6.1.18
+      snippet: DR   Q17QF0, AGT2_BOVIN ;  Q9BYV1, AGT2_HUMAN ;  Q3UEG6, AGT2_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.6.1.18 cross-references UniProtKB:Q9BYV1 (AGT2_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q3UEG6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGT2_MOUSE is an exemplar enzyme with EC 2.6.1.18 activity.
+    evidence:
+    - reference: EC:2.6.1.18
+      snippet: DR   Q17QF0, AGT2_BOVIN ;  Q9BYV1, AGT2_HUMAN ;  Q3UEG6, AGT2_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.6.1.18 cross-references UniProtKB:Q3UEG6 (AGT2_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

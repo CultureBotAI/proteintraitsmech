@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.1.204
     mapping_source: rhea2ec
@@ -28,4 +28,110 @@ definitions:
       Catalyses the reaction: cyclobis-(1->3)-alpha-D-isomaltosyl + 2 H2O = 2 isomaltose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyclobis-(1->3)-alpha-D-isomaltosyl + 2 H2O = 2 isomaltose
+  description: Substrate-to-product chemistry of RHEA:24844, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24845 (rh:substrates → 24844_L, rh:products → 24844_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of cyclobis-(1->3)-alpha-D-isomaltosyl + 2 H2O = 2 isomaltose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24844
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: cyclobis-(1->3)-alpha-D-isomaltosyl + 2 H2O = 2 isomaltose'
+  - node_id: sub1
+    label: cyclobis-(1->3)-alpha-D-isomaltosyl
+    node_type: CHEMICAL
+    grounding: CHEBI:136822
+    description: Formula C24H40O20.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: isomaltose
+    node_type: CHEMICAL
+    grounding: CHEBI:28189
+    description: Formula C12H22O11.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 1,3-alpha-isomaltosidase
+    grounding: EC:3.2.1.204
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_D2PPM7
+    node_type: PROTEIN
+    label: AIMA_KRIFD
+    grounding: UniProtKB:D2PPM7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cyclobis-(1->3)-alpha-D-isomaltosyl is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24845
+      snippet: cyclobis-(1->3)-alpha-D-isomaltosyl + 2 H2O => 2 isomaltose
+      notes: Rhea's left-to-right directional reaction RHEA:24845 declares side 24844_L as its substrates
+        (rh:substrates); the master reaction RHEA:24844 is undirected. This participant is CHEBI:136822
+        with coefficient 1. Rhea cites PMID:27302067, PMID:15063208 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:24845
+      snippet: cyclobis-(1->3)-alpha-D-isomaltosyl + 2 H2O => 2 isomaltose
+      notes: Rhea's left-to-right directional reaction RHEA:24845 declares side 24844_L as its substrates
+        (rh:substrates); the master reaction RHEA:24844 is undirected. This participant is CHEBI:15377
+        with coefficient 2. Rhea cites PMID:27302067, PMID:15063208 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: isomaltose is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:24845
+      snippet: cyclobis-(1->3)-alpha-D-isomaltosyl + 2 H2O => 2 isomaltose
+      notes: Rhea's left-to-right directional reaction RHEA:24845 declares side 24844_R as its products
+        (rh:products); the master reaction RHEA:24844 is undirected. This participant is CHEBI:28189 with
+        coefficient 2. Rhea cites PMID:27302067, PMID:15063208 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.1.204; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24844
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.204"/>
+      notes: The rh:ec triple on RHEA:24844 in rhea.rdf. EC 3.2.1.204 is itself a record in this KB.
+  - subject: prot_D2PPM7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AIMA_KRIFD is an exemplar enzyme carrying EC 3.2.1.204, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.204
+      snippet: DR   D2PPM7, AIMA_KRIFD ;
+      notes: ExPASy ENZYME entry EC 3.2.1.204 cross-references UniProtKB:D2PPM7 (AIMA_KRIFD) as a protein
+        with this activity.
+    - reference: RHEA:24844
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.204"/>
+      notes: Rhea assigns RHEA:24844 to EC 3.2.1.204, and EC 3.2.1.204 maps to exactly one Rhea master
+        reaction (RHEA:24844), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

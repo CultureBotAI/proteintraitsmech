@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.16.1.9
     mapping_source: rhea2ec
@@ -34,4 +34,246 @@ definitions:
       Catalyses the reaction: 2 a Fe(II)-siderophore + NADP(+) + H(+) = 2 a Fe(III)-siderophore + NADPH
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 a Fe(II)-siderophore + NADP(+) + H(+) = 2 a Fe(III)-siderophore + NADPH
+  description: Substrate-to-product chemistry of RHEA:28795, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28796 (rh:substrates → 28795_L, rh:products → 28795_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 a Fe(II)-siderophore + NADP(+) + H(+) = 2 a Fe(III)-siderophore + NADPH
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28795
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 a Fe(II)-siderophore + NADP(+) + H(+) = 2 a Fe(III)-siderophore + NADPH'
+  - node_id: sub1
+    label: a Fe(II)-siderophore
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11344
+    description: Rhea compound GENERIC:11344.
+  - node_id: sub1_rp1
+    label: Fe(2+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11344 (a Fe(II)-siderophore);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29033
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: a Fe(III)-siderophore
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11342
+    description: Rhea compound GENERIC:11342.
+  - node_id: prd1_rp1
+    label: Fe(3+)
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11342 (a Fe(III)-siderophore);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29034
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ferric-chelate reductase (NADPH) activity
+    grounding: GO:0052851
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: ferric-chelate reductase [NAD(P)H]
+    grounding: EC:1.16.1.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: ec2
+    node_type: MOLECULAR_FUNCTION
+    label: ferric-chelate reductase (NADPH)
+    grounding: EC:1.16.1.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q5A446
+    node_type: PROTEIN
+    label: FRE1_CANAL
+    grounding: UniProtKB:Q5A446
+  - node_id: prot_P32791
+    node_type: PROTEIN
+    label: FRE1_YEAST
+    grounding: UniProtKB:P32791
+  - node_id: prot_P36033
+    node_type: PROTEIN
+    label: FRE2_YEAST
+    grounding: UniProtKB:P36033
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a Fe(II)-siderophore is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:28796
+      snippet: 2 a Fe(II)-siderophore + NADP(+) + H(+) => 2 a Fe(III)-siderophore + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:28796 declares side 28795_L as its substrates
+        (rh:substrates); the master reaction RHEA:28795 is undirected. This participant is GENERIC:11344
+        with coefficient 2. Rhea cites PMID:18765906, PMID:21097627 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(2+) is the reactive part of a Fe(II)-siderophore.
+    evidence:
+    - reference: RHEA:28795
+      snippet: Fe(2+)
+      notes: Rhea compound GENERIC:11344 (a Fe(II)-siderophore) declares rh:reactivePart = Fe(2+) (CHEBI:29033),
+        formula Fe.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28796
+      snippet: 2 a Fe(II)-siderophore + NADP(+) + H(+) => 2 a Fe(III)-siderophore + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:28796 declares side 28795_L as its substrates
+        (rh:substrates); the master reaction RHEA:28795 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:18765906, PMID:21097627 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28796
+      snippet: 2 a Fe(II)-siderophore + NADP(+) + H(+) => 2 a Fe(III)-siderophore + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:28796 declares side 28795_L as its substrates
+        (rh:substrates); the master reaction RHEA:28795 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:18765906, PMID:21097627 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a Fe(III)-siderophore is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:28796
+      snippet: 2 a Fe(II)-siderophore + NADP(+) + H(+) => 2 a Fe(III)-siderophore + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:28796 declares side 28795_R as its products
+        (rh:products); the master reaction RHEA:28795 is undirected. This participant is GENERIC:11342
+        with coefficient 2. Rhea cites PMID:18765906, PMID:21097627 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: Fe(3+) is the reactive part of a Fe(III)-siderophore.
+    evidence:
+    - reference: RHEA:28795
+      snippet: Fe(3+)
+      notes: Rhea compound GENERIC:11342 (a Fe(III)-siderophore) declares rh:reactivePart = Fe(3+) (CHEBI:29034),
+        formula Fe.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28796
+      snippet: 2 a Fe(II)-siderophore + NADP(+) + H(+) => 2 a Fe(III)-siderophore + NADPH
+      notes: Rhea's left-to-right directional reaction RHEA:28796 declares side 28795_R as its products
+        (rh:products); the master reaction RHEA:28795 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:18765906, PMID:21097627 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:28795
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0052851"/>
+      notes: The rdfs:seeAlso triple on RHEA:28795 in rhea.rdf. GO term GO:0052851 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.16.1.10; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28795
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.16.1.10"/>
+      notes: The rh:ec triple on RHEA:28795 in rhea.rdf. EC 1.16.1.10 is itself a record in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec2
+    description: Rhea assigns this reaction to EC 1.16.1.9; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28795
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.16.1.9"/>
+      notes: The rh:ec triple on RHEA:28795 in rhea.rdf. EC 1.16.1.9 is itself a record in this KB.
+  - subject: prot_Q5A446
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FRE1_CANAL is an exemplar enzyme carrying EC 1.16.1.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.16.1.9
+      snippet: DR   Q5A446, FRE1_CANAL ;  P32791, FRE1_YEAST ;  P36033, FRE2_YEAST ;
+      notes: ExPASy ENZYME entry EC 1.16.1.9 cross-references UniProtKB:Q5A446 (FRE1_CANAL) as a protein
+        with this activity.
+    - reference: RHEA:28795
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.16.1.9"/>
+      notes: Rhea assigns RHEA:28795 to EC 1.16.1.9, and EC 1.16.1.9 maps to exactly one Rhea master reaction
+        (RHEA:28795), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P32791
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FRE1_YEAST is an exemplar enzyme carrying EC 1.16.1.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.16.1.9
+      snippet: DR   Q5A446, FRE1_CANAL ;  P32791, FRE1_YEAST ;  P36033, FRE2_YEAST ;
+      notes: ExPASy ENZYME entry EC 1.16.1.9 cross-references UniProtKB:P32791 (FRE1_YEAST) as a protein
+        with this activity.
+    - reference: RHEA:28795
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.16.1.9"/>
+      notes: Rhea assigns RHEA:28795 to EC 1.16.1.9, and EC 1.16.1.9 maps to exactly one Rhea master reaction
+        (RHEA:28795), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P36033
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FRE2_YEAST is an exemplar enzyme carrying EC 1.16.1.9, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.16.1.9
+      snippet: DR   Q5A446, FRE1_CANAL ;  P32791, FRE1_YEAST ;  P36033, FRE2_YEAST ;
+      notes: ExPASy ENZYME entry EC 1.16.1.9 cross-references UniProtKB:P36033 (FRE2_YEAST) as a protein
+        with this activity.
+    - reference: RHEA:28795
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.16.1.9"/>
+      notes: Rhea assigns RHEA:28795 to EC 1.16.1.9, and EC 1.16.1.9 maps to exactly one Rhea master reaction
+        (RHEA:28795), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

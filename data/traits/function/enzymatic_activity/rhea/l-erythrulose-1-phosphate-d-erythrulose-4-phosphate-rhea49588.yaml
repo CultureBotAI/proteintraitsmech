@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.3.1.33
     mapping_source: rhea2ec
@@ -26,4 +26,135 @@ definitions:
       Catalyses the reaction: L-erythrulose 1-phosphate = D-erythrulose 4-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-erythrulose 1-phosphate = D-erythrulose 4-phosphate
+  description: Substrate-to-product chemistry of RHEA:49588, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:49589 (rh:substrates → 49588_L, rh:products → 49588_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-erythrulose 1-phosphate = D-erythrulose 4-phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:49588
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-erythrulose 1-phosphate = D-erythrulose 4-phosphate'
+  - node_id: sub1
+    label: L-erythrulose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58002
+    description: Formula C4H7O7P.
+  - node_id: prd1
+    label: D-erythrulose 4-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:90796
+    description: Formula C4H7O7P.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: L-erythrulose-1-phosphate isomerase
+    grounding: EC:5.3.1.33
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q2YIQ6
+    node_type: PROTEIN
+    label: ERYH_BRUA2
+    grounding: UniProtKB:Q2YIQ6
+  - node_id: prot_P0C119
+    node_type: PROTEIN
+    label: ERYH_BRUAB
+    grounding: UniProtKB:P0C119
+  - node_id: prot_Q8YCV3
+    node_type: PROTEIN
+    label: ERYH_BRUME
+    grounding: UniProtKB:Q8YCV3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-erythrulose 1-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49589
+      snippet: L-erythrulose 1-phosphate => D-erythrulose 4-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49589 declares side 49588_L as its substrates
+        (rh:substrates); the master reaction RHEA:49588 is undirected. This participant is CHEBI:58002
+        with coefficient 1. Rhea cites PMID:25453104, PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-erythrulose 4-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49589
+      snippet: L-erythrulose 1-phosphate => D-erythrulose 4-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:49589 declares side 49588_R as its products
+        (rh:products); the master reaction RHEA:49588 is undirected. This participant is CHEBI:90796 with
+        coefficient 1. Rhea cites PMID:25453104, PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.3.1.33; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:49588
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.33"/>
+      notes: The rh:ec triple on RHEA:49588 in rhea.rdf. EC 5.3.1.33 is itself a record in this KB.
+  - subject: prot_Q2YIQ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ERYH_BRUA2 is an exemplar enzyme carrying EC 5.3.1.33, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.33
+      snippet: DR   Q2YIQ6, ERYH_BRUA2 ;  P0C119, ERYH_BRUAB ;  Q8YCV3, ERYH_BRUME ;
+      notes: ExPASy ENZYME entry EC 5.3.1.33 cross-references UniProtKB:Q2YIQ6 (ERYH_BRUA2) as a protein
+        with this activity.
+    - reference: RHEA:49588
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.33"/>
+      notes: Rhea assigns RHEA:49588 to EC 5.3.1.33, and EC 5.3.1.33 maps to exactly one Rhea master reaction
+        (RHEA:49588), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P0C119
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ERYH_BRUAB is an exemplar enzyme carrying EC 5.3.1.33, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.33
+      snippet: DR   Q2YIQ6, ERYH_BRUA2 ;  P0C119, ERYH_BRUAB ;  Q8YCV3, ERYH_BRUME ;
+      notes: ExPASy ENZYME entry EC 5.3.1.33 cross-references UniProtKB:P0C119 (ERYH_BRUAB) as a protein
+        with this activity.
+    - reference: RHEA:49588
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.33"/>
+      notes: Rhea assigns RHEA:49588 to EC 5.3.1.33, and EC 5.3.1.33 maps to exactly one Rhea master reaction
+        (RHEA:49588), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q8YCV3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ERYH_BRUME is an exemplar enzyme carrying EC 5.3.1.33, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.3.1.33
+      snippet: DR   Q2YIQ6, ERYH_BRUA2 ;  P0C119, ERYH_BRUAB ;  Q8YCV3, ERYH_BRUME ;
+      notes: ExPASy ENZYME entry EC 5.3.1.33 cross-references UniProtKB:Q8YCV3 (ERYH_BRUME) as a protein
+        with this activity.
+    - reference: RHEA:49588
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.3.1.33"/>
+      notes: Rhea assigns RHEA:49588 to EC 5.3.1.33, and EC 5.3.1.33 maps to exactly one Rhea master reaction
+        (RHEA:49588), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

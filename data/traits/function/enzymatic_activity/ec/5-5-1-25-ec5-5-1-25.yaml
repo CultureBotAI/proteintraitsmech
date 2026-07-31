@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.5.1.-
 mapped_xrefs:
@@ -32,4 +32,87 @@ definitions:
       Catalyses: 3,6-anhydro-L-galactonate = 2-dehydro-3-deoxy-L-galactonate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3,6-anhydro-L-galactonate cycloisomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.5.1.25. EC 5.5.1.25 maps to exactly
+    one curated Rhea reaction (RHEA:21512), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "3,6-anhydro-L-galactonate
+    = 2-dehydro-3-deoxy-L-galactonate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3,6-anhydro-L-galactonate cycloisomerase
+    grounding: EC:5.5.1.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 3,6-anhydro-L-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:83435
+    description: Formula C6H9O6.
+  - node_id: prd1
+    label: 2-dehydro-3-deoxy-L-galactonate
+    node_type: CHEMICAL
+    grounding: CHEBI:75545
+    description: Formula C6H9O6.
+  - node_id: prot_Q9RKF7
+    node_type: PROTEIN
+    label: ACI_STRCO
+    grounding: UniProtKB:Q9RKF7
+  - node_id: prot_H2IFX0
+    node_type: PROTEIN
+    label: ACI_VIBSJ
+    grounding: UniProtKB:H2IFX0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3,6-anhydro-L-galactonate is a substrate consumed by RHEA:21512 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21513
+      snippet: 3,6-anhydro-L-galactonate => 2-dehydro-3-deoxy-L-galactonate
+      notes: Rhea's left-to-right directional reaction RHEA:21513 declares side 21512_L as its substrates
+        (rh:substrates); the master reaction RHEA:21512 is undirected. This participant is CHEBI:83435
+        with coefficient 1. Rhea cites PMID:25156229 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-dehydro-3-deoxy-L-galactonate is a product released by RHEA:21512 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21513
+      snippet: 3,6-anhydro-L-galactonate => 2-dehydro-3-deoxy-L-galactonate
+      notes: Rhea's left-to-right directional reaction RHEA:21513 declares side 21512_R as its products
+        (rh:products); the master reaction RHEA:21512 is undirected. This participant is CHEBI:75545 with
+        coefficient 1. Rhea cites PMID:25156229 for this reaction.
+  - subject: prot_Q9RKF7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACI_STRCO is an exemplar enzyme with EC 5.5.1.25 activity.
+    evidence:
+    - reference: EC:5.5.1.25
+      snippet: DR   Q9RKF7, ACI_STRCO  ;  H2IFX0, ACI_VIBSJ  ;
+      notes: ExPASy ENZYME entry EC 5.5.1.25 cross-references UniProtKB:Q9RKF7 (ACI_STRCO) as a protein
+        with this activity.
+  - subject: prot_H2IFX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACI_VIBSJ is an exemplar enzyme with EC 5.5.1.25 activity.
+    evidence:
+    - reference: EC:5.5.1.25
+      snippet: DR   Q9RKF7, ACI_STRCO  ;  H2IFX0, ACI_VIBSJ  ;
+      notes: ExPASy ENZYME entry EC 5.5.1.25 cross-references UniProtKB:H2IFX0 (ACI_VIBSJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

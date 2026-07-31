@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:74269
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,166 @@ definitions:
       Catalyses the reaction: guanosine in U6 snRNA + S-adenosyl-L-methionine = N(2)-methylguanosine in U6 snRNA + S-adenosyl-L-homocysteine + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of guanosine in U6 snRNA + S-adenosyl-L-methionine = N(2)-methylguanosine
+    in U6 snRNA + S-…
+  description: Substrate-to-product chemistry of RHEA:83423, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:83424 (rh:substrates → 83423_L, rh:products → 83423_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of guanosine in U6 snRNA + S-adenosyl-L-methionine = N(2)-methylguanosine in U6…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:83423
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: guanosine in U6 snRNA + S-adenosyl-L-methionine = N(2)-methylguanosine in U6 snRNA
+      + S-adenosyl-L-homocysteine + H(+)'
+  - node_id: sub1
+    label: guanosine in U6 snRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:20128
+    description: Rhea compound GENERIC:20128.
+  - node_id: sub1_rp1
+    label: GMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:20128 (guanosine
+      in U6 snRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74269
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: N(2)-methylguanosine in U6 snRNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:20129
+    description: Rhea compound GENERIC:20129.
+  - node_id: prd1_rp1
+    label: N(2)-methylguanosine 5'-monophosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:20129 (N(2)-methylguanosine
+      in U6 snRNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74481
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: U6 snRNA (guanine-N(2))-methyltransferase activity
+    grounding: GO:0160230
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: guanosine in U6 snRNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:83424
+      snippet: guanosine in U6 snRNA + S-adenosyl-L-methionine => N(2)-methylguanosine in U6 snRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:83424 declares side 83423_L as its substrates
+        (rh:substrates); the master reaction RHEA:83423 is undirected. This participant is GENERIC:20128
+        with coefficient 1. Rhea cites PMID:37283053 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: GMP residue is the reactive part of guanosine in U6 snRNA.
+    evidence:
+    - reference: RHEA:83423
+      snippet: GMP residue
+      notes: Rhea compound GENERIC:20128 (guanosine in U6 snRNA) declares rh:reactivePart = GMP residue
+        (CHEBI:74269), formula C10H11N5O7P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:83424
+      snippet: guanosine in U6 snRNA + S-adenosyl-L-methionine => N(2)-methylguanosine in U6 snRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:83424 declares side 83423_L as its substrates
+        (rh:substrates); the master reaction RHEA:83423 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:37283053 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(2)-methylguanosine in U6 snRNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:83424
+      snippet: guanosine in U6 snRNA + S-adenosyl-L-methionine => N(2)-methylguanosine in U6 snRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:83424 declares side 83423_R as its products
+        (rh:products); the master reaction RHEA:83423 is undirected. This participant is GENERIC:20129
+        with coefficient 1. Rhea cites PMID:37283053 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(2)-methylguanosine 5'-monophosphate residue is the reactive part of N(2)-methylguanosine
+      in U6 snRNA.
+    evidence:
+    - reference: RHEA:83423
+      snippet: N(2)-methylguanosine 5'-monophosphate residue
+      notes: Rhea compound GENERIC:20129 (N(2)-methylguanosine in U6 snRNA) declares rh:reactivePart =
+        N(2)-methylguanosine 5'-monophosphate residue (CHEBI:74481), formula C11H13N5O7P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:83424
+      snippet: guanosine in U6 snRNA + S-adenosyl-L-methionine => N(2)-methylguanosine in U6 snRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:83424 declares side 83423_R as its products
+        (rh:products); the master reaction RHEA:83423 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:37283053 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:83424
+      snippet: guanosine in U6 snRNA + S-adenosyl-L-methionine => N(2)-methylguanosine in U6 snRNA + S-adenosyl-L-homocysteine
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:83424 declares side 83423_R as its products
+        (rh:products); the master reaction RHEA:83423 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:37283053 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:83423
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0160230"/>
+      notes: The rdfs:seeAlso triple on RHEA:83423 in rhea.rdf. GO term GO:0160230 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

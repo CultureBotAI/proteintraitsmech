@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.11.-
 synonyms:
@@ -47,4 +47,81 @@ definitions:
       Catalyses: Release of N-terminal glutamate (and to a lesser extent aspartate) from a peptide
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glutamyl aminopeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.11.7. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of N-terminal glutamate (and to a lesser extent aspartate) from a peptide".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glutamyl aminopeptidase
+    grounding: EC:3.4.11.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glutamyl aminopeptidase activity
+    grounding: GO:0004230
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_D3UW23
+    node_type: PROTEIN
+    label: AMPE_BITRH
+    grounding: UniProtKB:D3UW23
+  - node_id: prot_Q32LQ0
+    node_type: PROTEIN
+    label: AMPE_BOVIN
+    grounding: UniProtKB:Q32LQ0
+  - node_id: prot_P0DQU2
+    node_type: PROTEIN
+    label: AMPE_GLOBL
+    grounding: UniProtKB:P0DQU2
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.11.7
+      snippet: EC:3.4.11.7 > GO:glutamyl aminopeptidase activity ; GO:0004230
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004230 is itself a record
+        in this KB.
+  - subject: prot_D3UW23
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPE_BITRH is an exemplar enzyme with EC 3.4.11.7 activity.
+    evidence:
+    - reference: EC:3.4.11.7
+      snippet: DR   D3UW23, AMPE_BITRH ;  Q32LQ0, AMPE_BOVIN ;  P0DQU2, AMPE_GLOBL ;
+      notes: ExPASy ENZYME entry EC 3.4.11.7 cross-references UniProtKB:D3UW23 (AMPE_BITRH) as a protein
+        with this activity.
+  - subject: prot_Q32LQ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPE_BOVIN is an exemplar enzyme with EC 3.4.11.7 activity.
+    evidence:
+    - reference: EC:3.4.11.7
+      snippet: DR   D3UW23, AMPE_BITRH ;  Q32LQ0, AMPE_BOVIN ;  P0DQU2, AMPE_GLOBL ;
+      notes: ExPASy ENZYME entry EC 3.4.11.7 cross-references UniProtKB:Q32LQ0 (AMPE_BOVIN) as a protein
+        with this activity.
+  - subject: prot_P0DQU2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMPE_GLOBL is an exemplar enzyme with EC 3.4.11.7 activity.
+    evidence:
+    - reference: EC:3.4.11.7
+      snippet: DR   D3UW23, AMPE_BITRH ;  Q32LQ0, AMPE_BOVIN ;  P0DQU2, AMPE_GLOBL ;
+      notes: ExPASy ENZYME entry EC 3.4.11.7 cross-references UniProtKB:P0DQU2 (AMPE_GLOBL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

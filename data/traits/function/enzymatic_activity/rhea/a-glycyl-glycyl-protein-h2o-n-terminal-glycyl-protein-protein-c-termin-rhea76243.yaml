@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:195192
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,143 @@ definitions:
       Catalyses the reaction: a glycyl-glycyl-[protein] + H2O = N-terminal glycyl-[protein] + [protein]-C-terminal glycine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a glycyl-glycyl-[protein] + H2O = N-terminal glycyl-[protein] + [protein]-C-terminal
+    gl…
+  description: Substrate-to-product chemistry of RHEA:76243, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:76244 (rh:substrates → 76243_L, rh:products → 76243_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a glycyl-glycyl-[protein] + H2O = N-terminal glycyl-[protein] + [protein]-C-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:76243
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a glycyl-glycyl-[protein] + H2O = N-terminal glycyl-[protein] + [protein]-C-terminal
+      glycine'
+  - node_id: sub1
+    label: a glycyl-glycyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:18656
+    description: Rhea compound GENERIC:18656.
+  - node_id: sub1_rp1
+    label: a Gly-Gly residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18656 (a glycyl-glycyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:195192
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-terminal glycyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12666
+    description: Rhea compound GENERIC:12666.
+  - node_id: prd1_rp1
+    label: a N-terminal Gly residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12666 (N-terminal
+      glycyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64723
+  - node_id: prd2
+    label: '[protein]-C-terminal glycine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15093
+    description: Rhea compound GENERIC:15093.
+  - node_id: prd2_rp1
+    label: C-terminal glycine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15093 ([protein]-C-terminal
+      glycine); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83148
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a glycyl-glycyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:76244
+      snippet: a glycyl-glycyl-[protein] + H2O => N-terminal glycyl-[protein] + [protein]-C-terminal glycine
+      notes: Rhea's left-to-right directional reaction RHEA:76244 declares side 76243_L as its substrates
+        (rh:substrates); the master reaction RHEA:76243 is undirected. This participant is GENERIC:18656
+        with coefficient 1. Rhea cites PMID:36762862, PMID:25966977 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: a Gly-Gly residue is the reactive part of a glycyl-glycyl-[protein].
+    evidence:
+    - reference: RHEA:76243
+      snippet: a Gly-Gly residue
+      notes: Rhea compound GENERIC:18656 (a glycyl-glycyl-[protein]) declares rh:reactivePart = a Gly-Gly
+        residue (CHEBI:195192), formula C4H6N2O2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76244
+      snippet: a glycyl-glycyl-[protein] + H2O => N-terminal glycyl-[protein] + [protein]-C-terminal glycine
+      notes: Rhea's left-to-right directional reaction RHEA:76244 declares side 76243_L as its substrates
+        (rh:substrates); the master reaction RHEA:76243 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:36762862, PMID:25966977 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-terminal glycyl-[protein] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:76244
+      snippet: a glycyl-glycyl-[protein] + H2O => N-terminal glycyl-[protein] + [protein]-C-terminal glycine
+      notes: Rhea's left-to-right directional reaction RHEA:76244 declares side 76243_R as its products
+        (rh:products); the master reaction RHEA:76243 is undirected. This participant is GENERIC:12666
+        with coefficient 1. Rhea cites PMID:36762862, PMID:25966977 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: a N-terminal Gly residue is the reactive part of N-terminal glycyl-[protein].
+    evidence:
+    - reference: RHEA:76243
+      snippet: a N-terminal Gly residue
+      notes: Rhea compound GENERIC:12666 (N-terminal glycyl-[protein]) declares rh:reactivePart = a N-terminal
+        Gly residue (CHEBI:64723), formula C2H5NO.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: '[protein]-C-terminal glycine is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:76244
+      snippet: a glycyl-glycyl-[protein] + H2O => N-terminal glycyl-[protein] + [protein]-C-terminal glycine
+      notes: Rhea's left-to-right directional reaction RHEA:76244 declares side 76243_R as its products
+        (rh:products); the master reaction RHEA:76243 is undirected. This participant is GENERIC:15093
+        with coefficient 1. Rhea cites PMID:36762862, PMID:25966977 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: C-terminal glycine residue is the reactive part of [protein]-C-terminal glycine.
+    evidence:
+    - reference: RHEA:76243
+      snippet: C-terminal glycine residue
+      notes: Rhea compound GENERIC:15093 ([protein]-C-terminal glycine) declares rh:reactivePart = C-terminal
+        glycine residue (CHEBI:83148), formula C2H3NO2.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

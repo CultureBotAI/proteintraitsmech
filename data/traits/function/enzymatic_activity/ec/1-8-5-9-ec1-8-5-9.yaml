@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.5.-
 mapped_xrefs:
@@ -23,4 +23,142 @@ definitions:
       Catalyses: [DsbA protein]-dithiol + a quinone = [DsbA protein]-disulfide + a quinol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein dithiol:quinone oxidoreductase DsbB
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.5.9. EC 1.8.5.9 maps to exactly
+    one curated Rhea reaction (RHEA:20928), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[DsbA protein]-dithiol
+    + a quinone = [DsbA protein]-disulfide + a quinol". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein dithiol:quinone oxidoreductase DsbB
+    grounding: EC:1.8.5.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[DsbA protein]-dithiol'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15884
+    description: Rhea compound GENERIC:15884.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue at position C1
+    description: The reacting group Rhea names inside the generic participant GENERIC:15884 ([DsbA protein]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub1_rp2
+    node_type: RESIDUE
+    label: L-cysteine residue at position C2
+    description: The reacting group Rhea names inside the generic participant GENERIC:15884 ([DsbA protein]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: prd1
+    label: '[DsbA protein]-disulfide'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15885
+    description: Rhea compound GENERIC:15885.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-cystine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:15885 ([DsbA protein]-disulfide);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:50058
+  - node_id: prd2
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[DsbA protein]-dithiol is a substrate consumed by RHEA:20928 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:20929
+      snippet: '[DsbA protein]-dithiol + a quinone => [DsbA protein]-disulfide + a quinol'
+      notes: Rhea's left-to-right directional reaction RHEA:20929 declares side 20928_L as its substrates
+        (rh:substrates); the master reaction RHEA:20928 is undirected. This participant is GENERIC:15884
+        with coefficient 1. Rhea cites PMID:18695247, PMID:7568240, PMID:11967064, PMID:19567379 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [DsbA protein]-dithiol.
+    evidence:
+    - reference: RHEA:20928
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:15884 ([DsbA protein]-dithiol) declares rh:reactivePart at position
+        C1 = L-cysteine residue (CHEBI:29950).
+  - subject: sub1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [DsbA protein]-dithiol.
+    evidence:
+    - reference: RHEA:20928
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:15884 ([DsbA protein]-dithiol) declares rh:reactivePart at position
+        C2 = L-cysteine residue (CHEBI:29950).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a quinone is a substrate consumed by RHEA:20928 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20929
+      snippet: '[DsbA protein]-dithiol + a quinone => [DsbA protein]-disulfide + a quinol'
+      notes: Rhea's left-to-right directional reaction RHEA:20929 declares side 20928_L as its substrates
+        (rh:substrates); the master reaction RHEA:20928 is undirected. This participant is CHEBI:132124
+        with coefficient 1. Rhea cites PMID:18695247, PMID:7568240, PMID:11967064, PMID:19567379 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[DsbA protein]-disulfide is a product released by RHEA:20928 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:20929
+      snippet: '[DsbA protein]-dithiol + a quinone => [DsbA protein]-disulfide + a quinol'
+      notes: Rhea's left-to-right directional reaction RHEA:20929 declares side 20928_R as its products
+        (rh:products); the master reaction RHEA:20928 is undirected. This participant is GENERIC:15885
+        with coefficient 1. Rhea cites PMID:18695247, PMID:7568240, PMID:11967064, PMID:19567379 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cystine residue is the reactive part of [DsbA protein]-disulfide.
+    evidence:
+    - reference: RHEA:20928
+      snippet: L-cystine residue
+      notes: Rhea compound GENERIC:15885 ([DsbA protein]-disulfide) declares rh:reactivePart = L-cystine
+        residue (CHEBI:50058).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a quinol is a product released by RHEA:20928 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20929
+      snippet: '[DsbA protein]-dithiol + a quinone => [DsbA protein]-disulfide + a quinol'
+      notes: Rhea's left-to-right directional reaction RHEA:20929 declares side 20928_R as its products
+        (rh:products); the master reaction RHEA:20928 is undirected. This participant is CHEBI:24646 with
+        coefficient 1. Rhea cites PMID:18695247, PMID:7568240, PMID:11967064, PMID:19567379 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.99.1.-
 synonyms:
@@ -31,4 +31,71 @@ definitions:
       Catalyses: 2 Fe(III)-heme b = beta-hematin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of heme ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.99.1.8. EC 4.99.1.8 maps to exactly
+    one curated Rhea reaction (RHEA:53712), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 Fe(III)-heme
+    b = beta-hematin". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: heme ligase
+    grounding: EC:4.99.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: Fe(III)-heme b
+    node_type: CHEMICAL
+    grounding: CHEBI:55376
+    description: Formula C34H30FeN4O4.
+  - node_id: prd1
+    label: beta-hematin
+    node_type: CHEMICAL
+    grounding: CHEBI:55377
+    description: Formula C68H60Fe2N8O8.
+  - node_id: prot_Q8IL04
+    node_type: PROTEIN
+    label: HDP_PLAF7
+    grounding: UniProtKB:Q8IL04
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(III)-heme b is a substrate consumed by RHEA:53712 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:53713
+      snippet: 2 Fe(III)-heme b => beta-hematin
+      notes: Rhea's left-to-right directional reaction RHEA:53713 declares side 53712_L as its substrates
+        (rh:substrates); the master reaction RHEA:53712 is undirected. This participant is CHEBI:55376
+        with coefficient 2. Rhea cites PMID:18437218 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-hematin is a product released by RHEA:53712 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53713
+      snippet: 2 Fe(III)-heme b => beta-hematin
+      notes: Rhea's left-to-right directional reaction RHEA:53713 declares side 53712_R as its products
+        (rh:products); the master reaction RHEA:53712 is undirected. This participant is CHEBI:55377 with
+        coefficient 1. Rhea cites PMID:18437218 for this reaction.
+  - subject: prot_Q8IL04
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HDP_PLAF7 is an exemplar enzyme with EC 4.99.1.8 activity.
+    evidence:
+    - reference: EC:4.99.1.8
+      snippet: DR   Q8IL04, HDP_PLAF7  ;
+      notes: ExPASy ENZYME entry EC 4.99.1.8 cross-references UniProtKB:Q8IL04 (HDP_PLAF7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:85445
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,148 @@ definitions:
       Catalyses the reaction: a 2'-deoxyguanosine in DNA + NAD(+) = an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine in DNA + nicotinamide + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 2'-deoxyguanosine in DNA + NAD(+) = an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine
+    in DNA…
+  description: Substrate-to-product chemistry of RHEA:71807, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:71808 (rh:substrates → 71807_L, rh:products → 71807_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2'-deoxyguanosine in DNA + NAD(+) = an N(2)-(ADP-L-ribosyl)-2'-deoxyguanos…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:71807
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 2''-deoxyguanosine in DNA + NAD(+) = an N(2)-(ADP-L-ribosyl)-2''-deoxyguanosine
+      in DNA + nicotinamide + H(+)'
+  - node_id: sub1
+    label: a 2'-deoxyguanosine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:11367
+    description: Rhea compound GENERIC:11367.
+  - node_id: sub1_rp1
+    label: dGMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11367 (a 2'-deoxyguanosine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85445
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18062
+    description: Rhea compound GENERIC:18062.
+  - node_id: prd1_rp1
+    label: N(2)-(ADP-D-ribosyl)-dGMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18062 (an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142722
+  - node_id: prd2
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+    description: Formula C6H6N2O.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2'-deoxyguanosine in DNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:71808
+      snippet: a 2'-deoxyguanosine in DNA + NAD(+) => an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine in DNA
+        + nicotinamide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71808 declares side 71807_L as its substrates
+        (rh:substrates); the master reaction RHEA:71807 is undirected. This participant is GENERIC:11367
+        with coefficient 1. Rhea cites PMID:11592983, PMID:23212047 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: dGMP residue is the reactive part of a 2'-deoxyguanosine in DNA.
+    evidence:
+    - reference: RHEA:71807
+      snippet: dGMP residue
+      notes: Rhea compound GENERIC:11367 (a 2'-deoxyguanosine in DNA) declares rh:reactivePart = dGMP
+        residue (CHEBI:85445), formula C10H11N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71808
+      snippet: a 2'-deoxyguanosine in DNA + NAD(+) => an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine in DNA
+        + nicotinamide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71808 declares side 71807_L as its substrates
+        (rh:substrates); the master reaction RHEA:71807 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:11592983, PMID:23212047 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine in DNA is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71808
+      snippet: a 2'-deoxyguanosine in DNA + NAD(+) => an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine in DNA
+        + nicotinamide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71808 declares side 71807_R as its products
+        (rh:products); the master reaction RHEA:71807 is undirected. This participant is GENERIC:18062
+        with coefficient 1. Rhea cites PMID:11592983, PMID:23212047 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(2)-(ADP-D-ribosyl)-dGMP residue is the reactive part of an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine
+      in DNA.
+    evidence:
+    - reference: RHEA:71807
+      snippet: N(2)-(ADP-D-ribosyl)-dGMP residue
+      notes: Rhea compound GENERIC:18062 (an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine in DNA) declares rh:reactivePart
+        = N(2)-(ADP-D-ribosyl)-dGMP residue (CHEBI:142722), formula C25H30N10O19P3.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nicotinamide is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71808
+      snippet: a 2'-deoxyguanosine in DNA + NAD(+) => an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine in DNA
+        + nicotinamide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71808 declares side 71807_R as its products
+        (rh:products); the master reaction RHEA:71807 is undirected. This participant is CHEBI:17154 with
+        coefficient 1. Rhea cites PMID:11592983, PMID:23212047 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71808
+      snippet: a 2'-deoxyguanosine in DNA + NAD(+) => an N(2)-(ADP-L-ribosyl)-2'-deoxyguanosine in DNA
+        + nicotinamide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:71808 declares side 71807_R as its products
+        (rh:products); the master reaction RHEA:71807 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11592983, PMID:23212047 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

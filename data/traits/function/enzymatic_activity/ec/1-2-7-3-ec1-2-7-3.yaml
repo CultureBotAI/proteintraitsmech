@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.2.7.-
 synonyms:
@@ -49,4 +49,240 @@ definitions:
       Catalyses: 2 oxidized [2Fe-2S]-[ferredoxin] + 2-oxoglutarate + CoA = succinyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin] + CO2 + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-oxoglutarate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.2.7.3. EC 1.2.7.3 maps to exactly
+    one curated Rhea reaction (RHEA:17297), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 oxidized [2Fe-2S]-[ferredoxin]
+    + 2-oxoglutarate + CoA = succinyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin] + CO2 + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2-oxoglutarate synthase
+    grounding: EC:1.2.7.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](2+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: sub3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prd1
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: prd2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: '[2Fe-2S](1+)'
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: prd3
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2-oxoglutarate synthase activity
+    grounding: GO:0047553
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O29781
+    node_type: PROTEIN
+    label: KORA_ARCFU
+    grounding: UniProtKB:O29781
+  - node_id: prot_Q57724
+    node_type: PROTEIN
+    label: KORA_METJA
+    grounding: UniProtKB:Q57724
+  - node_id: prot_O27112
+    node_type: PROTEIN
+    label: KORA_METTH
+    grounding: UniProtKB:O27112
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: oxidized [2Fe-2S]-[ferredoxin] is a substrate consumed by RHEA:17297 (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:17298
+      snippet: 2 oxidized [2Fe-2S]-[ferredoxin] + 2-oxoglutarate + CoA => succinyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin]
+        + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17298 declares side 17297_L as its substrates
+        (rh:substrates); the master reaction RHEA:17297 is undirected. This participant is GENERIC:10000
+        with coefficient 2. Rhea cites PMID:8830683, PMID:4286833, PMID:11265457, PMID:4628267 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:17297
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by RHEA:17297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17298
+      snippet: 2 oxidized [2Fe-2S]-[ferredoxin] + 2-oxoglutarate + CoA => succinyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin]
+        + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17298 declares side 17297_L as its substrates
+        (rh:substrates); the master reaction RHEA:17297 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:8830683, PMID:4286833, PMID:11265457, PMID:4628267 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: CoA is a substrate consumed by RHEA:17297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17298
+      snippet: 2 oxidized [2Fe-2S]-[ferredoxin] + 2-oxoglutarate + CoA => succinyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin]
+        + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17298 declares side 17297_L as its substrates
+        (rh:substrates); the master reaction RHEA:17297 is undirected. This participant is CHEBI:57287
+        with coefficient 1. Rhea cites PMID:8830683, PMID:4286833, PMID:11265457, PMID:4628267 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: succinyl-CoA is a product released by RHEA:17297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17298
+      snippet: 2 oxidized [2Fe-2S]-[ferredoxin] + 2-oxoglutarate + CoA => succinyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin]
+        + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17298 declares side 17297_R as its products
+        (rh:products); the master reaction RHEA:17297 is undirected. This participant is CHEBI:57292 with
+        coefficient 1. Rhea cites PMID:8830683, PMID:4286833, PMID:11265457, PMID:4628267 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: reduced [2Fe-2S]-[ferredoxin] is a product released by RHEA:17297 (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:17298
+      snippet: 2 oxidized [2Fe-2S]-[ferredoxin] + 2-oxoglutarate + CoA => succinyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin]
+        + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17298 declares side 17297_R as its products
+        (rh:products); the master reaction RHEA:17297 is undirected. This participant is GENERIC:10001
+        with coefficient 2. Rhea cites PMID:8830683, PMID:4286833, PMID:11265457, PMID:4628267 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:17297
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CO2 is a product released by RHEA:17297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17298
+      snippet: 2 oxidized [2Fe-2S]-[ferredoxin] + 2-oxoglutarate + CoA => succinyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin]
+        + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17298 declares side 17297_R as its products
+        (rh:products); the master reaction RHEA:17297 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:8830683, PMID:4286833, PMID:11265457, PMID:4628267 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:17297 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17298
+      snippet: 2 oxidized [2Fe-2S]-[ferredoxin] + 2-oxoglutarate + CoA => succinyl-CoA + 2 reduced [2Fe-2S]-[ferredoxin]
+        + CO2 + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17298 declares side 17297_R as its products
+        (rh:products); the master reaction RHEA:17297 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:8830683, PMID:4286833, PMID:11265457, PMID:4628267 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.2.7.3
+      snippet: EC:1.2.7.3 > GO:2-oxoglutarate synthase activity ; GO:0047553
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047553 is itself a record
+        in this KB.
+  - subject: prot_O29781
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KORA_ARCFU is an exemplar enzyme with EC 1.2.7.3 activity.
+    evidence:
+    - reference: EC:1.2.7.3
+      snippet: DR   O29781, KORA_ARCFU ;  Q57724, KORA_METJA ;  O27112, KORA_METTH ;
+      notes: ExPASy ENZYME entry EC 1.2.7.3 cross-references UniProtKB:O29781 (KORA_ARCFU) as a protein
+        with this activity.
+  - subject: prot_Q57724
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KORA_METJA is an exemplar enzyme with EC 1.2.7.3 activity.
+    evidence:
+    - reference: EC:1.2.7.3
+      snippet: DR   O29781, KORA_ARCFU ;  Q57724, KORA_METJA ;  O27112, KORA_METTH ;
+      notes: ExPASy ENZYME entry EC 1.2.7.3 cross-references UniProtKB:Q57724 (KORA_METJA) as a protein
+        with this activity.
+  - subject: prot_O27112
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KORA_METTH is an exemplar enzyme with EC 1.2.7.3 activity.
+    evidence:
+    - reference: EC:1.2.7.3
+      snippet: DR   O29781, KORA_ARCFU ;  Q57724, KORA_METJA ;  O27112, KORA_METTH ;
+      notes: ExPASy ENZYME entry EC 1.2.7.3 cross-references UniProtKB:O27112 (KORA_METTH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (13 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

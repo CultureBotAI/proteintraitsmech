@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.2.-
 synonyms:
@@ -43,4 +43,119 @@ definitions:
       Catalyses: 5-methylsulfanyl-2,3-dioxopentyl phosphate = 2-hydroxy-5-methylsulfanyl- 3-oxopent-1-enyl phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2,3-diketo-5-methylthiopentyl-1-phosphate enolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.2.5. EC 5.3.2.5 maps to exactly
+    one curated Rhea reaction (RHEA:18769), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "5-methylsulfanyl-2,3-dioxopentyl
+    phosphate = 2-hydroxy-5-methylsulfanyl- 3-oxopent-1-enyl phosphate". Substrate/product direction is
+    the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 2,3-diketo-5-methylthiopentyl-1-phosphate enolase
+    grounding: EC:5.3.2.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 5-methylsulfanyl-2,3-dioxopentyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58828
+    description: Formula C6H9O6PS.
+  - node_id: prd1
+    label: 2-hydroxy-5-methylsulfanyl-3-oxopent-1-enyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59505
+    description: Formula C6H9O6PS.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 2,3-diketo-5-methylthiopentyl-1-phosphate enolase activity
+    grounding: GO:0043715
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_C3P745
+    node_type: PROTEIN
+    label: MTNW_BACAA
+    grounding: UniProtKB:C3P745
+  - node_id: prot_C3LIA6
+    node_type: PROTEIN
+    label: MTNW_BACAC
+    grounding: UniProtKB:C3LIA6
+  - node_id: prot_A0RI42
+    node_type: PROTEIN
+    label: MTNW_BACAH
+    grounding: UniProtKB:A0RI42
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-methylsulfanyl-2,3-dioxopentyl phosphate is a substrate consumed by RHEA:18769 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18770
+      snippet: 5-methylsulfanyl-2,3-dioxopentyl phosphate => 2-hydroxy-5-methylsulfanyl-3-oxopent-1-enyl
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:18770 declares side 18769_L as its substrates
+        (rh:substrates); the master reaction RHEA:18769 is undirected. This participant is CHEBI:58828
+        with coefficient 1. Rhea cites PMID:14551435, PMID:8227039 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-hydroxy-5-methylsulfanyl-3-oxopent-1-enyl phosphate is a product released by RHEA:18769
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18770
+      snippet: 5-methylsulfanyl-2,3-dioxopentyl phosphate => 2-hydroxy-5-methylsulfanyl-3-oxopent-1-enyl
+        phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:18770 declares side 18769_R as its products
+        (rh:products); the master reaction RHEA:18769 is undirected. This participant is CHEBI:59505 with
+        coefficient 1. Rhea cites PMID:14551435, PMID:8227039 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.2.5
+      snippet: EC:5.3.2.5 > GO:2,3-diketo-5-methylthiopentyl-1-phosphate enolase activity ; GO:0043715
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043715 is itself a record
+        in this KB.
+  - subject: prot_C3P745
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTNW_BACAA is an exemplar enzyme with EC 5.3.2.5 activity.
+    evidence:
+    - reference: EC:5.3.2.5
+      snippet: DR   C3P745, MTNW_BACAA ;  C3LIA6, MTNW_BACAC ;  A0RI42, MTNW_BACAH ;
+      notes: ExPASy ENZYME entry EC 5.3.2.5 cross-references UniProtKB:C3P745 (MTNW_BACAA) as a protein
+        with this activity.
+  - subject: prot_C3LIA6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTNW_BACAC is an exemplar enzyme with EC 5.3.2.5 activity.
+    evidence:
+    - reference: EC:5.3.2.5
+      snippet: DR   C3P745, MTNW_BACAA ;  C3LIA6, MTNW_BACAC ;  A0RI42, MTNW_BACAH ;
+      notes: ExPASy ENZYME entry EC 5.3.2.5 cross-references UniProtKB:C3LIA6 (MTNW_BACAC) as a protein
+        with this activity.
+  - subject: prot_A0RI42
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTNW_BACAH is an exemplar enzyme with EC 5.3.2.5 activity.
+    evidence:
+    - reference: EC:5.3.2.5
+      snippet: DR   C3P745, MTNW_BACAA ;  C3LIA6, MTNW_BACAC ;  A0RI42, MTNW_BACAH ;
+      notes: ExPASy ENZYME entry EC 5.3.2.5 cross-references UniProtKB:A0RI42 (MTNW_BACAH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

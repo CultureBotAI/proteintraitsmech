@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 mapped_xrefs:
@@ -38,4 +38,297 @@ definitions:
       Catalyses: tuberculosinyl diphosphate + adenosine + H(+) = 1-tuberculosinyladenosine + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of adenosine tuberculosinyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.153. Rhea assigns 4 curated
+    reactions to EC 2.5.1.153 (the first 3 are shown). No one substrate set is the class''s chemistry,
+    so each reaction is its own node — grounded to the Rhea record in this KB — and carries its own inputs
+    and outputs. ExPASy ENZYME states the catalysed reaction as: "tuberculosinyl diphosphate + adenosine
+    + H(+) = 1-tuberculosinyladenosine + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: adenosine tuberculosinyltransferase
+    grounding: EC:2.5.1.153
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of tuberculosinyl diphosphate + H2O = tuberculosinol + diphosphate
+    grounding: RHEA:31783
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: tuberculosinyl diphosphate + H2O = tuberculosinol + diphosphate'
+  - node_id: rxn1_sub1
+    label: tuberculosinyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58822
+    description: Formula C20H33O7P2.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: tuberculosinol
+    node_type: CHEMICAL
+    grounding: CHEBI:50387
+    description: Formula C20H34O.
+  - node_id: rxn1_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of tuberculosinyl diphosphate + H2O = (13R)-edaxadiene + diphosphate
+    grounding: RHEA:31787
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: tuberculosinyl diphosphate + H2O = (13R)-edaxadiene + diphosphate'
+  - node_id: rxn2_sub1
+    label: tuberculosinyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58822
+    description: Formula C20H33O7P2.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: (13R)-edaxadiene
+    node_type: CHEMICAL
+    grounding: CHEBI:63178
+    description: Formula C20H34O.
+  - node_id: rxn2_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of tuberculosinyl diphosphate + H2O = (13S)-edaxadiene + diphosphate
+    grounding: RHEA:31791
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: tuberculosinyl diphosphate + H2O = (13S)-edaxadiene + diphosphate'
+  - node_id: rxn3_sub1
+    label: tuberculosinyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58822
+    description: Formula C20H33O7P2.
+  - node_id: rxn3_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3_prd1
+    label: (13S)-edaxadiene
+    node_type: CHEMICAL
+    grounding: CHEBI:63180
+    description: Formula C20H34O.
+  - node_id: rxn3_prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_P9WJ60
+    node_type: PROTEIN
+    label: TUBAT_MYCTO
+    grounding: UniProtKB:P9WJ60
+  - node_id: prot_P9WJ61
+    node_type: PROTEIN
+    label: TUBAT_MYCTU
+    grounding: UniProtKB:P9WJ61
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:31783 is one of the 4 curated reactions Rhea assigns to EC 2.5.1.153; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31783
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.153"/>
+      notes: The rh:ec triple on RHEA:31783 in rhea.rdf assigns that reaction to EC 2.5.1.153.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: tuberculosinyl diphosphate is a substrate consumed by RHEA:31783 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31784
+      snippet: tuberculosinyl diphosphate + H2O => tuberculosinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31784 declares side 31783_L as its substrates
+        (rh:substrates); the master reaction RHEA:31783 is undirected. This participant is CHEBI:58822
+        with coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:31783 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31784
+      snippet: tuberculosinyl diphosphate + H2O => tuberculosinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31784 declares side 31783_L as its substrates
+        (rh:substrates); the master reaction RHEA:31783 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: tuberculosinol is a product released by RHEA:31783 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31784
+      snippet: tuberculosinyl diphosphate + H2O => tuberculosinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31784 declares side 31783_R as its products
+        (rh:products); the master reaction RHEA:31783 is undirected. This participant is CHEBI:50387 with
+        coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: diphosphate is a product released by RHEA:31783 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31784
+      snippet: tuberculosinyl diphosphate + H2O => tuberculosinol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31784 declares side 31783_R as its products
+        (rh:products); the master reaction RHEA:31783 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:31787 is one of the 4 curated reactions Rhea assigns to EC 2.5.1.153; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31787
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.153"/>
+      notes: The rh:ec triple on RHEA:31787 in rhea.rdf assigns that reaction to EC 2.5.1.153.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: tuberculosinyl diphosphate is a substrate consumed by RHEA:31787 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31788
+      snippet: tuberculosinyl diphosphate + H2O => (13R)-edaxadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31788 declares side 31787_L as its substrates
+        (rh:substrates); the master reaction RHEA:31787 is undirected. This participant is CHEBI:58822
+        with coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:31787 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31788
+      snippet: tuberculosinyl diphosphate + H2O => (13R)-edaxadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31788 declares side 31787_L as its substrates
+        (rh:substrates); the master reaction RHEA:31787 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (13R)-edaxadiene is a product released by RHEA:31787 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31788
+      snippet: tuberculosinyl diphosphate + H2O => (13R)-edaxadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31788 declares side 31787_R as its products
+        (rh:products); the master reaction RHEA:31787 is undirected. This participant is CHEBI:63178 with
+        coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: diphosphate is a product released by RHEA:31787 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31788
+      snippet: tuberculosinyl diphosphate + H2O => (13R)-edaxadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31788 declares side 31787_R as its products
+        (rh:products); the master reaction RHEA:31787 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:31791 is one of the 4 curated reactions Rhea assigns to EC 2.5.1.153; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31791
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.153"/>
+      notes: The rh:ec triple on RHEA:31791 in rhea.rdf assigns that reaction to EC 2.5.1.153.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: tuberculosinyl diphosphate is a substrate consumed by RHEA:31791 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31792
+      snippet: tuberculosinyl diphosphate + H2O => (13S)-edaxadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31792 declares side 31791_L as its substrates
+        (rh:substrates); the master reaction RHEA:31791 is undirected. This participant is CHEBI:58822
+        with coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: H2O is a substrate consumed by RHEA:31791 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31792
+      snippet: tuberculosinyl diphosphate + H2O => (13S)-edaxadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31792 declares side 31791_L as its substrates
+        (rh:substrates); the master reaction RHEA:31791 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: (13S)-edaxadiene is a product released by RHEA:31791 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31792
+      snippet: tuberculosinyl diphosphate + H2O => (13S)-edaxadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31792 declares side 31791_R as its products
+        (rh:products); the master reaction RHEA:31791 is undirected. This participant is CHEBI:63180 with
+        coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: diphosphate is a product released by RHEA:31791 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31792
+      snippet: tuberculosinyl diphosphate + H2O => (13S)-edaxadiene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:31792 declares side 31791_R as its products
+        (rh:products); the master reaction RHEA:31791 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:24475925, PMID:21290071, PMID:21228491 for this reaction.
+  - subject: prot_P9WJ60
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TUBAT_MYCTO is an exemplar enzyme with EC 2.5.1.153 activity.
+    evidence:
+    - reference: EC:2.5.1.153
+      snippet: DR   P9WJ60, TUBAT_MYCTO;  P9WJ61, TUBAT_MYCTU;
+      notes: ExPASy ENZYME entry EC 2.5.1.153 cross-references UniProtKB:P9WJ60 (TUBAT_MYCTO) as a protein
+        with this activity.
+  - subject: prot_P9WJ61
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TUBAT_MYCTU is an exemplar enzyme with EC 2.5.1.153 activity.
+    evidence:
+    - reference: EC:2.5.1.153
+      snippet: DR   P9WJ60, TUBAT_MYCTO;  P9WJ61, TUBAT_MYCTU;
+      notes: ExPASy ENZYME entry EC 2.5.1.153 cross-references UniProtKB:P9WJ61 (TUBAT_MYCTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (17 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

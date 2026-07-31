@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.3.3.-
 synonyms:
@@ -43,4 +43,117 @@ definitions:
       Catalyses: (2E,4Z)-5-hydroxypenta-2,4-diene-1,2,5-tricarboxylate = (3E,5R)-5- carboxy-2-oxohept-3-enedioate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-carboxymethyl-2-hydroxymuconate Delta-isomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.3.3.10. EC 5.3.3.10 maps to exactly
+    one curated Rhea reaction (RHEA:18813), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,4Z)-5-hydroxypenta-2,4-diene-1,2,5-tricarboxylate
+    = (3E,5R)-5- carboxy-2-oxohept-3-enedioate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 5-carboxymethyl-2-hydroxymuconate Delta-isomerase
+    grounding: EC:5.3.3.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,4Z)-5-hydroxypenta-2,4-diene-1,2,5-tricarboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:47961
+    description: Formula C8H5O7.
+  - node_id: prd1
+    label: (3E,5R)-5-carboxy-2-oxohept-3-enedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:87491
+    description: Formula C8H5O7.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 5-carboxymethyl-2-hydroxymuconate delta-isomerase activity
+    grounding: GO:0008704
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q46978
+    node_type: PROTEIN
+    label: HPAG_ECOLX
+    grounding: UniProtKB:Q46978
+  - node_id: prot_Q9RPU5
+    node_type: PROTEIN
+    label: HPAG_SALDU
+    grounding: UniProtKB:Q9RPU5
+  - node_id: prot_Q05354
+    node_type: PROTEIN
+    label: HPCD_ECOLX
+    grounding: UniProtKB:Q05354
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,4Z)-5-hydroxypenta-2,4-diene-1,2,5-tricarboxylate is a substrate consumed by RHEA:18813
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18814
+      snippet: (2E,4Z)-5-hydroxypenta-2,4-diene-1,2,5-tricarboxylate => (3E,5R)-5-carboxy-2-oxohept-3-enedioate
+      notes: Rhea's left-to-right directional reaction RHEA:18814 declares side 18813_L as its substrates
+        (rh:substrates); the master reaction RHEA:18813 is undirected. This participant is CHEBI:47961
+        with coefficient 1. Rhea cites PMID:11863436, PMID:2194841, PMID:8223600, PMID:7026235 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3E,5R)-5-carboxy-2-oxohept-3-enedioate is a product released by RHEA:18813 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18814
+      snippet: (2E,4Z)-5-hydroxypenta-2,4-diene-1,2,5-tricarboxylate => (3E,5R)-5-carboxy-2-oxohept-3-enedioate
+      notes: Rhea's left-to-right directional reaction RHEA:18814 declares side 18813_R as its products
+        (rh:products); the master reaction RHEA:18813 is undirected. This participant is CHEBI:87491 with
+        coefficient 1. Rhea cites PMID:11863436, PMID:2194841, PMID:8223600, PMID:7026235 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.3.3.10
+      snippet: EC:5.3.3.10 > GO:5-carboxymethyl-2-hydroxymuconate delta-isomerase activity ; GO:0008704
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008704 is itself a record
+        in this KB.
+  - subject: prot_Q46978
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPAG_ECOLX is an exemplar enzyme with EC 5.3.3.10 activity.
+    evidence:
+    - reference: EC:5.3.3.10
+      snippet: DR   Q46978, HPAG_ECOLX ;  Q9RPU5, HPAG_SALDU ;  Q05354, HPCD_ECOLX ;
+      notes: ExPASy ENZYME entry EC 5.3.3.10 cross-references UniProtKB:Q46978 (HPAG_ECOLX) as a protein
+        with this activity.
+  - subject: prot_Q9RPU5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPAG_SALDU is an exemplar enzyme with EC 5.3.3.10 activity.
+    evidence:
+    - reference: EC:5.3.3.10
+      snippet: DR   Q46978, HPAG_ECOLX ;  Q9RPU5, HPAG_SALDU ;  Q05354, HPCD_ECOLX ;
+      notes: ExPASy ENZYME entry EC 5.3.3.10 cross-references UniProtKB:Q9RPU5 (HPAG_SALDU) as a protein
+        with this activity.
+  - subject: prot_Q05354
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HPCD_ECOLX is an exemplar enzyme with EC 5.3.3.10 activity.
+    evidence:
+    - reference: EC:5.3.3.10
+      snippet: DR   Q46978, HPAG_ECOLX ;  Q9RPU5, HPAG_SALDU ;  Q05354, HPCD_ECOLX ;
+      notes: ExPASy ENZYME entry EC 5.3.3.10 cross-references UniProtKB:Q05354 (HPCD_ECOLX) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

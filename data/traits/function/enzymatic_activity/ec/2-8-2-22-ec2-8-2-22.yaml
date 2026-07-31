@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.2.-
 synonyms:
@@ -41,4 +41,149 @@ definitions:
       Catalyses: an aryl sulfate + a phenol = an aryl sulfate + a phenol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aryl-sulfate sulfotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.2.22. EC 2.8.2.22 maps to exactly
+    one curated Rhea reaction (RHEA:51072), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an aryl sulfate
+    + a phenol = an aryl sulfate + a phenol". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aryl-sulfate sulfotransferase
+    grounding: EC:2.8.2.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an aryl sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:140317
+    description: Formula C6O4SR5.
+  - node_id: sub2
+    label: a phenol
+    node_type: CHEMICAL
+    grounding: CHEBI:33853
+    description: Formula C6HOR5.
+  - node_id: prd1
+    label: an aryl sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:140317
+    description: Formula C6O4SR5.
+  - node_id: prd2
+    label: a phenol
+    node_type: CHEMICAL
+    grounding: CHEBI:33853
+    description: Formula C6HOR5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: arylsulfate sulfotransferase activity
+    grounding: GO:0047686
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B8FRJ0
+    node_type: PROTEIN
+    label: ASSTA_DESHD
+    grounding: UniProtKB:B8FRJ0
+  - node_id: prot_B8FZF6
+    node_type: PROTEIN
+    label: ASSTB_DESHD
+    grounding: UniProtKB:B8FZF6
+  - node_id: prot_A0A0W1JK39
+    node_type: PROTEIN
+    label: ASSTC_DESHA
+    grounding: UniProtKB:A0A0W1JK39
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an aryl sulfate is a substrate consumed by RHEA:51072 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51073
+      snippet: an aryl sulfate + a phenol => an aryl sulfate + a phenol
+      notes: Rhea's left-to-right directional reaction RHEA:51073 declares side 51072_L as its substrates
+        (rh:substrates); the master reaction RHEA:51072 is undirected. This participant is CHEBI:140317
+        with coefficient 1. Rhea cites PMID:19036922, PMID:3460636, PMID:17202651, PMID:2347024 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a phenol is a substrate consumed by RHEA:51072 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51073
+      snippet: an aryl sulfate + a phenol => an aryl sulfate + a phenol
+      notes: Rhea's left-to-right directional reaction RHEA:51073 declares side 51072_L as its substrates
+        (rh:substrates); the master reaction RHEA:51072 is undirected. This participant is CHEBI:33853
+        with coefficient 1. Rhea cites PMID:19036922, PMID:3460636, PMID:17202651, PMID:2347024 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an aryl sulfate is a product released by RHEA:51072 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51073
+      snippet: an aryl sulfate + a phenol => an aryl sulfate + a phenol
+      notes: Rhea's left-to-right directional reaction RHEA:51073 declares side 51072_R as its products
+        (rh:products); the master reaction RHEA:51072 is undirected. This participant is CHEBI:140317
+        with coefficient 1. Rhea cites PMID:19036922, PMID:3460636, PMID:17202651, PMID:2347024 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a phenol is a product released by RHEA:51072 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:51073
+      snippet: an aryl sulfate + a phenol => an aryl sulfate + a phenol
+      notes: Rhea's left-to-right directional reaction RHEA:51073 declares side 51072_R as its products
+        (rh:products); the master reaction RHEA:51072 is undirected. This participant is CHEBI:33853 with
+        coefficient 1. Rhea cites PMID:19036922, PMID:3460636, PMID:17202651, PMID:2347024 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.8.2.22
+      snippet: EC:2.8.2.22 > GO:arylsulfate sulfotransferase activity ; GO:0047686
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047686 is itself a record
+        in this KB.
+  - subject: prot_B8FRJ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASSTA_DESHD is an exemplar enzyme with EC 2.8.2.22 activity.
+    evidence:
+    - reference: EC:2.8.2.22
+      snippet: DR   B8FRJ0, ASSTA_DESHD;  B8FZF6, ASSTB_DESHD;  A0A0W1JK39, ASSTC_DESHA;
+      notes: ExPASy ENZYME entry EC 2.8.2.22 cross-references UniProtKB:B8FRJ0 (ASSTA_DESHD) as a protein
+        with this activity.
+  - subject: prot_B8FZF6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASSTB_DESHD is an exemplar enzyme with EC 2.8.2.22 activity.
+    evidence:
+    - reference: EC:2.8.2.22
+      snippet: DR   B8FRJ0, ASSTA_DESHD;  B8FZF6, ASSTB_DESHD;  A0A0W1JK39, ASSTC_DESHA;
+      notes: ExPASy ENZYME entry EC 2.8.2.22 cross-references UniProtKB:B8FZF6 (ASSTB_DESHD) as a protein
+        with this activity.
+  - subject: prot_A0A0W1JK39
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASSTC_DESHA is an exemplar enzyme with EC 2.8.2.22 activity.
+    evidence:
+    - reference: EC:2.8.2.22
+      snippet: DR   B8FRJ0, ASSTA_DESHD;  B8FZF6, ASSTB_DESHD;  A0A0W1JK39, ASSTC_DESHA;
+      notes: ExPASy ENZYME entry EC 2.8.2.22 cross-references UniProtKB:A0A0W1JK39 (ASSTC_DESHA) as a
+        protein with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

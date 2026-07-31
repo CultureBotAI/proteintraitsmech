@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -40,4 +40,66 @@ definitions:
       Catalyses: Similar, but not identical, to that of thermolysin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of bacillolysin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.28. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Similar,
+    but not identical, to that of thermolysin".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: bacillolysin
+    grounding: EC:3.4.24.28
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P06832
+    node_type: PROTEIN
+    label: NPRE_BACAM
+    grounding: UniProtKB:P06832
+  - node_id: prot_P05806
+    node_type: PROTEIN
+    label: NPRE_BACCE
+    grounding: UniProtKB:P05806
+  - node_id: prot_P23384
+    node_type: PROTEIN
+    label: NPRE_BACCL
+    grounding: UniProtKB:P23384
+  edges:
+  - subject: prot_P06832
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NPRE_BACAM is an exemplar enzyme with EC 3.4.24.28 activity.
+    evidence:
+    - reference: EC:3.4.24.28
+      snippet: DR   P06832, NPRE_BACAM ;  P05806, NPRE_BACCE ;  P23384, NPRE_BACCL ;
+      notes: ExPASy ENZYME entry EC 3.4.24.28 cross-references UniProtKB:P06832 (NPRE_BACAM) as a protein
+        with this activity.
+  - subject: prot_P05806
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NPRE_BACCE is an exemplar enzyme with EC 3.4.24.28 activity.
+    evidence:
+    - reference: EC:3.4.24.28
+      snippet: DR   P06832, NPRE_BACAM ;  P05806, NPRE_BACCE ;  P23384, NPRE_BACCL ;
+      notes: ExPASy ENZYME entry EC 3.4.24.28 cross-references UniProtKB:P05806 (NPRE_BACCE) as a protein
+        with this activity.
+  - subject: prot_P23384
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NPRE_BACCL is an exemplar enzyme with EC 3.4.24.28 activity.
+    evidence:
+    - reference: EC:3.4.24.28
+      snippet: DR   P06832, NPRE_BACAM ;  P05806, NPRE_BACCE ;  P23384, NPRE_BACCL ;
+      notes: ExPASy ENZYME entry EC 3.4.24.28 cross-references UniProtKB:P23384 (NPRE_BACCL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

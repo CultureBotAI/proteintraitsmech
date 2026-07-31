@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:184387
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,107 @@ definitions:
       Catalyses the reaction: 3',5'-cyclic UMP + H2O = UMP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3',5'-cyclic UMP + H2O = UMP + H(+)
+  description: Substrate-to-product chemistry of RHEA:70575, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:70576 (rh:substrates → 70575_L, rh:products → 70575_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3',5'-cyclic UMP + H2O = UMP + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:70575
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3'',5''-cyclic UMP + H2O = UMP + H(+)'
+  - node_id: sub1
+    label: 3',5'-cyclic UMP
+    node_type: CHEMICAL
+    grounding: CHEBI:184387
+    description: Formula C9H10N2O8P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: UMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57865
+    description: Formula C9H11N2O9P.
+  - node_id: prd2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3',5'-cyclic-nucleotide phosphodiesterase activity
+    grounding: GO:0004114
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3',5'-cyclic UMP is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:70576
+      snippet: 3',5'-cyclic UMP + H2O => UMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70576 declares side 70575_L as its substrates
+        (rh:substrates); the master reaction RHEA:70575 is undirected. This participant is CHEBI:184387
+        with coefficient 1. Rhea cites PMID:35395152, PMID:27975297 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70576
+      snippet: 3',5'-cyclic UMP + H2O => UMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70576 declares side 70575_L as its substrates
+        (rh:substrates); the master reaction RHEA:70575 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:35395152, PMID:27975297 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70576
+      snippet: 3',5'-cyclic UMP + H2O => UMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70576 declares side 70575_R as its products
+        (rh:products); the master reaction RHEA:70575 is undirected. This participant is CHEBI:57865 with
+        coefficient 1. Rhea cites PMID:35395152, PMID:27975297 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:70576
+      snippet: 3',5'-cyclic UMP + H2O => UMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:70576 declares side 70575_R as its products
+        (rh:products); the master reaction RHEA:70575 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:35395152, PMID:27975297 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:70575
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004114"/>
+      notes: The rdfs:seeAlso triple on RHEA:70575 in rhea.rdf. GO term GO:0004114 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

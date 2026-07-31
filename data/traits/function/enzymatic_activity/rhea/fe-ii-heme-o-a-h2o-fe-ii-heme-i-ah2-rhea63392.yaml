@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:60530
     role: SUBSTRATE_OR_PRODUCT
@@ -35,4 +35,111 @@ definitions:
       Catalyses the reaction: Fe(II)-heme o + A + H2O = Fe(II)-heme i + AH2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Fe(II)-heme o + A + H2O = Fe(II)-heme i + AH2
+  description: Substrate-to-product chemistry of RHEA:63392, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63393 (rh:substrates → 63392_L, rh:products → 63392_R), and Rhea
+    curates the reverse direction too. 3 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of Fe(II)-heme o + A + H2O = Fe(II)-heme i + AH2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63392
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: Fe(II)-heme o + A + H2O = Fe(II)-heme i + AH2'
+  - node_id: sub1
+    label: Fe(II)-heme o
+    node_type: CHEMICAL
+    grounding: CHEBI:60530
+    description: Formula C49H56FeN4O5.
+  - node_id: sub2
+    label: A
+    node_type: CHEMICAL
+    grounding: CHEBI:13193
+    description: Formula R.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: Fe(II)-heme i
+    node_type: CHEMICAL
+    grounding: CHEBI:147291
+    description: Formula C49H56FeN4O6.
+  - node_id: prd2
+    label: AH2
+    node_type: CHEMICAL
+    grounding: CHEBI:17499
+    description: Formula H2R.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(II)-heme o is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63393
+      snippet: Fe(II)-heme o + A + H2O => Fe(II)-heme i + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:63393 declares side 63392_L as its substrates
+        (rh:substrates); the master reaction RHEA:63392 is undirected. This participant is CHEBI:60530
+        with coefficient 1. Rhea cites PMID:16321940, PMID:30397130, PMID:12206660, PMID:15236569 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: A is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63393
+      snippet: Fe(II)-heme o + A + H2O => Fe(II)-heme i + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:63393 declares side 63392_L as its substrates
+        (rh:substrates); the master reaction RHEA:63392 is undirected. This participant is CHEBI:13193
+        with coefficient 1. Rhea cites PMID:16321940, PMID:30397130, PMID:12206660, PMID:15236569 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63393
+      snippet: Fe(II)-heme o + A + H2O => Fe(II)-heme i + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:63393 declares side 63392_L as its substrates
+        (rh:substrates); the master reaction RHEA:63392 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16321940, PMID:30397130, PMID:12206660, PMID:15236569 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Fe(II)-heme i is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63393
+      snippet: Fe(II)-heme o + A + H2O => Fe(II)-heme i + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:63393 declares side 63392_R as its products
+        (rh:products); the master reaction RHEA:63392 is undirected. This participant is CHEBI:147291
+        with coefficient 1. Rhea cites PMID:16321940, PMID:30397130, PMID:12206660, PMID:15236569 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AH2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63393
+      snippet: Fe(II)-heme o + A + H2O => Fe(II)-heme i + AH2
+      notes: Rhea's left-to-right directional reaction RHEA:63393 declares side 63392_R as its products
+        (rh:products); the master reaction RHEA:63392 is undirected. This participant is CHEBI:17499 with
+        coefficient 1. Rhea cites PMID:16321940, PMID:30397130, PMID:12206660, PMID:15236569 for this
+        reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

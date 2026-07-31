@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.5.1.-
 mapped_xrefs:
@@ -36,4 +36,148 @@ definitions:
       Catalyses: agroclavine + NADP(+) = didehydroagroclavine + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of agroclavine dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.5.1.46. EC 1.5.1.46 maps to exactly
+    one curated Rhea reaction (RHEA:34059), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "agroclavine +
+    NADP(+) = didehydroagroclavine + NADPH + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: agroclavine dehydrogenase
+    grounding: EC:1.5.1.46
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: agroclavine
+    node_type: CHEMICAL
+    grounding: CHEBI:65042
+    description: Formula C16H19N2.
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: didehydroagroclavine
+    node_type: CHEMICAL
+    grounding: CHEBI:65036
+    description: Formula C16H17N2.
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A8C7S1
+    node_type: PROTEIN
+    label: EASG_CLAFS
+    grounding: UniProtKB:A8C7S1
+  - node_id: prot_M1WEN5
+    node_type: PROTEIN
+    label: EASG_CLAP2
+    grounding: UniProtKB:M1WEN5
+  - node_id: prot_P0CT21
+    node_type: PROTEIN
+    label: EASG_CLAPU
+    grounding: UniProtKB:P0CT21
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: agroclavine is a substrate consumed by RHEA:34059 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34060
+      snippet: agroclavine + NADP(+) => didehydroagroclavine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34060 declares side 34059_L as its substrates
+        (rh:substrates); the master reaction RHEA:34059 is undirected. This participant is CHEBI:65042
+        with coefficient 1. Rhea cites PMID:21494745 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by RHEA:34059 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34060
+      snippet: agroclavine + NADP(+) => didehydroagroclavine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34060 declares side 34059_L as its substrates
+        (rh:substrates); the master reaction RHEA:34059 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:21494745 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: didehydroagroclavine is a product released by RHEA:34059 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34060
+      snippet: agroclavine + NADP(+) => didehydroagroclavine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34060 declares side 34059_R as its products
+        (rh:products); the master reaction RHEA:34059 is undirected. This participant is CHEBI:65036 with
+        coefficient 1. Rhea cites PMID:21494745 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by RHEA:34059 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34060
+      snippet: agroclavine + NADP(+) => didehydroagroclavine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34060 declares side 34059_R as its products
+        (rh:products); the master reaction RHEA:34059 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:21494745 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:34059 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34060
+      snippet: agroclavine + NADP(+) => didehydroagroclavine + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:34060 declares side 34059_R as its products
+        (rh:products); the master reaction RHEA:34059 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21494745 for this reaction.
+  - subject: prot_A8C7S1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EASG_CLAFS is an exemplar enzyme with EC 1.5.1.46 activity.
+    evidence:
+    - reference: EC:1.5.1.46
+      snippet: DR   A8C7S1, EASG_CLAFS ;  M1WEN5, EASG_CLAP2 ;  P0CT21, EASG_CLAPU ;
+      notes: ExPASy ENZYME entry EC 1.5.1.46 cross-references UniProtKB:A8C7S1 (EASG_CLAFS) as a protein
+        with this activity.
+  - subject: prot_M1WEN5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EASG_CLAP2 is an exemplar enzyme with EC 1.5.1.46 activity.
+    evidence:
+    - reference: EC:1.5.1.46
+      snippet: DR   A8C7S1, EASG_CLAFS ;  M1WEN5, EASG_CLAP2 ;  P0CT21, EASG_CLAPU ;
+      notes: ExPASy ENZYME entry EC 1.5.1.46 cross-references UniProtKB:M1WEN5 (EASG_CLAP2) as a protein
+        with this activity.
+  - subject: prot_P0CT21
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EASG_CLAPU is an exemplar enzyme with EC 1.5.1.46 activity.
+    evidence:
+    - reference: EC:1.5.1.46
+      snippet: DR   A8C7S1, EASG_CLAFS ;  M1WEN5, EASG_CLAP2 ;  P0CT21, EASG_CLAPU ;
+      notes: ExPASy ENZYME entry EC 1.5.1.46 cross-references UniProtKB:P0CT21 (EASG_CLAPU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

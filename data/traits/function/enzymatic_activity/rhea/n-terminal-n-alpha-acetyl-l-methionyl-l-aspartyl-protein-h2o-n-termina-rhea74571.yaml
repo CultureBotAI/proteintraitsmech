@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:133063
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,134 @@ definitions:
       Catalyses the reaction: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein] + H2O = N-terminal L-aspartyl-[protein] + N-acetyl-L-methionine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein] + H2O = N-terminal
+    L-aspart…
+  description: Substrate-to-product chemistry of RHEA:74571, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:74572 (rh:substrates → 74571_L, rh:products → 74571_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein] + H2O = N-termin…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:74571
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein] + H2O = N-terminal L-aspartyl-[protein]
+      + N-acetyl-L-methionine'
+  - node_id: sub1
+    label: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12693
+    description: Rhea compound GENERIC:12693.
+  - node_id: sub1_rp1
+    label: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12693 (N-terminal
+      N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein]); no position on any specific protein sequence
+      is asserted.
+    grounding: CHEBI:133063
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-terminal L-aspartyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12669
+    description: Rhea compound GENERIC:12669.
+  - node_id: prd1_rp1
+    label: L-aspartyl group
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:12669 (N-terminal
+      L-aspartyl-[protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64720
+  - node_id: prd2
+    label: N-acetyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:71670
+    description: Formula C7H12NO3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein] is a substrate consumed by
+      this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74572
+      snippet: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein] + H2O => N-terminal L-aspartyl-[protein]
+        + N-acetyl-L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:74572 declares side 74571_L as its substrates
+        (rh:substrates); the master reaction RHEA:74571 is undirected. This participant is GENERIC:12693
+        with coefficient 1. Rhea cites PMID:36173861 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartate residue is the reactive part of N-terminal
+      N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein].
+    evidence:
+    - reference: RHEA:74571
+      snippet: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartate residue
+      notes: Rhea compound GENERIC:12693 (N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein])
+        declares rh:reactivePart = N-terminal N(alpha)-acetyl-L-methionyl-L-aspartate residue (CHEBI:133063),
+        formula C11H16N2O5S.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74572
+      snippet: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein] + H2O => N-terminal L-aspartyl-[protein]
+        + N-acetyl-L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:74572 declares side 74571_L as its substrates
+        (rh:substrates); the master reaction RHEA:74571 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:36173861 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-terminal L-aspartyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:74572
+      snippet: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein] + H2O => N-terminal L-aspartyl-[protein]
+        + N-acetyl-L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:74572 declares side 74571_R as its products
+        (rh:products); the master reaction RHEA:74571 is undirected. This participant is GENERIC:12669
+        with coefficient 1. Rhea cites PMID:36173861 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-aspartyl group is the reactive part of N-terminal L-aspartyl-[protein].
+    evidence:
+    - reference: RHEA:74571
+      snippet: L-aspartyl group
+      notes: Rhea compound GENERIC:12669 (N-terminal L-aspartyl-[protein]) declares rh:reactivePart =
+        L-aspartyl group (CHEBI:64720), formula C4H6NO3.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: N-acetyl-L-methionine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:74572
+      snippet: N-terminal N(alpha)-acetyl-L-methionyl-L-aspartyl-[protein] + H2O => N-terminal L-aspartyl-[protein]
+        + N-acetyl-L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:74572 declares side 74571_R as its products
+        (rh:products); the master reaction RHEA:74571 is undirected. This participant is CHEBI:71670 with
+        coefficient 1. Rhea cites PMID:36173861 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

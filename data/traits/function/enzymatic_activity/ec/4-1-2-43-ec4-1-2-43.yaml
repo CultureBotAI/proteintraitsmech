@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -47,4 +47,132 @@ definitions:
       Catalyses: D-ribulose 5-phosphate + formaldehyde = D-arabino-hex-3-ulose 6-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-hexulose-6-phosphate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.43. EC 4.1.2.43 maps to exactly
+    one curated Rhea reaction (RHEA:25201), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-ribulose 5-phosphate
+    + formaldehyde = D-arabino-hex-3-ulose 6-phosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3-hexulose-6-phosphate synthase
+    grounding: EC:4.1.2.43
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-ribulose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58121
+    description: Formula C5H9O8P.
+  - node_id: sub2
+    label: formaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:16842
+    description: Formula CH2O.
+  - node_id: prd1
+    label: D-arabino-hex-3-ulose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58542
+    description: Formula C6H11O9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: hexulose-6-phosphate synthase activity
+    grounding: GO:0043801
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O28964
+    node_type: PROTEIN
+    label: FAEHP_ARCFU
+    grounding: UniProtKB:O28964
+  - node_id: prot_Q8THA9
+    node_type: PROTEIN
+    label: FAEHP_METAC
+    grounding: UniProtKB:Q8THA9
+  - node_id: prot_Q0W644
+    node_type: PROTEIN
+    label: FAEHP_METAR
+    grounding: UniProtKB:Q0W644
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-ribulose 5-phosphate is a substrate consumed by RHEA:25201 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25202
+      snippet: D-ribulose 5-phosphate + formaldehyde => D-arabino-hex-3-ulose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25202 declares side 25201_L as its substrates
+        (rh:substrates); the master reaction RHEA:25201 is undirected. This participant is CHEBI:58121
+        with coefficient 1. Rhea cites PMID:4219834, PMID:564713, PMID:15901685 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: formaldehyde is a substrate consumed by RHEA:25201 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25202
+      snippet: D-ribulose 5-phosphate + formaldehyde => D-arabino-hex-3-ulose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25202 declares side 25201_L as its substrates
+        (rh:substrates); the master reaction RHEA:25201 is undirected. This participant is CHEBI:16842
+        with coefficient 1. Rhea cites PMID:4219834, PMID:564713, PMID:15901685 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-arabino-hex-3-ulose 6-phosphate is a product released by RHEA:25201 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:25202
+      snippet: D-ribulose 5-phosphate + formaldehyde => D-arabino-hex-3-ulose 6-phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25202 declares side 25201_R as its products
+        (rh:products); the master reaction RHEA:25201 is undirected. This participant is CHEBI:58542 with
+        coefficient 1. Rhea cites PMID:4219834, PMID:564713, PMID:15901685 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.2.43
+      snippet: EC:4.1.2.43 > GO:hexulose-6-phosphate synthase activity ; GO:0043801
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043801 is itself a record
+        in this KB.
+  - subject: prot_O28964
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAEHP_ARCFU is an exemplar enzyme with EC 4.1.2.43 activity.
+    evidence:
+    - reference: EC:4.1.2.43
+      snippet: DR   O28964, FAEHP_ARCFU;  Q8THA9, FAEHP_METAC;  Q0W644, FAEHP_METAR;
+      notes: ExPASy ENZYME entry EC 4.1.2.43 cross-references UniProtKB:O28964 (FAEHP_ARCFU) as a protein
+        with this activity.
+  - subject: prot_Q8THA9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAEHP_METAC is an exemplar enzyme with EC 4.1.2.43 activity.
+    evidence:
+    - reference: EC:4.1.2.43
+      snippet: DR   O28964, FAEHP_ARCFU;  Q8THA9, FAEHP_METAC;  Q0W644, FAEHP_METAR;
+      notes: ExPASy ENZYME entry EC 4.1.2.43 cross-references UniProtKB:Q8THA9 (FAEHP_METAC) as a protein
+        with this activity.
+  - subject: prot_Q0W644
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FAEHP_METAR is an exemplar enzyme with EC 4.1.2.43 activity.
+    evidence:
+    - reference: EC:4.1.2.43
+      snippet: DR   O28964, FAEHP_ARCFU;  Q8THA9, FAEHP_METAC;  Q0W644, FAEHP_METAR;
+      notes: ExPASy ENZYME entry EC 4.1.2.43 cross-references UniProtKB:Q0W644 (FAEHP_METAR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

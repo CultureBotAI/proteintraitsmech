@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.31
     mapping_source: rhea2ec
@@ -32,4 +32,122 @@ definitions:
       Catalyses the reaction: N(alpha)-formyl-L-methionine + H2O = formate + L-methionine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N(alpha)-formyl-L-methionine + H2O = formate + L-methionine
+  description: Substrate-to-product chemistry of RHEA:17781, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17782 (rh:substrates → 17781_L, rh:products → 17781_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N(alpha)-formyl-L-methionine + H2O = formate + L-methionine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17781
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N(alpha)-formyl-L-methionine + H2O = formate + L-methionine'
+  - node_id: sub1
+    label: N(alpha)-formyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:57809
+    description: Formula C6H10NO3S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: prd2
+    label: L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+    description: Formula C5H11NO2S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: formylmethionine deformylase activity
+    grounding: GO:0008463
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: formylmethionine deformylase
+    grounding: EC:3.5.1.31
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(alpha)-formyl-L-methionine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:17782
+      snippet: N(alpha)-formyl-L-methionine + H2O => formate + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:17782 declares side 17781_L as its substrates
+        (rh:substrates); the master reaction RHEA:17781 is undirected. This participant is CHEBI:57809
+        with coefficient 1. Rhea cites PMID:5767026, PMID:16254442, PMID:15938642 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17782
+      snippet: N(alpha)-formyl-L-methionine + H2O => formate + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:17782 declares side 17781_L as its substrates
+        (rh:substrates); the master reaction RHEA:17781 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:5767026, PMID:16254442, PMID:15938642 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: formate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17782
+      snippet: N(alpha)-formyl-L-methionine + H2O => formate + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:17782 declares side 17781_R as its products
+        (rh:products); the master reaction RHEA:17781 is undirected. This participant is CHEBI:15740 with
+        coefficient 1. Rhea cites PMID:5767026, PMID:16254442, PMID:15938642 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-methionine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17782
+      snippet: N(alpha)-formyl-L-methionine + H2O => formate + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:17782 declares side 17781_R as its products
+        (rh:products); the master reaction RHEA:17781 is undirected. This participant is CHEBI:57844 with
+        coefficient 1. Rhea cites PMID:5767026, PMID:16254442, PMID:15938642 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17781
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0008463"/>
+      notes: The rdfs:seeAlso triple on RHEA:17781 in rhea.rdf. GO term GO:0008463 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.31; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17781
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.31"/>
+      notes: The rh:ec triple on RHEA:17781 in rhea.rdf. EC 3.5.1.31 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

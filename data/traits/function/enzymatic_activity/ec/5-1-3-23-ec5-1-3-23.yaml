@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.3.-
 synonyms:
@@ -35,4 +35,73 @@ definitions:
       Catalyses: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate = UDP-2,3- diacetamido-2,3-dideoxy-alpha-D-mannuronate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UDP-2,3-diacetamido-2,3-dideoxyglucuronic acid 2-epimerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.3.23. EC 5.1.3.23 maps to exactly
+    one curated Rhea reaction (RHEA:24764), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate
+    = UDP-2,3- diacetamido-2,3-dideoxy-alpha-D-mannuronate". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: UDP-2,3-diacetamido-2,3-dideoxyglucuronic acid 2-epimerase
+    grounding: EC:5.1.3.23
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58745
+    description: Formula C19H25N4O18P2.
+  - node_id: prd1
+    label: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate
+    node_type: CHEMICAL
+    grounding: CHEBI:58746
+    description: Formula C19H25N4O18P2.
+  - node_id: prot_G3XD61
+    node_type: PROTEIN
+    label: WBPI_PSEAE
+    grounding: UniProtKB:G3XD61
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate is a substrate consumed by RHEA:24764
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24765
+      snippet: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate => UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate
+      notes: Rhea's left-to-right directional reaction RHEA:24765 declares side 24764_L as its substrates
+        (rh:substrates); the master reaction RHEA:24764 is undirected. This participant is CHEBI:58745
+        with coefficient 1. Rhea cites PMID:17346239, PMID:11526328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate is a product released by RHEA:24764
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24765
+      snippet: UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-glucuronate => UDP-2,3-diacetamido-2,3-dideoxy-alpha-D-mannuronate
+      notes: Rhea's left-to-right directional reaction RHEA:24765 declares side 24764_R as its products
+        (rh:products); the master reaction RHEA:24764 is undirected. This participant is CHEBI:58746 with
+        coefficient 1. Rhea cites PMID:17346239, PMID:11526328 for this reaction.
+  - subject: prot_G3XD61
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: WBPI_PSEAE is an exemplar enzyme with EC 5.1.3.23 activity.
+    evidence:
+    - reference: EC:5.1.3.23
+      snippet: DR   G3XD61, WBPI_PSEAE ;
+      notes: ExPASy ENZYME entry EC 5.1.3.23 cross-references UniProtKB:G3XD61 (WBPI_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

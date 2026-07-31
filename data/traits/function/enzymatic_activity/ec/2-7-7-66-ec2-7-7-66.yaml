@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -41,4 +41,172 @@ definitions:
       Catalyses: apo-[malonate decarboxylase ACP] + 2'-(5''-triphospho-alpha-D-ribosyl)- 3'-dephospho-CoA = holo-[malonate decarboxylase ACP] + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of malonate decarboxylase holo-[acyl-carrier protein] synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.66. EC 2.7.7.66 maps to exactly
+    one curated Rhea reaction (RHEA:42644), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "apo-[malonate
+    decarboxylase ACP] + 2''-(5''''-triphospho-alpha-D-ribosyl)- 3''-dephospho-CoA = holo-[malonate decarboxylase
+    ACP] + diphosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: malonate decarboxylase holo-[acyl-carrier protein] synthase
+    grounding: EC:2.7.7.66
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: apo-[malonate decarboxylase ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10160
+    description: Rhea compound GENERIC:10160.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10160 (apo-[malonate
+      decarboxylase ACP]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: sub2
+    label: 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:61378
+    description: Formula C26H40N7O26P5S.
+  - node_id: prd1
+    label: holo-[malonate decarboxylase ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10161
+    description: Rhea compound GENERIC:10161.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-[2'-(5-phosphoribosyl)-3'-dephospho-CoA]-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10161 (holo-[malonate
+      decarboxylase ACP]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82683
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_C1DNP9
+    node_type: PROTEIN
+    label: MDCG_AZOVD
+    grounding: UniProtKB:C1DNP9
+  - node_id: prot_Q89XP2
+    node_type: PROTEIN
+    label: MDCG_BRADU
+    grounding: UniProtKB:Q89XP2
+  - node_id: prot_A6T8R9
+    node_type: PROTEIN
+    label: MDCG_KLEP7
+    grounding: UniProtKB:A6T8R9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: apo-[malonate decarboxylase ACP] is a substrate consumed by RHEA:42644 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42645
+      snippet: apo-[malonate decarboxylase ACP] + 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA
+        => holo-[malonate decarboxylase ACP] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:42645 declares side 42644_L as its substrates
+        (rh:substrates); the master reaction RHEA:42644 is undirected. This participant is GENERIC:10160
+        with coefficient 1. Rhea cites PMID:11052675, PMID:11052676 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of apo-[malonate decarboxylase ACP].
+    evidence:
+    - reference: RHEA:42644
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:10160 (apo-[malonate decarboxylase ACP]) declares rh:reactivePart =
+        L-serine residue (CHEBI:29999).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA is a substrate consumed by RHEA:42644
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42645
+      snippet: apo-[malonate decarboxylase ACP] + 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA
+        => holo-[malonate decarboxylase ACP] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:42645 declares side 42644_L as its substrates
+        (rh:substrates); the master reaction RHEA:42644 is undirected. This participant is CHEBI:61378
+        with coefficient 1. Rhea cites PMID:11052675, PMID:11052676 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: holo-[malonate decarboxylase ACP] is a product released by RHEA:42644 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42645
+      snippet: apo-[malonate decarboxylase ACP] + 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA
+        => holo-[malonate decarboxylase ACP] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:42645 declares side 42644_R as its products
+        (rh:products); the master reaction RHEA:42644 is undirected. This participant is GENERIC:10161
+        with coefficient 1. Rhea cites PMID:11052675, PMID:11052676 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[2'-(5-phosphoribosyl)-3'-dephospho-CoA]-L-serine residue is the reactive part of holo-[malonate
+      decarboxylase ACP].
+    evidence:
+    - reference: RHEA:42644
+      snippet: O-[2'-(5-phosphoribosyl)-3'-dephospho-CoA]-L-serine residue
+      notes: Rhea compound GENERIC:10161 (holo-[malonate decarboxylase ACP]) declares rh:reactivePart
+        = O-[2'-(5-phosphoribosyl)-3'-dephospho-CoA]-L-serine residue (CHEBI:82683).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:42644 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42645
+      snippet: apo-[malonate decarboxylase ACP] + 2'-(5''-triphospho-alpha-D-ribosyl)-3'-dephospho-CoA
+        => holo-[malonate decarboxylase ACP] + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:42645 declares side 42644_R as its products
+        (rh:products); the master reaction RHEA:42644 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:11052675, PMID:11052676 for this reaction.
+  - subject: prot_C1DNP9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MDCG_AZOVD is an exemplar enzyme with EC 2.7.7.66 activity.
+    evidence:
+    - reference: EC:2.7.7.66
+      snippet: DR   C1DNP9, MDCG_AZOVD ;  Q89XP2, MDCG_BRADU ;  A6T8R9, MDCG_KLEP7 ;
+      notes: ExPASy ENZYME entry EC 2.7.7.66 cross-references UniProtKB:C1DNP9 (MDCG_AZOVD) as a protein
+        with this activity.
+  - subject: prot_Q89XP2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MDCG_BRADU is an exemplar enzyme with EC 2.7.7.66 activity.
+    evidence:
+    - reference: EC:2.7.7.66
+      snippet: DR   C1DNP9, MDCG_AZOVD ;  Q89XP2, MDCG_BRADU ;  A6T8R9, MDCG_KLEP7 ;
+      notes: ExPASy ENZYME entry EC 2.7.7.66 cross-references UniProtKB:Q89XP2 (MDCG_BRADU) as a protein
+        with this activity.
+  - subject: prot_A6T8R9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MDCG_KLEP7 is an exemplar enzyme with EC 2.7.7.66 activity.
+    evidence:
+    - reference: EC:2.7.7.66
+      snippet: DR   C1DNP9, MDCG_AZOVD ;  Q89XP2, MDCG_BRADU ;  A6T8R9, MDCG_KLEP7 ;
+      notes: ExPASy ENZYME entry EC 2.7.7.66 cross-references UniProtKB:A6T8R9 (MDCG_KLEP7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

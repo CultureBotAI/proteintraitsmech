@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.2.-
 mapped_xrefs:
@@ -36,4 +36,179 @@ definitions:
       Catalyses: [amino-group carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L- glutamine + ATP = [amino-group carrier protein]-C-terminal-N-(1-carboxy- 5-phosphooxy-5-oxopentan-1-yl)-L-glutamine + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [amino-group carrier protein]-L-2-aminoadipate 6-kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.2.17. EC 2.7.2.17 maps to exactly
+    one curated Rhea reaction (RHEA:41944), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[amino-group
+    carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L- glutamine + ATP = [amino-group carrier
+    protein]-C-terminal-N-(1-carboxy- 5-phosphooxy-5-oxopentan-1-yl)-L-glutamine + ADP". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[amino-group carrier protein]-L-2-aminoadipate 6-kinase'
+    grounding: EC:2.7.2.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[amino-group carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L-glutamine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9694
+    description: Rhea compound GENERIC:9694.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: C-terminal-gamma-L-glutamyl-L-2-aminoadipate group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9694 ([amino-group
+      carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L-glutamine); no position on any specific
+      protein sequence is asserted.
+    grounding: CHEBI:78503
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: '[amino-group carrier protein]-C-terminal-N-(1-carboxy-5-phosphooxy-5-oxopentan-1-yl)-L-gl…'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9712
+    description: 'Rhea compound GENERIC:9712. Full Rhea name: [amino-group carrier protein]-C-terminal-N-(1-carboxy-5-phosphooxy-5-oxopentan-1-yl)-L-glutamine'
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: C-terminal-gamma-L-glutamyl-L-2-aminoadipate 6-phosphate group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9712 ([amino-group
+      carrier protein]-C-terminal-N-(1-carboxy-5-phosphooxy-5-oxopentan-1-yl)-L-glutamine); no position
+      on any specific protein sequence is asserted.
+    grounding: CHEBI:78499
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prot_Q9YBY9
+    node_type: PROTEIN
+    label: LYSZ_AERPE
+    grounding: UniProtKB:Q9YBY9
+  - node_id: prot_A8M8Q8
+    node_type: PROTEIN
+    label: LYSZ_CALMQ
+    grounding: UniProtKB:A8M8Q8
+  - node_id: prot_A0RWW1
+    node_type: PROTEIN
+    label: LYSZ_CENSY
+    grounding: UniProtKB:A0RWW1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[amino-group carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L-glutamine is
+      a substrate consumed by RHEA:41944 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:41945
+      snippet: '[amino-group carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L-glutamine + ATP
+        => [amino-group carrier protein]-C-terminal-N-(1-carboxy-5-phosphooxy-5-oxopentan-1-yl)-L-glutamine
+        + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:41945 declares side 41944_L as its substrates
+        (rh:substrates); the master reaction RHEA:41944 is undirected. This participant is GENERIC:9694
+        with coefficient 1. Rhea cites PMID:10613839, PMID:23434852, PMID:19620981 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: C-terminal-gamma-L-glutamyl-L-2-aminoadipate group is the reactive part of [amino-group
+      carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L-glutamine.
+    evidence:
+    - reference: RHEA:41944
+      snippet: C-terminal-gamma-L-glutamyl-L-2-aminoadipate group
+      notes: Rhea compound GENERIC:9694 ([amino-group carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L-glutamine)
+        declares rh:reactivePart = C-terminal-gamma-L-glutamyl-L-2-aminoadipate group (CHEBI:78503).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:41944 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41945
+      snippet: '[amino-group carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L-glutamine + ATP
+        => [amino-group carrier protein]-C-terminal-N-(1-carboxy-5-phosphooxy-5-oxopentan-1-yl)-L-glutamine
+        + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:41945 declares side 41944_L as its substrates
+        (rh:substrates); the master reaction RHEA:41944 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:10613839, PMID:23434852, PMID:19620981 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[amino-group carrier protein]-C-terminal-N-(1-carboxy-5-phosphooxy-5-oxopentan-1-yl)-L-glutamine
+      is a product released by RHEA:41944 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:41945
+      snippet: '[amino-group carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L-glutamine + ATP
+        => [amino-group carrier protein]-C-terminal-N-(1-carboxy-5-phosphooxy-5-oxopentan-1-yl)-L-glutamine
+        + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:41945 declares side 41944_R as its products
+        (rh:products); the master reaction RHEA:41944 is undirected. This participant is GENERIC:9712
+        with coefficient 1. Rhea cites PMID:10613839, PMID:23434852, PMID:19620981 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: C-terminal-gamma-L-glutamyl-L-2-aminoadipate 6-phosphate group is the reactive part of
+      [amino-group carrier protein]-C-terminal-N-(1-carboxy-5-phosphooxy-5-oxopentan-1-yl)-L-glutamine.
+    evidence:
+    - reference: RHEA:41944
+      snippet: C-terminal-gamma-L-glutamyl-L-2-aminoadipate 6-phosphate group
+      notes: Rhea compound GENERIC:9712 ([amino-group carrier protein]-C-terminal-N-(1-carboxy-5-phosphooxy-5-oxopentan-1-yl)-L-glutamine)
+        declares rh:reactivePart = C-terminal-gamma-L-glutamyl-L-2-aminoadipate 6-phosphate group (CHEBI:78499).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:41944 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:41945
+      snippet: '[amino-group carrier protein]-C-terminal-N-(1,4-dicarboxybutan-1-yl)-L-glutamine + ATP
+        => [amino-group carrier protein]-C-terminal-N-(1-carboxy-5-phosphooxy-5-oxopentan-1-yl)-L-glutamine
+        + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:41945 declares side 41944_R as its products
+        (rh:products); the master reaction RHEA:41944 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:10613839, PMID:23434852, PMID:19620981 for this reaction.
+  - subject: prot_Q9YBY9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSZ_AERPE is an exemplar enzyme with EC 2.7.2.17 activity.
+    evidence:
+    - reference: EC:2.7.2.17
+      snippet: DR   Q9YBY9, LYSZ_AERPE ;  A8M8Q8, LYSZ_CALMQ ;  A0RWW1, LYSZ_CENSY ;
+      notes: ExPASy ENZYME entry EC 2.7.2.17 cross-references UniProtKB:Q9YBY9 (LYSZ_AERPE) as a protein
+        with this activity.
+  - subject: prot_A8M8Q8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSZ_CALMQ is an exemplar enzyme with EC 2.7.2.17 activity.
+    evidence:
+    - reference: EC:2.7.2.17
+      snippet: DR   Q9YBY9, LYSZ_AERPE ;  A8M8Q8, LYSZ_CALMQ ;  A0RWW1, LYSZ_CENSY ;
+      notes: ExPASy ENZYME entry EC 2.7.2.17 cross-references UniProtKB:A8M8Q8 (LYSZ_CALMQ) as a protein
+        with this activity.
+  - subject: prot_A0RWW1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSZ_CENSY is an exemplar enzyme with EC 2.7.2.17 activity.
+    evidence:
+    - reference: EC:2.7.2.17
+      snippet: DR   Q9YBY9, LYSZ_AERPE ;  A8M8Q8, LYSZ_CALMQ ;  A0RWW1, LYSZ_CENSY ;
+      notes: ExPASy ENZYME entry EC 2.7.2.17 cross-references UniProtKB:A0RWW1 (LYSZ_CENSY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

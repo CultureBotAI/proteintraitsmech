@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.14.14.-
 mapped_xrefs:
@@ -36,4 +36,222 @@ definitions:
       Catalyses: fumitremorgin C + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 = 12alpha,13alpha-dihydroxyfumitremorgin C + 2 oxidized [NADPH--hemoprotein reductase] + 2 H2O + 2 H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fumitremorgin C monooxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.14.14.119. EC 1.14.14.119 maps
+    to exactly one curated Rhea reaction (RHEA:35967), so that reaction''s substrates and products are
+    the class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "fumitremorgin
+    C + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 = 12alpha,13alpha-dihydroxyfumitremorgin C + 2
+    oxidized [NADPH--hemoprotein reductase] + 2 H2O + 2 H(+)". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fumitremorgin C monooxygenase
+    grounding: EC:1.14.14.119
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: fumitremorgin C
+    node_type: CHEMICAL
+    grounding: CHEBI:72763
+    description: Formula C22H25N3O3.
+  - node_id: sub2
+    label: reduced [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11964
+    description: Rhea compound GENERIC:11964.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: FMNH2
+    description: The reacting group Rhea names inside the generic participant GENERIC:11964 (reduced [NADPH--hemoprotein
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:57618
+  - node_id: sub3
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 12alpha,13alpha-dihydroxyfumitremorgin C
+    node_type: CHEMICAL
+    grounding: CHEBI:72764
+    description: Formula C22H25N3O5.
+  - node_id: prd2
+    label: oxidized [NADPH--hemoprotein reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11965
+    description: Rhea compound GENERIC:11965.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: FMN
+    description: The reacting group Rhea names inside the generic participant GENERIC:11965 (oxidized
+      [NADPH--hemoprotein reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:58210
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A1DA65
+    node_type: PROTEIN
+    label: FTMG_ASPF1
+    grounding: UniProtKB:A1DA65
+  - node_id: prot_B9WZX6
+    node_type: PROTEIN
+    label: FTMG_ASPFM
+    grounding: UniProtKB:B9WZX6
+  - node_id: prot_Q4WAX0
+    node_type: PROTEIN
+    label: FTMG_ASPFU
+    grounding: UniProtKB:Q4WAX0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: fumitremorgin C is a substrate consumed by RHEA:35967 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35968
+      snippet: fumitremorgin C + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => 12alpha,13alpha-dihydroxyfumitremorgin
+        C + 2 oxidized [NADPH--hemoprotein reductase] + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35968 declares side 35967_L as its substrates
+        (rh:substrates); the master reaction RHEA:35967 is undirected. This participant is CHEBI:72763
+        with coefficient 1. Rhea cites PMID:19226505 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: reduced [NADPH--hemoprotein reductase] is a substrate consumed by RHEA:35967 (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:35968
+      snippet: fumitremorgin C + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => 12alpha,13alpha-dihydroxyfumitremorgin
+        C + 2 oxidized [NADPH--hemoprotein reductase] + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35968 declares side 35967_L as its substrates
+        (rh:substrates); the master reaction RHEA:35967 is undirected. This participant is GENERIC:11964
+        with coefficient 2. Rhea cites PMID:19226505 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: FMNH2 is the reactive part of reduced [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:35967
+      snippet: FMNH2
+      notes: Rhea compound GENERIC:11964 (reduced [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMNH2 (CHEBI:57618).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: O2 is a substrate consumed by RHEA:35967 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:35968
+      snippet: fumitremorgin C + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => 12alpha,13alpha-dihydroxyfumitremorgin
+        C + 2 oxidized [NADPH--hemoprotein reductase] + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35968 declares side 35967_L as its substrates
+        (rh:substrates); the master reaction RHEA:35967 is undirected. This participant is CHEBI:15379
+        with coefficient 2. Rhea cites PMID:19226505 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 12alpha,13alpha-dihydroxyfumitremorgin C is a product released by RHEA:35967 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:35968
+      snippet: fumitremorgin C + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => 12alpha,13alpha-dihydroxyfumitremorgin
+        C + 2 oxidized [NADPH--hemoprotein reductase] + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35968 declares side 35967_R as its products
+        (rh:products); the master reaction RHEA:35967 is undirected. This participant is CHEBI:72764 with
+        coefficient 1. Rhea cites PMID:19226505 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: oxidized [NADPH--hemoprotein reductase] is a product released by RHEA:35967 (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:35968
+      snippet: fumitremorgin C + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => 12alpha,13alpha-dihydroxyfumitremorgin
+        C + 2 oxidized [NADPH--hemoprotein reductase] + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35968 declares side 35967_R as its products
+        (rh:products); the master reaction RHEA:35967 is undirected. This participant is GENERIC:11965
+        with coefficient 2. Rhea cites PMID:19226505 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: FMN is the reactive part of oxidized [NADPH--hemoprotein reductase].
+    evidence:
+    - reference: RHEA:35967
+      snippet: FMN
+      notes: Rhea compound GENERIC:11965 (oxidized [NADPH--hemoprotein reductase]) declares rh:reactivePart
+        = FMN (CHEBI:58210).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by RHEA:35967 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:35968
+      snippet: fumitremorgin C + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => 12alpha,13alpha-dihydroxyfumitremorgin
+        C + 2 oxidized [NADPH--hemoprotein reductase] + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35968 declares side 35967_R as its products
+        (rh:products); the master reaction RHEA:35967 is undirected. This participant is CHEBI:15377 with
+        coefficient 2. Rhea cites PMID:19226505 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:35967 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:35968
+      snippet: fumitremorgin C + 2 reduced [NADPH--hemoprotein reductase] + 2 O2 => 12alpha,13alpha-dihydroxyfumitremorgin
+        C + 2 oxidized [NADPH--hemoprotein reductase] + 2 H2O + 2 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:35968 declares side 35967_R as its products
+        (rh:products); the master reaction RHEA:35967 is undirected. This participant is CHEBI:15378 with
+        coefficient 2. Rhea cites PMID:19226505 for this reaction.
+  - subject: prot_A1DA65
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FTMG_ASPF1 is an exemplar enzyme with EC 1.14.14.119 activity.
+    evidence:
+    - reference: EC:1.14.14.119
+      snippet: DR   A1DA65, FTMG_ASPF1 ;  B9WZX6, FTMG_ASPFM ;  Q4WAX0, FTMG_ASPFU ;
+      notes: ExPASy ENZYME entry EC 1.14.14.119 cross-references UniProtKB:A1DA65 (FTMG_ASPF1) as a protein
+        with this activity.
+  - subject: prot_B9WZX6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FTMG_ASPFM is an exemplar enzyme with EC 1.14.14.119 activity.
+    evidence:
+    - reference: EC:1.14.14.119
+      snippet: DR   A1DA65, FTMG_ASPF1 ;  B9WZX6, FTMG_ASPFM ;  Q4WAX0, FTMG_ASPFU ;
+      notes: ExPASy ENZYME entry EC 1.14.14.119 cross-references UniProtKB:B9WZX6 (FTMG_ASPFM) as a protein
+        with this activity.
+  - subject: prot_Q4WAX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FTMG_ASPFU is an exemplar enzyme with EC 1.14.14.119 activity.
+    evidence:
+    - reference: EC:1.14.14.119
+      snippet: DR   A1DA65, FTMG_ASPF1 ;  B9WZX6, FTMG_ASPFM ;  Q4WAX0, FTMG_ASPFU ;
+      notes: ExPASy ENZYME entry EC 1.14.14.119 cross-references UniProtKB:Q4WAX0 (FTMG_ASPFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

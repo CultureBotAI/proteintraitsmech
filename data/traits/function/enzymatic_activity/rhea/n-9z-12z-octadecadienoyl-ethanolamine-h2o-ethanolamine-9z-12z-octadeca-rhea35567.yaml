@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:64032
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,92 @@ definitions:
       Catalyses the reaction: N-(9Z,12Z-octadecadienoyl)-ethanolamine + H2O = ethanolamine + (9Z,12Z)-octadecadienoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-(9Z,12Z-octadecadienoyl)-ethanolamine + H2O = ethanolamine + (9Z,12Z)-octadecadienoate
+  description: Substrate-to-product chemistry of RHEA:35567, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:35568 (rh:substrates → 35567_L, rh:products → 35567_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-(9Z,12Z-octadecadienoyl)-ethanolamine + H2O = ethanolamine + (9Z,12Z)-octa…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:35567
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-(9Z,12Z-octadecadienoyl)-ethanolamine + H2O = ethanolamine + (9Z,12Z)-octadecadienoate'
+  - node_id: sub1
+    label: N-(9Z,12Z-octadecadienoyl)-ethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:64032
+    description: Formula C20H37NO2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: ethanolamine
+    node_type: CHEMICAL
+    grounding: CHEBI:57603
+    description: Formula C2H8NO.
+  - node_id: prd2
+    label: (9Z,12Z)-octadecadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30245
+    description: Formula C18H31O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-(9Z,12Z-octadecadienoyl)-ethanolamine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:35568
+      snippet: N-(9Z,12Z-octadecadienoyl)-ethanolamine + H2O => ethanolamine + (9Z,12Z)-octadecadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:35568 declares side 35567_L as its substrates
+        (rh:substrates); the master reaction RHEA:35567 is undirected. This participant is CHEBI:64032
+        with coefficient 1. Rhea cites PMID:12824167, PMID:21562563 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35568
+      snippet: N-(9Z,12Z-octadecadienoyl)-ethanolamine + H2O => ethanolamine + (9Z,12Z)-octadecadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:35568 declares side 35567_L as its substrates
+        (rh:substrates); the master reaction RHEA:35567 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12824167, PMID:21562563 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ethanolamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35568
+      snippet: N-(9Z,12Z-octadecadienoyl)-ethanolamine + H2O => ethanolamine + (9Z,12Z)-octadecadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:35568 declares side 35567_R as its products
+        (rh:products); the master reaction RHEA:35567 is undirected. This participant is CHEBI:57603 with
+        coefficient 1. Rhea cites PMID:12824167, PMID:21562563 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (9Z,12Z)-octadecadienoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:35568
+      snippet: N-(9Z,12Z-octadecadienoyl)-ethanolamine + H2O => ethanolamine + (9Z,12Z)-octadecadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:35568 declares side 35567_R as its products
+        (rh:products); the master reaction RHEA:35567 is undirected. This participant is CHEBI:30245 with
+        coefficient 1. Rhea cites PMID:12824167, PMID:21562563 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

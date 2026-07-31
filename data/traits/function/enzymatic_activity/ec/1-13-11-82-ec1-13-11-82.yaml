@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 mapped_xrefs:
@@ -28,4 +28,107 @@ definitions:
       Catalyses: all-trans-8'-apo-beta-carotenal + O2 = 2,6-dimethyldeca-2,4,6,8- tetraenedial + 13-apo-beta-carotenone
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 8'-apo-carotenoid 13,14-cleaving dioxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.82. EC 1.13.11.82 maps to
+    exactly one curated Rhea reaction (RHEA:36043), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "all-trans-8''-apo-beta-carotenal
+    + O2 = 2,6-dimethyldeca-2,4,6,8- tetraenedial + 13-apo-beta-carotenone". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 8'-apo-carotenoid 13,14-cleaving dioxygenase
+    grounding: EC:1.13.11.82
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: all-trans-8'-apo-beta-carotenal
+    node_type: CHEMICAL
+    grounding: CHEBI:53154
+    description: Formula C30H40O.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 2,6-dimethyldeca-2,4,6,8-tetraenedial
+    node_type: CHEMICAL
+    grounding: CHEBI:73152
+    description: Formula C12H14O2.
+  - node_id: prd2
+    label: 13-apo-beta-carotenone
+    node_type: CHEMICAL
+    grounding: CHEBI:53175
+    description: Formula C18H26O.
+  - node_id: prot_A4XES9
+    node_type: PROTEIN
+    label: CARDI_NOVAD
+    grounding: UniProtKB:A4XES9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: all-trans-8'-apo-beta-carotenal is a substrate consumed by RHEA:36043 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36044
+      snippet: all-trans-8'-apo-beta-carotenal + O2 => 2,6-dimethyldeca-2,4,6,8-tetraenedial + 13-apo-beta-carotenone
+      notes: Rhea's left-to-right directional reaction RHEA:36044 declares side 36043_L as its substrates
+        (rh:substrates); the master reaction RHEA:36043 is undirected. This participant is CHEBI:53154
+        with coefficient 1. Rhea cites PMID:22711425 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:36043 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36044
+      snippet: all-trans-8'-apo-beta-carotenal + O2 => 2,6-dimethyldeca-2,4,6,8-tetraenedial + 13-apo-beta-carotenone
+      notes: Rhea's left-to-right directional reaction RHEA:36044 declares side 36043_L as its substrates
+        (rh:substrates); the master reaction RHEA:36043 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:22711425 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2,6-dimethyldeca-2,4,6,8-tetraenedial is a product released by RHEA:36043 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:36044
+      snippet: all-trans-8'-apo-beta-carotenal + O2 => 2,6-dimethyldeca-2,4,6,8-tetraenedial + 13-apo-beta-carotenone
+      notes: Rhea's left-to-right directional reaction RHEA:36044 declares side 36043_R as its products
+        (rh:products); the master reaction RHEA:36043 is undirected. This participant is CHEBI:73152 with
+        coefficient 1. Rhea cites PMID:22711425 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 13-apo-beta-carotenone is a product released by RHEA:36043 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36044
+      snippet: all-trans-8'-apo-beta-carotenal + O2 => 2,6-dimethyldeca-2,4,6,8-tetraenedial + 13-apo-beta-carotenone
+      notes: Rhea's left-to-right directional reaction RHEA:36044 declares side 36043_R as its products
+        (rh:products); the master reaction RHEA:36043 is undirected. This participant is CHEBI:53175 with
+        coefficient 1. Rhea cites PMID:22711425 for this reaction.
+  - subject: prot_A4XES9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CARDI_NOVAD is an exemplar enzyme with EC 1.13.11.82 activity.
+    evidence:
+    - reference: EC:1.13.11.82
+      snippet: DR   A4XES9, CARDI_NOVAD;
+      notes: ExPASy ENZYME entry EC 1.13.11.82 cross-references UniProtKB:A4XES9 (CARDI_NOVAD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

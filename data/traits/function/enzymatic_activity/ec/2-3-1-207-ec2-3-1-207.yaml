@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -30,4 +30,183 @@ definitions:
       Catalyses: octanoyl-CoA + malonyl-[ACP] + H(+) = 3-oxodecanoyl-[ACP] + CO2 + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-ketodecanoyl-[acyl-carrier-protein] synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.207. EC 2.3.1.207 maps to
+    exactly one curated Rhea reaction (RHEA:42264), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "octanoyl-CoA
+    + malonyl-[ACP] + H(+) = 3-oxodecanoyl-[ACP] + CO2 + CoA". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-ketodecanoyl-[acyl-carrier-protein] synthase
+    grounding: EC:2.3.1.207
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: octanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57386
+    description: Formula C29H46N7O17P3S.
+  - node_id: sub2
+    label: malonyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9623
+    description: Rhea compound GENERIC:9623.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9623 (malonyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78449
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 3-oxodecanoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9637
+    description: Rhea compound GENERIC:9637.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-(S-3-oxodecanoylpantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9637 (3-oxodecanoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78464
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  - node_id: prd3
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: beta-ketodecanoyl-[acyl-carrier-protein] synthase activity
+    grounding: GO:0061990
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9HYV7
+    node_type: PROTEIN
+    label: BEKAS_PSEAE
+    grounding: UniProtKB:Q9HYV7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: octanoyl-CoA is a substrate consumed by RHEA:42264 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42265
+      snippet: octanoyl-CoA + malonyl-[ACP] + H(+) => 3-oxodecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:42265 declares side 42264_L as its substrates
+        (rh:substrates); the master reaction RHEA:42264 is undirected. This participant is CHEBI:57386
+        with coefficient 1. Rhea cites PMID:10629181, PMID:10840036, PMID:11278743 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: malonyl-[ACP] is a substrate consumed by RHEA:42264 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42265
+      snippet: octanoyl-CoA + malonyl-[ACP] + H(+) => 3-oxodecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:42265 declares side 42264_L as its substrates
+        (rh:substrates); the master reaction RHEA:42264 is undirected. This participant is GENERIC:9623
+        with coefficient 1. Rhea cites PMID:10629181, PMID:10840036, PMID:11278743 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of malonyl-[ACP].
+    evidence:
+    - reference: RHEA:42264
+      snippet: O-(S-malonylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9623 (malonyl-[ACP]) declares rh:reactivePart = O-(S-malonylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78449).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:42264 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42265
+      snippet: octanoyl-CoA + malonyl-[ACP] + H(+) => 3-oxodecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:42265 declares side 42264_L as its substrates
+        (rh:substrates); the master reaction RHEA:42264 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:10629181, PMID:10840036, PMID:11278743 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-oxodecanoyl-[ACP] is a product released by RHEA:42264 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42265
+      snippet: octanoyl-CoA + malonyl-[ACP] + H(+) => 3-oxodecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:42265 declares side 42264_R as its products
+        (rh:products); the master reaction RHEA:42264 is undirected. This participant is GENERIC:9637
+        with coefficient 1. Rhea cites PMID:10629181, PMID:10840036, PMID:11278743 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-3-oxodecanoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of
+      3-oxodecanoyl-[ACP].
+    evidence:
+    - reference: RHEA:42264
+      snippet: O-(S-3-oxodecanoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9637 (3-oxodecanoyl-[ACP]) declares rh:reactivePart = O-(S-3-oxodecanoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78464).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by RHEA:42264 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42265
+      snippet: octanoyl-CoA + malonyl-[ACP] + H(+) => 3-oxodecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:42265 declares side 42264_R as its products
+        (rh:products); the master reaction RHEA:42264 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:10629181, PMID:10840036, PMID:11278743 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: CoA is a product released by RHEA:42264 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42265
+      snippet: octanoyl-CoA + malonyl-[ACP] + H(+) => 3-oxodecanoyl-[ACP] + CO2 + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:42265 declares side 42264_R as its products
+        (rh:products); the master reaction RHEA:42264 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:10629181, PMID:10840036, PMID:11278743 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.207
+      snippet: EC:2.3.1.207 > GO:beta-ketodecanoyl-[acyl-carrier-protein] synthase activity ; GO:0061990
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0061990 is itself a record
+        in this KB.
+  - subject: prot_Q9HYV7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BEKAS_PSEAE is an exemplar enzyme with EC 2.3.1.207 activity.
+    evidence:
+    - reference: EC:2.3.1.207
+      snippet: DR   Q9HYV7, BEKAS_PSEAE;
+      notes: ExPASy ENZYME entry EC 2.3.1.207 cross-references UniProtKB:Q9HYV7 (BEKAS_PSEAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

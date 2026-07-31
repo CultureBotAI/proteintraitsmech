@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.20.4.-
 mapped_xrefs:
@@ -32,4 +32,173 @@ definitions:
       Catalyses: [mycoredoxin]-L-cysteine + arseno-mycothiol + H(+) = [mycoredoxin]-S- mycothiol-L-cysteine + arsenite
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mycoredoxin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.20.4.3. EC 1.20.4.3 maps to exactly
+    one curated Rhea reaction (RHEA:54036), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[mycoredoxin]-L-cysteine
+    + arseno-mycothiol + H(+) = [mycoredoxin]-S- mycothiol-L-cysteine + arsenite". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mycoredoxin
+    grounding: EC:1.20.4.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[mycoredoxin]-L-cysteine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13766
+    description: Rhea compound GENERIC:13766.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13766 ([mycoredoxin]-L-cysteine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: arseno-mycothiol
+    node_type: CHEMICAL
+    grounding: CHEBI:59655
+    description: Formula C17H29AsN2O15S.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: '[mycoredoxin]-S-mycothiol-L-cysteine'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13767
+    description: Rhea compound GENERIC:13767.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: S-mycothiol-L-cysteine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13767 ([mycoredoxin]-S-mycothiol-L-cysteine);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138035
+  - node_id: prd2
+    label: arsenite
+    node_type: CHEMICAL
+    grounding: CHEBI:29242
+    description: Formula AsH2O3.
+  - node_id: prot_P0DKT0
+    node_type: PROTEIN
+    label: MRX1_CORGK
+    grounding: UniProtKB:P0DKT0
+  - node_id: prot_P0DKS9
+    node_type: PROTEIN
+    label: MRX1_CORGL
+    grounding: UniProtKB:P0DKS9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[mycoredoxin]-L-cysteine is a substrate consumed by RHEA:54036 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:54037
+      snippet: '[mycoredoxin]-L-cysteine + arseno-mycothiol + H(+) => [mycoredoxin]-S-mycothiol-L-cysteine
+        + arsenite'
+      notes: Rhea's left-to-right directional reaction RHEA:54037 declares side 54036_L as its substrates
+        (rh:substrates); the master reaction RHEA:54036 is undirected. This participant is GENERIC:13766
+        with coefficient 1. Rhea cites PMID:19286650 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [mycoredoxin]-L-cysteine.
+    evidence:
+    - reference: RHEA:54036
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:13766 ([mycoredoxin]-L-cysteine) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: arseno-mycothiol is a substrate consumed by RHEA:54036 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54037
+      snippet: '[mycoredoxin]-L-cysteine + arseno-mycothiol + H(+) => [mycoredoxin]-S-mycothiol-L-cysteine
+        + arsenite'
+      notes: Rhea's left-to-right directional reaction RHEA:54037 declares side 54036_L as its substrates
+        (rh:substrates); the master reaction RHEA:54036 is undirected. This participant is CHEBI:59655
+        with coefficient 1. Rhea cites PMID:19286650 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:54036 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54037
+      snippet: '[mycoredoxin]-L-cysteine + arseno-mycothiol + H(+) => [mycoredoxin]-S-mycothiol-L-cysteine
+        + arsenite'
+      notes: Rhea's left-to-right directional reaction RHEA:54037 declares side 54036_L as its substrates
+        (rh:substrates); the master reaction RHEA:54036 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:19286650 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[mycoredoxin]-S-mycothiol-L-cysteine is a product released by RHEA:54036 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:54037
+      snippet: '[mycoredoxin]-L-cysteine + arseno-mycothiol + H(+) => [mycoredoxin]-S-mycothiol-L-cysteine
+        + arsenite'
+      notes: Rhea's left-to-right directional reaction RHEA:54037 declares side 54036_R as its products
+        (rh:products); the master reaction RHEA:54036 is undirected. This participant is GENERIC:13767
+        with coefficient 1. Rhea cites PMID:19286650 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-mycothiol-L-cysteine residue is the reactive part of [mycoredoxin]-S-mycothiol-L-cysteine.
+    evidence:
+    - reference: RHEA:54036
+      snippet: S-mycothiol-L-cysteine residue
+      notes: Rhea compound GENERIC:13767 ([mycoredoxin]-S-mycothiol-L-cysteine) declares rh:reactivePart
+        = S-mycothiol-L-cysteine residue (CHEBI:138035).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: arsenite is a product released by RHEA:54036 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54037
+      snippet: '[mycoredoxin]-L-cysteine + arseno-mycothiol + H(+) => [mycoredoxin]-S-mycothiol-L-cysteine
+        + arsenite'
+      notes: Rhea's left-to-right directional reaction RHEA:54037 declares side 54036_R as its products
+        (rh:products); the master reaction RHEA:54036 is undirected. This participant is CHEBI:29242 with
+        coefficient 1. Rhea cites PMID:19286650 for this reaction.
+  - subject: prot_P0DKT0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MRX1_CORGK is an exemplar enzyme with EC 1.20.4.3 activity.
+    evidence:
+    - reference: EC:1.20.4.3
+      snippet: DR   P0DKT0, MRX1_CORGK ;  P0DKS9, MRX1_CORGL ;
+      notes: ExPASy ENZYME entry EC 1.20.4.3 cross-references UniProtKB:P0DKT0 (MRX1_CORGK) as a protein
+        with this activity.
+  - subject: prot_P0DKS9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MRX1_CORGL is an exemplar enzyme with EC 1.20.4.3 activity.
+    evidence:
+    - reference: EC:1.20.4.3
+      snippet: DR   P0DKT0, MRX1_CORGK ;  P0DKS9, MRX1_CORGL ;
+      notes: ExPASy ENZYME entry EC 1.20.4.3 cross-references UniProtKB:P0DKS9 (MRX1_CORGL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

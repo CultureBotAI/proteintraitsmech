@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.8
     mapping_source: rhea2ec
@@ -28,4 +28,122 @@ definitions:
       Catalyses the reaction: N-formyl-L-aspartate + H2O = L-aspartate + formate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-formyl-L-aspartate + H2O = L-aspartate + formate
+  description: Substrate-to-product chemistry of RHEA:22040, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22041 (rh:substrates → 22040_L, rh:products → 22040_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-formyl-L-aspartate + H2O = L-aspartate + formate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22040
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-formyl-L-aspartate + H2O = L-aspartate + formate'
+  - node_id: sub1
+    label: N-formyl-L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:16923
+    description: Formula C5H5NO5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+    description: Formula C4H6NO4.
+  - node_id: prd2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: formylaspartate deformylase activity
+    grounding: GO:0047902
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: formylaspartate deformylase
+    grounding: EC:3.5.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-formyl-L-aspartate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22041
+      snippet: N-formyl-L-aspartate + H2O => L-aspartate + formate
+      notes: Rhea's left-to-right directional reaction RHEA:22041 declares side 22040_L as its substrates
+        (rh:substrates); the master reaction RHEA:22040 is undirected. This participant is CHEBI:16923
+        with coefficient 1. Rhea cites PMID:13449063 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22041
+      snippet: N-formyl-L-aspartate + H2O => L-aspartate + formate
+      notes: Rhea's left-to-right directional reaction RHEA:22041 declares side 22040_L as its substrates
+        (rh:substrates); the master reaction RHEA:22040 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:13449063 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-aspartate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22041
+      snippet: N-formyl-L-aspartate + H2O => L-aspartate + formate
+      notes: Rhea's left-to-right directional reaction RHEA:22041 declares side 22040_R as its products
+        (rh:products); the master reaction RHEA:22040 is undirected. This participant is CHEBI:29991 with
+        coefficient 1. Rhea cites PMID:13449063 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: formate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22041
+      snippet: N-formyl-L-aspartate + H2O => L-aspartate + formate
+      notes: Rhea's left-to-right directional reaction RHEA:22041 declares side 22040_R as its products
+        (rh:products); the master reaction RHEA:22040 is undirected. This participant is CHEBI:15740 with
+        coefficient 1. Rhea cites PMID:13449063 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:22040
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047902"/>
+      notes: The rdfs:seeAlso triple on RHEA:22040 in rhea.rdf. GO term GO:0047902 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.8; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22040
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.8"/>
+      notes: The rh:ec triple on RHEA:22040 in rhea.rdf. EC 3.5.1.8 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

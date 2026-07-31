@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:17664
     role: SUBSTRATE_OR_PRODUCT
@@ -31,4 +31,125 @@ definitions:
       Catalyses the reaction: an alkylamine + L-glutaminyl-[protein] = N(5)-alkyl-L-glutaminyl-[protein] + NH4(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an alkylamine + L-glutaminyl-[protein] = N(5)-alkyl-L-glutaminyl-[protein]
+    + NH4(+)
+  description: Substrate-to-product chemistry of RHEA:43768, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:43769 (rh:substrates → 43768_L, rh:products → 43768_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an alkylamine + L-glutaminyl-[protein] = N(5)-alkyl-L-glutaminyl-[protein] +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:43768
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an alkylamine + L-glutaminyl-[protein] = N(5)-alkyl-L-glutaminyl-[protein] + NH4(+)'
+  - node_id: sub1
+    label: an alkylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:17664
+    description: Formula H3NR.
+  - node_id: sub2
+    label: L-glutaminyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10207
+    description: Rhea compound GENERIC:10207.
+  - node_id: sub2_rp1
+    label: L-glutamine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10207 (L-glutaminyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:30011
+  - node_id: prd1
+    label: N(5)-alkyl-L-glutaminyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10683
+    description: Rhea compound GENERIC:10683.
+  - node_id: prd1_rp1
+    label: N(5)-alkyl-L-glutamine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10683 (N(5)-alkyl-L-glutaminyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83697
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an alkylamine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43769
+      snippet: an alkylamine + L-glutaminyl-[protein] => N(5)-alkyl-L-glutaminyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43769 declares side 43768_L as its substrates
+        (rh:substrates); the master reaction RHEA:43768 is undirected. This participant is CHEBI:17664
+        with coefficient 1. Rhea cites PMID:4151471, PMID:73346, PMID:5928192, PMID:2430312 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-glutaminyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43769
+      snippet: an alkylamine + L-glutaminyl-[protein] => N(5)-alkyl-L-glutaminyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43769 declares side 43768_L as its substrates
+        (rh:substrates); the master reaction RHEA:43768 is undirected. This participant is GENERIC:10207
+        with coefficient 1. Rhea cites PMID:4151471, PMID:73346, PMID:5928192, PMID:2430312 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-glutamine residue is the reactive part of L-glutaminyl-[protein].
+    evidence:
+    - reference: RHEA:43768
+      snippet: L-glutamine residue
+      notes: Rhea compound GENERIC:10207 (L-glutaminyl-[protein]) declares rh:reactivePart = L-glutamine
+        residue (CHEBI:30011), formula C5H8N2O2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(5)-alkyl-L-glutaminyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:43769
+      snippet: an alkylamine + L-glutaminyl-[protein] => N(5)-alkyl-L-glutaminyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43769 declares side 43768_R as its products
+        (rh:products); the master reaction RHEA:43768 is undirected. This participant is GENERIC:10683
+        with coefficient 1. Rhea cites PMID:4151471, PMID:73346, PMID:5928192, PMID:2430312 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(5)-alkyl-L-glutamine residue is the reactive part of N(5)-alkyl-L-glutaminyl-[protein].
+    evidence:
+    - reference: RHEA:43768
+      snippet: N(5)-alkyl-L-glutamine residue
+      notes: Rhea compound GENERIC:10683 (N(5)-alkyl-L-glutaminyl-[protein]) declares rh:reactivePart
+        = N(5)-alkyl-L-glutamine residue (CHEBI:83697), formula C5H7N2O2R.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43769
+      snippet: an alkylamine + L-glutaminyl-[protein] => N(5)-alkyl-L-glutaminyl-[protein] + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43769 declares side 43768_R as its products
+        (rh:products); the master reaction RHEA:43768 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:4151471, PMID:73346, PMID:5928192, PMID:2430312 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

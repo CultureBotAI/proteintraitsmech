@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:231739
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: sartorypyrone F + acetyl-CoA = sartorypyrone G + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sartorypyrone F + acetyl-CoA = sartorypyrone G + CoA
+  description: Substrate-to-product chemistry of RHEA:80879, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80880 (rh:substrates → 80879_L, rh:products → 80879_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of sartorypyrone F + acetyl-CoA = sartorypyrone G + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80879
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: sartorypyrone F + acetyl-CoA = sartorypyrone G + CoA'
+  - node_id: sub1
+    label: sartorypyrone F
+    node_type: CHEMICAL
+    grounding: CHEBI:231739
+    description: Formula C26H38O4.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: sartorypyrone G
+    node_type: CHEMICAL
+    grounding: CHEBI:231741
+    description: Formula C28H40O5.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sartorypyrone F is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80880
+      snippet: sartorypyrone F + acetyl-CoA => sartorypyrone G + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80880 declares side 80879_L as its substrates
+        (rh:substrates); the master reaction RHEA:80879 is undirected. This participant is CHEBI:231739
+        with coefficient 1. Rhea cites PMID:37860661 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80880
+      snippet: sartorypyrone F + acetyl-CoA => sartorypyrone G + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80880 declares side 80879_L as its substrates
+        (rh:substrates); the master reaction RHEA:80879 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:37860661 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sartorypyrone G is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80880
+      snippet: sartorypyrone F + acetyl-CoA => sartorypyrone G + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80880 declares side 80879_R as its products
+        (rh:products); the master reaction RHEA:80879 is undirected. This participant is CHEBI:231741
+        with coefficient 1. Rhea cites PMID:37860661 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80880
+      snippet: sartorypyrone F + acetyl-CoA => sartorypyrone G + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:80880 declares side 80879_R as its products
+        (rh:products); the master reaction RHEA:80879 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:37860661 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

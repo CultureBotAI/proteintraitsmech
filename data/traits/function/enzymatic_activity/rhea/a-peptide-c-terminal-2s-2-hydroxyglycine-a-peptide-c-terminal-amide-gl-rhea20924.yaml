@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.3.2.5
     mapping_source: rhea2ec
@@ -30,4 +30,202 @@ definitions:
       Catalyses the reaction: a [peptide]-C-terminal (2S)-2-hydroxyglycine = a [peptide]-C-terminal amide + glyoxylate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a [peptide]-C-terminal (2S)-2-hydroxyglycine = a [peptide]-C-terminal amide
+    + glyoxylate
+  description: Substrate-to-product chemistry of RHEA:20924, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:20925 (rh:substrates → 20924_L, rh:products → 20924_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a [peptide]-C-terminal (2S)-2-hydroxyglycine = a [peptide]-C-terminal amide…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:20924
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a [peptide]-C-terminal (2S)-2-hydroxyglycine = a [peptide]-C-terminal amide + glyoxylate'
+  - node_id: sub1
+    label: a [peptide]-C-terminal (2S)-2-hydroxyglycine
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15321
+    description: Rhea compound GENERIC:15321.
+  - node_id: sub1_rp1
+    label: C-terminal Xaa-(2S)-2-hydroxyglycine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:15321 (a [peptide]-C-terminal
+      (2S)-2-hydroxyglycine); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:142768
+  - node_id: prd1
+    label: a [peptide]-C-terminal amide
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13485
+    description: Rhea compound GENERIC:13485.
+  - node_id: prd1_rp1
+    label: C-terminal alpha-amino-acid amide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13485 (a [peptide]-C-terminal
+      amide); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:137001
+  - node_id: prd2
+    label: glyoxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:36655
+    description: Formula C2HO3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: peptidylamidoglycolate lyase activity
+    grounding: GO:0004598
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: peptidylamidoglycolate lyase
+    grounding: EC:4.3.2.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_P08478
+    node_type: PROTEIN
+    label: AMDA_XENLA
+    grounding: UniProtKB:P08478
+  - node_id: prot_P12890
+    node_type: PROTEIN
+    label: AMDB_XENLA
+    grounding: UniProtKB:P12890
+  - node_id: prot_P83388
+    node_type: PROTEIN
+    label: AMDL_CAEEL
+    grounding: UniProtKB:P83388
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a [peptide]-C-terminal (2S)-2-hydroxyglycine is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20925
+      snippet: a [peptide]-C-terminal (2S)-2-hydroxyglycine => a [peptide]-C-terminal amide + glyoxylate
+      notes: Rhea's left-to-right directional reaction RHEA:20925 declares side 20924_L as its substrates
+        (rh:substrates); the master reaction RHEA:20924 is undirected. This participant is GENERIC:15321
+        with coefficient 1. Rhea cites PMID:15198673, PMID:2207061, PMID:9405058 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: C-terminal Xaa-(2S)-2-hydroxyglycine residue is the reactive part of a [peptide]-C-terminal
+      (2S)-2-hydroxyglycine.
+    evidence:
+    - reference: RHEA:20924
+      snippet: C-terminal Xaa-(2S)-2-hydroxyglycine residue
+      notes: Rhea compound GENERIC:15321 (a [peptide]-C-terminal (2S)-2-hydroxyglycine) declares rh:reactivePart
+        = C-terminal Xaa-(2S)-2-hydroxyglycine residue (CHEBI:142768), formula C4H5N2O4R.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a [peptide]-C-terminal amide is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20925
+      snippet: a [peptide]-C-terminal (2S)-2-hydroxyglycine => a [peptide]-C-terminal amide + glyoxylate
+      notes: Rhea's left-to-right directional reaction RHEA:20925 declares side 20924_R as its products
+        (rh:products); the master reaction RHEA:20924 is undirected. This participant is GENERIC:13485
+        with coefficient 1. Rhea cites PMID:15198673, PMID:2207061, PMID:9405058 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: C-terminal alpha-amino-acid amide residue is the reactive part of a [peptide]-C-terminal
+      amide.
+    evidence:
+    - reference: RHEA:20924
+      snippet: C-terminal alpha-amino-acid amide residue
+      notes: Rhea compound GENERIC:13485 (a [peptide]-C-terminal amide) declares rh:reactivePart = C-terminal
+        alpha-amino-acid amide residue (CHEBI:137001), formula C2H4N2OR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glyoxylate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20925
+      snippet: a [peptide]-C-terminal (2S)-2-hydroxyglycine => a [peptide]-C-terminal amide + glyoxylate
+      notes: Rhea's left-to-right directional reaction RHEA:20925 declares side 20924_R as its products
+        (rh:products); the master reaction RHEA:20924 is undirected. This participant is CHEBI:36655 with
+        coefficient 1. Rhea cites PMID:15198673, PMID:2207061, PMID:9405058 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:20924
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0004598"/>
+      notes: The rdfs:seeAlso triple on RHEA:20924 in rhea.rdf. GO term GO:0004598 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.3.2.5; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:20924
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.2.5"/>
+      notes: The rh:ec triple on RHEA:20924 in rhea.rdf. EC 4.3.2.5 is itself a record in this KB.
+  - subject: prot_P08478
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMDA_XENLA is an exemplar enzyme carrying EC 4.3.2.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.2.5
+      snippet: DR   P08478, AMDA_XENLA ;  P12890, AMDB_XENLA ;  P83388, AMDL_CAEEL ;
+      notes: ExPASy ENZYME entry EC 4.3.2.5 cross-references UniProtKB:P08478 (AMDA_XENLA) as a protein
+        with this activity.
+    - reference: RHEA:20924
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.2.5"/>
+      notes: Rhea assigns RHEA:20924 to EC 4.3.2.5, and EC 4.3.2.5 maps to exactly one Rhea master reaction
+        (RHEA:20924), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P12890
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMDB_XENLA is an exemplar enzyme carrying EC 4.3.2.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.2.5
+      snippet: DR   P08478, AMDA_XENLA ;  P12890, AMDB_XENLA ;  P83388, AMDL_CAEEL ;
+      notes: ExPASy ENZYME entry EC 4.3.2.5 cross-references UniProtKB:P12890 (AMDB_XENLA) as a protein
+        with this activity.
+    - reference: RHEA:20924
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.2.5"/>
+      notes: Rhea assigns RHEA:20924 to EC 4.3.2.5, and EC 4.3.2.5 maps to exactly one Rhea master reaction
+        (RHEA:20924), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P83388
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMDL_CAEEL is an exemplar enzyme carrying EC 4.3.2.5, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.3.2.5
+      snippet: DR   P08478, AMDA_XENLA ;  P12890, AMDB_XENLA ;  P83388, AMDL_CAEEL ;
+      notes: ExPASy ENZYME entry EC 4.3.2.5 cross-references UniProtKB:P83388 (AMDL_CAEEL) as a protein
+        with this activity.
+    - reference: RHEA:20924
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.3.2.5"/>
+      notes: Rhea assigns RHEA:20924 to EC 4.3.2.5, and EC 4.3.2.5 maps to exactly one Rhea master reaction
+        (RHEA:20924), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

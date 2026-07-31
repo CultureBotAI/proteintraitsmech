@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.2.-
 synonyms:
@@ -43,4 +43,286 @@ definitions:
       Catalyses: an S-(2-hydroxyacyl)glutathione + H2O = a 2-hydroxy carboxylate + glutathione + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydroxyacylglutathione hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.2.6. Rhea assigns 2 curated
+    reactions to EC 3.1.2.6. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "an S-(2-hydroxyacyl)glutathione + H2O = a 2-hydroxy carboxylate
+    + glutathione + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxyacylglutathione hydrolase
+    grounding: EC:3.1.2.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an S-(2-hydroxyacyl)glutathione + H2O = a 2-hydroxy carboxylate + glutathion…
+    grounding: RHEA:21864
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an S-(2-hydroxyacyl)glutathione + H2O = a 2-hydroxy carboxylate + glutathione
+      + H(+)'
+  - node_id: rxn1_sub1
+    label: an S-(2-hydroxyacyl)glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:71261
+    description: Formula C12H17N3O8SR.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: a 2-hydroxy carboxylate
+    node_type: CHEMICAL
+    grounding: CHEBI:58896
+    description: Formula C2H2O3R.
+  - node_id: rxn1_prd2
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (R)-S-lactoylglutathione + H2O = (R)-lactate + glutathione + H(+)
+    grounding: RHEA:25245
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (R)-S-lactoylglutathione + H2O = (R)-lactate + glutathione + H(+)'
+  - node_id: rxn2_sub1
+    label: (R)-S-lactoylglutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57474
+    description: Formula C13H20N3O8S.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: (R)-lactate
+    node_type: CHEMICAL
+    grounding: CHEBI:16004
+    description: Formula C3H5O3.
+  - node_id: rxn2_prd2
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: hydroxyacylglutathione hydrolase activity
+    grounding: GO:0004416
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9UT36
+    node_type: PROTEIN
+    label: GLO21_SCHPO
+    grounding: UniProtKB:Q9UT36
+  - node_id: prot_Q7MQ55
+    node_type: PROTEIN
+    label: GLO21_VIBVY
+    grounding: UniProtKB:Q7MQ55
+  - node_id: prot_P75849
+    node_type: PROTEIN
+    label: GLO22_ECOLI
+    grounding: UniProtKB:P75849
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:21864 is one of the 2 curated reactions Rhea assigns to EC 3.1.2.6; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:21864
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.2.6"/>
+      notes: The rh:ec triple on RHEA:21864 in rhea.rdf assigns that reaction to EC 3.1.2.6.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: an S-(2-hydroxyacyl)glutathione is a substrate consumed by RHEA:21864 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21865
+      snippet: an S-(2-hydroxyacyl)glutathione + H2O => a 2-hydroxy carboxylate + glutathione + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21865 declares side 21864_L as its substrates
+        (rh:substrates); the master reaction RHEA:21864 is undirected. This participant is CHEBI:71261
+        with coefficient 1. Rhea cites PMID:25670698, PMID:16227621, PMID:17196158, PMID:19834746 for
+        this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:21864 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21865
+      snippet: an S-(2-hydroxyacyl)glutathione + H2O => a 2-hydroxy carboxylate + glutathione + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21865 declares side 21864_L as its substrates
+        (rh:substrates); the master reaction RHEA:21864 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:25670698, PMID:16227621, PMID:17196158, PMID:19834746 for
+        this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a 2-hydroxy carboxylate is a product released by RHEA:21864 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21865
+      snippet: an S-(2-hydroxyacyl)glutathione + H2O => a 2-hydroxy carboxylate + glutathione + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21865 declares side 21864_R as its products
+        (rh:products); the master reaction RHEA:21864 is undirected. This participant is CHEBI:58896 with
+        coefficient 1. Rhea cites PMID:25670698, PMID:16227621, PMID:17196158, PMID:19834746 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: glutathione is a product released by RHEA:21864 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21865
+      snippet: an S-(2-hydroxyacyl)glutathione + H2O => a 2-hydroxy carboxylate + glutathione + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21865 declares side 21864_R as its products
+        (rh:products); the master reaction RHEA:21864 is undirected. This participant is CHEBI:57925 with
+        coefficient 1. Rhea cites PMID:25670698, PMID:16227621, PMID:17196158, PMID:19834746 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:21864 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21865
+      snippet: an S-(2-hydroxyacyl)glutathione + H2O => a 2-hydroxy carboxylate + glutathione + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:21865 declares side 21864_R as its products
+        (rh:products); the master reaction RHEA:21864 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:25670698, PMID:16227621, PMID:17196158, PMID:19834746 for this
+        reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:25245 is one of the 2 curated reactions Rhea assigns to EC 3.1.2.6; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:25245
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.2.6"/>
+      notes: The rh:ec triple on RHEA:25245 in rhea.rdf assigns that reaction to EC 3.1.2.6.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (R)-S-lactoylglutathione is a substrate consumed by RHEA:25245 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25246
+      snippet: (R)-S-lactoylglutathione + H2O => (R)-lactate + glutathione + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25246 declares side 25245_L as its substrates
+        (rh:substrates); the master reaction RHEA:25245 is undirected. This participant is CHEBI:57474
+        with coefficient 1. Rhea cites PMID:4200890, PMID:25670698, PMID:4745654, PMID:17196158 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:25245 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25246
+      snippet: (R)-S-lactoylglutathione + H2O => (R)-lactate + glutathione + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25246 declares side 25245_L as its substrates
+        (rh:substrates); the master reaction RHEA:25245 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4200890, PMID:25670698, PMID:4745654, PMID:17196158 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (R)-lactate is a product released by RHEA:25245 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25246
+      snippet: (R)-S-lactoylglutathione + H2O => (R)-lactate + glutathione + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25246 declares side 25245_R as its products
+        (rh:products); the master reaction RHEA:25245 is undirected. This participant is CHEBI:16004 with
+        coefficient 1. Rhea cites PMID:4200890, PMID:25670698, PMID:4745654, PMID:17196158 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: glutathione is a product released by RHEA:25245 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25246
+      snippet: (R)-S-lactoylglutathione + H2O => (R)-lactate + glutathione + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25246 declares side 25245_R as its products
+        (rh:products); the master reaction RHEA:25245 is undirected. This participant is CHEBI:57925 with
+        coefficient 1. Rhea cites PMID:4200890, PMID:25670698, PMID:4745654, PMID:17196158 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:25245 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25246
+      snippet: (R)-S-lactoylglutathione + H2O => (R)-lactate + glutathione + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:25246 declares side 25245_R as its products
+        (rh:products); the master reaction RHEA:25245 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:4200890, PMID:25670698, PMID:4745654, PMID:17196158 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.2.6
+      snippet: EC:3.1.2.6 > GO:hydroxyacylglutathione hydrolase activity ; GO:0004416
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004416 is itself a record
+        in this KB.
+  - subject: prot_Q9UT36
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLO21_SCHPO is an exemplar enzyme with EC 3.1.2.6 activity.
+    evidence:
+    - reference: EC:3.1.2.6
+      snippet: DR   Q9UT36, GLO21_SCHPO;  Q7MQ55, GLO21_VIBVY;  P75849, GLO22_ECOLI;
+      notes: ExPASy ENZYME entry EC 3.1.2.6 cross-references UniProtKB:Q9UT36 (GLO21_SCHPO) as a protein
+        with this activity.
+  - subject: prot_Q7MQ55
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLO21_VIBVY is an exemplar enzyme with EC 3.1.2.6 activity.
+    evidence:
+    - reference: EC:3.1.2.6
+      snippet: DR   Q9UT36, GLO21_SCHPO;  Q7MQ55, GLO21_VIBVY;  P75849, GLO22_ECOLI;
+      notes: ExPASy ENZYME entry EC 3.1.2.6 cross-references UniProtKB:Q7MQ55 (GLO21_VIBVY) as a protein
+        with this activity.
+  - subject: prot_P75849
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLO22_ECOLI is an exemplar enzyme with EC 3.1.2.6 activity.
+    evidence:
+    - reference: EC:3.1.2.6
+      snippet: DR   Q9UT36, GLO21_SCHPO;  Q7MQ55, GLO21_VIBVY;  P75849, GLO22_ECOLI;
+      notes: ExPASy ENZYME entry EC 3.1.2.6 cross-references UniProtKB:P75849 (GLO22_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57466
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,80 @@ definitions:
       Catalyses the reaction: (13S)-hydroperoxy-(9Z,11E)-octadecadienoate = (9Z,13S)-12,13-epoxyoctadeca-9,11-dienoate + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (13S)-hydroperoxy-(9Z,11E)-octadecadienoate = (9Z,13S)-12,13-epoxyoctadeca-9,11-dienoat…
+  description: Substrate-to-product chemistry of RHEA:84075, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:84076 (rh:substrates → 84075_L, rh:products → 84075_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (13S)-hydroperoxy-(9Z,11E)-octadecadienoate = (9Z,13S)-12,13-epoxyoctadeca-9…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:84075
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (13S)-hydroperoxy-(9Z,11E)-octadecadienoate = (9Z,13S)-12,13-epoxyoctadeca-9,11-dienoate
+      + H2O'
+  - node_id: sub1
+    label: (13S)-hydroperoxy-(9Z,11E)-octadecadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57466
+    description: Formula C18H31O4.
+  - node_id: prd1
+    label: (9Z,13S)-12,13-epoxyoctadeca-9,11-dienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57465
+    description: Formula C18H29O3.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (13S)-hydroperoxy-(9Z,11E)-octadecadienoate is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84076
+      snippet: (13S)-hydroperoxy-(9Z,11E)-octadecadienoate => (9Z,13S)-12,13-epoxyoctadeca-9,11-dienoate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:84076 declares side 84075_L as its substrates
+        (rh:substrates); the master reaction RHEA:84075 is undirected. This participant is CHEBI:57466
+        with coefficient 1. Rhea cites PMID:7721745, PMID:8756596 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (9Z,13S)-12,13-epoxyoctadeca-9,11-dienoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:84076
+      snippet: (13S)-hydroperoxy-(9Z,11E)-octadecadienoate => (9Z,13S)-12,13-epoxyoctadeca-9,11-dienoate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:84076 declares side 84075_R as its products
+        (rh:products); the master reaction RHEA:84075 is undirected. This participant is CHEBI:57465 with
+        coefficient 1. Rhea cites PMID:7721745, PMID:8756596 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:84076
+      snippet: (13S)-hydroperoxy-(9Z,11E)-octadecadienoate => (9Z,13S)-12,13-epoxyoctadeca-9,11-dienoate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:84076 declares side 84075_R as its products
+        (rh:products); the master reaction RHEA:84075 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:7721745, PMID:8756596 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

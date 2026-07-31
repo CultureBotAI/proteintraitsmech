@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:173113
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,141 @@ definitions:
       Catalyses the reaction: a 3'-end 2'-phospho-ribonucleotide-RNA + H2O = a 3'-end ribonucleotide-RNA + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 3'-end 2'-phospho-ribonucleotide-RNA + H2O = a 3'-end ribonucleotide-RNA
+    + phosphate
+  description: Substrate-to-product chemistry of RHEA:85191, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:85192 (rh:substrates → 85191_L, rh:products → 85191_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 3'-end 2'-phospho-ribonucleotide-RNA + H2O = a 3'-end ribonucleotide-RNA +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:85191
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 3''-end 2''-phospho-ribonucleotide-RNA + H2O = a 3''-end ribonucleotide-RNA + phosphate'
+  - node_id: sub1
+    label: a 3'-end 2'-phospho-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17353
+    description: Rhea compound GENERIC:17353.
+  - node_id: sub1_rp1
+    label: 3'-terminal ribonucleotide 2'-phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17353 (a 3'-end
+      2'-phospho-ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:173113
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a 3'-end ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17428
+    description: Rhea compound GENERIC:17428.
+  - node_id: prd1_rp1
+    label: a 3'-terminal ribonucleotide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17428 (a 3'-end
+      ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74896
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: RNA 2'-phosphatase activity
+    grounding: GO:0160273
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3'-end 2'-phospho-ribonucleotide-RNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:85192
+      snippet: a 3'-end 2'-phospho-ribonucleotide-RNA + H2O => a 3'-end ribonucleotide-RNA + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:85192 declares side 85191_L as its substrates
+        (rh:substrates); the master reaction RHEA:85191 is undirected. This participant is GENERIC:17353
+        with coefficient 1. Rhea cites PMID:32732418, PMID:36180430 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-terminal ribonucleotide 2'-phosphate residue is the reactive part of a 3'-end 2'-phospho-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:85191
+      snippet: 3'-terminal ribonucleotide 2'-phosphate residue
+      notes: Rhea compound GENERIC:17353 (a 3'-end 2'-phospho-ribonucleotide-RNA) declares rh:reactivePart
+        = 3'-terminal ribonucleotide 2'-phosphate residue (CHEBI:173113), formula C5H7O9P2R.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85192
+      snippet: a 3'-end 2'-phospho-ribonucleotide-RNA + H2O => a 3'-end ribonucleotide-RNA + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:85192 declares side 85191_L as its substrates
+        (rh:substrates); the master reaction RHEA:85191 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:32732418, PMID:36180430 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3'-end ribonucleotide-RNA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:85192
+      snippet: a 3'-end 2'-phospho-ribonucleotide-RNA + H2O => a 3'-end ribonucleotide-RNA + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:85192 declares side 85191_R as its products
+        (rh:products); the master reaction RHEA:85191 is undirected. This participant is GENERIC:17428
+        with coefficient 1. Rhea cites PMID:32732418, PMID:36180430 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: a 3'-terminal ribonucleotide residue is the reactive part of a 3'-end ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:85191
+      snippet: a 3'-terminal ribonucleotide residue
+      notes: Rhea compound GENERIC:17428 (a 3'-end ribonucleotide-RNA) declares rh:reactivePart = a 3'-terminal
+        ribonucleotide residue (CHEBI:74896), formula C5H8O6PR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85192
+      snippet: a 3'-end 2'-phospho-ribonucleotide-RNA + H2O => a 3'-end ribonucleotide-RNA + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:85192 declares side 85191_R as its products
+        (rh:products); the master reaction RHEA:85191 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:32732418, PMID:36180430 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:85191
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0160273"/>
+      notes: The rdfs:seeAlso triple on RHEA:85191 in rhea.rdf. GO term GO:0160273 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 mapped_xrefs:
@@ -36,4 +36,85 @@ definitions:
       Catalyses: Hydrolysis of cellobiose from the reducing end of xyloglucans consisting of a beta-(1->4)-linked glucan carrying alpha-D-xylosyl groups on O-6 of the glucose residues. To be a substrate, the first residue must be unsubstituted, the second residue may bear a xylosyl group, whether further glycosylated or not, and the third residue, which becomes the new terminus by the action of the enzyme, is preferably xylosylated, but this xylose residue must not be further substituted
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of oligoxyloglucan reducing-end-specific cellobiohydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.150. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of cellobiose from the reducing end of xyloglucans consisting of a beta-(1->4)-linked glucan carrying
+    alpha-D-xylosyl groups on O-6 of the glucose residues. To be a substrate, the first residue must be
+    unsubstituted, the second residue may bear a xylosyl group, whether further glycosylated or not, and
+    the third residue, which becomes the new terminus by the action of the enzyme, is preferably xylosylated,
+    but this xylose residue must not be further substituted".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: oligoxyloglucan reducing-end-specific cellobiohydrolase
+    grounding: EC:3.2.1.150
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: oligoxyloglucan reducing-end-specific cellobiohydrolase activity
+    grounding: GO:0033945
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8J0D2
+    node_type: PROTEIN
+    label: CBHRE_GEOS1
+    grounding: UniProtKB:Q8J0D2
+  - node_id: prot_A1DAU0
+    node_type: PROTEIN
+    label: XGCA_ASPF1
+    grounding: UniProtKB:A1DAU0
+  - node_id: prot_Q5BD38
+    node_type: PROTEIN
+    label: XGCA_EMENI
+    grounding: UniProtKB:Q5BD38
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.150
+      snippet: EC:3.2.1.150 > GO:oligoxyloglucan reducing-end-specific cellobiohydrolase activity ; GO:0033945
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033945 is itself a record
+        in this KB.
+  - subject: prot_Q8J0D2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBHRE_GEOS1 is an exemplar enzyme with EC 3.2.1.150 activity.
+    evidence:
+    - reference: EC:3.2.1.150
+      snippet: DR   Q8J0D2, CBHRE_GEOS1;  A1DAU0, XGCA_ASPF1 ;  Q5BD38, XGCA_EMENI ;
+      notes: ExPASy ENZYME entry EC 3.2.1.150 cross-references UniProtKB:Q8J0D2 (CBHRE_GEOS1) as a protein
+        with this activity.
+  - subject: prot_A1DAU0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XGCA_ASPF1 is an exemplar enzyme with EC 3.2.1.150 activity.
+    evidence:
+    - reference: EC:3.2.1.150
+      snippet: DR   Q8J0D2, CBHRE_GEOS1;  A1DAU0, XGCA_ASPF1 ;  Q5BD38, XGCA_EMENI ;
+      notes: ExPASy ENZYME entry EC 3.2.1.150 cross-references UniProtKB:A1DAU0 (XGCA_ASPF1) as a protein
+        with this activity.
+  - subject: prot_Q5BD38
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: XGCA_EMENI is an exemplar enzyme with EC 3.2.1.150 activity.
+    evidence:
+    - reference: EC:3.2.1.150
+      snippet: DR   Q8J0D2, CBHRE_GEOS1;  A1DAU0, XGCA_ASPF1 ;  Q5BD38, XGCA_EMENI ;
+      notes: ExPASy ENZYME entry EC 3.2.1.150 cross-references UniProtKB:Q5BD38 (XGCA_EMENI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

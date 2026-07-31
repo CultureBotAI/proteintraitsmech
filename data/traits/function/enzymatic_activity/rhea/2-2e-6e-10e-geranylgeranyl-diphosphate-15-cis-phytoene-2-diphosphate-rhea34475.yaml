@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.5.1.32
     mapping_source: rhea2ec
@@ -28,4 +28,166 @@ definitions:
       Catalyses the reaction: 2 (2E,6E,10E)-geranylgeranyl diphosphate = 15-cis-phytoene + 2 diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 (2E,6E,10E)-geranylgeranyl diphosphate = 15-cis-phytoene + 2 diphosphate
+  description: Substrate-to-product chemistry of RHEA:34475, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34476 (rh:substrates → 34475_L, rh:products → 34475_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 (2E,6E,10E)-geranylgeranyl diphosphate = 15-cis-phytoene + 2 diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34475
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 (2E,6E,10E)-geranylgeranyl diphosphate = 15-cis-phytoene + 2 diphosphate'
+  - node_id: sub1
+    label: (2E,6E,10E)-geranylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58756
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: 15-cis-phytoene
+    node_type: CHEMICAL
+    grounding: CHEBI:27787
+    description: Formula C40H64.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 15-cis-phytoene synthase activity
+    grounding: GO:0046905
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 15-cis-phytoene synthase
+    grounding: EC:2.5.1.32
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9ACU1
+    node_type: PROTEIN
+    label: CRIT_STRCO
+    grounding: UniProtKB:Q9ACU1
+  - node_id: prot_D5KXJ0
+    node_type: PROTEIN
+    label: CRTB_ENTAG
+    grounding: UniProtKB:D5KXJ0
+  - node_id: prot_P21683
+    node_type: PROTEIN
+    label: CRTB_PANAN
+    grounding: UniProtKB:P21683
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E)-geranylgeranyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:34476
+      snippet: 2 (2E,6E,10E)-geranylgeranyl diphosphate => 15-cis-phytoene + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34476 declares side 34475_L as its substrates
+        (rh:substrates); the master reaction RHEA:34475 is undirected. This participant is CHEBI:58756
+        with coefficient 2. Rhea cites PMID:4819767, PMID:7896759 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 15-cis-phytoene is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34476
+      snippet: 2 (2E,6E,10E)-geranylgeranyl diphosphate => 15-cis-phytoene + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34476 declares side 34475_R as its products
+        (rh:products); the master reaction RHEA:34475 is undirected. This participant is CHEBI:27787 with
+        coefficient 1. Rhea cites PMID:4819767, PMID:7896759 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:34476
+      snippet: 2 (2E,6E,10E)-geranylgeranyl diphosphate => 15-cis-phytoene + 2 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34476 declares side 34475_R as its products
+        (rh:products); the master reaction RHEA:34475 is undirected. This participant is CHEBI:33019 with
+        coefficient 2. Rhea cites PMID:4819767, PMID:7896759 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:34475
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0046905"/>
+      notes: The rdfs:seeAlso triple on RHEA:34475 in rhea.rdf. GO term GO:0046905 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.5.1.32; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34475
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.32"/>
+      notes: The rh:ec triple on RHEA:34475 in rhea.rdf. EC 2.5.1.32 is itself a record in this KB.
+  - subject: prot_Q9ACU1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRIT_STRCO is an exemplar enzyme carrying EC 2.5.1.32, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.32
+      snippet: DR   Q9ACU1, CRIT_STRCO ;  D5KXJ0, CRTB_ENTAG ;  P21683, CRTB_PANAN ;
+      notes: ExPASy ENZYME entry EC 2.5.1.32 cross-references UniProtKB:Q9ACU1 (CRIT_STRCO) as a protein
+        with this activity.
+    - reference: RHEA:34475
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.32"/>
+      notes: Rhea assigns RHEA:34475 to EC 2.5.1.32, and EC 2.5.1.32 maps to exactly one Rhea master reaction
+        (RHEA:34475), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_D5KXJ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTB_ENTAG is an exemplar enzyme carrying EC 2.5.1.32, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.32
+      snippet: DR   Q9ACU1, CRIT_STRCO ;  D5KXJ0, CRTB_ENTAG ;  P21683, CRTB_PANAN ;
+      notes: ExPASy ENZYME entry EC 2.5.1.32 cross-references UniProtKB:D5KXJ0 (CRTB_ENTAG) as a protein
+        with this activity.
+    - reference: RHEA:34475
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.32"/>
+      notes: Rhea assigns RHEA:34475 to EC 2.5.1.32, and EC 2.5.1.32 maps to exactly one Rhea master reaction
+        (RHEA:34475), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P21683
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CRTB_PANAN is an exemplar enzyme carrying EC 2.5.1.32, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.5.1.32
+      snippet: DR   Q9ACU1, CRIT_STRCO ;  D5KXJ0, CRTB_ENTAG ;  P21683, CRTB_PANAN ;
+      notes: ExPASy ENZYME entry EC 2.5.1.32 cross-references UniProtKB:P21683 (CRTB_PANAN) as a protein
+        with this activity.
+    - reference: RHEA:34475
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.5.1.32"/>
+      notes: Rhea assigns RHEA:34475 to EC 2.5.1.32, and EC 2.5.1.32 maps to exactly one Rhea master reaction
+        (RHEA:34475), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

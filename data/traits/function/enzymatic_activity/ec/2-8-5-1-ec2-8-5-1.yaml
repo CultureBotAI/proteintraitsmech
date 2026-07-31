@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.5.-
 mapped_xrefs:
@@ -28,4 +28,104 @@ definitions:
       Catalyses: O-phospho-L-serine + thiosulfate = S-sulfo-L-cysteine + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-sulfo-L-cysteine synthase (3-phospho-L-serine-dependent)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.5.1. EC 2.8.5.1 maps to exactly
+    one curated Rhea reaction (RHEA:52420), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "O-phospho-L-serine
+    + thiosulfate = S-sulfo-L-cysteine + phosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: S-sulfo-L-cysteine synthase (3-phospho-L-serine-dependent)
+    grounding: EC:2.8.5.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: O-phospho-L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:57524
+    description: Formula C3H6NO6P.
+  - node_id: sub2
+    label: thiosulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:33542
+    description: Formula HO3S2.
+  - node_id: prd1
+    label: S-sulfo-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:62225
+    description: Formula C3H6NO5S2.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prot_Q79FV4
+    node_type: PROTEIN
+    label: CYSK2_MYCTU
+    grounding: UniProtKB:Q79FV4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: O-phospho-L-serine is a substrate consumed by RHEA:52420 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52421
+      snippet: O-phospho-L-serine + thiosulfate => S-sulfo-L-cysteine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52421 declares side 52420_L as its substrates
+        (rh:substrates); the master reaction RHEA:52420 is undirected. This participant is CHEBI:57524
+        with coefficient 1. Rhea cites PMID:25022854 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: thiosulfate is a substrate consumed by RHEA:52420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52421
+      snippet: O-phospho-L-serine + thiosulfate => S-sulfo-L-cysteine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52421 declares side 52420_L as its substrates
+        (rh:substrates); the master reaction RHEA:52420 is undirected. This participant is CHEBI:33542
+        with coefficient 1. Rhea cites PMID:25022854 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-sulfo-L-cysteine is a product released by RHEA:52420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52421
+      snippet: O-phospho-L-serine + thiosulfate => S-sulfo-L-cysteine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52421 declares side 52420_R as its products
+        (rh:products); the master reaction RHEA:52420 is undirected. This participant is CHEBI:62225 with
+        coefficient 1. Rhea cites PMID:25022854 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:52420 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52421
+      snippet: O-phospho-L-serine + thiosulfate => S-sulfo-L-cysteine + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52421 declares side 52420_R as its products
+        (rh:products); the master reaction RHEA:52420 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:25022854 for this reaction.
+  - subject: prot_Q79FV4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYSK2_MYCTU is an exemplar enzyme with EC 2.8.5.1 activity.
+    evidence:
+    - reference: EC:2.8.5.1
+      snippet: DR   Q79FV4, CYSK2_MYCTU;
+      notes: ExPASy ENZYME entry EC 2.8.5.1 cross-references UniProtKB:Q79FV4 (CYSK2_MYCTU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

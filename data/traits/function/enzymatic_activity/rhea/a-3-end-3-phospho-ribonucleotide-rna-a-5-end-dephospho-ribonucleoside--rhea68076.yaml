@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:6.5.1.8
     mapping_source: rhea2ec
@@ -48,4 +48,218 @@ definitions:
       Catalyses the reaction: a 3'-end 3'-phospho-ribonucleotide-RNA + a 5'-end dephospho-ribonucleoside-RNA + GTP = a ribonucleotidyl-ribonucleotide-RNA + GMP + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 3'-end 3'-phospho-ribonucleotide-RNA + a 5'-end dephospho-ribonucleoside-RNA
+    + GTP =…
+  description: Substrate-to-product chemistry of RHEA:68076, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:68077 (rh:substrates → 68076_L, rh:products → 68076_R), and Rhea
+    curates the reverse direction too. 3 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 3'-end 3'-phospho-ribonucleotide-RNA + a 5'-end dephospho-ribonucleoside-R…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:68076
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 3''-end 3''-phospho-ribonucleotide-RNA + a 5''-end dephospho-ribonucleoside-RNA
+      + GTP = a ribonucleotidyl-ribonucleotide-RNA + GMP + diphosphate'
+  - node_id: sub1
+    label: a 3'-end 3'-phospho-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10463
+    description: Rhea compound GENERIC:10463.
+  - node_id: sub1_rp1
+    label: a 3'-terminal ribonucleotide 3'-phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10463 (a 3'-end
+      3'-phospho-ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83062
+  - node_id: sub2
+    label: a 5'-end dephospho-ribonucleoside-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:13936
+    description: Rhea compound GENERIC:13936.
+  - node_id: sub2_rp1
+    label: 5'-end 5'-dephospho ribonucleotide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:13936 (a 5'-end
+      dephospho-ribonucleoside-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138284
+  - node_id: sub3
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: prd1
+    label: a ribonucleotidyl-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17355
+    description: Rhea compound GENERIC:17355.
+  - node_id: prd1_rp1
+    label: ribonucleotide-ribonucleotide residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17355 (a ribonucleotidyl-ribonucleotide-RNA);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:173118
+  - node_id: prd2
+    label: GMP
+    node_type: CHEMICAL
+    grounding: CHEBI:58115
+    description: Formula C10H12N5O8P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: RNA ligase (GTP) activity
+    grounding: GO:0170057
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 3'-phosphate/5'-hydroxy nucleic acid ligase
+    grounding: EC:6.5.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3'-end 3'-phospho-ribonucleotide-RNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68077
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + a 5'-end dephospho-ribonucleoside-RNA + GTP =>
+        a ribonucleotidyl-ribonucleotide-RNA + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68077 declares side 68076_L as its substrates
+        (rh:substrates); the master reaction RHEA:68076 is undirected. This participant is GENERIC:10463
+        with coefficient 1. Rhea cites PMID:24218597, PMID:21757685, PMID:26385509, PMID:26858100 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: a 3'-terminal ribonucleotide 3'-phosphate residue is the reactive part of a 3'-end 3'-phospho-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:68076
+      snippet: a 3'-terminal ribonucleotide 3'-phosphate residue
+      notes: Rhea compound GENERIC:10463 (a 3'-end 3'-phospho-ribonucleotide-RNA) declares rh:reactivePart
+        = a 3'-terminal ribonucleotide 3'-phosphate residue (CHEBI:83062), formula C5H7O9P2R.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a 5'-end dephospho-ribonucleoside-RNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68077
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + a 5'-end dephospho-ribonucleoside-RNA + GTP =>
+        a ribonucleotidyl-ribonucleotide-RNA + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68077 declares side 68076_L as its substrates
+        (rh:substrates); the master reaction RHEA:68076 is undirected. This participant is GENERIC:13936
+        with coefficient 1. Rhea cites PMID:24218597, PMID:21757685, PMID:26385509, PMID:26858100 for
+        this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: 5'-end 5'-dephospho ribonucleotide residue is the reactive part of a 5'-end dephospho-ribonucleoside-RNA.
+    evidence:
+    - reference: RHEA:68076
+      snippet: 5'-end 5'-dephospho ribonucleotide residue
+      notes: Rhea compound GENERIC:13936 (a 5'-end dephospho-ribonucleoside-RNA) declares rh:reactivePart
+        = 5'-end 5'-dephospho ribonucleotide residue (CHEBI:138284), formula C5H8O4R.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: GTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68077
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + a 5'-end dephospho-ribonucleoside-RNA + GTP =>
+        a ribonucleotidyl-ribonucleotide-RNA + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68077 declares side 68076_L as its substrates
+        (rh:substrates); the master reaction RHEA:68076 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:24218597, PMID:21757685, PMID:26385509, PMID:26858100 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a ribonucleotidyl-ribonucleotide-RNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68077
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + a 5'-end dephospho-ribonucleoside-RNA + GTP =>
+        a ribonucleotidyl-ribonucleotide-RNA + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68077 declares side 68076_R as its products
+        (rh:products); the master reaction RHEA:68076 is undirected. This participant is GENERIC:17355
+        with coefficient 1. Rhea cites PMID:24218597, PMID:21757685, PMID:26385509, PMID:26858100 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: ribonucleotide-ribonucleotide residue is the reactive part of a ribonucleotidyl-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:68076
+      snippet: ribonucleotide-ribonucleotide residue
+      notes: Rhea compound GENERIC:17355 (a ribonucleotidyl-ribonucleotide-RNA) declares rh:reactivePart
+        = ribonucleotide-ribonucleotide residue (CHEBI:173118), formula C10H14O12P2R2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: GMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68077
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + a 5'-end dephospho-ribonucleoside-RNA + GTP =>
+        a ribonucleotidyl-ribonucleotide-RNA + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68077 declares side 68076_R as its products
+        (rh:products); the master reaction RHEA:68076 is undirected. This participant is CHEBI:58115 with
+        coefficient 1. Rhea cites PMID:24218597, PMID:21757685, PMID:26385509, PMID:26858100 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68077
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + a 5'-end dephospho-ribonucleoside-RNA + GTP =>
+        a ribonucleotidyl-ribonucleotide-RNA + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:68077 declares side 68076_R as its products
+        (rh:products); the master reaction RHEA:68076 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:24218597, PMID:21757685, PMID:26385509, PMID:26858100 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:68076
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0170057"/>
+      notes: The rdfs:seeAlso triple on RHEA:68076 in rhea.rdf. GO term GO:0170057 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 6.5.1.8; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:68076
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/6.5.1.8"/>
+      notes: The rh:ec triple on RHEA:68076 in rhea.rdf. EC 6.5.1.8 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

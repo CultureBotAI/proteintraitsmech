@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.3.1.-
 synonyms:
@@ -35,4 +35,192 @@ definitions:
       Catalyses: [beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n) + n D-aspartate + n ATP = [beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu- 6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n + n ADP + n phosphate + n H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-aspartate ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.3.1.12. EC 6.3.1.12 maps to exactly
+    one curated Rhea reaction (RHEA:10752), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n)
+    + n D-aspartate + n ATP = [beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu- 6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n
+    + n ADP + n phosphate + n H(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-aspartate ligase
+    grounding: EC:6.3.1.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:76539
+    xrefs:
+    - RHEA-COMP:14481
+    description: Rhea compound POLYMER:14481. Formula H2O(C39H63N8O19)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: D-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:29990
+    description: Formula C4H6NO4.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n'
+    node_type: CHEMICAL
+    grounding: CHEBI:140312
+    xrefs:
+    - RHEA-COMP:14482
+    description: Rhea compound POLYMER:14482. Formula H2O(C43H67N9O22)<i><sub>n</sub></i>.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: D-aspartate ligase activity
+    grounding: GO:0034025
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_H8L902
+    node_type: PROTEIN
+    label: ASL_ENTFU
+    grounding: UniProtKB:H8L902
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n) is a substrate
+      consumed by RHEA:10752 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:10753
+      snippet: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n) + n D-aspartate
+        + n ATP => [beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n
+        + n ADP + n phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10753 declares side 10752_L as its substrates
+        (rh:substrates); the master reaction RHEA:10752 is undirected. This participant is POLYMER:14481
+        with coefficient 1. Rhea cites PMID:9416615, PMID:4626717, PMID:4262567, PMID:16510449 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: D-aspartate is a substrate consumed by RHEA:10752 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:10753
+      snippet: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n) + n D-aspartate
+        + n ATP => [beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n
+        + n ADP + n phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10753 declares side 10752_L as its substrates
+        (rh:substrates); the master reaction RHEA:10752 is undirected. This participant is CHEBI:29990
+        with coefficient n. Rhea cites PMID:9416615, PMID:4626717, PMID:4262567, PMID:16510449 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:10752 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:10753
+      snippet: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n) + n D-aspartate
+        + n ATP => [beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n
+        + n ADP + n phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10753 declares side 10752_L as its substrates
+        (rh:substrates); the master reaction RHEA:10752 is undirected. This participant is CHEBI:30616
+        with coefficient n. Rhea cites PMID:9416615, PMID:4626717, PMID:4262567, PMID:16510449 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n
+      is a product released by RHEA:10752 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:10753
+      snippet: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n) + n D-aspartate
+        + n ATP => [beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n
+        + n ADP + n phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10753 declares side 10752_R as its products
+        (rh:products); the master reaction RHEA:10752 is undirected. This participant is POLYMER:14482
+        with coefficient 1. Rhea cites PMID:9416615, PMID:4626717, PMID:4262567, PMID:16510449 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:10752 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:10753
+      snippet: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n) + n D-aspartate
+        + n ATP => [beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n
+        + n ADP + n phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10753 declares side 10752_R as its products
+        (rh:products); the master reaction RHEA:10752 is undirected. This participant is CHEBI:456216
+        with coefficient n. Rhea cites PMID:9416615, PMID:4626717, PMID:4262567, PMID:16510449 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: phosphate is a product released by RHEA:10752 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:10753
+      snippet: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n) + n D-aspartate
+        + n ATP => [beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n
+        + n ADP + n phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10753 declares side 10752_R as its products
+        (rh:products); the master reaction RHEA:10752 is undirected. This participant is CHEBI:43474 with
+        coefficient n. Rhea cites PMID:9416615, PMID:4626717, PMID:4262567, PMID:16510449 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:10752 (stoichiometric coefficient n).
+    evidence:
+    - reference: RHEA:10753
+      snippet: '[beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-L-Lys-D-Ala-D-Ala)](n) + n D-aspartate
+        + n ATP => [beta-GlcNAc-(1->4)-Mur2Ac(oyl-L-Ala-gamma-D-Glu-6-N-(beta-D-Asp)-L-Lys-D-Ala-D-Ala)]n
+        + n ADP + n phosphate + n H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:10753 declares side 10752_R as its products
+        (rh:products); the master reaction RHEA:10752 is undirected. This participant is CHEBI:15378 with
+        coefficient n. Rhea cites PMID:9416615, PMID:4626717, PMID:4262567, PMID:16510449 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:6.3.1.12
+      snippet: EC:6.3.1.12 > GO:D-aspartate ligase activity ; GO:0034025
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0034025 is itself a record
+        in this KB.
+  - subject: prot_H8L902
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ASL_ENTFU is an exemplar enzyme with EC 6.3.1.12 activity.
+    evidence:
+    - reference: EC:6.3.1.12
+      snippet: DR   H8L902, ASL_ENTFU  ;
+      notes: ExPASy ENZYME entry EC 6.3.1.12 cross-references UniProtKB:H8L902 (ASL_ENTFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:235316
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: de-ester-(-)-coronaridene + H(+) = (-)-ibogamine + CO2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of de-ester-(-)-coronaridene + H(+) = (-)-ibogamine + CO2
+  description: Substrate-to-product chemistry of RHEA:85891, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:85892 (rh:substrates → 85891_L, rh:products → 85891_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of de-ester-(-)-coronaridene + H(+) = (-)-ibogamine + CO2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:85891
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: de-ester-(-)-coronaridene + H(+) = (-)-ibogamine + CO2'
+  - node_id: sub1
+    label: de-ester-(-)-coronaridene
+    node_type: CHEMICAL
+    grounding: CHEBI:235316
+    description: Formula C20H24N2O2.
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: (-)-ibogamine
+    node_type: CHEMICAL
+    grounding: CHEBI:146257
+    description: Formula C19H25N2.
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: de-ester-(-)-coronaridene is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:85892
+      snippet: de-ester-(-)-coronaridene + H(+) => (-)-ibogamine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:85892 declares side 85891_L as its substrates
+        (rh:substrates); the master reaction RHEA:85891 is undirected. This participant is CHEBI:235316
+        with coefficient 1. Rhea cites PMID:31364847 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85892
+      snippet: de-ester-(-)-coronaridene + H(+) => (-)-ibogamine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:85892 declares side 85891_L as its substrates
+        (rh:substrates); the master reaction RHEA:85891 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:31364847 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (-)-ibogamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85892
+      snippet: de-ester-(-)-coronaridene + H(+) => (-)-ibogamine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:85892 declares side 85891_R as its products
+        (rh:products); the master reaction RHEA:85891 is undirected. This participant is CHEBI:146257
+        with coefficient 1. Rhea cites PMID:31364847 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:85892
+      snippet: de-ester-(-)-coronaridene + H(+) => (-)-ibogamine + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:85892 declares side 85891_R as its products
+        (rh:products); the master reaction RHEA:85891 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:31364847 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -35,4 +35,217 @@ definitions:
       Catalyses: an N-acetylarylalkylamine + H2O = an aralkylamine + acetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of arylalkyl acylamidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.76. Rhea assigns 2 curated
+    reactions to EC 3.5.1.76. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "an N-acetylarylalkylamine + H2O = an aralkylamine + acetate".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: arylalkyl acylamidase
+    grounding: EC:3.5.1.76
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of an N-acetylarylalkylamine + H2O = an aralkylamine + acetate
+    grounding: RHEA:10352
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: an N-acetylarylalkylamine + H2O = an aralkylamine + acetate'
+  - node_id: rxn1_sub1
+    label: an N-acetylarylalkylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:18096
+    description: Formula C3H6NOR.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: an aralkylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:88332
+    description: Formula CH5NR.
+  - node_id: rxn1_prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of N-(2-phenylethyl)acetamide + H2O = 2-phenylethylamine + acetate
+    grounding: RHEA:23952
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: N-(2-phenylethyl)acetamide + H2O = 2-phenylethylamine + acetate'
+  - node_id: rxn2_sub1
+    label: N-(2-phenylethyl)acetamide
+    node_type: CHEMICAL
+    grounding: CHEBI:18177
+    description: Formula C10H13NO.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: 2-phenylethylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:225237
+    description: Formula C8H12N.
+  - node_id: rxn2_prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: arylalkyl acylamidase activity
+    grounding: GO:0047416
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P35902
+    node_type: PROTEIN
+    label: ARYA_PSEPU
+    grounding: UniProtKB:P35902
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:10352 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.76; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:10352
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.76"/>
+      notes: The rh:ec triple on RHEA:10352 in rhea.rdf assigns that reaction to EC 3.5.1.76.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: an N-acetylarylalkylamine is a substrate consumed by RHEA:10352 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10353
+      snippet: an N-acetylarylalkylamine + H2O => an aralkylamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:10353 declares side 10352_L as its substrates
+        (rh:substrates); the master reaction RHEA:10352 is undirected. This participant is CHEBI:18096
+        with coefficient 1. Rhea cites PMID:1396711 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:10352 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10353
+      snippet: an N-acetylarylalkylamine + H2O => an aralkylamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:10353 declares side 10352_L as its substrates
+        (rh:substrates); the master reaction RHEA:10352 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:1396711 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: an aralkylamine is a product released by RHEA:10352 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10353
+      snippet: an N-acetylarylalkylamine + H2O => an aralkylamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:10353 declares side 10352_R as its products
+        (rh:products); the master reaction RHEA:10352 is undirected. This participant is CHEBI:88332 with
+        coefficient 1. Rhea cites PMID:1396711 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: acetate is a product released by RHEA:10352 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10353
+      snippet: an N-acetylarylalkylamine + H2O => an aralkylamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:10353 declares side 10352_R as its products
+        (rh:products); the master reaction RHEA:10352 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:1396711 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:23952 is one of the 2 curated reactions Rhea assigns to EC 3.5.1.76; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:23952
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.76"/>
+      notes: The rh:ec triple on RHEA:23952 in rhea.rdf assigns that reaction to EC 3.5.1.76.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: N-(2-phenylethyl)acetamide is a substrate consumed by RHEA:23952 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23953
+      snippet: N-(2-phenylethyl)acetamide + H2O => 2-phenylethylamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23953 declares side 23952_L as its substrates
+        (rh:substrates); the master reaction RHEA:23952 is undirected. This participant is CHEBI:18177
+        with coefficient 1. Rhea cites PMID:1396711 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:23952 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23953
+      snippet: N-(2-phenylethyl)acetamide + H2O => 2-phenylethylamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23953 declares side 23952_L as its substrates
+        (rh:substrates); the master reaction RHEA:23952 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:1396711 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 2-phenylethylamine is a product released by RHEA:23952 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23953
+      snippet: N-(2-phenylethyl)acetamide + H2O => 2-phenylethylamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23953 declares side 23952_R as its products
+        (rh:products); the master reaction RHEA:23952 is undirected. This participant is CHEBI:225237
+        with coefficient 1. Rhea cites PMID:1396711 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: acetate is a product released by RHEA:23952 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23953
+      snippet: N-(2-phenylethyl)acetamide + H2O => 2-phenylethylamine + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:23953 declares side 23952_R as its products
+        (rh:products); the master reaction RHEA:23952 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:1396711 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.76
+      snippet: EC:3.5.1.76 > GO:arylalkyl acylamidase activity ; GO:0047416
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047416 is itself a record
+        in this KB.
+  - subject: prot_P35902
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARYA_PSEPU is an exemplar enzyme with EC 3.5.1.76 activity.
+    evidence:
+    - reference: EC:3.5.1.76
+      snippet: DR   P35902, ARYA_PSEPU ;
+      notes: ExPASy ENZYME entry EC 3.5.1.76 cross-references UniProtKB:P35902 (ARYA_PSEPU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

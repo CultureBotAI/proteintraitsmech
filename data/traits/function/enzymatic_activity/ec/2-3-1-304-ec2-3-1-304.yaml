@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -28,4 +28,213 @@ definitions:
       Catalyses: [(R)-3-hydroxyalkanoate](n) + a (3R)-3-hydroxyacyl-CoA = [(R)-3- hydroxyalkanoate](n+1) + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of poly[(R)-3-hydroxyalkanoate] polymerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.304. Rhea assigns 2 curated
+    reactions to EC 2.3.1.304. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "[(R)-3-hydroxyalkanoate](n) + a (3R)-3-hydroxyacyl-CoA =
+    [(R)-3- hydroxyalkanoate](n+1) + CoA". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: poly[(R)-3-hydroxyalkanoate] polymerase
+    grounding: EC:2.3.1.304
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (3R)-3-hydroxybutanoyl-CoA + [(3R)-hydroxybutanoate](n) = [(3R)-hydroxybutan…
+    grounding: RHEA:15405
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (3R)-3-hydroxybutanoyl-CoA + [(3R)-hydroxybutanoate](n) = [(3R)-hydroxybutanoate](n+1)
+      + CoA'
+  - node_id: rxn1_sub1
+    label: (3R)-3-hydroxybutanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57315
+    description: Formula C25H38N7O18P3S.
+  - node_id: rxn1_sub2
+    label: '[(3R)-hydroxybutanoate](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:8298
+    xrefs:
+    - RHEA-COMP:14464
+    description: Rhea compound POLYMER:14464. Formula HO(C4H6O2)<i><sub>n</sub></i>.
+  - node_id: rxn1_prd1
+    label: '[(3R)-hydroxybutanoate](n+1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:8298
+    xrefs:
+    - RHEA-COMP:14465
+    description: Rhea compound POLYMER:14465. Formula HO(C4H6O2)<i><sub>n+1</sub></i>.
+  - node_id: rxn1_prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of [(R)-3-hydroxyalkanoate](n) + a (3R)-3-hydroxyacyl-CoA = [(R)-3-hydroxyalkan…
+    grounding: RHEA:66924
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: [(R)-3-hydroxyalkanoate](n) + a (3R)-3-hydroxyacyl-CoA = [(R)-3-hydroxyalkanoate](n+1)
+      + CoA'
+  - node_id: rxn2_sub1
+    label: '[(R)-3-hydroxyalkanoate](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:167457
+    xrefs:
+    - RHEA-COMP:17146
+    description: Rhea compound POLYMER:17146. Formula HO(C3H3O2R)<i><sub>n</sub></i>.
+  - node_id: rxn2_sub2
+    label: a (3R)-3-hydroxyacyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57319
+    description: Formula C24H35N7O18P3SR.
+  - node_id: rxn2_prd1
+    label: '[(R)-3-hydroxyalkanoate](n+1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:167457
+    xrefs:
+    - RHEA-COMP:17147
+    description: Rhea compound POLYMER:17147. Formula HO(C3H3O2R)<i><sub>n+1</sub></i>.
+  - node_id: rxn2_prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:15405 is one of the 2 curated reactions Rhea assigns to EC 2.3.1.304; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:15405
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.304"/>
+      notes: The rh:ec triple on RHEA:15405 in rhea.rdf assigns that reaction to EC 2.3.1.304.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (3R)-3-hydroxybutanoyl-CoA is a substrate consumed by RHEA:15405 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:15406
+      snippet: (3R)-3-hydroxybutanoyl-CoA + [(3R)-hydroxybutanoate](n) => [(3R)-hydroxybutanoate](n+1)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15406 declares side 15405_L as its substrates
+        (rh:substrates); the master reaction RHEA:15405 is undirected. This participant is CHEBI:57315
+        with coefficient 1. Rhea cites PMID:7957260, PMID:9888824, PMID:25629766 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: '[(3R)-hydroxybutanoate](n) is a substrate consumed by RHEA:15405 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:15406
+      snippet: (3R)-3-hydroxybutanoyl-CoA + [(3R)-hydroxybutanoate](n) => [(3R)-hydroxybutanoate](n+1)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15406 declares side 15405_L as its substrates
+        (rh:substrates); the master reaction RHEA:15405 is undirected. This participant is POLYMER:14464
+        with coefficient 1. Rhea cites PMID:7957260, PMID:9888824, PMID:25629766 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: '[(3R)-hydroxybutanoate](n+1) is a product released by RHEA:15405 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:15406
+      snippet: (3R)-3-hydroxybutanoyl-CoA + [(3R)-hydroxybutanoate](n) => [(3R)-hydroxybutanoate](n+1)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15406 declares side 15405_R as its products
+        (rh:products); the master reaction RHEA:15405 is undirected. This participant is POLYMER:14465
+        with coefficient 1. Rhea cites PMID:7957260, PMID:9888824, PMID:25629766 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: CoA is a product released by RHEA:15405 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15406
+      snippet: (3R)-3-hydroxybutanoyl-CoA + [(3R)-hydroxybutanoate](n) => [(3R)-hydroxybutanoate](n+1)
+        + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:15406 declares side 15405_R as its products
+        (rh:products); the master reaction RHEA:15405 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:7957260, PMID:9888824, PMID:25629766 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:66924 is one of the 2 curated reactions Rhea assigns to EC 2.3.1.304; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:66924
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.304"/>
+      notes: The rh:ec triple on RHEA:66924 in rhea.rdf assigns that reaction to EC 2.3.1.304.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: '[(R)-3-hydroxyalkanoate](n) is a substrate consumed by RHEA:66924 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:66925
+      snippet: '[(R)-3-hydroxyalkanoate](n) + a (3R)-3-hydroxyacyl-CoA => [(R)-3-hydroxyalkanoate](n+1)
+        + CoA'
+      notes: Rhea's left-to-right directional reaction RHEA:66925 declares side 66924_L as its substrates
+        (rh:substrates); the master reaction RHEA:66924 is undirected. This participant is POLYMER:17146
+        with coefficient 1. Rhea cites PMID:28884324, PMID:7957260, PMID:2078525, PMID:10880359 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: a (3R)-3-hydroxyacyl-CoA is a substrate consumed by RHEA:66924 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:66925
+      snippet: '[(R)-3-hydroxyalkanoate](n) + a (3R)-3-hydroxyacyl-CoA => [(R)-3-hydroxyalkanoate](n+1)
+        + CoA'
+      notes: Rhea's left-to-right directional reaction RHEA:66925 declares side 66924_L as its substrates
+        (rh:substrates); the master reaction RHEA:66924 is undirected. This participant is CHEBI:57319
+        with coefficient 1. Rhea cites PMID:28884324, PMID:7957260, PMID:2078525, PMID:10880359 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: '[(R)-3-hydroxyalkanoate](n+1) is a product released by RHEA:66924 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:66925
+      snippet: '[(R)-3-hydroxyalkanoate](n) + a (3R)-3-hydroxyacyl-CoA => [(R)-3-hydroxyalkanoate](n+1)
+        + CoA'
+      notes: Rhea's left-to-right directional reaction RHEA:66925 declares side 66924_R as its products
+        (rh:products); the master reaction RHEA:66924 is undirected. This participant is POLYMER:17147
+        with coefficient 1. Rhea cites PMID:28884324, PMID:7957260, PMID:2078525, PMID:10880359 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: CoA is a product released by RHEA:66924 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:66925
+      snippet: '[(R)-3-hydroxyalkanoate](n) + a (3R)-3-hydroxyacyl-CoA => [(R)-3-hydroxyalkanoate](n+1)
+        + CoA'
+      notes: Rhea's left-to-right directional reaction RHEA:66925 declares side 66924_R as its products
+        (rh:products); the master reaction RHEA:66924 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:28884324, PMID:7957260, PMID:2078525, PMID:10880359 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

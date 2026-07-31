@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:231519
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,108 @@ definitions:
       Catalyses the reaction: 4-ethylbenzyl alcohol + O2 = 4-ethylbenzaldehyde + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-ethylbenzyl alcohol + O2 = 4-ethylbenzaldehyde + H2O2
+  description: Substrate-to-product chemistry of RHEA:80467, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80468 (rh:substrates → 80467_L, rh:products → 80467_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4-ethylbenzyl alcohol + O2 = 4-ethylbenzaldehyde + H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80467
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4-ethylbenzyl alcohol + O2 = 4-ethylbenzaldehyde + H2O2'
+  - node_id: sub1
+    label: 4-ethylbenzyl alcohol
+    node_type: CHEMICAL
+    grounding: CHEBI:231519
+    description: Formula C9H12O.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: 4-ethylbenzaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:167400
+    description: Formula C9H10O.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aryl-alcohol oxidase activity
+    grounding: GO:0047682
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-ethylbenzyl alcohol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80468
+      snippet: 4-ethylbenzyl alcohol + O2 => 4-ethylbenzaldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:80468 declares side 80467_L as its substrates
+        (rh:substrates); the master reaction RHEA:80467 is undirected. This participant is CHEBI:231519
+        with coefficient 1. Rhea cites PMID:10809692 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80468
+      snippet: 4-ethylbenzyl alcohol + O2 => 4-ethylbenzaldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:80468 declares side 80467_L as its substrates
+        (rh:substrates); the master reaction RHEA:80467 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:10809692 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-ethylbenzaldehyde is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80468
+      snippet: 4-ethylbenzyl alcohol + O2 => 4-ethylbenzaldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:80468 declares side 80467_R as its products
+        (rh:products); the master reaction RHEA:80467 is undirected. This participant is CHEBI:167400
+        with coefficient 1. Rhea cites PMID:10809692 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80468
+      snippet: 4-ethylbenzyl alcohol + O2 => 4-ethylbenzaldehyde + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:80468 declares side 80467_R as its products
+        (rh:products); the master reaction RHEA:80467 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:10809692 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:80467
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047682"/>
+      notes: The rdfs:seeAlso triple on RHEA:80467 in rhea.rdf. GO term GO:0047682 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.8.-
 synonyms:
@@ -33,4 +33,126 @@ definitions:
       Catalyses: di-trans,octa-cis-undecaprenyl phosphate + UDP-alpha-D-galactose = alpha- D-galactosyl-di-trans,octa-cis-undecaprenyl diphosphate + UMP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of undecaprenyl-phosphate galactose phosphotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.8.6. EC 2.7.8.6 maps to exactly
+    one curated Rhea reaction (RHEA:11652), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "di-trans,octa-cis-undecaprenyl
+    phosphate + UDP-alpha-D-galactose = alpha- D-galactosyl-di-trans,octa-cis-undecaprenyl diphosphate
+    + UMP". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: undecaprenyl-phosphate galactose phosphotransferase
+    grounding: EC:2.7.8.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: di-trans,octa-cis-undecaprenyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:60392
+    description: Formula C55H89O4P.
+  - node_id: sub2
+    label: UDP-alpha-D-galactose
+    node_type: CHEMICAL
+    grounding: CHEBI:66914
+    description: Formula C15H22N2O17P2.
+  - node_id: prd1
+    label: alpha-D-galactosyl-di-trans,octa-cis-undecaprenyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:138733
+    description: Formula C61H100O12P2.
+  - node_id: prd2
+    label: UMP
+    node_type: CHEMICAL
+    grounding: CHEBI:57865
+    description: Formula C9H11N2O9P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: undecaprenyl-phosphate galactose phosphotransferase activity
+    grounding: GO:0047360
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P26406
+    node_type: PROTEIN
+    label: RFBP_SALTY
+    grounding: UniProtKB:P26406
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: di-trans,octa-cis-undecaprenyl phosphate is a substrate consumed by RHEA:11652 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11653
+      snippet: di-trans,octa-cis-undecaprenyl phosphate + UDP-alpha-D-galactose => alpha-D-galactosyl-di-trans,octa-cis-undecaprenyl
+        diphosphate + UMP
+      notes: Rhea's left-to-right directional reaction RHEA:11653 declares side 11652_L as its substrates
+        (rh:substrates); the master reaction RHEA:11652 is undirected. This participant is CHEBI:60392
+        with coefficient 1. Rhea cites PMID:4291948, PMID:8626328 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-galactose is a substrate consumed by RHEA:11652 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11653
+      snippet: di-trans,octa-cis-undecaprenyl phosphate + UDP-alpha-D-galactose => alpha-D-galactosyl-di-trans,octa-cis-undecaprenyl
+        diphosphate + UMP
+      notes: Rhea's left-to-right directional reaction RHEA:11653 declares side 11652_L as its substrates
+        (rh:substrates); the master reaction RHEA:11652 is undirected. This participant is CHEBI:66914
+        with coefficient 1. Rhea cites PMID:4291948, PMID:8626328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-galactosyl-di-trans,octa-cis-undecaprenyl diphosphate is a product released by
+      RHEA:11652 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11653
+      snippet: di-trans,octa-cis-undecaprenyl phosphate + UDP-alpha-D-galactose => alpha-D-galactosyl-di-trans,octa-cis-undecaprenyl
+        diphosphate + UMP
+      notes: Rhea's left-to-right directional reaction RHEA:11653 declares side 11652_R as its products
+        (rh:products); the master reaction RHEA:11652 is undirected. This participant is CHEBI:138733
+        with coefficient 1. Rhea cites PMID:4291948, PMID:8626328 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UMP is a product released by RHEA:11652 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11653
+      snippet: di-trans,octa-cis-undecaprenyl phosphate + UDP-alpha-D-galactose => alpha-D-galactosyl-di-trans,octa-cis-undecaprenyl
+        diphosphate + UMP
+      notes: Rhea's left-to-right directional reaction RHEA:11653 declares side 11652_R as its products
+        (rh:products); the master reaction RHEA:11652 is undirected. This participant is CHEBI:57865 with
+        coefficient 1. Rhea cites PMID:4291948, PMID:8626328 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.8.6
+      snippet: EC:2.7.8.6 > GO:undecaprenyl-phosphate galactose phosphotransferase activity ; GO:0047360
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047360 is itself a record
+        in this KB.
+  - subject: prot_P26406
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RFBP_SALTY is an exemplar enzyme with EC 2.7.8.6 activity.
+    evidence:
+    - reference: EC:2.7.8.6
+      snippet: DR   P26406, RFBP_SALTY ;
+      notes: ExPASy ENZYME entry EC 2.7.8.6 cross-references UniProtKB:P26406 (RFBP_SALTY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

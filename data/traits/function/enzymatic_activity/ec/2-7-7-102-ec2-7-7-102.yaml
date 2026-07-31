@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.7.-
 synonyms:
@@ -38,4 +38,67 @@ definitions:
       Catalyses: (1) ssDNA + n NTP = ssDNA/pppN(pN)n-1 hybrid + (n-1) diphosphate. (2) ssDNA + n dNTP = ssDNA/pppdN(pdN)n-1 hybrid + (n-1) diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of DNA primase AEP
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.7.102. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "(1) ssDNA
+    + n NTP = ssDNA/pppN(pN)n-1 hybrid + (n-1) diphosphate. (2) ssDNA + n dNTP = ssDNA/pppdN(pdN)n-1 hybrid
+    + (n-1) diphosphate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: DNA primase AEP
+    grounding: EC:2.7.7.102
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q8ILY1
+    node_type: PROTEIN
+    label: PREX_PLAF7
+    grounding: UniProtKB:Q8ILY1
+  - node_id: prot_P49642
+    node_type: PROTEIN
+    label: PRI1_HUMAN
+    grounding: UniProtKB:P49642
+  - node_id: prot_P20664
+    node_type: PROTEIN
+    label: PRI1_MOUSE
+    grounding: UniProtKB:P20664
+  edges:
+  - subject: prot_Q8ILY1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PREX_PLAF7 is an exemplar enzyme with EC 2.7.7.102 activity.
+    evidence:
+    - reference: EC:2.7.7.102
+      snippet: DR   Q8ILY1, PREX_PLAF7 ;  P49642, PRI1_HUMAN ;  P20664, PRI1_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.7.7.102 cross-references UniProtKB:Q8ILY1 (PREX_PLAF7) as a protein
+        with this activity.
+  - subject: prot_P49642
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRI1_HUMAN is an exemplar enzyme with EC 2.7.7.102 activity.
+    evidence:
+    - reference: EC:2.7.7.102
+      snippet: DR   Q8ILY1, PREX_PLAF7 ;  P49642, PRI1_HUMAN ;  P20664, PRI1_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.7.7.102 cross-references UniProtKB:P49642 (PRI1_HUMAN) as a protein
+        with this activity.
+  - subject: prot_P20664
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRI1_MOUSE is an exemplar enzyme with EC 2.7.7.102 activity.
+    evidence:
+    - reference: EC:2.7.7.102
+      snippet: DR   Q8ILY1, PREX_PLAF7 ;  P49642, PRI1_HUMAN ;  P20664, PRI1_MOUSE ;
+      notes: ExPASy ENZYME entry EC 2.7.7.102 cross-references UniProtKB:P20664 (PRI1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

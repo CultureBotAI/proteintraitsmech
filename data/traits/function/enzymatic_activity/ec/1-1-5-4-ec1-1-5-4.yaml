@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.5.-
 synonyms:
@@ -51,4 +51,249 @@ definitions:
       Catalyses: (S)-malate + a quinone = a quinol + oxaloacetate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of malate dehydrogenase (quinone)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.5.4. Rhea assigns 2 curated
+    reactions to EC 1.1.5.4. No one substrate set is the class''s chemistry, so each reaction is its own
+    node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy ENZYME
+    states the catalysed reaction as: "(S)-malate + a quinone = a quinol + oxaloacetate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: malate dehydrogenase (quinone)
+    grounding: EC:1.1.5.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of a menaquinone + (S)-malate = a menaquinol + oxaloacetate
+    grounding: RHEA:30095
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: a menaquinone + (S)-malate = a menaquinol + oxaloacetate'
+  - node_id: rxn1_sub1
+    label: a menaquinone
+    node_type: CHEMICAL
+    grounding: CHEBI:16374
+    xrefs:
+    - RHEA-COMP:9537
+    description: Rhea compound POLYMER:9537. Formula C11H8O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: rxn1_sub2
+    label: (S)-malate
+    node_type: CHEMICAL
+    grounding: CHEBI:15589
+    description: Formula C4H4O5.
+  - node_id: rxn1_prd1
+    label: a menaquinol
+    node_type: CHEMICAL
+    grounding: CHEBI:18151
+    xrefs:
+    - RHEA-COMP:9539
+    description: Rhea compound POLYMER:9539. Formula C11H10O2(C5H8)<i><sub>n</sub></i>.
+  - node_id: rxn1_prd2
+    label: oxaloacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+    description: Formula C4H2O5.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (S)-malate + a quinone = a quinol + oxaloacetate
+    grounding: RHEA:46012
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (S)-malate + a quinone = a quinol + oxaloacetate'
+  - node_id: rxn2_sub1
+    label: (S)-malate
+    node_type: CHEMICAL
+    grounding: CHEBI:15589
+    description: Formula C4H4O5.
+  - node_id: rxn2_sub2
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: rxn2_prd1
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  - node_id: rxn2_prd2
+    label: oxaloacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:16452
+    description: Formula C4H2O5.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-malate dehydrogenase (quinone) activity
+    grounding: GO:0008924
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9HYF4
+    node_type: PROTEIN
+    label: MQO1_PSEAE
+    grounding: UniProtKB:Q9HYF4
+  - node_id: prot_Q88PU7
+    node_type: PROTEIN
+    label: MQO1_PSEPK
+    grounding: UniProtKB:Q88PU7
+  - node_id: prot_Q5HDJ0
+    node_type: PROTEIN
+    label: MQO1_STAAC
+    grounding: UniProtKB:Q5HDJ0
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:30095 is one of the 2 curated reactions Rhea assigns to EC 1.1.5.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:30095
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.5.4"/>
+      notes: The rh:ec triple on RHEA:30095 in rhea.rdf assigns that reaction to EC 1.1.5.4.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: a menaquinone is a substrate consumed by RHEA:30095 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30096
+      snippet: a menaquinone + (S)-malate => a menaquinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:30096 declares side 30095_L as its substrates
+        (rh:substrates); the master reaction RHEA:30095 is undirected. This participant is POLYMER:9537
+        with coefficient 1.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: (S)-malate is a substrate consumed by RHEA:30095 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30096
+      snippet: a menaquinone + (S)-malate => a menaquinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:30096 declares side 30095_L as its substrates
+        (rh:substrates); the master reaction RHEA:30095 is undirected. This participant is CHEBI:15589
+        with coefficient 1.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: a menaquinol is a product released by RHEA:30095 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30096
+      snippet: a menaquinone + (S)-malate => a menaquinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:30096 declares side 30095_R as its products
+        (rh:products); the master reaction RHEA:30095 is undirected. This participant is POLYMER:9539
+        with coefficient 1.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: oxaloacetate is a product released by RHEA:30095 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30096
+      snippet: a menaquinone + (S)-malate => a menaquinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:30096 declares side 30095_R as its products
+        (rh:products); the master reaction RHEA:30095 is undirected. This participant is CHEBI:16452 with
+        coefficient 1.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:46012 is one of the 2 curated reactions Rhea assigns to EC 1.1.5.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:46012
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.5.4"/>
+      notes: The rh:ec triple on RHEA:46012 in rhea.rdf assigns that reaction to EC 1.1.5.4.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (S)-malate is a substrate consumed by RHEA:46012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46013
+      snippet: (S)-malate + a quinone => a quinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:46013 declares side 46012_L as its substrates
+        (rh:substrates); the master reaction RHEA:46012 is undirected. This participant is CHEBI:15589
+        with coefficient 1. Rhea cites PMID:9660197, PMID:629992, PMID:10809701, PMID:234747 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: a quinone is a substrate consumed by RHEA:46012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46013
+      snippet: (S)-malate + a quinone => a quinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:46013 declares side 46012_L as its substrates
+        (rh:substrates); the master reaction RHEA:46012 is undirected. This participant is CHEBI:132124
+        with coefficient 1. Rhea cites PMID:9660197, PMID:629992, PMID:10809701, PMID:234747 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: a quinol is a product released by RHEA:46012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46013
+      snippet: (S)-malate + a quinone => a quinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:46013 declares side 46012_R as its products
+        (rh:products); the master reaction RHEA:46012 is undirected. This participant is CHEBI:24646 with
+        coefficient 1. Rhea cites PMID:9660197, PMID:629992, PMID:10809701, PMID:234747 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: oxaloacetate is a product released by RHEA:46012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46013
+      snippet: (S)-malate + a quinone => a quinol + oxaloacetate
+      notes: Rhea's left-to-right directional reaction RHEA:46013 declares side 46012_R as its products
+        (rh:products); the master reaction RHEA:46012 is undirected. This participant is CHEBI:16452 with
+        coefficient 1. Rhea cites PMID:9660197, PMID:629992, PMID:10809701, PMID:234747 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.5.4
+      snippet: EC:1.1.5.4 > GO:L-malate dehydrogenase (quinone) activity ; GO:0008924
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008924 is itself a record
+        in this KB.
+  - subject: prot_Q9HYF4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MQO1_PSEAE is an exemplar enzyme with EC 1.1.5.4 activity.
+    evidence:
+    - reference: EC:1.1.5.4
+      snippet: DR   Q9HYF4, MQO1_PSEAE ;  Q88PU7, MQO1_PSEPK ;  Q5HDJ0, MQO1_STAAC ;
+      notes: ExPASy ENZYME entry EC 1.1.5.4 cross-references UniProtKB:Q9HYF4 (MQO1_PSEAE) as a protein
+        with this activity.
+  - subject: prot_Q88PU7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MQO1_PSEPK is an exemplar enzyme with EC 1.1.5.4 activity.
+    evidence:
+    - reference: EC:1.1.5.4
+      snippet: DR   Q9HYF4, MQO1_PSEAE ;  Q88PU7, MQO1_PSEPK ;  Q5HDJ0, MQO1_STAAC ;
+      notes: ExPASy ENZYME entry EC 1.1.5.4 cross-references UniProtKB:Q88PU7 (MQO1_PSEPK) as a protein
+        with this activity.
+  - subject: prot_Q5HDJ0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MQO1_STAAC is an exemplar enzyme with EC 1.1.5.4 activity.
+    evidence:
+    - reference: EC:1.1.5.4
+      snippet: DR   Q9HYF4, MQO1_PSEAE ;  Q88PU7, MQO1_PSEPK ;  Q5HDJ0, MQO1_STAAC ;
+      notes: ExPASy ENZYME entry EC 1.1.5.4 cross-references UniProtKB:Q5HDJ0 (MQO1_STAAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (14 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

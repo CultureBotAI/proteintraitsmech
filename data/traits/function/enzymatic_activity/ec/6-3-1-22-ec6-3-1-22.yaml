@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.3.1.-
 mapped_xrefs:
@@ -36,4 +36,205 @@ definitions:
       Catalyses: cytidine(34) in elongator tRNA(Met) + acetate + ATP = N(4)- acetylcytidine(34) in elongator tRNA(Met) + AMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of tRNAmet cytidine acetate ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.3.1.22. EC 6.3.1.22 maps to exactly
+    one curated Rhea reaction (RHEA:58144), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "cytidine(34)
+    in elongator tRNA(Met) + acetate + ATP = N(4)- acetylcytidine(34) in elongator tRNA(Met) + AMP + diphosphate".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: tRNAmet cytidine acetate ligase
+    grounding: EC:6.3.1.22
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: cytidine(34) in elongator tRNA(Met)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10693
+    description: Rhea compound GENERIC:10693.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: CMP residue at position 34
+    description: The reacting group Rhea names inside the generic participant GENERIC:10693 (cytidine(34)
+      in elongator tRNA(Met)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82748
+  - node_id: sub2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: N(4)-acetylcytidine(34) in elongator tRNA(Met)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10694
+    description: Rhea compound GENERIC:10694.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(4)-acetylcytidine 5'-phosphate residue at position 34
+    description: The reacting group Rhea names inside the generic participant GENERIC:10694 (N(4)-acetylcytidine(34)
+      in elongator tRNA(Met)); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74900
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A3DF04
+    node_type: PROTEIN
+    label: TMCAL_ACET2
+    grounding: UniProtKB:A3DF04
+  - node_id: prot_C4Z916
+    node_type: PROTEIN
+    label: TMCAL_AGARV
+    grounding: UniProtKB:C4Z916
+  - node_id: prot_A6TRU7
+    node_type: PROTEIN
+    label: TMCAL_ALKMQ
+    grounding: UniProtKB:A6TRU7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cytidine(34) in elongator tRNA(Met) is a substrate consumed by RHEA:58144 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:58145
+      snippet: cytidine(34) in elongator tRNA(Met) + acetate + ATP => N(4)-acetylcytidine(34) in elongator
+        tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58145 declares side 58144_L as its substrates
+        (rh:substrates); the master reaction RHEA:58144 is undirected. This participant is GENERIC:10693
+        with coefficient 1. Rhea cites PMID:30150682 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: CMP residue is the reactive part of cytidine(34) in elongator tRNA(Met).
+    evidence:
+    - reference: RHEA:58144
+      snippet: CMP residue
+      notes: Rhea compound GENERIC:10693 (cytidine(34) in elongator tRNA(Met)) declares rh:reactivePart
+        at position 34 = CMP residue (CHEBI:82748).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetate is a substrate consumed by RHEA:58144 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58145
+      snippet: cytidine(34) in elongator tRNA(Met) + acetate + ATP => N(4)-acetylcytidine(34) in elongator
+        tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58145 declares side 58144_L as its substrates
+        (rh:substrates); the master reaction RHEA:58144 is undirected. This participant is CHEBI:30089
+        with coefficient 1. Rhea cites PMID:30150682 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:58144 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58145
+      snippet: cytidine(34) in elongator tRNA(Met) + acetate + ATP => N(4)-acetylcytidine(34) in elongator
+        tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58145 declares side 58144_L as its substrates
+        (rh:substrates); the master reaction RHEA:58144 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:30150682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(4)-acetylcytidine(34) in elongator tRNA(Met) is a product released by RHEA:58144 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:58145
+      snippet: cytidine(34) in elongator tRNA(Met) + acetate + ATP => N(4)-acetylcytidine(34) in elongator
+        tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58145 declares side 58144_R as its products
+        (rh:products); the master reaction RHEA:58144 is undirected. This participant is GENERIC:10694
+        with coefficient 1. Rhea cites PMID:30150682 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(4)-acetylcytidine 5'-phosphate residue is the reactive part of N(4)-acetylcytidine(34)
+      in elongator tRNA(Met).
+    evidence:
+    - reference: RHEA:58144
+      snippet: N(4)-acetylcytidine 5'-phosphate residue
+      notes: Rhea compound GENERIC:10694 (N(4)-acetylcytidine(34) in elongator tRNA(Met)) declares rh:reactivePart
+        at position 34 = N(4)-acetylcytidine 5'-phosphate residue (CHEBI:74900).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:58144 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58145
+      snippet: cytidine(34) in elongator tRNA(Met) + acetate + ATP => N(4)-acetylcytidine(34) in elongator
+        tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58145 declares side 58144_R as its products
+        (rh:products); the master reaction RHEA:58144 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:30150682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:58144 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58145
+      snippet: cytidine(34) in elongator tRNA(Met) + acetate + ATP => N(4)-acetylcytidine(34) in elongator
+        tRNA(Met) + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58145 declares side 58144_R as its products
+        (rh:products); the master reaction RHEA:58144 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:30150682 for this reaction.
+  - subject: prot_A3DF04
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TMCAL_ACET2 is an exemplar enzyme with EC 6.3.1.22 activity.
+    evidence:
+    - reference: EC:6.3.1.22
+      snippet: DR   A3DF04, TMCAL_ACET2;  C4Z916, TMCAL_AGARV;  A6TRU7, TMCAL_ALKMQ;
+      notes: ExPASy ENZYME entry EC 6.3.1.22 cross-references UniProtKB:A3DF04 (TMCAL_ACET2) as a protein
+        with this activity.
+  - subject: prot_C4Z916
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TMCAL_AGARV is an exemplar enzyme with EC 6.3.1.22 activity.
+    evidence:
+    - reference: EC:6.3.1.22
+      snippet: DR   A3DF04, TMCAL_ACET2;  C4Z916, TMCAL_AGARV;  A6TRU7, TMCAL_ALKMQ;
+      notes: ExPASy ENZYME entry EC 6.3.1.22 cross-references UniProtKB:C4Z916 (TMCAL_AGARV) as a protein
+        with this activity.
+  - subject: prot_A6TRU7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TMCAL_ALKMQ is an exemplar enzyme with EC 6.3.1.22 activity.
+    evidence:
+    - reference: EC:6.3.1.22
+      snippet: DR   A3DF04, TMCAL_ACET2;  C4Z916, TMCAL_AGARV;  A6TRU7, TMCAL_ALKMQ;
+      notes: ExPASy ENZYME entry EC 6.3.1.22 cross-references UniProtKB:A6TRU7 (TMCAL_ALKMQ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

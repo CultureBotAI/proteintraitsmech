@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57817
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,110 @@ definitions:
       Catalyses the reaction: sphinganine + UDP-alpha-D-galactose = beta-D-galactosyl-(1<->1')-sphinganine + UDP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sphinganine + UDP-alpha-D-galactose = beta-D-galactosyl-(1<->1')-sphinganine
+    + UDP + H(…
+  description: Substrate-to-product chemistry of RHEA:43408, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:43409 (rh:substrates → 43408_L, rh:products → 43408_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of sphinganine + UDP-alpha-D-galactose = beta-D-galactosyl-(1<->1')-sphinganine…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:43408
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: sphinganine + UDP-alpha-D-galactose = beta-D-galactosyl-(1<->1'')-sphinganine + UDP
+      + H(+)'
+  - node_id: sub1
+    label: sphinganine
+    node_type: CHEMICAL
+    grounding: CHEBI:57817
+    description: Formula C18H40NO2.
+  - node_id: sub2
+    label: UDP-alpha-D-galactose
+    node_type: CHEMICAL
+    grounding: CHEBI:66914
+    description: Formula C15H22N2O17P2.
+  - node_id: prd1
+    label: beta-D-galactosyl-(1<->1')-sphinganine
+    node_type: CHEMICAL
+    grounding: CHEBI:83234
+    description: Formula C24H50NO7.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sphinganine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43409
+      snippet: sphinganine + UDP-alpha-D-galactose => beta-D-galactosyl-(1<->1')-sphinganine + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43409 declares side 43408_L as its substrates
+        (rh:substrates); the master reaction RHEA:43408 is undirected. This participant is CHEBI:57817
+        with coefficient 1. Rhea cites PMID:13810623 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-galactose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43409
+      snippet: sphinganine + UDP-alpha-D-galactose => beta-D-galactosyl-(1<->1')-sphinganine + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43409 declares side 43408_L as its substrates
+        (rh:substrates); the master reaction RHEA:43408 is undirected. This participant is CHEBI:66914
+        with coefficient 1. Rhea cites PMID:13810623 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-galactosyl-(1<->1')-sphinganine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:43409
+      snippet: sphinganine + UDP-alpha-D-galactose => beta-D-galactosyl-(1<->1')-sphinganine + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43409 declares side 43408_R as its products
+        (rh:products); the master reaction RHEA:43408 is undirected. This participant is CHEBI:83234 with
+        coefficient 1. Rhea cites PMID:13810623 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43409
+      snippet: sphinganine + UDP-alpha-D-galactose => beta-D-galactosyl-(1<->1')-sphinganine + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43409 declares side 43408_R as its products
+        (rh:products); the master reaction RHEA:43408 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:13810623 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43409
+      snippet: sphinganine + UDP-alpha-D-galactose => beta-D-galactosyl-(1<->1')-sphinganine + UDP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:43409 declares side 43408_R as its products
+        (rh:products); the master reaction RHEA:43408 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:13810623 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

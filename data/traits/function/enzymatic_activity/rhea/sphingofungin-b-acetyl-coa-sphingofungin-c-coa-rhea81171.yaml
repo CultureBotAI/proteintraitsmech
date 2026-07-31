@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:231807
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: sphingofungin B + acetyl-CoA = sphingofungin C + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sphingofungin B + acetyl-CoA = sphingofungin C + CoA
+  description: Substrate-to-product chemistry of RHEA:81171, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:81172 (rh:substrates → 81171_L, rh:products → 81171_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of sphingofungin B + acetyl-CoA = sphingofungin C + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:81171
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: sphingofungin B + acetyl-CoA = sphingofungin C + CoA'
+  - node_id: sub1
+    label: sphingofungin B
+    node_type: CHEMICAL
+    grounding: CHEBI:231807
+    description: Formula C20H39NO6.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: sphingofungin C
+    node_type: CHEMICAL
+    grounding: CHEBI:231808
+    description: Formula C22H41NO7.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: sphingofungin B is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81172
+      snippet: sphingofungin B + acetyl-CoA => sphingofungin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:81172 declares side 81171_L as its substrates
+        (rh:substrates); the master reaction RHEA:81171 is undirected. This participant is CHEBI:231807
+        with coefficient 1. Rhea cites PMID:35023724 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81172
+      snippet: sphingofungin B + acetyl-CoA => sphingofungin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:81172 declares side 81171_L as its substrates
+        (rh:substrates); the master reaction RHEA:81171 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:35023724 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sphingofungin C is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81172
+      snippet: sphingofungin B + acetyl-CoA => sphingofungin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:81172 declares side 81171_R as its products
+        (rh:products); the master reaction RHEA:81171 is undirected. This participant is CHEBI:231808
+        with coefficient 1. Rhea cites PMID:35023724 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81172
+      snippet: sphingofungin B + acetyl-CoA => sphingofungin C + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:81172 declares side 81171_R as its products
+        (rh:products); the master reaction RHEA:81171 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:35023724 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

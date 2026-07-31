@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.1.2.-
 synonyms:
@@ -45,4 +45,132 @@ definitions:
       Catalyses: L-fuculose 1-phosphate = (S)-lactaldehyde + dihydroxyacetone phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-fuculose-phosphate aldolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.1.2.17. EC 4.1.2.17 maps to exactly
+    one curated Rhea reaction (RHEA:12933), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-fuculose 1-phosphate
+    = (S)-lactaldehyde + dihydroxyacetone phosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-fuculose-phosphate aldolase
+    grounding: EC:4.1.2.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-fuculose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57846
+    description: Formula C6H11O8P.
+  - node_id: prd1
+    label: (S)-lactaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:18041
+    description: Formula C3H6O2.
+  - node_id: prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-fuculose-phosphate aldolase activity
+    grounding: GO:0008738
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8X6R8
+    node_type: PROTEIN
+    label: FUCA_ECO57
+    grounding: UniProtKB:Q8X6R8
+  - node_id: prot_Q8FEF0
+    node_type: PROTEIN
+    label: FUCA_ECOL6
+    grounding: UniProtKB:Q8FEF0
+  - node_id: prot_P0AB87
+    node_type: PROTEIN
+    label: FUCA_ECOLI
+    grounding: UniProtKB:P0AB87
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-fuculose 1-phosphate is a substrate consumed by RHEA:12933 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12934
+      snippet: L-fuculose 1-phosphate => (S)-lactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12934 declares side 12933_L as its substrates
+        (rh:substrates); the master reaction RHEA:12933 is undirected. This participant is CHEBI:57846
+        with coefficient 1. Rhea cites PMID:11054289, PMID:10821675, PMID:8676381 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-lactaldehyde is a product released by RHEA:12933 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12934
+      snippet: L-fuculose 1-phosphate => (S)-lactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12934 declares side 12933_R as its products
+        (rh:products); the master reaction RHEA:12933 is undirected. This participant is CHEBI:18041 with
+        coefficient 1. Rhea cites PMID:11054289, PMID:10821675, PMID:8676381 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dihydroxyacetone phosphate is a product released by RHEA:12933 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12934
+      snippet: L-fuculose 1-phosphate => (S)-lactaldehyde + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:12934 declares side 12933_R as its products
+        (rh:products); the master reaction RHEA:12933 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:11054289, PMID:10821675, PMID:8676381 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.1.2.17
+      snippet: EC:4.1.2.17 > GO:L-fuculose-phosphate aldolase activity ; GO:0008738
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008738 is itself a record
+        in this KB.
+  - subject: prot_Q8X6R8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUCA_ECO57 is an exemplar enzyme with EC 4.1.2.17 activity.
+    evidence:
+    - reference: EC:4.1.2.17
+      snippet: DR   Q8X6R8, FUCA_ECO57 ;  Q8FEF0, FUCA_ECOL6 ;  P0AB87, FUCA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.1.2.17 cross-references UniProtKB:Q8X6R8 (FUCA_ECO57) as a protein
+        with this activity.
+  - subject: prot_Q8FEF0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUCA_ECOL6 is an exemplar enzyme with EC 4.1.2.17 activity.
+    evidence:
+    - reference: EC:4.1.2.17
+      snippet: DR   Q8X6R8, FUCA_ECO57 ;  Q8FEF0, FUCA_ECOL6 ;  P0AB87, FUCA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.1.2.17 cross-references UniProtKB:Q8FEF0 (FUCA_ECOL6) as a protein
+        with this activity.
+  - subject: prot_P0AB87
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FUCA_ECOLI is an exemplar enzyme with EC 4.1.2.17 activity.
+    evidence:
+    - reference: EC:4.1.2.17
+      snippet: DR   Q8X6R8, FUCA_ECO57 ;  Q8FEF0, FUCA_ECOL6 ;  P0AB87, FUCA_ECOLI ;
+      notes: ExPASy ENZYME entry EC 4.1.2.17 cross-references UniProtKB:P0AB87 (FUCA_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

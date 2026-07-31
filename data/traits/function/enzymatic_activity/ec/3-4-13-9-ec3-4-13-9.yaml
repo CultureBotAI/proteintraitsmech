@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.13.-
 synonyms:
@@ -51,4 +51,150 @@ definitions:
       Catalyses: Xaa-L-Pro dipeptide + H2O = an L-alpha-amino acid + L-proline
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Xaa-Pro dipeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.13.9. EC 3.4.13.9 maps to exactly
+    one curated Rhea reaction (RHEA:76407), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "Xaa-L-Pro dipeptide
+    + H2O = an L-alpha-amino acid + L-proline". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: Xaa-Pro dipeptidase
+    grounding: EC:3.4.13.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: Xaa-L-Pro dipeptide
+    node_type: CHEMICAL
+    grounding: CHEBI:195196
+    description: Formula C7H11N2O3R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: an L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+    description: Formula C2H4NO2R.
+  - node_id: prd2
+    label: L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:60039
+    description: Formula C5H9NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: proline dipeptidase activity
+    grounding: GO:0102009
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q55E60
+    node_type: PROTEIN
+    label: PEPD_DICDI
+    grounding: UniProtKB:Q55E60
+  - node_id: prot_P12955
+    node_type: PROTEIN
+    label: PEPD_HUMAN
+    grounding: UniProtKB:P12955
+  - node_id: prot_Q11136
+    node_type: PROTEIN
+    label: PEPD_MOUSE
+    grounding: UniProtKB:Q11136
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Xaa-L-Pro dipeptide is a substrate consumed by RHEA:76407 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:76408
+      snippet: Xaa-L-Pro dipeptide + H2O => an L-alpha-amino acid + L-proline
+      notes: Rhea's left-to-right directional reaction RHEA:76408 declares side 76407_L as its substrates
+        (rh:substrates); the master reaction RHEA:76407 is undirected. This participant is CHEBI:195196
+        with coefficient 1. Rhea cites PMID:15313226, PMID:25354344, PMID:17081196, PMID:6853481 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:76407 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76408
+      snippet: Xaa-L-Pro dipeptide + H2O => an L-alpha-amino acid + L-proline
+      notes: Rhea's left-to-right directional reaction RHEA:76408 declares side 76407_L as its substrates
+        (rh:substrates); the master reaction RHEA:76407 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15313226, PMID:25354344, PMID:17081196, PMID:6853481 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an L-alpha-amino acid is a product released by RHEA:76407 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:76408
+      snippet: Xaa-L-Pro dipeptide + H2O => an L-alpha-amino acid + L-proline
+      notes: Rhea's left-to-right directional reaction RHEA:76408 declares side 76407_R as its products
+        (rh:products); the master reaction RHEA:76407 is undirected. This participant is CHEBI:59869 with
+        coefficient 1. Rhea cites PMID:15313226, PMID:25354344, PMID:17081196, PMID:6853481 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-proline is a product released by RHEA:76407 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:76408
+      snippet: Xaa-L-Pro dipeptide + H2O => an L-alpha-amino acid + L-proline
+      notes: Rhea's left-to-right directional reaction RHEA:76408 declares side 76407_R as its products
+        (rh:products); the master reaction RHEA:76407 is undirected. This participant is CHEBI:60039 with
+        coefficient 1. Rhea cites PMID:15313226, PMID:25354344, PMID:17081196, PMID:6853481 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.13.9
+      snippet: EC:3.4.13.9 > GO:proline dipeptidase activity ; GO:0102009
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102009 is itself a record
+        in this KB.
+  - subject: prot_Q55E60
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPD_DICDI is an exemplar enzyme with EC 3.4.13.9 activity.
+    evidence:
+    - reference: EC:3.4.13.9
+      snippet: DR   Q55E60, PEPD_DICDI ;  P12955, PEPD_HUMAN ;  Q11136, PEPD_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.13.9 cross-references UniProtKB:Q55E60 (PEPD_DICDI) as a protein
+        with this activity.
+  - subject: prot_P12955
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPD_HUMAN is an exemplar enzyme with EC 3.4.13.9 activity.
+    evidence:
+    - reference: EC:3.4.13.9
+      snippet: DR   Q55E60, PEPD_DICDI ;  P12955, PEPD_HUMAN ;  Q11136, PEPD_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.13.9 cross-references UniProtKB:P12955 (PEPD_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q11136
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PEPD_MOUSE is an exemplar enzyme with EC 3.4.13.9 activity.
+    evidence:
+    - reference: EC:3.4.13.9
+      snippet: DR   Q55E60, PEPD_DICDI ;  P12955, PEPD_HUMAN ;  Q11136, PEPD_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.13.9 cross-references UniProtKB:Q11136 (PEPD_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

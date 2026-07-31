@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.1.3.25
     mapping_source: rhea2ec
@@ -24,4 +24,95 @@ definitions:
       Catalyses the reaction: dTDP-6-deoxy-beta-L-talose = dTDP-beta-L-rhamnose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dTDP-6-deoxy-beta-L-talose = dTDP-beta-L-rhamnose
+  description: Substrate-to-product chemistry of RHEA:34451, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34452 (rh:substrates → 34451_L, rh:products → 34451_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dTDP-6-deoxy-beta-L-talose = dTDP-beta-L-rhamnose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34451
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dTDP-6-deoxy-beta-L-talose = dTDP-beta-L-rhamnose'
+  - node_id: sub1
+    label: dTDP-6-deoxy-beta-L-talose
+    node_type: CHEMICAL
+    grounding: CHEBI:68576
+    description: Formula C16H24N2O15P2.
+  - node_id: prd1
+    label: dTDP-beta-L-rhamnose
+    node_type: CHEMICAL
+    grounding: CHEBI:57510
+    description: Formula C16H24N2O15P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: dTDP-L-rhamnose 4-epimerase
+    grounding: EC:5.1.3.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q2SYH7
+    node_type: PROTEIN
+    label: WBIB_BURTA
+    grounding: UniProtKB:Q2SYH7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dTDP-6-deoxy-beta-L-talose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34452
+      snippet: dTDP-6-deoxy-beta-L-talose => dTDP-beta-L-rhamnose
+      notes: Rhea's left-to-right directional reaction RHEA:34452 declares side 34451_L as its substrates
+        (rh:substrates); the master reaction RHEA:34451 is undirected. This participant is CHEBI:68576
+        with coefficient 1. Rhea cites PMID:21640586 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dTDP-beta-L-rhamnose is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34452
+      snippet: dTDP-6-deoxy-beta-L-talose => dTDP-beta-L-rhamnose
+      notes: Rhea's left-to-right directional reaction RHEA:34452 declares side 34451_R as its products
+        (rh:products); the master reaction RHEA:34451 is undirected. This participant is CHEBI:57510 with
+        coefficient 1. Rhea cites PMID:21640586 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.1.3.25; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34451
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.25"/>
+      notes: The rh:ec triple on RHEA:34451 in rhea.rdf. EC 5.1.3.25 is itself a record in this KB.
+  - subject: prot_Q2SYH7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: WBIB_BURTA is an exemplar enzyme carrying EC 5.1.3.25, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.25
+      snippet: DR   Q2SYH7, WBIB_BURTA ;
+      notes: ExPASy ENZYME entry EC 5.1.3.25 cross-references UniProtKB:Q2SYH7 (WBIB_BURTA) as a protein
+        with this activity.
+    - reference: RHEA:34451
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.25"/>
+      notes: Rhea assigns RHEA:34451 to EC 5.1.3.25, and EC 5.1.3.25 maps to exactly one Rhea master reaction
+        (RHEA:34451), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

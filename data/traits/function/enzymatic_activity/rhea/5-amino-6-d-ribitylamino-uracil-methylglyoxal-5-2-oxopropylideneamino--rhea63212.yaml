@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:15934
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,97 @@ definitions:
       Catalyses the reaction: 5-amino-6-(D-ribitylamino)uracil + methylglyoxal = 5-(2-oxopropylideneamino)-6-(D-ribitylamino)uracil + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-amino-6-(D-ribitylamino)uracil + methylglyoxal = 5-(2-oxopropylideneamino)-6-(D-ribit…
+  description: Substrate-to-product chemistry of RHEA:63212, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63213 (rh:substrates → 63212_L, rh:products → 63212_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-amino-6-(D-ribitylamino)uracil + methylglyoxal = 5-(2-oxopropylideneamino)…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63212
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-amino-6-(D-ribitylamino)uracil + methylglyoxal = 5-(2-oxopropylideneamino)-6-(D-ribitylamino)uracil
+      + H2O'
+  - node_id: sub1
+    label: 5-amino-6-(D-ribitylamino)uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:15934
+    description: Formula C9H16N4O6.
+  - node_id: sub2
+    label: methylglyoxal
+    node_type: CHEMICAL
+    grounding: CHEBI:17158
+    description: Formula C3H4O2.
+  - node_id: prd1
+    label: 5-(2-oxopropylideneamino)-6-(D-ribitylamino)uracil
+    node_type: CHEMICAL
+    grounding: CHEBI:78398
+    description: Formula C12H18N4O7.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-amino-6-(D-ribitylamino)uracil is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:63213
+      snippet: 5-amino-6-(D-ribitylamino)uracil + methylglyoxal => 5-(2-oxopropylideneamino)-6-(D-ribitylamino)uracil
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:63213 declares side 63212_L as its substrates
+        (rh:substrates); the master reaction RHEA:63212 is undirected. This participant is CHEBI:15934
+        with coefficient 1. Rhea cites PMID:24695216 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: methylglyoxal is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63213
+      snippet: 5-amino-6-(D-ribitylamino)uracil + methylglyoxal => 5-(2-oxopropylideneamino)-6-(D-ribitylamino)uracil
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:63213 declares side 63212_L as its substrates
+        (rh:substrates); the master reaction RHEA:63212 is undirected. This participant is CHEBI:17158
+        with coefficient 1. Rhea cites PMID:24695216 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-(2-oxopropylideneamino)-6-(D-ribitylamino)uracil is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63213
+      snippet: 5-amino-6-(D-ribitylamino)uracil + methylglyoxal => 5-(2-oxopropylideneamino)-6-(D-ribitylamino)uracil
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:63213 declares side 63212_R as its products
+        (rh:products); the master reaction RHEA:63212 is undirected. This participant is CHEBI:78398 with
+        coefficient 1. Rhea cites PMID:24695216 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63213
+      snippet: 5-amino-6-(D-ribitylamino)uracil + methylglyoxal => 5-(2-oxopropylideneamino)-6-(D-ribitylamino)uracil
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:63213 declares side 63212_R as its products
+        (rh:products); the master reaction RHEA:63212 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:24695216 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

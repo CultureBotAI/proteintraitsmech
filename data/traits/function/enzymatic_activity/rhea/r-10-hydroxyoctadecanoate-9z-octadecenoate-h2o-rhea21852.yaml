@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.53
     mapping_source: rhea2ec
@@ -30,4 +30,167 @@ definitions:
       Catalyses the reaction: (R)-10-hydroxyoctadecanoate = (9Z)-octadecenoate + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (R)-10-hydroxyoctadecanoate = (9Z)-octadecenoate + H2O
+  description: Substrate-to-product chemistry of RHEA:21852, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:21853 (rh:substrates → 21852_L, rh:products → 21852_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (R)-10-hydroxyoctadecanoate = (9Z)-octadecenoate + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21852
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (R)-10-hydroxyoctadecanoate = (9Z)-octadecenoate + H2O'
+  - node_id: sub1
+    label: (R)-10-hydroxyoctadecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:15683
+    description: Formula C18H35O3.
+  - node_id: prd1
+    label: (9Z)-octadecenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30823
+    description: Formula C18H33O2.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: oleate hydratase activity
+    grounding: GO:0050151
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: oleate hydratase
+    grounding: EC:4.2.1.53
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_C7DLJ6
+    node_type: PROTEIN
+    label: OLHYD_ELIME
+    grounding: UniProtKB:C7DLJ6
+  - node_id: prot_B9E972
+    node_type: PROTEIN
+    label: OLHYD_MACCJ
+    grounding: UniProtKB:B9E972
+  - node_id: prot_B5XK69
+    node_type: PROTEIN
+    label: OLHYD_STRPZ
+    grounding: UniProtKB:B5XK69
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-10-hydroxyoctadecanoate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21853
+      snippet: (R)-10-hydroxyoctadecanoate => (9Z)-octadecenoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21853 declares side 21852_L as its substrates
+        (rh:substrates); the master reaction RHEA:21852 is undirected. This participant is CHEBI:15683
+        with coefficient 1. Rhea cites PMID:5492948, PMID:19465645, PMID:22203098 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (9Z)-octadecenoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:21853
+      snippet: (R)-10-hydroxyoctadecanoate => (9Z)-octadecenoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21853 declares side 21852_R as its products
+        (rh:products); the master reaction RHEA:21852 is undirected. This participant is CHEBI:30823 with
+        coefficient 1. Rhea cites PMID:5492948, PMID:19465645, PMID:22203098 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21853
+      snippet: (R)-10-hydroxyoctadecanoate => (9Z)-octadecenoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:21853 declares side 21852_R as its products
+        (rh:products); the master reaction RHEA:21852 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:5492948, PMID:19465645, PMID:22203098 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:21852
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050151"/>
+      notes: The rdfs:seeAlso triple on RHEA:21852 in rhea.rdf. GO term GO:0050151 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.53; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:21852
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.53"/>
+      notes: The rh:ec triple on RHEA:21852 in rhea.rdf. EC 4.2.1.53 is itself a record in this KB.
+  - subject: prot_C7DLJ6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLHYD_ELIME is an exemplar enzyme carrying EC 4.2.1.53, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.53
+      snippet: DR   C7DLJ6, OLHYD_ELIME;  B9E972, OLHYD_MACCJ;  B5XK69, OLHYD_STRPZ;
+      notes: ExPASy ENZYME entry EC 4.2.1.53 cross-references UniProtKB:C7DLJ6 (OLHYD_ELIME) as a protein
+        with this activity.
+    - reference: RHEA:21852
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.53"/>
+      notes: Rhea assigns RHEA:21852 to EC 4.2.1.53, and EC 4.2.1.53 maps to exactly one Rhea master reaction
+        (RHEA:21852), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B9E972
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLHYD_MACCJ is an exemplar enzyme carrying EC 4.2.1.53, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.53
+      snippet: DR   C7DLJ6, OLHYD_ELIME;  B9E972, OLHYD_MACCJ;  B5XK69, OLHYD_STRPZ;
+      notes: ExPASy ENZYME entry EC 4.2.1.53 cross-references UniProtKB:B9E972 (OLHYD_MACCJ) as a protein
+        with this activity.
+    - reference: RHEA:21852
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.53"/>
+      notes: Rhea assigns RHEA:21852 to EC 4.2.1.53, and EC 4.2.1.53 maps to exactly one Rhea master reaction
+        (RHEA:21852), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B5XK69
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: OLHYD_STRPZ is an exemplar enzyme carrying EC 4.2.1.53, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.53
+      snippet: DR   C7DLJ6, OLHYD_ELIME;  B9E972, OLHYD_MACCJ;  B5XK69, OLHYD_STRPZ;
+      notes: ExPASy ENZYME entry EC 4.2.1.53 cross-references UniProtKB:B5XK69 (OLHYD_STRPZ) as a protein
+        with this activity.
+    - reference: RHEA:21852
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.53"/>
+      notes: Rhea assigns RHEA:21852 to EC 4.2.1.53, and EC 4.2.1.53 maps to exactly one Rhea master reaction
+        (RHEA:21852), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.5.1.-
 mapped_xrefs:
@@ -38,4 +38,163 @@ definitions:
       Catalyses: O-phospho-L-serine + sulfite + H(+) = L-cysteate + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cysteate synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.5.1.76. EC 2.5.1.76 maps to exactly
+    one curated Rhea reaction (RHEA:26486), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "O-phospho-L-serine
+    + sulfite + H(+) = L-cysteate + phosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cysteate synthase
+    grounding: EC:2.5.1.76
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: O-phospho-L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:57524
+    description: Formula C3H6NO6P.
+  - node_id: sub2
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: sub3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: L-cysteate
+    node_type: CHEMICAL
+    grounding: CHEBI:58090
+    description: Formula C3H6NO5S.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cysteate synthase activity
+    grounding: GO:0044686
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_C7M8J5
+    node_type: PROTEIN
+    label: CAPA_CAPOD
+    grounding: UniProtKB:C7M8J5
+  - node_id: prot_Q8TKU7
+    node_type: PROTEIN
+    label: CYAS_METAC
+    grounding: UniProtKB:Q8TKU7
+  - node_id: prot_Q0W896
+    node_type: PROTEIN
+    label: CYAS_METAR
+    grounding: UniProtKB:Q0W896
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: O-phospho-L-serine is a substrate consumed by RHEA:26486 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26487
+      snippet: O-phospho-L-serine + sulfite + H(+) => L-cysteate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26487 declares side 26486_L as its substrates
+        (rh:substrates); the master reaction RHEA:26486 is undirected. This participant is CHEBI:57524
+        with coefficient 1. Rhea cites PMID:19761441, PMID:35476918 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sulfite is a substrate consumed by RHEA:26486 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26487
+      snippet: O-phospho-L-serine + sulfite + H(+) => L-cysteate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26487 declares side 26486_L as its substrates
+        (rh:substrates); the master reaction RHEA:26486 is undirected. This participant is CHEBI:17359
+        with coefficient 1. Rhea cites PMID:19761441, PMID:35476918 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H(+) is a substrate consumed by RHEA:26486 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26487
+      snippet: O-phospho-L-serine + sulfite + H(+) => L-cysteate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26487 declares side 26486_L as its substrates
+        (rh:substrates); the master reaction RHEA:26486 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:19761441, PMID:35476918 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-cysteate is a product released by RHEA:26486 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26487
+      snippet: O-phospho-L-serine + sulfite + H(+) => L-cysteate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26487 declares side 26486_R as its products
+        (rh:products); the master reaction RHEA:26486 is undirected. This participant is CHEBI:58090 with
+        coefficient 1. Rhea cites PMID:19761441, PMID:35476918 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:26486 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26487
+      snippet: O-phospho-L-serine + sulfite + H(+) => L-cysteate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:26487 declares side 26486_R as its products
+        (rh:products); the master reaction RHEA:26486 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:19761441, PMID:35476918 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.5.1.76
+      snippet: EC:2.5.1.76 > GO:cysteate synthase activity ; GO:0044686
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0044686 is itself a record
+        in this KB.
+  - subject: prot_C7M8J5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAPA_CAPOD is an exemplar enzyme with EC 2.5.1.76 activity.
+    evidence:
+    - reference: EC:2.5.1.76
+      snippet: DR   C7M8J5, CAPA_CAPOD ;  Q8TKU7, CYAS_METAC ;  Q0W896, CYAS_METAR ;
+      notes: ExPASy ENZYME entry EC 2.5.1.76 cross-references UniProtKB:C7M8J5 (CAPA_CAPOD) as a protein
+        with this activity.
+  - subject: prot_Q8TKU7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYAS_METAC is an exemplar enzyme with EC 2.5.1.76 activity.
+    evidence:
+    - reference: EC:2.5.1.76
+      snippet: DR   C7M8J5, CAPA_CAPOD ;  Q8TKU7, CYAS_METAC ;  Q0W896, CYAS_METAR ;
+      notes: ExPASy ENZYME entry EC 2.5.1.76 cross-references UniProtKB:Q8TKU7 (CYAS_METAC) as a protein
+        with this activity.
+  - subject: prot_Q0W896
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYAS_METAR is an exemplar enzyme with EC 2.5.1.76 activity.
+    evidence:
+    - reference: EC:2.5.1.76
+      snippet: DR   C7M8J5, CAPA_CAPOD ;  Q8TKU7, CYAS_METAC ;  Q0W896, CYAS_METAR ;
+      notes: ExPASy ENZYME entry EC 2.5.1.76 cross-references UniProtKB:Q0W896 (CYAS_METAR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

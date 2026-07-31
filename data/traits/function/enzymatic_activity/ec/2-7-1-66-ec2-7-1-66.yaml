@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -41,4 +41,272 @@ definitions:
       Catalyses: di-trans,octa-cis-undecaprenol + ATP = di-trans,octa-cis-undecaprenyl phosphate + ADP + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of undecaprenol kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.66. Rhea assigns 2 curated
+    reactions to EC 2.7.1.66. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "di-trans,octa-cis-undecaprenol + ATP = di-trans,octa-cis-undecaprenyl
+    phosphate + ADP + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: undecaprenol kinase
+    grounding: EC:2.7.1.66
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of all-trans-undecaprenol + ATP = all-trans-undecaprenyl phosphate + ADP + H(+)
+    grounding: RHEA:23752
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: all-trans-undecaprenol + ATP = all-trans-undecaprenyl phosphate + ADP +
+      H(+)'
+  - node_id: rxn1_sub1
+    label: all-trans-undecaprenol
+    node_type: CHEMICAL
+    grounding: CHEBI:16591
+    description: Formula C55H90O.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_prd1
+    label: all-trans-undecaprenyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57654
+    description: Formula C55H89O4P.
+  - node_id: rxn1_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of di-trans,octa-cis-undecaprenol + ATP = di-trans,octa-cis-undecaprenyl phosph…
+    grounding: RHEA:28122
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: di-trans,octa-cis-undecaprenol + ATP = di-trans,octa-cis-undecaprenyl phosphate
+      + ADP + H(+)'
+  - node_id: rxn2_sub1
+    label: di-trans,octa-cis-undecaprenol
+    node_type: CHEMICAL
+    grounding: CHEBI:61216
+    description: Formula C55H90O.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_prd1
+    label: di-trans,octa-cis-undecaprenyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:60392
+    description: Formula C55H89O4P.
+  - node_id: rxn2_prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: di-trans, poly-cis-undecaprenol kinase activity
+    grounding: GO:0036433
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P19638
+    node_type: PROTEIN
+    label: UDPK_BACSU
+    grounding: UniProtKB:P19638
+  - node_id: prot_Q05888
+    node_type: PROTEIN
+    label: UDPK_STRMU
+    grounding: UniProtKB:Q05888
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:23752 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.66; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:23752
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.66"/>
+      notes: The rh:ec triple on RHEA:23752 in rhea.rdf assigns that reaction to EC 2.7.1.66.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: all-trans-undecaprenol is a substrate consumed by RHEA:23752 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23753
+      snippet: all-trans-undecaprenol + ATP => all-trans-undecaprenyl phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23753 declares side 23752_L as its substrates
+        (rh:substrates); the master reaction RHEA:23752 is undirected. This participant is CHEBI:16591
+        with coefficient 1. Rhea cites PMID:17535816, PMID:4248528, PMID:12654811 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:23752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23753
+      snippet: all-trans-undecaprenol + ATP => all-trans-undecaprenyl phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23753 declares side 23752_L as its substrates
+        (rh:substrates); the master reaction RHEA:23752 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:17535816, PMID:4248528, PMID:12654811 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: all-trans-undecaprenyl phosphate is a product released by RHEA:23752 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:23753
+      snippet: all-trans-undecaprenol + ATP => all-trans-undecaprenyl phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23753 declares side 23752_R as its products
+        (rh:products); the master reaction RHEA:23752 is undirected. This participant is CHEBI:57654 with
+        coefficient 1. Rhea cites PMID:17535816, PMID:4248528, PMID:12654811 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: ADP is a product released by RHEA:23752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23753
+      snippet: all-trans-undecaprenol + ATP => all-trans-undecaprenyl phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23753 declares side 23752_R as its products
+        (rh:products); the master reaction RHEA:23752 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:17535816, PMID:4248528, PMID:12654811 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:23752 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23753
+      snippet: all-trans-undecaprenol + ATP => all-trans-undecaprenyl phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:23753 declares side 23752_R as its products
+        (rh:products); the master reaction RHEA:23752 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:17535816, PMID:4248528, PMID:12654811 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:28122 is one of the 2 curated reactions Rhea assigns to EC 2.7.1.66; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:28122
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.66"/>
+      notes: The rh:ec triple on RHEA:28122 in rhea.rdf assigns that reaction to EC 2.7.1.66.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: di-trans,octa-cis-undecaprenol is a substrate consumed by RHEA:28122 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:28123
+      snippet: di-trans,octa-cis-undecaprenol + ATP => di-trans,octa-cis-undecaprenyl phosphate + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28123 declares side 28122_L as its substrates
+        (rh:substrates); the master reaction RHEA:28122 is undirected. This participant is CHEBI:61216
+        with coefficient 1. Rhea cites PMID:17535816 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:28122 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28123
+      snippet: di-trans,octa-cis-undecaprenol + ATP => di-trans,octa-cis-undecaprenyl phosphate + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28123 declares side 28122_L as its substrates
+        (rh:substrates); the master reaction RHEA:28122 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:17535816 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: di-trans,octa-cis-undecaprenyl phosphate is a product released by RHEA:28122 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:28123
+      snippet: di-trans,octa-cis-undecaprenol + ATP => di-trans,octa-cis-undecaprenyl phosphate + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28123 declares side 28122_R as its products
+        (rh:products); the master reaction RHEA:28122 is undirected. This participant is CHEBI:60392 with
+        coefficient 1. Rhea cites PMID:17535816 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: ADP is a product released by RHEA:28122 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28123
+      snippet: di-trans,octa-cis-undecaprenol + ATP => di-trans,octa-cis-undecaprenyl phosphate + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28123 declares side 28122_R as its products
+        (rh:products); the master reaction RHEA:28122 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:17535816 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:28122 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28123
+      snippet: di-trans,octa-cis-undecaprenol + ATP => di-trans,octa-cis-undecaprenyl phosphate + ADP
+        + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:28123 declares side 28122_R as its products
+        (rh:products); the master reaction RHEA:28122 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:17535816 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.1.66
+      snippet: EC:2.7.1.66 > GO:di-trans, poly-cis-undecaprenol kinase activity ; GO:0036433
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0036433 is itself a record
+        in this KB.
+  - subject: prot_P19638
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UDPK_BACSU is an exemplar enzyme with EC 2.7.1.66 activity.
+    evidence:
+    - reference: EC:2.7.1.66
+      snippet: DR   P19638, UDPK_BACSU ;  Q05888, UDPK_STRMU ;
+      notes: ExPASy ENZYME entry EC 2.7.1.66 cross-references UniProtKB:P19638 (UDPK_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q05888
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: UDPK_STRMU is an exemplar enzyme with EC 2.7.1.66 activity.
+    evidence:
+    - reference: EC:2.7.1.66
+      snippet: DR   P19638, UDPK_BACSU ;  Q05888, UDPK_STRMU ;
+      notes: ExPASy ENZYME entry EC 2.7.1.66 cross-references UniProtKB:Q05888 (UDPK_STRMU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.5.1.-
 synonyms:
@@ -31,4 +31,160 @@ definitions:
       Catalyses: a 3'-end 3'-phospho-ribonucleotide-RNA + GTP = a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA + GMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of RNA 3'-terminal-phosphate cyclase (GTP)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.5.1.5. EC 6.5.1.5 maps to exactly
+    one curated Rhea reaction (RHEA:13969), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a 3''-end 3''-phospho-ribonucleotide-RNA
+    + GTP = a 3''-end 2'',3''-cyclophospho-ribonucleotide-RNA + GMP + diphosphate". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: RNA 3'-terminal-phosphate cyclase (GTP)
+    grounding: EC:6.5.1.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a 3'-end 3'-phospho-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10463
+    description: Rhea compound GENERIC:10463.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: a 3'-terminal ribonucleotide 3'-phosphate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10463 (a 3'-end
+      3'-phospho-ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83062
+  - node_id: sub2
+    label: GTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37565
+    description: Formula C10H12N5O14P3.
+  - node_id: prd1
+    label: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10464
+    description: Rhea compound GENERIC:10464.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10464 (a 3'-end
+      2',3'-cyclophospho-ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83064
+  - node_id: prd2
+    label: GMP
+    node_type: CHEMICAL
+    grounding: CHEBI:58115
+    description: Formula C10H12N5O8P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q8U0N7
+    node_type: PROTEIN
+    label: RTCA_PYRFU
+    grounding: UniProtKB:Q8U0N7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 3'-end 3'-phospho-ribonucleotide-RNA is a substrate consumed by RHEA:13969 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:13970
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + GTP => a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+        + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13970 declares side 13969_L as its substrates
+        (rh:substrates); the master reaction RHEA:13969 is undirected. This participant is GENERIC:10463
+        with coefficient 1. Rhea cites PMID:22074260 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: a 3'-terminal ribonucleotide 3'-phosphate residue is the reactive part of a 3'-end 3'-phospho-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:13969
+      snippet: a 3'-terminal ribonucleotide 3'-phosphate residue
+      notes: Rhea compound GENERIC:10463 (a 3'-end 3'-phospho-ribonucleotide-RNA) declares rh:reactivePart
+        = a 3'-terminal ribonucleotide 3'-phosphate residue (CHEBI:83062).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: GTP is a substrate consumed by RHEA:13969 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13970
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + GTP => a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+        + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13970 declares side 13969_L as its substrates
+        (rh:substrates); the master reaction RHEA:13969 is undirected. This participant is CHEBI:37565
+        with coefficient 1. Rhea cites PMID:22074260 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA is a product released by RHEA:13969 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:13970
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + GTP => a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+        + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13970 declares side 13969_R as its products
+        (rh:products); the master reaction RHEA:13969 is undirected. This participant is GENERIC:10464
+        with coefficient 1. Rhea cites PMID:22074260 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue is the reactive part of a
+      3'-end 2',3'-cyclophospho-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:13969
+      snippet: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue
+      notes: Rhea compound GENERIC:10464 (a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA) declares rh:reactivePart
+        = a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue (CHEBI:83064).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: GMP is a product released by RHEA:13969 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13970
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + GTP => a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+        + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13970 declares side 13969_R as its products
+        (rh:products); the master reaction RHEA:13969 is undirected. This participant is CHEBI:58115 with
+        coefficient 1. Rhea cites PMID:22074260 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:13969 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:13970
+      snippet: a 3'-end 3'-phospho-ribonucleotide-RNA + GTP => a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+        + GMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:13970 declares side 13969_R as its products
+        (rh:products); the master reaction RHEA:13969 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:22074260 for this reaction.
+  - subject: prot_Q8U0N7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RTCA_PYRFU is an exemplar enzyme with EC 6.5.1.5 activity.
+    evidence:
+    - reference: EC:6.5.1.5
+      snippet: DR   Q8U0N7, RTCA_PYRFU ;
+      notes: ExPASy ENZYME entry EC 6.5.1.5 cross-references UniProtKB:Q8U0N7 (RTCA_PYRFU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

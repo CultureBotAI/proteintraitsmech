@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.2.-
 synonyms:
@@ -35,4 +35,178 @@ definitions:
       Catalyses: L-arginyl-[dinitrogen reductase] + NAD(+) = N(omega)-alpha-(ADP-D- ribosyl)-L-arginyl-[dinitrogen reductase] + nicotinamide + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of NAD(+)--dinitrogen-reductase ADP-D-ribosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.2.37. EC 2.4.2.37 maps to exactly
+    one curated Rhea reaction (RHEA:18077), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-arginyl-[dinitrogen
+    reductase] + NAD(+) = N(omega)-alpha-(ADP-D- ribosyl)-L-arginyl-[dinitrogen reductase] + nicotinamide
+    + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: NAD(+)--dinitrogen-reductase ADP-D-ribosyltransferase
+    grounding: EC:2.4.2.37
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-arginyl-[dinitrogen reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10789
+    description: Rhea compound GENERIC:10789.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-arginine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10789 (L-arginyl-[dinitrogen
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29965
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: N(omega)-alpha-(ADP-D-ribosyl)-L-arginyl-[dinitrogen reductase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10791
+    description: Rhea compound GENERIC:10791.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: N(omega)-(ADP-alpha-D-ribosyl)-L-arginine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:10791 (N(omega)-alpha-(ADP-D-ribosyl)-L-arginyl-[dinitrogen
+      reductase]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83960
+  - node_id: prd2
+    label: nicotinamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17154
+    description: Formula C6H6N2O.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: NAD+-dinitrogen-reductase ADP-D-ribosyltransferase activity
+    grounding: GO:0030701
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P14299
+    node_type: PROTEIN
+    label: DRAT_RHORU
+    grounding: UniProtKB:P14299
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-arginyl-[dinitrogen reductase] is a substrate consumed by RHEA:18077 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:18078
+      snippet: L-arginyl-[dinitrogen reductase] + NAD(+) => N(omega)-alpha-(ADP-D-ribosyl)-L-arginyl-[dinitrogen
+        reductase] + nicotinamide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18078 declares side 18077_L as its substrates
+        (rh:substrates); the master reaction RHEA:18077 is undirected. This participant is GENERIC:10789
+        with coefficient 1. Rhea cites PMID:2506427, PMID:3141411, PMID:3090031, PMID:24934999 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-arginine residue is the reactive part of L-arginyl-[dinitrogen reductase].
+    evidence:
+    - reference: RHEA:18077
+      snippet: L-arginine residue
+      notes: Rhea compound GENERIC:10789 (L-arginyl-[dinitrogen reductase]) declares rh:reactivePart =
+        L-arginine residue (CHEBI:29965).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:18077 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18078
+      snippet: L-arginyl-[dinitrogen reductase] + NAD(+) => N(omega)-alpha-(ADP-D-ribosyl)-L-arginyl-[dinitrogen
+        reductase] + nicotinamide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18078 declares side 18077_L as its substrates
+        (rh:substrates); the master reaction RHEA:18077 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:2506427, PMID:3141411, PMID:3090031, PMID:24934999 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(omega)-alpha-(ADP-D-ribosyl)-L-arginyl-[dinitrogen reductase] is a product released
+      by RHEA:18077 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18078
+      snippet: L-arginyl-[dinitrogen reductase] + NAD(+) => N(omega)-alpha-(ADP-D-ribosyl)-L-arginyl-[dinitrogen
+        reductase] + nicotinamide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18078 declares side 18077_R as its products
+        (rh:products); the master reaction RHEA:18077 is undirected. This participant is GENERIC:10791
+        with coefficient 1. Rhea cites PMID:2506427, PMID:3141411, PMID:3090031, PMID:24934999 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: N(omega)-(ADP-alpha-D-ribosyl)-L-arginine residue is the reactive part of N(omega)-alpha-(ADP-D-ribosyl)-L-arginyl-[dinitrogen
+      reductase].
+    evidence:
+    - reference: RHEA:18077
+      snippet: N(omega)-(ADP-alpha-D-ribosyl)-L-arginine residue
+      notes: Rhea compound GENERIC:10791 (N(omega)-alpha-(ADP-D-ribosyl)-L-arginyl-[dinitrogen reductase])
+        declares rh:reactivePart = N(omega)-(ADP-alpha-D-ribosyl)-L-arginine residue (CHEBI:83960).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nicotinamide is a product released by RHEA:18077 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18078
+      snippet: L-arginyl-[dinitrogen reductase] + NAD(+) => N(omega)-alpha-(ADP-D-ribosyl)-L-arginyl-[dinitrogen
+        reductase] + nicotinamide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18078 declares side 18077_R as its products
+        (rh:products); the master reaction RHEA:18077 is undirected. This participant is CHEBI:17154 with
+        coefficient 1. Rhea cites PMID:2506427, PMID:3141411, PMID:3090031, PMID:24934999 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:18077 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18078
+      snippet: L-arginyl-[dinitrogen reductase] + NAD(+) => N(omega)-alpha-(ADP-D-ribosyl)-L-arginyl-[dinitrogen
+        reductase] + nicotinamide + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18078 declares side 18077_R as its products
+        (rh:products); the master reaction RHEA:18077 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:2506427, PMID:3141411, PMID:3090031, PMID:24934999 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.2.37
+      snippet: EC:2.4.2.37 > GO:NAD+-dinitrogen-reductase ADP-D-ribosyltransferase activity ; GO:0030701
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0030701 is itself a record
+        in this KB.
+  - subject: prot_P14299
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DRAT_RHORU is an exemplar enzyme with EC 2.4.2.37 activity.
+    evidence:
+    - reference: EC:2.4.2.37
+      snippet: DR   P14299, DRAT_RHORU ;
+      notes: ExPASy ENZYME entry EC 2.4.2.37 cross-references UniProtKB:P14299 (DRAT_RHORU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

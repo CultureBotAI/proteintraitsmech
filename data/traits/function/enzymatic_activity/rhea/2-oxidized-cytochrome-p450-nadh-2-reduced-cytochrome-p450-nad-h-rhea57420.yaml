@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:55376
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,141 @@ definitions:
       Catalyses the reaction: 2 oxidized [cytochrome P450] + NADH = 2 reduced [cytochrome P450] + NAD(+) + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 oxidized [cytochrome P450] + NADH = 2 reduced [cytochrome P450] + NAD(+)
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:57420, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:57421 (rh:substrates → 57420_L, rh:products → 57420_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 oxidized [cytochrome P450] + NADH = 2 reduced [cytochrome P450] + NAD(+) +…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:57420
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 oxidized [cytochrome P450] + NADH = 2 reduced [cytochrome P450] + NAD(+) + H(+)'
+  - node_id: sub1
+    label: oxidized [cytochrome P450]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14627
+    description: Rhea compound GENERIC:14627.
+  - node_id: sub1_rp1
+    label: Fe(III)-heme b
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14627 (oxidized
+      [cytochrome P450]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:55376
+  - node_id: sub2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd1
+    label: reduced [cytochrome P450]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14628
+    description: Rhea compound GENERIC:14628.
+  - node_id: prd1_rp1
+    label: heme b
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14628 (reduced [cytochrome
+      P450]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:60344
+  - node_id: prd2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: oxidized [cytochrome P450] is a substrate consumed by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:57421
+      snippet: 2 oxidized [cytochrome P450] + NADH => 2 reduced [cytochrome P450] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57421 declares side 57420_L as its substrates
+        (rh:substrates); the master reaction RHEA:57420 is undirected. This participant is GENERIC:14627
+        with coefficient 2. Rhea cites PMID:29950589 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: Fe(III)-heme b is the reactive part of oxidized [cytochrome P450].
+    evidence:
+    - reference: RHEA:57420
+      snippet: Fe(III)-heme b
+      notes: Rhea compound GENERIC:14627 (oxidized [cytochrome P450]) declares rh:reactivePart = Fe(III)-heme
+        b (CHEBI:55376), formula C34H30FeN4O4.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADH is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57421
+      snippet: 2 oxidized [cytochrome P450] + NADH => 2 reduced [cytochrome P450] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57421 declares side 57420_L as its substrates
+        (rh:substrates); the master reaction RHEA:57420 is undirected. This participant is CHEBI:57945
+        with coefficient 1. Rhea cites PMID:29950589 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: reduced [cytochrome P450] is a product released by this reaction (stoichiometric coefficient
+      2).
+    evidence:
+    - reference: RHEA:57421
+      snippet: 2 oxidized [cytochrome P450] + NADH => 2 reduced [cytochrome P450] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57421 declares side 57420_R as its products
+        (rh:products); the master reaction RHEA:57420 is undirected. This participant is GENERIC:14628
+        with coefficient 2. Rhea cites PMID:29950589 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: heme b is the reactive part of reduced [cytochrome P450].
+    evidence:
+    - reference: RHEA:57420
+      snippet: heme b
+      notes: Rhea compound GENERIC:14628 (reduced [cytochrome P450]) declares rh:reactivePart = heme b
+        (CHEBI:60344), formula C34H30FeN4O4.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NAD(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57421
+      snippet: 2 oxidized [cytochrome P450] + NADH => 2 reduced [cytochrome P450] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57421 declares side 57420_R as its products
+        (rh:products); the master reaction RHEA:57420 is undirected. This participant is CHEBI:57540 with
+        coefficient 1. Rhea cites PMID:29950589 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57421
+      snippet: 2 oxidized [cytochrome P450] + NADH => 2 reduced [cytochrome P450] + NAD(+) + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57421 declares side 57420_R as its products
+        (rh:products); the master reaction RHEA:57420 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29950589 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

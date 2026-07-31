@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:6.2.1.-
 canonical_examples:
@@ -33,4 +33,199 @@ definitions:
       Catalyses: an L-alpha-amino acid + holo-[ACP] + ATP = an L-alpha-aminoacyl-[ACP] + AMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of amino acid--[acyl-carrier-protein] ligase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:6.2.1.n2. EC 6.2.1.n2 maps to exactly
+    one curated Rhea reaction (RHEA:52660), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an L-alpha-amino
+    acid + holo-[ACP] + ATP = an L-alpha-aminoacyl-[ACP] + AMP + diphosphate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: amino acid--[acyl-carrier-protein] ligase
+    grounding: EC:6.2.1.n2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+    description: Formula C2H4NO2R.
+  - node_id: sub2
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: sub3
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: an L-alpha-aminoacyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13877
+    description: Rhea compound GENERIC:13877.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-[S-L-alpha-aminoacyl-pantetheine-4'-phosphoryl]serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:13877 (an L-alpha-aminoacyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:138175
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_Q89VT8
+    node_type: PROTEIN
+    label: AACL1_BRADU
+    grounding: UniProtKB:Q89VT8
+  - node_id: prot_Q89GR3
+    node_type: PROTEIN
+    label: AACL2_BRADU
+    grounding: UniProtKB:Q89GR3
+  - node_id: prot_Q7CWR3
+    node_type: PROTEIN
+    label: AACL_AGRFC
+    grounding: UniProtKB:Q7CWR3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an L-alpha-amino acid is a substrate consumed by RHEA:52660 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52661
+      snippet: an L-alpha-amino acid + holo-[ACP] + ATP => an L-alpha-aminoacyl-[ACP] + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52661 declares side 52660_L as its substrates
+        (rh:substrates); the master reaction RHEA:52660 is undirected. This participant is CHEBI:59869
+        with coefficient 1. Rhea cites PMID:20663952 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: holo-[ACP] is a substrate consumed by RHEA:52660 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52661
+      snippet: an L-alpha-amino acid + holo-[ACP] + ATP => an L-alpha-aminoacyl-[ACP] + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52661 declares side 52660_L as its substrates
+        (rh:substrates); the master reaction RHEA:52660 is undirected. This participant is GENERIC:9685
+        with coefficient 1. Rhea cites PMID:20663952 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:52660
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: ATP is a substrate consumed by RHEA:52660 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52661
+      snippet: an L-alpha-amino acid + holo-[ACP] + ATP => an L-alpha-aminoacyl-[ACP] + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52661 declares side 52660_L as its substrates
+        (rh:substrates); the master reaction RHEA:52660 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:20663952 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an L-alpha-aminoacyl-[ACP] is a product released by RHEA:52660 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:52661
+      snippet: an L-alpha-amino acid + holo-[ACP] + ATP => an L-alpha-aminoacyl-[ACP] + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52661 declares side 52660_R as its products
+        (rh:products); the master reaction RHEA:52660 is undirected. This participant is GENERIC:13877
+        with coefficient 1. Rhea cites PMID:20663952 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-[S-L-alpha-aminoacyl-pantetheine-4'-phosphoryl]serine residue is the reactive part
+      of an L-alpha-aminoacyl-[ACP].
+    evidence:
+    - reference: RHEA:52660
+      snippet: O-[S-L-alpha-aminoacyl-pantetheine-4'-phosphoryl]serine residue
+      notes: Rhea compound GENERIC:13877 (an L-alpha-aminoacyl-[ACP]) declares rh:reactivePart = O-[S-L-alpha-aminoacyl-pantetheine-4'-phosphoryl]serine
+        residue (CHEBI:138175).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by RHEA:52660 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52661
+      snippet: an L-alpha-amino acid + holo-[ACP] + ATP => an L-alpha-aminoacyl-[ACP] + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52661 declares side 52660_R as its products
+        (rh:products); the master reaction RHEA:52660 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:20663952 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: diphosphate is a product released by RHEA:52660 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52661
+      snippet: an L-alpha-amino acid + holo-[ACP] + ATP => an L-alpha-aminoacyl-[ACP] + AMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:52661 declares side 52660_R as its products
+        (rh:products); the master reaction RHEA:52660 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:20663952 for this reaction.
+  - subject: prot_Q89VT8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AACL1_BRADU is an exemplar enzyme with EC 6.2.1.n2 activity.
+    evidence:
+    - reference: EC:6.2.1.n2
+      snippet: DR   Q89VT8, AACL1_BRADU;  Q89GR3, AACL2_BRADU;  Q7CWR3, AACL_AGRFC ;
+      notes: ExPASy ENZYME entry EC 6.2.1.n2 cross-references UniProtKB:Q89VT8 (AACL1_BRADU) as a protein
+        with this activity.
+  - subject: prot_Q89GR3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AACL2_BRADU is an exemplar enzyme with EC 6.2.1.n2 activity.
+    evidence:
+    - reference: EC:6.2.1.n2
+      snippet: DR   Q89VT8, AACL1_BRADU;  Q89GR3, AACL2_BRADU;  Q7CWR3, AACL_AGRFC ;
+      notes: ExPASy ENZYME entry EC 6.2.1.n2 cross-references UniProtKB:Q89GR3 (AACL2_BRADU) as a protein
+        with this activity.
+  - subject: prot_Q7CWR3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AACL_AGRFC is an exemplar enzyme with EC 6.2.1.n2 activity.
+    evidence:
+    - reference: EC:6.2.1.n2
+      snippet: DR   Q89VT8, AACL1_BRADU;  Q89GR3, AACL2_BRADU;  Q7CWR3, AACL_AGRFC ;
+      notes: ExPASy ENZYME entry EC 6.2.1.n2 cross-references UniProtKB:Q7CWR3 (AACL_AGRFC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

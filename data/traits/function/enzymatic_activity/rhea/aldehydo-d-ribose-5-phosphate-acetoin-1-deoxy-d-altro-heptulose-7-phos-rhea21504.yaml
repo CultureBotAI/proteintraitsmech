@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.2.1.4
     mapping_source: rhea2ec
@@ -25,4 +25,125 @@ definitions:
       Catalyses the reaction: aldehydo-D-ribose 5-phosphate + acetoin = 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aldehydo-D-ribose 5-phosphate + acetoin = 1-deoxy-D-altro-heptulose 7-phosphate
+    + aceta…
+  description: Substrate-to-product chemistry of RHEA:21504, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:21505 (rh:substrates → 21504_L, rh:products → 21504_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of aldehydo-D-ribose 5-phosphate + acetoin = 1-deoxy-D-altro-heptulose 7-phosph…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:21504
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: aldehydo-D-ribose 5-phosphate + acetoin = 1-deoxy-D-altro-heptulose 7-phosphate +
+      acetaldehyde'
+  - node_id: sub1
+    label: aldehydo-D-ribose 5-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58273
+    description: Formula C5H9O8P.
+  - node_id: sub2
+    label: acetoin
+    node_type: CHEMICAL
+    grounding: CHEBI:15688
+    description: Formula C4H8O2.
+  - node_id: prd1
+    label: 1-deoxy-D-altro-heptulose 7-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57764
+    description: Formula C7H13O9P.
+  - node_id: prd2
+    label: acetaldehyde
+    node_type: CHEMICAL
+    grounding: CHEBI:15343
+    description: Formula C2H4O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: acetoin-ribose-5-phosphate transaldolase activity
+    grounding: GO:0047156
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: acetoin--ribose-5-phosphate transaldolase
+    grounding: EC:2.2.1.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: aldehydo-D-ribose 5-phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21505
+      snippet: aldehydo-D-ribose 5-phosphate + acetoin => 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:21505 declares side 21504_L as its substrates
+        (rh:substrates); the master reaction RHEA:21504 is undirected. This participant is CHEBI:58273
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetoin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21505
+      snippet: aldehydo-D-ribose 5-phosphate + acetoin => 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:21505 declares side 21504_L as its substrates
+        (rh:substrates); the master reaction RHEA:21504 is undirected. This participant is CHEBI:15688
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-deoxy-D-altro-heptulose 7-phosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:21505
+      snippet: aldehydo-D-ribose 5-phosphate + acetoin => 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:21505 declares side 21504_R as its products
+        (rh:products); the master reaction RHEA:21504 is undirected. This participant is CHEBI:57764 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetaldehyde is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:21505
+      snippet: aldehydo-D-ribose 5-phosphate + acetoin => 1-deoxy-D-altro-heptulose 7-phosphate + acetaldehyde
+      notes: Rhea's left-to-right directional reaction RHEA:21505 declares side 21504_R as its products
+        (rh:products); the master reaction RHEA:21504 is undirected. This participant is CHEBI:15343 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:21504
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047156"/>
+      notes: The rdfs:seeAlso triple on RHEA:21504 in rhea.rdf. GO term GO:0047156 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.2.1.4; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:21504
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.2.1.4"/>
+      notes: The rh:ec triple on RHEA:21504 in rhea.rdf. EC 2.2.1.4 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:88052
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: dimethylallyl phosphate + FMNH2 = N(5)-dimethylallyl-FMNH2 + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dimethylallyl phosphate + FMNH2 = N(5)-dimethylallyl-FMNH2 + phosphate
+  description: Substrate-to-product chemistry of RHEA:81591, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:81592 (rh:substrates → 81591_L, rh:products → 81591_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dimethylallyl phosphate + FMNH2 = N(5)-dimethylallyl-FMNH2 + phosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:81591
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dimethylallyl phosphate + FMNH2 = N(5)-dimethylallyl-FMNH2 + phosphate'
+  - node_id: sub1
+    label: dimethylallyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:88052
+    description: Formula C5H9O4P.
+  - node_id: sub2
+    label: FMNH2
+    node_type: CHEMICAL
+    grounding: CHEBI:57618
+    description: Formula C17H21N4O9P.
+  - node_id: prd1
+    label: N(5)-dimethylallyl-FMNH2
+    node_type: CHEMICAL
+    grounding: CHEBI:231955
+    description: Formula C22H29N4O9P.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dimethylallyl phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81592
+      snippet: dimethylallyl phosphate + FMNH2 => N(5)-dimethylallyl-FMNH2 + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:81592 declares side 81591_L as its substrates
+        (rh:substrates); the master reaction RHEA:81591 is undirected. This participant is CHEBI:88052
+        with coefficient 1. Rhea cites PMID:39231435 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: FMNH2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81592
+      snippet: dimethylallyl phosphate + FMNH2 => N(5)-dimethylallyl-FMNH2 + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:81592 declares side 81591_L as its substrates
+        (rh:substrates); the master reaction RHEA:81591 is undirected. This participant is CHEBI:57618
+        with coefficient 1. Rhea cites PMID:39231435 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N(5)-dimethylallyl-FMNH2 is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:81592
+      snippet: dimethylallyl phosphate + FMNH2 => N(5)-dimethylallyl-FMNH2 + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:81592 declares side 81591_R as its products
+        (rh:products); the master reaction RHEA:81591 is undirected. This participant is CHEBI:231955
+        with coefficient 1. Rhea cites PMID:39231435 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:81592
+      snippet: dimethylallyl phosphate + FMNH2 => N(5)-dimethylallyl-FMNH2 + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:81592 declares side 81591_R as its products
+        (rh:products); the master reaction RHEA:81591 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:39231435 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

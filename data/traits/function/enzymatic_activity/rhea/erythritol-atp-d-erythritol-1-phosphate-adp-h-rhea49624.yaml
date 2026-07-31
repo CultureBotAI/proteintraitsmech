@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.1.215
     mapping_source: rhea2ec
@@ -32,4 +32,142 @@ definitions:
       Catalyses the reaction: erythritol + ATP = D-erythritol 1-phosphate + ADP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of erythritol + ATP = D-erythritol 1-phosphate + ADP + H(+)
+  description: Substrate-to-product chemistry of RHEA:49624, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:49625 (rh:substrates → 49624_L, rh:products → 49624_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of erythritol + ATP = D-erythritol 1-phosphate + ADP + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:49624
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: erythritol + ATP = D-erythritol 1-phosphate + ADP + H(+)'
+  - node_id: sub1
+    label: erythritol
+    node_type: CHEMICAL
+    grounding: CHEBI:17113
+    description: Formula C4H10O4.
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: D-erythritol 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:131849
+    description: Formula C4H9O7P.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: erythritol kinase (D-erythritol 1-phosphate-forming)
+    grounding: EC:2.7.1.215
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q2YIQ1
+    node_type: PROTEIN
+    label: ERYA_BRUA2
+    grounding: UniProtKB:Q2YIQ1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: erythritol is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49625
+      snippet: erythritol + ATP => D-erythritol 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49625 declares side 49624_L as its substrates
+        (rh:substrates); the master reaction RHEA:49624 is undirected. This participant is CHEBI:17113
+        with coefficient 1. Rhea cites PMID:12639570, PMID:163226 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49625
+      snippet: erythritol + ATP => D-erythritol 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49625 declares side 49624_L as its substrates
+        (rh:substrates); the master reaction RHEA:49624 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:12639570, PMID:163226 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-erythritol 1-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:49625
+      snippet: erythritol + ATP => D-erythritol 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49625 declares side 49624_R as its products
+        (rh:products); the master reaction RHEA:49624 is undirected. This participant is CHEBI:131849
+        with coefficient 1. Rhea cites PMID:12639570, PMID:163226 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49625
+      snippet: erythritol + ATP => D-erythritol 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49625 declares side 49624_R as its products
+        (rh:products); the master reaction RHEA:49624 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:12639570, PMID:163226 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:49625
+      snippet: erythritol + ATP => D-erythritol 1-phosphate + ADP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:49625 declares side 49624_R as its products
+        (rh:products); the master reaction RHEA:49624 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:12639570, PMID:163226 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.1.215; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:49624
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.215"/>
+      notes: The rh:ec triple on RHEA:49624 in rhea.rdf. EC 2.7.1.215 is itself a record in this KB.
+  - subject: prot_Q2YIQ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ERYA_BRUA2 is an exemplar enzyme carrying EC 2.7.1.215, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.1.215
+      snippet: DR   Q2YIQ1, ERYA_BRUA2 ;
+      notes: ExPASy ENZYME entry EC 2.7.1.215 cross-references UniProtKB:Q2YIQ1 (ERYA_BRUA2) as a protein
+        with this activity.
+    - reference: RHEA:49624
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.215"/>
+      notes: Rhea assigns RHEA:49624 to EC 2.7.1.215, and EC 2.7.1.215 maps to exactly one Rhea master
+        reaction (RHEA:49624), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

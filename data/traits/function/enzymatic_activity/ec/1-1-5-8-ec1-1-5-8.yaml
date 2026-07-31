@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.5.-
 synonyms:
@@ -39,4 +39,132 @@ definitions:
       Catalyses: L-quinate + a quinone = 3-dehydroquinate + a quinol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of quinate/shikimate dehydrogenase (quinone)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.5.8. EC 1.1.5.8 maps to exactly
+    one curated Rhea reaction (RHEA:23672), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-quinate + a
+    quinone = 3-dehydroquinate + a quinol". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: quinate/shikimate dehydrogenase (quinone)
+    grounding: EC:1.1.5.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-quinate
+    node_type: CHEMICAL
+    grounding: CHEBI:29751
+    description: Formula C7H11O6.
+  - node_id: sub2
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: prd1
+    label: 3-dehydroquinate
+    node_type: CHEMICAL
+    grounding: CHEBI:32364
+    description: Formula C7H9O6.
+  - node_id: prd2
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: quinate dehydrogenase (quinone) activity
+    grounding: GO:0047519
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q59086
+    node_type: PROTEIN
+    label: QUIA_ACIAD
+    grounding: UniProtKB:Q59086
+  - node_id: prot_Q9XD78
+    node_type: PROTEIN
+    label: QUIA_XANCJ
+    grounding: UniProtKB:Q9XD78
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-quinate is a substrate consumed by RHEA:23672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23673
+      snippet: L-quinate + a quinone => 3-dehydroquinate + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:23673 declares side 23672_L as its substrates
+        (rh:substrates); the master reaction RHEA:23672 is undirected. This participant is CHEBI:29751
+        with coefficient 1. Rhea cites PMID:3044290, PMID:15598527, PMID:14586099 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a quinone is a substrate consumed by RHEA:23672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23673
+      snippet: L-quinate + a quinone => 3-dehydroquinate + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:23673 declares side 23672_L as its substrates
+        (rh:substrates); the master reaction RHEA:23672 is undirected. This participant is CHEBI:132124
+        with coefficient 1. Rhea cites PMID:3044290, PMID:15598527, PMID:14586099 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-dehydroquinate is a product released by RHEA:23672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23673
+      snippet: L-quinate + a quinone => 3-dehydroquinate + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:23673 declares side 23672_R as its products
+        (rh:products); the master reaction RHEA:23672 is undirected. This participant is CHEBI:32364 with
+        coefficient 1. Rhea cites PMID:3044290, PMID:15598527, PMID:14586099 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a quinol is a product released by RHEA:23672 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23673
+      snippet: L-quinate + a quinone => 3-dehydroquinate + a quinol
+      notes: Rhea's left-to-right directional reaction RHEA:23673 declares side 23672_R as its products
+        (rh:products); the master reaction RHEA:23672 is undirected. This participant is CHEBI:24646 with
+        coefficient 1. Rhea cites PMID:3044290, PMID:15598527, PMID:14586099 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.5.8
+      snippet: EC:1.1.5.8 > GO:quinate dehydrogenase (quinone) activity ; GO:0047519
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047519 is itself a record
+        in this KB.
+  - subject: prot_Q59086
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: QUIA_ACIAD is an exemplar enzyme with EC 1.1.5.8 activity.
+    evidence:
+    - reference: EC:1.1.5.8
+      snippet: DR   Q59086, QUIA_ACIAD ;  Q9XD78, QUIA_XANCJ ;
+      notes: ExPASy ENZYME entry EC 1.1.5.8 cross-references UniProtKB:Q59086 (QUIA_ACIAD) as a protein
+        with this activity.
+  - subject: prot_Q9XD78
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: QUIA_XANCJ is an exemplar enzyme with EC 1.1.5.8 activity.
+    evidence:
+    - reference: EC:1.1.5.8
+      snippet: DR   Q59086, QUIA_ACIAD ;  Q9XD78, QUIA_XANCJ ;
+      notes: ExPASy ENZYME entry EC 1.1.5.8 cross-references UniProtKB:Q9XD78 (QUIA_XANCJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

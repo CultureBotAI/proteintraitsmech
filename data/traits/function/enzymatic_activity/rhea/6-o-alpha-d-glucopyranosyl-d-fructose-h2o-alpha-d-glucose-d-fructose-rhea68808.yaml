@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.1.219
     mapping_source: rhea2ec
@@ -28,4 +28,126 @@ definitions:
       Catalyses the reaction: 6-O-alpha-D-glucopyranosyl-D-fructose + H2O = alpha-D-glucose + D-fructose
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6-O-alpha-D-glucopyranosyl-D-fructose + H2O = alpha-D-glucose + D-fructose
+  description: Substrate-to-product chemistry of RHEA:68808, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:68809 (rh:substrates → 68808_L, rh:products → 68808_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 6-O-alpha-D-glucopyranosyl-D-fructose + H2O = alpha-D-glucose + D-fructose
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:68808
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 6-O-alpha-D-glucopyranosyl-D-fructose + H2O = alpha-D-glucose + D-fructose'
+  - node_id: sub1
+    label: 6-O-alpha-D-glucopyranosyl-D-fructose
+    node_type: CHEMICAL
+    grounding: CHEBI:18394
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:17925
+    description: Formula C6H12O6.
+  - node_id: prd2
+    label: D-fructose
+    node_type: CHEMICAL
+    grounding: CHEBI:37721
+    description: Formula C6H12O6.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: palatinase
+    grounding: EC:3.2.1.219
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9AI62
+    node_type: PROTEIN
+    label: PALQ_ERWRD
+    grounding: UniProtKB:Q9AI62
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 6-O-alpha-D-glucopyranosyl-D-fructose is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68809
+      snippet: 6-O-alpha-D-glucopyranosyl-D-fructose + H2O => alpha-D-glucose + D-fructose
+      notes: Rhea's left-to-right directional reaction RHEA:68809 declares side 68808_L as its substrates
+        (rh:substrates); the master reaction RHEA:68808 is undirected. This participant is CHEBI:18394
+        with coefficient 1. Rhea cites PMID:27480812 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68809
+      snippet: 6-O-alpha-D-glucopyranosyl-D-fructose + H2O => alpha-D-glucose + D-fructose
+      notes: Rhea's left-to-right directional reaction RHEA:68809 declares side 68808_L as its substrates
+        (rh:substrates); the master reaction RHEA:68808 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:27480812 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: alpha-D-glucose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68809
+      snippet: 6-O-alpha-D-glucopyranosyl-D-fructose + H2O => alpha-D-glucose + D-fructose
+      notes: Rhea's left-to-right directional reaction RHEA:68809 declares side 68808_R as its products
+        (rh:products); the master reaction RHEA:68808 is undirected. This participant is CHEBI:17925 with
+        coefficient 1. Rhea cites PMID:27480812 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: D-fructose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68809
+      snippet: 6-O-alpha-D-glucopyranosyl-D-fructose + H2O => alpha-D-glucose + D-fructose
+      notes: Rhea's left-to-right directional reaction RHEA:68809 declares side 68808_R as its products
+        (rh:products); the master reaction RHEA:68808 is undirected. This participant is CHEBI:37721 with
+        coefficient 1. Rhea cites PMID:27480812 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.1.219; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:68808
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.219"/>
+      notes: The rh:ec triple on RHEA:68808 in rhea.rdf. EC 3.2.1.219 is itself a record in this KB.
+  - subject: prot_Q9AI62
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PALQ_ERWRD is an exemplar enzyme carrying EC 3.2.1.219, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.219
+      snippet: DR   Q9AI62, PALQ_ERWRD ;
+      notes: ExPASy ENZYME entry EC 3.2.1.219 cross-references UniProtKB:Q9AI62 (PALQ_ERWRD) as a protein
+        with this activity.
+    - reference: RHEA:68808
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.219"/>
+      notes: Rhea assigns RHEA:68808 to EC 3.2.1.219, and EC 3.2.1.219 maps to exactly one Rhea master
+        reaction (RHEA:68808), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

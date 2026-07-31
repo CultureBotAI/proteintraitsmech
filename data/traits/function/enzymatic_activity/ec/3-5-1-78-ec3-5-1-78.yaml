@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 synonyms:
@@ -39,4 +39,133 @@ definitions:
       Catalyses: glutathionylspermidine + H2O = spermidine + glutathione
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glutathionylspermidine amidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.78. EC 3.5.1.78 maps to exactly
+    one curated Rhea reaction (RHEA:17173), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "glutathionylspermidine
+    + H2O = spermidine + glutathione". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glutathionylspermidine amidase
+    grounding: EC:3.5.1.78
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: glutathionylspermidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57835
+    description: Formula C17H36N6O5S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: spermidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57834
+    description: Formula C7H22N3.
+  - node_id: prd2
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glutathionylspermidine amidase activity
+    grounding: GO:0008884
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0AES0
+    node_type: PROTEIN
+    label: GSP_ECOLI
+    grounding: UniProtKB:P0AES0
+  - node_id: prot_P0AES1
+    node_type: PROTEIN
+    label: GSP_SHIFL
+    grounding: UniProtKB:P0AES1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: glutathionylspermidine is a substrate consumed by RHEA:17173 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17174
+      snippet: glutathionylspermidine + H2O => spermidine + glutathione
+      notes: Rhea's left-to-right directional reaction RHEA:17174 declares side 17173_L as its substrates
+        (rh:substrates); the master reaction RHEA:17173 is undirected. This participant is CHEBI:57835
+        with coefficient 1. Rhea cites PMID:7775463, PMID:17124497, PMID:8999955 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:17173 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17174
+      snippet: glutathionylspermidine + H2O => spermidine + glutathione
+      notes: Rhea's left-to-right directional reaction RHEA:17174 declares side 17173_L as its substrates
+        (rh:substrates); the master reaction RHEA:17173 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:7775463, PMID:17124497, PMID:8999955 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: spermidine is a product released by RHEA:17173 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17174
+      snippet: glutathionylspermidine + H2O => spermidine + glutathione
+      notes: Rhea's left-to-right directional reaction RHEA:17174 declares side 17173_R as its products
+        (rh:products); the master reaction RHEA:17173 is undirected. This participant is CHEBI:57834 with
+        coefficient 1. Rhea cites PMID:7775463, PMID:17124497, PMID:8999955 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glutathione is a product released by RHEA:17173 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17174
+      snippet: glutathionylspermidine + H2O => spermidine + glutathione
+      notes: Rhea's left-to-right directional reaction RHEA:17174 declares side 17173_R as its products
+        (rh:products); the master reaction RHEA:17173 is undirected. This participant is CHEBI:57925 with
+        coefficient 1. Rhea cites PMID:7775463, PMID:17124497, PMID:8999955 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.78
+      snippet: EC:3.5.1.78 > GO:glutathionylspermidine amidase activity ; GO:0008884
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0008884 is itself a record
+        in this KB.
+  - subject: prot_P0AES0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GSP_ECOLI is an exemplar enzyme with EC 3.5.1.78 activity.
+    evidence:
+    - reference: EC:3.5.1.78
+      snippet: DR   P0AES0, GSP_ECOLI  ;  P0AES1, GSP_SHIFL  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.78 cross-references UniProtKB:P0AES0 (GSP_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P0AES1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GSP_SHIFL is an exemplar enzyme with EC 3.5.1.78 activity.
+    evidence:
+    - reference: EC:3.5.1.78
+      snippet: DR   P0AES0, GSP_ECOLI  ;  P0AES1, GSP_SHIFL  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.78 cross-references UniProtKB:P0AES1 (GSP_SHIFL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -51,4 +51,127 @@ definitions:
       Catalyses: [(1->4)-alpha-D-galacturonosyl](n) = 4-(4-deoxy-alpha-D-galact-4- enuronosyl)-D-galacturonate + [(1->4)-alpha-D-galacturonosyl](n-2)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pectate disaccharide-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.9. EC 4.2.2.9 maps to exactly
+    one curated Rhea reaction (RHEA:57104), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[(1->4)-alpha-D-galacturonosyl](n)
+    = 4-(4-deoxy-alpha-D-galact-4- enuronosyl)-D-galacturonate + [(1->4)-alpha-D-galacturonosyl](n-2)".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: pectate disaccharide-lyase
+    grounding: EC:4.2.2.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[(1->4)-alpha-D-galacturonosyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:140523
+    xrefs:
+    - RHEA-COMP:14570
+    description: Rhea compound POLYMER:14570. Formula H2O(C6H7O6)<i><sub>n</sub></i>.
+  - node_id: prd1
+    label: 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate
+    node_type: CHEMICAL
+    grounding: CHEBI:60189
+    description: Formula C12H14O12.
+  - node_id: prd2
+    label: '[(1->4)-alpha-D-galacturonosyl](n-2)'
+    node_type: CHEMICAL
+    grounding: CHEBI:140523
+    xrefs:
+    - RHEA-COMP:14734
+    description: Rhea compound POLYMER:14734. Formula H2O(C6H7O6)<i><sub>n-2</sub></i>.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: pectate disaccharide-lyase activity
+    grounding: GO:0047489
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q05526
+    node_type: PROTEIN
+    label: PLYW_DICD3
+    grounding: UniProtKB:Q05526
+  - node_id: prot_P22751
+    node_type: PROTEIN
+    label: PLYX_DICCH
+    grounding: UniProtKB:P22751
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[(1->4)-alpha-D-galacturonosyl](n) is a substrate consumed by RHEA:57104 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:57105
+      snippet: '[(1->4)-alpha-D-galacturonosyl](n) => 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate
+        + [(1->4)-alpha-D-galacturonosyl](n-2)'
+      notes: Rhea's left-to-right directional reaction RHEA:57105 declares side 57104_L as its substrates
+        (rh:substrates); the master reaction RHEA:57104 is undirected. This participant is POLYMER:14570
+        with coefficient 1. Rhea cites PMID:10383957, PMID:10049400, PMID:14188174 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate is a product released by RHEA:57104
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57105
+      snippet: '[(1->4)-alpha-D-galacturonosyl](n) => 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate
+        + [(1->4)-alpha-D-galacturonosyl](n-2)'
+      notes: Rhea's left-to-right directional reaction RHEA:57105 declares side 57104_R as its products
+        (rh:products); the master reaction RHEA:57104 is undirected. This participant is CHEBI:60189 with
+        coefficient 1. Rhea cites PMID:10383957, PMID:10049400, PMID:14188174 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: '[(1->4)-alpha-D-galacturonosyl](n-2) is a product released by RHEA:57104 (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:57105
+      snippet: '[(1->4)-alpha-D-galacturonosyl](n) => 4-(4-deoxy-alpha-D-galact-4-enuronosyl)-D-galacturonate
+        + [(1->4)-alpha-D-galacturonosyl](n-2)'
+      notes: Rhea's left-to-right directional reaction RHEA:57105 declares side 57104_R as its products
+        (rh:products); the master reaction RHEA:57104 is undirected. This participant is POLYMER:14734
+        with coefficient 1. Rhea cites PMID:10383957, PMID:10049400, PMID:14188174 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.9
+      snippet: EC:4.2.2.9 > GO:pectate disaccharide-lyase activity ; GO:0047489
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047489 is itself a record
+        in this KB.
+  - subject: prot_Q05526
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLYW_DICD3 is an exemplar enzyme with EC 4.2.2.9 activity.
+    evidence:
+    - reference: EC:4.2.2.9
+      snippet: DR   Q05526, PLYW_DICD3 ;  P22751, PLYX_DICCH ;
+      notes: ExPASy ENZYME entry EC 4.2.2.9 cross-references UniProtKB:Q05526 (PLYW_DICD3) as a protein
+        with this activity.
+  - subject: prot_P22751
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PLYX_DICCH is an exemplar enzyme with EC 4.2.2.9 activity.
+    evidence:
+    - reference: EC:4.2.2.9
+      snippet: DR   Q05526, PLYW_DICD3 ;  P22751, PLYX_DICCH ;
+      notes: ExPASy ENZYME entry EC 4.2.2.9 cross-references UniProtKB:P22751 (PLYX_DICCH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

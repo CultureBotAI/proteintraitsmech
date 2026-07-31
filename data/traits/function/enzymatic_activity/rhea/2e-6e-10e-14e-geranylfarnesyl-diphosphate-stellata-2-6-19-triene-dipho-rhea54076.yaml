@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.178
     mapping_source: rhea2ec
@@ -26,4 +26,112 @@ definitions:
       Catalyses the reaction: (2E,6E,10E,14E)-geranylfarnesyl diphosphate = stellata-2,6,19-triene + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E,10E,14E)-geranylfarnesyl diphosphate = stellata-2,6,19-triene +
+    diphosphate
+  description: Substrate-to-product chemistry of RHEA:54076, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:54077 (rh:substrates → 54076_L, rh:products → 54076_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E,10E,14E)-geranylfarnesyl diphosphate = stellata-2,6,19-triene + dipho…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:54076
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E,10E,14E)-geranylfarnesyl diphosphate = stellata-2,6,19-triene + diphosphate'
+  - node_id: sub1
+    label: (2E,6E,10E,14E)-geranylfarnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57907
+    description: Formula C25H41O7P2.
+  - node_id: prd1
+    label: stellata-2,6,19-triene
+    node_type: CHEMICAL
+    grounding: CHEBI:138048
+    description: Formula C25H40.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: stellata-2,6,19-triene synthase
+    grounding: EC:4.2.3.178
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A0P0ZEM1
+    node_type: PROTEIN
+    label: STLSS_EMEVA
+    grounding: UniProtKB:A0A0P0ZEM1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E,10E,14E)-geranylfarnesyl diphosphate is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54077
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => stellata-2,6,19-triene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54077 declares side 54076_L as its substrates
+        (rh:substrates); the master reaction RHEA:54076 is undirected. This participant is CHEBI:57907
+        with coefficient 1. Rhea cites PMID:26351860 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: stellata-2,6,19-triene is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:54077
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => stellata-2,6,19-triene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54077 declares side 54076_R as its products
+        (rh:products); the master reaction RHEA:54076 is undirected. This participant is CHEBI:138048
+        with coefficient 1. Rhea cites PMID:26351860 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54077
+      snippet: (2E,6E,10E,14E)-geranylfarnesyl diphosphate => stellata-2,6,19-triene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:54077 declares side 54076_R as its products
+        (rh:products); the master reaction RHEA:54076 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:26351860 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.178; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:54076
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.178"/>
+      notes: The rh:ec triple on RHEA:54076 in rhea.rdf. EC 4.2.3.178 is itself a record in this KB.
+  - subject: prot_A0A0P0ZEM1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: STLSS_EMEVA is an exemplar enzyme carrying EC 4.2.3.178, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.178
+      snippet: DR   A0A0P0ZEM1, STLSS_EMEVA;
+      notes: ExPASy ENZYME entry EC 4.2.3.178 cross-references UniProtKB:A0A0P0ZEM1 (STLSS_EMEVA) as a
+        protein with this activity.
+    - reference: RHEA:54076
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.178"/>
+      notes: Rhea assigns RHEA:54076 to EC 4.2.3.178, and EC 4.2.3.178 maps to exactly one Rhea master
+        reaction (RHEA:54076), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:44027
     role: SUBSTRATE_OR_PRODUCT
@@ -22,4 +22,93 @@ definitions:
       Catalyses the reaction: menaquinone-8 + sn-glycerol 3-phosphate = menaquinol-8 + dihydroxyacetone phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of menaquinone-8 + sn-glycerol 3-phosphate = menaquinol-8 + dihydroxyacetone
+    phosphate
+  description: Substrate-to-product chemistry of RHEA:29223, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:29224 (rh:substrates → 29223_L, rh:products → 29223_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of menaquinone-8 + sn-glycerol 3-phosphate = menaquinol-8 + dihydroxyacetone ph…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:29223
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: menaquinone-8 + sn-glycerol 3-phosphate = menaquinol-8 + dihydroxyacetone phosphate'
+  - node_id: sub1
+    label: menaquinone-8
+    node_type: CHEMICAL
+    grounding: CHEBI:44027
+    description: Formula C51H72O2.
+  - node_id: sub2
+    label: sn-glycerol 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57597
+    description: Formula C3H7O6P.
+  - node_id: prd1
+    label: menaquinol-8
+    node_type: CHEMICAL
+    grounding: CHEBI:61684
+    description: Formula C51H74O2.
+  - node_id: prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: menaquinone-8 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29224
+      snippet: menaquinone-8 + sn-glycerol 3-phosphate => menaquinol-8 + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29224 declares side 29223_L as its substrates
+        (rh:substrates); the master reaction RHEA:29223 is undirected. This participant is CHEBI:44027
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sn-glycerol 3-phosphate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:29224
+      snippet: menaquinone-8 + sn-glycerol 3-phosphate => menaquinol-8 + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29224 declares side 29223_L as its substrates
+        (rh:substrates); the master reaction RHEA:29223 is undirected. This participant is CHEBI:57597
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: menaquinol-8 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29224
+      snippet: menaquinone-8 + sn-glycerol 3-phosphate => menaquinol-8 + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29224 declares side 29223_R as its products
+        (rh:products); the master reaction RHEA:29223 is undirected. This participant is CHEBI:61684 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dihydroxyacetone phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:29224
+      snippet: menaquinone-8 + sn-glycerol 3-phosphate => menaquinol-8 + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:29224 declares side 29223_R as its products
+        (rh:products); the master reaction RHEA:29223 is undirected. This participant is CHEBI:57642 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.18.-
 synonyms:
@@ -49,4 +49,82 @@ definitions:
       Catalyses: Release of C-terminal amino acid residues with broad specificity, but lacks action on C-terminal proline. Shows weak endopeptidase activity
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cathepsin X
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.18.1. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Release
+    of C-terminal amino acid residues with broad specificity, but lacks action on C-terminal proline.
+    Shows weak endopeptidase activity".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cathepsin X
+    grounding: EC:3.4.18.1
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cysteine-type carboxypeptidase activity
+    grounding: GO:0016807
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_G5EGP8
+    node_type: PROTEIN
+    label: CATZ1_CAEEL
+    grounding: UniProtKB:G5EGP8
+  - node_id: prot_P05689
+    node_type: PROTEIN
+    label: CATZ_BOVIN
+    grounding: UniProtKB:P05689
+  - node_id: prot_Q9UBR2
+    node_type: PROTEIN
+    label: CATZ_HUMAN
+    grounding: UniProtKB:Q9UBR2
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.18.1
+      snippet: EC:3.4.18.1 > GO:cysteine-type carboxypeptidase activity ; GO:0016807
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0016807 is itself a record
+        in this KB.
+  - subject: prot_G5EGP8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CATZ1_CAEEL is an exemplar enzyme with EC 3.4.18.1 activity.
+    evidence:
+    - reference: EC:3.4.18.1
+      snippet: DR   G5EGP8, CATZ1_CAEEL;  P05689, CATZ_BOVIN ;  Q9UBR2, CATZ_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.18.1 cross-references UniProtKB:G5EGP8 (CATZ1_CAEEL) as a protein
+        with this activity.
+  - subject: prot_P05689
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CATZ_BOVIN is an exemplar enzyme with EC 3.4.18.1 activity.
+    evidence:
+    - reference: EC:3.4.18.1
+      snippet: DR   G5EGP8, CATZ1_CAEEL;  P05689, CATZ_BOVIN ;  Q9UBR2, CATZ_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.18.1 cross-references UniProtKB:P05689 (CATZ_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q9UBR2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CATZ_HUMAN is an exemplar enzyme with EC 3.4.18.1 activity.
+    evidence:
+    - reference: EC:3.4.18.1
+      snippet: DR   G5EGP8, CATZ1_CAEEL;  P05689, CATZ_BOVIN ;  Q9UBR2, CATZ_HUMAN ;
+      notes: ExPASy ENZYME entry EC 3.4.18.1 cross-references UniProtKB:Q9UBR2 (CATZ_HUMAN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

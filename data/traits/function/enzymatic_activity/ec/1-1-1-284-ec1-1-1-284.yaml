@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 synonyms:
@@ -67,4 +67,283 @@ definitions:
       Catalyses: (1) S-(hydroxymethyl)glutathione + NADP(+) = S-formylglutathione + NADPH + H(+). (2) S-(hydroxymethyl)glutathione + NAD(+) = S-formylglutathione + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-(hydroxymethyl)glutathione dehydrogenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.284. Rhea assigns 2 curated
+    reactions to EC 1.1.1.284. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) S-(hydroxymethyl)glutathione + NADP(+) = S-formylglutathione
+    + NADPH + H(+). (2) S-(hydroxymethyl)glutathione + NAD(+) = S-formylglutathione + NADH + H(+)". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: S-(hydroxymethyl)glutathione dehydrogenase
+    grounding: EC:1.1.1.284
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of S-(hydroxymethyl)glutathione + NADP(+) = S-formylglutathione + NADPH + H(+)
+    grounding: RHEA:19981
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: S-(hydroxymethyl)glutathione + NADP(+) = S-formylglutathione + NADPH +
+      H(+)'
+  - node_id: rxn1_sub1
+    label: S-(hydroxymethyl)glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:58758
+    description: Formula C11H18N3O7S.
+  - node_id: rxn1_sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: rxn1_prd1
+    label: S-formylglutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57688
+    description: Formula C11H16N3O7S.
+  - node_id: rxn1_prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn1_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of S-(hydroxymethyl)glutathione + NAD(+) = S-formylglutathione + NADH + H(+)
+    grounding: RHEA:19985
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: S-(hydroxymethyl)glutathione + NAD(+) = S-formylglutathione + NADH + H(+)'
+  - node_id: rxn2_sub1
+    label: S-(hydroxymethyl)glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:58758
+    description: Formula C11H18N3O7S.
+  - node_id: rxn2_sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: rxn2_prd1
+    label: S-formylglutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57688
+    description: Formula C11H16N3O7S.
+  - node_id: rxn2_prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn2_prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: S-(hydroxymethyl)glutathione dehydrogenase [NAD(P)+] activity
+    grounding: GO:0051903
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P81600
+    node_type: PROTEIN
+    label: ADHH_GADMO
+    grounding: UniProtKB:P81600
+  - node_id: prot_P72324
+    node_type: PROTEIN
+    label: ADHI_CERS4
+    grounding: UniProtKB:P72324
+  - node_id: prot_P81601
+    node_type: PROTEIN
+    label: ADHL_GADMO
+    grounding: UniProtKB:P81601
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:19981 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.284; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:19981
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.284"/>
+      notes: The rh:ec triple on RHEA:19981 in rhea.rdf assigns that reaction to EC 1.1.1.284.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: S-(hydroxymethyl)glutathione is a substrate consumed by RHEA:19981 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19982
+      snippet: S-(hydroxymethyl)glutathione + NADP(+) => S-formylglutathione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19982 declares side 19981_L as its substrates
+        (rh:substrates); the master reaction RHEA:19981 is undirected. This participant is CHEBI:58758
+        with coefficient 1. Rhea cites PMID:7798140, PMID:8631716, PMID:10978156, PMID:11260719 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: NADP(+) is a substrate consumed by RHEA:19981 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19982
+      snippet: S-(hydroxymethyl)glutathione + NADP(+) => S-formylglutathione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19982 declares side 19981_L as its substrates
+        (rh:substrates); the master reaction RHEA:19981 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:7798140, PMID:8631716, PMID:10978156, PMID:11260719 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: S-formylglutathione is a product released by RHEA:19981 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19982
+      snippet: S-(hydroxymethyl)glutathione + NADP(+) => S-formylglutathione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19982 declares side 19981_R as its products
+        (rh:products); the master reaction RHEA:19981 is undirected. This participant is CHEBI:57688 with
+        coefficient 1. Rhea cites PMID:7798140, PMID:8631716, PMID:10978156, PMID:11260719 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: NADPH is a product released by RHEA:19981 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19982
+      snippet: S-(hydroxymethyl)glutathione + NADP(+) => S-formylglutathione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19982 declares side 19981_R as its products
+        (rh:products); the master reaction RHEA:19981 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:7798140, PMID:8631716, PMID:10978156, PMID:11260719 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: H(+) is a product released by RHEA:19981 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19982
+      snippet: S-(hydroxymethyl)glutathione + NADP(+) => S-formylglutathione + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19982 declares side 19981_R as its products
+        (rh:products); the master reaction RHEA:19981 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:7798140, PMID:8631716, PMID:10978156, PMID:11260719 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:19985 is one of the 2 curated reactions Rhea assigns to EC 1.1.1.284; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:19985
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.1.1.284"/>
+      notes: The rh:ec triple on RHEA:19985 in rhea.rdf assigns that reaction to EC 1.1.1.284.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: S-(hydroxymethyl)glutathione is a substrate consumed by RHEA:19985 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19986
+      snippet: S-(hydroxymethyl)glutathione + NAD(+) => S-formylglutathione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19986 declares side 19985_L as its substrates
+        (rh:substrates); the master reaction RHEA:19985 is undirected. This participant is CHEBI:58758
+        with coefficient 1. Rhea cites PMID:7798140, PMID:8631716, PMID:10978156, PMID:11260719 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: NAD(+) is a substrate consumed by RHEA:19985 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19986
+      snippet: S-(hydroxymethyl)glutathione + NAD(+) => S-formylglutathione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19986 declares side 19985_L as its substrates
+        (rh:substrates); the master reaction RHEA:19985 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:7798140, PMID:8631716, PMID:10978156, PMID:11260719 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: S-formylglutathione is a product released by RHEA:19985 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19986
+      snippet: S-(hydroxymethyl)glutathione + NAD(+) => S-formylglutathione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19986 declares side 19985_R as its products
+        (rh:products); the master reaction RHEA:19985 is undirected. This participant is CHEBI:57688 with
+        coefficient 1. Rhea cites PMID:7798140, PMID:8631716, PMID:10978156, PMID:11260719 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: NADH is a product released by RHEA:19985 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19986
+      snippet: S-(hydroxymethyl)glutathione + NAD(+) => S-formylglutathione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19986 declares side 19985_R as its products
+        (rh:products); the master reaction RHEA:19985 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:7798140, PMID:8631716, PMID:10978156, PMID:11260719 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: H(+) is a product released by RHEA:19985 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19986
+      snippet: S-(hydroxymethyl)glutathione + NAD(+) => S-formylglutathione + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19986 declares side 19985_R as its products
+        (rh:products); the master reaction RHEA:19985 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:7798140, PMID:8631716, PMID:10978156, PMID:11260719 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.1.1.284
+      snippet: EC:1.1.1.284 > GO:S-(hydroxymethyl)glutathione dehydrogenase [NAD(P)+] activity ; GO:0051903
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0051903 is itself a record
+        in this KB.
+  - subject: prot_P81600
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADHH_GADMO is an exemplar enzyme with EC 1.1.1.284 activity.
+    evidence:
+    - reference: EC:1.1.1.284
+      snippet: DR   P81600, ADHH_GADMO ;  P72324, ADHI_CERS4 ;  P81601, ADHL_GADMO ;
+      notes: ExPASy ENZYME entry EC 1.1.1.284 cross-references UniProtKB:P81600 (ADHH_GADMO) as a protein
+        with this activity.
+  - subject: prot_P72324
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADHI_CERS4 is an exemplar enzyme with EC 1.1.1.284 activity.
+    evidence:
+    - reference: EC:1.1.1.284
+      snippet: DR   P81600, ADHH_GADMO ;  P72324, ADHI_CERS4 ;  P81601, ADHL_GADMO ;
+      notes: ExPASy ENZYME entry EC 1.1.1.284 cross-references UniProtKB:P72324 (ADHI_CERS4) as a protein
+        with this activity.
+  - subject: prot_P81601
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ADHL_GADMO is an exemplar enzyme with EC 1.1.1.284 activity.
+    evidence:
+    - reference: EC:1.1.1.284
+      snippet: DR   P81600, ADHH_GADMO ;  P72324, ADHI_CERS4 ;  P81601, ADHL_GADMO ;
+      notes: ExPASy ENZYME entry EC 1.1.1.284 cross-references UniProtKB:P81601 (ADHL_GADMO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

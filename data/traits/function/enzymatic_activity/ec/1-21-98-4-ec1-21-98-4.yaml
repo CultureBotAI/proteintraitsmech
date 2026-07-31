@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.21.98.-
 mapped_xrefs:
@@ -36,4 +36,206 @@ definitions:
       Catalyses: [PQQ precursor protein] + S-adenosyl-L-methionine = E-Y cross-linked-[PQQ precursor protein] + 5'-deoxyadenosine + L-methionine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of PqqA peptide cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.21.98.4. EC 1.21.98.4 maps to
+    exactly one curated Rhea reaction (RHEA:56836), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[PQQ
+    precursor protein] + S-adenosyl-L-methionine = E-Y cross-linked-[PQQ precursor protein] + 5''-deoxyadenosine
+    + L-methionine + H(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: PqqA peptide cyclase
+    grounding: EC:1.21.98.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[PQQ precursor protein]'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14800
+    description: Rhea compound GENERIC:14800.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: EXXXY peptide
+    description: The reacting group Rhea names inside the generic participant GENERIC:14800 ([PQQ precursor
+      protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:141026
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: E-Y cross-linked-[PQQ precursor protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14801
+    description: Rhea compound GENERIC:14801.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: E-Y cross-linked EXXXY peptide
+    description: The reacting group Rhea names inside the generic participant GENERIC:14801 (E-Y cross-linked-[PQQ
+      precursor protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:141027
+  - node_id: prd2
+    label: 5'-deoxyadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17319
+    description: Formula C10H13N5O3.
+  - node_id: prd3
+    label: L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+    description: Formula C5H11NO2S.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q6F9I9
+    node_type: PROTEIN
+    label: PQQE_ACIAD
+    grounding: UniProtKB:Q6F9I9
+  - node_id: prot_B7H2Y0
+    node_type: PROTEIN
+    label: PQQE_ACIB3
+    grounding: UniProtKB:B7H2Y0
+  - node_id: prot_B7I6M8
+    node_type: PROTEIN
+    label: PQQE_ACIB5
+    grounding: UniProtKB:B7I6M8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[PQQ precursor protein] is a substrate consumed by RHEA:56836 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:56837
+      snippet: '[PQQ precursor protein] + S-adenosyl-L-methionine => E-Y cross-linked-[PQQ precursor protein]
+        + 5''-deoxyadenosine + L-methionine + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56837 declares side 56836_L as its substrates
+        (rh:substrates); the master reaction RHEA:56836 is undirected. This participant is GENERIC:14800
+        with coefficient 1. Rhea cites PMID:20737074, PMID:25817994, PMID:26961875 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: EXXXY peptide is the reactive part of [PQQ precursor protein].
+    evidence:
+    - reference: RHEA:56836
+      snippet: EXXXY peptide
+      notes: Rhea compound GENERIC:14800 ([PQQ precursor protein]) declares rh:reactivePart = EXXXY peptide
+        (CHEBI:141026).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:56836 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56837
+      snippet: '[PQQ precursor protein] + S-adenosyl-L-methionine => E-Y cross-linked-[PQQ precursor protein]
+        + 5''-deoxyadenosine + L-methionine + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56837 declares side 56836_L as its substrates
+        (rh:substrates); the master reaction RHEA:56836 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:20737074, PMID:25817994, PMID:26961875 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: E-Y cross-linked-[PQQ precursor protein] is a product released by RHEA:56836 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:56837
+      snippet: '[PQQ precursor protein] + S-adenosyl-L-methionine => E-Y cross-linked-[PQQ precursor protein]
+        + 5''-deoxyadenosine + L-methionine + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56837 declares side 56836_R as its products
+        (rh:products); the master reaction RHEA:56836 is undirected. This participant is GENERIC:14801
+        with coefficient 1. Rhea cites PMID:20737074, PMID:25817994, PMID:26961875 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: E-Y cross-linked EXXXY peptide is the reactive part of E-Y cross-linked-[PQQ precursor
+      protein].
+    evidence:
+    - reference: RHEA:56836
+      snippet: E-Y cross-linked EXXXY peptide
+      notes: Rhea compound GENERIC:14801 (E-Y cross-linked-[PQQ precursor protein]) declares rh:reactivePart
+        = E-Y cross-linked EXXXY peptide (CHEBI:141027).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 5'-deoxyadenosine is a product released by RHEA:56836 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56837
+      snippet: '[PQQ precursor protein] + S-adenosyl-L-methionine => E-Y cross-linked-[PQQ precursor protein]
+        + 5''-deoxyadenosine + L-methionine + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56837 declares side 56836_R as its products
+        (rh:products); the master reaction RHEA:56836 is undirected. This participant is CHEBI:17319 with
+        coefficient 1. Rhea cites PMID:20737074, PMID:25817994, PMID:26961875 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: L-methionine is a product released by RHEA:56836 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56837
+      snippet: '[PQQ precursor protein] + S-adenosyl-L-methionine => E-Y cross-linked-[PQQ precursor protein]
+        + 5''-deoxyadenosine + L-methionine + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56837 declares side 56836_R as its products
+        (rh:products); the master reaction RHEA:56836 is undirected. This participant is CHEBI:57844 with
+        coefficient 1. Rhea cites PMID:20737074, PMID:25817994, PMID:26961875 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:56836 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56837
+      snippet: '[PQQ precursor protein] + S-adenosyl-L-methionine => E-Y cross-linked-[PQQ precursor protein]
+        + 5''-deoxyadenosine + L-methionine + H(+)'
+      notes: Rhea's left-to-right directional reaction RHEA:56837 declares side 56836_R as its products
+        (rh:products); the master reaction RHEA:56836 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:20737074, PMID:25817994, PMID:26961875 for this reaction.
+  - subject: prot_Q6F9I9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PQQE_ACIAD is an exemplar enzyme with EC 1.21.98.4 activity.
+    evidence:
+    - reference: EC:1.21.98.4
+      snippet: DR   Q6F9I9, PQQE_ACIAD ;  B7H2Y0, PQQE_ACIB3 ;  B7I6M8, PQQE_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 1.21.98.4 cross-references UniProtKB:Q6F9I9 (PQQE_ACIAD) as a protein
+        with this activity.
+  - subject: prot_B7H2Y0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PQQE_ACIB3 is an exemplar enzyme with EC 1.21.98.4 activity.
+    evidence:
+    - reference: EC:1.21.98.4
+      snippet: DR   Q6F9I9, PQQE_ACIAD ;  B7H2Y0, PQQE_ACIB3 ;  B7I6M8, PQQE_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 1.21.98.4 cross-references UniProtKB:B7H2Y0 (PQQE_ACIB3) as a protein
+        with this activity.
+  - subject: prot_B7I6M8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PQQE_ACIB5 is an exemplar enzyme with EC 1.21.98.4 activity.
+    evidence:
+    - reference: EC:1.21.98.4
+      snippet: DR   Q6F9I9, PQQE_ACIAD ;  B7H2Y0, PQQE_ACIB3 ;  B7I6M8, PQQE_ACIB5 ;
+      notes: ExPASy ENZYME entry EC 1.21.98.4 cross-references UniProtKB:B7I6M8 (PQQE_ACIB5) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

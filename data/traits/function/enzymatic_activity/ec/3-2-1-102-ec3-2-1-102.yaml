@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -31,4 +31,53 @@ definitions:
       Catalyses: Endohydrolysis of (1->4)-beta-D-galactosidic linkages in blood group A and B substances
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of blood-group-substance endo-1,4-beta-galactosidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.102. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Endohydrolysis
+    of (1->4)-beta-D-galactosidic linkages in blood group A and B substances".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: blood-group-substance endo-1,4-beta-galactosidase
+    grounding: EC:3.2.1.102
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: blood-group-substance endo-1,4-beta-galactosidase activity
+    grounding: GO:0033929
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q6RUF5
+    node_type: PROTEIN
+    label: EABC_CLOPF
+    grounding: UniProtKB:Q6RUF5
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.102
+      snippet: EC:3.2.1.102 > GO:blood-group-substance endo-1,4-beta-galactosidase activity ; GO:0033929
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0033929 is itself a record
+        in this KB.
+  - subject: prot_Q6RUF5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: EABC_CLOPF is an exemplar enzyme with EC 3.2.1.102 activity.
+    evidence:
+    - reference: EC:3.2.1.102
+      snippet: DR   Q6RUF5, EABC_CLOPF ;
+      notes: ExPASy ENZYME entry EC 3.2.1.102 cross-references UniProtKB:Q6RUF5 (EABC_CLOPF) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

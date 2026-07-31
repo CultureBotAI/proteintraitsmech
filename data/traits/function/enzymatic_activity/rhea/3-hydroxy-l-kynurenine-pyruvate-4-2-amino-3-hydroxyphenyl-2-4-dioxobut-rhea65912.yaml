@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:58125
     role: SUBSTRATE_OR_PRODUCT
@@ -29,4 +29,110 @@ definitions:
       Catalyses the reaction: 3-hydroxy-L-kynurenine + pyruvate = 4-(2-amino-3-hydroxyphenyl)-2,4-dioxobutanoate + L-alanine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3-hydroxy-L-kynurenine + pyruvate = 4-(2-amino-3-hydroxyphenyl)-2,4-dioxobutanoate
+    + L-…
+  description: Substrate-to-product chemistry of RHEA:65912, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:65913 (rh:substrates → 65912_L, rh:products → 65912_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 3-hydroxy-L-kynurenine + pyruvate = 4-(2-amino-3-hydroxyphenyl)-2,4-dioxobut…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:65912
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 3-hydroxy-L-kynurenine + pyruvate = 4-(2-amino-3-hydroxyphenyl)-2,4-dioxobutanoate
+      + L-alanine'
+  - node_id: sub1
+    label: 3-hydroxy-L-kynurenine
+    node_type: CHEMICAL
+    grounding: CHEBI:58125
+    description: Formula C10H12N2O4.
+  - node_id: sub2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd1
+    label: 4-(2-amino-3-hydroxyphenyl)-2,4-dioxobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:157756
+    description: Formula C10H8NO5.
+  - node_id: prd2
+    label: L-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57972
+    description: Formula C3H7NO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-alanine:oxo-acid transaminase activity
+    grounding: GO:0047635
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 3-hydroxy-L-kynurenine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:65913
+      snippet: 3-hydroxy-L-kynurenine + pyruvate => 4-(2-amino-3-hydroxyphenyl)-2,4-dioxobutanoate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:65913 declares side 65912_L as its substrates
+        (rh:substrates); the master reaction RHEA:65912 is undirected. This participant is CHEBI:58125
+        with coefficient 1. Rhea cites PMID:11880382, PMID:12220660, PMID:16262702 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: pyruvate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65913
+      snippet: 3-hydroxy-L-kynurenine + pyruvate => 4-(2-amino-3-hydroxyphenyl)-2,4-dioxobutanoate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:65913 declares side 65912_L as its substrates
+        (rh:substrates); the master reaction RHEA:65912 is undirected. This participant is CHEBI:15361
+        with coefficient 1. Rhea cites PMID:11880382, PMID:12220660, PMID:16262702 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 4-(2-amino-3-hydroxyphenyl)-2,4-dioxobutanoate is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65913
+      snippet: 3-hydroxy-L-kynurenine + pyruvate => 4-(2-amino-3-hydroxyphenyl)-2,4-dioxobutanoate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:65913 declares side 65912_R as its products
+        (rh:products); the master reaction RHEA:65912 is undirected. This participant is CHEBI:157756
+        with coefficient 1. Rhea cites PMID:11880382, PMID:12220660, PMID:16262702 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-alanine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:65913
+      snippet: 3-hydroxy-L-kynurenine + pyruvate => 4-(2-amino-3-hydroxyphenyl)-2,4-dioxobutanoate + L-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:65913 declares side 65912_R as its products
+        (rh:products); the master reaction RHEA:65912 is undirected. This participant is CHEBI:57972 with
+        coefficient 1. Rhea cites PMID:11880382, PMID:12220660, PMID:16262702 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:65912
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047635"/>
+      notes: The rdfs:seeAlso triple on RHEA:65912 in rhea.rdf. GO term GO:0047635 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

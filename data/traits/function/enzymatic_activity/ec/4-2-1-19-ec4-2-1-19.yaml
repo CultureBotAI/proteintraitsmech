@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 mapped_xrefs:
@@ -38,4 +38,137 @@ definitions:
       Catalyses: D-erythro-1-(imidazol-4-yl)glycerol 3-phosphate = 3-(imidazol-4-yl)-2- oxopropyl phosphate + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of imidazoleglycerol-phosphate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.19. EC 4.2.1.19 maps to exactly
+    one curated Rhea reaction (RHEA:11040), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-erythro-1-(imidazol-4-yl)glycerol
+    3-phosphate = 3-(imidazol-4-yl)-2- oxopropyl phosphate + H2O". Substrate/product direction is the
+    one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are
+    undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: imidazoleglycerol-phosphate dehydratase
+    grounding: EC:4.2.1.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-erythro-1-(imidazol-4-yl)glycerol 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58278
+    description: Formula C6H9N2O6P.
+  - node_id: prd1
+    label: 3-(imidazol-4-yl)-2-oxopropyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57766
+    description: Formula C6H7N2O5P.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: imidazoleglycerol-phosphate dehydratase activity
+    grounding: GO:0004424
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P34047
+    node_type: PROTEIN
+    label: HIS5A_ARATH
+    grounding: UniProtKB:P34047
+  - node_id: prot_O23346
+    node_type: PROTEIN
+    label: HIS5B_ARATH
+    grounding: UniProtKB:O23346
+  - node_id: prot_P34048
+    node_type: PROTEIN
+    label: HIS7A_WHEAT
+    grounding: UniProtKB:P34048
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-erythro-1-(imidazol-4-yl)glycerol 3-phosphate is a substrate consumed by RHEA:11040
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11041
+      snippet: D-erythro-1-(imidazol-4-yl)glycerol 3-phosphate => 3-(imidazol-4-yl)-2-oxopropyl phosphate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:11041 declares side 11040_L as its substrates
+        (rh:substrates); the master reaction RHEA:11040 is undirected. This participant is CHEBI:58278
+        with coefficient 1. Rhea cites PMID:8066131, PMID:26095028, PMID:13475302, PMID:8045413 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-(imidazol-4-yl)-2-oxopropyl phosphate is a product released by RHEA:11040 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:11041
+      snippet: D-erythro-1-(imidazol-4-yl)glycerol 3-phosphate => 3-(imidazol-4-yl)-2-oxopropyl phosphate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:11041 declares side 11040_R as its products
+        (rh:products); the master reaction RHEA:11040 is undirected. This participant is CHEBI:57766 with
+        coefficient 1. Rhea cites PMID:8066131, PMID:26095028, PMID:13475302, PMID:8045413 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by RHEA:11040 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11041
+      snippet: D-erythro-1-(imidazol-4-yl)glycerol 3-phosphate => 3-(imidazol-4-yl)-2-oxopropyl phosphate
+        + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:11041 declares side 11040_R as its products
+        (rh:products); the master reaction RHEA:11040 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:8066131, PMID:26095028, PMID:13475302, PMID:8045413 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.19
+      snippet: EC:4.2.1.19 > GO:imidazoleglycerol-phosphate dehydratase activity ; GO:0004424
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004424 is itself a record
+        in this KB.
+  - subject: prot_P34047
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS5A_ARATH is an exemplar enzyme with EC 4.2.1.19 activity.
+    evidence:
+    - reference: EC:4.2.1.19
+      snippet: DR   P34047, HIS5A_ARATH;  O23346, HIS5B_ARATH;  P34048, HIS7A_WHEAT;
+      notes: ExPASy ENZYME entry EC 4.2.1.19 cross-references UniProtKB:P34047 (HIS5A_ARATH) as a protein
+        with this activity.
+  - subject: prot_O23346
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS5B_ARATH is an exemplar enzyme with EC 4.2.1.19 activity.
+    evidence:
+    - reference: EC:4.2.1.19
+      snippet: DR   P34047, HIS5A_ARATH;  O23346, HIS5B_ARATH;  P34048, HIS7A_WHEAT;
+      notes: ExPASy ENZYME entry EC 4.2.1.19 cross-references UniProtKB:O23346 (HIS5B_ARATH) as a protein
+        with this activity.
+  - subject: prot_P34048
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HIS7A_WHEAT is an exemplar enzyme with EC 4.2.1.19 activity.
+    evidence:
+    - reference: EC:4.2.1.19
+      snippet: DR   P34047, HIS5A_ARATH;  O23346, HIS5B_ARATH;  P34048, HIS7A_WHEAT;
+      notes: ExPASy ENZYME entry EC 4.2.1.19 cross-references UniProtKB:P34048 (HIS7A_WHEAT) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

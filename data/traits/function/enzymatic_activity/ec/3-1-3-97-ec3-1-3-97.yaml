@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.3.-
 mapped_xrefs:
@@ -38,4 +38,149 @@ definitions:
       Catalyses: a ribonucleoside 3',5'-bisphosphate + H2O = a ribonucleoside 5'-phosphate + phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 3',5'-nucleoside bisphosphate phosphatase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.3.97. EC 3.1.3.97 maps to exactly
+    one curated Rhea reaction (RHEA:43532), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a ribonucleoside
+    3'',5''-bisphosphate + H2O = a ribonucleoside 5''-phosphate + phosphate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 3',5'-nucleoside bisphosphate phosphatase
+    grounding: EC:3.1.3.97
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a ribonucleoside 3',5'-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:83402
+    description: Formula C5H7O10P2R.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a ribonucleoside 5'-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58043
+    description: Formula C5H8O7PR.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3',5'-nucleotide bisphosphate phosphatase activity
+    grounding: GO:0097657
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q7NXD4
+    node_type: PROTEIN
+    label: 35NBP_CHRVO
+    grounding: UniProtKB:Q7NXD4
+  - node_id: prot_P44176
+    node_type: PROTEIN
+    label: RNAAM_HAEIN
+    grounding: UniProtKB:P44176
+  - node_id: prot_P77766
+    node_type: PROTEIN
+    label: RNM_ECOLI
+    grounding: UniProtKB:P77766
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a ribonucleoside 3',5'-bisphosphate is a substrate consumed by RHEA:43532 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:43533
+      snippet: a ribonucleoside 3',5'-bisphosphate + H2O => a ribonucleoside 5'-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:43533 declares side 43532_L as its substrates
+        (rh:substrates); the master reaction RHEA:43532 is undirected. This participant is CHEBI:83402
+        with coefficient 1. Rhea cites PMID:25871919, PMID:24401123 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:43532 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43533
+      snippet: a ribonucleoside 3',5'-bisphosphate + H2O => a ribonucleoside 5'-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:43533 declares side 43532_L as its substrates
+        (rh:substrates); the master reaction RHEA:43532 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:25871919, PMID:24401123 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a ribonucleoside 5'-phosphate is a product released by RHEA:43532 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:43533
+      snippet: a ribonucleoside 3',5'-bisphosphate + H2O => a ribonucleoside 5'-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:43533 declares side 43532_R as its products
+        (rh:products); the master reaction RHEA:43532 is undirected. This participant is CHEBI:58043 with
+        coefficient 1. Rhea cites PMID:25871919, PMID:24401123 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by RHEA:43532 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:43533
+      snippet: a ribonucleoside 3',5'-bisphosphate + H2O => a ribonucleoside 5'-phosphate + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:43533 declares side 43532_R as its products
+        (rh:products); the master reaction RHEA:43532 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:25871919, PMID:24401123 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.1.3.97
+      snippet: EC:3.1.3.97 > GO:3',5'-nucleotide bisphosphate phosphatase activity ; GO:0097657
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0097657 is itself a record
+        in this KB.
+  - subject: prot_Q7NXD4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 35NBP_CHRVO is an exemplar enzyme with EC 3.1.3.97 activity.
+    evidence:
+    - reference: EC:3.1.3.97
+      snippet: DR   Q7NXD4, 35NBP_CHRVO;  P44176, RNAAM_HAEIN;  P77766, RNM_ECOLI  ;
+      notes: ExPASy ENZYME entry EC 3.1.3.97 cross-references UniProtKB:Q7NXD4 (35NBP_CHRVO) as a protein
+        with this activity.
+  - subject: prot_P44176
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RNAAM_HAEIN is an exemplar enzyme with EC 3.1.3.97 activity.
+    evidence:
+    - reference: EC:3.1.3.97
+      snippet: DR   Q7NXD4, 35NBP_CHRVO;  P44176, RNAAM_HAEIN;  P77766, RNM_ECOLI  ;
+      notes: ExPASy ENZYME entry EC 3.1.3.97 cross-references UniProtKB:P44176 (RNAAM_HAEIN) as a protein
+        with this activity.
+  - subject: prot_P77766
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RNM_ECOLI is an exemplar enzyme with EC 3.1.3.97 activity.
+    evidence:
+    - reference: EC:3.1.3.97
+      snippet: DR   Q7NXD4, 35NBP_CHRVO;  P44176, RNAAM_HAEIN;  P77766, RNM_ECOLI  ;
+      notes: ExPASy ENZYME entry EC 3.1.3.97 cross-references UniProtKB:P77766 (RNM_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

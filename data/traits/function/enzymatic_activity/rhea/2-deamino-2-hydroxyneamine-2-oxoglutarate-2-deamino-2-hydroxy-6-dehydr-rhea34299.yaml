@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.6.1.94
     mapping_source: rhea2ec
@@ -30,4 +30,132 @@ definitions:
       Catalyses the reaction: 2'-deamino-2'-hydroxyneamine + 2-oxoglutarate = 2'-deamino-2'-hydroxy-6'-dehydroparomamine + L-glutamate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2'-deamino-2'-hydroxyneamine + 2-oxoglutarate = 2'-deamino-2'-hydroxy-6'-dehydroparomam…
+  description: Substrate-to-product chemistry of RHEA:34299, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:34300 (rh:substrates → 34299_L, rh:products → 34299_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2'-deamino-2'-hydroxyneamine + 2-oxoglutarate = 2'-deamino-2'-hydroxy-6'-deh…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34299
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2''-deamino-2''-hydroxyneamine + 2-oxoglutarate = 2''-deamino-2''-hydroxy-6''-dehydroparomamine
+      + L-glutamate'
+  - node_id: sub1
+    label: 2'-deamino-2'-hydroxyneamine
+    node_type: CHEMICAL
+    grounding: CHEBI:67213
+    description: Formula C12H28N3O7.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: 2'-deamino-2'-hydroxy-6'-dehydroparomamine
+    node_type: CHEMICAL
+    grounding: CHEBI:67214
+    description: Formula C12H24N2O8.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2'-deamino-2'-hydroxyneamine transaminase
+    grounding: EC:2.6.1.94
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q6L741
+    node_type: PROTEIN
+    label: KACL_STRKN
+    grounding: UniProtKB:Q6L741
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2'-deamino-2'-hydroxyneamine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34300
+      snippet: 2'-deamino-2'-hydroxyneamine + 2-oxoglutarate => 2'-deamino-2'-hydroxy-6'-dehydroparomamine
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:34300 declares side 34299_L as its substrates
+        (rh:substrates); the master reaction RHEA:34299 is undirected. This participant is CHEBI:67213
+        with coefficient 1. Rhea cites PMID:19219581, PMID:21983602 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34300
+      snippet: 2'-deamino-2'-hydroxyneamine + 2-oxoglutarate => 2'-deamino-2'-hydroxy-6'-dehydroparomamine
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:34300 declares side 34299_L as its substrates
+        (rh:substrates); the master reaction RHEA:34299 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:19219581, PMID:21983602 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2'-deamino-2'-hydroxy-6'-dehydroparomamine is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:34300
+      snippet: 2'-deamino-2'-hydroxyneamine + 2-oxoglutarate => 2'-deamino-2'-hydroxy-6'-dehydroparomamine
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:34300 declares side 34299_R as its products
+        (rh:products); the master reaction RHEA:34299 is undirected. This participant is CHEBI:67214 with
+        coefficient 1. Rhea cites PMID:19219581, PMID:21983602 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34300
+      snippet: 2'-deamino-2'-hydroxyneamine + 2-oxoglutarate => 2'-deamino-2'-hydroxy-6'-dehydroparomamine
+        + L-glutamate
+      notes: Rhea's left-to-right directional reaction RHEA:34300 declares side 34299_R as its products
+        (rh:products); the master reaction RHEA:34299 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:19219581, PMID:21983602 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.6.1.94; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:34299
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.94"/>
+      notes: The rh:ec triple on RHEA:34299 in rhea.rdf. EC 2.6.1.94 is itself a record in this KB.
+  - subject: prot_Q6L741
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: KACL_STRKN is an exemplar enzyme carrying EC 2.6.1.94, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.6.1.94
+      snippet: DR   Q6L741, KACL_STRKN ;
+      notes: ExPASy ENZYME entry EC 2.6.1.94 cross-references UniProtKB:Q6L741 (KACL_STRKN) as a protein
+        with this activity.
+    - reference: RHEA:34299
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.94"/>
+      notes: Rhea assigns RHEA:34299 to EC 2.6.1.94, and EC 2.6.1.94 maps to exactly one Rhea master reaction
+        (RHEA:34299), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

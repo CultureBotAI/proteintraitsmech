@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -36,4 +36,66 @@ definitions:
       Catalyses: Preferential cleavage in neurotensin: 10-Pro-|-Tyr-11
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of neurolysin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.16. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Preferential
+    cleavage in neurotensin: 10-Pro-|-Tyr-11".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: neurolysin
+    grounding: EC:3.4.24.16
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_A2VDQ5
+    node_type: PROTEIN
+    label: NEUL_BOVIN
+    grounding: UniProtKB:A2VDQ5
+  - node_id: prot_Q9BYT8
+    node_type: PROTEIN
+    label: NEUL_HUMAN
+    grounding: UniProtKB:Q9BYT8
+  - node_id: prot_Q91YP2
+    node_type: PROTEIN
+    label: NEUL_MOUSE
+    grounding: UniProtKB:Q91YP2
+  edges:
+  - subject: prot_A2VDQ5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEUL_BOVIN is an exemplar enzyme with EC 3.4.24.16 activity.
+    evidence:
+    - reference: EC:3.4.24.16
+      snippet: DR   A2VDQ5, NEUL_BOVIN ;  Q9BYT8, NEUL_HUMAN ;  Q91YP2, NEUL_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.24.16 cross-references UniProtKB:A2VDQ5 (NEUL_BOVIN) as a protein
+        with this activity.
+  - subject: prot_Q9BYT8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEUL_HUMAN is an exemplar enzyme with EC 3.4.24.16 activity.
+    evidence:
+    - reference: EC:3.4.24.16
+      snippet: DR   A2VDQ5, NEUL_BOVIN ;  Q9BYT8, NEUL_HUMAN ;  Q91YP2, NEUL_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.24.16 cross-references UniProtKB:Q9BYT8 (NEUL_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q91YP2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NEUL_MOUSE is an exemplar enzyme with EC 3.4.24.16 activity.
+    evidence:
+    - reference: EC:3.4.24.16
+      snippet: DR   A2VDQ5, NEUL_BOVIN ;  Q9BYT8, NEUL_HUMAN ;  Q91YP2, NEUL_MOUSE ;
+      notes: ExPASy ENZYME entry EC 3.4.24.16 cross-references UniProtKB:Q91YP2 (NEUL_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

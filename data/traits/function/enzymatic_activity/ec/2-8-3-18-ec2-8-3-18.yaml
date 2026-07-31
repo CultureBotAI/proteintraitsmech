@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.8.3.-
 synonyms:
@@ -39,4 +39,131 @@ definitions:
       Catalyses: succinyl-CoA + acetate = succinate + acetyl-CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of succinyl-CoA:acetate CoA-transferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.8.3.18. EC 2.8.3.18 maps to exactly
+    one curated Rhea reaction (RHEA:35711), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "succinyl-CoA
+    + acetate = succinate + acetyl-CoA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: succinyl-CoA:acetate CoA-transferase
+    grounding: EC:2.8.3.18
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: succinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57292
+    description: Formula C25H35N7O19P3S.
+  - node_id: sub2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: prd1
+    label: succinate
+    node_type: CHEMICAL
+    grounding: CHEBI:30031
+    description: Formula C4H4O4.
+  - node_id: prd2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prot_C6EUD4
+    node_type: PROTEIN
+    label: APSCT_FASHE
+    grounding: UniProtKB:C6EUD4
+  - node_id: prot_P38946
+    node_type: PROTEIN
+    label: CAT1_CLOK5
+    grounding: UniProtKB:P38946
+  - node_id: prot_B3EY95
+    node_type: PROTEIN
+    label: SCACT_ACEAC
+    grounding: UniProtKB:B3EY95
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: succinyl-CoA is a substrate consumed by RHEA:35711 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35712
+      snippet: succinyl-CoA + acetate => succinate + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:35712 declares side 35711_L as its substrates
+        (rh:substrates); the master reaction RHEA:35711 is undirected. This participant is CHEBI:57292
+        with coefficient 1. Rhea cites PMID:3090435, PMID:18502856 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetate is a substrate consumed by RHEA:35711 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35712
+      snippet: succinyl-CoA + acetate => succinate + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:35712 declares side 35711_L as its substrates
+        (rh:substrates); the master reaction RHEA:35711 is undirected. This participant is CHEBI:30089
+        with coefficient 1. Rhea cites PMID:3090435, PMID:18502856 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: succinate is a product released by RHEA:35711 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35712
+      snippet: succinyl-CoA + acetate => succinate + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:35712 declares side 35711_R as its products
+        (rh:products); the master reaction RHEA:35711 is undirected. This participant is CHEBI:30031 with
+        coefficient 1. Rhea cites PMID:3090435, PMID:18502856 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetyl-CoA is a product released by RHEA:35711 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35712
+      snippet: succinyl-CoA + acetate => succinate + acetyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:35712 declares side 35711_R as its products
+        (rh:products); the master reaction RHEA:35711 is undirected. This participant is CHEBI:57288 with
+        coefficient 1. Rhea cites PMID:3090435, PMID:18502856 for this reaction.
+  - subject: prot_C6EUD4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APSCT_FASHE is an exemplar enzyme with EC 2.8.3.18 activity.
+    evidence:
+    - reference: EC:2.8.3.18
+      snippet: DR   C6EUD4, APSCT_FASHE;  P38946, CAT1_CLOK5 ;  B3EY95, SCACT_ACEAC;
+      notes: ExPASy ENZYME entry EC 2.8.3.18 cross-references UniProtKB:C6EUD4 (APSCT_FASHE) as a protein
+        with this activity.
+  - subject: prot_P38946
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CAT1_CLOK5 is an exemplar enzyme with EC 2.8.3.18 activity.
+    evidence:
+    - reference: EC:2.8.3.18
+      snippet: DR   C6EUD4, APSCT_FASHE;  P38946, CAT1_CLOK5 ;  B3EY95, SCACT_ACEAC;
+      notes: ExPASy ENZYME entry EC 2.8.3.18 cross-references UniProtKB:P38946 (CAT1_CLOK5) as a protein
+        with this activity.
+  - subject: prot_B3EY95
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SCACT_ACEAC is an exemplar enzyme with EC 2.8.3.18 activity.
+    evidence:
+    - reference: EC:2.8.3.18
+      snippet: DR   C6EUD4, APSCT_FASHE;  P38946, CAT1_CLOK5 ;  B3EY95, SCACT_ACEAC;
+      notes: ExPASy ENZYME entry EC 2.8.3.18 cross-references UniProtKB:B3EY95 (SCACT_ACEAC) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

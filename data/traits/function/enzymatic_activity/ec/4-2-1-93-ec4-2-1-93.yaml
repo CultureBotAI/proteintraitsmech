@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.1.-
 synonyms:
@@ -43,4 +43,307 @@ definitions:
       Catalyses: (1) (6S)-NADHX + ATP = ADP + phosphate + NADH + H(+). (2) (6S)-NADPHX + ATP = ADP + phosphate + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ATP-dependent NAD(P)H-hydrate dehydratase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.1.93. Rhea assigns 2 curated
+    reactions to EC 4.2.1.93. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(1) (6S)-NADHX + ATP = ADP + phosphate + NADH + H(+). (2)
+    (6S)-NADPHX + ATP = ADP + phosphate + NADPH + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ATP-dependent NAD(P)H-hydrate dehydratase
+    grounding: EC:4.2.1.93
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (6S)-NADHX + ATP = ADP + phosphate + NADH + H(+)
+    grounding: RHEA:19017
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (6S)-NADHX + ATP = ADP + phosphate + NADH + H(+)'
+  - node_id: rxn1_sub1
+    label: (6S)-NADHX
+    node_type: CHEMICAL
+    grounding: CHEBI:64074
+    description: Formula C21H29N7O15P2.
+  - node_id: rxn1_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn1_prd1
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn1_prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn1_prd3
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: rxn1_prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (6S)-NADPHX + ATP = ADP + phosphate + NADPH + H(+)
+    grounding: RHEA:32231
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (6S)-NADPHX + ATP = ADP + phosphate + NADPH + H(+)'
+  - node_id: rxn2_sub1
+    label: (6S)-NADPHX
+    node_type: CHEMICAL
+    grounding: CHEBI:64076
+    description: Formula C21H28N7O18P3.
+  - node_id: rxn2_sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: rxn2_prd1
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: rxn2_prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: rxn2_prd3
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: rxn2_prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ATP-dependent NAD(P)H-hydrate dehydratase activity
+    grounding: GO:0047453
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_E3LAQ9
+    node_type: PROTEIN
+    label: NNRD1_PUCGT
+    grounding: UniProtKB:E3LAQ9
+  - node_id: prot_E3L9T1
+    node_type: PROTEIN
+    label: NNRD2_PUCGT
+    grounding: UniProtKB:E3L9T1
+  - node_id: prot_Q17NP0
+    node_type: PROTEIN
+    label: NNRD_AEDAE
+    grounding: UniProtKB:Q17NP0
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:19017 is one of the 2 curated reactions Rhea assigns to EC 4.2.1.93; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:19017
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.93"/>
+      notes: The rh:ec triple on RHEA:19017 in rhea.rdf assigns that reaction to EC 4.2.1.93.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (6S)-NADHX is a substrate consumed by RHEA:19017 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19018
+      snippet: (6S)-NADHX + ATP => ADP + phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19018 declares side 19017_L as its substrates
+        (rh:substrates); the master reaction RHEA:19017 is undirected. This participant is CHEBI:64074
+        with coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: ATP is a substrate consumed by RHEA:19017 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19018
+      snippet: (6S)-NADHX + ATP => ADP + phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19018 declares side 19017_L as its substrates
+        (rh:substrates); the master reaction RHEA:19017 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: ADP is a product released by RHEA:19017 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19018
+      snippet: (6S)-NADHX + ATP => ADP + phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19018 declares side 19017_R as its products
+        (rh:products); the master reaction RHEA:19017 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: phosphate is a product released by RHEA:19017 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19018
+      snippet: (6S)-NADHX + ATP => ADP + phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19018 declares side 19017_R as its products
+        (rh:products); the master reaction RHEA:19017 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd3
+    description: NADH is a product released by RHEA:19017 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19018
+      snippet: (6S)-NADHX + ATP => ADP + phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19018 declares side 19017_R as its products
+        (rh:products); the master reaction RHEA:19017 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd4
+    description: H(+) is a product released by RHEA:19017 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19018
+      snippet: (6S)-NADHX + ATP => ADP + phosphate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19018 declares side 19017_R as its products
+        (rh:products); the master reaction RHEA:19017 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:32231 is one of the 2 curated reactions Rhea assigns to EC 4.2.1.93; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:32231
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.93"/>
+      notes: The rh:ec triple on RHEA:32231 in rhea.rdf assigns that reaction to EC 4.2.1.93.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (6S)-NADPHX is a substrate consumed by RHEA:32231 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32232
+      snippet: (6S)-NADPHX + ATP => ADP + phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32232 declares side 32231_L as its substrates
+        (rh:substrates); the master reaction RHEA:32231 is undirected. This participant is CHEBI:64076
+        with coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: ATP is a substrate consumed by RHEA:32231 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32232
+      snippet: (6S)-NADPHX + ATP => ADP + phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32232 declares side 32231_L as its substrates
+        (rh:substrates); the master reaction RHEA:32231 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: ADP is a product released by RHEA:32231 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32232
+      snippet: (6S)-NADPHX + ATP => ADP + phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32232 declares side 32231_R as its products
+        (rh:products); the master reaction RHEA:32231 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: phosphate is a product released by RHEA:32231 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32232
+      snippet: (6S)-NADPHX + ATP => ADP + phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32232 declares side 32231_R as its products
+        (rh:products); the master reaction RHEA:32231 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd3
+    description: NADPH is a product released by RHEA:32231 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32232
+      snippet: (6S)-NADPHX + ATP => ADP + phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32232 declares side 32231_R as its products
+        (rh:products); the master reaction RHEA:32231 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd4
+    description: H(+) is a product released by RHEA:32231 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32232
+      snippet: (6S)-NADPHX + ATP => ADP + phosphate + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:32232 declares side 32231_R as its products
+        (rh:products); the master reaction RHEA:32231 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:21994945, PMID:3061454 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.1.93
+      snippet: EC:4.2.1.93 > GO:ATP-dependent NAD(P)H-hydrate dehydratase activity ; GO:0047453
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047453 is itself a record
+        in this KB.
+  - subject: prot_E3LAQ9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NNRD1_PUCGT is an exemplar enzyme with EC 4.2.1.93 activity.
+    evidence:
+    - reference: EC:4.2.1.93
+      snippet: DR   E3LAQ9, NNRD1_PUCGT;  E3L9T1, NNRD2_PUCGT;  Q17NP0, NNRD_AEDAE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.93 cross-references UniProtKB:E3LAQ9 (NNRD1_PUCGT) as a protein
+        with this activity.
+  - subject: prot_E3L9T1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NNRD2_PUCGT is an exemplar enzyme with EC 4.2.1.93 activity.
+    evidence:
+    - reference: EC:4.2.1.93
+      snippet: DR   E3LAQ9, NNRD1_PUCGT;  E3L9T1, NNRD2_PUCGT;  Q17NP0, NNRD_AEDAE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.93 cross-references UniProtKB:E3L9T1 (NNRD2_PUCGT) as a protein
+        with this activity.
+  - subject: prot_Q17NP0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NNRD_AEDAE is an exemplar enzyme with EC 4.2.1.93 activity.
+    evidence:
+    - reference: EC:4.2.1.93
+      snippet: DR   E3LAQ9, NNRD1_PUCGT;  E3L9T1, NNRD2_PUCGT;  Q17NP0, NNRD_AEDAE ;
+      notes: ExPASy ENZYME entry EC 4.2.1.93 cross-references UniProtKB:Q17NP0 (NNRD_AEDAE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (18 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

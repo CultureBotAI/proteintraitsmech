@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.6.1.82
     mapping_source: rhea2ec
@@ -32,4 +32,137 @@ definitions:
       Catalyses the reaction: putrescine + 2-oxoglutarate = 1-pyrroline + L-glutamate + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of putrescine + 2-oxoglutarate = 1-pyrroline + L-glutamate + H2O
+  description: Substrate-to-product chemistry of RHEA:12268, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:12269 (rh:substrates → 12268_L, rh:products → 12268_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of putrescine + 2-oxoglutarate = 1-pyrroline + L-glutamate + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:12268
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: putrescine + 2-oxoglutarate = 1-pyrroline + L-glutamate + H2O'
+  - node_id: sub1
+    label: putrescine
+    node_type: CHEMICAL
+    grounding: CHEBI:326268
+    description: Formula C4H14N2.
+  - node_id: sub2
+    label: 2-oxoglutarate
+    node_type: CHEMICAL
+    grounding: CHEBI:16810
+    description: Formula C5H4O5.
+  - node_id: prd1
+    label: 1-pyrroline
+    node_type: CHEMICAL
+    grounding: CHEBI:36781
+    description: Formula C4H8N.
+  - node_id: prd2
+    label: L-glutamate
+    node_type: CHEMICAL
+    grounding: CHEBI:29985
+    description: Formula C5H8NO4.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: putrescine:2-oxoglutarate transaminase activity
+    grounding: GO:0033094
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: putrescine--2-oxoglutarate transaminase
+    grounding: EC:2.6.1.82
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: putrescine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12269
+      snippet: putrescine + 2-oxoglutarate => 1-pyrroline + L-glutamate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12269 declares side 12268_L as its substrates
+        (rh:substrates); the master reaction RHEA:12268 is undirected. This participant is CHEBI:326268
+        with coefficient 1. Rhea cites PMID:16023116, PMID:3510672 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: 2-oxoglutarate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12269
+      snippet: putrescine + 2-oxoglutarate => 1-pyrroline + L-glutamate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12269 declares side 12268_L as its substrates
+        (rh:substrates); the master reaction RHEA:12268 is undirected. This participant is CHEBI:16810
+        with coefficient 1. Rhea cites PMID:16023116, PMID:3510672 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1-pyrroline is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12269
+      snippet: putrescine + 2-oxoglutarate => 1-pyrroline + L-glutamate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12269 declares side 12268_R as its products
+        (rh:products); the master reaction RHEA:12268 is undirected. This participant is CHEBI:36781 with
+        coefficient 1. Rhea cites PMID:16023116, PMID:3510672 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-glutamate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12269
+      snippet: putrescine + 2-oxoglutarate => 1-pyrroline + L-glutamate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12269 declares side 12268_R as its products
+        (rh:products); the master reaction RHEA:12268 is undirected. This participant is CHEBI:29985 with
+        coefficient 1. Rhea cites PMID:16023116, PMID:3510672 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12269
+      snippet: putrescine + 2-oxoglutarate => 1-pyrroline + L-glutamate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:12269 declares side 12268_R as its products
+        (rh:products); the master reaction RHEA:12268 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:16023116, PMID:3510672 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:12268
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0033094"/>
+      notes: The rdfs:seeAlso triple on RHEA:12268 in rhea.rdf. GO term GO:0033094 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.6.1.82; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:12268
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.82"/>
+      notes: The rh:ec triple on RHEA:12268 in rhea.rdf. EC 2.6.1.82 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

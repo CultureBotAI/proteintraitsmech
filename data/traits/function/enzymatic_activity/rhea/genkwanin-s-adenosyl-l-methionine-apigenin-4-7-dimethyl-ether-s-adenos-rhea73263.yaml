@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:192700
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,109 @@ definitions:
       Catalyses the reaction: genkwanin + S-adenosyl-L-methionine = apigenin 4',7-dimethyl ether + S-adenosyl-L-homocysteine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of genkwanin + S-adenosyl-L-methionine = apigenin 4',7-dimethyl ether + S-adenosyl-L-homoc…
+  description: Substrate-to-product chemistry of RHEA:73263, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:73264 (rh:substrates → 73263_L, rh:products → 73263_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of genkwanin + S-adenosyl-L-methionine = apigenin 4',7-dimethyl ether + S-adeno…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:73263
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: genkwanin + S-adenosyl-L-methionine = apigenin 4'',7-dimethyl ether + S-adenosyl-L-homocysteine'
+  - node_id: sub1
+    label: genkwanin
+    node_type: CHEMICAL
+    grounding: CHEBI:192700
+    description: Formula C16H11O5.
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: apigenin 4',7-dimethyl ether
+    node_type: CHEMICAL
+    grounding: CHEBI:2769
+    description: Formula C17H14O5.
+  - node_id: prd2
+    label: S-adenosyl-L-homocysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:57856
+    description: Formula C14H20N6O5S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: genkwanin 4'-O-methyltransferase activity
+    grounding: GO:0102533
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: genkwanin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73264
+      snippet: genkwanin + S-adenosyl-L-methionine => apigenin 4',7-dimethyl ether + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:73264 declares side 73263_L as its substrates
+        (rh:substrates); the master reaction RHEA:73263 is undirected. This participant is CHEBI:192700
+        with coefficient 1. Rhea cites PMID:22923679 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:73264
+      snippet: genkwanin + S-adenosyl-L-methionine => apigenin 4',7-dimethyl ether + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:73264 declares side 73263_L as its substrates
+        (rh:substrates); the master reaction RHEA:73263 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:22923679 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: apigenin 4',7-dimethyl ether is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:73264
+      snippet: genkwanin + S-adenosyl-L-methionine => apigenin 4',7-dimethyl ether + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:73264 declares side 73263_R as its products
+        (rh:products); the master reaction RHEA:73263 is undirected. This participant is CHEBI:2769 with
+        coefficient 1. Rhea cites PMID:22923679 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: S-adenosyl-L-homocysteine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:73264
+      snippet: genkwanin + S-adenosyl-L-methionine => apigenin 4',7-dimethyl ether + S-adenosyl-L-homocysteine
+      notes: Rhea's left-to-right directional reaction RHEA:73264 declares side 73263_R as its products
+        (rh:products); the master reaction RHEA:73263 is undirected. This participant is CHEBI:57856 with
+        coefficient 1. Rhea cites PMID:22923679 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:73263
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102533"/>
+      notes: The rdfs:seeAlso triple on RHEA:73263 in rhea.rdf. GO term GO:0102533 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

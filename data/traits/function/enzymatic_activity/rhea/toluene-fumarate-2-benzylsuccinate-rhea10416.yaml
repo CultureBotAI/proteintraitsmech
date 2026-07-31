@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.99.11
     mapping_source: rhea2ec
@@ -40,4 +40,168 @@ definitions:
       Catalyses the reaction: toluene + fumarate = 2-benzylsuccinate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of toluene + fumarate = 2-benzylsuccinate
+  description: Substrate-to-product chemistry of RHEA:10416, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:10417 (rh:substrates → 10416_L, rh:products → 10416_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of toluene + fumarate = 2-benzylsuccinate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:10416
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: toluene + fumarate = 2-benzylsuccinate'
+  - node_id: sub1
+    label: toluene
+    node_type: CHEMICAL
+    grounding: CHEBI:17578
+    description: Formula C7H8.
+  - node_id: sub2
+    label: fumarate
+    node_type: CHEMICAL
+    grounding: CHEBI:29806
+    description: Formula C4H2O4.
+  - node_id: prd1
+    label: 2-benzylsuccinate
+    node_type: CHEMICAL
+    grounding: CHEBI:57621
+    description: Formula C11H10O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: benzylsuccinate synthase activity
+    grounding: GO:0018805
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: benzylsuccinate synthase
+    grounding: EC:4.1.99.11
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_O87943
+    node_type: PROTEIN
+    label: BSSA_THAAR
+    grounding: UniProtKB:O87943
+  - node_id: prot_O87944
+    node_type: PROTEIN
+    label: BSSB_THAAR
+    grounding: UniProtKB:O87944
+  - node_id: prot_O87942
+    node_type: PROTEIN
+    label: BSSC_THAAR
+    grounding: UniProtKB:O87942
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: toluene is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10417
+      snippet: toluene + fumarate => 2-benzylsuccinate
+      notes: Rhea's left-to-right directional reaction RHEA:10417 declares side 10416_L as its substrates
+        (rh:substrates); the master reaction RHEA:10416 is undirected. This participant is CHEBI:17578
+        with coefficient 1. Rhea cites PMID:9006019, PMID:8706665, PMID:11278506, PMID:17105211 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: fumarate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10417
+      snippet: toluene + fumarate => 2-benzylsuccinate
+      notes: Rhea's left-to-right directional reaction RHEA:10417 declares side 10416_L as its substrates
+        (rh:substrates); the master reaction RHEA:10416 is undirected. This participant is CHEBI:29806
+        with coefficient 1. Rhea cites PMID:9006019, PMID:8706665, PMID:11278506, PMID:17105211 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-benzylsuccinate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10417
+      snippet: toluene + fumarate => 2-benzylsuccinate
+      notes: Rhea's left-to-right directional reaction RHEA:10417 declares side 10416_R as its products
+        (rh:products); the master reaction RHEA:10416 is undirected. This participant is CHEBI:57621 with
+        coefficient 1. Rhea cites PMID:9006019, PMID:8706665, PMID:11278506, PMID:17105211 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:10416
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0018805"/>
+      notes: The rdfs:seeAlso triple on RHEA:10416 in rhea.rdf. GO term GO:0018805 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.99.11; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:10416
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.11"/>
+      notes: The rh:ec triple on RHEA:10416 in rhea.rdf. EC 4.1.99.11 is itself a record in this KB.
+  - subject: prot_O87943
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BSSA_THAAR is an exemplar enzyme carrying EC 4.1.99.11, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.99.11
+      snippet: DR   O87943, BSSA_THAAR ;  O87944, BSSB_THAAR ;  O87942, BSSC_THAAR ;
+      notes: ExPASy ENZYME entry EC 4.1.99.11 cross-references UniProtKB:O87943 (BSSA_THAAR) as a protein
+        with this activity.
+    - reference: RHEA:10416
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.11"/>
+      notes: Rhea assigns RHEA:10416 to EC 4.1.99.11, and EC 4.1.99.11 maps to exactly one Rhea master
+        reaction (RHEA:10416), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_O87944
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BSSB_THAAR is an exemplar enzyme carrying EC 4.1.99.11, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.99.11
+      snippet: DR   O87943, BSSA_THAAR ;  O87944, BSSB_THAAR ;  O87942, BSSC_THAAR ;
+      notes: ExPASy ENZYME entry EC 4.1.99.11 cross-references UniProtKB:O87944 (BSSB_THAAR) as a protein
+        with this activity.
+    - reference: RHEA:10416
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.11"/>
+      notes: Rhea assigns RHEA:10416 to EC 4.1.99.11, and EC 4.1.99.11 maps to exactly one Rhea master
+        reaction (RHEA:10416), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_O87942
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BSSC_THAAR is an exemplar enzyme carrying EC 4.1.99.11, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.99.11
+      snippet: DR   O87943, BSSA_THAAR ;  O87944, BSSB_THAAR ;  O87942, BSSC_THAAR ;
+      notes: ExPASy ENZYME entry EC 4.1.99.11 cross-references UniProtKB:O87942 (BSSC_THAAR) as a protein
+        with this activity.
+    - reference: RHEA:10416
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.99.11"/>
+      notes: Rhea assigns RHEA:10416 to EC 4.1.99.11, and EC 4.1.99.11 maps to exactly one Rhea master
+        reaction (RHEA:10416), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

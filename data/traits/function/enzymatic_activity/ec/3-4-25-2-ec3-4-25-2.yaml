@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.25.-
 canonical_examples:
@@ -33,4 +33,66 @@ definitions:
       Catalyses: ATP-dependent cleavage of peptide bonds with broad specificity
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of HslU--HslV peptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.25.2. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "ATP-dependent
+    cleavage of peptide bonds with broad specificity".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: HslU--HslV peptidase
+    grounding: EC:3.4.25.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_A5FYD8
+    node_type: PROTEIN
+    label: HSLV_ACICJ
+    grounding: UniProtKB:A5FYD8
+  - node_id: prot_B9MFS3
+    node_type: PROTEIN
+    label: HSLV_ACIET
+    grounding: UniProtKB:B9MFS3
+  - node_id: prot_A3N334
+    node_type: PROTEIN
+    label: HSLV_ACTP2
+    grounding: UniProtKB:A3N334
+  edges:
+  - subject: prot_A5FYD8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HSLV_ACICJ is an exemplar enzyme with EC 3.4.25.2 activity.
+    evidence:
+    - reference: EC:3.4.25.2
+      snippet: DR   A5FYD8, HSLV_ACICJ ;  B9MFS3, HSLV_ACIET ;  A3N334, HSLV_ACTP2 ;
+      notes: ExPASy ENZYME entry EC 3.4.25.2 cross-references UniProtKB:A5FYD8 (HSLV_ACICJ) as a protein
+        with this activity.
+  - subject: prot_B9MFS3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HSLV_ACIET is an exemplar enzyme with EC 3.4.25.2 activity.
+    evidence:
+    - reference: EC:3.4.25.2
+      snippet: DR   A5FYD8, HSLV_ACICJ ;  B9MFS3, HSLV_ACIET ;  A3N334, HSLV_ACTP2 ;
+      notes: ExPASy ENZYME entry EC 3.4.25.2 cross-references UniProtKB:B9MFS3 (HSLV_ACIET) as a protein
+        with this activity.
+  - subject: prot_A3N334
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HSLV_ACTP2 is an exemplar enzyme with EC 3.4.25.2 activity.
+    evidence:
+    - reference: EC:3.4.25.2
+      snippet: DR   A5FYD8, HSLV_ACICJ ;  B9MFS3, HSLV_ACIET ;  A3N334, HSLV_ACTP2 ;
+      notes: ExPASy ENZYME entry EC 3.4.25.2 cross-references UniProtKB:A3N334 (HSLV_ACTP2) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

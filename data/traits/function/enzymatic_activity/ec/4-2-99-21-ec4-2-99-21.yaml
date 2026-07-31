@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.99.-
 synonyms:
@@ -41,4 +41,133 @@ definitions:
       Catalyses: isochorismate = salicylate + pyruvate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of isochorismate lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.99.21. EC 4.2.99.21 maps to
+    exactly one curated Rhea reaction (RHEA:27874), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "isochorismate
+    = salicylate + pyruvate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: isochorismate lyase
+    grounding: EC:4.2.99.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: isochorismate
+    node_type: CHEMICAL
+    grounding: CHEBI:29780
+    description: Formula C10H8O6.
+  - node_id: prd1
+    label: salicylate
+    node_type: CHEMICAL
+    grounding: CHEBI:30762
+    description: Formula C7H5O3.
+  - node_id: prd2
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: isochorismate pyruvate lyase activity
+    grounding: GO:0043904
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q7TYQ1
+    node_type: PROTEIN
+    label: MBTI_MYCBO
+    grounding: UniProtKB:Q7TYQ1
+  - node_id: prot_Q73XV3
+    node_type: PROTEIN
+    label: MBTI_MYCPA
+    grounding: UniProtKB:Q73XV3
+  - node_id: prot_P9WFX0
+    node_type: PROTEIN
+    label: MBTI_MYCTO
+    grounding: UniProtKB:P9WFX0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: isochorismate is a substrate consumed by RHEA:27874 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27875
+      snippet: isochorismate => salicylate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:27875 declares side 27874_L as its substrates
+        (rh:substrates); the master reaction RHEA:27874 is undirected. This participant is CHEBI:29780
+        with coefficient 1. Rhea cites PMID:16030197, PMID:21504201, PMID:17240979, PMID:16923875 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: salicylate is a product released by RHEA:27874 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27875
+      snippet: isochorismate => salicylate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:27875 declares side 27874_R as its products
+        (rh:products); the master reaction RHEA:27874 is undirected. This participant is CHEBI:30762 with
+        coefficient 1. Rhea cites PMID:16030197, PMID:21504201, PMID:17240979, PMID:16923875 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: pyruvate is a product released by RHEA:27874 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27875
+      snippet: isochorismate => salicylate + pyruvate
+      notes: Rhea's left-to-right directional reaction RHEA:27875 declares side 27874_R as its products
+        (rh:products); the master reaction RHEA:27874 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:16030197, PMID:21504201, PMID:17240979, PMID:16923875 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.99.21
+      snippet: EC:4.2.99.21 > GO:isochorismate pyruvate lyase activity ; GO:0043904
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043904 is itself a record
+        in this KB.
+  - subject: prot_Q7TYQ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MBTI_MYCBO is an exemplar enzyme with EC 4.2.99.21 activity.
+    evidence:
+    - reference: EC:4.2.99.21
+      snippet: DR   Q7TYQ1, MBTI_MYCBO ;  Q73XV3, MBTI_MYCPA ;  P9WFX0, MBTI_MYCTO ;
+      notes: ExPASy ENZYME entry EC 4.2.99.21 cross-references UniProtKB:Q7TYQ1 (MBTI_MYCBO) as a protein
+        with this activity.
+  - subject: prot_Q73XV3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MBTI_MYCPA is an exemplar enzyme with EC 4.2.99.21 activity.
+    evidence:
+    - reference: EC:4.2.99.21
+      snippet: DR   Q7TYQ1, MBTI_MYCBO ;  Q73XV3, MBTI_MYCPA ;  P9WFX0, MBTI_MYCTO ;
+      notes: ExPASy ENZYME entry EC 4.2.99.21 cross-references UniProtKB:Q73XV3 (MBTI_MYCPA) as a protein
+        with this activity.
+  - subject: prot_P9WFX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MBTI_MYCTO is an exemplar enzyme with EC 4.2.99.21 activity.
+    evidence:
+    - reference: EC:4.2.99.21
+      snippet: DR   Q7TYQ1, MBTI_MYCBO ;  Q73XV3, MBTI_MYCPA ;  P9WFX0, MBTI_MYCTO ;
+      notes: ExPASy ENZYME entry EC 4.2.99.21 cross-references UniProtKB:P9WFX0 (MBTI_MYCTO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

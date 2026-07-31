@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -43,4 +43,179 @@ definitions:
       Catalyses: L-seryl-tRNA(Sec) + ATP = O-phospho-L-seryl-tRNA(Sec) + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of O-phosphoseryl-tRNA(Sec) kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.164. EC 2.7.1.164 maps to
+    exactly one curated Rhea reaction (RHEA:25037), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-seryl-tRNA(Sec)
+    + ATP = O-phospho-L-seryl-tRNA(Sec) + ADP". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: O-phosphoseryl-tRNA(Sec) kinase
+    grounding: EC:2.7.1.164
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-seryl-tRNA(Sec)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9742
+    description: Rhea compound GENERIC:9742.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: 3'-(L-seryl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9742 (L-seryl-tRNA(Sec));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78533
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: O-phospho-L-seryl-tRNA(Sec)
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:9947
+    description: Rhea compound GENERIC:9947.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: 3'-(O-phosphonato-L-seryl)adenylyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:9947 (O-phospho-L-seryl-tRNA(Sec));
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78551
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-seryl-tRNA(Sec) kinase activity
+    grounding: GO:0043915
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8IV42
+    node_type: PROTEIN
+    label: PSTK_HUMAN
+    grounding: UniProtKB:Q8IV42
+  - node_id: prot_Q58933
+    node_type: PROTEIN
+    label: PSTK_METJA
+    grounding: UniProtKB:Q58933
+  - node_id: prot_Q8TUS5
+    node_type: PROTEIN
+    label: PSTK_METKA
+    grounding: UniProtKB:Q8TUS5
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-seryl-tRNA(Sec) is a substrate consumed by RHEA:25037 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25038
+      snippet: L-seryl-tRNA(Sec) + ATP => O-phospho-L-seryl-tRNA(Sec) + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:25038 declares side 25037_L as its substrates
+        (rh:substrates); the master reaction RHEA:25037 is undirected. This participant is GENERIC:9742
+        with coefficient 1. Rhea cites PMID:15317934, PMID:16201757 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 3'-(L-seryl)adenylyl group is the reactive part of L-seryl-tRNA(Sec).
+    evidence:
+    - reference: RHEA:25037
+      snippet: 3'-(L-seryl)adenylyl group
+      notes: Rhea compound GENERIC:9742 (L-seryl-tRNA(Sec)) declares rh:reactivePart = 3'-(L-seryl)adenylyl
+        group (CHEBI:78533).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:25037 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25038
+      snippet: L-seryl-tRNA(Sec) + ATP => O-phospho-L-seryl-tRNA(Sec) + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:25038 declares side 25037_L as its substrates
+        (rh:substrates); the master reaction RHEA:25037 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:15317934, PMID:16201757 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: O-phospho-L-seryl-tRNA(Sec) is a product released by RHEA:25037 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25038
+      snippet: L-seryl-tRNA(Sec) + ATP => O-phospho-L-seryl-tRNA(Sec) + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:25038 declares side 25037_R as its products
+        (rh:products); the master reaction RHEA:25037 is undirected. This participant is GENERIC:9947
+        with coefficient 1. Rhea cites PMID:15317934, PMID:16201757 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 3'-(O-phosphonato-L-seryl)adenylyl group is the reactive part of O-phospho-L-seryl-tRNA(Sec).
+    evidence:
+    - reference: RHEA:25037
+      snippet: 3'-(O-phosphonato-L-seryl)adenylyl group
+      notes: Rhea compound GENERIC:9947 (O-phospho-L-seryl-tRNA(Sec)) declares rh:reactivePart = 3'-(O-phosphonato-L-seryl)adenylyl
+        group (CHEBI:78551).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:25037 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25038
+      snippet: L-seryl-tRNA(Sec) + ATP => O-phospho-L-seryl-tRNA(Sec) + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:25038 declares side 25037_R as its products
+        (rh:products); the master reaction RHEA:25037 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:15317934, PMID:16201757 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.7.1.164
+      snippet: EC:2.7.1.164 > GO:L-seryl-tRNA(Sec) kinase activity ; GO:0043915
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0043915 is itself a record
+        in this KB.
+  - subject: prot_Q8IV42
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSTK_HUMAN is an exemplar enzyme with EC 2.7.1.164 activity.
+    evidence:
+    - reference: EC:2.7.1.164
+      snippet: DR   Q8IV42, PSTK_HUMAN ;  Q58933, PSTK_METJA ;  Q8TUS5, PSTK_METKA ;
+      notes: ExPASy ENZYME entry EC 2.7.1.164 cross-references UniProtKB:Q8IV42 (PSTK_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q58933
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSTK_METJA is an exemplar enzyme with EC 2.7.1.164 activity.
+    evidence:
+    - reference: EC:2.7.1.164
+      snippet: DR   Q8IV42, PSTK_HUMAN ;  Q58933, PSTK_METJA ;  Q8TUS5, PSTK_METKA ;
+      notes: ExPASy ENZYME entry EC 2.7.1.164 cross-references UniProtKB:Q58933 (PSTK_METJA) as a protein
+        with this activity.
+  - subject: prot_Q8TUS5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PSTK_METKA is an exemplar enzyme with EC 2.7.1.164 activity.
+    evidence:
+    - reference: EC:2.7.1.164
+      snippet: DR   Q8IV42, PSTK_HUMAN ;  Q58933, PSTK_METJA ;  Q8TUS5, PSTK_METKA ;
+      notes: ExPASy ENZYME entry EC 2.7.1.164 cross-references UniProtKB:Q8TUS5 (PSTK_METKA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.3.-
 mapped_xrefs:
@@ -25,4 +25,105 @@ definitions:
       Catalyses: N-amidino-L-aspartate + H2O = urea + L-aspartate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of amidinoaspartase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.3.14. EC 3.5.3.14 maps to exactly
+    one curated Rhea reaction (RHEA:14849), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N-amidino-L-aspartate
+    + H2O = urea + L-aspartate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: amidinoaspartase
+    grounding: EC:3.5.3.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N-amidino-L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:58005
+    description: Formula C5H8N3O4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: urea
+    node_type: CHEMICAL
+    grounding: CHEBI:16199
+    description: Formula CH4N2O.
+  - node_id: prd2
+    label: L-aspartate
+    node_type: CHEMICAL
+    grounding: CHEBI:29991
+    description: Formula C4H6NO4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: amidinoaspartase activity
+    grounding: GO:0047660
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-amidino-L-aspartate is a substrate consumed by RHEA:14849 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:14850
+      snippet: N-amidino-L-aspartate + H2O => urea + L-aspartate
+      notes: Rhea's left-to-right directional reaction RHEA:14850 declares side 14849_L as its substrates
+        (rh:substrates); the master reaction RHEA:14849 is undirected. This participant is CHEBI:58005
+        with coefficient 1. Rhea cites PMID:4651648 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:14849 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14850
+      snippet: N-amidino-L-aspartate + H2O => urea + L-aspartate
+      notes: Rhea's left-to-right directional reaction RHEA:14850 declares side 14849_L as its substrates
+        (rh:substrates); the master reaction RHEA:14849 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4651648 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: urea is a product released by RHEA:14849 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14850
+      snippet: N-amidino-L-aspartate + H2O => urea + L-aspartate
+      notes: Rhea's left-to-right directional reaction RHEA:14850 declares side 14849_R as its products
+        (rh:products); the master reaction RHEA:14849 is undirected. This participant is CHEBI:16199 with
+        coefficient 1. Rhea cites PMID:4651648 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-aspartate is a product released by RHEA:14849 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14850
+      snippet: N-amidino-L-aspartate + H2O => urea + L-aspartate
+      notes: Rhea's left-to-right directional reaction RHEA:14850 declares side 14849_R as its products
+        (rh:products); the master reaction RHEA:14849 is undirected. This participant is CHEBI:29991 with
+        coefficient 1. Rhea cites PMID:4651648 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.3.14
+      snippet: EC:3.5.3.14 > GO:amidinoaspartase activity ; GO:0047660
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047660 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

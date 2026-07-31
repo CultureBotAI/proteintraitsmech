@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.11.2.-
 synonyms:
@@ -49,4 +49,298 @@ definitions:
       Catalyses: (1) a 1,2-saturated fatty acid + H2O2 = a 2-hydroxy fatty acid + H2O. (2) a 2,3-saturated fatty acid + H2O2 = a 3-hydroxy fatty acid + H2O
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of fatty-acid peroxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.11.2.4. Rhea assigns 5 curated
+    reactions to EC 1.11.2.4 (the first 3 are shown). No one substrate set is the class''s chemistry,
+    so each reaction is its own node — grounded to the Rhea record in this KB — and carries its own inputs
+    and outputs. ExPASy ENZYME states the catalysed reaction as: "(1) a 1,2-saturated fatty acid + H2O2
+    = a 2-hydroxy fatty acid + H2O. (2) a 2,3-saturated fatty acid + H2O2 = a 3-hydroxy fatty acid + H2O".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: fatty-acid peroxygenase
+    grounding: EC:1.11.2.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of tetradecanoate + H2O2 = (3R)-hydroxytetradecanoate + H2O
+    grounding: RHEA:46024
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: tetradecanoate + H2O2 = (3R)-hydroxytetradecanoate + H2O'
+  - node_id: rxn1_sub1
+    label: tetradecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30807
+    description: Formula C14H27O2.
+  - node_id: rxn1_sub2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: rxn1_prd1
+    label: (3R)-hydroxytetradecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:85635
+    description: Formula C14H27O3.
+  - node_id: rxn1_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of tetradecanoate + H2O2 = (2R)-hydroxytetradecanoate + H2O
+    grounding: RHEA:46028
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: tetradecanoate + H2O2 = (2R)-hydroxytetradecanoate + H2O'
+  - node_id: rxn2_sub1
+    label: tetradecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30807
+    description: Formula C14H27O2.
+  - node_id: rxn2_sub2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: rxn2_prd1
+    label: (2R)-hydroxytetradecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:85636
+    description: Formula C14H27O3.
+  - node_id: rxn2_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of tetradecanoate + H2O2 = (2S)-hydroxytetradecanoate + H2O
+    grounding: RHEA:46032
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: tetradecanoate + H2O2 = (2S)-hydroxytetradecanoate + H2O'
+  - node_id: rxn3_sub1
+    label: tetradecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30807
+    description: Formula C14H27O2.
+  - node_id: rxn3_sub2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: rxn3_prd1
+    label: (2S)-hydroxytetradecanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:85637
+    description: Formula C14H27O3.
+  - node_id: rxn3_prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prot_I3DZK9
+    node_type: PROTEIN
+    label: CYPC_BACMM
+    grounding: UniProtKB:I3DZK9
+  - node_id: prot_O31440
+    node_type: PROTEIN
+    label: CYPC_BACSU
+    grounding: UniProtKB:O31440
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:46024 is one of the 5 curated reactions Rhea assigns to EC 1.11.2.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:46024
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.11.2.4"/>
+      notes: The rh:ec triple on RHEA:46024 in rhea.rdf assigns that reaction to EC 1.11.2.4.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: tetradecanoate is a substrate consumed by RHEA:46024 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46025
+      snippet: tetradecanoate + H2O2 => (3R)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46025 declares side 46024_L as its substrates
+        (rh:substrates); the master reaction RHEA:46024 is undirected. This participant is CHEBI:30807
+        with coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O2 is a substrate consumed by RHEA:46024 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46025
+      snippet: tetradecanoate + H2O2 => (3R)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46025 declares side 46024_L as its substrates
+        (rh:substrates); the master reaction RHEA:46024 is undirected. This participant is CHEBI:16240
+        with coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (3R)-hydroxytetradecanoate is a product released by RHEA:46024 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46025
+      snippet: tetradecanoate + H2O2 => (3R)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46025 declares side 46024_R as its products
+        (rh:products); the master reaction RHEA:46024 is undirected. This participant is CHEBI:85635 with
+        coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: H2O is a product released by RHEA:46024 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46025
+      snippet: tetradecanoate + H2O2 => (3R)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46025 declares side 46024_R as its products
+        (rh:products); the master reaction RHEA:46024 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:46028 is one of the 5 curated reactions Rhea assigns to EC 1.11.2.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:46028
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.11.2.4"/>
+      notes: The rh:ec triple on RHEA:46028 in rhea.rdf assigns that reaction to EC 1.11.2.4.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: tetradecanoate is a substrate consumed by RHEA:46028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46029
+      snippet: tetradecanoate + H2O2 => (2R)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46029 declares side 46028_L as its substrates
+        (rh:substrates); the master reaction RHEA:46028 is undirected. This participant is CHEBI:30807
+        with coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O2 is a substrate consumed by RHEA:46028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46029
+      snippet: tetradecanoate + H2O2 => (2R)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46029 declares side 46028_L as its substrates
+        (rh:substrates); the master reaction RHEA:46028 is undirected. This participant is CHEBI:16240
+        with coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (2R)-hydroxytetradecanoate is a product released by RHEA:46028 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46029
+      snippet: tetradecanoate + H2O2 => (2R)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46029 declares side 46028_R as its products
+        (rh:products); the master reaction RHEA:46028 is undirected. This participant is CHEBI:85636 with
+        coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: H2O is a product released by RHEA:46028 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46029
+      snippet: tetradecanoate + H2O2 => (2R)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46029 declares side 46028_R as its products
+        (rh:products); the master reaction RHEA:46028 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:46032 is one of the 5 curated reactions Rhea assigns to EC 1.11.2.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:46032
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.11.2.4"/>
+      notes: The rh:ec triple on RHEA:46032 in rhea.rdf assigns that reaction to EC 1.11.2.4.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: tetradecanoate is a substrate consumed by RHEA:46032 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46033
+      snippet: tetradecanoate + H2O2 => (2S)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46033 declares side 46032_L as its substrates
+        (rh:substrates); the master reaction RHEA:46032 is undirected. This participant is CHEBI:30807
+        with coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: H2O2 is a substrate consumed by RHEA:46032 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46033
+      snippet: tetradecanoate + H2O2 => (2S)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46033 declares side 46032_L as its substrates
+        (rh:substrates); the master reaction RHEA:46032 is undirected. This participant is CHEBI:16240
+        with coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: (2S)-hydroxytetradecanoate is a product released by RHEA:46032 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46033
+      snippet: tetradecanoate + H2O2 => (2S)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46033 declares side 46032_R as its products
+        (rh:products); the master reaction RHEA:46032 is undirected. This participant is CHEBI:85637 with
+        coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: H2O is a product released by RHEA:46032 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:46033
+      snippet: tetradecanoate + H2O2 => (2S)-hydroxytetradecanoate + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:46033 declares side 46032_R as its products
+        (rh:products); the master reaction RHEA:46032 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:10529095 for this reaction.
+  - subject: prot_I3DZK9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYPC_BACMM is an exemplar enzyme with EC 1.11.2.4 activity.
+    evidence:
+    - reference: EC:1.11.2.4
+      snippet: DR   I3DZK9, CYPC_BACMM ;  O31440, CYPC_BACSU ;
+      notes: ExPASy ENZYME entry EC 1.11.2.4 cross-references UniProtKB:I3DZK9 (CYPC_BACMM) as a protein
+        with this activity.
+  - subject: prot_O31440
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CYPC_BACSU is an exemplar enzyme with EC 1.11.2.4 activity.
+    evidence:
+    - reference: EC:1.11.2.4
+      snippet: DR   I3DZK9, CYPC_BACMM ;  O31440, CYPC_BACSU ;
+      notes: ExPASy ENZYME entry EC 1.11.2.4 cross-references UniProtKB:O31440 (CYPC_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (17 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

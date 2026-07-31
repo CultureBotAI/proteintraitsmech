@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -38,4 +38,67 @@ definitions:
       Catalyses: Hydrolysis of four peptide bonds in the viral precursor polyprotein, commonly with Asp or Glu in the P6 position, Cys or Thr in P1 and Ser or Ala in P1'
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hepacivirin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.98. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of four peptide bonds in the viral precursor polyprotein, commonly with Asp or Glu in the P6 position,
+    Cys or Thr in P1 and Ser or Ala in P1''".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hepacivirin
+    grounding: EC:3.4.21.98
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q69422
+    node_type: PROTEIN
+    label: POLG_GBVB
+    grounding: UniProtKB:Q69422
+  - node_id: prot_P26664
+    node_type: PROTEIN
+    label: POLG_HCV1
+    grounding: UniProtKB:P26664
+  - node_id: prot_Q5I2N3
+    node_type: PROTEIN
+    label: POLG_HCV6A
+    grounding: UniProtKB:Q5I2N3
+  edges:
+  - subject: prot_Q69422
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_GBVB is an exemplar enzyme with EC 3.4.21.98 activity.
+    evidence:
+    - reference: EC:3.4.21.98
+      snippet: DR   Q69422, POLG_GBVB  ;  P26664, POLG_HCV1  ;  Q5I2N3, POLG_HCV6A ;
+      notes: ExPASy ENZYME entry EC 3.4.21.98 cross-references UniProtKB:Q69422 (POLG_GBVB) as a protein
+        with this activity.
+  - subject: prot_P26664
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_HCV1 is an exemplar enzyme with EC 3.4.21.98 activity.
+    evidence:
+    - reference: EC:3.4.21.98
+      snippet: DR   Q69422, POLG_GBVB  ;  P26664, POLG_HCV1  ;  Q5I2N3, POLG_HCV6A ;
+      notes: ExPASy ENZYME entry EC 3.4.21.98 cross-references UniProtKB:P26664 (POLG_HCV1) as a protein
+        with this activity.
+  - subject: prot_Q5I2N3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: POLG_HCV6A is an exemplar enzyme with EC 3.4.21.98 activity.
+    evidence:
+    - reference: EC:3.4.21.98
+      snippet: DR   Q69422, POLG_GBVB  ;  P26664, POLG_HCV1  ;  Q5I2N3, POLG_HCV6A ;
+      notes: ExPASy ENZYME entry EC 3.4.21.98 cross-references UniProtKB:Q5I2N3 (POLG_HCV6A) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

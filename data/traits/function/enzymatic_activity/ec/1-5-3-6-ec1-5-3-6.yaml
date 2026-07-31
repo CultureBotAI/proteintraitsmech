@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.5.3.-
 synonyms:
@@ -35,4 +35,136 @@ definitions:
       Catalyses: (R)-6-hydroxynicotine + O2 + H2O = 6-hydroxypseudooxynicotine + H2O2
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (R)-6-hydroxynicotine oxidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.5.3.6. EC 1.5.3.6 maps to exactly
+    one curated Rhea reaction (RHEA:10012), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(R)-6-hydroxynicotine
+    + O2 + H2O = 6-hydroxypseudooxynicotine + H2O2". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: (R)-6-hydroxynicotine oxidase
+    grounding: EC:1.5.3.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (R)-6-hydroxynicotine
+    node_type: CHEMICAL
+    grounding: CHEBI:58413
+    description: Formula C10H15N2O.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 6-hydroxypseudooxynicotine
+    node_type: CHEMICAL
+    grounding: CHEBI:58682
+    description: Formula C10H15N2O2.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (R)-6-hydroxynicotine oxidase activity
+    grounding: GO:0018530
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P08159
+    node_type: PROTEIN
+    label: HDNO_PAENI
+    grounding: UniProtKB:P08159
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (R)-6-hydroxynicotine is a substrate consumed by RHEA:10012 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10013
+      snippet: (R)-6-hydroxynicotine + O2 + H2O => 6-hydroxypseudooxynicotine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:10013 declares side 10012_L as its substrates
+        (rh:substrates); the master reaction RHEA:10012 is undirected. This participant is CHEBI:58413
+        with coefficient 1. Rhea cites PMID:16095622, PMID:2680607 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by RHEA:10012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10013
+      snippet: (R)-6-hydroxynicotine + O2 + H2O => 6-hydroxypseudooxynicotine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:10013 declares side 10012_L as its substrates
+        (rh:substrates); the master reaction RHEA:10012 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:16095622, PMID:2680607 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by RHEA:10012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10013
+      snippet: (R)-6-hydroxynicotine + O2 + H2O => 6-hydroxypseudooxynicotine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:10013 declares side 10012_L as its substrates
+        (rh:substrates); the master reaction RHEA:10012 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16095622, PMID:2680607 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 6-hydroxypseudooxynicotine is a product released by RHEA:10012 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:10013
+      snippet: (R)-6-hydroxynicotine + O2 + H2O => 6-hydroxypseudooxynicotine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:10013 declares side 10012_R as its products
+        (rh:products); the master reaction RHEA:10012 is undirected. This participant is CHEBI:58682 with
+        coefficient 1. Rhea cites PMID:16095622, PMID:2680607 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by RHEA:10012 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:10013
+      snippet: (R)-6-hydroxynicotine + O2 + H2O => 6-hydroxypseudooxynicotine + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:10013 declares side 10012_R as its products
+        (rh:products); the master reaction RHEA:10012 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:16095622, PMID:2680607 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.5.3.6
+      snippet: EC:1.5.3.6 > GO:(R)-6-hydroxynicotine oxidase activity ; GO:0018530
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0018530 is itself a record
+        in this KB.
+  - subject: prot_P08159
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HDNO_PAENI is an exemplar enzyme with EC 1.5.3.6 activity.
+    evidence:
+    - reference: EC:1.5.3.6
+      snippet: DR   P08159, HDNO_PAENI ;
+      notes: ExPASy ENZYME entry EC 1.5.3.6 cross-references UniProtKB:P08159 (HDNO_PAENI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

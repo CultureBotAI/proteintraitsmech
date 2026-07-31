@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 synonyms:
@@ -32,4 +32,53 @@ definitions:
       Catalyses: The enzyme cleaves angiotensin-converting enzyme 2 (EC 3.4.17.23) and cleaves influenzea A and B virus and coronavirus spike glycoproteins at arginine residues
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of transmembrane protease serine 2
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.122. No Rhea reaction is
+    assigned to this EC class, so no substrate or product is asserted; the graph records only the exemplar
+    enzymes and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as:
+    "The enzyme cleaves angiotensin-converting enzyme 2 (EC 3.4.17.23) and cleaves influenzea A and B
+    virus and coronavirus spike glycoproteins at arginine residues".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: transmembrane protease serine 2
+    grounding: EC:3.4.21.122
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_O15393
+    node_type: PROTEIN
+    label: TMPS2_HUMAN
+    grounding: UniProtKB:O15393
+  - node_id: prot_Q9JIQ8
+    node_type: PROTEIN
+    label: TMPS2_MOUSE
+    grounding: UniProtKB:Q9JIQ8
+  edges:
+  - subject: prot_O15393
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TMPS2_HUMAN is an exemplar enzyme with EC 3.4.21.122 activity.
+    evidence:
+    - reference: EC:3.4.21.122
+      snippet: DR   O15393, TMPS2_HUMAN;  Q9JIQ8, TMPS2_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.21.122 cross-references UniProtKB:O15393 (TMPS2_HUMAN) as a protein
+        with this activity.
+  - subject: prot_Q9JIQ8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TMPS2_MOUSE is an exemplar enzyme with EC 3.4.21.122 activity.
+    evidence:
+    - reference: EC:3.4.21.122
+      snippet: DR   O15393, TMPS2_HUMAN;  Q9JIQ8, TMPS2_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.21.122 cross-references UniProtKB:Q9JIQ8 (TMPS2_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

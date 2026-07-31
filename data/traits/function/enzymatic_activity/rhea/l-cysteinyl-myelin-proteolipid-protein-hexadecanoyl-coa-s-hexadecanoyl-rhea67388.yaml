@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.3.1.100
     mapping_source: rhea2ec
@@ -28,4 +28,146 @@ definitions:
       Catalyses the reaction: L-cysteinyl-[myelin proteolipid protein] + hexadecanoyl-CoA = S-hexadecanoyl-L-cysteinyl-[myelin proteolipid protein] + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-cysteinyl-[myelin proteolipid protein] + hexadecanoyl-CoA = S-hexadecanoyl-L-cysteiny…
+  description: Substrate-to-product chemistry of RHEA:67388, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67389 (rh:substrates → 67388_L, rh:products → 67388_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-cysteinyl-[myelin proteolipid protein] + hexadecanoyl-CoA = S-hexadecanoyl…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67388
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-cysteinyl-[myelin proteolipid protein] + hexadecanoyl-CoA = S-hexadecanoyl-L-cysteinyl-[myelin
+      proteolipid protein] + CoA'
+  - node_id: sub1
+    label: L-cysteinyl-[myelin proteolipid protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17254
+    description: Rhea compound GENERIC:17254.
+  - node_id: sub1_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17254 (L-cysteinyl-[myelin
+      proteolipid protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: hexadecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57379
+    description: Formula C37H62N7O17P3S.
+  - node_id: prd1
+    label: S-hexadecanoyl-L-cysteinyl-[myelin proteolipid protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17255
+    description: Rhea compound GENERIC:17255.
+  - node_id: prd1_rp1
+    label: S-hexadecanoyl-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17255 (S-hexadecanoyl-L-cysteinyl-[myelin
+      proteolipid protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74151
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: '[myelin-proteolipid] O-palmitoyltransferase'
+    grounding: EC:2.3.1.100
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-cysteinyl-[myelin proteolipid protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:67389
+      snippet: L-cysteinyl-[myelin proteolipid protein] + hexadecanoyl-CoA => S-hexadecanoyl-L-cysteinyl-[myelin
+        proteolipid protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67389 declares side 67388_L as its substrates
+        (rh:substrates); the master reaction RHEA:67388 is undirected. This participant is GENERIC:17254
+        with coefficient 1. Rhea cites PMID:3818589 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[myelin proteolipid protein].
+    evidence:
+    - reference: RHEA:67388
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:17254 (L-cysteinyl-[myelin proteolipid protein]) declares rh:reactivePart
+        = L-cysteine residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: hexadecanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:67389
+      snippet: L-cysteinyl-[myelin proteolipid protein] + hexadecanoyl-CoA => S-hexadecanoyl-L-cysteinyl-[myelin
+        proteolipid protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67389 declares side 67388_L as its substrates
+        (rh:substrates); the master reaction RHEA:67388 is undirected. This participant is CHEBI:57379
+        with coefficient 1. Rhea cites PMID:3818589 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-hexadecanoyl-L-cysteinyl-[myelin proteolipid protein] is a product released by this
+      reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67389
+      snippet: L-cysteinyl-[myelin proteolipid protein] + hexadecanoyl-CoA => S-hexadecanoyl-L-cysteinyl-[myelin
+        proteolipid protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67389 declares side 67388_R as its products
+        (rh:products); the master reaction RHEA:67388 is undirected. This participant is GENERIC:17255
+        with coefficient 1. Rhea cites PMID:3818589 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-hexadecanoyl-L-cysteine residue is the reactive part of S-hexadecanoyl-L-cysteinyl-[myelin
+      proteolipid protein].
+    evidence:
+    - reference: RHEA:67388
+      snippet: S-hexadecanoyl-L-cysteine residue
+      notes: Rhea compound GENERIC:17255 (S-hexadecanoyl-L-cysteinyl-[myelin proteolipid protein]) declares
+        rh:reactivePart = S-hexadecanoyl-L-cysteine residue (CHEBI:74151), formula C19H35NO2S.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67389
+      snippet: L-cysteinyl-[myelin proteolipid protein] + hexadecanoyl-CoA => S-hexadecanoyl-L-cysteinyl-[myelin
+        proteolipid protein] + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:67389 declares side 67388_R as its products
+        (rh:products); the master reaction RHEA:67388 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:3818589 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.3.1.100; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:67388
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.3.1.100"/>
+      notes: The rh:ec triple on RHEA:67388 in rhea.rdf. EC 2.3.1.100 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

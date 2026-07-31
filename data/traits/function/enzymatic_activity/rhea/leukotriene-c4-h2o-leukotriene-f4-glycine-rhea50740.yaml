@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:57973
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,90 @@ definitions:
       Catalyses the reaction: leukotriene C4 + H2O = leukotriene F4 + glycine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of leukotriene C4 + H2O = leukotriene F4 + glycine
+  description: Substrate-to-product chemistry of RHEA:50740, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:50741 (rh:substrates → 50740_L, rh:products → 50740_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of leukotriene C4 + H2O = leukotriene F4 + glycine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:50740
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: leukotriene C4 + H2O = leukotriene F4 + glycine'
+  - node_id: sub1
+    label: leukotriene C4
+    node_type: CHEMICAL
+    grounding: CHEBI:57973
+    description: Formula C30H45N3O9S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: leukotriene F4
+    node_type: CHEMICAL
+    grounding: CHEBI:133618
+    description: Formula C28H42N2O8S.
+  - node_id: prd2
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+    description: Formula C2H5NO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: leukotriene C4 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50741
+      snippet: leukotriene C4 + H2O => leukotriene F4 + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:50741 declares side 50740_L as its substrates
+        (rh:substrates); the master reaction RHEA:50740 is undirected. This participant is CHEBI:57973
+        with coefficient 1. Rhea cites PMID:12729612 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50741
+      snippet: leukotriene C4 + H2O => leukotriene F4 + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:50741 declares side 50740_L as its substrates
+        (rh:substrates); the master reaction RHEA:50740 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12729612 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: leukotriene F4 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50741
+      snippet: leukotriene C4 + H2O => leukotriene F4 + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:50741 declares side 50740_R as its products
+        (rh:products); the master reaction RHEA:50740 is undirected. This participant is CHEBI:133618
+        with coefficient 1. Rhea cites PMID:12729612 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: glycine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50741
+      snippet: leukotriene C4 + H2O => leukotriene F4 + glycine
+      notes: Rhea's left-to-right directional reaction RHEA:50741 declares side 50740_R as its products
+        (rh:products); the master reaction RHEA:50740 is undirected. This participant is CHEBI:57305 with
+        coefficient 1. Rhea cites PMID:12729612 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

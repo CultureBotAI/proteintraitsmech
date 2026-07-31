@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.60
     mapping_source: rhea2ec
@@ -30,4 +30,146 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate = germacrene C + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate = germacrene C + diphosphate
+  description: Substrate-to-product chemistry of RHEA:28302, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:28303 (rh:substrates → 28302_L, rh:products → 28302_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate = germacrene C + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:28302
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate = germacrene C + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: germacrene C
+    node_type: CHEMICAL
+    grounding: CHEBI:61478
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: germacrene C synthase activity
+    grounding: GO:0102904
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: germacrene C synthase
+    grounding: EC:4.2.3.60
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_J9RLZ7
+    node_type: PROTEIN
+    label: TPS1_VALOF
+    grounding: UniProtKB:J9RLZ7
+  - node_id: prot_O64961
+    node_type: PROTEIN
+    label: TPS9_SOLLC
+    grounding: UniProtKB:O64961
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:28303
+      snippet: (2E,6E)-farnesyl diphosphate => germacrene C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28303 declares side 28302_L as its substrates
+        (rh:substrates); the master reaction RHEA:28302 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:22776156, PMID:21818683, PMID:9482865 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: germacrene C is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28303
+      snippet: (2E,6E)-farnesyl diphosphate => germacrene C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28303 declares side 28302_R as its products
+        (rh:products); the master reaction RHEA:28302 is undirected. This participant is CHEBI:61478 with
+        coefficient 1. Rhea cites PMID:22776156, PMID:21818683, PMID:9482865 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:28303
+      snippet: (2E,6E)-farnesyl diphosphate => germacrene C + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:28303 declares side 28302_R as its products
+        (rh:products); the master reaction RHEA:28302 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:22776156, PMID:21818683, PMID:9482865 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:28302
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0102904"/>
+      notes: The rdfs:seeAlso triple on RHEA:28302 in rhea.rdf. GO term GO:0102904 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.60; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:28302
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.60"/>
+      notes: The rh:ec triple on RHEA:28302 in rhea.rdf. EC 4.2.3.60 is itself a record in this KB.
+  - subject: prot_J9RLZ7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS1_VALOF is an exemplar enzyme carrying EC 4.2.3.60, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.60
+      snippet: DR   J9RLZ7, TPS1_VALOF ;  O64961, TPS9_SOLLC ;
+      notes: ExPASy ENZYME entry EC 4.2.3.60 cross-references UniProtKB:J9RLZ7 (TPS1_VALOF) as a protein
+        with this activity.
+    - reference: RHEA:28302
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.60"/>
+      notes: Rhea assigns RHEA:28302 to EC 4.2.3.60, and EC 4.2.3.60 maps to exactly one Rhea master reaction
+        (RHEA:28302), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O64961
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TPS9_SOLLC is an exemplar enzyme carrying EC 4.2.3.60, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.60
+      snippet: DR   J9RLZ7, TPS1_VALOF ;  O64961, TPS9_SOLLC ;
+      notes: ExPASy ENZYME entry EC 4.2.3.60 cross-references UniProtKB:O64961 (TPS9_SOLLC) as a protein
+        with this activity.
+    - reference: RHEA:28302
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.60"/>
+      notes: Rhea assigns RHEA:28302 to EC 4.2.3.60, and EC 4.2.3.60 maps to exactly one Rhea master reaction
+        (RHEA:28302), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

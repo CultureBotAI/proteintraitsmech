@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -32,4 +32,87 @@ definitions:
       Catalyses: (2R)-ethylmalonyl-CoA = (2S)-methylsuccinyl-CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ethylmalonyl-CoA mutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.63. EC 5.4.99.63 maps to
+    exactly one curated Rhea reaction (RHEA:45576), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2R)-ethylmalonyl-CoA
+    = (2S)-methylsuccinyl-CoA". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ethylmalonyl-CoA mutase
+    grounding: EC:5.4.99.63
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2R)-ethylmalonyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:85316
+    description: Formula C26H37N7O19P3S.
+  - node_id: prd1
+    label: (2S)-methylsuccinyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:84866
+    description: Formula C26H37N7O19P3S.
+  - node_id: prot_Q3IZ90
+    node_type: PROTEIN
+    label: ECM_CERS4
+    grounding: UniProtKB:Q3IZ90
+  - node_id: prot_Q49115
+    node_type: PROTEIN
+    label: ECM_METEA
+    grounding: UniProtKB:Q49115
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2R)-ethylmalonyl-CoA is a substrate consumed by RHEA:45576 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45577
+      snippet: (2R)-ethylmalonyl-CoA => (2S)-methylsuccinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:45577 declares side 45576_L as its substrates
+        (rh:substrates); the master reaction RHEA:45576 is undirected. This participant is CHEBI:85316
+        with coefficient 1. Rhea cites PMID:18819910 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2S)-methylsuccinyl-CoA is a product released by RHEA:45576 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45577
+      snippet: (2R)-ethylmalonyl-CoA => (2S)-methylsuccinyl-CoA
+      notes: Rhea's left-to-right directional reaction RHEA:45577 declares side 45576_R as its products
+        (rh:products); the master reaction RHEA:45576 is undirected. This participant is CHEBI:84866 with
+        coefficient 1. Rhea cites PMID:18819910 for this reaction.
+  - subject: prot_Q3IZ90
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ECM_CERS4 is an exemplar enzyme with EC 5.4.99.63 activity.
+    evidence:
+    - reference: EC:5.4.99.63
+      snippet: DR   Q3IZ90, ECM_CERS4  ;  Q49115, ECM_METEA  ;
+      notes: ExPASy ENZYME entry EC 5.4.99.63 cross-references UniProtKB:Q3IZ90 (ECM_CERS4) as a protein
+        with this activity.
+  - subject: prot_Q49115
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ECM_METEA is an exemplar enzyme with EC 5.4.99.63 activity.
+    evidence:
+    - reference: EC:5.4.99.63
+      snippet: DR   Q3IZ90, ECM_CERS4  ;  Q49115, ECM_METEA  ;
+      notes: ExPASy ENZYME entry EC 5.4.99.63 cross-references UniProtKB:Q49115 (ECM_METEA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

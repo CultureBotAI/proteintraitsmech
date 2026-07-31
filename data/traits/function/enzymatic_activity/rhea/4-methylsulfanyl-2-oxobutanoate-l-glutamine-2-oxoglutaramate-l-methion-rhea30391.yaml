@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.6.1.117
     mapping_source: rhea2ec
@@ -30,4 +30,126 @@ definitions:
       Catalyses the reaction: 4-methylsulfanyl-2-oxobutanoate + L-glutamine = 2-oxoglutaramate + L-methionine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-methylsulfanyl-2-oxobutanoate + L-glutamine = 2-oxoglutaramate + L-methionine
+  description: Substrate-to-product chemistry of RHEA:30391, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:30392 (rh:substrates → 30391_L, rh:products → 30391_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4-methylsulfanyl-2-oxobutanoate + L-glutamine = 2-oxoglutaramate + L-methion…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:30391
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4-methylsulfanyl-2-oxobutanoate + L-glutamine = 2-oxoglutaramate + L-methionine'
+  - node_id: sub1
+    label: 4-methylsulfanyl-2-oxobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:16723
+    description: Formula C5H7O3S.
+  - node_id: sub2
+    label: L-glutamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58359
+    description: Formula C5H10N2O3.
+  - node_id: prd1
+    label: 2-oxoglutaramate
+    node_type: CHEMICAL
+    grounding: CHEBI:16769
+    description: Formula C5H6NO4.
+  - node_id: prd2
+    label: L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+    description: Formula C5H11NO2S.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: L-glutamine--4-(methylsulfanyl)-2-oxobutanoate aminotransferase
+    grounding: EC:2.6.1.117
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_O31665
+    node_type: PROTEIN
+    label: MTNE_BACSU
+    grounding: UniProtKB:O31665
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-methylsulfanyl-2-oxobutanoate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:30392
+      snippet: 4-methylsulfanyl-2-oxobutanoate + L-glutamine => 2-oxoglutaramate + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:30392 declares side 30391_L as its substrates
+        (rh:substrates); the master reaction RHEA:30391 is undirected. This participant is CHEBI:16723
+        with coefficient 1. Rhea cites PMID:24837359, PMID:12670965 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-glutamine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30392
+      snippet: 4-methylsulfanyl-2-oxobutanoate + L-glutamine => 2-oxoglutaramate + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:30392 declares side 30391_L as its substrates
+        (rh:substrates); the master reaction RHEA:30391 is undirected. This participant is CHEBI:58359
+        with coefficient 1. Rhea cites PMID:24837359, PMID:12670965 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-oxoglutaramate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30392
+      snippet: 4-methylsulfanyl-2-oxobutanoate + L-glutamine => 2-oxoglutaramate + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:30392 declares side 30391_R as its products
+        (rh:products); the master reaction RHEA:30391 is undirected. This participant is CHEBI:16769 with
+        coefficient 1. Rhea cites PMID:24837359, PMID:12670965 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-methionine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:30392
+      snippet: 4-methylsulfanyl-2-oxobutanoate + L-glutamine => 2-oxoglutaramate + L-methionine
+      notes: Rhea's left-to-right directional reaction RHEA:30392 declares side 30391_R as its products
+        (rh:products); the master reaction RHEA:30391 is undirected. This participant is CHEBI:57844 with
+        coefficient 1. Rhea cites PMID:24837359, PMID:12670965 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.6.1.117; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:30391
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.117"/>
+      notes: The rh:ec triple on RHEA:30391 in rhea.rdf. EC 2.6.1.117 is itself a record in this KB.
+  - subject: prot_O31665
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MTNE_BACSU is an exemplar enzyme carrying EC 2.6.1.117, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.6.1.117
+      snippet: DR   O31665, MTNE_BACSU ;
+      notes: ExPASy ENZYME entry EC 2.6.1.117 cross-references UniProtKB:O31665 (MTNE_BACSU) as a protein
+        with this activity.
+    - reference: RHEA:30391
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.6.1.117"/>
+      notes: Rhea assigns RHEA:30391 to EC 2.6.1.117, and EC 2.6.1.117 maps to exactly one Rhea master
+        reaction (RHEA:30391), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.1.-
 mapped_xrefs:
@@ -36,4 +36,147 @@ definitions:
       Catalyses: D-apionate + NAD(+) = 3-oxoisoapionate + NADH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-apionate oxidoisomerase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.1.421. EC 1.1.1.421 maps to
+    exactly one curated Rhea reaction (RHEA:57044), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "D-apionate
+    + NAD(+) = 3-oxoisoapionate + NADH + H(+)". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: D-apionate oxidoisomerase
+    grounding: EC:1.1.1.421
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: D-apionate
+    node_type: CHEMICAL
+    grounding: CHEBI:141352
+    description: Formula C5H9O6.
+  - node_id: sub2
+    label: NAD(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:57540
+    description: Formula C21H26N7O14P2.
+  - node_id: prd1
+    label: 3-oxoisoapionate
+    node_type: CHEMICAL
+    grounding: CHEBI:141353
+    description: Formula C5H7O6.
+  - node_id: prd2
+    label: NADH
+    node_type: CHEMICAL
+    grounding: CHEBI:57945
+    description: Formula C21H27N7O14P2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_C0CMQ7
+    node_type: PROTEIN
+    label: APNO_BLAHS
+    grounding: UniProtKB:C0CMQ7
+  - node_id: prot_F8GV06
+    node_type: PROTEIN
+    label: APNO_CUPNN
+    grounding: UniProtKB:F8GV06
+  - node_id: prot_Q6D8V3
+    node_type: PROTEIN
+    label: APNO_PECAS
+    grounding: UniProtKB:Q6D8V3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-apionate is a substrate consumed by RHEA:57044 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57045
+      snippet: D-apionate + NAD(+) => 3-oxoisoapionate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57045 declares side 57044_L as its substrates
+        (rh:substrates); the master reaction RHEA:57044 is undirected. This participant is CHEBI:141352
+        with coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NAD(+) is a substrate consumed by RHEA:57044 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57045
+      snippet: D-apionate + NAD(+) => 3-oxoisoapionate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57045 declares side 57044_L as its substrates
+        (rh:substrates); the master reaction RHEA:57044 is undirected. This participant is CHEBI:57540
+        with coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-oxoisoapionate is a product released by RHEA:57044 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57045
+      snippet: D-apionate + NAD(+) => 3-oxoisoapionate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57045 declares side 57044_R as its products
+        (rh:products); the master reaction RHEA:57044 is undirected. This participant is CHEBI:141353
+        with coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADH is a product released by RHEA:57044 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57045
+      snippet: D-apionate + NAD(+) => 3-oxoisoapionate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57045 declares side 57044_R as its products
+        (rh:products); the master reaction RHEA:57044 is undirected. This participant is CHEBI:57945 with
+        coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:57044 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:57045
+      snippet: D-apionate + NAD(+) => 3-oxoisoapionate + NADH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:57045 declares side 57044_R as its products
+        (rh:products); the master reaction RHEA:57044 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:29867142 for this reaction.
+  - subject: prot_C0CMQ7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APNO_BLAHS is an exemplar enzyme with EC 1.1.1.421 activity.
+    evidence:
+    - reference: EC:1.1.1.421
+      snippet: DR   C0CMQ7, APNO_BLAHS ;  F8GV06, APNO_CUPNN ;  Q6D8V3, APNO_PECAS ;
+      notes: ExPASy ENZYME entry EC 1.1.1.421 cross-references UniProtKB:C0CMQ7 (APNO_BLAHS) as a protein
+        with this activity.
+  - subject: prot_F8GV06
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APNO_CUPNN is an exemplar enzyme with EC 1.1.1.421 activity.
+    evidence:
+    - reference: EC:1.1.1.421
+      snippet: DR   C0CMQ7, APNO_BLAHS ;  F8GV06, APNO_CUPNN ;  Q6D8V3, APNO_PECAS ;
+      notes: ExPASy ENZYME entry EC 1.1.1.421 cross-references UniProtKB:F8GV06 (APNO_CUPNN) as a protein
+        with this activity.
+  - subject: prot_Q6D8V3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APNO_PECAS is an exemplar enzyme with EC 1.1.1.421 activity.
+    evidence:
+    - reference: EC:1.1.1.421
+      snippet: DR   C0CMQ7, APNO_BLAHS ;  F8GV06, APNO_CUPNN ;  Q6D8V3, APNO_PECAS ;
+      notes: ExPASy ENZYME entry EC 1.1.1.421 cross-references UniProtKB:Q6D8V3 (APNO_PECAS) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

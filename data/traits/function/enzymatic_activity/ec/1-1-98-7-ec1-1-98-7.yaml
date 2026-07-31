@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.1.98.-
 mapped_xrefs:
@@ -36,4 +36,205 @@ definitions:
       Catalyses: L-seryl-[sulfatase] + S-adenosyl-L-methionine = 3-oxo-L-alanyl- [sulfatase] + 5'-deoxyadenosine + L-methionine + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of serine-type anaerobic sulfatase-maturating enzyme
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.1.98.7. EC 1.1.98.7 maps to exactly
+    one curated Rhea reaction (RHEA:17609), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-seryl-[sulfatase]
+    + S-adenosyl-L-methionine = 3-oxo-L-alanyl- [sulfatase] + 5''-deoxyadenosine + L-methionine + H(+)".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: serine-type anaerobic sulfatase-maturating enzyme
+    grounding: EC:1.1.98.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-seryl-[sulfatase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:15882
+    description: Rhea compound GENERIC:15882.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:15882 (L-seryl-[sulfatase]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29999
+  - node_id: sub2
+    label: S-adenosyl-L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:59789
+    description: Formula C15H23N6O5S.
+  - node_id: prd1
+    label: 3-oxo-L-alanyl-[sulfatase]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:12901
+    description: Rhea compound GENERIC:12901.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-3-oxoalanine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:12901 (3-oxo-L-alanyl-[sulfatase]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85621
+  - node_id: prd2
+    label: 5'-deoxyadenosine
+    node_type: CHEMICAL
+    grounding: CHEBI:17319
+    description: Formula C10H13N5O3.
+  - node_id: prd3
+    label: L-methionine
+    node_type: CHEMICAL
+    grounding: CHEBI:57844
+    description: Formula C5H11NO2S.
+  - node_id: prd4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_Q02550
+    node_type: PROTEIN
+    label: ANSME_BACTN
+    grounding: UniProtKB:Q02550
+  - node_id: prot_P20714
+    node_type: PROTEIN
+    label: ANSME_KLEAE
+    grounding: UniProtKB:P20714
+  - node_id: prot_Q9X758
+    node_type: PROTEIN
+    label: ANSME_KLEPN
+    grounding: UniProtKB:Q9X758
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-seryl-[sulfatase] is a substrate consumed by RHEA:17609 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17610
+      snippet: L-seryl-[sulfatase] + S-adenosyl-L-methionine => 3-oxo-L-alanyl-[sulfatase] + 5'-deoxyadenosine
+        + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17610 declares side 17609_L as its substrates
+        (rh:substrates); the master reaction RHEA:17609 is undirected. This participant is GENERIC:15882
+        with coefficient 1. Rhea cites PMID:14749327, PMID:18558715, PMID:10336424 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-serine residue is the reactive part of L-seryl-[sulfatase].
+    evidence:
+    - reference: RHEA:17609
+      snippet: L-serine residue
+      notes: Rhea compound GENERIC:15882 (L-seryl-[sulfatase]) declares rh:reactivePart = L-serine residue
+        (CHEBI:29999).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: S-adenosyl-L-methionine is a substrate consumed by RHEA:17609 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17610
+      snippet: L-seryl-[sulfatase] + S-adenosyl-L-methionine => 3-oxo-L-alanyl-[sulfatase] + 5'-deoxyadenosine
+        + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17610 declares side 17609_L as its substrates
+        (rh:substrates); the master reaction RHEA:17609 is undirected. This participant is CHEBI:59789
+        with coefficient 1. Rhea cites PMID:14749327, PMID:18558715, PMID:10336424 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-oxo-L-alanyl-[sulfatase] is a product released by RHEA:17609 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17610
+      snippet: L-seryl-[sulfatase] + S-adenosyl-L-methionine => 3-oxo-L-alanyl-[sulfatase] + 5'-deoxyadenosine
+        + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17610 declares side 17609_R as its products
+        (rh:products); the master reaction RHEA:17609 is undirected. This participant is GENERIC:12901
+        with coefficient 1. Rhea cites PMID:14749327, PMID:18558715, PMID:10336424 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-3-oxoalanine residue is the reactive part of 3-oxo-L-alanyl-[sulfatase].
+    evidence:
+    - reference: RHEA:17609
+      snippet: L-3-oxoalanine residue
+      notes: Rhea compound GENERIC:12901 (3-oxo-L-alanyl-[sulfatase]) declares rh:reactivePart = L-3-oxoalanine
+        residue (CHEBI:85621).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: 5'-deoxyadenosine is a product released by RHEA:17609 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17610
+      snippet: L-seryl-[sulfatase] + S-adenosyl-L-methionine => 3-oxo-L-alanyl-[sulfatase] + 5'-deoxyadenosine
+        + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17610 declares side 17609_R as its products
+        (rh:products); the master reaction RHEA:17609 is undirected. This participant is CHEBI:17319 with
+        coefficient 1. Rhea cites PMID:14749327, PMID:18558715, PMID:10336424 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: L-methionine is a product released by RHEA:17609 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17610
+      snippet: L-seryl-[sulfatase] + S-adenosyl-L-methionine => 3-oxo-L-alanyl-[sulfatase] + 5'-deoxyadenosine
+        + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17610 declares side 17609_R as its products
+        (rh:products); the master reaction RHEA:17609 is undirected. This participant is CHEBI:57844 with
+        coefficient 1. Rhea cites PMID:14749327, PMID:18558715, PMID:10336424 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd4
+    description: H(+) is a product released by RHEA:17609 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17610
+      snippet: L-seryl-[sulfatase] + S-adenosyl-L-methionine => 3-oxo-L-alanyl-[sulfatase] + 5'-deoxyadenosine
+        + L-methionine + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:17610 declares side 17609_R as its products
+        (rh:products); the master reaction RHEA:17609 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:14749327, PMID:18558715, PMID:10336424 for this reaction.
+  - subject: prot_Q02550
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ANSME_BACTN is an exemplar enzyme with EC 1.1.98.7 activity.
+    evidence:
+    - reference: EC:1.1.98.7
+      snippet: DR   Q02550, ANSME_BACTN;  P20714, ANSME_KLEAE;  Q9X758, ANSME_KLEPN;
+      notes: ExPASy ENZYME entry EC 1.1.98.7 cross-references UniProtKB:Q02550 (ANSME_BACTN) as a protein
+        with this activity.
+  - subject: prot_P20714
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ANSME_KLEAE is an exemplar enzyme with EC 1.1.98.7 activity.
+    evidence:
+    - reference: EC:1.1.98.7
+      snippet: DR   Q02550, ANSME_BACTN;  P20714, ANSME_KLEAE;  Q9X758, ANSME_KLEPN;
+      notes: ExPASy ENZYME entry EC 1.1.98.7 cross-references UniProtKB:P20714 (ANSME_KLEAE) as a protein
+        with this activity.
+  - subject: prot_Q9X758
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ANSME_KLEPN is an exemplar enzyme with EC 1.1.98.7 activity.
+    evidence:
+    - reference: EC:1.1.98.7
+      snippet: DR   Q02550, ANSME_BACTN;  P20714, ANSME_KLEAE;  Q9X758, ANSME_KLEPN;
+      notes: ExPASy ENZYME entry EC 1.1.98.7 cross-references UniProtKB:Q9X758 (ANSME_KLEPN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

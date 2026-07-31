@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.5.-
 mapped_xrefs:
@@ -28,4 +28,119 @@ definitions:
       Catalyses: a quinone + sulfite + H2O = a quinol + sulfate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of sulfite dehydrogenase (quinone)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.5.6. EC 1.8.5.6 maps to exactly
+    one curated Rhea reaction (RHEA:50760), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a quinone + sulfite
+    + H2O = a quinol + sulfate". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: sulfite dehydrogenase (quinone)
+    grounding: EC:1.8.5.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: sub2
+    label: sulfite
+    node_type: CHEMICAL
+    grounding: CHEBI:17359
+    description: Formula O3S.
+  - node_id: sub3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  - node_id: prd2
+    label: sulfate
+    node_type: CHEMICAL
+    grounding: CHEBI:16189
+    description: Formula O4S.
+  - node_id: prot_D3RNN8
+    node_type: PROTEIN
+    label: SOEA_ALLVD
+    grounding: UniProtKB:D3RNN8
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a quinone is a substrate consumed by RHEA:50760 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50761
+      snippet: a quinone + sulfite + H2O => a quinol + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:50761 declares side 50760_L as its substrates
+        (rh:substrates); the master reaction RHEA:50760 is undirected. This participant is CHEBI:132124
+        with coefficient 1. Rhea cites PMID:24030319 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sulfite is a substrate consumed by RHEA:50760 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50761
+      snippet: a quinone + sulfite + H2O => a quinol + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:50761 declares side 50760_L as its substrates
+        (rh:substrates); the master reaction RHEA:50760 is undirected. This participant is CHEBI:17359
+        with coefficient 1. Rhea cites PMID:24030319 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: H2O is a substrate consumed by RHEA:50760 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50761
+      snippet: a quinone + sulfite + H2O => a quinol + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:50761 declares side 50760_L as its substrates
+        (rh:substrates); the master reaction RHEA:50760 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:24030319 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a quinol is a product released by RHEA:50760 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50761
+      snippet: a quinone + sulfite + H2O => a quinol + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:50761 declares side 50760_R as its products
+        (rh:products); the master reaction RHEA:50760 is undirected. This participant is CHEBI:24646 with
+        coefficient 1. Rhea cites PMID:24030319 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: sulfate is a product released by RHEA:50760 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:50761
+      snippet: a quinone + sulfite + H2O => a quinol + sulfate
+      notes: Rhea's left-to-right directional reaction RHEA:50761 declares side 50760_R as its products
+        (rh:products); the master reaction RHEA:50760 is undirected. This participant is CHEBI:16189 with
+        coefficient 1. Rhea cites PMID:24030319 for this reaction.
+  - subject: prot_D3RNN8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SOEA_ALLVD is an exemplar enzyme with EC 1.8.5.6 activity.
+    evidence:
+    - reference: EC:1.8.5.6
+      snippet: DR   D3RNN8, SOEA_ALLVD ;
+      notes: ExPASy ENZYME entry EC 1.8.5.6 cross-references UniProtKB:D3RNN8 (SOEA_ALLVD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

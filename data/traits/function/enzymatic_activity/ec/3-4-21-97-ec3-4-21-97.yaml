@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.21.-
 canonical_examples:
@@ -33,4 +33,66 @@ definitions:
       Catalyses: Cleaves -Ala-|-Ser- and -Ala-|-Ala- bonds in the scaffold protein
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of assemblin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.21.97. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleaves
+    -Ala-|-Ser- and -Ala-|-Ala- bonds in the scaffold protein".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: assemblin
+    grounding: EC:3.4.21.97
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_O36367
+    node_type: PROTEIN
+    label: SCAF_ALHV1
+    grounding: UniProtKB:O36367
+  - node_id: prot_P54817
+    node_type: PROTEIN
+    label: SCAF_BHV1C
+    grounding: UniProtKB:P54817
+  - node_id: prot_Q1HVC7
+    node_type: PROTEIN
+    label: SCAF_EBVA8
+    grounding: UniProtKB:Q1HVC7
+  edges:
+  - subject: prot_O36367
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SCAF_ALHV1 is an exemplar enzyme with EC 3.4.21.97 activity.
+    evidence:
+    - reference: EC:3.4.21.97
+      snippet: DR   O36367, SCAF_ALHV1 ;  P54817, SCAF_BHV1C ;  Q1HVC7, SCAF_EBVA8 ;
+      notes: ExPASy ENZYME entry EC 3.4.21.97 cross-references UniProtKB:O36367 (SCAF_ALHV1) as a protein
+        with this activity.
+  - subject: prot_P54817
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SCAF_BHV1C is an exemplar enzyme with EC 3.4.21.97 activity.
+    evidence:
+    - reference: EC:3.4.21.97
+      snippet: DR   O36367, SCAF_ALHV1 ;  P54817, SCAF_BHV1C ;  Q1HVC7, SCAF_EBVA8 ;
+      notes: ExPASy ENZYME entry EC 3.4.21.97 cross-references UniProtKB:P54817 (SCAF_BHV1C) as a protein
+        with this activity.
+  - subject: prot_Q1HVC7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SCAF_EBVA8 is an exemplar enzyme with EC 3.4.21.97 activity.
+    evidence:
+    - reference: EC:3.4.21.97
+      snippet: DR   O36367, SCAF_ALHV1 ;  P54817, SCAF_BHV1C ;  Q1HVC7, SCAF_EBVA8 ;
+      notes: ExPASy ENZYME entry EC 3.4.21.97 cross-references UniProtKB:Q1HVC7 (SCAF_EBVA8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.6.1.-
 synonyms:
@@ -45,4 +45,130 @@ definitions:
       Catalyses: CTP = 3',5'-cyclic CMP + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cytidylate cyclase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.6.1.6. EC 4.6.1.6 maps to exactly
+    one curated Rhea reaction (RHEA:14737), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "CTP = 3'',5''-cyclic
+    CMP + diphosphate". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: cytidylate cyclase
+    grounding: EC:4.6.1.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: CTP
+    node_type: CHEMICAL
+    grounding: CHEBI:37563
+    description: Formula C9H12N3O14P3.
+  - node_id: prd1
+    label: 3',5'-cyclic CMP
+    node_type: CHEMICAL
+    grounding: CHEBI:58003
+    description: Formula C9H11N3O7P.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cytidylate cyclase activity
+    grounding: GO:0047805
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0DV24
+    node_type: PROTEIN
+    label: PYCC1_ECOLX
+    grounding: UniProtKB:P0DV24
+  - node_id: prot_P0DV26
+    node_type: PROTEIN
+    label: PYCC2_ECOLX
+    grounding: UniProtKB:P0DV26
+  - node_id: prot_P0DV38
+    node_type: PROTEIN
+    label: PYCC_STAAU
+    grounding: UniProtKB:P0DV38
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: CTP is a substrate consumed by RHEA:14737 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14738
+      snippet: CTP => 3',5'-cyclic CMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14738 declares side 14737_L as its substrates
+        (rh:substrates); the master reaction RHEA:14737 is undirected. This participant is CHEBI:37563
+        with coefficient 1. Rhea cites PMID:34644530, PMID:20521845, PMID:23778 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3',5'-cyclic CMP is a product released by RHEA:14737 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14738
+      snippet: CTP => 3',5'-cyclic CMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14738 declares side 14737_R as its products
+        (rh:products); the master reaction RHEA:14737 is undirected. This participant is CHEBI:58003 with
+        coefficient 1. Rhea cites PMID:34644530, PMID:20521845, PMID:23778 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:14737 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:14738
+      snippet: CTP => 3',5'-cyclic CMP + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:14738 declares side 14737_R as its products
+        (rh:products); the master reaction RHEA:14737 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:34644530, PMID:20521845, PMID:23778 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.6.1.6
+      snippet: EC:4.6.1.6 > GO:cytidylate cyclase activity ; GO:0047805
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047805 is itself a record
+        in this KB.
+  - subject: prot_P0DV24
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYCC1_ECOLX is an exemplar enzyme with EC 4.6.1.6 activity.
+    evidence:
+    - reference: EC:4.6.1.6
+      snippet: DR   P0DV24, PYCC1_ECOLX;  P0DV26, PYCC2_ECOLX;  P0DV38, PYCC_STAAU ;
+      notes: ExPASy ENZYME entry EC 4.6.1.6 cross-references UniProtKB:P0DV24 (PYCC1_ECOLX) as a protein
+        with this activity.
+  - subject: prot_P0DV26
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYCC2_ECOLX is an exemplar enzyme with EC 4.6.1.6 activity.
+    evidence:
+    - reference: EC:4.6.1.6
+      snippet: DR   P0DV24, PYCC1_ECOLX;  P0DV26, PYCC2_ECOLX;  P0DV38, PYCC_STAAU ;
+      notes: ExPASy ENZYME entry EC 4.6.1.6 cross-references UniProtKB:P0DV26 (PYCC2_ECOLX) as a protein
+        with this activity.
+  - subject: prot_P0DV38
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PYCC_STAAU is an exemplar enzyme with EC 4.6.1.6 activity.
+    evidence:
+    - reference: EC:4.6.1.6
+      snippet: DR   P0DV24, PYCC1_ECOLX;  P0DV26, PYCC2_ECOLX;  P0DV38, PYCC_STAAU ;
+      notes: ExPASy ENZYME entry EC 4.6.1.6 cross-references UniProtKB:P0DV38 (PYCC_STAAU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

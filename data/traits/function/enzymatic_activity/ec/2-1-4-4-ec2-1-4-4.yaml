@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.1.4.-
 mapped_xrefs:
@@ -38,4 +38,282 @@ definitions:
       Catalyses: L-valine + L-arginine = N-amidino-L-valine + L-ornithine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of valine amidinotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.1.4.4. Rhea assigns 6 curated
+    reactions to EC 2.1.4.4 (the first 3 are shown). No one substrate set is the class''s chemistry, so
+    each reaction is its own node — grounded to the Rhea record in this KB — and carries its own inputs
+    and outputs. ExPASy ENZYME states the catalysed reaction as: "L-valine + L-arginine = N-amidino-L-valine
+    + L-ornithine". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: valine amidinotransferase
+    grounding: EC:2.1.4.4
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-valine + L-arginine = N-amidino-L-valine + L-ornithine
+    grounding: RHEA:82195
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-valine + L-arginine = N-amidino-L-valine + L-ornithine'
+  - node_id: rxn1_sub1
+    label: L-valine
+    node_type: CHEMICAL
+    grounding: CHEBI:57762
+    description: Formula C5H11NO2.
+  - node_id: rxn1_sub2
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: rxn1_prd1
+    label: N-amidino-L-valine
+    node_type: CHEMICAL
+    grounding: CHEBI:232085
+    description: Formula C6H13N3O2.
+  - node_id: rxn1_prd2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-cysteine + L-arginine = N-amidino-L-cysteine + L-ornithine
+    grounding: RHEA:82219
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-cysteine + L-arginine = N-amidino-L-cysteine + L-ornithine'
+  - node_id: rxn2_sub1
+    label: L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:35235
+    description: Formula C3H7NO2S.
+  - node_id: rxn2_sub2
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: rxn2_prd1
+    label: N-amidino-L-cysteine
+    node_type: CHEMICAL
+    grounding: CHEBI:232115
+    description: Formula C4H9N3O2S.
+  - node_id: rxn2_prd2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-isoleucine + L-arginine = N-amidino-L-isoleucine + L-ornithine
+    grounding: RHEA:82223
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-isoleucine + L-arginine = N-amidino-L-isoleucine + L-ornithine'
+  - node_id: rxn3_sub1
+    label: L-isoleucine
+    node_type: CHEMICAL
+    grounding: CHEBI:58045
+    description: Formula C6H13NO2.
+  - node_id: rxn3_sub2
+    label: L-arginine
+    node_type: CHEMICAL
+    grounding: CHEBI:32682
+    description: Formula C6H15N4O2.
+  - node_id: rxn3_prd1
+    label: N-amidino-L-isoleucine
+    node_type: CHEMICAL
+    grounding: CHEBI:232116
+    description: Formula C7H15N3O2.
+  - node_id: rxn3_prd2
+    label: L-ornithine
+    node_type: CHEMICAL
+    grounding: CHEBI:46911
+    description: Formula C5H13N2O2.
+  - node_id: prot_A4X5N0
+    node_type: PROTEIN
+    label: AMDT_SALTO
+    grounding: UniProtKB:A4X5N0
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:82195 is one of the 6 curated reactions Rhea assigns to EC 2.1.4.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:82195
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.4.4"/>
+      notes: The rh:ec triple on RHEA:82195 in rhea.rdf assigns that reaction to EC 2.1.4.4.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: L-valine is a substrate consumed by RHEA:82195 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82196
+      snippet: L-valine + L-arginine => N-amidino-L-valine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82196 declares side 82195_L as its substrates
+        (rh:substrates); the master reaction RHEA:82195 is undirected. This participant is CHEBI:57762
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: L-arginine is a substrate consumed by RHEA:82195 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82196
+      snippet: L-valine + L-arginine => N-amidino-L-valine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82196 declares side 82195_L as its substrates
+        (rh:substrates); the master reaction RHEA:82195 is undirected. This participant is CHEBI:32682
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: N-amidino-L-valine is a product released by RHEA:82195 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82196
+      snippet: L-valine + L-arginine => N-amidino-L-valine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82196 declares side 82195_R as its products
+        (rh:products); the master reaction RHEA:82195 is undirected. This participant is CHEBI:232085
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: L-ornithine is a product released by RHEA:82195 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82196
+      snippet: L-valine + L-arginine => N-amidino-L-valine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82196 declares side 82195_R as its products
+        (rh:products); the master reaction RHEA:82195 is undirected. This participant is CHEBI:46911 with
+        coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:82219 is one of the 6 curated reactions Rhea assigns to EC 2.1.4.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:82219
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.4.4"/>
+      notes: The rh:ec triple on RHEA:82219 in rhea.rdf assigns that reaction to EC 2.1.4.4.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: L-cysteine is a substrate consumed by RHEA:82219 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82220
+      snippet: L-cysteine + L-arginine => N-amidino-L-cysteine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82220 declares side 82219_L as its substrates
+        (rh:substrates); the master reaction RHEA:82219 is undirected. This participant is CHEBI:35235
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: L-arginine is a substrate consumed by RHEA:82219 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82220
+      snippet: L-cysteine + L-arginine => N-amidino-L-cysteine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82220 declares side 82219_L as its substrates
+        (rh:substrates); the master reaction RHEA:82219 is undirected. This participant is CHEBI:32682
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: N-amidino-L-cysteine is a product released by RHEA:82219 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82220
+      snippet: L-cysteine + L-arginine => N-amidino-L-cysteine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82220 declares side 82219_R as its products
+        (rh:products); the master reaction RHEA:82219 is undirected. This participant is CHEBI:232115
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: L-ornithine is a product released by RHEA:82219 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82220
+      snippet: L-cysteine + L-arginine => N-amidino-L-cysteine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82220 declares side 82219_R as its products
+        (rh:products); the master reaction RHEA:82219 is undirected. This participant is CHEBI:46911 with
+        coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:82223 is one of the 6 curated reactions Rhea assigns to EC 2.1.4.4; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:82223
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.4.4"/>
+      notes: The rh:ec triple on RHEA:82223 in rhea.rdf assigns that reaction to EC 2.1.4.4.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: L-isoleucine is a substrate consumed by RHEA:82223 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82224
+      snippet: L-isoleucine + L-arginine => N-amidino-L-isoleucine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82224 declares side 82223_L as its substrates
+        (rh:substrates); the master reaction RHEA:82223 is undirected. This participant is CHEBI:58045
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: L-arginine is a substrate consumed by RHEA:82223 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82224
+      snippet: L-isoleucine + L-arginine => N-amidino-L-isoleucine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82224 declares side 82223_L as its substrates
+        (rh:substrates); the master reaction RHEA:82223 is undirected. This participant is CHEBI:32682
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: N-amidino-L-isoleucine is a product released by RHEA:82223 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:82224
+      snippet: L-isoleucine + L-arginine => N-amidino-L-isoleucine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82224 declares side 82223_R as its products
+        (rh:products); the master reaction RHEA:82223 is undirected. This participant is CHEBI:232116
+        with coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: L-ornithine is a product released by RHEA:82223 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:82224
+      snippet: L-isoleucine + L-arginine => N-amidino-L-isoleucine + L-ornithine
+      notes: Rhea's left-to-right directional reaction RHEA:82224 declares side 82223_R as its products
+        (rh:products); the master reaction RHEA:82223 is undirected. This participant is CHEBI:46911 with
+        coefficient 1. Rhea cites PMID:27289319 for this reaction.
+  - subject: prot_A4X5N0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AMDT_SALTO is an exemplar enzyme with EC 2.1.4.4 activity.
+    evidence:
+    - reference: EC:2.1.4.4
+      snippet: DR   A4X5N0, AMDT_SALTO ;
+      notes: ExPASy ENZYME entry EC 2.1.4.4 cross-references UniProtKB:A4X5N0 (AMDT_SALTO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (16 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

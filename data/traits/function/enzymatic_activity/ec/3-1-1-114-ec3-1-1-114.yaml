@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.1.1.-
 mapped_xrefs:
@@ -28,4 +28,119 @@ definitions:
       Catalyses: methyl acetate + H2O = methanol + acetate + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of methyl acetate hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.1.1.114. EC 3.1.1.114 maps to
+    exactly one curated Rhea reaction (RHEA:60440), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "methyl
+    acetate + H2O = methanol + acetate + H(+)". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: methyl acetate hydrolase
+    grounding: EC:3.1.1.114
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: methyl acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:77700
+    description: Formula C3H6O2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: methanol
+    node_type: CHEMICAL
+    grounding: CHEBI:17790
+    description: Formula CH4O.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prot_A1IHE7
+    node_type: PROTEIN
+    label: ACMB_GORST
+    grounding: UniProtKB:A1IHE7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: methyl acetate is a substrate consumed by RHEA:60440 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60441
+      snippet: methyl acetate + H2O => methanol + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:60441 declares side 60440_L as its substrates
+        (rh:substrates); the master reaction RHEA:60440 is undirected. This participant is CHEBI:77700
+        with coefficient 1. Rhea cites PMID:17071761 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:60440 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60441
+      snippet: methyl acetate + H2O => methanol + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:60441 declares side 60440_L as its substrates
+        (rh:substrates); the master reaction RHEA:60440 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:17071761 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: methanol is a product released by RHEA:60440 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60441
+      snippet: methyl acetate + H2O => methanol + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:60441 declares side 60440_R as its products
+        (rh:products); the master reaction RHEA:60440 is undirected. This participant is CHEBI:17790 with
+        coefficient 1. Rhea cites PMID:17071761 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by RHEA:60440 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60441
+      snippet: methyl acetate + H2O => methanol + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:60441 declares side 60440_R as its products
+        (rh:products); the master reaction RHEA:60440 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:17071761 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:60440 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:60441
+      snippet: methyl acetate + H2O => methanol + acetate + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:60441 declares side 60440_R as its products
+        (rh:products); the master reaction RHEA:60440 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:17071761 for this reaction.
+  - subject: prot_A1IHE7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACMB_GORST is an exemplar enzyme with EC 3.1.1.114 activity.
+    evidence:
+    - reference: EC:3.1.1.114
+      snippet: DR   A1IHE7, ACMB_GORST ;
+      notes: ExPASy ENZYME entry EC 3.1.1.114 cross-references UniProtKB:A1IHE7 (ACMB_GORST) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

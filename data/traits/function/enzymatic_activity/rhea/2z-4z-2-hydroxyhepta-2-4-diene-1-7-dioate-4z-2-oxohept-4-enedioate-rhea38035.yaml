@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:87504
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,60 @@ definitions:
       Catalyses the reaction: (2Z,4Z)-2-hydroxyhepta-2,4-diene-1,7-dioate = (4Z)-2-oxohept-4-enedioate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2Z,4Z)-2-hydroxyhepta-2,4-diene-1,7-dioate = (4Z)-2-oxohept-4-enedioate
+  description: Substrate-to-product chemistry of RHEA:38035, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:38036 (rh:substrates → 38035_L, rh:products → 38035_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2Z,4Z)-2-hydroxyhepta-2,4-diene-1,7-dioate = (4Z)-2-oxohept-4-enedioate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:38035
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2Z,4Z)-2-hydroxyhepta-2,4-diene-1,7-dioate = (4Z)-2-oxohept-4-enedioate'
+  - node_id: sub1
+    label: (2Z,4Z)-2-hydroxyhepta-2,4-diene-1,7-dioate
+    node_type: CHEMICAL
+    grounding: CHEBI:87504
+    description: Formula C7H6O5.
+  - node_id: prd1
+    label: (4Z)-2-oxohept-4-enedioate
+    node_type: CHEMICAL
+    grounding: CHEBI:87507
+    description: Formula C7H6O5.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2Z,4Z)-2-hydroxyhepta-2,4-diene-1,7-dioate is a substrate consumed by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:38036
+      snippet: (2Z,4Z)-2-hydroxyhepta-2,4-diene-1,7-dioate => (4Z)-2-oxohept-4-enedioate
+      notes: Rhea's left-to-right directional reaction RHEA:38036 declares side 38035_L as its substrates
+        (rh:substrates); the master reaction RHEA:38035 is undirected. This participant is CHEBI:87504
+        with coefficient 1. Rhea cites PMID:7026235 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (4Z)-2-oxohept-4-enedioate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:38036
+      snippet: (2Z,4Z)-2-hydroxyhepta-2,4-diene-1,7-dioate => (4Z)-2-oxohept-4-enedioate
+      notes: Rhea's left-to-right directional reaction RHEA:38036 declares side 38035_R as its products
+        (rh:products); the master reaction RHEA:38035 is undirected. This participant is CHEBI:87507 with
+        coefficient 1. Rhea cites PMID:7026235 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

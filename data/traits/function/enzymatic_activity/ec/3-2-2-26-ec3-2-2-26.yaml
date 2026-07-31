@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 synonyms:
@@ -39,4 +39,132 @@ definitions:
       Catalyses: futalosine + H2O = dehypoxanthine futalosine + hypoxanthine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of futalosine hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.26. EC 3.2.2.26 maps to exactly
+    one curated Rhea reaction (RHEA:25904), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "futalosine +
+    H2O = dehypoxanthine futalosine + hypoxanthine". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: futalosine hydrolase
+    grounding: EC:3.2.2.26
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: futalosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58863
+    description: Formula C19H17N4O7.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: dehypoxanthine futalosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58864
+    description: Formula C14H15O7.
+  - node_id: prd2
+    label: hypoxanthine
+    node_type: CHEMICAL
+    grounding: CHEBI:17368
+    description: Formula C5H4N4O.
+  - node_id: prot_A0LR22
+    node_type: PROTEIN
+    label: MQNB_ACIC1
+    grounding: UniProtKB:A0LR22
+  - node_id: prot_Q9KXN0
+    node_type: PROTEIN
+    label: MQNB_STRCO
+    grounding: UniProtKB:Q9KXN0
+  - node_id: prot_Q5SKT7
+    node_type: PROTEIN
+    label: MQNB_THET8
+    grounding: UniProtKB:Q5SKT7
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: futalosine is a substrate consumed by RHEA:25904 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25905
+      snippet: futalosine + H2O => dehypoxanthine futalosine + hypoxanthine
+      notes: Rhea's left-to-right directional reaction RHEA:25905 declares side 25904_L as its substrates
+        (rh:substrates); the master reaction RHEA:25904 is undirected. This participant is CHEBI:58863
+        with coefficient 1. Rhea cites PMID:18801996 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:25904 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25905
+      snippet: futalosine + H2O => dehypoxanthine futalosine + hypoxanthine
+      notes: Rhea's left-to-right directional reaction RHEA:25905 declares side 25904_L as its substrates
+        (rh:substrates); the master reaction RHEA:25904 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:18801996 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dehypoxanthine futalosine is a product released by RHEA:25904 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25905
+      snippet: futalosine + H2O => dehypoxanthine futalosine + hypoxanthine
+      notes: Rhea's left-to-right directional reaction RHEA:25905 declares side 25904_R as its products
+        (rh:products); the master reaction RHEA:25904 is undirected. This participant is CHEBI:58864 with
+        coefficient 1. Rhea cites PMID:18801996 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: hypoxanthine is a product released by RHEA:25904 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25905
+      snippet: futalosine + H2O => dehypoxanthine futalosine + hypoxanthine
+      notes: Rhea's left-to-right directional reaction RHEA:25905 declares side 25904_R as its products
+        (rh:products); the master reaction RHEA:25904 is undirected. This participant is CHEBI:17368 with
+        coefficient 1. Rhea cites PMID:18801996 for this reaction.
+  - subject: prot_A0LR22
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MQNB_ACIC1 is an exemplar enzyme with EC 3.2.2.26 activity.
+    evidence:
+    - reference: EC:3.2.2.26
+      snippet: DR   A0LR22, MQNB_ACIC1 ;  Q9KXN0, MQNB_STRCO ;  Q5SKT7, MQNB_THET8 ;
+      notes: ExPASy ENZYME entry EC 3.2.2.26 cross-references UniProtKB:A0LR22 (MQNB_ACIC1) as a protein
+        with this activity.
+  - subject: prot_Q9KXN0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MQNB_STRCO is an exemplar enzyme with EC 3.2.2.26 activity.
+    evidence:
+    - reference: EC:3.2.2.26
+      snippet: DR   A0LR22, MQNB_ACIC1 ;  Q9KXN0, MQNB_STRCO ;  Q5SKT7, MQNB_THET8 ;
+      notes: ExPASy ENZYME entry EC 3.2.2.26 cross-references UniProtKB:Q9KXN0 (MQNB_STRCO) as a protein
+        with this activity.
+  - subject: prot_Q5SKT7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MQNB_THET8 is an exemplar enzyme with EC 3.2.2.26 activity.
+    evidence:
+    - reference: EC:3.2.2.26
+      snippet: DR   A0LR22, MQNB_ACIC1 ;  Q9KXN0, MQNB_STRCO ;  Q5SKT7, MQNB_THET8 ;
+      notes: ExPASy ENZYME entry EC 3.2.2.26 cross-references UniProtKB:Q5SKT7 (MQNB_THET8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

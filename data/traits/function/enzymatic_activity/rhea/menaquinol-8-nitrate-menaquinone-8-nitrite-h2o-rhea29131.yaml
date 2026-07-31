@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:61684
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,106 @@ definitions:
       Catalyses the reaction: menaquinol-8 + nitrate = menaquinone-8 + nitrite + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of menaquinol-8 + nitrate = menaquinone-8 + nitrite + H2O
+  description: Substrate-to-product chemistry of RHEA:29131, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:29132 (rh:substrates → 29131_L, rh:products → 29131_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of menaquinol-8 + nitrate = menaquinone-8 + nitrite + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:29131
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: menaquinol-8 + nitrate = menaquinone-8 + nitrite + H2O'
+  - node_id: sub1
+    label: menaquinol-8
+    node_type: CHEMICAL
+    grounding: CHEBI:61684
+    description: Formula C51H74O2.
+  - node_id: sub2
+    label: nitrate
+    node_type: CHEMICAL
+    grounding: CHEBI:17632
+    description: Formula NO3.
+  - node_id: prd1
+    label: menaquinone-8
+    node_type: CHEMICAL
+    grounding: CHEBI:44027
+    description: Formula C51H72O2.
+  - node_id: prd2
+    label: nitrite
+    node_type: CHEMICAL
+    grounding: CHEBI:16301
+    description: Formula NO2.
+  - node_id: prd3
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: menaquinol-8 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29132
+      snippet: menaquinol-8 + nitrate => menaquinone-8 + nitrite + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:29132 declares side 29131_L as its substrates
+        (rh:substrates); the master reaction RHEA:29131 is undirected. This participant is CHEBI:61684
+        with coefficient 1. Rhea cites PMID:14674886 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: nitrate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29132
+      snippet: menaquinol-8 + nitrate => menaquinone-8 + nitrite + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:29132 declares side 29131_L as its substrates
+        (rh:substrates); the master reaction RHEA:29131 is undirected. This participant is CHEBI:17632
+        with coefficient 1. Rhea cites PMID:14674886 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: menaquinone-8 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29132
+      snippet: menaquinol-8 + nitrate => menaquinone-8 + nitrite + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:29132 declares side 29131_R as its products
+        (rh:products); the master reaction RHEA:29131 is undirected. This participant is CHEBI:44027 with
+        coefficient 1. Rhea cites PMID:14674886 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: nitrite is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29132
+      snippet: menaquinol-8 + nitrate => menaquinone-8 + nitrite + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:29132 declares side 29131_R as its products
+        (rh:products); the master reaction RHEA:29131 is undirected. This participant is CHEBI:16301 with
+        coefficient 1. Rhea cites PMID:14674886 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:29132
+      snippet: menaquinol-8 + nitrate => menaquinone-8 + nitrite + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:29132 declares side 29131_R as its products
+        (rh:products); the master reaction RHEA:29131 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:14674886 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

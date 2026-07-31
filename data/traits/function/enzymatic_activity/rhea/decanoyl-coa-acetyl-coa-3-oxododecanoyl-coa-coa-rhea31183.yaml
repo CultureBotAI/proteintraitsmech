@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:61430
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,91 @@ definitions:
       Catalyses the reaction: decanoyl-CoA + acetyl-CoA = 3-oxododecanoyl-CoA + CoA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of decanoyl-CoA + acetyl-CoA = 3-oxododecanoyl-CoA + CoA
+  description: Substrate-to-product chemistry of RHEA:31183, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:31184 (rh:substrates → 31183_L, rh:products → 31183_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of decanoyl-CoA + acetyl-CoA = 3-oxododecanoyl-CoA + CoA
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:31183
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: decanoyl-CoA + acetyl-CoA = 3-oxododecanoyl-CoA + CoA'
+  - node_id: sub1
+    label: decanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:61430
+    description: Formula C31H50N7O17P3S.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: 3-oxododecanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:62615
+    description: Formula C33H52N7O18P3S.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: decanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31184
+      snippet: decanoyl-CoA + acetyl-CoA => 3-oxododecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:31184 declares side 31183_L as its substrates
+        (rh:substrates); the master reaction RHEA:31183 is undirected. This participant is CHEBI:61430
+        with coefficient 1. Rhea cites PMID:8163672, PMID:9325339 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31184
+      snippet: decanoyl-CoA + acetyl-CoA => 3-oxododecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:31184 declares side 31183_L as its substrates
+        (rh:substrates); the master reaction RHEA:31183 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:8163672, PMID:9325339 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-oxododecanoyl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31184
+      snippet: decanoyl-CoA + acetyl-CoA => 3-oxododecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:31184 declares side 31183_R as its products
+        (rh:products); the master reaction RHEA:31183 is undirected. This participant is CHEBI:62615 with
+        coefficient 1. Rhea cites PMID:8163672, PMID:9325339 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31184
+      snippet: decanoyl-CoA + acetyl-CoA => 3-oxododecanoyl-CoA + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:31184 declares side 31183_R as its products
+        (rh:products); the master reaction RHEA:31183 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:8163672, PMID:9325339 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

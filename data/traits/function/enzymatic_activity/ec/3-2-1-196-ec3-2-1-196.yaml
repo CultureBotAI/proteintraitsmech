@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.1.-
 synonyms:
@@ -39,4 +39,82 @@ definitions:
       Catalyses: Hydrolysis of (1->6)-alpha-D-glucosidic linkages to branches with degrees of polymerization of three or four glucose residues in limit dextrin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of limit dextrin alpha-1,6-maltotetraose-hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.1.196. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of (1->6)-alpha-D-glucosidic linkages to branches with degrees of polymerization of three or four
+    glucose residues in limit dextrin".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: limit dextrin alpha-1,6-maltotetraose-hydrolase
+    grounding: EC:3.2.1.196
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: limit dextrin alpha-1,6-maltotetraose-hydrolase activity
+    grounding: GO:0120549
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A8AQY2
+    node_type: PROTEIN
+    label: GLGX_CITK8
+    grounding: UniProtKB:A8AQY2
+  - node_id: prot_A7MGF3
+    node_type: PROTEIN
+    label: GLGX_CROS8
+    grounding: UniProtKB:A7MGF3
+  - node_id: prot_Q8KR69
+    node_type: PROTEIN
+    label: GLGX_DICCH
+    grounding: UniProtKB:Q8KR69
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.1.196
+      snippet: EC:3.2.1.196 > GO:limit dextrin alpha-1,6-maltotetraose-hydrolase activity ; GO:0120549
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0120549 is itself a record
+        in this KB.
+  - subject: prot_A8AQY2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLGX_CITK8 is an exemplar enzyme with EC 3.2.1.196 activity.
+    evidence:
+    - reference: EC:3.2.1.196
+      snippet: DR   A8AQY2, GLGX_CITK8 ;  A7MGF3, GLGX_CROS8 ;  Q8KR69, GLGX_DICCH ;
+      notes: ExPASy ENZYME entry EC 3.2.1.196 cross-references UniProtKB:A8AQY2 (GLGX_CITK8) as a protein
+        with this activity.
+  - subject: prot_A7MGF3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLGX_CROS8 is an exemplar enzyme with EC 3.2.1.196 activity.
+    evidence:
+    - reference: EC:3.2.1.196
+      snippet: DR   A8AQY2, GLGX_CITK8 ;  A7MGF3, GLGX_CROS8 ;  Q8KR69, GLGX_DICCH ;
+      notes: ExPASy ENZYME entry EC 3.2.1.196 cross-references UniProtKB:A7MGF3 (GLGX_CROS8) as a protein
+        with this activity.
+  - subject: prot_Q8KR69
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLGX_DICCH is an exemplar enzyme with EC 3.2.1.196 activity.
+    evidence:
+    - reference: EC:3.2.1.196
+      snippet: DR   A8AQY2, GLGX_CITK8 ;  A7MGF3, GLGX_CROS8 ;  Q8KR69, GLGX_DICCH ;
+      notes: ExPASy ENZYME entry EC 3.2.1.196 cross-references UniProtKB:Q8KR69 (GLGX_DICCH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.2.2.-
 synonyms:
@@ -41,4 +41,81 @@ definitions:
       Catalyses: Hydrolysis of alkylated DNA, releasing 3-methyladenine, 3-methylguanine, 7-methylguanine and 7-methyladenine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of DNA-3-methyladenine glycosylase II
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.2.2.21. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Hydrolysis
+    of alkylated DNA, releasing 3-methyladenine, 3-methylguanine, 7-methylguanine and 7-methyladenine".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: DNA-3-methyladenine glycosylase II
+    grounding: EC:3.2.2.21
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: alkylbase DNA N-glycosylase activity
+    grounding: GO:0003905
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P04395
+    node_type: PROTEIN
+    label: 3MG2_ECOLI
+    grounding: UniProtKB:P04395
+  - node_id: prot_P37878
+    node_type: PROTEIN
+    label: 3MGA_BACSU
+    grounding: UniProtKB:P37878
+  - node_id: prot_Q39147
+    node_type: PROTEIN
+    label: 3MG_ARATH
+    grounding: UniProtKB:Q39147
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.2.2.21
+      snippet: EC:3.2.2.21 > GO:alkylbase DNA N-glycosylase activity ; GO:0003905
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003905 is itself a record
+        in this KB.
+  - subject: prot_P04395
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3MG2_ECOLI is an exemplar enzyme with EC 3.2.2.21 activity.
+    evidence:
+    - reference: EC:3.2.2.21
+      snippet: DR   P04395, 3MG2_ECOLI ;  P37878, 3MGA_BACSU ;  Q39147, 3MG_ARATH  ;
+      notes: ExPASy ENZYME entry EC 3.2.2.21 cross-references UniProtKB:P04395 (3MG2_ECOLI) as a protein
+        with this activity.
+  - subject: prot_P37878
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3MGA_BACSU is an exemplar enzyme with EC 3.2.2.21 activity.
+    evidence:
+    - reference: EC:3.2.2.21
+      snippet: DR   P04395, 3MG2_ECOLI ;  P37878, 3MGA_BACSU ;  Q39147, 3MG_ARATH  ;
+      notes: ExPASy ENZYME entry EC 3.2.2.21 cross-references UniProtKB:P37878 (3MGA_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q39147
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: 3MG_ARATH is an exemplar enzyme with EC 3.2.2.21 activity.
+    evidence:
+    - reference: EC:3.2.2.21
+      snippet: DR   P04395, 3MG2_ECOLI ;  P37878, 3MGA_BACSU ;  Q39147, 3MG_ARATH  ;
+      notes: ExPASy ENZYME entry EC 3.2.2.21 cross-references UniProtKB:Q39147 (3MG_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

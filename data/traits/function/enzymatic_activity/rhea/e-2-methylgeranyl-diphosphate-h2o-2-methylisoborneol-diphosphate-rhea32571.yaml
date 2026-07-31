@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.118
     mapping_source: rhea2ec
@@ -32,4 +32,167 @@ definitions:
       Catalyses the reaction: (E)-2-methylgeranyl diphosphate + H2O = 2-methylisoborneol + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (E)-2-methylgeranyl diphosphate + H2O = 2-methylisoborneol + diphosphate
+  description: Substrate-to-product chemistry of RHEA:32571, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:32572 (rh:substrates → 32571_L, rh:products → 32571_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (E)-2-methylgeranyl diphosphate + H2O = 2-methylisoborneol + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:32571
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (E)-2-methylgeranyl diphosphate + H2O = 2-methylisoborneol + diphosphate'
+  - node_id: sub1
+    label: (E)-2-methylgeranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:61984
+    description: Formula C11H19O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 2-methylisoborneol
+    node_type: CHEMICAL
+    grounding: CHEBI:61987
+    description: Formula C11H20O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2-methylisoborneol synthase
+    grounding: EC:4.2.3.118
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A4FG19
+    node_type: PROTEIN
+    label: MIBS_SACEN
+    grounding: UniProtKB:A4FG19
+  - node_id: prot_A3KI17
+    node_type: PROTEIN
+    label: MIBS_STRA7
+    grounding: UniProtKB:A3KI17
+  - node_id: prot_Q9F1Y6
+    node_type: PROTEIN
+    label: MIBS_STRCO
+    grounding: UniProtKB:Q9F1Y6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (E)-2-methylgeranyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:32572
+      snippet: (E)-2-methylgeranyl diphosphate + H2O => 2-methylisoborneol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32572 declares side 32571_L as its substrates
+        (rh:substrates); the master reaction RHEA:32571 is undirected. This participant is CHEBI:61984
+        with coefficient 1. Rhea cites PMID:21174459, PMID:18563898, PMID:18492804 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32572
+      snippet: (E)-2-methylgeranyl diphosphate + H2O => 2-methylisoborneol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32572 declares side 32571_L as its substrates
+        (rh:substrates); the master reaction RHEA:32571 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21174459, PMID:18563898, PMID:18492804 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-methylisoborneol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:32572
+      snippet: (E)-2-methylgeranyl diphosphate + H2O => 2-methylisoborneol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32572 declares side 32571_R as its products
+        (rh:products); the master reaction RHEA:32571 is undirected. This participant is CHEBI:61987 with
+        coefficient 1. Rhea cites PMID:21174459, PMID:18563898, PMID:18492804 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32572
+      snippet: (E)-2-methylgeranyl diphosphate + H2O => 2-methylisoborneol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32572 declares side 32571_R as its products
+        (rh:products); the master reaction RHEA:32571 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21174459, PMID:18563898, PMID:18492804 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.118; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:32571
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.118"/>
+      notes: The rh:ec triple on RHEA:32571 in rhea.rdf. EC 4.2.3.118 is itself a record in this KB.
+  - subject: prot_A4FG19
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MIBS_SACEN is an exemplar enzyme carrying EC 4.2.3.118, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.118
+      snippet: DR   A4FG19, MIBS_SACEN ;  A3KI17, MIBS_STRA7 ;  Q9F1Y6, MIBS_STRCO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.118 cross-references UniProtKB:A4FG19 (MIBS_SACEN) as a protein
+        with this activity.
+    - reference: RHEA:32571
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.118"/>
+      notes: Rhea assigns RHEA:32571 to EC 4.2.3.118, and EC 4.2.3.118 maps to exactly one Rhea master
+        reaction (RHEA:32571), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_A3KI17
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MIBS_STRA7 is an exemplar enzyme carrying EC 4.2.3.118, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.118
+      snippet: DR   A4FG19, MIBS_SACEN ;  A3KI17, MIBS_STRA7 ;  Q9F1Y6, MIBS_STRCO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.118 cross-references UniProtKB:A3KI17 (MIBS_STRA7) as a protein
+        with this activity.
+    - reference: RHEA:32571
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.118"/>
+      notes: Rhea assigns RHEA:32571 to EC 4.2.3.118, and EC 4.2.3.118 maps to exactly one Rhea master
+        reaction (RHEA:32571), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q9F1Y6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MIBS_STRCO is an exemplar enzyme carrying EC 4.2.3.118, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.118
+      snippet: DR   A4FG19, MIBS_SACEN ;  A3KI17, MIBS_STRA7 ;  Q9F1Y6, MIBS_STRCO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.118 cross-references UniProtKB:Q9F1Y6 (MIBS_STRCO) as a protein
+        with this activity.
+    - reference: RHEA:32571
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.118"/>
+      notes: Rhea assigns RHEA:32571 to EC 4.2.3.118, and EC 4.2.3.118 maps to exactly one Rhea master
+        reaction (RHEA:32571), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.4.1.170
     mapping_source: rhea2ec
@@ -28,4 +28,123 @@ definitions:
       Catalyses the reaction: daidzein + UDP-alpha-D-glucose = daidzein 7-O-beta-D-glucoside + UDP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of daidzein + UDP-alpha-D-glucose = daidzein 7-O-beta-D-glucoside + UDP
+  description: Substrate-to-product chemistry of RHEA:56048, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:56049 (rh:substrates → 56048_L, rh:products → 56048_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of daidzein + UDP-alpha-D-glucose = daidzein 7-O-beta-D-glucoside + UDP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:56048
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: daidzein + UDP-alpha-D-glucose = daidzein 7-O-beta-D-glucoside + UDP'
+  - node_id: sub1
+    label: daidzein
+    node_type: CHEMICAL
+    grounding: CHEBI:77764
+    description: Formula C15H9O4.
+  - node_id: sub2
+    label: UDP-alpha-D-glucose
+    node_type: CHEMICAL
+    grounding: CHEBI:58885
+    description: Formula C15H22N2O17P2.
+  - node_id: prd1
+    label: daidzein 7-O-beta-D-glucoside
+    node_type: CHEMICAL
+    grounding: CHEBI:42202
+    description: Formula C21H20O9.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: isoflavone 7-O-glucosyltransferase activity
+    grounding: GO:0050004
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: isoflavone 7-O-glucosyltransferase
+    grounding: EC:2.4.1.170
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: daidzein is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56049
+      snippet: daidzein + UDP-alpha-D-glucose => daidzein 7-O-beta-D-glucoside + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:56049 declares side 56048_L as its substrates
+        (rh:substrates); the master reaction RHEA:56048 is undirected. This participant is CHEBI:77764
+        with coefficient 1. Rhea cites PMID:6458246 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-glucose is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:56049
+      snippet: daidzein + UDP-alpha-D-glucose => daidzein 7-O-beta-D-glucoside + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:56049 declares side 56048_L as its substrates
+        (rh:substrates); the master reaction RHEA:56048 is undirected. This participant is CHEBI:58885
+        with coefficient 1. Rhea cites PMID:6458246 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: daidzein 7-O-beta-D-glucoside is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:56049
+      snippet: daidzein + UDP-alpha-D-glucose => daidzein 7-O-beta-D-glucoside + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:56049 declares side 56048_R as its products
+        (rh:products); the master reaction RHEA:56048 is undirected. This participant is CHEBI:42202 with
+        coefficient 1. Rhea cites PMID:6458246 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:56049
+      snippet: daidzein + UDP-alpha-D-glucose => daidzein 7-O-beta-D-glucoside + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:56049 declares side 56048_R as its products
+        (rh:products); the master reaction RHEA:56048 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:6458246 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:56048
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050004"/>
+      notes: The rdfs:seeAlso triple on RHEA:56048 in rhea.rdf. GO term GO:0050004 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.4.1.170; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:56048
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.170"/>
+      notes: The rh:ec triple on RHEA:56048 in rhea.rdf. EC 2.4.1.170 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

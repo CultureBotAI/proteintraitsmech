@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.1.-
 synonyms:
@@ -55,4 +55,165 @@ definitions:
       Catalyses: 2 glutathione + NADP(+) = glutathione disulfide + NADPH + H(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glutathione-disulfide reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.1.7. EC 1.8.1.7 maps to exactly
+    one curated Rhea reaction (RHEA:11740), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "2 glutathione
+    + NADP(+) = glutathione disulfide + NADPH + H(+)". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glutathione-disulfide reductase
+    grounding: EC:1.8.1.7
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: glutathione
+    node_type: CHEMICAL
+    grounding: CHEBI:57925
+    description: Formula C10H16N3O6S.
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: glutathione disulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:58297
+    description: Formula C20H30N6O12S2.
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glutathione-disulfide reductase (NADPH) activity
+    grounding: GO:0004362
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P48641
+    node_type: PROTEIN
+    label: GSHRC_ARATH
+    grounding: UniProtKB:P48641
+  - node_id: prot_O04955
+    node_type: PROTEIN
+    label: GSHRC_BRARP
+    grounding: UniProtKB:O04955
+  - node_id: prot_P48642
+    node_type: PROTEIN
+    label: GSHRC_ORYSJ
+    grounding: UniProtKB:P48642
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: glutathione is a substrate consumed by RHEA:11740 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:11741
+      snippet: 2 glutathione + NADP(+) => glutathione disulfide + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11741 declares side 11740_L as its substrates
+        (rh:substrates); the master reaction RHEA:11740 is undirected. This participant is CHEBI:57925
+        with coefficient 2. Rhea cites PMID:3656429, PMID:1524433, PMID:23593298, PMID:6822532 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by RHEA:11740 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11741
+      snippet: 2 glutathione + NADP(+) => glutathione disulfide + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11741 declares side 11740_L as its substrates
+        (rh:substrates); the master reaction RHEA:11740 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:3656429, PMID:1524433, PMID:23593298, PMID:6822532 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: glutathione disulfide is a product released by RHEA:11740 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:11741
+      snippet: 2 glutathione + NADP(+) => glutathione disulfide + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11741 declares side 11740_R as its products
+        (rh:products); the master reaction RHEA:11740 is undirected. This participant is CHEBI:58297 with
+        coefficient 1. Rhea cites PMID:3656429, PMID:1524433, PMID:23593298, PMID:6822532 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by RHEA:11740 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11741
+      snippet: 2 glutathione + NADP(+) => glutathione disulfide + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11741 declares side 11740_R as its products
+        (rh:products); the master reaction RHEA:11740 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:3656429, PMID:1524433, PMID:23593298, PMID:6822532 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by RHEA:11740 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:11741
+      snippet: 2 glutathione + NADP(+) => glutathione disulfide + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:11741 declares side 11740_R as its products
+        (rh:products); the master reaction RHEA:11740 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:3656429, PMID:1524433, PMID:23593298, PMID:6822532 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.8.1.7
+      snippet: EC:1.8.1.7 > GO:glutathione-disulfide reductase (NADPH) activity ; GO:0004362
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004362 is itself a record
+        in this KB.
+  - subject: prot_P48641
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GSHRC_ARATH is an exemplar enzyme with EC 1.8.1.7 activity.
+    evidence:
+    - reference: EC:1.8.1.7
+      snippet: DR   P48641, GSHRC_ARATH;  O04955, GSHRC_BRARP;  P48642, GSHRC_ORYSJ;
+      notes: ExPASy ENZYME entry EC 1.8.1.7 cross-references UniProtKB:P48641 (GSHRC_ARATH) as a protein
+        with this activity.
+  - subject: prot_O04955
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GSHRC_BRARP is an exemplar enzyme with EC 1.8.1.7 activity.
+    evidence:
+    - reference: EC:1.8.1.7
+      snippet: DR   P48641, GSHRC_ARATH;  O04955, GSHRC_BRARP;  P48642, GSHRC_ORYSJ;
+      notes: ExPASy ENZYME entry EC 1.8.1.7 cross-references UniProtKB:O04955 (GSHRC_BRARP) as a protein
+        with this activity.
+  - subject: prot_P48642
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GSHRC_ORYSJ is an exemplar enzyme with EC 1.8.1.7 activity.
+    evidence:
+    - reference: EC:1.8.1.7
+      snippet: DR   P48641, GSHRC_ARATH;  O04955, GSHRC_BRARP;  P48642, GSHRC_ORYSJ;
+      notes: ExPASy ENZYME entry EC 1.8.1.7 cross-references UniProtKB:P48642 (GSHRC_ORYSJ) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

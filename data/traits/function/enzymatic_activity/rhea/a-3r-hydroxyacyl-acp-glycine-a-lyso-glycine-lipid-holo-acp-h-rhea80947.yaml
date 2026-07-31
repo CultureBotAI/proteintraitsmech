@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:78827
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,141 @@ definitions:
       Catalyses the reaction: a (3R)-hydroxyacyl-[ACP] + glycine = a lyso-glycine lipid + holo-[ACP] + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a (3R)-hydroxyacyl-[ACP] + glycine = a lyso-glycine lipid + holo-[ACP]
+    + H(+)
+  description: Substrate-to-product chemistry of RHEA:80947, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:80948 (rh:substrates → 80947_L, rh:products → 80947_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a (3R)-hydroxyacyl-[ACP] + glycine = a lyso-glycine lipid + holo-[ACP] + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:80947
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a (3R)-hydroxyacyl-[ACP] + glycine = a lyso-glycine lipid + holo-[ACP] + H(+)'
+  - node_id: sub1
+    label: a (3R)-hydroxyacyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9945
+    description: Rhea compound GENERIC:9945.
+  - node_id: sub1_rp1
+    label: (3R)-hydroxyacyl-pantetheine-4-phosphorylserine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9945 (a (3R)-hydroxyacyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78827
+  - node_id: sub2
+    label: glycine
+    node_type: CHEMICAL
+    grounding: CHEBI:57305
+    description: Formula C2H5NO2.
+  - node_id: prd1
+    label: a lyso-glycine lipid
+    node_type: CHEMICAL
+    grounding: CHEBI:231742
+    description: Formula C5H7NO4R.
+  - node_id: prd2
+    label: holo-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9685
+    description: Rhea compound GENERIC:9685.
+  - node_id: prd2_rp1
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9685 (holo-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a (3R)-hydroxyacyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80948
+      snippet: a (3R)-hydroxyacyl-[ACP] + glycine => a lyso-glycine lipid + holo-[ACP] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80948 declares side 80947_L as its substrates
+        (rh:substrates); the master reaction RHEA:80947 is undirected. This participant is GENERIC:9945
+        with coefficient 1. Rhea cites PMID:30367006 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: (3R)-hydroxyacyl-pantetheine-4-phosphorylserine residue is the reactive part of a (3R)-hydroxyacyl-[ACP].
+    evidence:
+    - reference: RHEA:80947
+      snippet: (3R)-hydroxyacyl-pantetheine-4-phosphorylserine residue
+      notes: Rhea compound GENERIC:9945 (a (3R)-hydroxyacyl-[ACP]) declares rh:reactivePart = (3R)-hydroxyacyl-pantetheine-4-phosphorylserine
+        residue (CHEBI:78827), formula C17H28N3O10PSR.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: glycine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80948
+      snippet: a (3R)-hydroxyacyl-[ACP] + glycine => a lyso-glycine lipid + holo-[ACP] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80948 declares side 80947_L as its substrates
+        (rh:substrates); the master reaction RHEA:80947 is undirected. This participant is CHEBI:57305
+        with coefficient 1. Rhea cites PMID:30367006 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a lyso-glycine lipid is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:80948
+      snippet: a (3R)-hydroxyacyl-[ACP] + glycine => a lyso-glycine lipid + holo-[ACP] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80948 declares side 80947_R as its products
+        (rh:products); the master reaction RHEA:80947 is undirected. This participant is CHEBI:231742
+        with coefficient 1. Rhea cites PMID:30367006 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: holo-[ACP] is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80948
+      snippet: a (3R)-hydroxyacyl-[ACP] + glycine => a lyso-glycine lipid + holo-[ACP] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80948 declares side 80947_R as its products
+        (rh:products); the master reaction RHEA:80947 is undirected. This participant is GENERIC:9685
+        with coefficient 1. Rhea cites PMID:30367006 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[ACP].
+    evidence:
+    - reference: RHEA:80947
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9685 (holo-[ACP]) declares rh:reactivePart = O-(pantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:64479), formula C14H25N3O8PS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:80948
+      snippet: a (3R)-hydroxyacyl-[ACP] + glycine => a lyso-glycine lipid + holo-[ACP] + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:80948 declares side 80947_R as its products
+        (rh:products); the master reaction RHEA:80947 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:30367006 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 mapped_xrefs:
@@ -28,4 +28,72 @@ definitions:
       Catalyses: (3S,22S)-2,3:22,23-diepoxysqualene = pre-alpha-onocerin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of pre-alpha-onocerin synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.65. EC 5.4.99.65 maps to
+    exactly one curated Rhea reaction (RHEA:54664), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(3S,22S)-2,3:22,23-diepoxysqualene
+    = pre-alpha-onocerin". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: pre-alpha-onocerin synthase
+    grounding: EC:5.4.99.65
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (3S,22S)-2,3:22,23-diepoxysqualene
+    node_type: CHEMICAL
+    grounding: CHEBI:138307
+    description: Formula C30H50O2.
+  - node_id: prd1
+    label: pre-alpha-onocerin
+    node_type: CHEMICAL
+    grounding: CHEBI:138305
+    description: Formula C30H50O2.
+  - node_id: prot_A0A125SXN1
+    node_type: PROTEIN
+    label: LCC_LYCCL
+    grounding: UniProtKB:A0A125SXN1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (3S,22S)-2,3:22,23-diepoxysqualene is a substrate consumed by RHEA:54664 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:54665
+      snippet: (3S,22S)-2,3:22,23-diepoxysqualene => pre-alpha-onocerin
+      notes: Rhea's left-to-right directional reaction RHEA:54665 declares side 54664_L as its substrates
+        (rh:substrates); the master reaction RHEA:54664 is undirected. This participant is CHEBI:138307
+        with coefficient 1. Rhea cites PMID:26663356 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pre-alpha-onocerin is a product released by RHEA:54664 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:54665
+      snippet: (3S,22S)-2,3:22,23-diepoxysqualene => pre-alpha-onocerin
+      notes: Rhea's left-to-right directional reaction RHEA:54665 declares side 54664_R as its products
+        (rh:products); the master reaction RHEA:54664 is undirected. This participant is CHEBI:138305
+        with coefficient 1. Rhea cites PMID:26663356 for this reaction.
+  - subject: prot_A0A125SXN1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LCC_LYCCL is an exemplar enzyme with EC 5.4.99.65 activity.
+    evidence:
+    - reference: EC:5.4.99.65
+      snippet: DR   A0A125SXN1, LCC_LYCCL  ;
+      notes: ExPASy ENZYME entry EC 5.4.99.65 cross-references UniProtKB:A0A125SXN1 (LCC_LYCCL) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

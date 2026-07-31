@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.1.99.-
 synonyms:
@@ -41,4 +41,117 @@ definitions:
       Catalyses: a D-5-monosubstituted hydantoin = a L-5-monosubstituted hydantoin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of hydantoin racemase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.1.99.5. EC 5.1.99.5 maps to exactly
+    one curated Rhea reaction (RHEA:46624), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "a D-5-monosubstituted
+    hydantoin = a L-5-monosubstituted hydantoin". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: hydantoin racemase
+    grounding: EC:5.1.99.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: a D-5-monosubstituted hydantoin
+    node_type: CHEMICAL
+    grounding: CHEBI:86339
+    description: Formula C3H3N2O2R.
+  - node_id: prd1
+    label: a L-5-monosubstituted hydantoin
+    node_type: CHEMICAL
+    grounding: CHEBI:86340
+    description: Formula C3H3N2O2R.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: hydantoin racemase activity
+    grounding: GO:0036348
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9F466
+    node_type: PROTEIN
+    label: HYDRA_PAEAU
+    grounding: UniProtKB:Q9F466
+  - node_id: prot_Q00924
+    node_type: PROTEIN
+    label: HYDRA_PSESN
+    grounding: UniProtKB:Q00924
+  - node_id: prot_Q6TMG4
+    node_type: PROTEIN
+    label: HYDRA_RHIML
+    grounding: UniProtKB:Q6TMG4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a D-5-monosubstituted hydantoin is a substrate consumed by RHEA:46624 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:46625
+      snippet: a D-5-monosubstituted hydantoin => a L-5-monosubstituted hydantoin
+      notes: Rhea's left-to-right directional reaction RHEA:46625 declares side 46624_L as its substrates
+        (rh:substrates); the master reaction RHEA:46624 is undirected. This participant is CHEBI:86339
+        with coefficient 1. Rhea cites PMID:11849938, PMID:14711700, PMID:10949312, PMID:1459947 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a L-5-monosubstituted hydantoin is a product released by RHEA:46624 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:46625
+      snippet: a D-5-monosubstituted hydantoin => a L-5-monosubstituted hydantoin
+      notes: Rhea's left-to-right directional reaction RHEA:46625 declares side 46624_R as its products
+        (rh:products); the master reaction RHEA:46624 is undirected. This participant is CHEBI:86340 with
+        coefficient 1. Rhea cites PMID:11849938, PMID:14711700, PMID:10949312, PMID:1459947 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.1.99.5
+      snippet: EC:5.1.99.5 > GO:hydantoin racemase activity ; GO:0036348
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0036348 is itself a record
+        in this KB.
+  - subject: prot_Q9F466
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HYDRA_PAEAU is an exemplar enzyme with EC 5.1.99.5 activity.
+    evidence:
+    - reference: EC:5.1.99.5
+      snippet: DR   Q9F466, HYDRA_PAEAU;  Q00924, HYDRA_PSESN;  Q6TMG4, HYDRA_RHIML;
+      notes: ExPASy ENZYME entry EC 5.1.99.5 cross-references UniProtKB:Q9F466 (HYDRA_PAEAU) as a protein
+        with this activity.
+  - subject: prot_Q00924
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HYDRA_PSESN is an exemplar enzyme with EC 5.1.99.5 activity.
+    evidence:
+    - reference: EC:5.1.99.5
+      snippet: DR   Q9F466, HYDRA_PAEAU;  Q00924, HYDRA_PSESN;  Q6TMG4, HYDRA_RHIML;
+      notes: ExPASy ENZYME entry EC 5.1.99.5 cross-references UniProtKB:Q00924 (HYDRA_PSESN) as a protein
+        with this activity.
+  - subject: prot_Q6TMG4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HYDRA_RHIML is an exemplar enzyme with EC 5.1.99.5 activity.
+    evidence:
+    - reference: EC:5.1.99.5
+      snippet: DR   Q9F466, HYDRA_PAEAU;  Q00924, HYDRA_PSESN;  Q6TMG4, HYDRA_RHIML;
+      notes: ExPASy ENZYME entry EC 5.1.99.5 cross-references UniProtKB:Q6TMG4 (HYDRA_RHIML) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

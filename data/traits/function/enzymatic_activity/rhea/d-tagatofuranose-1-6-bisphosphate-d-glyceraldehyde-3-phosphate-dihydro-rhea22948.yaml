@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.1.2.40
     mapping_source: rhea2ec
@@ -26,4 +26,170 @@ definitions:
       Catalyses the reaction: D-tagatofuranose 1,6-bisphosphate = D-glyceraldehyde 3-phosphate + dihydroxyacetone phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-tagatofuranose 1,6-bisphosphate = D-glyceraldehyde 3-phosphate + dihydroxyacetone
+    pho…
+  description: Substrate-to-product chemistry of RHEA:22948, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22949 (rh:substrates → 22948_L, rh:products → 22948_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-tagatofuranose 1,6-bisphosphate = D-glyceraldehyde 3-phosphate + dihydroxy…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22948
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-tagatofuranose 1,6-bisphosphate = D-glyceraldehyde 3-phosphate + dihydroxyacetone
+      phosphate'
+  - node_id: sub1
+    label: D-tagatofuranose 1,6-bisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58694
+    description: Formula C6H10O12P2.
+  - node_id: prd1
+    label: D-glyceraldehyde 3-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:59776
+    description: Formula C3H5O6P.
+  - node_id: prd2
+    label: dihydroxyacetone phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57642
+    description: Formula C3H5O6P.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: tagatose-bisphosphate aldolase activity
+    grounding: GO:0009025
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: tagatose-bisphosphate aldolase
+    grounding: EC:4.1.2.40
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A7ZNR5
+    node_type: PROTEIN
+    label: GATY_ECO24
+    grounding: UniProtKB:A7ZNR5
+  - node_id: prot_B7UFB3
+    node_type: PROTEIN
+    label: GATY_ECO27
+    grounding: UniProtKB:B7UFB3
+  - node_id: prot_B7MEF1
+    node_type: PROTEIN
+    label: GATY_ECO45
+    grounding: UniProtKB:B7MEF1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-tagatofuranose 1,6-bisphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:22949
+      snippet: D-tagatofuranose 1,6-bisphosphate => D-glyceraldehyde 3-phosphate + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22949 declares side 22948_L as its substrates
+        (rh:substrates); the master reaction RHEA:22948 is undirected. This participant is CHEBI:58694
+        with coefficient 1. Rhea cites PMID:1901863 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-glyceraldehyde 3-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22949
+      snippet: D-tagatofuranose 1,6-bisphosphate => D-glyceraldehyde 3-phosphate + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22949 declares side 22948_R as its products
+        (rh:products); the master reaction RHEA:22948 is undirected. This participant is CHEBI:59776 with
+        coefficient 1. Rhea cites PMID:1901863 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: dihydroxyacetone phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22949
+      snippet: D-tagatofuranose 1,6-bisphosphate => D-glyceraldehyde 3-phosphate + dihydroxyacetone phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:22949 declares side 22948_R as its products
+        (rh:products); the master reaction RHEA:22948 is undirected. This participant is CHEBI:57642 with
+        coefficient 1. Rhea cites PMID:1901863 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:22948
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0009025"/>
+      notes: The rdfs:seeAlso triple on RHEA:22948 in rhea.rdf. GO term GO:0009025 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.1.2.40; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22948
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.40"/>
+      notes: The rh:ec triple on RHEA:22948 in rhea.rdf. EC 4.1.2.40 is itself a record in this KB.
+  - subject: prot_A7ZNR5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GATY_ECO24 is an exemplar enzyme carrying EC 4.1.2.40, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.40
+      snippet: DR   A7ZNR5, GATY_ECO24 ;  B7UFB3, GATY_ECO27 ;  B7MEF1, GATY_ECO45 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.40 cross-references UniProtKB:A7ZNR5 (GATY_ECO24) as a protein
+        with this activity.
+    - reference: RHEA:22948
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.40"/>
+      notes: Rhea assigns RHEA:22948 to EC 4.1.2.40, and EC 4.1.2.40 maps to exactly one Rhea master reaction
+        (RHEA:22948), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B7UFB3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GATY_ECO27 is an exemplar enzyme carrying EC 4.1.2.40, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.40
+      snippet: DR   A7ZNR5, GATY_ECO24 ;  B7UFB3, GATY_ECO27 ;  B7MEF1, GATY_ECO45 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.40 cross-references UniProtKB:B7UFB3 (GATY_ECO27) as a protein
+        with this activity.
+    - reference: RHEA:22948
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.40"/>
+      notes: Rhea assigns RHEA:22948 to EC 4.1.2.40, and EC 4.1.2.40 maps to exactly one Rhea master reaction
+        (RHEA:22948), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B7MEF1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GATY_ECO45 is an exemplar enzyme carrying EC 4.1.2.40, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.1.2.40
+      snippet: DR   A7ZNR5, GATY_ECO24 ;  B7UFB3, GATY_ECO27 ;  B7MEF1, GATY_ECO45 ;
+      notes: ExPASy ENZYME entry EC 4.1.2.40 cross-references UniProtKB:B7MEF1 (GATY_ECO45) as a protein
+        with this activity.
+    - reference: RHEA:22948
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.1.2.40"/>
+      notes: Rhea assigns RHEA:22948 to EC 4.1.2.40, and EC 4.1.2.40 maps to exactly one Rhea master reaction
+        (RHEA:22948), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

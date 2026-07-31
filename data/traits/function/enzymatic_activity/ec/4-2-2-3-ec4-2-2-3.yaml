@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.2.-
 synonyms:
@@ -43,4 +43,82 @@ definitions:
       Catalyses: Eliminative cleavage of alginate to give oligosaccharides with 4-deoxy- alpha-L-erythro-hex-4-enuronosyl groups at their non-reducing ends and beta-D-mannuronate at their reducing end
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of mannuronate-specific alginate lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.2.3. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Eliminative
+    cleavage of alginate to give oligosaccharides with 4-deoxy- alpha-L-erythro-hex-4-enuronosyl groups
+    at their non-reducing ends and beta-D-mannuronate at their reducing end".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: mannuronate-specific alginate lyase
+    grounding: EC:4.2.2.3
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: poly(beta-D-mannuronate) lyase activity
+    grounding: GO:0045135
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9ZFG9
+    node_type: PROTEIN
+    label: ALGE7_AZOVI
+    grounding: UniProtKB:Q9ZFG9
+  - node_id: prot_O50660
+    node_type: PROTEIN
+    label: ALGL_AZOCH
+    grounding: UniProtKB:O50660
+  - node_id: prot_C1DP89
+    node_type: PROTEIN
+    label: ALGL_AZOVD
+    grounding: UniProtKB:C1DP89
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.2.3
+      snippet: EC:4.2.2.3 > GO:poly(beta-D-mannuronate) lyase activity ; GO:0045135
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0045135 is itself a record
+        in this KB.
+  - subject: prot_Q9ZFG9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALGE7_AZOVI is an exemplar enzyme with EC 4.2.2.3 activity.
+    evidence:
+    - reference: EC:4.2.2.3
+      snippet: DR   Q9ZFG9, ALGE7_AZOVI;  O50660, ALGL_AZOCH ;  C1DP89, ALGL_AZOVD ;
+      notes: ExPASy ENZYME entry EC 4.2.2.3 cross-references UniProtKB:Q9ZFG9 (ALGE7_AZOVI) as a protein
+        with this activity.
+  - subject: prot_O50660
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALGL_AZOCH is an exemplar enzyme with EC 4.2.2.3 activity.
+    evidence:
+    - reference: EC:4.2.2.3
+      snippet: DR   Q9ZFG9, ALGE7_AZOVI;  O50660, ALGL_AZOCH ;  C1DP89, ALGL_AZOVD ;
+      notes: ExPASy ENZYME entry EC 4.2.2.3 cross-references UniProtKB:O50660 (ALGL_AZOCH) as a protein
+        with this activity.
+  - subject: prot_C1DP89
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ALGL_AZOVD is an exemplar enzyme with EC 4.2.2.3 activity.
+    evidence:
+    - reference: EC:4.2.2.3
+      snippet: DR   Q9ZFG9, ALGE7_AZOVI;  O50660, ALGL_AZOCH ;  C1DP89, ALGL_AZOVD ;
+      notes: ExPASy ENZYME entry EC 4.2.2.3 cross-references UniProtKB:C1DP89 (ALGL_AZOVD) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

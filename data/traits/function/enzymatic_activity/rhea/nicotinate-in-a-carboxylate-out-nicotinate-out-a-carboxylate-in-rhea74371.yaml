@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:32544
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,95 @@ definitions:
       Catalyses the reaction: nicotinate(in) + a carboxylate(out) = nicotinate(out) + a carboxylate(in)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of nicotinate(in) + a carboxylate(out) = nicotinate(out) + a carboxylate(in)
+  description: 'Substrate-to-product chemistry of RHEA:74371, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:74372 (rh:substrates → 74371_L, rh:products → 74371_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of nicotinate(in) + a carboxylate(out) = nicotinate(out) + a carboxylate(in)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:74371
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: nicotinate(in) + a carboxylate(out) = nicotinate(out) + a carboxylate(in)'
+  - node_id: sub1
+    label: nicotinate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:32544
+    description: Formula C6H4NO2.
+  - node_id: sub2
+    label: a carboxylate (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  - node_id: prd1
+    label: nicotinate (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:32544
+    description: Formula C6H4NO2.
+  - node_id: prd2
+    label: a carboxylate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:29067
+    description: Formula CO2R.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: nicotinate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74372
+      snippet: nicotinate(in) + a carboxylate(out) => nicotinate(out) + a carboxylate(in)
+      notes: Rhea's left-to-right directional reaction RHEA:74372 declares side 74371_L as its substrates
+        (rh:substrates); the master reaction RHEA:74371 is undirected. This participant is CHEBI:32544
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:35144162
+        for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a carboxylate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74372
+      snippet: nicotinate(in) + a carboxylate(out) => nicotinate(out) + a carboxylate(in)
+      notes: Rhea's left-to-right directional reaction RHEA:74372 declares side 74371_L as its substrates
+        (rh:substrates); the master reaction RHEA:74371 is undirected. This participant is CHEBI:29067
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:35144162 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: nicotinate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74372
+      snippet: nicotinate(in) + a carboxylate(out) => nicotinate(out) + a carboxylate(in)
+      notes: Rhea's left-to-right directional reaction RHEA:74372 declares side 74371_R as its products
+        (rh:products); the master reaction RHEA:74371 is undirected. This participant is CHEBI:32544 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:35144162
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a carboxylate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:74372
+      snippet: nicotinate(in) + a carboxylate(out) => nicotinate(out) + a carboxylate(in)
+      notes: Rhea's left-to-right directional reaction RHEA:74372 declares side 74371_R as its products
+        (rh:products); the master reaction RHEA:74371 is undirected. This participant is CHEBI:29067 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:35144162
+        for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

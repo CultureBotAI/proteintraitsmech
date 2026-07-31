@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.8.5.-
 mapped_xrefs:
@@ -23,4 +23,178 @@ definitions:
       Catalyses: [DsrC protein]-dithiol + 2 a quinone + hydrogen sulfide + H(+) = [DsrC protein]-trisulfide + 2 a quinol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [DsrC]-trisulfide reductase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.8.5.10. EC 1.8.5.10 maps to exactly
+    one curated Rhea reaction (RHEA:78839), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[DsrC protein]-dithiol
+    + 2 a quinone + hydrogen sulfide + H(+) = [DsrC protein]-trisulfide + 2 a quinol". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[DsrC]-trisulfide reductase'
+    grounding: EC:1.8.5.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[DsrC protein]-dithiol'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11723
+    description: Rhea compound GENERIC:11723.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue at position C1
+    description: The reacting group Rhea names inside the generic participant GENERIC:11723 ([DsrC protein]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub1_rp2
+    node_type: RESIDUE
+    label: L-cysteine residue at position C2
+    description: The reacting group Rhea names inside the generic participant GENERIC:11723 ([DsrC protein]-dithiol);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: sub2
+    label: a quinone
+    node_type: CHEMICAL
+    grounding: CHEBI:132124
+    description: Formula C6O2R4.
+  - node_id: sub3
+    label: hydrogen sulfide
+    node_type: CHEMICAL
+    grounding: CHEBI:29919
+    description: Formula HS.
+  - node_id: sub4
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: '[DsrC protein]-trisulfide'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:19152
+    description: Rhea compound GENERIC:19152.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: di-L-cysteinyl-trisulfide residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:19152 ([DsrC protein]-trisulfide);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:229579
+  - node_id: prd2
+    label: a quinol
+    node_type: CHEMICAL
+    grounding: CHEBI:24646
+    description: Formula C6H2O2R4.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[DsrC protein]-dithiol is a substrate consumed by RHEA:78839 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:78840
+      snippet: '[DsrC protein]-dithiol + 2 a quinone + hydrogen sulfide + H(+) => [DsrC protein]-trisulfide
+        + 2 a quinol'
+      notes: Rhea's left-to-right directional reaction RHEA:78840 declares side 78839_L as its substrates
+        (rh:substrates); the master reaction RHEA:78839 is undirected. This participant is GENERIC:11723
+        with coefficient 1. Rhea cites PMID:26680199 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [DsrC protein]-dithiol.
+    evidence:
+    - reference: RHEA:78839
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:11723 ([DsrC protein]-dithiol) declares rh:reactivePart at position
+        C1 = L-cysteine residue (CHEBI:29950).
+  - subject: sub1_rp2
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-cysteine residue is the reactive part of [DsrC protein]-dithiol.
+    evidence:
+    - reference: RHEA:78839
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:11723 ([DsrC protein]-dithiol) declares rh:reactivePart at position
+        C2 = L-cysteine residue (CHEBI:29950).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a quinone is a substrate consumed by RHEA:78839 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:78840
+      snippet: '[DsrC protein]-dithiol + 2 a quinone + hydrogen sulfide + H(+) => [DsrC protein]-trisulfide
+        + 2 a quinol'
+      notes: Rhea's left-to-right directional reaction RHEA:78840 declares side 78839_L as its substrates
+        (rh:substrates); the master reaction RHEA:78839 is undirected. This participant is CHEBI:132124
+        with coefficient 2. Rhea cites PMID:26680199 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub3
+    description: hydrogen sulfide is a substrate consumed by RHEA:78839 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78840
+      snippet: '[DsrC protein]-dithiol + 2 a quinone + hydrogen sulfide + H(+) => [DsrC protein]-trisulfide
+        + 2 a quinol'
+      notes: Rhea's left-to-right directional reaction RHEA:78840 declares side 78839_L as its substrates
+        (rh:substrates); the master reaction RHEA:78839 is undirected. This participant is CHEBI:29919
+        with coefficient 1. Rhea cites PMID:26680199 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub4
+    description: H(+) is a substrate consumed by RHEA:78839 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:78840
+      snippet: '[DsrC protein]-dithiol + 2 a quinone + hydrogen sulfide + H(+) => [DsrC protein]-trisulfide
+        + 2 a quinol'
+      notes: Rhea's left-to-right directional reaction RHEA:78840 declares side 78839_L as its substrates
+        (rh:substrates); the master reaction RHEA:78839 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:26680199 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[DsrC protein]-trisulfide is a product released by RHEA:78839 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:78840
+      snippet: '[DsrC protein]-dithiol + 2 a quinone + hydrogen sulfide + H(+) => [DsrC protein]-trisulfide
+        + 2 a quinol'
+      notes: Rhea's left-to-right directional reaction RHEA:78840 declares side 78839_R as its products
+        (rh:products); the master reaction RHEA:78839 is undirected. This participant is GENERIC:19152
+        with coefficient 1. Rhea cites PMID:26680199 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: di-L-cysteinyl-trisulfide residue is the reactive part of [DsrC protein]-trisulfide.
+    evidence:
+    - reference: RHEA:78839
+      snippet: di-L-cysteinyl-trisulfide residue
+      notes: Rhea compound GENERIC:19152 ([DsrC protein]-trisulfide) declares rh:reactivePart = di-L-cysteinyl-trisulfide
+        residue (CHEBI:229579).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a quinol is a product released by RHEA:78839 (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:78840
+      snippet: '[DsrC protein]-dithiol + 2 a quinone + hydrogen sulfide + H(+) => [DsrC protein]-trisulfide
+        + 2 a quinol'
+      notes: Rhea's left-to-right directional reaction RHEA:78840 declares side 78839_R as its products
+        (rh:products); the master reaction RHEA:78839 is undirected. This participant is CHEBI:24646 with
+        coefficient 2. Rhea cites PMID:26680199 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

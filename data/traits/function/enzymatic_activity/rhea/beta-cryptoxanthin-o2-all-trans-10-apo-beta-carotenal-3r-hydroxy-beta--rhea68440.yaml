@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:10362
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,93 @@ definitions:
       Catalyses the reaction: beta-cryptoxanthin + O2 = all-trans-10'-apo-beta-carotenal + (3R)-hydroxy-beta-ionone
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-cryptoxanthin + O2 = all-trans-10'-apo-beta-carotenal + (3R)-hydroxy-beta-ionone
+  description: Substrate-to-product chemistry of RHEA:68440, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:68441 (rh:substrates → 68440_L, rh:products → 68440_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of beta-cryptoxanthin + O2 = all-trans-10'-apo-beta-carotenal + (3R)-hydroxy-be…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:68440
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: beta-cryptoxanthin + O2 = all-trans-10''-apo-beta-carotenal + (3R)-hydroxy-beta-ionone'
+  - node_id: sub1
+    label: beta-cryptoxanthin
+    node_type: CHEMICAL
+    grounding: CHEBI:10362
+    description: Formula C40H56O.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: all-trans-10'-apo-beta-carotenal
+    node_type: CHEMICAL
+    grounding: CHEBI:53153
+    description: Formula C27H36O.
+  - node_id: prd2
+    label: (3R)-hydroxy-beta-ionone
+    node_type: CHEMICAL
+    grounding: CHEBI:53173
+    description: Formula C13H20O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: beta-cryptoxanthin is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68441
+      snippet: beta-cryptoxanthin + O2 => all-trans-10'-apo-beta-carotenal + (3R)-hydroxy-beta-ionone
+      notes: Rhea's left-to-right directional reaction RHEA:68441 declares side 68440_L as its substrates
+        (rh:substrates); the master reaction RHEA:68440 is undirected. This participant is CHEBI:10362
+        with coefficient 1. Rhea cites PMID:21106934, PMID:21081106 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68441
+      snippet: beta-cryptoxanthin + O2 => all-trans-10'-apo-beta-carotenal + (3R)-hydroxy-beta-ionone
+      notes: Rhea's left-to-right directional reaction RHEA:68441 declares side 68440_L as its substrates
+        (rh:substrates); the master reaction RHEA:68440 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:21106934, PMID:21081106 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: all-trans-10'-apo-beta-carotenal is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:68441
+      snippet: beta-cryptoxanthin + O2 => all-trans-10'-apo-beta-carotenal + (3R)-hydroxy-beta-ionone
+      notes: Rhea's left-to-right directional reaction RHEA:68441 declares side 68440_R as its products
+        (rh:products); the master reaction RHEA:68440 is undirected. This participant is CHEBI:53153 with
+        coefficient 1. Rhea cites PMID:21106934, PMID:21081106 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (3R)-hydroxy-beta-ionone is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68441
+      snippet: beta-cryptoxanthin + O2 => all-trans-10'-apo-beta-carotenal + (3R)-hydroxy-beta-ionone
+      notes: Rhea's left-to-right directional reaction RHEA:68441 declares side 68440_R as its products
+        (rh:products); the master reaction RHEA:68440 is undirected. This participant is CHEBI:53173 with
+        coefficient 1. Rhea cites PMID:21106934, PMID:21081106 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

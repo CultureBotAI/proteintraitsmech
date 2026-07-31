@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.1.-
 synonyms:
@@ -51,4 +51,133 @@ definitions:
       Catalyses: L-serine = pyruvate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-serine ammonia-lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.1.17. EC 4.3.1.17 maps to exactly
+    one curated Rhea reaction (RHEA:19169), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-serine = pyruvate
+    + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional
+    child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-serine ammonia-lyase
+    grounding: EC:4.3.1.17
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-serine
+    node_type: CHEMICAL
+    grounding: CHEBI:33384
+    description: Formula C3H7NO3.
+  - node_id: prd1
+    label: pyruvate
+    node_type: CHEMICAL
+    grounding: CHEBI:15361
+    description: Formula C3H3O3.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-serine ammonia-lyase activity
+    grounding: GO:0003941
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P0CF23
+    node_type: PROTEIN
+    label: SDH1_YEASX
+    grounding: UniProtKB:P0CF23
+  - node_id: prot_O34607
+    node_type: PROTEIN
+    label: SDHAA_BACSU
+    grounding: UniProtKB:O34607
+  - node_id: prot_O34635
+    node_type: PROTEIN
+    label: SDHAB_BACSU
+    grounding: UniProtKB:O34635
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-serine is a substrate consumed by RHEA:19169 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19170
+      snippet: L-serine => pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19170 declares side 19169_L as its substrates
+        (rh:substrates); the master reaction RHEA:19169 is undirected. This participant is CHEBI:33384
+        with coefficient 1. Rhea cites PMID:19640845, PMID:14596599, PMID:18342636, PMID:38417345 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: pyruvate is a product released by RHEA:19169 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19170
+      snippet: L-serine => pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19170 declares side 19169_R as its products
+        (rh:products); the master reaction RHEA:19169 is undirected. This participant is CHEBI:15361 with
+        coefficient 1. Rhea cites PMID:19640845, PMID:14596599, PMID:18342636, PMID:38417345 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:19169 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19170
+      snippet: L-serine => pyruvate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:19170 declares side 19169_R as its products
+        (rh:products); the master reaction RHEA:19169 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:19640845, PMID:14596599, PMID:18342636, PMID:38417345 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.3.1.17
+      snippet: EC:4.3.1.17 > GO:L-serine ammonia-lyase activity ; GO:0003941
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003941 is itself a record
+        in this KB.
+  - subject: prot_P0CF23
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SDH1_YEASX is an exemplar enzyme with EC 4.3.1.17 activity.
+    evidence:
+    - reference: EC:4.3.1.17
+      snippet: DR   P0CF23, SDH1_YEASX ;  O34607, SDHAA_BACSU;  O34635, SDHAB_BACSU;
+      notes: ExPASy ENZYME entry EC 4.3.1.17 cross-references UniProtKB:P0CF23 (SDH1_YEASX) as a protein
+        with this activity.
+  - subject: prot_O34607
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SDHAA_BACSU is an exemplar enzyme with EC 4.3.1.17 activity.
+    evidence:
+    - reference: EC:4.3.1.17
+      snippet: DR   P0CF23, SDH1_YEASX ;  O34607, SDHAA_BACSU;  O34635, SDHAB_BACSU;
+      notes: ExPASy ENZYME entry EC 4.3.1.17 cross-references UniProtKB:O34607 (SDHAA_BACSU) as a protein
+        with this activity.
+  - subject: prot_O34635
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SDHAB_BACSU is an exemplar enzyme with EC 4.3.1.17 activity.
+    evidence:
+    - reference: EC:4.3.1.17
+      snippet: DR   P0CF23, SDH1_YEASX ;  O34607, SDHAA_BACSU;  O34635, SDHAB_BACSU;
+      notes: ExPASy ENZYME entry EC 4.3.1.17 cross-references UniProtKB:O34635 (SDHAB_BACSU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

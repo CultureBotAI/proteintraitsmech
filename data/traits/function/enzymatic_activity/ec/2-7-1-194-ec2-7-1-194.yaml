@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.1.-
 synonyms:
@@ -39,4 +39,171 @@ definitions:
       Catalyses: N(pros)-phospho-L-histidyl-[protein] + L-ascorbate(out) = L-ascorbate 6-phosphate(in) + L-histidyl-[protein]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of protein-N(pi)-phosphohistidine--L-ascorbate phosphotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.1.194. EC 2.7.1.194 maps to
+    exactly one curated Rhea reaction (RHEA:42436), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "N(pros)-phospho-L-histidyl-[protein]
+    + L-ascorbate(out) = L-ascorbate 6-phosphate(in) + L-histidyl-[protein]". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: protein-N(pi)-phosphohistidine--L-ascorbate phosphotransferase
+    grounding: EC:2.7.1.194
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: N(pros)-phospho-L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9746
+    description: Rhea compound GENERIC:9746.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: N(pros)-phospho-L-histidine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64837
+  - node_id: sub2
+    label: L-ascorbate (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:38290
+    description: Formula C6H7O6.
+  - node_id: prd1
+    label: L-ascorbate 6-phosphate (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:61698
+    description: Formula C6H6O9P.
+  - node_id: prd2
+    label: L-histidyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9745
+    description: Rhea compound GENERIC:9745.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: L-histidine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:9745 (L-histidyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29979
+  - node_id: prot_P69823
+    node_type: PROTEIN
+    label: ULAB_ECO57
+    grounding: UniProtKB:P69823
+  - node_id: prot_Q8FAJ1
+    node_type: PROTEIN
+    label: ULAB_ECOL6
+    grounding: UniProtKB:Q8FAJ1
+  - node_id: prot_P69822
+    node_type: PROTEIN
+    label: ULAB_ECOLI
+    grounding: UniProtKB:P69822
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N(pros)-phospho-L-histidyl-[protein] is a substrate consumed by RHEA:42436 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42437
+      snippet: N(pros)-phospho-L-histidyl-[protein] + L-ascorbate(out) => L-ascorbate 6-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:42437 declares side 42436_L as its substrates
+        (rh:substrates); the master reaction RHEA:42436 is undirected. This participant is GENERIC:9746
+        with coefficient 1. Rhea cites PMID:15153772, PMID:12644495, PMID:25686089 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: N(pros)-phospho-L-histidine residue is the reactive part of N(pros)-phospho-L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:42436
+      snippet: N(pros)-phospho-L-histidine residue
+      notes: Rhea compound GENERIC:9746 (N(pros)-phospho-L-histidyl-[protein]) declares rh:reactivePart
+        = N(pros)-phospho-L-histidine residue (CHEBI:64837).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-ascorbate is a substrate consumed by RHEA:42436 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42437
+      snippet: N(pros)-phospho-L-histidyl-[protein] + L-ascorbate(out) => L-ascorbate 6-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:42437 declares side 42436_L as its substrates
+        (rh:substrates); the master reaction RHEA:42436 is undirected. This participant is CHEBI:38290
+        with coefficient 1. Rhea cites PMID:15153772, PMID:12644495, PMID:25686089 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-ascorbate 6-phosphate is a product released by RHEA:42436 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42437
+      snippet: N(pros)-phospho-L-histidyl-[protein] + L-ascorbate(out) => L-ascorbate 6-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:42437 declares side 42436_R as its products
+        (rh:products); the master reaction RHEA:42436 is undirected. This participant is CHEBI:61698 with
+        coefficient 1. Rhea cites PMID:15153772, PMID:12644495, PMID:25686089 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-histidyl-[protein] is a product released by RHEA:42436 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42437
+      snippet: N(pros)-phospho-L-histidyl-[protein] + L-ascorbate(out) => L-ascorbate 6-phosphate(in)
+        + L-histidyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:42437 declares side 42436_R as its products
+        (rh:products); the master reaction RHEA:42436 is undirected. This participant is GENERIC:9745
+        with coefficient 1. Rhea cites PMID:15153772, PMID:12644495, PMID:25686089 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-histidine residue is the reactive part of L-histidyl-[protein].
+    evidence:
+    - reference: RHEA:42436
+      snippet: L-histidine residue
+      notes: Rhea compound GENERIC:9745 (L-histidyl-[protein]) declares rh:reactivePart = L-histidine
+        residue (CHEBI:29979).
+  - subject: prot_P69823
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ULAB_ECO57 is an exemplar enzyme with EC 2.7.1.194 activity.
+    evidence:
+    - reference: EC:2.7.1.194
+      snippet: DR   P69823, ULAB_ECO57 ;  Q8FAJ1, ULAB_ECOL6 ;  P69822, ULAB_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.1.194 cross-references UniProtKB:P69823 (ULAB_ECO57) as a protein
+        with this activity.
+  - subject: prot_Q8FAJ1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ULAB_ECOL6 is an exemplar enzyme with EC 2.7.1.194 activity.
+    evidence:
+    - reference: EC:2.7.1.194
+      snippet: DR   P69823, ULAB_ECO57 ;  Q8FAJ1, ULAB_ECOL6 ;  P69822, ULAB_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.1.194 cross-references UniProtKB:Q8FAJ1 (ULAB_ECOL6) as a protein
+        with this activity.
+  - subject: prot_P69822
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ULAB_ECOLI is an exemplar enzyme with EC 2.7.1.194 activity.
+    evidence:
+    - reference: EC:2.7.1.194
+      snippet: DR   P69823, ULAB_ECO57 ;  Q8FAJ1, ULAB_ECOL6 ;  P69822, ULAB_ECOLI ;
+      notes: ExPASy ENZYME entry EC 2.7.1.194 cross-references UniProtKB:P69822 (ULAB_ECOLI) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.24.-
 synonyms:
@@ -30,4 +30,39 @@ definitions:
       Catalyses: Preferential cleavage of bonds with bulky hydrophobic groups in P2 and P1'. Phe at P1' is the most favored residue, which distinguished this enzyme from thermolysin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of vibriolysin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.24.25. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Preferential
+    cleavage of bonds with bulky hydrophobic groups in P2 and P1''. Phe at P1'' is the most favored residue,
+    which distinguished this enzyme from thermolysin".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: vibriolysin
+    grounding: EC:3.4.24.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q00971
+    node_type: PROTEIN
+    label: NPRV_VIBPR
+    grounding: UniProtKB:Q00971
+  edges:
+  - subject: prot_Q00971
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: NPRV_VIBPR is an exemplar enzyme with EC 3.4.24.25 activity.
+    evidence:
+    - reference: EC:3.4.24.25
+      snippet: DR   Q00971, NPRV_VIBPR ;
+      notes: ExPASy ENZYME entry EC 3.4.24.25 cross-references UniProtKB:Q00971 (NPRV_VIBPR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

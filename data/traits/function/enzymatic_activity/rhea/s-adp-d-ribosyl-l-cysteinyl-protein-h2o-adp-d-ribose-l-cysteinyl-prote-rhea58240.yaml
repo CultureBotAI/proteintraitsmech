@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:140607
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,124 @@ definitions:
       Catalyses the reaction: S-(ADP-D-ribosyl)-L-cysteinyl-[protein] + H2O = ADP-D-ribose + L-cysteinyl-[protein]
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-(ADP-D-ribosyl)-L-cysteinyl-[protein] + H2O = ADP-D-ribose + L-cysteinyl-[protein]
+  description: Substrate-to-product chemistry of RHEA:58240, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58241 (rh:substrates → 58240_L, rh:products → 58240_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of S-(ADP-D-ribosyl)-L-cysteinyl-[protein] + H2O = ADP-D-ribose + L-cysteinyl-[…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58240
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: S-(ADP-D-ribosyl)-L-cysteinyl-[protein] + H2O = ADP-D-ribose + L-cysteinyl-[protein]'
+  - node_id: sub1
+    label: S-(ADP-D-ribosyl)-L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:14624
+    description: Rhea compound GENERIC:14624.
+  - node_id: sub1_rp1
+    label: S-(ADP-D-ribosyl)-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:14624 (S-(ADP-D-ribosyl)-L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:140607
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: ADP-D-ribose
+    node_type: CHEMICAL
+    grounding: CHEBI:57967
+    description: Formula C15H21N5O14P2.
+  - node_id: prd2
+    label: L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10131
+    description: Rhea compound GENERIC:10131.
+  - node_id: prd2_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10131 (L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: S-(ADP-D-ribosyl)-L-cysteinyl-[protein] is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:58241
+      snippet: S-(ADP-D-ribosyl)-L-cysteinyl-[protein] + H2O => ADP-D-ribose + L-cysteinyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:58241 declares side 58240_L as its substrates
+        (rh:substrates); the master reaction RHEA:58240 is undirected. This participant is GENERIC:14624
+        with coefficient 1. Rhea cites PMID:16023112 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: S-(ADP-D-ribosyl)-L-cysteine residue is the reactive part of S-(ADP-D-ribosyl)-L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:58240
+      snippet: S-(ADP-D-ribosyl)-L-cysteine residue
+      notes: Rhea compound GENERIC:14624 (S-(ADP-D-ribosyl)-L-cysteinyl-[protein]) declares rh:reactivePart
+        = S-(ADP-D-ribosyl)-L-cysteine residue (CHEBI:140607), formula C18H24N6O14P2S.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58241
+      snippet: S-(ADP-D-ribosyl)-L-cysteinyl-[protein] + H2O => ADP-D-ribose + L-cysteinyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:58241 declares side 58240_L as its substrates
+        (rh:substrates); the master reaction RHEA:58240 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16023112 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ADP-D-ribose is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:58241
+      snippet: S-(ADP-D-ribosyl)-L-cysteinyl-[protein] + H2O => ADP-D-ribose + L-cysteinyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:58241 declares side 58240_R as its products
+        (rh:products); the master reaction RHEA:58240 is undirected. This participant is CHEBI:57967 with
+        coefficient 1. Rhea cites PMID:16023112 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: L-cysteinyl-[protein] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58241
+      snippet: S-(ADP-D-ribosyl)-L-cysteinyl-[protein] + H2O => ADP-D-ribose + L-cysteinyl-[protein]
+      notes: Rhea's left-to-right directional reaction RHEA:58241 declares side 58240_R as its products
+        (rh:products); the master reaction RHEA:58240 is undirected. This participant is GENERIC:10131
+        with coefficient 1. Rhea cites PMID:16023112 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:58240
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10131 (L-cysteinyl-[protein]) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950), formula C3H5NOS.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.6.2.-
 mapped_xrefs:
@@ -36,4 +36,81 @@ definitions:
       Catalyses: n ATP + n H2O + wound RNA = n ADP + n phosphate + unwound RNA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of RNA 3'-5' helicase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.6.2.6. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "n ATP +
+    n H2O + wound RNA = n ADP + n phosphate + unwound RNA".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: RNA 3'-5' helicase
+    grounding: EC:5.6.2.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 3'-5' RNA helicase activity
+    grounding: GO:0034458
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9ZBD8
+    node_type: PROTEIN
+    label: HELY_MYCLE
+    grounding: UniProtKB:Q9ZBD8
+  - node_id: prot_A0QZ38
+    node_type: PROTEIN
+    label: HELY_MYCS2
+    grounding: UniProtKB:A0QZ38
+  - node_id: prot_P9WMR0
+    node_type: PROTEIN
+    label: HELY_MYCTO
+    grounding: UniProtKB:P9WMR0
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.6.2.6
+      snippet: EC:5.6.2.6 > GO:3'-5' RNA helicase activity ; GO:0034458
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0034458 is itself a record
+        in this KB.
+  - subject: prot_Q9ZBD8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HELY_MYCLE is an exemplar enzyme with EC 5.6.2.6 activity.
+    evidence:
+    - reference: EC:5.6.2.6
+      snippet: DR   Q9ZBD8, HELY_MYCLE ;  A0QZ38, HELY_MYCS2 ;  P9WMR0, HELY_MYCTO ;
+      notes: ExPASy ENZYME entry EC 5.6.2.6 cross-references UniProtKB:Q9ZBD8 (HELY_MYCLE) as a protein
+        with this activity.
+  - subject: prot_A0QZ38
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HELY_MYCS2 is an exemplar enzyme with EC 5.6.2.6 activity.
+    evidence:
+    - reference: EC:5.6.2.6
+      snippet: DR   Q9ZBD8, HELY_MYCLE ;  A0QZ38, HELY_MYCS2 ;  P9WMR0, HELY_MYCTO ;
+      notes: ExPASy ENZYME entry EC 5.6.2.6 cross-references UniProtKB:A0QZ38 (HELY_MYCS2) as a protein
+        with this activity.
+  - subject: prot_P9WMR0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HELY_MYCTO is an exemplar enzyme with EC 5.6.2.6 activity.
+    evidence:
+    - reference: EC:5.6.2.6
+      snippet: DR   Q9ZBD8, HELY_MYCLE ;  A0QZ38, HELY_MYCS2 ;  P9WMR0, HELY_MYCTO ;
+      notes: ExPASy ENZYME entry EC 5.6.2.6 cross-references UniProtKB:P9WMR0 (HELY_MYCTO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

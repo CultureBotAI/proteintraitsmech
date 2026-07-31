@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.23.-
 synonyms:
@@ -41,4 +41,81 @@ definitions:
       Catalyses: Cleavage of Leu-|-Xaa bond in angiotensinogen to generate angiotensin I
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of renin
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.23.15. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Cleavage
+    of Leu-|-Xaa bond in angiotensinogen to generate angiotensin I".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: renin
+    grounding: EC:3.4.23.15
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aspartic-type endopeptidase activity
+    grounding: GO:0004190
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q18DC8
+    node_type: PROTEIN
+    label: RE123_ECHOC
+    grounding: UniProtKB:Q18DC8
+  - node_id: prot_Q18DC9
+    node_type: PROTEIN
+    label: RE51_ECHOC
+    grounding: UniProtKB:Q18DC9
+  - node_id: prot_P06281
+    node_type: PROTEIN
+    label: RENI1_MOUSE
+    grounding: UniProtKB:P06281
+  edges:
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.4.23.15
+      snippet: EC:3.4.23.15 > GO:aspartic-type endopeptidase activity ; GO:0004190
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004190 is itself a record
+        in this KB.
+  - subject: prot_Q18DC8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RE123_ECHOC is an exemplar enzyme with EC 3.4.23.15 activity.
+    evidence:
+    - reference: EC:3.4.23.15
+      snippet: DR   Q18DC8, RE123_ECHOC;  Q18DC9, RE51_ECHOC ;  P06281, RENI1_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.23.15 cross-references UniProtKB:Q18DC8 (RE123_ECHOC) as a protein
+        with this activity.
+  - subject: prot_Q18DC9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RE51_ECHOC is an exemplar enzyme with EC 3.4.23.15 activity.
+    evidence:
+    - reference: EC:3.4.23.15
+      snippet: DR   Q18DC8, RE123_ECHOC;  Q18DC9, RE51_ECHOC ;  P06281, RENI1_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.23.15 cross-references UniProtKB:Q18DC9 (RE51_ECHOC) as a protein
+        with this activity.
+  - subject: prot_P06281
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RENI1_MOUSE is an exemplar enzyme with EC 3.4.23.15 activity.
+    evidence:
+    - reference: EC:3.4.23.15
+      snippet: DR   Q18DC8, RE123_ECHOC;  Q18DC9, RE51_ECHOC ;  P06281, RENI1_MOUSE;
+      notes: ExPASy ENZYME entry EC 3.4.23.15 cross-references UniProtKB:P06281 (RENI1_MOUSE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

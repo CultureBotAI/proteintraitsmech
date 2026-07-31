@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -43,4 +43,132 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = (+)-aristolochene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of aristolochene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.9. EC 4.2.3.9 maps to exactly
+    one curated Rhea reaction (RHEA:19825), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = (+)-aristolochene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: aristolochene synthase
+    grounding: EC:4.2.3.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: (+)-aristolochene
+    node_type: CHEMICAL
+    grounding: CHEBI:43445
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: aristolochene synthase activity
+    grounding: GO:0045483
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q9UR08
+    node_type: PROTEIN
+    label: ARIS_ASPTE
+    grounding: UniProtKB:Q9UR08
+  - node_id: prot_W6Q4Q9
+    node_type: PROTEIN
+    label: PRX2_PENRF
+    grounding: UniProtKB:W6Q4Q9
+  - node_id: prot_Q03471
+    node_type: PROTEIN
+    label: PRX2_PENRO
+    grounding: UniProtKB:Q03471
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:19825 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19826
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-aristolochene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19826 declares side 19825_L as its substrates
+        (rh:substrates); the master reaction RHEA:19825 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:10775423, PMID:9295271, PMID:10825154, PMID:12296728 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-aristolochene is a product released by RHEA:19825 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19826
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-aristolochene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19826 declares side 19825_R as its products
+        (rh:products); the master reaction RHEA:19825 is undirected. This participant is CHEBI:43445 with
+        coefficient 1. Rhea cites PMID:10775423, PMID:9295271, PMID:10825154, PMID:12296728 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:19825 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19826
+      snippet: (2E,6E)-farnesyl diphosphate => (+)-aristolochene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:19826 declares side 19825_R as its products
+        (rh:products); the master reaction RHEA:19825 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:10775423, PMID:9295271, PMID:10825154, PMID:12296728 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.9
+      snippet: EC:4.2.3.9 > GO:aristolochene synthase activity ; GO:0045483
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0045483 is itself a record
+        in this KB.
+  - subject: prot_Q9UR08
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ARIS_ASPTE is an exemplar enzyme with EC 4.2.3.9 activity.
+    evidence:
+    - reference: EC:4.2.3.9
+      snippet: DR   Q9UR08, ARIS_ASPTE ;  W6Q4Q9, PRX2_PENRF ;  Q03471, PRX2_PENRO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.9 cross-references UniProtKB:Q9UR08 (ARIS_ASPTE) as a protein
+        with this activity.
+  - subject: prot_W6Q4Q9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRX2_PENRF is an exemplar enzyme with EC 4.2.3.9 activity.
+    evidence:
+    - reference: EC:4.2.3.9
+      snippet: DR   Q9UR08, ARIS_ASPTE ;  W6Q4Q9, PRX2_PENRF ;  Q03471, PRX2_PENRO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.9 cross-references UniProtKB:W6Q4Q9 (PRX2_PENRF) as a protein
+        with this activity.
+  - subject: prot_Q03471
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRX2_PENRO is an exemplar enzyme with EC 4.2.3.9 activity.
+    evidence:
+    - reference: EC:4.2.3.9
+      snippet: DR   Q9UR08, ARIS_ASPTE ;  W6Q4Q9, PRX2_PENRF ;  Q03471, PRX2_PENRO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.9 cross-references UniProtKB:Q03471 (PRX2_PENRO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

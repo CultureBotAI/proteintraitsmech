@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.22.-
 synonyms:
@@ -28,4 +28,38 @@ definitions:
       Catalyses: Broad specificity for cleavage of proteins, but strong preference for Z-Arg-Arg-|-NHMec among small molecule substrates
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of stem bromelain
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.22.32. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "Broad specificity
+    for cleavage of proteins, but strong preference for Z-Arg-Arg-|-NHMec among small molecule substrates".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: stem bromelain
+    grounding: EC:3.4.22.32
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_P14518
+    node_type: PROTEIN
+    label: BROM2_ANACO
+    grounding: UniProtKB:P14518
+  edges:
+  - subject: prot_P14518
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: BROM2_ANACO is an exemplar enzyme with EC 3.4.22.32 activity.
+    evidence:
+    - reference: EC:3.4.22.32
+      snippet: DR   P14518, BROM2_ANACO;
+      notes: ExPASy ENZYME entry EC 3.4.22.32 cross-references UniProtKB:P14518 (BROM2_ANACO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (1 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

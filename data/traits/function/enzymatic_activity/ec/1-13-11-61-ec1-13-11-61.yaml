@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:1.13.11.-
 synonyms:
@@ -37,4 +37,187 @@ definitions:
       Catalyses: (9Z,12Z,15Z)-octadecatrienoate + O2 = (9R,10E,12Z,15Z)-9- hydroperoxyoctadeca-10,12,15-trienoate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of linolenate 9R-lipoxygenase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:1.13.11.61. Rhea assigns 2 curated
+    reactions to EC 1.13.11.61. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "(9Z,12Z,15Z)-octadecatrienoate + O2 = (9R,10E,12Z,15Z)-9-
+    hydroperoxyoctadeca-10,12,15-trienoate". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: linolenate 9R-lipoxygenase
+    grounding: EC:1.13.11.61
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (9Z,12Z,15Z)-octadecatrienoate + O2 = (9R,10E,12Z,15Z)-9-hydroperoxyoctadeca…
+    grounding: RHEA:31687
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (9Z,12Z,15Z)-octadecatrienoate + O2 = (9R,10E,12Z,15Z)-9-hydroperoxyoctadeca-10,12,15-trienoate'
+  - node_id: rxn1_sub1
+    label: (9Z,12Z,15Z)-octadecatrienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:32387
+    description: Formula C18H29O2.
+  - node_id: rxn1_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn1_prd1
+    label: (9R,10E,12Z,15Z)-9-hydroperoxyoctadeca-10,12,15-trienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:63241
+    description: Formula C18H29O4.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of (9Z,12Z)-octadecadienoate + O2 = (9R)-hydroperoxy-(10E,12Z)-octadecadienoate
+    grounding: RHEA:31691
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: (9Z,12Z)-octadecadienoate + O2 = (9R)-hydroperoxy-(10E,12Z)-octadecadienoate'
+  - node_id: rxn2_sub1
+    label: (9Z,12Z)-octadecadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30245
+    description: Formula C18H31O2.
+  - node_id: rxn2_sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: rxn2_prd1
+    label: (9R)-hydroperoxy-(10E,12Z)-octadecadienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:63323
+    description: Formula C18H31O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: linolenate 9R-lipoxygenase activity
+    grounding: GO:0102299
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q8YK97
+    node_type: PROTEIN
+    label: LILIP_NOSS1
+    grounding: UniProtKB:Q8YK97
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:31687 is one of the 2 curated reactions Rhea assigns to EC 1.13.11.61; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31687
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.61"/>
+      notes: The rh:ec triple on RHEA:31687 in rhea.rdf assigns that reaction to EC 1.13.11.61.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: (9Z,12Z,15Z)-octadecatrienoate is a substrate consumed by RHEA:31687 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31688
+      snippet: (9Z,12Z,15Z)-octadecatrienoate + O2 => (9R,10E,12Z,15Z)-9-hydroperoxyoctadeca-10,12,15-trienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31688 declares side 31687_L as its substrates
+        (rh:substrates); the master reaction RHEA:31687 is undirected. This participant is CHEBI:32387
+        with coefficient 1. Rhea cites PMID:20043865, PMID:18031288, PMID:18439634 for this reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: O2 is a substrate consumed by RHEA:31687 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31688
+      snippet: (9Z,12Z,15Z)-octadecatrienoate + O2 => (9R,10E,12Z,15Z)-9-hydroperoxyoctadeca-10,12,15-trienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31688 declares side 31687_L as its substrates
+        (rh:substrates); the master reaction RHEA:31687 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:20043865, PMID:18031288, PMID:18439634 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: (9R,10E,12Z,15Z)-9-hydroperoxyoctadeca-10,12,15-trienoate is a product released by RHEA:31687
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31688
+      snippet: (9Z,12Z,15Z)-octadecatrienoate + O2 => (9R,10E,12Z,15Z)-9-hydroperoxyoctadeca-10,12,15-trienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31688 declares side 31687_R as its products
+        (rh:products); the master reaction RHEA:31687 is undirected. This participant is CHEBI:63241 with
+        coefficient 1. Rhea cites PMID:20043865, PMID:18031288, PMID:18439634 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:31691 is one of the 2 curated reactions Rhea assigns to EC 1.13.11.61; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:31691
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.13.11.61"/>
+      notes: The rh:ec triple on RHEA:31691 in rhea.rdf assigns that reaction to EC 1.13.11.61.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: (9Z,12Z)-octadecadienoate is a substrate consumed by RHEA:31691 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31692
+      snippet: (9Z,12Z)-octadecadienoate + O2 => (9R)-hydroperoxy-(10E,12Z)-octadecadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31692 declares side 31691_L as its substrates
+        (rh:substrates); the master reaction RHEA:31691 is undirected. This participant is CHEBI:30245
+        with coefficient 1. Rhea cites PMID:20043865, PMID:18031288, PMID:18439634 for this reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: O2 is a substrate consumed by RHEA:31691 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31692
+      snippet: (9Z,12Z)-octadecadienoate + O2 => (9R)-hydroperoxy-(10E,12Z)-octadecadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31692 declares side 31691_L as its substrates
+        (rh:substrates); the master reaction RHEA:31691 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:20043865, PMID:18031288, PMID:18439634 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: (9R)-hydroperoxy-(10E,12Z)-octadecadienoate is a product released by RHEA:31691 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:31692
+      snippet: (9Z,12Z)-octadecadienoate + O2 => (9R)-hydroperoxy-(10E,12Z)-octadecadienoate
+      notes: Rhea's left-to-right directional reaction RHEA:31692 declares side 31691_R as its products
+        (rh:products); the master reaction RHEA:31691 is undirected. This participant is CHEBI:63323 with
+        coefficient 1. Rhea cites PMID:20043865, PMID:18031288, PMID:18439634 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:1.13.11.61
+      snippet: EC:1.13.11.61 > GO:linolenate 9R-lipoxygenase activity ; GO:0102299
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0102299 is itself a record
+        in this KB.
+  - subject: prot_Q8YK97
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LILIP_NOSS1 is an exemplar enzyme with EC 1.13.11.61 activity.
+    evidence:
+    - reference: EC:1.13.11.61
+      snippet: DR   Q8YK97, LILIP_NOSS1;
+      notes: ExPASy ENZYME entry EC 1.13.11.61 cross-references UniProtKB:Q8YK97 (LILIP_NOSS1) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

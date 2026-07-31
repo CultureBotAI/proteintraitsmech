@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.4.1.-
 mapped_xrefs:
@@ -23,4 +23,113 @@ definitions:
       Catalyses: phycoerythrobilin-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit] = apo- L-cysteinyl(82)-[C-phycoerythrin alpha-subunit] + (2R,3E)- phycoerythrobilin
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of C-phycoerythrin alpha-cysteine-82 phycoerythrobilin lyase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.4.1.39. EC 4.4.1.39 maps to exactly
+    one curated Rhea reaction (RHEA:68624), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "phycoerythrobilin-L-cysteinyl(82)-[C-phycoerythrin
+    alpha-subunit] = apo- L-cysteinyl(82)-[C-phycoerythrin alpha-subunit] + (2R,3E)- phycoerythrobilin".
+    Substrate/product direction is the one Rhea states in each reaction''s left-to-right directional child;
+    Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: C-phycoerythrin alpha-cysteine-82 phycoerythrobilin lyase
+    grounding: EC:4.4.1.39
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: phycoerythrobilin-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17529
+    description: Rhea compound GENERIC:17529.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: S-3-[(2R)-phycoerythrobilin]-L-cysteine residue at position 82
+    description: The reacting group Rhea names inside the generic participant GENERIC:17529 (phycoerythrobilin-L-cysteinyl(82)-[C-phycoerythrin
+      alpha-subunit]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85279
+  - node_id: prd1
+    label: apo-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:17532
+    description: Rhea compound GENERIC:17532.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: L-cysteine residue at position 82
+    description: The reacting group Rhea names inside the generic participant GENERIC:17532 (apo-L-cysteinyl(82)-[C-phycoerythrin
+      alpha-subunit]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd2
+    label: (2R,3E)-phycoerythrobilin
+    node_type: CHEMICAL
+    grounding: CHEBI:85276
+    description: Formula C33H36N4O6.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: phycoerythrobilin-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit] is a substrate consumed
+      by RHEA:68624 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68625
+      snippet: phycoerythrobilin-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit] => apo-L-cysteinyl(82)-[C-phycoerythrin
+        alpha-subunit] + (2R,3E)-phycoerythrobilin
+      notes: Rhea's left-to-right directional reaction RHEA:68625 declares side 68624_L as its substrates
+        (rh:substrates); the master reaction RHEA:68624 is undirected. This participant is GENERIC:17529
+        with coefficient 1. Rhea cites PMID:21865169, PMID:31173730 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: S-3-[(2R)-phycoerythrobilin]-L-cysteine residue is the reactive part of phycoerythrobilin-L-cysteinyl(82)-[C-phycoerythrin
+      alpha-subunit].
+    evidence:
+    - reference: RHEA:68624
+      snippet: S-3-[(2R)-phycoerythrobilin]-L-cysteine residue
+      notes: Rhea compound GENERIC:17529 (phycoerythrobilin-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit])
+        declares rh:reactivePart at position 82 = S-3-[(2R)-phycoerythrobilin]-L-cysteine residue (CHEBI:85279).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: apo-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit] is a product released by RHEA:68624
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68625
+      snippet: phycoerythrobilin-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit] => apo-L-cysteinyl(82)-[C-phycoerythrin
+        alpha-subunit] + (2R,3E)-phycoerythrobilin
+      notes: Rhea's left-to-right directional reaction RHEA:68625 declares side 68624_R as its products
+        (rh:products); the master reaction RHEA:68624 is undirected. This participant is GENERIC:17532
+        with coefficient 1. Rhea cites PMID:21865169, PMID:31173730 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: L-cysteine residue is the reactive part of apo-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit].
+    evidence:
+    - reference: RHEA:68624
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:17532 (apo-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit]) declares
+        rh:reactivePart at position 82 = L-cysteine residue (CHEBI:29950).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (2R,3E)-phycoerythrobilin is a product released by RHEA:68624 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68625
+      snippet: phycoerythrobilin-L-cysteinyl(82)-[C-phycoerythrin alpha-subunit] => apo-L-cysteinyl(82)-[C-phycoerythrin
+        alpha-subunit] + (2R,3E)-phycoerythrobilin
+      notes: Rhea's left-to-right directional reaction RHEA:68625 declares side 68624_R as its products
+        (rh:products); the master reaction RHEA:68624 is undirected. This participant is CHEBI:85276 with
+        coefficient 1. Rhea cites PMID:21865169, PMID:31173730 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

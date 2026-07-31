@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.3.-
 mapped_xrefs:
@@ -38,4 +38,151 @@ definitions:
       Catalyses: agmatine + H2O = N-carbamoylputrescine + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of agmatine deiminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.3.12. EC 3.5.3.12 maps to exactly
+    one curated Rhea reaction (RHEA:18037), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "agmatine + H2O
+    = N-carbamoylputrescine + NH4(+)". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: agmatine deiminase
+    grounding: EC:3.5.3.12
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: agmatine
+    node_type: CHEMICAL
+    grounding: CHEBI:58145
+    description: Formula C5H16N4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: N-carbamoylputrescine
+    node_type: CHEMICAL
+    grounding: CHEBI:58318
+    description: Formula C5H14N3O.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: agmatine deiminase activity
+    grounding: GO:0047632
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q725C6
+    node_type: PROTEIN
+    label: AGUA1_LISMF
+    grounding: UniProtKB:Q725C6
+  - node_id: prot_Q8YAS5
+    node_type: PROTEIN
+    label: AGUA1_LISMO
+    grounding: UniProtKB:Q8YAS5
+  - node_id: prot_Q725C4
+    node_type: PROTEIN
+    label: AGUA2_LISMF
+    grounding: UniProtKB:Q725C4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: agmatine is a substrate consumed by RHEA:18037 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18038
+      snippet: agmatine + H2O => N-carbamoylputrescine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18038 declares side 18037_L as its substrates
+        (rh:substrates); the master reaction RHEA:18037 is undirected. This participant is CHEBI:58145
+        with coefficient 1. Rhea cites PMID:12782327, PMID:30984210, PMID:11673419, PMID:12914918 for
+        this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:18037 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18038
+      snippet: agmatine + H2O => N-carbamoylputrescine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18038 declares side 18037_L as its substrates
+        (rh:substrates); the master reaction RHEA:18037 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:12782327, PMID:30984210, PMID:11673419, PMID:12914918 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: N-carbamoylputrescine is a product released by RHEA:18037 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:18038
+      snippet: agmatine + H2O => N-carbamoylputrescine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18038 declares side 18037_R as its products
+        (rh:products); the master reaction RHEA:18037 is undirected. This participant is CHEBI:58318 with
+        coefficient 1. Rhea cites PMID:12782327, PMID:30984210, PMID:11673419, PMID:12914918 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:18037 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:18038
+      snippet: agmatine + H2O => N-carbamoylputrescine + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:18038 declares side 18037_R as its products
+        (rh:products); the master reaction RHEA:18037 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:12782327, PMID:30984210, PMID:11673419, PMID:12914918 for this
+        reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.3.12
+      snippet: EC:3.5.3.12 > GO:agmatine deiminase activity ; GO:0047632
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047632 is itself a record
+        in this KB.
+  - subject: prot_Q725C6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGUA1_LISMF is an exemplar enzyme with EC 3.5.3.12 activity.
+    evidence:
+    - reference: EC:3.5.3.12
+      snippet: DR   Q725C6, AGUA1_LISMF;  Q8YAS5, AGUA1_LISMO;  Q725C4, AGUA2_LISMF;
+      notes: ExPASy ENZYME entry EC 3.5.3.12 cross-references UniProtKB:Q725C6 (AGUA1_LISMF) as a protein
+        with this activity.
+  - subject: prot_Q8YAS5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGUA1_LISMO is an exemplar enzyme with EC 3.5.3.12 activity.
+    evidence:
+    - reference: EC:3.5.3.12
+      snippet: DR   Q725C6, AGUA1_LISMF;  Q8YAS5, AGUA1_LISMO;  Q725C4, AGUA2_LISMF;
+      notes: ExPASy ENZYME entry EC 3.5.3.12 cross-references UniProtKB:Q8YAS5 (AGUA1_LISMO) as a protein
+        with this activity.
+  - subject: prot_Q725C4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGUA2_LISMF is an exemplar enzyme with EC 3.5.3.12 activity.
+    evidence:
+    - reference: EC:3.5.3.12
+      snippet: DR   Q725C6, AGUA1_LISMF;  Q8YAS5, AGUA1_LISMO;  Q725C4, AGUA2_LISMF;
+      notes: ExPASy ENZYME entry EC 3.5.3.12 cross-references UniProtKB:Q725C4 (AGUA2_LISMF) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

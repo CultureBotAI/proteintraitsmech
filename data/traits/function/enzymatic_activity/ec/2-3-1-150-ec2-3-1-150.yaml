@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 mapped_xrefs:
@@ -30,4 +30,120 @@ definitions:
       Catalyses: (7S)-salutaridinol + acetyl-CoA = (7S)-O-acetylsalutaridinol + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of salutaridinol 7-O-acetyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.150. EC 2.3.1.150 maps to
+    exactly one curated Rhea reaction (RHEA:22856), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(7S)-salutaridinol
+    + acetyl-CoA = (7S)-O-acetylsalutaridinol + CoA". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: salutaridinol 7-O-acetyltransferase
+    grounding: EC:2.3.1.150
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (7S)-salutaridinol
+    node_type: CHEMICAL
+    grounding: CHEBI:58463
+    description: Formula C19H24NO4.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: (7S)-O-acetylsalutaridinol
+    node_type: CHEMICAL
+    grounding: CHEBI:57672
+    description: Formula C21H26NO5.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: salutaridinol 7-O-acetyltransferase activity
+    grounding: GO:0047180
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q94FT4
+    node_type: PROTEIN
+    label: SALAT_PAPSO
+    grounding: UniProtKB:Q94FT4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (7S)-salutaridinol is a substrate consumed by RHEA:22856 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22857
+      snippet: (7S)-salutaridinol + acetyl-CoA => (7S)-O-acetylsalutaridinol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:22857 declares side 22856_L as its substrates
+        (rh:substrates); the master reaction RHEA:22856 is undirected. This participant is CHEBI:58463
+        with coefficient 1. Rhea cites PMID:8537369, PMID:11404355 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by RHEA:22856 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22857
+      snippet: (7S)-salutaridinol + acetyl-CoA => (7S)-O-acetylsalutaridinol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:22857 declares side 22856_L as its substrates
+        (rh:substrates); the master reaction RHEA:22856 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:8537369, PMID:11404355 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (7S)-O-acetylsalutaridinol is a product released by RHEA:22856 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22857
+      snippet: (7S)-salutaridinol + acetyl-CoA => (7S)-O-acetylsalutaridinol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:22857 declares side 22856_R as its products
+        (rh:products); the master reaction RHEA:22856 is undirected. This participant is CHEBI:57672 with
+        coefficient 1. Rhea cites PMID:8537369, PMID:11404355 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:22856 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22857
+      snippet: (7S)-salutaridinol + acetyl-CoA => (7S)-O-acetylsalutaridinol + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:22857 declares side 22856_R as its products
+        (rh:products); the master reaction RHEA:22856 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:8537369, PMID:11404355 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.150
+      snippet: EC:2.3.1.150 > GO:salutaridinol 7-O-acetyltransferase activity ; GO:0047180
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047180 is itself a record
+        in this KB.
+  - subject: prot_Q94FT4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: SALAT_PAPSO is an exemplar enzyme with EC 2.3.1.150 activity.
+    evidence:
+    - reference: EC:2.3.1.150
+      snippet: DR   Q94FT4, SALAT_PAPSO;
+      notes: ExPASy ENZYME entry EC 2.3.1.150 cross-references UniProtKB:Q94FT4 (SALAT_PAPSO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

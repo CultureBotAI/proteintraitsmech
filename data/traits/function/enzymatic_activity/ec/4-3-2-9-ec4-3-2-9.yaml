@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.3.2.-
 synonyms:
@@ -41,4 +41,132 @@ definitions:
       Catalyses: an alpha-(gamma-L-glutamyl)-L-amino acid = 5-oxo-L-proline + an L-alpha- amino acid
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of gamma-glutamylcyclotransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.3.2.9. EC 4.3.2.9 maps to exactly
+    one curated Rhea reaction (RHEA:20505), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "an alpha-(gamma-L-glutamyl)-L-amino
+    acid = 5-oxo-L-proline + an L-alpha- amino acid". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-glutamylcyclotransferase
+    grounding: EC:4.3.2.9
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: an alpha-(gamma-L-glutamyl)-L-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:71304
+    description: Formula C7H10N2O5R.
+  - node_id: prd1
+    label: 5-oxo-L-proline
+    node_type: CHEMICAL
+    grounding: CHEBI:58402
+    description: Formula C5H6NO3.
+  - node_id: prd2
+    label: an L-alpha-amino acid
+    node_type: CHEMICAL
+    grounding: CHEBI:59869
+    description: Formula C2H4NO2R.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: gamma-glutamylcyclotransferase activity
+    grounding: GO:0003839
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q2UPC2
+    node_type: PROTEIN
+    label: ACLK_ASPOR
+    grounding: UniProtKB:Q2UPC2
+  - node_id: prot_A0A0M8N9Q3
+    node_type: PROTEIN
+    label: ETPK_ESCWE
+    grounding: UniProtKB:A0A0M8N9Q3
+  - node_id: prot_Q8GY54
+    node_type: PROTEIN
+    label: GCT21_ARATH
+    grounding: UniProtKB:Q8GY54
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an alpha-(gamma-L-glutamyl)-L-amino acid is a substrate consumed by RHEA:20505 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20506
+      snippet: an alpha-(gamma-L-glutamyl)-L-amino acid => 5-oxo-L-proline + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:20506 declares side 20505_L as its substrates
+        (rh:substrates); the master reaction RHEA:20505 is undirected. This participant is CHEBI:71304
+        with coefficient 1. Rhea cites PMID:18515354 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-oxo-L-proline is a product released by RHEA:20505 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20506
+      snippet: an alpha-(gamma-L-glutamyl)-L-amino acid => 5-oxo-L-proline + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:20506 declares side 20505_R as its products
+        (rh:products); the master reaction RHEA:20505 is undirected. This participant is CHEBI:58402 with
+        coefficient 1. Rhea cites PMID:18515354 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: an L-alpha-amino acid is a product released by RHEA:20505 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:20506
+      snippet: an alpha-(gamma-L-glutamyl)-L-amino acid => 5-oxo-L-proline + an L-alpha-amino acid
+      notes: Rhea's left-to-right directional reaction RHEA:20506 declares side 20505_R as its products
+        (rh:products); the master reaction RHEA:20505 is undirected. This participant is CHEBI:59869 with
+        coefficient 1. Rhea cites PMID:18515354 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.3.2.9
+      snippet: EC:4.3.2.9 > GO:gamma-glutamylcyclotransferase activity ; GO:0003839
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0003839 is itself a record
+        in this KB.
+  - subject: prot_Q2UPC2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ACLK_ASPOR is an exemplar enzyme with EC 4.3.2.9 activity.
+    evidence:
+    - reference: EC:4.3.2.9
+      snippet: DR   Q2UPC2, ACLK_ASPOR ;  A0A0M8N9Q3, ETPK_ESCWE ;  Q8GY54, GCT21_ARATH;
+      notes: ExPASy ENZYME entry EC 4.3.2.9 cross-references UniProtKB:Q2UPC2 (ACLK_ASPOR) as a protein
+        with this activity.
+  - subject: prot_A0A0M8N9Q3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: ETPK_ESCWE is an exemplar enzyme with EC 4.3.2.9 activity.
+    evidence:
+    - reference: EC:4.3.2.9
+      snippet: DR   Q2UPC2, ACLK_ASPOR ;  A0A0M8N9Q3, ETPK_ESCWE ;  Q8GY54, GCT21_ARATH;
+      notes: ExPASy ENZYME entry EC 4.3.2.9 cross-references UniProtKB:A0A0M8N9Q3 (ETPK_ESCWE) as a protein
+        with this activity.
+  - subject: prot_Q8GY54
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCT21_ARATH is an exemplar enzyme with EC 4.3.2.9 activity.
+    evidence:
+    - reference: EC:4.3.2.9
+      snippet: DR   Q2UPC2, ACLK_ASPOR ;  A0A0M8N9Q3, ETPK_ESCWE ;  Q8GY54, GCT21_ARATH;
+      notes: ExPASy ENZYME entry EC 4.3.2.9 cross-references UniProtKB:Q8GY54 (GCT21_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

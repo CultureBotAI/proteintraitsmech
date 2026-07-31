@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.4.13.-
 synonyms:
@@ -34,4 +34,275 @@ definitions:
       Catalyses: Hydrolysis of anserine (beta-alanyl-|-N(pi)-methyl-L-histidine), carnosine, homocarnosine, glycyl-|-leucine and other dipeptides with broad specificity
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Xaa-methyl-His dipeptidase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.4.13.5. Rhea assigns 3 curated
+    reactions to EC 3.4.13.5. No one substrate set is the class''s chemistry, so each reaction is its
+    own node — grounded to the Rhea record in this KB — and carries its own inputs and outputs. ExPASy
+    ENZYME states the catalysed reaction as: "Hydrolysis of anserine (beta-alanyl-|-N(pi)-methyl-L-histidine),
+    carnosine, homocarnosine, glycyl-|-leucine and other dipeptides with broad specificity". Substrate/product
+    direction is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master
+    reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: Xaa-methyl-His dipeptidase
+    grounding: EC:3.4.13.5
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: rxn1
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of carnosine + H2O = beta-alanine + L-histidine
+    grounding: RHEA:59360
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: carnosine + H2O = beta-alanine + L-histidine'
+  - node_id: rxn1_sub1
+    label: carnosine
+    node_type: CHEMICAL
+    grounding: CHEBI:57485
+    description: Formula C9H14N4O3.
+  - node_id: rxn1_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn1_prd1
+    label: beta-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57966
+    description: Formula C3H7NO2.
+  - node_id: rxn1_prd2
+    label: L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57595
+    description: Formula C6H9N3O2.
+  - node_id: rxn2
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of L-homocarnosine + H2O = 4-aminobutanoate + L-histidine
+    grounding: RHEA:59572
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: L-homocarnosine + H2O = 4-aminobutanoate + L-histidine'
+  - node_id: rxn2_sub1
+    label: L-homocarnosine
+    node_type: CHEMICAL
+    grounding: CHEBI:143075
+    description: Formula C10H16N4O3.
+  - node_id: rxn2_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn2_prd1
+    label: 4-aminobutanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:59888
+    description: Formula C4H9NO2.
+  - node_id: rxn2_prd2
+    label: L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:57595
+    description: Formula C6H9N3O2.
+  - node_id: rxn3
+    node_type: MOLECULAR_FUNCTION
+    label: catalysis of anserine + H2O = N(pros)-methyl-L-histidine + beta-alanine
+    grounding: RHEA:59576
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — one of the curated Rhea reactions of this
+      EC class. Full equation: anserine + H2O = N(pros)-methyl-L-histidine + beta-alanine'
+  - node_id: rxn3_sub1
+    label: anserine
+    node_type: CHEMICAL
+    grounding: CHEBI:58445
+    description: Formula C10H16N4O3.
+  - node_id: rxn3_sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: rxn3_prd1
+    label: N(pros)-methyl-L-histidine
+    node_type: CHEMICAL
+    grounding: CHEBI:143076
+    description: Formula C7H11N3O2.
+  - node_id: rxn3_prd2
+    label: beta-alanine
+    node_type: CHEMICAL
+    grounding: CHEBI:57966
+    description: Formula C3H7NO2.
+  edges:
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn1
+    description: RHEA:59360 is one of the 3 curated reactions Rhea assigns to EC 3.4.13.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:59360
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.13.5"/>
+      notes: The rh:ec triple on RHEA:59360 in rhea.rdf assigns that reaction to EC 3.4.13.5.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub1
+    description: carnosine is a substrate consumed by RHEA:59360 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59361
+      snippet: carnosine + H2O => beta-alanine + L-histidine
+      notes: Rhea's left-to-right directional reaction RHEA:59361 declares side 59360_L as its substrates
+        (rh:substrates); the master reaction RHEA:59360 is undirected. This participant is CHEBI:57485
+        with coefficient 1. Rhea cites PMID:1903095, PMID:35761267, PMID:24566305, PMID:318374 for this
+        reaction.
+  - subject: rxn1
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn1_sub2
+    description: H2O is a substrate consumed by RHEA:59360 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59361
+      snippet: carnosine + H2O => beta-alanine + L-histidine
+      notes: Rhea's left-to-right directional reaction RHEA:59361 declares side 59360_L as its substrates
+        (rh:substrates); the master reaction RHEA:59360 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:1903095, PMID:35761267, PMID:24566305, PMID:318374 for this
+        reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd1
+    description: beta-alanine is a product released by RHEA:59360 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59361
+      snippet: carnosine + H2O => beta-alanine + L-histidine
+      notes: Rhea's left-to-right directional reaction RHEA:59361 declares side 59360_R as its products
+        (rh:products); the master reaction RHEA:59360 is undirected. This participant is CHEBI:57966 with
+        coefficient 1. Rhea cites PMID:1903095, PMID:35761267, PMID:24566305, PMID:318374 for this reaction.
+  - subject: rxn1
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn1_prd2
+    description: L-histidine is a product released by RHEA:59360 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59361
+      snippet: carnosine + H2O => beta-alanine + L-histidine
+      notes: Rhea's left-to-right directional reaction RHEA:59361 declares side 59360_R as its products
+        (rh:products); the master reaction RHEA:59360 is undirected. This participant is CHEBI:57595 with
+        coefficient 1. Rhea cites PMID:1903095, PMID:35761267, PMID:24566305, PMID:318374 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn2
+    description: RHEA:59572 is one of the 3 curated reactions Rhea assigns to EC 3.4.13.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:59572
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.13.5"/>
+      notes: The rh:ec triple on RHEA:59572 in rhea.rdf assigns that reaction to EC 3.4.13.5.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub1
+    description: L-homocarnosine is a substrate consumed by RHEA:59572 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59573
+      snippet: L-homocarnosine + H2O => 4-aminobutanoate + L-histidine
+      notes: Rhea's left-to-right directional reaction RHEA:59573 declares side 59572_L as its substrates
+        (rh:substrates); the master reaction RHEA:59572 is undirected. This participant is CHEBI:143075
+        with coefficient 1. Rhea cites PMID:1903095, PMID:318374, PMID:7116644, PMID:12473676 for this
+        reaction.
+  - subject: rxn2
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn2_sub2
+    description: H2O is a substrate consumed by RHEA:59572 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59573
+      snippet: L-homocarnosine + H2O => 4-aminobutanoate + L-histidine
+      notes: Rhea's left-to-right directional reaction RHEA:59573 declares side 59572_L as its substrates
+        (rh:substrates); the master reaction RHEA:59572 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:1903095, PMID:318374, PMID:7116644, PMID:12473676 for this
+        reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd1
+    description: 4-aminobutanoate is a product released by RHEA:59572 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59573
+      snippet: L-homocarnosine + H2O => 4-aminobutanoate + L-histidine
+      notes: Rhea's left-to-right directional reaction RHEA:59573 declares side 59572_R as its products
+        (rh:products); the master reaction RHEA:59572 is undirected. This participant is CHEBI:59888 with
+        coefficient 1. Rhea cites PMID:1903095, PMID:318374, PMID:7116644, PMID:12473676 for this reaction.
+  - subject: rxn2
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn2_prd2
+    description: L-histidine is a product released by RHEA:59572 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59573
+      snippet: L-homocarnosine + H2O => 4-aminobutanoate + L-histidine
+      notes: Rhea's left-to-right directional reaction RHEA:59573 declares side 59572_R as its products
+        (rh:products); the master reaction RHEA:59572 is undirected. This participant is CHEBI:57595 with
+        coefficient 1. Rhea cites PMID:1903095, PMID:318374, PMID:7116644, PMID:12473676 for this reaction.
+  - subject: activity
+    predicate: has as a curated reaction
+    predicate_id: skos:narrowMatch
+    object: rxn3
+    description: RHEA:59576 is one of the 3 curated reactions Rhea assigns to EC 3.4.13.5; its substrates
+      are not claimed for the class as a whole.
+    evidence:
+    - reference: RHEA:59576
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.4.13.5"/>
+      notes: The rh:ec triple on RHEA:59576 in rhea.rdf assigns that reaction to EC 3.4.13.5.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub1
+    description: anserine is a substrate consumed by RHEA:59576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59577
+      snippet: anserine + H2O => N(pros)-methyl-L-histidine + beta-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:59577 declares side 59576_L as its substrates
+        (rh:substrates); the master reaction RHEA:59576 is undirected. This participant is CHEBI:58445
+        with coefficient 1. Rhea cites PMID:1903095, PMID:24566305, PMID:318374, PMID:7116644 for this
+        reaction.
+  - subject: rxn3
+    predicate: has input
+    predicate_id: RO:0002233
+    object: rxn3_sub2
+    description: H2O is a substrate consumed by RHEA:59576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59577
+      snippet: anserine + H2O => N(pros)-methyl-L-histidine + beta-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:59577 declares side 59576_L as its substrates
+        (rh:substrates); the master reaction RHEA:59576 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:1903095, PMID:24566305, PMID:318374, PMID:7116644 for this
+        reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd1
+    description: N(pros)-methyl-L-histidine is a product released by RHEA:59576 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59577
+      snippet: anserine + H2O => N(pros)-methyl-L-histidine + beta-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:59577 declares side 59576_R as its products
+        (rh:products); the master reaction RHEA:59576 is undirected. This participant is CHEBI:143076
+        with coefficient 1. Rhea cites PMID:1903095, PMID:24566305, PMID:318374, PMID:7116644 for this
+        reaction.
+  - subject: rxn3
+    predicate: has output
+    predicate_id: RO:0002234
+    object: rxn3_prd2
+    description: beta-alanine is a product released by RHEA:59576 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59577
+      snippet: anserine + H2O => N(pros)-methyl-L-histidine + beta-alanine
+      notes: Rhea's left-to-right directional reaction RHEA:59577 declares side 59576_R as its products
+        (rh:products); the master reaction RHEA:59576 is undirected. This participant is CHEBI:57966 with
+        coefficient 1. Rhea cites PMID:1903095, PMID:24566305, PMID:318374, PMID:7116644 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (15 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

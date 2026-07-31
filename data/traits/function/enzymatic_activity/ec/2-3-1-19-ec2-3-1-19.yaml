@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -41,4 +41,146 @@ definitions:
       Catalyses: butanoyl-CoA + phosphate = butanoyl phosphate + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phosphate butyryltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.19. EC 2.3.1.19 maps to exactly
+    one curated Rhea reaction (RHEA:20892), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "butanoyl-CoA
+    + phosphate = butanoyl phosphate + CoA". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phosphate butyryltransferase
+    grounding: EC:2.3.1.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: butanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57371
+    description: Formula C25H38N7O17P3S.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: butanoyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58079
+    description: Formula C4H7O5P.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: phosphate butyryltransferase activity
+    grounding: GO:0050182
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_P54530
+    node_type: PROTEIN
+    label: PTB_BACSU
+    grounding: UniProtKB:P54530
+  - node_id: prot_P58255
+    node_type: PROTEIN
+    label: PTB_CLOAB
+    grounding: UniProtKB:P58255
+  - node_id: prot_Q05624
+    node_type: PROTEIN
+    label: PTB_CLOB8
+    grounding: UniProtKB:Q05624
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: butanoyl-CoA is a substrate consumed by RHEA:20892 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20893
+      snippet: butanoyl-CoA + phosphate => butanoyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20893 declares side 20892_L as its substrates
+        (rh:substrates); the master reaction RHEA:20892 is undirected. This participant is CHEBI:57371
+        with coefficient 1. Rhea cites PMID:11400055, PMID:13840823 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:20892 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20893
+      snippet: butanoyl-CoA + phosphate => butanoyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20893 declares side 20892_L as its substrates
+        (rh:substrates); the master reaction RHEA:20892 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:11400055, PMID:13840823 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: butanoyl phosphate is a product released by RHEA:20892 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20893
+      snippet: butanoyl-CoA + phosphate => butanoyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20893 declares side 20892_R as its products
+        (rh:products); the master reaction RHEA:20892 is undirected. This participant is CHEBI:58079 with
+        coefficient 1. Rhea cites PMID:11400055, PMID:13840823 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:20892 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20893
+      snippet: butanoyl-CoA + phosphate => butanoyl phosphate + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:20893 declares side 20892_R as its products
+        (rh:products); the master reaction RHEA:20892 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:11400055, PMID:13840823 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.3.1.19
+      snippet: EC:2.3.1.19 > GO:phosphate butyryltransferase activity ; GO:0050182
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0050182 is itself a record
+        in this KB.
+  - subject: prot_P54530
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTB_BACSU is an exemplar enzyme with EC 2.3.1.19 activity.
+    evidence:
+    - reference: EC:2.3.1.19
+      snippet: DR   P54530, PTB_BACSU  ;  P58255, PTB_CLOAB  ;  Q05624, PTB_CLOB8  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.19 cross-references UniProtKB:P54530 (PTB_BACSU) as a protein
+        with this activity.
+  - subject: prot_P58255
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTB_CLOAB is an exemplar enzyme with EC 2.3.1.19 activity.
+    evidence:
+    - reference: EC:2.3.1.19
+      snippet: DR   P54530, PTB_BACSU  ;  P58255, PTB_CLOAB  ;  Q05624, PTB_CLOB8  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.19 cross-references UniProtKB:P58255 (PTB_CLOAB) as a protein
+        with this activity.
+  - subject: prot_Q05624
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PTB_CLOB8 is an exemplar enzyme with EC 2.3.1.19 activity.
+    evidence:
+    - reference: EC:2.3.1.19
+      snippet: DR   P54530, PTB_BACSU  ;  P58255, PTB_CLOAB  ;  Q05624, PTB_CLOB8  ;
+      notes: ExPASy ENZYME entry EC 2.3.1.19 cross-references UniProtKB:Q05624 (PTB_CLOB8) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

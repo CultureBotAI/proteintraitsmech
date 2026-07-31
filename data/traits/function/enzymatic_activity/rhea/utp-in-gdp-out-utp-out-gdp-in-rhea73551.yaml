@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:46398
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,95 @@ definitions:
       Catalyses the reaction: UTP(in) + GDP(out) = UTP(out) + GDP(in)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of UTP(in) + GDP(out) = UTP(out) + GDP(in)
+  description: 'Substrate-to-product chemistry of RHEA:73551, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:73552 (rh:substrates → 73551_L, rh:products → 73551_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of UTP(in) + GDP(out) = UTP(out) + GDP(in)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:73551
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: UTP(in) + GDP(out) = UTP(out) + GDP(in)'
+  - node_id: sub1
+    label: UTP (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+    description: Formula C9H11N2O15P3.
+  - node_id: sub2
+    label: GDP (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+    description: Formula C10H12N5O11P2.
+  - node_id: prd1
+    label: UTP (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:46398
+    description: Formula C9H11N2O15P3.
+  - node_id: prd2
+    label: GDP (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:58189
+    description: Formula C10H12N5O11P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: UTP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73552
+      snippet: UTP(in) + GDP(out) => UTP(out) + GDP(in)
+      notes: Rhea's left-to-right directional reaction RHEA:73552 declares side 73551_L as its substrates
+        (rh:substrates); the master reaction RHEA:73551 is undirected. This participant is CHEBI:46398
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:25320081
+        for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: GDP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73552
+      snippet: UTP(in) + GDP(out) => UTP(out) + GDP(in)
+      notes: Rhea's left-to-right directional reaction RHEA:73552 declares side 73551_L as its substrates
+        (rh:substrates); the master reaction RHEA:73551 is undirected. This participant is CHEBI:58189
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:25320081 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: UTP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73552
+      snippet: UTP(in) + GDP(out) => UTP(out) + GDP(in)
+      notes: Rhea's left-to-right directional reaction RHEA:73552 declares side 73551_R as its products
+        (rh:products); the master reaction RHEA:73551 is undirected. This participant is CHEBI:46398 with
+        coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites PMID:25320081
+        for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: GDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:73552
+      snippet: UTP(in) + GDP(out) => UTP(out) + GDP(in)
+      notes: Rhea's left-to-right directional reaction RHEA:73552 declares side 73551_R as its products
+        (rh:products); the master reaction RHEA:73551 is undirected. This participant is CHEBI:58189 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:25320081
+        for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

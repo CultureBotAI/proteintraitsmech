@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:64771
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,81 @@ definitions:
       Catalyses the reaction: 2 a 1-acyl-sn-glycero-3-phospho-(1D-myo-inositol) = sn-glycero-3-phospho-1D-myo-inositol + a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 a 1-acyl-sn-glycero-3-phospho-(1D-myo-inositol) = sn-glycero-3-phospho-1D-myo-inosito…
+  description: Substrate-to-product chemistry of RHEA:33167, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:33168 (rh:substrates → 33167_L, rh:products → 33167_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 a 1-acyl-sn-glycero-3-phospho-(1D-myo-inositol) = sn-glycero-3-phospho-1D-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:33167
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 a 1-acyl-sn-glycero-3-phospho-(1D-myo-inositol) = sn-glycero-3-phospho-1D-myo-inositol
+      + a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol)'
+  - node_id: sub1
+    label: a 1-acyl-sn-glycero-3-phospho-(1D-myo-inositol)
+    node_type: CHEMICAL
+    grounding: CHEBI:64771
+    description: Formula C10H17O12PR.
+  - node_id: prd1
+    label: sn-glycero-3-phospho-1D-myo-inositol
+    node_type: CHEMICAL
+    grounding: CHEBI:58444
+    description: Formula C9H18O11P.
+  - node_id: prd2
+    label: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol)
+    node_type: CHEMICAL
+    grounding: CHEBI:57880
+    description: Formula C11H16O13PR2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 1-acyl-sn-glycero-3-phospho-(1D-myo-inositol) is a substrate consumed by this reaction
+      (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:33168
+      snippet: 2 a 1-acyl-sn-glycero-3-phospho-(1D-myo-inositol) => sn-glycero-3-phospho-1D-myo-inositol
+        + a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol)
+      notes: Rhea's left-to-right directional reaction RHEA:33168 declares side 33167_L as its substrates
+        (rh:substrates); the master reaction RHEA:33167 is undirected. This participant is CHEBI:64771
+        with coefficient 2. Rhea cites PMID:10497163 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: sn-glycero-3-phospho-1D-myo-inositol is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:33168
+      snippet: 2 a 1-acyl-sn-glycero-3-phospho-(1D-myo-inositol) => sn-glycero-3-phospho-1D-myo-inositol
+        + a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol)
+      notes: Rhea's left-to-right directional reaction RHEA:33168 declares side 33167_R as its products
+        (rh:products); the master reaction RHEA:33167 is undirected. This participant is CHEBI:58444 with
+        coefficient 1. Rhea cites PMID:10497163 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol) is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:33168
+      snippet: 2 a 1-acyl-sn-glycero-3-phospho-(1D-myo-inositol) => sn-glycero-3-phospho-1D-myo-inositol
+        + a 1,2-diacyl-sn-glycero-3-phospho-(1D-myo-inositol)
+      notes: Rhea's left-to-right directional reaction RHEA:33168 declares side 33167_R as its products
+        (rh:products); the master reaction RHEA:33167 is undirected. This participant is CHEBI:57880 with
+        coefficient 1. Rhea cites PMID:10497163 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

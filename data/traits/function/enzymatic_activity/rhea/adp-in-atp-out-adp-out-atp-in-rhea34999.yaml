@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:456216
     role: SUBSTRATE_OR_PRODUCT
@@ -35,4 +35,111 @@ definitions:
       Catalyses the reaction: ADP(in) + ATP(out) = ADP(out) + ATP(in)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ADP(in) + ATP(out) = ADP(out) + ATP(in)
+  description: 'Substrate-to-product chemistry of RHEA:34999, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:35000 (rh:substrates → 34999_L, rh:products → 34999_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of ADP(in) + ATP(out) = ADP(out) + ATP(in)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:34999
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: ADP(in) + ATP(out) = ADP(out) + ATP(in)'
+  - node_id: sub1
+    label: ADP (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: sub2
+    label: ATP (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: ADP (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prd2
+    label: ATP (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ATP:ADP antiporter activity
+    grounding: GO:0005471
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ADP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35000
+      snippet: ADP(in) + ATP(out) => ADP(out) + ATP(in)
+      notes: Rhea's left-to-right directional reaction RHEA:35000 declares side 34999_L as its substrates
+        (rh:substrates); the master reaction RHEA:34999 is undirected. This participant is CHEBI:456216
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:31341297,
+        PMID:30611538, PMID:24474793, PMID:19429682 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35000
+      snippet: ADP(in) + ATP(out) => ADP(out) + ATP(in)
+      notes: Rhea's left-to-right directional reaction RHEA:35000 declares side 34999_L as its substrates
+        (rh:substrates); the master reaction RHEA:34999 is undirected. This participant is CHEBI:30616
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:31341297, PMID:30611538, PMID:24474793, PMID:19429682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35000
+      snippet: ADP(in) + ATP(out) => ADP(out) + ATP(in)
+      notes: Rhea's left-to-right directional reaction RHEA:35000 declares side 34999_R as its products
+        (rh:products); the master reaction RHEA:34999 is undirected. This participant is CHEBI:456216
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:31341297, PMID:30611538, PMID:24474793, PMID:19429682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ATP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:35000
+      snippet: ADP(in) + ATP(out) => ADP(out) + ATP(in)
+      notes: Rhea's left-to-right directional reaction RHEA:35000 declares side 34999_R as its products
+        (rh:products); the master reaction RHEA:34999 is undirected. This participant is CHEBI:30616 with
+        coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:31341297,
+        PMID:30611538, PMID:24474793, PMID:19429682 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:34999
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0005471"/>
+      notes: The rdfs:seeAlso triple on RHEA:34999 in rhea.rdf. GO term GO:0005471 is itself a record
+        in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

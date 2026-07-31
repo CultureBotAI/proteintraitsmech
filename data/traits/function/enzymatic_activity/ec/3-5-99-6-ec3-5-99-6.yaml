@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.99.-
 synonyms:
@@ -49,4 +49,148 @@ definitions:
       Catalyses: alpha-D-glucosamine 6-phosphate + H2O = beta-D-fructose 6-phosphate + NH4(+)
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of glucosamine-6-phosphate deaminase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.99.6. EC 3.5.99.6 maps to exactly
+    one curated Rhea reaction (RHEA:12172), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "alpha-D-glucosamine
+    6-phosphate + H2O = beta-D-fructose 6-phosphate + NH4(+)". Substrate/product direction is the one
+    Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: glucosamine-6-phosphate deaminase
+    grounding: EC:3.5.99.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: alpha-D-glucosamine 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:75989
+    description: Formula C6H13NO8P.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: beta-D-fructose 6-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:57634
+    description: Formula C6H11O9P.
+  - node_id: prd2
+    label: NH4(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:28938
+    description: Formula H4N.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: glucosamine-6-phosphate deaminase activity
+    grounding: GO:0004342
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_A0KYQ7
+    node_type: PROTEIN
+    label: AGAS_SHESA
+    grounding: UniProtKB:A0KYQ7
+  - node_id: prot_O31458
+    node_type: PROTEIN
+    label: GAMA_BACSU
+    grounding: UniProtKB:O31458
+  - node_id: prot_Q5JDU3
+    node_type: PROTEIN
+    label: GLMD_THEKO
+    grounding: UniProtKB:Q5JDU3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: alpha-D-glucosamine 6-phosphate is a substrate consumed by RHEA:12172 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:12173
+      snippet: alpha-D-glucosamine 6-phosphate + H2O => beta-D-fructose 6-phosphate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12173 declares side 12172_L as its substrates
+        (rh:substrates); the master reaction RHEA:12172 is undirected. This participant is CHEBI:75989
+        with coefficient 1. Rhea cites PMID:16199574 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:12172 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12173
+      snippet: alpha-D-glucosamine 6-phosphate + H2O => beta-D-fructose 6-phosphate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12173 declares side 12172_L as its substrates
+        (rh:substrates); the master reaction RHEA:12172 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:16199574 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-fructose 6-phosphate is a product released by RHEA:12172 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:12173
+      snippet: alpha-D-glucosamine 6-phosphate + H2O => beta-D-fructose 6-phosphate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12173 declares side 12172_R as its products
+        (rh:products); the master reaction RHEA:12172 is undirected. This participant is CHEBI:57634 with
+        coefficient 1. Rhea cites PMID:16199574 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NH4(+) is a product released by RHEA:12172 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:12173
+      snippet: alpha-D-glucosamine 6-phosphate + H2O => beta-D-fructose 6-phosphate + NH4(+)
+      notes: Rhea's left-to-right directional reaction RHEA:12173 declares side 12172_R as its products
+        (rh:products); the master reaction RHEA:12172 is undirected. This participant is CHEBI:28938 with
+        coefficient 1. Rhea cites PMID:16199574 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.99.6
+      snippet: EC:3.5.99.6 > GO:glucosamine-6-phosphate deaminase activity ; GO:0004342
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0004342 is itself a record
+        in this KB.
+  - subject: prot_A0KYQ7
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGAS_SHESA is an exemplar enzyme with EC 3.5.99.6 activity.
+    evidence:
+    - reference: EC:3.5.99.6
+      snippet: DR   A0KYQ7, AGAS_SHESA ;  O31458, GAMA_BACSU ;  Q5JDU3, GLMD_THEKO ;
+      notes: ExPASy ENZYME entry EC 3.5.99.6 cross-references UniProtKB:A0KYQ7 (AGAS_SHESA) as a protein
+        with this activity.
+  - subject: prot_O31458
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GAMA_BACSU is an exemplar enzyme with EC 3.5.99.6 activity.
+    evidence:
+    - reference: EC:3.5.99.6
+      snippet: DR   A0KYQ7, AGAS_SHESA ;  O31458, GAMA_BACSU ;  Q5JDU3, GLMD_THEKO ;
+      notes: ExPASy ENZYME entry EC 3.5.99.6 cross-references UniProtKB:O31458 (GAMA_BACSU) as a protein
+        with this activity.
+  - subject: prot_Q5JDU3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GLMD_THEKO is an exemplar enzyme with EC 3.5.99.6 activity.
+    evidence:
+    - reference: EC:3.5.99.6
+      snippet: DR   A0KYQ7, AGAS_SHESA ;  O31458, GAMA_BACSU ;  Q5JDU3, GLMD_THEKO ;
+      notes: ExPASy ENZYME entry EC 3.5.99.6 cross-references UniProtKB:Q5JDU3 (GLMD_THEKO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

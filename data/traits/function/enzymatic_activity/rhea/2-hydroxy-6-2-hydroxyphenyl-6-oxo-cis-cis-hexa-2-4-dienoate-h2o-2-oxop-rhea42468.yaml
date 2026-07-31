@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.7.1.8
     mapping_source: rhea2ec
@@ -25,4 +25,112 @@ definitions:
       Catalyses the reaction: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O = 2-oxopent-4-enoate + salicylate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O = 2-oxopent-4-enoat…
+  description: Substrate-to-product chemistry of RHEA:42468, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:42469 (rh:substrates → 42468_L, rh:products → 42468_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O = 2-oxop…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:42468
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O = 2-oxopent-4-enoate
+      + salicylate'
+  - node_id: sub1
+    label: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate
+    node_type: CHEMICAL
+    grounding: CHEBI:79172
+    description: Formula C12H8O5.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 2-oxopent-4-enoate
+    node_type: CHEMICAL
+    grounding: CHEBI:11641
+    description: Formula C5H5O3.
+  - node_id: prd2
+    label: salicylate
+    node_type: CHEMICAL
+    grounding: CHEBI:30762
+    description: Formula C7H5O3.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 2,6-dioxo-6-phenylhexa-3-enoate hydrolase
+    grounding: EC:3.7.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate is a substrate consumed
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42469
+      snippet: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O => 2-oxopent-4-enoate
+        + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:42469 declares side 42468_L as its substrates
+        (rh:substrates); the master reaction RHEA:42468 is undirected. This participant is CHEBI:79172
+        with coefficient 1.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42469
+      snippet: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O => 2-oxopent-4-enoate
+        + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:42469 declares side 42468_L as its substrates
+        (rh:substrates); the master reaction RHEA:42468 is undirected. This participant is CHEBI:15377
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 2-oxopent-4-enoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42469
+      snippet: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O => 2-oxopent-4-enoate
+        + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:42469 declares side 42468_R as its products
+        (rh:products); the master reaction RHEA:42468 is undirected. This participant is CHEBI:11641 with
+        coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: salicylate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42469
+      snippet: 2-hydroxy-6-(2-hydroxyphenyl)-6-oxo-cis,cis-hexa-2,4-dienoate + H2O => 2-oxopent-4-enoate
+        + salicylate
+      notes: Rhea's left-to-right directional reaction RHEA:42469 declares side 42468_R as its products
+        (rh:products); the master reaction RHEA:42468 is undirected. This participant is CHEBI:30762 with
+        coefficient 1.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.7.1.8; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:42468
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.7.1.8"/>
+      notes: The rh:ec triple on RHEA:42468 in rhea.rdf. EC 3.7.1.8 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

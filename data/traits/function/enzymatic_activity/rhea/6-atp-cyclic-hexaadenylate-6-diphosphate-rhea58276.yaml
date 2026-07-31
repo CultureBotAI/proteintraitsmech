@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:30616
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,75 @@ definitions:
       Catalyses the reaction: 6 ATP = cyclic hexaadenylate + 6 diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 6 ATP = cyclic hexaadenylate + 6 diphosphate
+  description: Substrate-to-product chemistry of RHEA:58276, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:58277 (rh:substrates → 58276_L, rh:products → 58276_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 6 ATP = cyclic hexaadenylate + 6 diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:58276
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 6 ATP = cyclic hexaadenylate + 6 diphosphate'
+  - node_id: sub1
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: cyclic hexaadenylate
+    node_type: CHEMICAL
+    grounding: CHEBI:142456
+    description: Formula C60H66N30O36P6.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ATP is a substrate consumed by this reaction (stoichiometric coefficient 6).
+    evidence:
+    - reference: RHEA:58277
+      snippet: 6 ATP => cyclic hexaadenylate + 6 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58277 declares side 58276_L as its substrates
+        (rh:substrates); the master reaction RHEA:58276 is undirected. This participant is CHEBI:30616
+        with coefficient 6. Rhea cites PMID:28663439, PMID:28722012 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: cyclic hexaadenylate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:58277
+      snippet: 6 ATP => cyclic hexaadenylate + 6 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58277 declares side 58276_R as its products
+        (rh:products); the master reaction RHEA:58276 is undirected. This participant is CHEBI:142456
+        with coefficient 1. Rhea cites PMID:28663439, PMID:28722012 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 6).
+    evidence:
+    - reference: RHEA:58277
+      snippet: 6 ATP => cyclic hexaadenylate + 6 diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:58277 declares side 58276_R as its products
+        (rh:products); the master reaction RHEA:58276 is undirected. This participant is CHEBI:33019 with
+        coefficient 6. Rhea cites PMID:28663439, PMID:28722012 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.99.-
 synonyms:
@@ -38,4 +38,66 @@ definitions:
       Catalyses: n lipid-linked O-antigen repeat units = a lipid-linked O antigen + (n-1) polyisoprenyl diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of O-antigen polymerase Wzy
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.99.27. No Rhea reaction is assigned
+    to this EC class, so no substrate or product is asserted; the graph records only the exemplar enzymes
+    and the equivalent GO molecular function. ExPASy ENZYME states the catalysed reaction as: "n lipid-linked
+    O-antigen repeat units = a lipid-linked O antigen + (n-1) polyisoprenyl diphosphate".'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: O-antigen polymerase Wzy
+    grounding: EC:2.4.99.27
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: prot_Q58YW1
+    node_type: PROTEIN
+    label: WZY_ECOLX
+    grounding: UniProtKB:Q58YW1
+  - node_id: prot_G3XCW3
+    node_type: PROTEIN
+    label: WZY_PSEAE
+    grounding: UniProtKB:G3XCW3
+  - node_id: prot_Q00474
+    node_type: PROTEIN
+    label: WZY_SALMU
+    grounding: UniProtKB:Q00474
+  edges:
+  - subject: prot_Q58YW1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: WZY_ECOLX is an exemplar enzyme with EC 2.4.99.27 activity.
+    evidence:
+    - reference: EC:2.4.99.27
+      snippet: DR   Q58YW1, WZY_ECOLX  ;  G3XCW3, WZY_PSEAE  ;  Q00474, WZY_SALMU  ;
+      notes: ExPASy ENZYME entry EC 2.4.99.27 cross-references UniProtKB:Q58YW1 (WZY_ECOLX) as a protein
+        with this activity.
+  - subject: prot_G3XCW3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: WZY_PSEAE is an exemplar enzyme with EC 2.4.99.27 activity.
+    evidence:
+    - reference: EC:2.4.99.27
+      snippet: DR   Q58YW1, WZY_ECOLX  ;  G3XCW3, WZY_PSEAE  ;  Q00474, WZY_SALMU  ;
+      notes: ExPASy ENZYME entry EC 2.4.99.27 cross-references UniProtKB:G3XCW3 (WZY_PSEAE) as a protein
+        with this activity.
+  - subject: prot_Q00474
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: WZY_SALMU is an exemplar enzyme with EC 2.4.99.27 activity.
+    evidence:
+    - reference: EC:2.4.99.27
+      snippet: DR   Q58YW1, WZY_ECOLX  ;  G3XCW3, WZY_PSEAE  ;  Q00474, WZY_SALMU  ;
+      notes: ExPASy ENZYME entry EC 2.4.99.27 cross-references UniProtKB:Q00474 (WZY_SALMU) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (3 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

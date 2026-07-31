@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:190922
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,125 @@ definitions:
       Catalyses the reaction: 5-O-(L-seryl)-dTMP in DNA + H(+) = 5-aminoethoxy-methyl-dUMP in DNA + CO2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 5-O-(L-seryl)-dTMP in DNA + H(+) = 5-aminoethoxy-methyl-dUMP in DNA + CO2
+  description: Substrate-to-product chemistry of RHEA:71571, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:71572 (rh:substrates → 71571_L, rh:products → 71571_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 5-O-(L-seryl)-dTMP in DNA + H(+) = 5-aminoethoxy-methyl-dUMP in DNA + CO2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:71571
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 5-O-(L-seryl)-dTMP in DNA + H(+) = 5-aminoethoxy-methyl-dUMP in DNA + CO2'
+  - node_id: sub1
+    label: 5-O-(L-seryl)-dTMP in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18046
+    description: Rhea compound GENERIC:18046.
+  - node_id: sub1_rp1
+    label: 5-O-(L-seryl)-dTMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18046 (5-O-(L-seryl)-dTMP
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:190922
+  - node_id: sub2
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: prd1
+    label: 5-aminoethoxy-methyl-dUMP in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:18047
+    description: Rhea compound GENERIC:18047.
+  - node_id: prd1_rp1
+    label: 5-aminoethoxy-methyl-dUMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:18047 (5-aminoethoxy-methyl-dUMP
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:190923
+  - node_id: prd2
+    label: CO2
+    node_type: CHEMICAL
+    grounding: CHEBI:16526
+    description: Formula CO2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 5-O-(L-seryl)-dTMP in DNA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:71572
+      snippet: 5-O-(L-seryl)-dTMP in DNA + H(+) => 5-aminoethoxy-methyl-dUMP in DNA + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71572 declares side 71571_L as its substrates
+        (rh:substrates); the master reaction RHEA:71571 is undirected. This participant is GENERIC:18046
+        with coefficient 1. Rhea cites PMID:34522950 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 5-O-(L-seryl)-dTMP residue is the reactive part of 5-O-(L-seryl)-dTMP in DNA.
+    evidence:
+    - reference: RHEA:71571
+      snippet: 5-O-(L-seryl)-dTMP residue
+      notes: Rhea compound GENERIC:18046 (5-O-(L-seryl)-dTMP in DNA) declares rh:reactivePart = 5-O-(L-seryl)-dTMP
+        residue (CHEBI:190922), formula C13H17N3O10P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71572
+      snippet: 5-O-(L-seryl)-dTMP in DNA + H(+) => 5-aminoethoxy-methyl-dUMP in DNA + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71572 declares side 71571_L as its substrates
+        (rh:substrates); the master reaction RHEA:71571 is undirected. This participant is CHEBI:15378
+        with coefficient 1. Rhea cites PMID:34522950 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 5-aminoethoxy-methyl-dUMP in DNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:71572
+      snippet: 5-O-(L-seryl)-dTMP in DNA + H(+) => 5-aminoethoxy-methyl-dUMP in DNA + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71572 declares side 71571_R as its products
+        (rh:products); the master reaction RHEA:71571 is undirected. This participant is GENERIC:18047
+        with coefficient 1. Rhea cites PMID:34522950 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 5-aminoethoxy-methyl-dUMP residue is the reactive part of 5-aminoethoxy-methyl-dUMP in
+      DNA.
+    evidence:
+    - reference: RHEA:71571
+      snippet: 5-aminoethoxy-methyl-dUMP residue
+      notes: Rhea compound GENERIC:18047 (5-aminoethoxy-methyl-dUMP in DNA) declares rh:reactivePart =
+        5-aminoethoxy-methyl-dUMP residue (CHEBI:190923), formula C12H18N3O8P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CO2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:71572
+      snippet: 5-O-(L-seryl)-dTMP in DNA + H(+) => 5-aminoethoxy-methyl-dUMP in DNA + CO2
+      notes: Rhea's left-to-right directional reaction RHEA:71572 declares side 71571_R as its products
+        (rh:products); the master reaction RHEA:71571 is undirected. This participant is CHEBI:16526 with
+        coefficient 1. Rhea cites PMID:34522950 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

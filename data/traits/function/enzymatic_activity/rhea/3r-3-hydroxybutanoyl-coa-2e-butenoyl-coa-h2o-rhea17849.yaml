@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.55
     mapping_source: rhea2ec
@@ -34,4 +34,168 @@ definitions:
       Catalyses the reaction: (3R)-3-hydroxybutanoyl-CoA = (2E)-butenoyl-CoA + H2O
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (3R)-3-hydroxybutanoyl-CoA = (2E)-butenoyl-CoA + H2O
+  description: Substrate-to-product chemistry of RHEA:17849, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:17850 (rh:substrates → 17849_L, rh:products → 17849_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (3R)-3-hydroxybutanoyl-CoA = (2E)-butenoyl-CoA + H2O
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:17849
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (3R)-3-hydroxybutanoyl-CoA = (2E)-butenoyl-CoA + H2O'
+  - node_id: sub1
+    label: (3R)-3-hydroxybutanoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57315
+    description: Formula C25H38N7O18P3S.
+  - node_id: prd1
+    label: (2E)-butenoyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57332
+    description: Formula C25H36N7O17P3S.
+  - node_id: prd2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: (2E)-butenoyl-CoA hydratase activity
+    grounding: GO:0120092
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: 3-hydroxybutyryl-CoA dehydratase
+    grounding: EC:4.2.1.55
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_C5AZ74
+    node_type: PROTEIN
+    label: CROR_METEA
+    grounding: UniProtKB:C5AZ74
+  - node_id: prot_O53664
+    node_type: PROTEIN
+    label: HTDX_MYCTU
+    grounding: UniProtKB:O53664
+  - node_id: prot_P9WNP3
+    node_type: PROTEIN
+    label: HTDZ_MYCTU
+    grounding: UniProtKB:P9WNP3
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (3R)-3-hydroxybutanoyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17850
+      snippet: (3R)-3-hydroxybutanoyl-CoA => (2E)-butenoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:17850 declares side 17849_L as its substrates
+        (rh:substrates); the master reaction RHEA:17849 is undirected. This participant is CHEBI:57315
+        with coefficient 1. Rhea cites PMID:5808333, PMID:11872727, PMID:18375556, PMID:20511508 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (2E)-butenoyl-CoA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:17850
+      snippet: (3R)-3-hydroxybutanoyl-CoA => (2E)-butenoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:17850 declares side 17849_R as its products
+        (rh:products); the master reaction RHEA:17849 is undirected. This participant is CHEBI:57332 with
+        coefficient 1. Rhea cites PMID:5808333, PMID:11872727, PMID:18375556, PMID:20511508 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:17850
+      snippet: (3R)-3-hydroxybutanoyl-CoA => (2E)-butenoyl-CoA + H2O
+      notes: Rhea's left-to-right directional reaction RHEA:17850 declares side 17849_R as its products
+        (rh:products); the master reaction RHEA:17849 is undirected. This participant is CHEBI:15377 with
+        coefficient 1. Rhea cites PMID:5808333, PMID:11872727, PMID:18375556, PMID:20511508 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:17849
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0120092"/>
+      notes: The rdfs:seeAlso triple on RHEA:17849 in rhea.rdf. GO term GO:0120092 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.55; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:17849
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.55"/>
+      notes: The rh:ec triple on RHEA:17849 in rhea.rdf. EC 4.2.1.55 is itself a record in this KB.
+  - subject: prot_C5AZ74
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CROR_METEA is an exemplar enzyme carrying EC 4.2.1.55, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.55
+      snippet: DR   C5AZ74, CROR_METEA ;  O53664, HTDX_MYCTU ;  P9WNP3, HTDZ_MYCTU ;
+      notes: ExPASy ENZYME entry EC 4.2.1.55 cross-references UniProtKB:C5AZ74 (CROR_METEA) as a protein
+        with this activity.
+    - reference: RHEA:17849
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.55"/>
+      notes: Rhea assigns RHEA:17849 to EC 4.2.1.55, and EC 4.2.1.55 maps to exactly one Rhea master reaction
+        (RHEA:17849), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O53664
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HTDX_MYCTU is an exemplar enzyme carrying EC 4.2.1.55, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.55
+      snippet: DR   C5AZ74, CROR_METEA ;  O53664, HTDX_MYCTU ;  P9WNP3, HTDZ_MYCTU ;
+      notes: ExPASy ENZYME entry EC 4.2.1.55 cross-references UniProtKB:O53664 (HTDX_MYCTU) as a protein
+        with this activity.
+    - reference: RHEA:17849
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.55"/>
+      notes: Rhea assigns RHEA:17849 to EC 4.2.1.55, and EC 4.2.1.55 maps to exactly one Rhea master reaction
+        (RHEA:17849), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P9WNP3
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HTDZ_MYCTU is an exemplar enzyme carrying EC 4.2.1.55, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.55
+      snippet: DR   C5AZ74, CROR_METEA ;  O53664, HTDX_MYCTU ;  P9WNP3, HTDZ_MYCTU ;
+      notes: ExPASy ENZYME entry EC 4.2.1.55 cross-references UniProtKB:P9WNP3 (HTDZ_MYCTU) as a protein
+        with this activity.
+    - reference: RHEA:17849
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.55"/>
+      notes: Rhea assigns RHEA:17849 to EC 4.2.1.55, and EC 4.2.1.55 maps to exactly one Rhea master reaction
+        (RHEA:17849), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

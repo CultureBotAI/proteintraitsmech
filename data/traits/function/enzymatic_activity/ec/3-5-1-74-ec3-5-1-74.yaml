@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:3.5.1.-
 mapped_xrefs:
@@ -38,4 +38,147 @@ definitions:
       Catalyses: taurochenodeoxycholate + H2O = chenodeoxycholate + taurine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of chenodeoxycholoyltaurine hydrolase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:3.5.1.74. EC 3.5.1.74 maps to exactly
+    one curated Rhea reaction (RHEA:16309), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "taurochenodeoxycholate
+    + H2O = chenodeoxycholate + taurine". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: chenodeoxycholoyltaurine hydrolase
+    grounding: EC:3.5.1.74
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: taurochenodeoxycholate
+    node_type: CHEMICAL
+    grounding: CHEBI:9407
+    description: Formula C26H44NO6S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: chenodeoxycholate
+    node_type: CHEMICAL
+    grounding: CHEBI:36234
+    description: Formula C24H39O4.
+  - node_id: prd2
+    label: taurine
+    node_type: CHEMICAL
+    grounding: CHEBI:507393
+    description: Formula C2H7NO3S.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: chenodeoxycholoyltaurine hydrolase activity
+    grounding: GO:0047742
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_B8DUI5
+    node_type: PROTEIN
+    label: CBH_BIFA0
+    grounding: UniProtKB:B8DUI5
+  - node_id: prot_P0DXD2
+    node_type: PROTEIN
+    label: CBH_BIFL2
+    grounding: UniProtKB:P0DXD2
+  - node_id: prot_Q9KK62
+    node_type: PROTEIN
+    label: CBH_BIFLN
+    grounding: UniProtKB:Q9KK62
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: taurochenodeoxycholate is a substrate consumed by RHEA:16309 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:16310
+      snippet: taurochenodeoxycholate + H2O => chenodeoxycholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:16310 declares side 16309_L as its substrates
+        (rh:substrates); the master reaction RHEA:16309 is undirected. This participant is CHEBI:9407
+        with coefficient 1. Rhea cites PMID:10831430, PMID:12810727 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:16309 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16310
+      snippet: taurochenodeoxycholate + H2O => chenodeoxycholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:16310 declares side 16309_L as its substrates
+        (rh:substrates); the master reaction RHEA:16309 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:10831430, PMID:12810727 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: chenodeoxycholate is a product released by RHEA:16309 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16310
+      snippet: taurochenodeoxycholate + H2O => chenodeoxycholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:16310 declares side 16309_R as its products
+        (rh:products); the master reaction RHEA:16309 is undirected. This participant is CHEBI:36234 with
+        coefficient 1. Rhea cites PMID:10831430, PMID:12810727 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: taurine is a product released by RHEA:16309 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:16310
+      snippet: taurochenodeoxycholate + H2O => chenodeoxycholate + taurine
+      notes: Rhea's left-to-right directional reaction RHEA:16310 declares side 16309_R as its products
+        (rh:products); the master reaction RHEA:16309 is undirected. This participant is CHEBI:507393
+        with coefficient 1. Rhea cites PMID:10831430, PMID:12810727 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:3.5.1.74
+      snippet: EC:3.5.1.74 > GO:chenodeoxycholoyltaurine hydrolase activity ; GO:0047742
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047742 is itself a record
+        in this KB.
+  - subject: prot_B8DUI5
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBH_BIFA0 is an exemplar enzyme with EC 3.5.1.74 activity.
+    evidence:
+    - reference: EC:3.5.1.74
+      snippet: DR   B8DUI5, CBH_BIFA0  ;  P0DXD2, CBH_BIFL2  ;  Q9KK62, CBH_BIFLN  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.74 cross-references UniProtKB:B8DUI5 (CBH_BIFA0) as a protein
+        with this activity.
+  - subject: prot_P0DXD2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBH_BIFL2 is an exemplar enzyme with EC 3.5.1.74 activity.
+    evidence:
+    - reference: EC:3.5.1.74
+      snippet: DR   B8DUI5, CBH_BIFA0  ;  P0DXD2, CBH_BIFL2  ;  Q9KK62, CBH_BIFLN  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.74 cross-references UniProtKB:P0DXD2 (CBH_BIFL2) as a protein
+        with this activity.
+  - subject: prot_Q9KK62
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CBH_BIFLN is an exemplar enzyme with EC 3.5.1.74 activity.
+    evidence:
+    - reference: EC:3.5.1.74
+      snippet: DR   B8DUI5, CBH_BIFA0  ;  P0DXD2, CBH_BIFL2  ;  Q9KK62, CBH_BIFLN  ;
+      notes: ExPASy ENZYME entry EC 3.5.1.74 cross-references UniProtKB:Q9KK62 (CBH_BIFLN) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

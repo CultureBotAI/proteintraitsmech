@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:142345
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,99 @@ definitions:
       Catalyses the reaction: di-trans,nona-cis-dodecaprenyl phosphate + UDP-alpha-D-galacturonate = beta-D-galacturonosyl di-trans,nona-cis-dodecaprenyl phosphate + UDP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of di-trans,nona-cis-dodecaprenyl phosphate + UDP-alpha-D-galacturonate =
+    beta-D-galacturo…
+  description: Substrate-to-product chemistry of RHEA:26006, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:26007 (rh:substrates → 26006_L, rh:products → 26006_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of di-trans,nona-cis-dodecaprenyl phosphate + UDP-alpha-D-galacturonate = beta-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:26006
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: di-trans,nona-cis-dodecaprenyl phosphate + UDP-alpha-D-galacturonate = beta-D-galacturonosyl
+      di-trans,nona-cis-dodecaprenyl phosphate + UDP'
+  - node_id: sub1
+    label: di-trans,nona-cis-dodecaprenyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:142345
+    description: Formula C60H97O4P.
+  - node_id: sub2
+    label: UDP-alpha-D-galacturonate
+    node_type: CHEMICAL
+    grounding: CHEBI:57635
+    description: Formula C15H19N2O18P2.
+  - node_id: prd1
+    label: beta-D-galacturonosyl di-trans,nona-cis-dodecaprenyl phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:142217
+    description: Formula C66H105O10P.
+  - node_id: prd2
+    label: UDP
+    node_type: CHEMICAL
+    grounding: CHEBI:58223
+    description: Formula C9H11N2O12P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: di-trans,nona-cis-dodecaprenyl phosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:26007
+      snippet: di-trans,nona-cis-dodecaprenyl phosphate + UDP-alpha-D-galacturonate => beta-D-galacturonosyl
+        di-trans,nona-cis-dodecaprenyl phosphate + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:26007 declares side 26006_L as its substrates
+        (rh:substrates); the master reaction RHEA:26006 is undirected. This participant is CHEBI:142345
+        with coefficient 1. Rhea cites PMID:16497671, PMID:22110131 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: UDP-alpha-D-galacturonate is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:26007
+      snippet: di-trans,nona-cis-dodecaprenyl phosphate + UDP-alpha-D-galacturonate => beta-D-galacturonosyl
+        di-trans,nona-cis-dodecaprenyl phosphate + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:26007 declares side 26006_L as its substrates
+        (rh:substrates); the master reaction RHEA:26006 is undirected. This participant is CHEBI:57635
+        with coefficient 1. Rhea cites PMID:16497671, PMID:22110131 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-D-galacturonosyl di-trans,nona-cis-dodecaprenyl phosphate is a product released
+      by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26007
+      snippet: di-trans,nona-cis-dodecaprenyl phosphate + UDP-alpha-D-galacturonate => beta-D-galacturonosyl
+        di-trans,nona-cis-dodecaprenyl phosphate + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:26007 declares side 26006_R as its products
+        (rh:products); the master reaction RHEA:26006 is undirected. This participant is CHEBI:142217
+        with coefficient 1. Rhea cites PMID:16497671, PMID:22110131 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: UDP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:26007
+      snippet: di-trans,nona-cis-dodecaprenyl phosphate + UDP-alpha-D-galacturonate => beta-D-galacturonosyl
+        di-trans,nona-cis-dodecaprenyl phosphate + UDP
+      notes: Rhea's left-to-right directional reaction RHEA:26007 declares side 26006_R as its products
+        (rh:products); the master reaction RHEA:26006 is undirected. This participant is CHEBI:58223 with
+        coefficient 1. Rhea cites PMID:16497671, PMID:22110131 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

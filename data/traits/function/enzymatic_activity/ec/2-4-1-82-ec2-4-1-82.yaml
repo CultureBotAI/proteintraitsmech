@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 synonyms:
@@ -45,4 +45,147 @@ definitions:
       Catalyses: alpha-D-galactosyl-(1->3)-1D-myo-inositol + sucrose = raffinose + myo- inositol
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of galactinol--sucrose galactosyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.82. EC 2.4.1.82 maps to exactly
+    one curated Rhea reaction (RHEA:20161), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "alpha-D-galactosyl-(1->3)-1D-myo-inositol
+    + sucrose = raffinose + myo- inositol". Substrate/product direction is the one Rhea states in each
+    reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: galactinol--sucrose galactosyltransferase
+    grounding: EC:2.4.1.82
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: alpha-D-galactosyl-(1->3)-1D-myo-inositol
+    node_type: CHEMICAL
+    grounding: CHEBI:17505
+    description: Formula C12H22O11.
+  - node_id: sub2
+    label: sucrose
+    node_type: CHEMICAL
+    grounding: CHEBI:17992
+    description: Formula C12H22O11.
+  - node_id: prd1
+    label: raffinose
+    node_type: CHEMICAL
+    grounding: CHEBI:16634
+    description: Formula C18H32O16.
+  - node_id: prd2
+    label: myo-inositol
+    node_type: CHEMICAL
+    grounding: CHEBI:17268
+    description: Formula C6H12O6.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: galactinol-sucrose galactosyltransferase activity
+    grounding: GO:0047274
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q84VX0
+    node_type: PROTEIN
+    label: RFS1_ARATH
+    grounding: UniProtKB:Q84VX0
+  - node_id: prot_Q94A08
+    node_type: PROTEIN
+    label: RFS2_ARATH
+    grounding: UniProtKB:Q94A08
+  - node_id: prot_Q9SYJ4
+    node_type: PROTEIN
+    label: RFS4_ARATH
+    grounding: UniProtKB:Q9SYJ4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: alpha-D-galactosyl-(1->3)-1D-myo-inositol is a substrate consumed by RHEA:20161 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:20162
+      snippet: alpha-D-galactosyl-(1->3)-1D-myo-inositol + sucrose => raffinose + myo-inositol
+      notes: Rhea's left-to-right directional reaction RHEA:20162 declares side 20161_L as its substrates
+        (rh:substrates); the master reaction RHEA:20161 is undirected. This participant is CHEBI:17505
+        with coefficient 1. Rhea cites PMID:12244450, PMID:17206375 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: sucrose is a substrate consumed by RHEA:20161 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20162
+      snippet: alpha-D-galactosyl-(1->3)-1D-myo-inositol + sucrose => raffinose + myo-inositol
+      notes: Rhea's left-to-right directional reaction RHEA:20162 declares side 20161_L as its substrates
+        (rh:substrates); the master reaction RHEA:20161 is undirected. This participant is CHEBI:17992
+        with coefficient 1. Rhea cites PMID:12244450, PMID:17206375 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: raffinose is a product released by RHEA:20161 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20162
+      snippet: alpha-D-galactosyl-(1->3)-1D-myo-inositol + sucrose => raffinose + myo-inositol
+      notes: Rhea's left-to-right directional reaction RHEA:20162 declares side 20161_R as its products
+        (rh:products); the master reaction RHEA:20161 is undirected. This participant is CHEBI:16634 with
+        coefficient 1. Rhea cites PMID:12244450, PMID:17206375 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: myo-inositol is a product released by RHEA:20161 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:20162
+      snippet: alpha-D-galactosyl-(1->3)-1D-myo-inositol + sucrose => raffinose + myo-inositol
+      notes: Rhea's left-to-right directional reaction RHEA:20162 declares side 20161_R as its products
+        (rh:products); the master reaction RHEA:20161 is undirected. This participant is CHEBI:17268 with
+        coefficient 1. Rhea cites PMID:12244450, PMID:17206375 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:2.4.1.82
+      snippet: EC:2.4.1.82 > GO:galactinol-sucrose galactosyltransferase activity ; GO:0047274
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047274 is itself a record
+        in this KB.
+  - subject: prot_Q84VX0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RFS1_ARATH is an exemplar enzyme with EC 2.4.1.82 activity.
+    evidence:
+    - reference: EC:2.4.1.82
+      snippet: DR   Q84VX0, RFS1_ARATH ;  Q94A08, RFS2_ARATH ;  Q9SYJ4, RFS4_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.4.1.82 cross-references UniProtKB:Q84VX0 (RFS1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q94A08
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RFS2_ARATH is an exemplar enzyme with EC 2.4.1.82 activity.
+    evidence:
+    - reference: EC:2.4.1.82
+      snippet: DR   Q84VX0, RFS1_ARATH ;  Q94A08, RFS2_ARATH ;  Q9SYJ4, RFS4_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.4.1.82 cross-references UniProtKB:Q94A08 (RFS2_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9SYJ4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RFS4_ARATH is an exemplar enzyme with EC 2.4.1.82 activity.
+    evidence:
+    - reference: EC:2.4.1.82
+      snippet: DR   Q84VX0, RFS1_ARATH ;  Q94A08, RFS2_ARATH ;  Q9SYJ4, RFS4_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.4.1.82 cross-references UniProtKB:Q9SYJ4 (RFS4_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

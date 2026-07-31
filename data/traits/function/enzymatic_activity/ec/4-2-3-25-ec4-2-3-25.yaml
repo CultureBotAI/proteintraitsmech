@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -43,4 +43,149 @@ definitions:
       Catalyses: (2E)-geranyl diphosphate + H2O = (S)-linalool + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of S-linalool synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.25. EC 4.2.3.25 maps to exactly
+    one curated Rhea reaction (RHEA:24116), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E)-geranyl
+    diphosphate + H2O = (S)-linalool + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: S-linalool synthase
+    grounding: EC:4.2.3.25
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E)-geranyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58057
+    description: Formula C10H17O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (S)-linalool
+    node_type: CHEMICAL
+    grounding: CHEBI:98
+    description: Formula C10H18O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: S-linalool synthase activity
+    grounding: GO:0034007
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q84UV0
+    node_type: PROTEIN
+    label: LINS_ARATH
+    grounding: UniProtKB:Q84UV0
+  - node_id: prot_Q6ZH94
+    node_type: PROTEIN
+    label: LINS_ORYSJ
+    grounding: UniProtKB:Q6ZH94
+  - node_id: prot_Q96376
+    node_type: PROTEIN
+    label: LIS_CLABR
+    grounding: UniProtKB:Q96376
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E)-geranyl diphosphate is a substrate consumed by RHEA:24116 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24117
+      snippet: (2E)-geranyl diphosphate + H2O => (S)-linalool + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24117 declares side 24116_L as its substrates
+        (rh:substrates); the master reaction RHEA:24116 is undirected. This participant is CHEBI:58057
+        with coefficient 1. Rhea cites PMID:22908266, PMID:8768373, PMID:11532177, PMID:7864636 for this
+        reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by RHEA:24116 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24117
+      snippet: (2E)-geranyl diphosphate + H2O => (S)-linalool + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24117 declares side 24116_L as its substrates
+        (rh:substrates); the master reaction RHEA:24116 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:22908266, PMID:8768373, PMID:11532177, PMID:7864636 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (S)-linalool is a product released by RHEA:24116 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24117
+      snippet: (2E)-geranyl diphosphate + H2O => (S)-linalool + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24117 declares side 24116_R as its products
+        (rh:products); the master reaction RHEA:24116 is undirected. This participant is CHEBI:98 with
+        coefficient 1. Rhea cites PMID:22908266, PMID:8768373, PMID:11532177, PMID:7864636 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:24116 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:24117
+      snippet: (2E)-geranyl diphosphate + H2O => (S)-linalool + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:24117 declares side 24116_R as its products
+        (rh:products); the master reaction RHEA:24116 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:22908266, PMID:8768373, PMID:11532177, PMID:7864636 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.25
+      snippet: EC:4.2.3.25 > GO:S-linalool synthase activity ; GO:0034007
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0034007 is itself a record
+        in this KB.
+  - subject: prot_Q84UV0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LINS_ARATH is an exemplar enzyme with EC 4.2.3.25 activity.
+    evidence:
+    - reference: EC:4.2.3.25
+      snippet: DR   Q84UV0, LINS_ARATH ;  Q6ZH94, LINS_ORYSJ ;  Q96376, LIS_CLABR  ;
+      notes: ExPASy ENZYME entry EC 4.2.3.25 cross-references UniProtKB:Q84UV0 (LINS_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q6ZH94
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LINS_ORYSJ is an exemplar enzyme with EC 4.2.3.25 activity.
+    evidence:
+    - reference: EC:4.2.3.25
+      snippet: DR   Q84UV0, LINS_ARATH ;  Q6ZH94, LINS_ORYSJ ;  Q96376, LIS_CLABR  ;
+      notes: ExPASy ENZYME entry EC 4.2.3.25 cross-references UniProtKB:Q6ZH94 (LINS_ORYSJ) as a protein
+        with this activity.
+  - subject: prot_Q96376
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LIS_CLABR is an exemplar enzyme with EC 4.2.3.25 activity.
+    evidence:
+    - reference: EC:4.2.3.25
+      snippet: DR   Q84UV0, LINS_ARATH ;  Q6ZH94, LINS_ORYSJ ;  Q96376, LIS_CLABR  ;
+      notes: ExPASy ENZYME entry EC 4.2.3.25 cross-references UniProtKB:Q96376 (LIS_CLABR) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

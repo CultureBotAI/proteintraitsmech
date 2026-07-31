@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.4.1.319
     mapping_source: rhea2ec
@@ -26,4 +26,140 @@ definitions:
       Catalyses the reaction: [(1->4)-beta-D-mannosyl](n) + phosphate = [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose 1-phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [(1->4)-beta-D-mannosyl](n) + phosphate = [(1->4)-beta-D-mannosyl](n-1)
+    + alpha-D-manno…
+  description: Substrate-to-product chemistry of RHEA:45772, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:45773 (rh:substrates → 45772_L, rh:products → 45772_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of [(1->4)-beta-D-mannosyl](n) + phosphate = [(1->4)-beta-D-mannosyl](n-1) + al…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:45772
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: [(1->4)-beta-D-mannosyl](n) + phosphate = [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose
+      1-phosphate'
+  - node_id: sub1
+    label: '[(1->4)-beta-D-mannosyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:27857
+    xrefs:
+    - RHEA-COMP:11351
+    description: Rhea compound POLYMER:11351. Formula H2O(C6H10O5)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: '[(1->4)-beta-D-mannosyl](n-1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:27857
+    xrefs:
+    - RHEA-COMP:11350
+    description: Rhea compound POLYMER:11350. Formula H2O(C6H10O5)<i><sub>n-1</sub></i>. Polymerisation
+      index n-1.
+  - node_id: prd2
+    label: alpha-D-mannose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58409
+    description: Formula C6H11O9P.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: beta-1,4-mannooligosaccharide phosphorylase
+    grounding: EC:2.4.1.319
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_E6UBR9
+    node_type: PROTEIN
+    label: MOSP_RUMA7
+    grounding: UniProtKB:E6UBR9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[(1->4)-beta-D-mannosyl](n) is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:45773
+      snippet: '[(1->4)-beta-D-mannosyl](n) + phosphate => [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:45773 declares side 45772_L as its substrates
+        (rh:substrates); the master reaction RHEA:45772 is undirected. This participant is POLYMER:11351
+        with coefficient 1. Rhea cites PMID:23093406 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45773
+      snippet: '[(1->4)-beta-D-mannosyl](n) + phosphate => [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:45773 declares side 45772_L as its substrates
+        (rh:substrates); the master reaction RHEA:45772 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:23093406 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[(1->4)-beta-D-mannosyl](n-1) is a product released by this reaction (stoichiometric
+      coefficient 1).'
+    evidence:
+    - reference: RHEA:45773
+      snippet: '[(1->4)-beta-D-mannosyl](n) + phosphate => [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:45773 declares side 45772_R as its products
+        (rh:products); the master reaction RHEA:45772 is undirected. This participant is POLYMER:11350
+        with coefficient 1. Rhea cites PMID:23093406 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: alpha-D-mannose 1-phosphate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45773
+      snippet: '[(1->4)-beta-D-mannosyl](n) + phosphate => [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:45773 declares side 45772_R as its products
+        (rh:products); the master reaction RHEA:45772 is undirected. This participant is CHEBI:58409 with
+        coefficient 1. Rhea cites PMID:23093406 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.4.1.319; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:45772
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.319"/>
+      notes: The rh:ec triple on RHEA:45772 in rhea.rdf. EC 2.4.1.319 is itself a record in this KB.
+  - subject: prot_E6UBR9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MOSP_RUMA7 is an exemplar enzyme carrying EC 2.4.1.319, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.4.1.319
+      snippet: DR   E6UBR9, MOSP_RUMA7 ;
+      notes: ExPASy ENZYME entry EC 2.4.1.319 cross-references UniProtKB:E6UBR9 (MOSP_RUMA7) as a protein
+        with this activity.
+    - reference: RHEA:45772
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.4.1.319"/>
+      notes: Rhea assigns RHEA:45772 to EC 2.4.1.319, and EC 2.4.1.319 maps to exactly one Rhea master
+        reaction (RHEA:45772), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

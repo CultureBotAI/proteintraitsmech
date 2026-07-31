@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.5.1.56
     mapping_source: rhea2ec
@@ -30,4 +30,182 @@ definitions:
       Catalyses the reaction: N,N-dimethylformamide + H2O = dimethylamine + formate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N,N-dimethylformamide + H2O = dimethylamine + formate
+  description: Substrate-to-product chemistry of RHEA:19517, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:19518 (rh:substrates → 19517_L, rh:products → 19517_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N,N-dimethylformamide + H2O = dimethylamine + formate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:19517
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N,N-dimethylformamide + H2O = dimethylamine + formate'
+  - node_id: sub1
+    label: N,N-dimethylformamide
+    node_type: CHEMICAL
+    grounding: CHEBI:17741
+    description: Formula C3H7NO.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: dimethylamine
+    node_type: CHEMICAL
+    grounding: CHEBI:58040
+    description: Formula C2H8N.
+  - node_id: prd2
+    label: formate
+    node_type: CHEMICAL
+    grounding: CHEBI:15740
+    description: Formula CHO2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N,N-dimethylformamidase activity
+    grounding: GO:0050116
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: N,N-dimethylformamidase
+    grounding: EC:3.5.1.56
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9LCC1
+    node_type: PROTEIN
+    label: DMFAA_ALCSP
+    grounding: UniProtKB:Q9LCC1
+  - node_id: prot_C9DQ22
+    node_type: PROTEIN
+    label: DMFAA_PARAH
+    grounding: UniProtKB:C9DQ22
+  - node_id: prot_Q9LCC0
+    node_type: PROTEIN
+    label: DMFAB_ALCSP
+    grounding: UniProtKB:Q9LCC0
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N,N-dimethylformamide is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19518
+      snippet: N,N-dimethylformamide + H2O => dimethylamine + formate
+      notes: Rhea's left-to-right directional reaction RHEA:19518 declares side 19517_L as its substrates
+        (rh:substrates); the master reaction RHEA:19517 is undirected. This participant is CHEBI:17741
+        with coefficient 1. Rhea cites PMID:3732281, PMID:10664842 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19518
+      snippet: N,N-dimethylformamide + H2O => dimethylamine + formate
+      notes: Rhea's left-to-right directional reaction RHEA:19518 declares side 19517_L as its substrates
+        (rh:substrates); the master reaction RHEA:19517 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:3732281, PMID:10664842 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dimethylamine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19518
+      snippet: N,N-dimethylformamide + H2O => dimethylamine + formate
+      notes: Rhea's left-to-right directional reaction RHEA:19518 declares side 19517_R as its products
+        (rh:products); the master reaction RHEA:19517 is undirected. This participant is CHEBI:58040 with
+        coefficient 1. Rhea cites PMID:3732281, PMID:10664842 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: formate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:19518
+      snippet: N,N-dimethylformamide + H2O => dimethylamine + formate
+      notes: Rhea's left-to-right directional reaction RHEA:19518 declares side 19517_R as its products
+        (rh:products); the master reaction RHEA:19517 is undirected. This participant is CHEBI:15740 with
+        coefficient 1. Rhea cites PMID:3732281, PMID:10664842 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:19517
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050116"/>
+      notes: The rdfs:seeAlso triple on RHEA:19517 in rhea.rdf. GO term GO:0050116 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.5.1.56; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:19517
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.56"/>
+      notes: The rh:ec triple on RHEA:19517 in rhea.rdf. EC 3.5.1.56 is itself a record in this KB.
+  - subject: prot_Q9LCC1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DMFAA_ALCSP is an exemplar enzyme carrying EC 3.5.1.56, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.56
+      snippet: DR   Q9LCC1, DMFAA_ALCSP;  C9DQ22, DMFAA_PARAH;  Q9LCC0, DMFAB_ALCSP;
+      notes: ExPASy ENZYME entry EC 3.5.1.56 cross-references UniProtKB:Q9LCC1 (DMFAA_ALCSP) as a protein
+        with this activity.
+    - reference: RHEA:19517
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.56"/>
+      notes: Rhea assigns RHEA:19517 to EC 3.5.1.56, and EC 3.5.1.56 maps to exactly one Rhea master reaction
+        (RHEA:19517), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_C9DQ22
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DMFAA_PARAH is an exemplar enzyme carrying EC 3.5.1.56, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.56
+      snippet: DR   Q9LCC1, DMFAA_ALCSP;  C9DQ22, DMFAA_PARAH;  Q9LCC0, DMFAB_ALCSP;
+      notes: ExPASy ENZYME entry EC 3.5.1.56 cross-references UniProtKB:C9DQ22 (DMFAA_PARAH) as a protein
+        with this activity.
+    - reference: RHEA:19517
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.56"/>
+      notes: Rhea assigns RHEA:19517 to EC 3.5.1.56, and EC 3.5.1.56 maps to exactly one Rhea master reaction
+        (RHEA:19517), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q9LCC0
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: DMFAB_ALCSP is an exemplar enzyme carrying EC 3.5.1.56, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.5.1.56
+      snippet: DR   Q9LCC1, DMFAA_ALCSP;  C9DQ22, DMFAA_PARAH;  Q9LCC0, DMFAB_ALCSP;
+      notes: ExPASy ENZYME entry EC 3.5.1.56 cross-references UniProtKB:Q9LCC0 (DMFAB_ALCSP) as a protein
+        with this activity.
+    - reference: RHEA:19517
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.5.1.56"/>
+      notes: Rhea assigns RHEA:19517 to EC 3.5.1.56, and EC 3.5.1.56 maps to exactly one Rhea master reaction
+        (RHEA:19517), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

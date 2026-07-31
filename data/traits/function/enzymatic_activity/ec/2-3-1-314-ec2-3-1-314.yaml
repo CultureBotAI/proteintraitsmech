@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.1.-
 synonyms:
@@ -35,4 +35,118 @@ definitions:
       Catalyses: phytol + a fatty acyl-CoA = a fatty acid phytyl ester + CoA
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phytol O-acyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.1.314. EC 2.3.1.314 maps to
+    exactly one curated Rhea reaction (RHEA:68128), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "phytol
+    + a fatty acyl-CoA = a fatty acid phytyl ester + CoA". Substrate/product direction is the one Rhea
+    states in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phytol O-acyltransferase
+    grounding: EC:2.3.1.314
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: phytol
+    node_type: CHEMICAL
+    grounding: CHEBI:17327
+    description: Formula C20H40O.
+  - node_id: sub2
+    label: a fatty acyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:77636
+    description: Formula C22H31N7O17P3SR.
+  - node_id: prd1
+    label: a fatty acid phytyl ester
+    node_type: CHEMICAL
+    grounding: CHEBI:177021
+    description: Formula C21H39O2R.
+  - node_id: prd2
+    label: CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57287
+    description: Formula C21H32N7O16P3S.
+  - node_id: prot_Q9ZVN2
+    node_type: PROTEIN
+    label: PES1_ARATH
+    grounding: UniProtKB:Q9ZVN2
+  - node_id: prot_Q9LW26
+    node_type: PROTEIN
+    label: PES2_ARATH
+    grounding: UniProtKB:Q9LW26
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: phytol is a substrate consumed by RHEA:68128 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68129
+      snippet: phytol + a fatty acyl-CoA => a fatty acid phytyl ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:68129 declares side 68128_L as its substrates
+        (rh:substrates); the master reaction RHEA:68128 is undirected. This participant is CHEBI:17327
+        with coefficient 1. Rhea cites PMID:22623494 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: a fatty acyl-CoA is a substrate consumed by RHEA:68128 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68129
+      snippet: phytol + a fatty acyl-CoA => a fatty acid phytyl ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:68129 declares side 68128_L as its substrates
+        (rh:substrates); the master reaction RHEA:68128 is undirected. This participant is CHEBI:77636
+        with coefficient 1. Rhea cites PMID:22623494 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a fatty acid phytyl ester is a product released by RHEA:68128 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:68129
+      snippet: phytol + a fatty acyl-CoA => a fatty acid phytyl ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:68129 declares side 68128_R as its products
+        (rh:products); the master reaction RHEA:68128 is undirected. This participant is CHEBI:177021
+        with coefficient 1. Rhea cites PMID:22623494 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: CoA is a product released by RHEA:68128 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:68129
+      snippet: phytol + a fatty acyl-CoA => a fatty acid phytyl ester + CoA
+      notes: Rhea's left-to-right directional reaction RHEA:68129 declares side 68128_R as its products
+        (rh:products); the master reaction RHEA:68128 is undirected. This participant is CHEBI:57287 with
+        coefficient 1. Rhea cites PMID:22623494 for this reaction.
+  - subject: prot_Q9ZVN2
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PES1_ARATH is an exemplar enzyme with EC 2.3.1.314 activity.
+    evidence:
+    - reference: EC:2.3.1.314
+      snippet: DR   Q9ZVN2, PES1_ARATH ;  Q9LW26, PES2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.3.1.314 cross-references UniProtKB:Q9ZVN2 (PES1_ARATH) as a protein
+        with this activity.
+  - subject: prot_Q9LW26
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PES2_ARATH is an exemplar enzyme with EC 2.3.1.314 activity.
+    evidence:
+    - reference: EC:2.3.1.314
+      snippet: DR   Q9ZVN2, PES1_ARATH ;  Q9LW26, PES2_ARATH ;
+      notes: ExPASy ENZYME entry EC 2.3.1.314 cross-references UniProtKB:Q9LW26 (PES2_ARATH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

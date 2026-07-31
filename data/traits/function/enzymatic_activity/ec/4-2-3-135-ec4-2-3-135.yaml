@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -39,4 +39,117 @@ definitions:
       Catalyses: (2E,6E)-farnesyl diphosphate = Delta(6)-protoilludene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of Delta(6)-protoilludene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.135. EC 4.2.3.135 maps to
+    exactly one curated Rhea reaction (RHEA:34695), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "(2E,6E)-farnesyl
+    diphosphate = Delta(6)-protoilludene + diphosphate". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: Delta(6)-protoilludene synthase
+    grounding: EC:4.2.3.135
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: prd1
+    label: Delta(6)-protoilludene
+    node_type: CHEMICAL
+    grounding: CHEBI:68655
+    description: Formula C15H24.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: prot_A0A5Q0QN66
+    node_type: PROTEIN
+    label: AGR6_CYCAE
+    grounding: UniProtKB:A0A5Q0QN66
+  - node_id: prot_A0A5Q0QNH9
+    node_type: PROTEIN
+    label: AGR7_CYCAE
+    grounding: UniProtKB:A0A5Q0QNH9
+  - node_id: prot_P0DL13
+    node_type: PROTEIN
+    label: PRO1_ARMGA
+    grounding: UniProtKB:P0DL13
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by RHEA:34695 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34696
+      snippet: (2E,6E)-farnesyl diphosphate => Delta(6)-protoilludene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34696 declares side 34695_L as its substrates
+        (rh:substrates); the master reaction RHEA:34695 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:24166732, PMID:21148562 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: Delta(6)-protoilludene is a product released by RHEA:34695 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34696
+      snippet: (2E,6E)-farnesyl diphosphate => Delta(6)-protoilludene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34696 declares side 34695_R as its products
+        (rh:products); the master reaction RHEA:34695 is undirected. This participant is CHEBI:68655 with
+        coefficient 1. Rhea cites PMID:24166732, PMID:21148562 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:34695 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34696
+      snippet: (2E,6E)-farnesyl diphosphate => Delta(6)-protoilludene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:34696 declares side 34695_R as its products
+        (rh:products); the master reaction RHEA:34695 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:24166732, PMID:21148562 for this reaction.
+  - subject: prot_A0A5Q0QN66
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGR6_CYCAE is an exemplar enzyme with EC 4.2.3.135 activity.
+    evidence:
+    - reference: EC:4.2.3.135
+      snippet: DR   A0A5Q0QN66, AGR6_CYCAE ;  A0A5Q0QNH9, AGR7_CYCAE ;  P0DL13, PRO1_ARMGA ;
+      notes: ExPASy ENZYME entry EC 4.2.3.135 cross-references UniProtKB:A0A5Q0QN66 (AGR6_CYCAE) as a
+        protein with this activity.
+  - subject: prot_A0A5Q0QNH9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGR7_CYCAE is an exemplar enzyme with EC 4.2.3.135 activity.
+    evidence:
+    - reference: EC:4.2.3.135
+      snippet: DR   A0A5Q0QN66, AGR6_CYCAE ;  A0A5Q0QNH9, AGR7_CYCAE ;  P0DL13, PRO1_ARMGA ;
+      notes: ExPASy ENZYME entry EC 4.2.3.135 cross-references UniProtKB:A0A5Q0QNH9 (AGR7_CYCAE) as a
+        protein with this activity.
+  - subject: prot_P0DL13
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PRO1_ARMGA is an exemplar enzyme with EC 4.2.3.135 activity.
+    evidence:
+    - reference: EC:4.2.3.135
+      snippet: DR   A0A5Q0QN66, AGR6_CYCAE ;  A0A5Q0QNH9, AGR7_CYCAE ;  P0DL13, PRO1_ARMGA ;
+      notes: ExPASy ENZYME entry EC 4.2.3.135 cross-references UniProtKB:P0DL13 (PRO1_ARMGA) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

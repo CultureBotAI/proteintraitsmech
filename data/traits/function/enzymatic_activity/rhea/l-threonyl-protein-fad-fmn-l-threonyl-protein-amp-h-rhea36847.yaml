@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.7.1.180
     mapping_source: rhea2ec
@@ -30,4 +30,231 @@ definitions:
       Catalyses the reaction: L-threonyl-[protein] + FAD = FMN-L-threonyl-[protein] + AMP + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-threonyl-[protein] + FAD = FMN-L-threonyl-[protein] + AMP + H(+)
+  description: Substrate-to-product chemistry of RHEA:36847, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:36848 (rh:substrates → 36847_L, rh:products → 36847_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-threonyl-[protein] + FAD = FMN-L-threonyl-[protein] + AMP + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:36847
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-threonyl-[protein] + FAD = FMN-L-threonyl-[protein] + AMP + H(+)'
+  - node_id: sub1
+    label: L-threonyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11060
+    description: Rhea compound GENERIC:11060.
+  - node_id: sub1_rp1
+    label: L-threonine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11060 (L-threonyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:30013
+  - node_id: sub2
+    label: FAD
+    node_type: CHEMICAL
+    grounding: CHEBI:57692
+    description: Formula C27H30N9O15P2.
+  - node_id: prd1
+    label: FMN-L-threonyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11061
+    description: Rhea compound GENERIC:11061.
+  - node_id: prd1_rp1
+    label: FMN-L-threonine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11061 (FMN-L-threonyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:74257
+  - node_id: prd2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: flavin transferase activity
+    grounding: GO:7770036
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: FAD:protein FMN transferase
+    grounding: EC:2.7.1.180
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_B5XP00
+    node_type: PROTEIN
+    label: APBE1_KLEV3
+    grounding: UniProtKB:B5XP00
+  - node_id: prot_B5XRA9
+    node_type: PROTEIN
+    label: APBE2_KLEV3
+    grounding: UniProtKB:B5XRA9
+  - node_id: prot_Q52718
+    node_type: PROTEIN
+    label: APBEF_RHOCA
+    grounding: UniProtKB:Q52718
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-threonyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36848
+      snippet: L-threonyl-[protein] + FAD => FMN-L-threonyl-[protein] + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36848 declares side 36847_L as its substrates
+        (rh:substrates); the master reaction RHEA:36847 is undirected. This participant is GENERIC:11060
+        with coefficient 1. Rhea cites PMID:23558683 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: L-threonine residue is the reactive part of L-threonyl-[protein].
+    evidence:
+    - reference: RHEA:36847
+      snippet: L-threonine residue
+      notes: Rhea compound GENERIC:11060 (L-threonyl-[protein]) declares rh:reactivePart = L-threonine
+        residue (CHEBI:30013), formula C4H7NO2.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: FAD is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36848
+      snippet: L-threonyl-[protein] + FAD => FMN-L-threonyl-[protein] + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36848 declares side 36847_L as its substrates
+        (rh:substrates); the master reaction RHEA:36847 is undirected. This participant is CHEBI:57692
+        with coefficient 1. Rhea cites PMID:23558683 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: FMN-L-threonyl-[protein] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:36848
+      snippet: L-threonyl-[protein] + FAD => FMN-L-threonyl-[protein] + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36848 declares side 36847_R as its products
+        (rh:products); the master reaction RHEA:36847 is undirected. This participant is GENERIC:11061
+        with coefficient 1. Rhea cites PMID:23558683 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: FMN-L-threonine residue is the reactive part of FMN-L-threonyl-[protein].
+    evidence:
+    - reference: RHEA:36847
+      snippet: FMN-L-threonine residue
+      notes: Rhea compound GENERIC:11061 (FMN-L-threonyl-[protein]) declares rh:reactivePart = FMN-L-threonine
+        residue (CHEBI:74257), formula C21H24N5O10P.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: AMP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36848
+      snippet: L-threonyl-[protein] + FAD => FMN-L-threonyl-[protein] + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36848 declares side 36847_R as its products
+        (rh:products); the master reaction RHEA:36847 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:23558683 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:36848
+      snippet: L-threonyl-[protein] + FAD => FMN-L-threonyl-[protein] + AMP + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:36848 declares side 36847_R as its products
+        (rh:products); the master reaction RHEA:36847 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:23558683 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:36847
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_7770036"/>
+      notes: The rdfs:seeAlso triple on RHEA:36847 in rhea.rdf. GO term GO:7770036 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.7.1.180; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:36847
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.180"/>
+      notes: The rh:ec triple on RHEA:36847 in rhea.rdf. EC 2.7.1.180 is itself a record in this KB.
+  - subject: prot_B5XP00
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APBE1_KLEV3 is an exemplar enzyme carrying EC 2.7.1.180, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.1.180
+      snippet: DR   B5XP00, APBE1_KLEV3;  B5XRA9, APBE2_KLEV3;  Q52718, APBEF_RHOCA;
+      notes: ExPASy ENZYME entry EC 2.7.1.180 cross-references UniProtKB:B5XP00 (APBE1_KLEV3) as a protein
+        with this activity.
+    - reference: RHEA:36847
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.180"/>
+      notes: Rhea assigns RHEA:36847 to EC 2.7.1.180, and EC 2.7.1.180 maps to exactly one Rhea master
+        reaction (RHEA:36847), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_B5XRA9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APBE2_KLEV3 is an exemplar enzyme carrying EC 2.7.1.180, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.1.180
+      snippet: DR   B5XP00, APBE1_KLEV3;  B5XRA9, APBE2_KLEV3;  Q52718, APBEF_RHOCA;
+      notes: ExPASy ENZYME entry EC 2.7.1.180 cross-references UniProtKB:B5XRA9 (APBE2_KLEV3) as a protein
+        with this activity.
+    - reference: RHEA:36847
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.180"/>
+      notes: Rhea assigns RHEA:36847 to EC 2.7.1.180, and EC 2.7.1.180 maps to exactly one Rhea master
+        reaction (RHEA:36847), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+  - subject: prot_Q52718
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: APBEF_RHOCA is an exemplar enzyme carrying EC 2.7.1.180, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:2.7.1.180
+      snippet: DR   B5XP00, APBE1_KLEV3;  B5XRA9, APBE2_KLEV3;  Q52718, APBEF_RHOCA;
+      notes: ExPASy ENZYME entry EC 2.7.1.180 cross-references UniProtKB:Q52718 (APBEF_RHOCA) as a protein
+        with this activity.
+    - reference: RHEA:36847
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.7.1.180"/>
+      notes: Rhea assigns RHEA:36847 to EC 2.7.1.180, and EC 2.7.1.180 maps to exactly one Rhea master
+        reaction (RHEA:36847), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (12 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

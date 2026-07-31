@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:1949
     role: SUBSTRATE_OR_PRODUCT
@@ -18,4 +18,59 @@ definitions:
       Catalyses the reaction: 4alpha-methylzymosterol = zymosterol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4alpha-methylzymosterol = zymosterol
+  description: Substrate-to-product chemistry of RHEA:42456, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:42457 (rh:substrates → 42456_L, rh:products → 42456_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Participant structure was checked by re-rendering
+    Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 4alpha-methylzymosterol = zymosterol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:42456
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 4alpha-methylzymosterol = zymosterol'
+  - node_id: sub1
+    label: 4alpha-methylzymosterol
+    node_type: CHEMICAL
+    grounding: CHEBI:1949
+    description: Formula C28H46O.
+  - node_id: prd1
+    label: zymosterol
+    node_type: CHEMICAL
+    grounding: CHEBI:18252
+    description: Formula C27H44O.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4alpha-methylzymosterol is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:42457
+      snippet: 4alpha-methylzymosterol => zymosterol
+      notes: Rhea's left-to-right directional reaction RHEA:42457 declares side 42456_L as its substrates
+        (rh:substrates); the master reaction RHEA:42456 is undirected. This participant is CHEBI:1949
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: zymosterol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:42457
+      snippet: 4alpha-methylzymosterol => zymosterol
+      notes: Rhea's left-to-right directional reaction RHEA:42457 declares side 42456_R as its products
+        (rh:products); the master reaction RHEA:42456 is undirected. This participant is CHEBI:18252 with
+        coefficient 1.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.5.7.2
     mapping_source: rhea2ec
@@ -30,4 +30,190 @@ definitions:
       Catalyses the reaction: reduced coenzyme F420-(gamma-L-Glu)(n) + 2 oxidized [2Fe-2S]-[ferredoxin] = oxidized coenzyme F420-(gamma-L-Glu)(n) + 2 reduced [2Fe-2S]-[ferredoxin] + 3 H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of reduced coenzyme F420-(gamma-L-Glu)(n) + 2 oxidized [2Fe-2S]-[ferredoxin]
+    = oxidized co…
+  description: Substrate-to-product chemistry of RHEA:42324, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:42325 (rh:substrates → 42324_L, rh:products → 42324_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of reduced coenzyme F420-(gamma-L-Glu)(n) + 2 oxidized [2Fe-2S]-[ferredoxin] =…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:42324
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: reduced coenzyme F420-(gamma-L-Glu)(n) + 2 oxidized [2Fe-2S]-[ferredoxin] = oxidized
+      coenzyme F420-(gamma-L-Glu)(n) + 2 reduced [2Fe-2S]-[ferredoxin] + 3 H(+)'
+  - node_id: sub1
+    label: reduced coenzyme F420-(gamma-L-Glu)(n)
+    node_type: CHEMICAL
+    grounding: CHEBI:139511
+    xrefs:
+    - RHEA-COMP:14378
+    description: Rhea compound POLYMER:14378. Formula C19H22N3O12P(C5H6NO3)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: sub2
+    label: oxidized [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10000
+    description: Rhea compound GENERIC:10000.
+  - node_id: sub2_rp1
+    label: '[2Fe-2S](2+)'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10000 (oxidized
+      [2Fe-2S]-[ferredoxin]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33737
+  - node_id: prd1
+    label: oxidized coenzyme F420-(gamma-L-Glu)(n)
+    node_type: CHEMICAL
+    grounding: CHEBI:133980
+    xrefs:
+    - RHEA-COMP:12939
+    description: Rhea compound POLYMER:12939. Formula C19H19N3O12P(C5H6NO3)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: prd2
+    label: reduced [2Fe-2S]-[ferredoxin]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10001
+    description: Rhea compound GENERIC:10001.
+  - node_id: prd2_rp1
+    label: '[2Fe-2S](1+)'
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:33738
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: coenzyme F420 oxidoreductase (ferredoxin)
+    grounding: EC:1.5.7.2
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8PZ67
+    node_type: PROTEIN
+    label: FPOF_METMA
+    grounding: UniProtKB:Q8PZ67
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: reduced coenzyme F420-(gamma-L-Glu)(n) is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42325
+      snippet: reduced coenzyme F420-(gamma-L-Glu)(n) + 2 oxidized [2Fe-2S]-[ferredoxin] => oxidized coenzyme
+        F420-(gamma-L-Glu)(n) + 2 reduced [2Fe-2S]-[ferredoxin] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42325 declares side 42324_L as its substrates
+        (rh:substrates); the master reaction RHEA:42324 is undirected. This participant is POLYMER:14378
+        with coefficient 1. Rhea cites PMID:21306561 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: oxidized [2Fe-2S]-[ferredoxin] is a substrate consumed by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:42325
+      snippet: reduced coenzyme F420-(gamma-L-Glu)(n) + 2 oxidized [2Fe-2S]-[ferredoxin] => oxidized coenzyme
+        F420-(gamma-L-Glu)(n) + 2 reduced [2Fe-2S]-[ferredoxin] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42325 declares side 42324_L as its substrates
+        (rh:substrates); the master reaction RHEA:42324 is undirected. This participant is GENERIC:10000
+        with coefficient 2. Rhea cites PMID:21306561 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: '[2Fe-2S](2+) is the reactive part of oxidized [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:42324
+      snippet: '[2Fe-2S](2+)'
+      notes: Rhea compound GENERIC:10000 (oxidized [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](2+)
+        (CHEBI:33737), formula Fe2S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: oxidized coenzyme F420-(gamma-L-Glu)(n) is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:42325
+      snippet: reduced coenzyme F420-(gamma-L-Glu)(n) + 2 oxidized [2Fe-2S]-[ferredoxin] => oxidized coenzyme
+        F420-(gamma-L-Glu)(n) + 2 reduced [2Fe-2S]-[ferredoxin] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42325 declares side 42324_R as its products
+        (rh:products); the master reaction RHEA:42324 is undirected. This participant is POLYMER:12939
+        with coefficient 1. Rhea cites PMID:21306561 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: reduced [2Fe-2S]-[ferredoxin] is a product released by this reaction (stoichiometric
+      coefficient 2).
+    evidence:
+    - reference: RHEA:42325
+      snippet: reduced coenzyme F420-(gamma-L-Glu)(n) + 2 oxidized [2Fe-2S]-[ferredoxin] => oxidized coenzyme
+        F420-(gamma-L-Glu)(n) + 2 reduced [2Fe-2S]-[ferredoxin] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42325 declares side 42324_R as its products
+        (rh:products); the master reaction RHEA:42324 is undirected. This participant is GENERIC:10001
+        with coefficient 2. Rhea cites PMID:21306561 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: '[2Fe-2S](1+) is the reactive part of reduced [2Fe-2S]-[ferredoxin].'
+    evidence:
+    - reference: RHEA:42324
+      snippet: '[2Fe-2S](1+)'
+      notes: Rhea compound GENERIC:10001 (reduced [2Fe-2S]-[ferredoxin]) declares rh:reactivePart = [2Fe-2S](1+)
+        (CHEBI:33738), formula Fe2S2.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 3).
+    evidence:
+    - reference: RHEA:42325
+      snippet: reduced coenzyme F420-(gamma-L-Glu)(n) + 2 oxidized [2Fe-2S]-[ferredoxin] => oxidized coenzyme
+        F420-(gamma-L-Glu)(n) + 2 reduced [2Fe-2S]-[ferredoxin] + 3 H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:42325 declares side 42324_R as its products
+        (rh:products); the master reaction RHEA:42324 is undirected. This participant is CHEBI:15378 with
+        coefficient 3. Rhea cites PMID:21306561 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.5.7.2; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:42324
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.7.2"/>
+      notes: The rh:ec triple on RHEA:42324 in rhea.rdf. EC 1.5.7.2 is itself a record in this KB.
+  - subject: prot_Q8PZ67
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: FPOF_METMA is an exemplar enzyme carrying EC 1.5.7.2, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:1.5.7.2
+      snippet: DR   Q8PZ67, FPOF_METMA ;
+      notes: ExPASy ENZYME entry EC 1.5.7.2 cross-references UniProtKB:Q8PZ67 (FPOF_METMA) as a protein
+        with this activity.
+    - reference: RHEA:42324
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.5.7.2"/>
+      notes: Rhea assigns RHEA:42324 to EC 1.5.7.2, and EC 1.5.7.2 maps to exactly one Rhea master reaction
+        (RHEA:42324), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

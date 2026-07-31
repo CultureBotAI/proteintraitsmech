@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.4.1.-
 mapped_xrefs:
@@ -28,4 +28,115 @@ definitions:
       Catalyses: [(1->4)-beta-D-mannosyl](n) + phosphate = [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose 1-phosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of beta-1,4-mannooligosaccharide phosphorylase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.4.1.319. EC 2.4.1.319 maps to
+    exactly one curated Rhea reaction (RHEA:45772), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[(1->4)-beta-D-mannosyl](n)
+    + phosphate = [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose 1-phosphate". Substrate/product direction
+    is the one Rhea states in each reaction''s left-to-right directional child; Rhea''s master reactions
+    are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: beta-1,4-mannooligosaccharide phosphorylase
+    grounding: EC:2.4.1.319
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[(1->4)-beta-D-mannosyl](n)'
+    node_type: CHEMICAL
+    grounding: CHEBI:27857
+    xrefs:
+    - RHEA-COMP:11351
+    description: Rhea compound POLYMER:11351. Formula H2O(C6H10O5)<i><sub>n</sub></i>.
+  - node_id: sub2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: prd1
+    label: '[(1->4)-beta-D-mannosyl](n-1)'
+    node_type: CHEMICAL
+    grounding: CHEBI:27857
+    xrefs:
+    - RHEA-COMP:11350
+    description: Rhea compound POLYMER:11350. Formula H2O(C6H10O5)<i><sub>n-1</sub></i>.
+  - node_id: prd2
+    label: alpha-D-mannose 1-phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58409
+    description: Formula C6H11O9P.
+  - node_id: prot_E6UBR9
+    node_type: PROTEIN
+    label: MOSP_RUMA7
+    grounding: UniProtKB:E6UBR9
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[(1->4)-beta-D-mannosyl](n) is a substrate consumed by RHEA:45772 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:45773
+      snippet: '[(1->4)-beta-D-mannosyl](n) + phosphate => [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:45773 declares side 45772_L as its substrates
+        (rh:substrates); the master reaction RHEA:45772 is undirected. This participant is POLYMER:11351
+        with coefficient 1. Rhea cites PMID:23093406 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: phosphate is a substrate consumed by RHEA:45772 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45773
+      snippet: '[(1->4)-beta-D-mannosyl](n) + phosphate => [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:45773 declares side 45772_L as its substrates
+        (rh:substrates); the master reaction RHEA:45772 is undirected. This participant is CHEBI:43474
+        with coefficient 1. Rhea cites PMID:23093406 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[(1->4)-beta-D-mannosyl](n-1) is a product released by RHEA:45772 (stoichiometric coefficient
+      1).'
+    evidence:
+    - reference: RHEA:45773
+      snippet: '[(1->4)-beta-D-mannosyl](n) + phosphate => [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:45773 declares side 45772_R as its products
+        (rh:products); the master reaction RHEA:45772 is undirected. This participant is POLYMER:11350
+        with coefficient 1. Rhea cites PMID:23093406 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: alpha-D-mannose 1-phosphate is a product released by RHEA:45772 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:45773
+      snippet: '[(1->4)-beta-D-mannosyl](n) + phosphate => [(1->4)-beta-D-mannosyl](n-1) + alpha-D-mannose
+        1-phosphate'
+      notes: Rhea's left-to-right directional reaction RHEA:45773 declares side 45772_R as its products
+        (rh:products); the master reaction RHEA:45772 is undirected. This participant is CHEBI:58409 with
+        coefficient 1. Rhea cites PMID:23093406 for this reaction.
+  - subject: prot_E6UBR9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MOSP_RUMA7 is an exemplar enzyme with EC 2.4.1.319 activity.
+    evidence:
+    - reference: EC:2.4.1.319
+      snippet: DR   E6UBR9, MOSP_RUMA7 ;
+      notes: ExPASy ENZYME entry EC 2.4.1.319 cross-references UniProtKB:E6UBR9 (MOSP_RUMA7) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

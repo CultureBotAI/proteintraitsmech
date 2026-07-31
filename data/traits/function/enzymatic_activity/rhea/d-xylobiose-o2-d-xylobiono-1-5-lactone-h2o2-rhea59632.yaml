@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:28309
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,91 @@ definitions:
       Catalyses the reaction: D-xylobiose + O2 = D-xylobiono-1,5-lactone + H2O2
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of D-xylobiose + O2 = D-xylobiono-1,5-lactone + H2O2
+  description: Substrate-to-product chemistry of RHEA:59632, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:59633 (rh:substrates → 59632_L, rh:products → 59632_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of D-xylobiose + O2 = D-xylobiono-1,5-lactone + H2O2
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:59632
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: D-xylobiose + O2 = D-xylobiono-1,5-lactone + H2O2'
+  - node_id: sub1
+    label: D-xylobiose
+    node_type: CHEMICAL
+    grounding: CHEBI:28309
+    description: Formula C10H18O9.
+  - node_id: sub2
+    label: O2
+    node_type: CHEMICAL
+    grounding: CHEBI:15379
+    description: Formula O2.
+  - node_id: prd1
+    label: D-xylobiono-1,5-lactone
+    node_type: CHEMICAL
+    grounding: CHEBI:143156
+    description: Formula C10H16O9.
+  - node_id: prd2
+    label: H2O2
+    node_type: CHEMICAL
+    grounding: CHEBI:16240
+    description: Formula H2O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: D-xylobiose is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59633
+      snippet: D-xylobiose + O2 => D-xylobiono-1,5-lactone + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:59633 declares side 59632_L as its substrates
+        (rh:substrates); the master reaction RHEA:59632 is undirected. This participant is CHEBI:28309
+        with coefficient 1. Rhea cites PMID:27629413 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: O2 is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59633
+      snippet: D-xylobiose + O2 => D-xylobiono-1,5-lactone + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:59633 declares side 59632_L as its substrates
+        (rh:substrates); the master reaction RHEA:59632 is undirected. This participant is CHEBI:15379
+        with coefficient 1. Rhea cites PMID:27629413 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: D-xylobiono-1,5-lactone is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:59633
+      snippet: D-xylobiose + O2 => D-xylobiono-1,5-lactone + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:59633 declares side 59632_R as its products
+        (rh:products); the master reaction RHEA:59632 is undirected. This participant is CHEBI:143156
+        with coefficient 1. Rhea cites PMID:27629413 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: H2O2 is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:59633
+      snippet: D-xylobiose + O2 => D-xylobiono-1,5-lactone + H2O2
+      notes: Rhea's left-to-right directional reaction RHEA:59633 declares side 59632_R as its products
+        (rh:products); the master reaction RHEA:59632 is undirected. This participant is CHEBI:16240 with
+        coefficient 1. Rhea cites PMID:27629413 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

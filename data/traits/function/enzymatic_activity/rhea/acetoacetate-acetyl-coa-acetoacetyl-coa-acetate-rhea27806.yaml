@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:13705
     role: SUBSTRATE_OR_PRODUCT
@@ -27,4 +27,90 @@ definitions:
       Catalyses the reaction: acetoacetate + acetyl-CoA = acetoacetyl-CoA + acetate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of acetoacetate + acetyl-CoA = acetoacetyl-CoA + acetate
+  description: Substrate-to-product chemistry of RHEA:27806, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:27807 (rh:substrates → 27806_L, rh:products → 27806_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of acetoacetate + acetyl-CoA = acetoacetyl-CoA + acetate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:27806
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: acetoacetate + acetyl-CoA = acetoacetyl-CoA + acetate'
+  - node_id: sub1
+    label: acetoacetate
+    node_type: CHEMICAL
+    grounding: CHEBI:13705
+    description: Formula C4H5O3.
+  - node_id: sub2
+    label: acetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57288
+    description: Formula C23H34N7O17P3S.
+  - node_id: prd1
+    label: acetoacetyl-CoA
+    node_type: CHEMICAL
+    grounding: CHEBI:57286
+    description: Formula C25H36N7O18P3S.
+  - node_id: prd2
+    label: acetate
+    node_type: CHEMICAL
+    grounding: CHEBI:30089
+    description: Formula C2H3O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: acetoacetate is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27807
+      snippet: acetoacetate + acetyl-CoA => acetoacetyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:27807 declares side 27806_L as its substrates
+        (rh:substrates); the master reaction RHEA:27806 is undirected. This participant is CHEBI:13705
+        with coefficient 1. Rhea cites PMID:1103739, PMID:1103741 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: acetyl-CoA is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27807
+      snippet: acetoacetate + acetyl-CoA => acetoacetyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:27807 declares side 27806_L as its substrates
+        (rh:substrates); the master reaction RHEA:27806 is undirected. This participant is CHEBI:57288
+        with coefficient 1. Rhea cites PMID:1103739, PMID:1103741 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: acetoacetyl-CoA is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27807
+      snippet: acetoacetate + acetyl-CoA => acetoacetyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:27807 declares side 27806_R as its products
+        (rh:products); the master reaction RHEA:27806 is undirected. This participant is CHEBI:57286 with
+        coefficient 1. Rhea cites PMID:1103739, PMID:1103741 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: acetate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:27807
+      snippet: acetoacetate + acetyl-CoA => acetoacetyl-CoA + acetate
+      notes: Rhea's left-to-right directional reaction RHEA:27807 declares side 27806_R as its products
+        (rh:products); the master reaction RHEA:27806 is undirected. This participant is CHEBI:30089 with
+        coefficient 1. Rhea cites PMID:1103739, PMID:1103741 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

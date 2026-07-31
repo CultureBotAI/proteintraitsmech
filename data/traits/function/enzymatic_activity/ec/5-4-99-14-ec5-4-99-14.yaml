@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.99.-
 synonyms:
@@ -41,4 +41,102 @@ definitions:
       Catalyses: 4-methylmuconolactone = 3-methylmuconolactone
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 4-carboxymethyl-4-methylbutenolide mutase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.99.14. EC 5.4.99.14 maps to
+    exactly one curated Rhea reaction (RHEA:19237), so that reaction''s substrates and products are the
+    class''s and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "4-methylmuconolactone
+    = 3-methylmuconolactone". Substrate/product direction is the one Rhea states in each reaction''s left-to-right
+    directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: 4-carboxymethyl-4-methylbutenolide mutase
+    grounding: EC:5.4.99.14
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: 4-methylmuconolactone
+    node_type: CHEMICAL
+    grounding: CHEBI:57888
+    description: Formula C7H7O4.
+  - node_id: prd1
+    label: 3-methylmuconolactone
+    node_type: CHEMICAL
+    grounding: CHEBI:57883
+    description: Formula C7H7O4.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: 4-carboxymethyl-4-methylbutenolide mutase activity
+    grounding: GO:0047469
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_O51799
+    node_type: PROTEIN
+    label: MMLI_CUPPJ
+    grounding: UniProtKB:O51799
+  - node_id: prot_C5MR76
+    node_type: PROTEIN
+    label: MMLI_PSERE
+    grounding: UniProtKB:C5MR76
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 4-methylmuconolactone is a substrate consumed by RHEA:19237 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19238
+      snippet: 4-methylmuconolactone => 3-methylmuconolactone
+      notes: Rhea's left-to-right directional reaction RHEA:19238 declares side 19237_L as its substrates
+        (rh:substrates); the master reaction RHEA:19237 is undirected. This participant is CHEBI:57888
+        with coefficient 1.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-methylmuconolactone is a product released by RHEA:19237 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19238
+      snippet: 4-methylmuconolactone => 3-methylmuconolactone
+      notes: Rhea's left-to-right directional reaction RHEA:19238 declares side 19237_R as its products
+        (rh:products); the master reaction RHEA:19237 is undirected. This participant is CHEBI:57883 with
+        coefficient 1.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:5.4.99.14
+      snippet: EC:5.4.99.14 > GO:4-carboxymethyl-4-methylbutenolide mutase activity ; GO:0047469
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0047469 is itself a record
+        in this KB.
+  - subject: prot_O51799
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMLI_CUPPJ is an exemplar enzyme with EC 5.4.99.14 activity.
+    evidence:
+    - reference: EC:5.4.99.14
+      snippet: DR   O51799, MMLI_CUPPJ ;  C5MR76, MMLI_PSERE ;
+      notes: ExPASy ENZYME entry EC 5.4.99.14 cross-references UniProtKB:O51799 (MMLI_CUPPJ) as a protein
+        with this activity.
+  - subject: prot_C5MR76
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: MMLI_PSERE is an exemplar enzyme with EC 5.4.99.14 activity.
+    evidence:
+    - reference: EC:5.4.99.14
+      snippet: DR   O51799, MMLI_CUPPJ ;  C5MR76, MMLI_PSERE ;
+      notes: ExPASy ENZYME entry EC 5.4.99.14 cross-references UniProtKB:C5MR76 (MMLI_PSERE) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:2.1.1.63
     mapping_source: rhea2ec
@@ -44,4 +44,198 @@ definitions:
       Catalyses the reaction: a 6-O-methyl-2'-deoxyguanosine in DNA + L-cysteinyl-[protein] = S-methyl-L-cysteinyl-[protein] + a 2'-deoxyguanosine in DNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 6-O-methyl-2'-deoxyguanosine in DNA + L-cysteinyl-[protein] = S-methyl-L-cysteinyl-[p…
+  description: Substrate-to-product chemistry of RHEA:24000, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:24001 (rh:substrates → 24000_L, rh:products → 24000_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 6-O-methyl-2'-deoxyguanosine in DNA + L-cysteinyl-[protein] = S-methyl-L-c…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:24000
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 6-O-methyl-2''-deoxyguanosine in DNA + L-cysteinyl-[protein] = S-methyl-L-cysteinyl-[protein]
+      + a 2''-deoxyguanosine in DNA'
+  - node_id: sub1
+    label: a 6-O-methyl-2'-deoxyguanosine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:11368
+    description: Rhea compound GENERIC:11368.
+  - node_id: sub1_rp1
+    label: 6-O-methyl dGMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11368 (a 6-O-methyl-2'-deoxyguanosine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85448
+  - node_id: sub2
+    label: L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10131
+    description: Rhea compound GENERIC:10131.
+  - node_id: sub2_rp1
+    label: L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10131 (L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:29950
+  - node_id: prd1
+    label: S-methyl-L-cysteinyl-[protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:10132
+    description: Rhea compound GENERIC:10132.
+  - node_id: prd1_rp1
+    label: S-methyl-L-cysteine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10132 (S-methyl-L-cysteinyl-[protein]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:82612
+  - node_id: prd2
+    label: a 2'-deoxyguanosine in DNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:11367
+    description: Rhea compound GENERIC:11367.
+  - node_id: prd2_rp1
+    label: dGMP residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:11367 (a 2'-deoxyguanosine
+      in DNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85445
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: methylated-DNA-[protein]-cysteine S-methyltransferase activity
+    grounding: GO:0003908
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: methylated-DNA--[protein]-cysteine S-methyltransferase
+    grounding: EC:2.1.1.63
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 6-O-methyl-2'-deoxyguanosine in DNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24001
+      snippet: a 6-O-methyl-2'-deoxyguanosine in DNA + L-cysteinyl-[protein] => S-methyl-L-cysteinyl-[protein]
+        + a 2'-deoxyguanosine in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:24001 declares side 24000_L as its substrates
+        (rh:substrates); the master reaction RHEA:24000 is undirected. This participant is GENERIC:11368
+        with coefficient 1. Rhea cites PMID:7008792, PMID:2670886, PMID:1993655, PMID:2987862 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: 6-O-methyl dGMP residue is the reactive part of a 6-O-methyl-2'-deoxyguanosine in DNA.
+    evidence:
+    - reference: RHEA:24000
+      snippet: 6-O-methyl dGMP residue
+      notes: Rhea compound GENERIC:11368 (a 6-O-methyl-2'-deoxyguanosine in DNA) declares rh:reactivePart
+        = 6-O-methyl dGMP residue (CHEBI:85448), formula C11H13N5O6P.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-cysteinyl-[protein] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24001
+      snippet: a 6-O-methyl-2'-deoxyguanosine in DNA + L-cysteinyl-[protein] => S-methyl-L-cysteinyl-[protein]
+        + a 2'-deoxyguanosine in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:24001 declares side 24000_L as its substrates
+        (rh:substrates); the master reaction RHEA:24000 is undirected. This participant is GENERIC:10131
+        with coefficient 1. Rhea cites PMID:7008792, PMID:2670886, PMID:1993655, PMID:2987862 for this
+        reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: L-cysteine residue is the reactive part of L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:24000
+      snippet: L-cysteine residue
+      notes: Rhea compound GENERIC:10131 (L-cysteinyl-[protein]) declares rh:reactivePart = L-cysteine
+        residue (CHEBI:29950), formula C3H5NOS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: S-methyl-L-cysteinyl-[protein] is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:24001
+      snippet: a 6-O-methyl-2'-deoxyguanosine in DNA + L-cysteinyl-[protein] => S-methyl-L-cysteinyl-[protein]
+        + a 2'-deoxyguanosine in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:24001 declares side 24000_R as its products
+        (rh:products); the master reaction RHEA:24000 is undirected. This participant is GENERIC:10132
+        with coefficient 1. Rhea cites PMID:7008792, PMID:2670886, PMID:1993655, PMID:2987862 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: S-methyl-L-cysteine residue is the reactive part of S-methyl-L-cysteinyl-[protein].
+    evidence:
+    - reference: RHEA:24000
+      snippet: S-methyl-L-cysteine residue
+      notes: Rhea compound GENERIC:10132 (S-methyl-L-cysteinyl-[protein]) declares rh:reactivePart = S-methyl-L-cysteine
+        residue (CHEBI:82612), formula C4H7NOS.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 2'-deoxyguanosine in DNA is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:24001
+      snippet: a 6-O-methyl-2'-deoxyguanosine in DNA + L-cysteinyl-[protein] => S-methyl-L-cysteinyl-[protein]
+        + a 2'-deoxyguanosine in DNA
+      notes: Rhea's left-to-right directional reaction RHEA:24001 declares side 24000_R as its products
+        (rh:products); the master reaction RHEA:24000 is undirected. This participant is GENERIC:11367
+        with coefficient 1. Rhea cites PMID:7008792, PMID:2670886, PMID:1993655, PMID:2987862 for this
+        reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: dGMP residue is the reactive part of a 2'-deoxyguanosine in DNA.
+    evidence:
+    - reference: RHEA:24000
+      snippet: dGMP residue
+      notes: Rhea compound GENERIC:11367 (a 2'-deoxyguanosine in DNA) declares rh:reactivePart = dGMP
+        residue (CHEBI:85445), formula C10H11N5O6P.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:24000
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0003908"/>
+      notes: The rdfs:seeAlso triple on RHEA:24000 in rhea.rdf. GO term GO:0003908 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 2.1.1.63; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:24000
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/2.1.1.63"/>
+      notes: The rh:ec triple on RHEA:24000 in rhea.rdf. EC 2.1.1.63 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (10 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

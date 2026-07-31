@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.4.3.6
     mapping_source: rhea2ec
@@ -28,4 +28,150 @@ definitions:
       Catalyses the reaction: L-tyrosine = 3-amino-3-(4-hydroxyphenyl)propanoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-tyrosine = 3-amino-3-(4-hydroxyphenyl)propanoate
+  description: Substrate-to-product chemistry of RHEA:15781, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:15782 (rh:substrates → 15781_L, rh:products → 15781_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of L-tyrosine = 3-amino-3-(4-hydroxyphenyl)propanoate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:15781
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: L-tyrosine = 3-amino-3-(4-hydroxyphenyl)propanoate'
+  - node_id: sub1
+    label: L-tyrosine
+    node_type: CHEMICAL
+    grounding: CHEBI:58315
+    description: Formula C9H11NO3.
+  - node_id: prd1
+    label: 3-amino-3-(4-hydroxyphenyl)propanoate
+    node_type: CHEMICAL
+    grounding: CHEBI:57956
+    description: Formula C9H11NO3.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: L-tyrosine 2,3-aminomutase activity
+    grounding: GO:0050368
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: tyrosine 2,3-aminomutase
+    grounding: EC:5.4.3.6
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q1LRV9
+    node_type: PROTEIN
+    label: TALY_CUPMC
+    grounding: UniProtKB:Q1LRV9
+  - node_id: prot_Q0VZ68
+    node_type: PROTEIN
+    label: TAM_CHOCO
+    grounding: UniProtKB:Q0VZ68
+  - node_id: prot_B8ZV93
+    node_type: PROTEIN
+    label: TAM_MYXFU
+    grounding: UniProtKB:B8ZV93
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-tyrosine is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:15782
+      snippet: L-tyrosine => 3-amino-3-(4-hydroxyphenyl)propanoate
+      notes: Rhea's left-to-right directional reaction RHEA:15782 declares side 15781_L as its substrates
+        (rh:substrates); the master reaction RHEA:15781 is undirected. This participant is CHEBI:58315
+        with coefficient 1. Rhea cites PMID:20577998, PMID:23800193, PMID:19222035 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 3-amino-3-(4-hydroxyphenyl)propanoate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:15782
+      snippet: L-tyrosine => 3-amino-3-(4-hydroxyphenyl)propanoate
+      notes: Rhea's left-to-right directional reaction RHEA:15782 declares side 15781_R as its products
+        (rh:products); the master reaction RHEA:15781 is undirected. This participant is CHEBI:57956 with
+        coefficient 1. Rhea cites PMID:20577998, PMID:23800193, PMID:19222035 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:15781
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050368"/>
+      notes: The rdfs:seeAlso triple on RHEA:15781 in rhea.rdf. GO term GO:0050368 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.4.3.6; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:15781
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.3.6"/>
+      notes: The rh:ec triple on RHEA:15781 in rhea.rdf. EC 5.4.3.6 is itself a record in this KB.
+  - subject: prot_Q1LRV9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TALY_CUPMC is an exemplar enzyme carrying EC 5.4.3.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.3.6
+      snippet: DR   Q1LRV9, TALY_CUPMC ;  Q0VZ68, TAM_CHOCO  ;  B8ZV93, TAM_MYXFU  ;
+      notes: ExPASy ENZYME entry EC 5.4.3.6 cross-references UniProtKB:Q1LRV9 (TALY_CUPMC) as a protein
+        with this activity.
+    - reference: RHEA:15781
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.3.6"/>
+      notes: Rhea assigns RHEA:15781 to EC 5.4.3.6, and EC 5.4.3.6 maps to exactly one Rhea master reaction
+        (RHEA:15781), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q0VZ68
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAM_CHOCO is an exemplar enzyme carrying EC 5.4.3.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.3.6
+      snippet: DR   Q1LRV9, TALY_CUPMC ;  Q0VZ68, TAM_CHOCO  ;  B8ZV93, TAM_MYXFU  ;
+      notes: ExPASy ENZYME entry EC 5.4.3.6 cross-references UniProtKB:Q0VZ68 (TAM_CHOCO) as a protein
+        with this activity.
+    - reference: RHEA:15781
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.3.6"/>
+      notes: Rhea assigns RHEA:15781 to EC 5.4.3.6, and EC 5.4.3.6 maps to exactly one Rhea master reaction
+        (RHEA:15781), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B8ZV93
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TAM_MYXFU is an exemplar enzyme carrying EC 5.4.3.6, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.4.3.6
+      snippet: DR   Q1LRV9, TALY_CUPMC ;  Q0VZ68, TAM_CHOCO  ;  B8ZV93, TAM_MYXFU  ;
+      notes: ExPASy ENZYME entry EC 5.4.3.6 cross-references UniProtKB:B8ZV93 (TAM_MYXFU) as a protein
+        with this activity.
+    - reference: RHEA:15781
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.4.3.6"/>
+      notes: Rhea assigns RHEA:15781 to EC 5.4.3.6, and EC 5.4.3.6 maps to exactly one Rhea master reaction
+        (RHEA:15781), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

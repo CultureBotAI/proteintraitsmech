@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.3.2.-
 mapped_xrefs:
@@ -28,4 +28,180 @@ definitions:
       Catalyses: holo-[CmaD peptidyl-carrier protein] + L-alloisoleucyl-[CmaA peptidyl- carrier protein] = L-alloisoleucyl-[CmaD peptidyl-carrier protein] + holo-[CmaA peptidyl-carrier protein]
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of L-allo-isoleucyltransferase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.3.2.28. EC 2.3.2.28 maps to exactly
+    one curated Rhea reaction (RHEA:45628), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "holo-[CmaD peptidyl-carrier
+    protein] + L-alloisoleucyl-[CmaA peptidyl- carrier protein] = L-alloisoleucyl-[CmaD peptidyl-carrier
+    protein] + holo-[CmaA peptidyl-carrier protein]". Substrate/product direction is the one Rhea states
+    in each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: L-allo-isoleucyltransferase
+    grounding: EC:2.3.2.28
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: holo-[CmaD peptidyl-carrier protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11299
+    description: Rhea compound GENERIC:11299.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11299 (holo-[CmaD
+      peptidyl-carrier protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: sub2
+    label: L-alloisoleucyl-[CmaA peptidyl-carrier protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11295
+    description: Rhea compound GENERIC:11295.
+  - node_id: sub2_rp1
+    node_type: RESIDUE
+    label: O-(S-L-alloisoleucylpantetheine-4'-phosphoryl)serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11295 (L-alloisoleucyl-[CmaA
+      peptidyl-carrier protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85339
+  - node_id: prd1
+    label: L-alloisoleucyl-[CmaD peptidyl-carrier protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11300
+    description: Rhea compound GENERIC:11300.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: O-(S-L-alloisoleucylpantetheine-4'-phosphoryl)serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11300 (L-alloisoleucyl-[CmaD
+      peptidyl-carrier protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:85339
+  - node_id: prd2
+    label: holo-[CmaA peptidyl-carrier protein]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:11297
+    description: Rhea compound GENERIC:11297.
+  - node_id: prd2_rp1
+    node_type: RESIDUE
+    label: O-(pantetheine-4'-phosphoryl)-L-serine residue
+    description: The reacting group Rhea names inside the generic participant GENERIC:11297 (holo-[CmaA
+      peptidyl-carrier protein]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:64479
+  - node_id: prot_Q6TNA6
+    node_type: PROTEIN
+    label: CMAE_PSESG
+    grounding: UniProtKB:Q6TNA6
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: holo-[CmaD peptidyl-carrier protein] is a substrate consumed by RHEA:45628 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45629
+      snippet: holo-[CmaD peptidyl-carrier protein] + L-alloisoleucyl-[CmaA peptidyl-carrier protein]
+        => L-alloisoleucyl-[CmaD peptidyl-carrier protein] + holo-[CmaA peptidyl-carrier protein]
+      notes: Rhea's left-to-right directional reaction RHEA:45629 declares side 45628_L as its substrates
+        (rh:substrates); the master reaction RHEA:45628 is undirected. This participant is GENERIC:11299
+        with coefficient 1. Rhea cites PMID:17530782, PMID:16121186 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[CmaD peptidyl-carrier
+      protein].
+    evidence:
+    - reference: RHEA:45628
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:11299 (holo-[CmaD peptidyl-carrier protein]) declares rh:reactivePart
+        = O-(pantetheine-4'-phosphoryl)-L-serine residue (CHEBI:64479).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: L-alloisoleucyl-[CmaA peptidyl-carrier protein] is a substrate consumed by RHEA:45628
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:45629
+      snippet: holo-[CmaD peptidyl-carrier protein] + L-alloisoleucyl-[CmaA peptidyl-carrier protein]
+        => L-alloisoleucyl-[CmaD peptidyl-carrier protein] + holo-[CmaA peptidyl-carrier protein]
+      notes: Rhea's left-to-right directional reaction RHEA:45629 declares side 45628_L as its substrates
+        (rh:substrates); the master reaction RHEA:45628 is undirected. This participant is GENERIC:11295
+        with coefficient 1. Rhea cites PMID:17530782, PMID:16121186 for this reaction.
+  - subject: sub2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub2
+    description: O-(S-L-alloisoleucylpantetheine-4'-phosphoryl)serine residue is the reactive part of
+      L-alloisoleucyl-[CmaA peptidyl-carrier protein].
+    evidence:
+    - reference: RHEA:45628
+      snippet: O-(S-L-alloisoleucylpantetheine-4'-phosphoryl)serine residue
+      notes: Rhea compound GENERIC:11295 (L-alloisoleucyl-[CmaA peptidyl-carrier protein]) declares rh:reactivePart
+        = O-(S-L-alloisoleucylpantetheine-4'-phosphoryl)serine residue (CHEBI:85339).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: L-alloisoleucyl-[CmaD peptidyl-carrier protein] is a product released by RHEA:45628 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45629
+      snippet: holo-[CmaD peptidyl-carrier protein] + L-alloisoleucyl-[CmaA peptidyl-carrier protein]
+        => L-alloisoleucyl-[CmaD peptidyl-carrier protein] + holo-[CmaA peptidyl-carrier protein]
+      notes: Rhea's left-to-right directional reaction RHEA:45629 declares side 45628_R as its products
+        (rh:products); the master reaction RHEA:45628 is undirected. This participant is GENERIC:11300
+        with coefficient 1. Rhea cites PMID:17530782, PMID:16121186 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-L-alloisoleucylpantetheine-4'-phosphoryl)serine residue is the reactive part of
+      L-alloisoleucyl-[CmaD peptidyl-carrier protein].
+    evidence:
+    - reference: RHEA:45628
+      snippet: O-(S-L-alloisoleucylpantetheine-4'-phosphoryl)serine residue
+      notes: Rhea compound GENERIC:11300 (L-alloisoleucyl-[CmaD peptidyl-carrier protein]) declares rh:reactivePart
+        = O-(S-L-alloisoleucylpantetheine-4'-phosphoryl)serine residue (CHEBI:85339).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: holo-[CmaA peptidyl-carrier protein] is a product released by RHEA:45628 (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:45629
+      snippet: holo-[CmaD peptidyl-carrier protein] + L-alloisoleucyl-[CmaA peptidyl-carrier protein]
+        => L-alloisoleucyl-[CmaD peptidyl-carrier protein] + holo-[CmaA peptidyl-carrier protein]
+      notes: Rhea's left-to-right directional reaction RHEA:45629 declares side 45628_R as its products
+        (rh:products); the master reaction RHEA:45628 is undirected. This participant is GENERIC:11297
+        with coefficient 1. Rhea cites PMID:17530782, PMID:16121186 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: O-(pantetheine-4'-phosphoryl)-L-serine residue is the reactive part of holo-[CmaA peptidyl-carrier
+      protein].
+    evidence:
+    - reference: RHEA:45628
+      snippet: O-(pantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:11297 (holo-[CmaA peptidyl-carrier protein]) declares rh:reactivePart
+        = O-(pantetheine-4'-phosphoryl)-L-serine residue (CHEBI:64479).
+  - subject: prot_Q6TNA6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CMAE_PSESG is an exemplar enzyme with EC 2.3.2.28 activity.
+    evidence:
+    - reference: EC:2.3.2.28
+      snippet: DR   Q6TNA6, CMAE_PSESG ;
+      notes: ExPASy ENZYME entry EC 2.3.2.28 cross-references UniProtKB:Q6TNA6 (CMAE_PSESG) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

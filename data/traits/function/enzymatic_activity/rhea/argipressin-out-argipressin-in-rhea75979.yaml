@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:194507
     role: SUBSTRATE_OR_PRODUCT
@@ -19,4 +19,61 @@ definitions:
       Catalyses the reaction: argipressin(out) = argipressin(in)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of argipressin(out) = argipressin(in)
+  description: 'Substrate-to-product chemistry of RHEA:75979, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:75980 (rh:substrates → 75979_L, rh:products → 75979_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. A transport reaction:
+    a participant crosses a membrane, and Rhea gives its side (in/out) but not the membrane. Participant
+    structure was checked by re-rendering Rhea''s own equation string from it.'
+  nodes:
+  - node_id: activity
+    label: catalysis of argipressin(out) = argipressin(in)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:75979
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: argipressin(out) = argipressin(in)'
+  - node_id: sub1
+    label: argipressin (outside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:194507
+    description: Formula C46H67N15O12S2.
+  - node_id: prd1
+    label: argipressin (inside the membrane)
+    node_type: CHEMICAL
+    grounding: CHEBI:194507
+    description: Formula C46H67N15O12S2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: argipressin is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75980
+      snippet: argipressin(out) => argipressin(in)
+      notes: Rhea's left-to-right directional reaction RHEA:75980 declares side 75979_L as its substrates
+        (rh:substrates); the master reaction RHEA:75979 is undirected. This participant is CHEBI:194507
+        with coefficient 1. It is transported, and appears on the outside of the membrane. Rhea cites
+        PMID:16971491 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: argipressin is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:75980
+      snippet: argipressin(out) => argipressin(in)
+      notes: Rhea's left-to-right directional reaction RHEA:75980 declares side 75979_R as its products
+        (rh:products); the master reaction RHEA:75979 is undirected. This participant is CHEBI:194507
+        with coefficient 1. It is transported, and appears on the inside of the membrane. Rhea cites PMID:16971491
+        for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

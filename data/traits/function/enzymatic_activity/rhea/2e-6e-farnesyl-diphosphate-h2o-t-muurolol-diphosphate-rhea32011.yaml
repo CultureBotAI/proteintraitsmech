@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.3.98
     mapping_source: rhea2ec
@@ -28,4 +28,166 @@ definitions:
       Catalyses the reaction: (2E,6E)-farnesyl diphosphate + H2O = (+)-T-muurolol + diphosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (2E,6E)-farnesyl diphosphate + H2O = (+)-T-muurolol + diphosphate
+  description: Substrate-to-product chemistry of RHEA:32011, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:32012 (rh:substrates → 32011_L, rh:products → 32011_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (2E,6E)-farnesyl diphosphate + H2O = (+)-T-muurolol + diphosphate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:32011
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (2E,6E)-farnesyl diphosphate + H2O = (+)-T-muurolol + diphosphate'
+  - node_id: sub1
+    label: (2E,6E)-farnesyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:175763
+    description: Formula C15H25O7P2.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (+)-T-muurolol
+    node_type: CHEMICAL
+    grounding: CHEBI:63704
+    description: Formula C15H26O.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-T-muurolol synthase
+    grounding: EC:4.2.3.98
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_A0A8H8CMW1
+    node_type: PROTEIN
+    label: CUBA_PSICU
+    grounding: UniProtKB:A0A8H8CMW1
+  - node_id: prot_A7NH01
+    node_type: PROTEIN
+    label: TMUUS_ROSCS
+    grounding: UniProtKB:A7NH01
+  - node_id: prot_B5GW45
+    node_type: PROTEIN
+    label: TMUUS_STRCL
+    grounding: UniProtKB:B5GW45
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (2E,6E)-farnesyl diphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:32012
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-T-muurolol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32012 declares side 32011_L as its substrates
+        (rh:substrates); the master reaction RHEA:32011 is undirected. This participant is CHEBI:175763
+        with coefficient 1. Rhea cites PMID:21276937 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32012
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-T-muurolol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32012 declares side 32011_L as its substrates
+        (rh:substrates); the master reaction RHEA:32011 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21276937 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-T-muurolol is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32012
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-T-muurolol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32012 declares side 32011_R as its products
+        (rh:products); the master reaction RHEA:32011 is undirected. This participant is CHEBI:63704 with
+        coefficient 1. Rhea cites PMID:21276937 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:32012
+      snippet: (2E,6E)-farnesyl diphosphate + H2O => (+)-T-muurolol + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:32012 declares side 32011_R as its products
+        (rh:products); the master reaction RHEA:32011 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:21276937 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.3.98; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:32011
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.98"/>
+      notes: The rh:ec triple on RHEA:32011 in rhea.rdf. EC 4.2.3.98 is itself a record in this KB.
+  - subject: prot_A0A8H8CMW1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CUBA_PSICU is an exemplar enzyme carrying EC 4.2.3.98, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.98
+      snippet: DR   A0A8H8CMW1, CUBA_PSICU ;  A7NH01, TMUUS_ROSCS;  B5GW45, TMUUS_STRCL;
+      notes: ExPASy ENZYME entry EC 4.2.3.98 cross-references UniProtKB:A0A8H8CMW1 (CUBA_PSICU) as a protein
+        with this activity.
+    - reference: RHEA:32011
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.98"/>
+      notes: Rhea assigns RHEA:32011 to EC 4.2.3.98, and EC 4.2.3.98 maps to exactly one Rhea master reaction
+        (RHEA:32011), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_A7NH01
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TMUUS_ROSCS is an exemplar enzyme carrying EC 4.2.3.98, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.98
+      snippet: DR   A0A8H8CMW1, CUBA_PSICU ;  A7NH01, TMUUS_ROSCS;  B5GW45, TMUUS_STRCL;
+      notes: ExPASy ENZYME entry EC 4.2.3.98 cross-references UniProtKB:A7NH01 (TMUUS_ROSCS) as a protein
+        with this activity.
+    - reference: RHEA:32011
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.98"/>
+      notes: Rhea assigns RHEA:32011 to EC 4.2.3.98, and EC 4.2.3.98 maps to exactly one Rhea master reaction
+        (RHEA:32011), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_B5GW45
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: TMUUS_STRCL is an exemplar enzyme carrying EC 4.2.3.98, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.3.98
+      snippet: DR   A0A8H8CMW1, CUBA_PSICU ;  A7NH01, TMUUS_ROSCS;  B5GW45, TMUUS_STRCL;
+      notes: ExPASy ENZYME entry EC 4.2.3.98 cross-references UniProtKB:B5GW45 (TMUUS_STRCL) as a protein
+        with this activity.
+    - reference: RHEA:32011
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.3.98"/>
+      notes: Rhea assigns RHEA:32011 to EC 4.2.3.98, and EC 4.2.3.98 maps to exactly one Rhea master reaction
+        (RHEA:32011), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

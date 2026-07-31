@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:5.4.3.-
 mapped_xrefs:
@@ -36,4 +36,100 @@ definitions:
       Catalyses: L-phenylalanine = (3R)-beta-phenylalanine
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of phenylalanine aminomutase (L-beta-phenylalanine forming)
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:5.4.3.10. EC 5.4.3.10 maps to exactly
+    one curated Rhea reaction (RHEA:34395), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "L-phenylalanine
+    = (3R)-beta-phenylalanine". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: phenylalanine aminomutase (L-beta-phenylalanine forming)
+    grounding: EC:5.4.3.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: L-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:58095
+    description: Formula C9H11NO2.
+  - node_id: prd1
+    label: (3R)-beta-phenylalanine
+    node_type: CHEMICAL
+    grounding: CHEBI:67158
+    description: Formula C9H11NO2.
+  - node_id: prot_P9WEN6
+    node_type: PROTEIN
+    label: CCTP1_TALIS
+    grounding: UniProtKB:P9WEN6
+  - node_id: prot_Q6GZ04
+    node_type: PROTEIN
+    label: PAM_TAXCA
+    grounding: UniProtKB:Q6GZ04
+  - node_id: prot_Q68G84
+    node_type: PROTEIN
+    label: PAM_TAXCH
+    grounding: UniProtKB:Q68G84
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: L-phenylalanine is a substrate consumed by RHEA:34395 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:34396
+      snippet: L-phenylalanine => (3R)-beta-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:34396 declares side 34395_L as its substrates
+        (rh:substrates); the master reaction RHEA:34395 is undirected. This participant is CHEBI:58095
+        with coefficient 1. Rhea cites PMID:21361343 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (3R)-beta-phenylalanine is a product released by RHEA:34395 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:34396
+      snippet: L-phenylalanine => (3R)-beta-phenylalanine
+      notes: Rhea's left-to-right directional reaction RHEA:34396 declares side 34395_R as its products
+        (rh:products); the master reaction RHEA:34395 is undirected. This participant is CHEBI:67158 with
+        coefficient 1. Rhea cites PMID:21361343 for this reaction.
+  - subject: prot_P9WEN6
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CCTP1_TALIS is an exemplar enzyme with EC 5.4.3.10 activity.
+    evidence:
+    - reference: EC:5.4.3.10
+      snippet: DR   P9WEN6, CCTP1_TALIS;  Q6GZ04, PAM_TAXCA  ;  Q68G84, PAM_TAXCH  ;
+      notes: ExPASy ENZYME entry EC 5.4.3.10 cross-references UniProtKB:P9WEN6 (CCTP1_TALIS) as a protein
+        with this activity.
+  - subject: prot_Q6GZ04
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAM_TAXCA is an exemplar enzyme with EC 5.4.3.10 activity.
+    evidence:
+    - reference: EC:5.4.3.10
+      snippet: DR   P9WEN6, CCTP1_TALIS;  Q6GZ04, PAM_TAXCA  ;  Q68G84, PAM_TAXCH  ;
+      notes: ExPASy ENZYME entry EC 5.4.3.10 cross-references UniProtKB:Q6GZ04 (PAM_TAXCA) as a protein
+        with this activity.
+  - subject: prot_Q68G84
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PAM_TAXCH is an exemplar enzyme with EC 5.4.3.10 activity.
+    evidence:
+    - reference: EC:5.4.3.10
+      snippet: DR   P9WEN6, CCTP1_TALIS;  Q6GZ04, PAM_TAXCA  ;  Q68G84, PAM_TAXCH  ;
+      notes: ExPASy ENZYME entry EC 5.4.3.10 cross-references UniProtKB:Q68G84 (PAM_TAXCH) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

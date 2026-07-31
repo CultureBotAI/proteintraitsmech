@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.99.1.8
     mapping_source: rhea2ec
@@ -24,4 +24,93 @@ definitions:
       Catalyses the reaction: 2 Fe(III)-heme b = beta-hematin
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 2 Fe(III)-heme b = beta-hematin
+  description: Substrate-to-product chemistry of RHEA:53712, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:53713 (rh:substrates → 53712_L, rh:products → 53712_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 2 Fe(III)-heme b = beta-hematin
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:53712
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 2 Fe(III)-heme b = beta-hematin'
+  - node_id: sub1
+    label: Fe(III)-heme b
+    node_type: CHEMICAL
+    grounding: CHEBI:55376
+    description: Formula C34H30FeN4O4.
+  - node_id: prd1
+    label: beta-hematin
+    node_type: CHEMICAL
+    grounding: CHEBI:55377
+    description: Formula C68H60Fe2N8O8.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: heme ligase
+    grounding: EC:4.99.1.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q8IL04
+    node_type: PROTEIN
+    label: HDP_PLAF7
+    grounding: UniProtKB:Q8IL04
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: Fe(III)-heme b is a substrate consumed by this reaction (stoichiometric coefficient 2).
+    evidence:
+    - reference: RHEA:53713
+      snippet: 2 Fe(III)-heme b => beta-hematin
+      notes: Rhea's left-to-right directional reaction RHEA:53713 declares side 53712_L as its substrates
+        (rh:substrates); the master reaction RHEA:53712 is undirected. This participant is CHEBI:55376
+        with coefficient 2. Rhea cites PMID:18437218 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: beta-hematin is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:53713
+      snippet: 2 Fe(III)-heme b => beta-hematin
+      notes: Rhea's left-to-right directional reaction RHEA:53713 declares side 53712_R as its products
+        (rh:products); the master reaction RHEA:53712 is undirected. This participant is CHEBI:55377 with
+        coefficient 1. Rhea cites PMID:18437218 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.99.1.8; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:53712
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.99.1.8"/>
+      notes: The rh:ec triple on RHEA:53712 in rhea.rdf. EC 4.99.1.8 is itself a record in this KB.
+  - subject: prot_Q8IL04
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: HDP_PLAF7 is an exemplar enzyme carrying EC 4.99.1.8, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.99.1.8
+      snippet: DR   Q8IL04, HDP_PLAF7  ;
+      notes: ExPASy ENZYME entry EC 4.99.1.8 cross-references UniProtKB:Q8IL04 (HDP_PLAF7) as a protein
+        with this activity.
+    - reference: RHEA:53712
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.99.1.8"/>
+      notes: Rhea assigns RHEA:53712 to EC 4.99.1.8, and EC 4.99.1.8 maps to exactly one Rhea master reaction
+        (RHEA:53712), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

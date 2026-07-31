@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:5.1.3.8
     mapping_source: rhea2ec
@@ -26,4 +26,151 @@ definitions:
       Catalyses the reaction: an N-acyl-D-glucosamine = an N-acyl-D-mannosamine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of an N-acyl-D-glucosamine = an N-acyl-D-mannosamine
+  description: Substrate-to-product chemistry of RHEA:19033, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:19034 (rh:substrates → 19033_L, rh:products → 19033_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of an N-acyl-D-glucosamine = an N-acyl-D-mannosamine
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:19033
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: an N-acyl-D-glucosamine = an N-acyl-D-mannosamine'
+  - node_id: sub1
+    label: an N-acyl-D-glucosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:17274
+    description: Formula C7H12NO6R.
+  - node_id: prd1
+    label: an N-acyl-D-mannosamine
+    node_type: CHEMICAL
+    grounding: CHEBI:16062
+    description: Formula C7H12NO6R.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: N-acylglucosamine 2-epimerase activity
+    grounding: GO:0050121
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: N-acylglucosamine 2-epimerase
+    grounding: EC:5.1.3.8
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q2KIS1
+    node_type: PROTEIN
+    label: RENBP_BOVIN
+    grounding: UniProtKB:Q2KIS1
+  - node_id: prot_O18921
+    node_type: PROTEIN
+    label: RENBP_CANLF
+    grounding: UniProtKB:O18921
+  - node_id: prot_P51606
+    node_type: PROTEIN
+    label: RENBP_HUMAN
+    grounding: UniProtKB:P51606
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: an N-acyl-D-glucosamine is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19034
+      snippet: an N-acyl-D-glucosamine => an N-acyl-D-mannosamine
+      notes: Rhea's left-to-right directional reaction RHEA:19034 declares side 19033_L as its substrates
+        (rh:substrates); the master reaction RHEA:19033 is undirected. This participant is CHEBI:17274
+        with coefficient 1. Rhea cites PMID:22692205, PMID:8663114 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: an N-acyl-D-mannosamine is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:19034
+      snippet: an N-acyl-D-glucosamine => an N-acyl-D-mannosamine
+      notes: Rhea's left-to-right directional reaction RHEA:19034 declares side 19033_R as its products
+        (rh:products); the master reaction RHEA:19033 is undirected. This participant is CHEBI:16062 with
+        coefficient 1. Rhea cites PMID:22692205, PMID:8663114 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:19033
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0050121"/>
+      notes: The rdfs:seeAlso triple on RHEA:19033 in rhea.rdf. GO term GO:0050121 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 5.1.3.8; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:19033
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.8"/>
+      notes: The rh:ec triple on RHEA:19033 in rhea.rdf. EC 5.1.3.8 is itself a record in this KB.
+  - subject: prot_Q2KIS1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RENBP_BOVIN is an exemplar enzyme carrying EC 5.1.3.8, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.8
+      snippet: DR   Q2KIS1, RENBP_BOVIN;  O18921, RENBP_CANLF;  P51606, RENBP_HUMAN;
+      notes: ExPASy ENZYME entry EC 5.1.3.8 cross-references UniProtKB:Q2KIS1 (RENBP_BOVIN) as a protein
+        with this activity.
+    - reference: RHEA:19033
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.8"/>
+      notes: Rhea assigns RHEA:19033 to EC 5.1.3.8, and EC 5.1.3.8 maps to exactly one Rhea master reaction
+        (RHEA:19033), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O18921
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RENBP_CANLF is an exemplar enzyme carrying EC 5.1.3.8, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.8
+      snippet: DR   Q2KIS1, RENBP_BOVIN;  O18921, RENBP_CANLF;  P51606, RENBP_HUMAN;
+      notes: ExPASy ENZYME entry EC 5.1.3.8 cross-references UniProtKB:O18921 (RENBP_CANLF) as a protein
+        with this activity.
+    - reference: RHEA:19033
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.8"/>
+      notes: Rhea assigns RHEA:19033 to EC 5.1.3.8, and EC 5.1.3.8 maps to exactly one Rhea master reaction
+        (RHEA:19033), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_P51606
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: RENBP_HUMAN is an exemplar enzyme carrying EC 5.1.3.8, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:5.1.3.8
+      snippet: DR   Q2KIS1, RENBP_BOVIN;  O18921, RENBP_CANLF;  P51606, RENBP_HUMAN;
+      notes: ExPASy ENZYME entry EC 5.1.3.8 cross-references UniProtKB:P51606 (RENBP_HUMAN) as a protein
+        with this activity.
+    - reference: RHEA:19033
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/5.1.3.8"/>
+      notes: Rhea assigns RHEA:19033 to EC 5.1.3.8, and EC 5.1.3.8 maps to exactly one Rhea master reaction
+        (RHEA:19033), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (7 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

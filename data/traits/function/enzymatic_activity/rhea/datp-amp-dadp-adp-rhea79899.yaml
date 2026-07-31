@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:61404
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,90 @@ definitions:
       Catalyses the reaction: dATP + AMP = dADP + ADP
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of dATP + AMP = dADP + ADP
+  description: Substrate-to-product chemistry of RHEA:79899, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:79900 (rh:substrates → 79899_L, rh:products → 79899_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of dATP + AMP = dADP + ADP
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:79899
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: dATP + AMP = dADP + ADP'
+  - node_id: sub1
+    label: dATP
+    node_type: CHEMICAL
+    grounding: CHEBI:61404
+    description: Formula C10H12N5O12P3.
+  - node_id: sub2
+    label: AMP
+    node_type: CHEMICAL
+    grounding: CHEBI:456215
+    description: Formula C10H12N5O7P.
+  - node_id: prd1
+    label: dADP
+    node_type: CHEMICAL
+    grounding: CHEBI:57667
+    description: Formula C10H12N5O9P2.
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: dATP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79900
+      snippet: dATP + AMP => dADP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:79900 declares side 79899_L as its substrates
+        (rh:substrates); the master reaction RHEA:79899 is undirected. This participant is CHEBI:61404
+        with coefficient 1. Rhea cites PMID:2161682 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: AMP is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79900
+      snippet: dATP + AMP => dADP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:79900 declares side 79899_L as its substrates
+        (rh:substrates); the master reaction RHEA:79899 is undirected. This participant is CHEBI:456215
+        with coefficient 1. Rhea cites PMID:2161682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: dADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79900
+      snippet: dATP + AMP => dADP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:79900 declares side 79899_R as its products
+        (rh:products); the master reaction RHEA:79899 is undirected. This participant is CHEBI:57667 with
+        coefficient 1. Rhea cites PMID:2161682 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:79900
+      snippet: dATP + AMP => dADP + ADP
+      notes: Rhea's left-to-right directional reaction RHEA:79900 declares side 79899_R as its products
+        (rh:products); the master reaction RHEA:79899 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:2161682 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

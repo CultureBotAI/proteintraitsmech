@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:146191
     role: SUBSTRATE_OR_PRODUCT
@@ -25,4 +25,92 @@ definitions:
       Catalyses the reaction: N-(9Z-octadecenoyl)-taurine + H2O = taurine + (9Z)-octadecenoate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-(9Z-octadecenoyl)-taurine + H2O = taurine + (9Z)-octadecenoate
+  description: Substrate-to-product chemistry of RHEA:63148, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:63149 (rh:substrates → 63148_L, rh:products → 63148_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-(9Z-octadecenoyl)-taurine + H2O = taurine + (9Z)-octadecenoate
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:63148
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-(9Z-octadecenoyl)-taurine + H2O = taurine + (9Z)-octadecenoate'
+  - node_id: sub1
+    label: N-(9Z-octadecenoyl)-taurine
+    node_type: CHEMICAL
+    grounding: CHEBI:146191
+    description: Formula C20H38NO4S.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: taurine
+    node_type: CHEMICAL
+    grounding: CHEBI:507393
+    description: Formula C2H7NO3S.
+  - node_id: prd2
+    label: (9Z)-octadecenoate
+    node_type: CHEMICAL
+    grounding: CHEBI:30823
+    description: Formula C18H33O2.
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-(9Z-octadecenoyl)-taurine is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:63149
+      snippet: N-(9Z-octadecenoyl)-taurine + H2O => taurine + (9Z)-octadecenoate
+      notes: Rhea's left-to-right directional reaction RHEA:63149 declares side 63148_L as its substrates
+        (rh:substrates); the master reaction RHEA:63148 is undirected. This participant is CHEBI:146191
+        with coefficient 1. Rhea cites PMID:15533037 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63149
+      snippet: N-(9Z-octadecenoyl)-taurine + H2O => taurine + (9Z)-octadecenoate
+      notes: Rhea's left-to-right directional reaction RHEA:63149 declares side 63148_L as its substrates
+        (rh:substrates); the master reaction RHEA:63148 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:15533037 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: taurine is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:63149
+      snippet: N-(9Z-octadecenoyl)-taurine + H2O => taurine + (9Z)-octadecenoate
+      notes: Rhea's left-to-right directional reaction RHEA:63149 declares side 63148_R as its products
+        (rh:products); the master reaction RHEA:63148 is undirected. This participant is CHEBI:507393
+        with coefficient 1. Rhea cites PMID:15533037 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: (9Z)-octadecenoate is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:63149
+      snippet: N-(9Z-octadecenoyl)-taurine + H2O => taurine + (9Z)-octadecenoate
+      notes: Rhea's left-to-right directional reaction RHEA:63149 declares side 63148_R as its products
+        (rh:products); the master reaction RHEA:63148 is undirected. This participant is CHEBI:30823 with
+        coefficient 1. Rhea cites PMID:15533037 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (4 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

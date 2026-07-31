@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:173117
     role: SUBSTRATE_OR_PRODUCT
@@ -23,4 +23,127 @@ definitions:
       Catalyses the reaction: ribonucleotidyl-uridine-RNA = a 5'-end dephospho-uridine-RNA + a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ribonucleotidyl-uridine-RNA = a 5'-end dephospho-uridine-RNA + a 3'-end
+    2',3'-cyclophos…
+  description: Substrate-to-product chemistry of RHEA:67792, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:67793 (rh:substrates → 67792_L, rh:products → 67792_R), and Rhea
+    curates the reverse direction too. 1 substrate, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of ribonucleotidyl-uridine-RNA = a 5'-end dephospho-uridine-RNA + a 3'-end 2',3…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:67792
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: ribonucleotidyl-uridine-RNA = a 5''-end dephospho-uridine-RNA + a 3''-end 2'',3''-cyclophospho-ribonucleotide-RNA'
+  - node_id: sub1
+    label: ribonucleotidyl-uridine-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17354
+    description: Rhea compound GENERIC:17354.
+  - node_id: sub1_rp1
+    label: ribonucleotide-uridine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17354 (ribonucleotidyl-uridine-RNA);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:173117
+  - node_id: prd1
+    label: a 5'-end dephospho-uridine-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:17356
+    description: Rhea compound GENERIC:17356.
+  - node_id: prd1_rp1
+    label: 5'-dephospho-uridine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:17356 (a 5'-end
+      dephospho-uridine-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:173224
+  - node_id: prd2
+    label: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+    node_type: NUCLEIC_ACID
+    grounding: RHEA-COMP:10464
+    description: Rhea compound GENERIC:10464.
+  - node_id: prd2_rp1
+    label: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:10464 (a 3'-end
+      2',3'-cyclophospho-ribonucleotide-RNA); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:83064
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ribonucleotidyl-uridine-RNA is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:67793
+      snippet: ribonucleotidyl-uridine-RNA => a 5'-end dephospho-uridine-RNA + a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+      notes: Rhea's left-to-right directional reaction RHEA:67793 declares side 67792_L as its substrates
+        (rh:substrates); the master reaction RHEA:67792 is undirected. This participant is GENERIC:17354
+        with coefficient 1. Rhea cites PMID:18936097 for this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: ribonucleotide-uridine residue is the reactive part of ribonucleotidyl-uridine-RNA.
+    evidence:
+    - reference: RHEA:67792
+      snippet: ribonucleotide-uridine residue
+      notes: Rhea compound GENERIC:17354 (ribonucleotidyl-uridine-RNA) declares rh:reactivePart = ribonucleotide-uridine
+        residue (CHEBI:173117), formula C14H17N2O14P2R.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a 5'-end dephospho-uridine-RNA is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:67793
+      snippet: ribonucleotidyl-uridine-RNA => a 5'-end dephospho-uridine-RNA + a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+      notes: Rhea's left-to-right directional reaction RHEA:67793 declares side 67792_R as its products
+        (rh:products); the master reaction RHEA:67792 is undirected. This participant is GENERIC:17356
+        with coefficient 1. Rhea cites PMID:18936097 for this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: 5'-dephospho-uridine residue is the reactive part of a 5'-end dephospho-uridine-RNA.
+    evidence:
+    - reference: RHEA:67792
+      snippet: 5'-dephospho-uridine residue
+      notes: Rhea compound GENERIC:17356 (a 5'-end dephospho-uridine-RNA) declares rh:reactivePart = 5'-dephospho-uridine
+        residue (CHEBI:173224), formula C9H11N2O6.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA is a product released by this reaction
+      (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:67793
+      snippet: ribonucleotidyl-uridine-RNA => a 5'-end dephospho-uridine-RNA + a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA
+      notes: Rhea's left-to-right directional reaction RHEA:67793 declares side 67792_R as its products
+        (rh:products); the master reaction RHEA:67792 is undirected. This participant is GENERIC:10464
+        with coefficient 1. Rhea cites PMID:18936097 for this reaction.
+  - subject: prd2_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd2
+    description: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue is the reactive part of a
+      3'-end 2',3'-cyclophospho-ribonucleotide-RNA.
+    evidence:
+    - reference: RHEA:67792
+      snippet: a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue
+      notes: Rhea compound GENERIC:10464 (a 3'-end 2',3'-cyclophospho-ribonucleotide-RNA) declares rh:reactivePart
+        = a 3'-terminal ribonucleotide 2',3'-cyclic phosphate residue (CHEBI:83064), formula C5H6O8P2R.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (6 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

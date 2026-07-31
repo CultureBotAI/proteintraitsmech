@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:1.3.1.10
     mapping_source: rhea2ec
@@ -52,4 +52,206 @@ definitions:
       Catalyses the reaction: a 2,3-saturated acyl-[ACP] + NADP(+) = a (2E)-enoyl-[ACP] + NADPH + H(+)
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of a 2,3-saturated acyl-[ACP] + NADP(+) = a (2E)-enoyl-[ACP] + NADPH + H(+)
+  description: Substrate-to-product chemistry of RHEA:22564, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:22565 (rh:substrates → 22564_L, rh:products → 22564_R), and Rhea
+    curates the reverse direction too. 2 substrates, 3 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of a 2,3-saturated acyl-[ACP] + NADP(+) = a (2E)-enoyl-[ACP] + NADPH + H(+)
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:22564
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: a 2,3-saturated acyl-[ACP] + NADP(+) = a (2E)-enoyl-[ACP] + NADPH + H(+)'
+  - node_id: sub1
+    label: a 2,3-saturated acyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9926
+    description: Rhea compound GENERIC:9926.
+  - node_id: sub1_rp1
+    label: O-(S-(2,3-saturated)-acylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9926 (a 2,3-saturated
+      acyl-[ACP]); no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78785
+  - node_id: sub2
+    label: NADP(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:58349
+    description: Formula C21H25N7O17P3.
+  - node_id: prd1
+    label: a (2E)-enoyl-[ACP]
+    node_type: PROTEIN
+    grounding: RHEA-COMP:9925
+    description: Rhea compound GENERIC:9925.
+  - node_id: prd1_rp1
+    label: O-(S-(2E)-enoylpantetheine-4'-phosphoryl)-L-serine residue
+    node_type: RESIDUE
+    description: The reacting group Rhea names inside the generic participant GENERIC:9925 (a (2E)-enoyl-[ACP]);
+      no position on any specific protein sequence is asserted.
+    grounding: CHEBI:78784
+  - node_id: prd2
+    label: NADPH
+    node_type: CHEMICAL
+    grounding: CHEBI:57783
+    description: Formula C21H26N7O17P3.
+  - node_id: prd3
+    label: H(+)
+    node_type: CHEMICAL
+    grounding: CHEBI:15378
+    description: Formula H.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: enoyl-[acyl-carrier-protein] reductase (NADPH) activity
+    grounding: GO:0141148
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: enoyl-[acyl-carrier-protein] reductase (NADPH, Si-specific)
+    grounding: EC:1.3.1.10
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: ec2
+    node_type: MOLECULAR_FUNCTION
+    label: enoyl-[acyl-carrier-protein] reductase
+    grounding: EC:1.3.1.104
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: ec3
+    node_type: MOLECULAR_FUNCTION
+    label: enoyl-[acyl-carrier-protein] reductase (NADPH, Re-specific)
+    grounding: EC:1.3.1.39
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: a 2,3-saturated acyl-[ACP] is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22565
+      snippet: a 2,3-saturated acyl-[ACP] + NADP(+) => a (2E)-enoyl-[ACP] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22565 declares side 22564_L as its substrates
+        (rh:substrates); the master reaction RHEA:22564 is undirected. This participant is GENERIC:9926
+        with coefficient 1. Rhea cites PMID:11007778, PMID:7567999, PMID:18335995, PMID:7021150 for this
+        reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: O-(S-(2,3-saturated)-acylpantetheine-4'-phosphoryl)-L-serine residue is the reactive
+      part of a 2,3-saturated acyl-[ACP].
+    evidence:
+    - reference: RHEA:22564
+      snippet: O-(S-(2,3-saturated)-acylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9926 (a 2,3-saturated acyl-[ACP]) declares rh:reactivePart = O-(S-(2,3-saturated)-acylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78785), formula C17H28N3O9PSR.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: NADP(+) is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22565
+      snippet: a 2,3-saturated acyl-[ACP] + NADP(+) => a (2E)-enoyl-[ACP] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22565 declares side 22564_L as its substrates
+        (rh:substrates); the master reaction RHEA:22564 is undirected. This participant is CHEBI:58349
+        with coefficient 1. Rhea cites PMID:11007778, PMID:7567999, PMID:18335995, PMID:7021150 for this
+        reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a (2E)-enoyl-[ACP] is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:22565
+      snippet: a 2,3-saturated acyl-[ACP] + NADP(+) => a (2E)-enoyl-[ACP] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22565 declares side 22564_R as its products
+        (rh:products); the master reaction RHEA:22564 is undirected. This participant is GENERIC:9925
+        with coefficient 1. Rhea cites PMID:11007778, PMID:7567999, PMID:18335995, PMID:7021150 for this
+        reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: O-(S-(2E)-enoylpantetheine-4'-phosphoryl)-L-serine residue is the reactive part of a
+      (2E)-enoyl-[ACP].
+    evidence:
+    - reference: RHEA:22564
+      snippet: O-(S-(2E)-enoylpantetheine-4'-phosphoryl)-L-serine residue
+      notes: Rhea compound GENERIC:9925 (a (2E)-enoyl-[ACP]) declares rh:reactivePart = O-(S-(2E)-enoylpantetheine-4'-phosphoryl)-L-serine
+        residue (CHEBI:78784), formula C17H26N3O9PSR.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: NADPH is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22565
+      snippet: a 2,3-saturated acyl-[ACP] + NADP(+) => a (2E)-enoyl-[ACP] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22565 declares side 22564_R as its products
+        (rh:products); the master reaction RHEA:22564 is undirected. This participant is CHEBI:57783 with
+        coefficient 1. Rhea cites PMID:11007778, PMID:7567999, PMID:18335995, PMID:7021150 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd3
+    description: H(+) is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:22565
+      snippet: a 2,3-saturated acyl-[ACP] + NADP(+) => a (2E)-enoyl-[ACP] + NADPH + H(+)
+      notes: Rhea's left-to-right directional reaction RHEA:22565 declares side 22564_R as its products
+        (rh:products); the master reaction RHEA:22564 is undirected. This participant is CHEBI:15378 with
+        coefficient 1. Rhea cites PMID:11007778, PMID:7567999, PMID:18335995, PMID:7021150 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:22564
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0141148"/>
+      notes: The rdfs:seeAlso triple on RHEA:22564 in rhea.rdf. GO term GO:0141148 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 1.3.1.10; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22564
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.1.10"/>
+      notes: The rh:ec triple on RHEA:22564 in rhea.rdf. EC 1.3.1.10 is itself a record in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec2
+    description: Rhea assigns this reaction to EC 1.3.1.104; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22564
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.1.104"/>
+      notes: The rh:ec triple on RHEA:22564 in rhea.rdf. EC 1.3.1.104 is itself a record in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec3
+    description: Rhea assigns this reaction to EC 1.3.1.39; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:22564
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/1.3.1.39"/>
+      notes: The rh:ec triple on RHEA:22564 in rhea.rdf. EC 1.3.1.39 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (11 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

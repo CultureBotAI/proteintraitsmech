@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:4.2.1.138
     mapping_source: rhea2ec
@@ -26,4 +26,111 @@ definitions:
       Catalyses the reaction: (+)-(E)-beta-caryophyllene + H2O = (+)-caryolan-1-ol
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of (+)-(E)-beta-caryophyllene + H2O = (+)-caryolan-1-ol
+  description: Substrate-to-product chemistry of RHEA:31795, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:31796 (rh:substrates → 31795_L, rh:products → 31795_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of (+)-(E)-beta-caryophyllene + H2O = (+)-caryolan-1-ol
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:31795
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: (+)-(E)-beta-caryophyllene + H2O = (+)-caryolan-1-ol'
+  - node_id: sub1
+    label: (+)-(E)-beta-caryophyllene
+    node_type: CHEMICAL
+    grounding: CHEBI:63190
+    description: Formula C15H24.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: (+)-caryolan-1-ol
+    node_type: CHEMICAL
+    grounding: CHEBI:63196
+    description: Formula C15H26O.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: (+)-caryolan-1-ol synthase
+    grounding: EC:4.2.1.138
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_B1W019
+    node_type: PROTEIN
+    label: GCOA_STRGG
+    grounding: UniProtKB:B1W019
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: (+)-(E)-beta-caryophyllene is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31796
+      snippet: (+)-(E)-beta-caryophyllene + H2O => (+)-caryolan-1-ol
+      notes: Rhea's left-to-right directional reaction RHEA:31796 declares side 31795_L as its substrates
+        (rh:substrates); the master reaction RHEA:31795 is undirected. This participant is CHEBI:63190
+        with coefficient 1. Rhea cites PMID:21693706 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:31796
+      snippet: (+)-(E)-beta-caryophyllene + H2O => (+)-caryolan-1-ol
+      notes: Rhea's left-to-right directional reaction RHEA:31796 declares side 31795_L as its substrates
+        (rh:substrates); the master reaction RHEA:31795 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:21693706 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: (+)-caryolan-1-ol is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:31796
+      snippet: (+)-(E)-beta-caryophyllene + H2O => (+)-caryolan-1-ol
+      notes: Rhea's left-to-right directional reaction RHEA:31796 declares side 31795_R as its products
+        (rh:products); the master reaction RHEA:31795 is undirected. This participant is CHEBI:63196 with
+        coefficient 1. Rhea cites PMID:21693706 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 4.2.1.138; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:31795
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.138"/>
+      notes: The rh:ec triple on RHEA:31795 in rhea.rdf. EC 4.2.1.138 is itself a record in this KB.
+  - subject: prot_B1W019
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: GCOA_STRGG is an exemplar enzyme carrying EC 4.2.1.138, the class whose only curated
+      Rhea reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:4.2.1.138
+      snippet: DR   B1W019, GCOA_STRGG ;
+      notes: ExPASy ENZYME entry EC 4.2.1.138 cross-references UniProtKB:B1W019 (GCOA_STRGG) as a protein
+        with this activity.
+    - reference: RHEA:31795
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/4.2.1.138"/>
+      notes: Rhea assigns RHEA:31795 to EC 4.2.1.138, and EC 4.2.1.138 maps to exactly one Rhea master
+        reaction (RHEA:31795), so the enzyme's activity is this reaction. Where an EC class maps to several
+        Rhea reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

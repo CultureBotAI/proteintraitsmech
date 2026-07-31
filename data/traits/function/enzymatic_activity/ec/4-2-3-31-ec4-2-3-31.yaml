@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:4.2.3.-
 synonyms:
@@ -33,4 +33,104 @@ definitions:
       Catalyses: ent-copalyl diphosphate = ent-pimara-9(11),15-diene + diphosphate
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of ent-pimara-9(11),15-diene synthase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:4.2.3.31. EC 4.2.3.31 maps to exactly
+    one curated Rhea reaction (RHEA:25544), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "ent-copalyl diphosphate
+    = ent-pimara-9(11),15-diene + diphosphate". Substrate/product direction is the one Rhea states in
+    each reaction''s left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: ent-pimara-9(11),15-diene synthase
+    grounding: EC:4.2.3.31
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: ent-copalyl diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:58553
+    description: Formula C20H33O7P2.
+  - node_id: prd1
+    label: ent-pimara-9(11),15-diene
+    node_type: CHEMICAL
+    grounding: CHEBI:50064
+    description: Formula C20H32.
+  - node_id: prd2
+    label: diphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:33019
+    description: Formula HO7P2.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: ent-pimara-9(11),15-diene synthase activity
+    grounding: GO:0052674
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: prot_Q5KSN4
+    node_type: PROTEIN
+    label: PMDS_STREO
+    grounding: UniProtKB:Q5KSN4
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: ent-copalyl diphosphate is a substrate consumed by RHEA:25544 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25545
+      snippet: ent-copalyl diphosphate => ent-pimara-9(11),15-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25545 declares side 25544_L as its substrates
+        (rh:substrates); the master reaction RHEA:25544 is undirected. This participant is CHEBI:58553
+        with coefficient 1. Rhea cites PMID:17148547 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: ent-pimara-9(11),15-diene is a product released by RHEA:25544 (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:25545
+      snippet: ent-copalyl diphosphate => ent-pimara-9(11),15-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25545 declares side 25544_R as its products
+        (rh:products); the master reaction RHEA:25544 is undirected. This participant is CHEBI:50064 with
+        coefficient 1. Rhea cites PMID:17148547 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: diphosphate is a product released by RHEA:25544 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:25545
+      snippet: ent-copalyl diphosphate => ent-pimara-9(11),15-diene + diphosphate
+      notes: Rhea's left-to-right directional reaction RHEA:25545 declares side 25544_R as its products
+        (rh:products); the master reaction RHEA:25544 is undirected. This participant is CHEBI:33019 with
+        coefficient 1. Rhea cites PMID:17148547 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: The GO molecular function that describes the same catalysis as this EC class.
+    evidence:
+    - reference: EC:4.2.3.31
+      snippet: EC:4.2.3.31 > GO:ent-pimara-9(11),15-diene synthase activity ; GO:0052674
+      notes: The ec2go mapping line maintained by the GO Consortium. GO term GO:0052674 is itself a record
+        in this KB.
+  - subject: prot_Q5KSN4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: PMDS_STREO is an exemplar enzyme with EC 4.2.3.31 activity.
+    evidence:
+    - reference: EC:4.2.3.31
+      snippet: DR   Q5KSN4, PMDS_STREO ;
+      notes: ExPASy ENZYME entry EC 4.2.3.31 cross-references UniProtKB:Q5KSN4 (PMDS_STREO) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

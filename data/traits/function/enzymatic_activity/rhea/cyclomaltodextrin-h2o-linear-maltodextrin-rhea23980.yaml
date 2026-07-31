@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.2.1.54
     mapping_source: rhea2ec
@@ -30,4 +30,173 @@ definitions:
       Catalyses the reaction: cyclomaltodextrin + H2O = linear maltodextrin
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of cyclomaltodextrin + H2O = linear maltodextrin
+  description: Substrate-to-product chemistry of RHEA:23980, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:23981 (rh:substrates → 23980_L, rh:products → 23980_R), and Rhea
+    curates the reverse direction too. 2 substrates, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of cyclomaltodextrin + H2O = linear maltodextrin
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:23980
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: cyclomaltodextrin + H2O = linear maltodextrin'
+  - node_id: sub1
+    label: cyclomaltodextrin
+    node_type: CHEMICAL
+    grounding: CHEBI:17623
+    xrefs:
+    - RHEA-COMP:14584
+    description: Rhea compound POLYMER:14584. Formula C18H30O15(C6H10O5)<i><sub>n-3</sub></i>. Polymerisation
+      index n-3.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: linear maltodextrin
+    node_type: CHEMICAL
+    grounding: CHEBI:18398
+    xrefs:
+    - RHEA-COMP:14707
+    description: Rhea compound POLYMER:14707. Formula H2O(C6H10O5)<i><sub>n</sub></i>. Polymerisation
+      index n.
+  - node_id: go
+    node_type: MOLECULAR_FUNCTION
+    label: cyclomaltodextrinase activity
+    grounding: GO:0047798
+    description: KB trait record (FUNC_MOLECULAR_FUNCTION).
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: cyclomaltodextrinase
+    grounding: EC:3.2.1.54
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  - node_id: prot_Q9X2F4
+    node_type: PROTEIN
+    label: AGLB_THEMA
+    grounding: UniProtKB:Q9X2F4
+  - node_id: prot_O86959
+    node_type: PROTEIN
+    label: AGLB_THENE
+    grounding: UniProtKB:O86959
+  - node_id: prot_Q59226
+    node_type: PROTEIN
+    label: CDAS_BACSP
+    grounding: UniProtKB:Q59226
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: cyclomaltodextrin is a substrate consumed by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23981
+      snippet: cyclomaltodextrin + H2O => linear maltodextrin
+      notes: Rhea's left-to-right directional reaction RHEA:23981 declares side 23980_L as its substrates
+        (rh:substrates); the master reaction RHEA:23980 is undirected. This participant is POLYMER:14584
+        with coefficient 1. Rhea cites PMID:4922856, PMID:14593917, PMID:12127967 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:23981
+      snippet: cyclomaltodextrin + H2O => linear maltodextrin
+      notes: Rhea's left-to-right directional reaction RHEA:23981 declares side 23980_L as its substrates
+        (rh:substrates); the master reaction RHEA:23980 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:4922856, PMID:14593917, PMID:12127967 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: linear maltodextrin is a product released by this reaction (stoichiometric coefficient
+      1).
+    evidence:
+    - reference: RHEA:23981
+      snippet: cyclomaltodextrin + H2O => linear maltodextrin
+      notes: Rhea's left-to-right directional reaction RHEA:23981 declares side 23980_R as its products
+        (rh:products); the master reaction RHEA:23980 is undirected. This participant is POLYMER:14707
+        with coefficient 1. Rhea cites PMID:4922856, PMID:14593917, PMID:12127967 for this reaction.
+  - subject: activity
+    predicate: is cross-referenced to the equivalent GO molecular function
+    predicate_id: skos:closeMatch
+    object: go
+    description: Rhea cross-references this reaction to the GO molecular function that describes the same
+      catalysis.
+    evidence:
+    - reference: RHEA:23980
+      snippet: <rdfs:seeAlso rdf:resource="http://purl.obolibrary.org/obo/GO_0047798"/>
+      notes: The rdfs:seeAlso triple on RHEA:23980 in rhea.rdf. GO term GO:0047798 is itself a record
+        in this KB.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.2.1.54; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:23980
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.54"/>
+      notes: The rh:ec triple on RHEA:23980 in rhea.rdf. EC 3.2.1.54 is itself a record in this KB.
+  - subject: prot_Q9X2F4
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGLB_THEMA is an exemplar enzyme carrying EC 3.2.1.54, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.54
+      snippet: DR   Q9X2F4, AGLB_THEMA ;  O86959, AGLB_THENE ;  Q59226, CDAS_BACSP ;
+      notes: ExPASy ENZYME entry EC 3.2.1.54 cross-references UniProtKB:Q9X2F4 (AGLB_THEMA) as a protein
+        with this activity.
+    - reference: RHEA:23980
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.54"/>
+      notes: Rhea assigns RHEA:23980 to EC 3.2.1.54, and EC 3.2.1.54 maps to exactly one Rhea master reaction
+        (RHEA:23980), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_O86959
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: AGLB_THENE is an exemplar enzyme carrying EC 3.2.1.54, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.54
+      snippet: DR   Q9X2F4, AGLB_THEMA ;  O86959, AGLB_THENE ;  Q59226, CDAS_BACSP ;
+      notes: ExPASy ENZYME entry EC 3.2.1.54 cross-references UniProtKB:O86959 (AGLB_THENE) as a protein
+        with this activity.
+    - reference: RHEA:23980
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.54"/>
+      notes: Rhea assigns RHEA:23980 to EC 3.2.1.54, and EC 3.2.1.54 maps to exactly one Rhea master reaction
+        (RHEA:23980), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+  - subject: prot_Q59226
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: CDAS_BACSP is an exemplar enzyme carrying EC 3.2.1.54, the class whose only curated Rhea
+      reaction is this one, so it catalyses this reaction.
+    evidence:
+    - reference: EC:3.2.1.54
+      snippet: DR   Q9X2F4, AGLB_THEMA ;  O86959, AGLB_THENE ;  Q59226, CDAS_BACSP ;
+      notes: ExPASy ENZYME entry EC 3.2.1.54 cross-references UniProtKB:Q59226 (CDAS_BACSP) as a protein
+        with this activity.
+    - reference: RHEA:23980
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.2.1.54"/>
+      notes: Rhea assigns RHEA:23980 to EC 3.2.1.54, and EC 3.2.1.54 maps to exactly one Rhea master reaction
+        (RHEA:23980), so the enzyme's activity is this reaction. Where an EC class maps to several Rhea
+        reactions no exemplar protein is written.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (8 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

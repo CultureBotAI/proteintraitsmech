@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 chemical_participants:
   - chebi: CHEBI:134624
     role: SUBSTRATE_OR_PRODUCT
@@ -21,4 +21,65 @@ definitions:
       Catalyses the reaction: N-[omega-(9R)-hydroperoxy-(10E,12Z)-octadecadienoyloxy]acyl-beta-D-glucosyl-(1<->1)-octadecasphing-4E-enine = a N-[omega-(9R,10R)-epoxy-(13R)-hydroxy-(11E)-octadecenoyloxy]acyl-beta-D-glucosyl-(1<->1)-sphing-4E-enine
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of N-[omega-(9R)-hydroperoxy-(10E,12Z)-octadecadienoyloxy]acyl-beta-D-glucosyl-(1<->1)-oct…
+  description: Substrate-to-product chemistry of RHEA:40503, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:40504 (rh:substrates → 40503_L, rh:products → 40503_R), and Rhea
+    curates the reverse direction too. 1 substrate, 1 product. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of N-[omega-(9R)-hydroperoxy-(10E,12Z)-octadecadienoyloxy]acyl-beta-D-glucosyl-…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:40503
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: N-[omega-(9R)-hydroperoxy-(10E,12Z)-octadecadienoyloxy]acyl-beta-D-glucosyl-(1<->1)-octadecasphing-4E-enine
+      = a N-[omega-(9R,10R)-epoxy-(13R)-hydroxy-(11E)-octadecenoyloxy]acyl-beta-D-glucosyl-(1<->1)-sphing-4E-enine'
+  - node_id: sub1
+    label: N-[omega-(9R)-hydroperoxy-(10E,12Z)-octadecadienoyloxy]acyl-beta-D-glucosyl-(1<->1)-octad…
+    node_type: CHEMICAL
+    grounding: CHEBI:134624
+    description: 'Full Rhea name: N-[omega-(9R)-hydroperoxy-(10E,12Z)-octadecadienoyloxy]acyl-beta-D-glucosyl-(1<->1)-octadecasphing-4E-enine
+      Formula C43H77NO12R.'
+  - node_id: prd1
+    label: a N-[omega-(9R,10R)-epoxy-(13R)-hydroxy-(11E)-octadecenoyloxy]acyl-beta-D-glucosyl-(1<->1…
+    node_type: CHEMICAL
+    grounding: CHEBI:134626
+    description: 'Full Rhea name: a N-[omega-(9R,10R)-epoxy-(13R)-hydroxy-(11E)-octadecenoyloxy]acyl-beta-D-glucosyl-(1<->1)-sphing-4E-enine
+      Formula C43H77NO12R.'
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: N-[omega-(9R)-hydroperoxy-(10E,12Z)-octadecadienoyloxy]acyl-beta-D-glucosyl-(1<->1)-octadecasphing-4E-enine
+      is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40504
+      snippet: N-[omega-(9R)-hydroperoxy-(10E,12Z)-octadecadienoyloxy]acyl-beta-D-glucosyl-(1<->1)-octadecasphing-4E-enine
+        => a N-[omega-(9R,10R)-epoxy-(13R)-hydroxy-(11E)-octadecenoyloxy]acyl-beta-D-glucosyl-(1<->1)-sphing-4E-enine
+      notes: Rhea's left-to-right directional reaction RHEA:40504 declares side 40503_L as its substrates
+        (rh:substrates); the master reaction RHEA:40503 is undirected. This participant is CHEBI:134624
+        with coefficient 1. Rhea cites PMID:21558561 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: a N-[omega-(9R,10R)-epoxy-(13R)-hydroxy-(11E)-octadecenoyloxy]acyl-beta-D-glucosyl-(1<->1)-sphing-4E-enine
+      is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:40504
+      snippet: N-[omega-(9R)-hydroperoxy-(10E,12Z)-octadecadienoyloxy]acyl-beta-D-glucosyl-(1<->1)-octadecasphing-4E-enine
+        => a N-[omega-(9R,10R)-epoxy-(13R)-hydroxy-(11E)-octadecenoyloxy]acyl-beta-D-glucosyl-(1<->1)-sphing-4E-enine
+      notes: Rhea's left-to-right directional reaction RHEA:40504 declares side 40503_R as its products
+        (rh:products); the master reaction RHEA:40503 is undirected. This participant is CHEBI:134626
+        with coefficient 1. Rhea cites PMID:21558561 for this reaction.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (2 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

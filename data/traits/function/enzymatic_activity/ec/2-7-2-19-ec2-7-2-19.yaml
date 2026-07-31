@@ -6,7 +6,7 @@ definition_source: ExPASy ENZYME
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 parent_traits:
   - EC:2.7.2.-
 mapped_xrefs:
@@ -36,4 +36,178 @@ definitions:
       Catalyses: [amino-group carrier protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate + ATP = [amino-group carrier protein]-C-terminal-gamma-(5-phospho-L- glutamyl)-L-glutamate + ADP
     source: "ExPASy ENZYME"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of [amino-group carrier protein]-L-glutamate 6-kinase
+  description: 'Chemistry, exemplar enzymes and GO equivalence for EC:2.7.2.19. EC 2.7.2.19 maps to exactly
+    one curated Rhea reaction (RHEA:52632), so that reaction''s substrates and products are the class''s
+    and hang directly off the activity. ExPASy ENZYME states the catalysed reaction as: "[amino-group
+    carrier protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate + ATP = [amino-group carrier protein]-C-terminal-gamma-(5-phospho-L-
+    glutamyl)-L-glutamate + ADP". Substrate/product direction is the one Rhea states in each reaction''s
+    left-to-right directional child; Rhea''s master reactions are undirected.'
+  nodes:
+  - node_id: activity
+    node_type: MOLECULAR_FUNCTION
+    label: '[amino-group carrier protein]-L-glutamate 6-kinase'
+    grounding: EC:2.7.2.19
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzyme class this graph explains.
+  - node_id: sub1
+    label: '[amino-group carrier protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13311
+    description: Rhea compound GENERIC:13311.
+  - node_id: sub1_rp1
+    node_type: RESIDUE
+    label: C-terminal-gamma-(L-glutamyl)-L-glutamyl group
+    description: The reacting group Rhea names inside the generic participant GENERIC:13311 ([amino-group
+      carrier protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate); no position on any specific protein
+      sequence is asserted.
+    grounding: CHEBI:136714
+  - node_id: sub2
+    label: ATP
+    node_type: CHEMICAL
+    grounding: CHEBI:30616
+    description: Formula C10H12N5O13P3.
+  - node_id: prd1
+    label: '[amino-group carrier protein]-C-terminal-gamma-(5-phospho-L-glutamyl)-L-glutamate'
+    node_type: PROTEIN
+    grounding: RHEA-COMP:13313
+    description: Rhea compound GENERIC:13313.
+  - node_id: prd1_rp1
+    node_type: RESIDUE
+    label: C-terminal-gamma-(5-phospho-L-glutamyl )-L-glutamate group
+    description: The reacting group Rhea names inside the generic participant GENERIC:13313 ([amino-group
+      carrier protein]-C-terminal-gamma-(5-phospho-L-glutamyl)-L-glutamate); no position on any specific
+      protein sequence is asserted.
+    grounding: CHEBI:136717
+  - node_id: prd2
+    label: ADP
+    node_type: CHEMICAL
+    grounding: CHEBI:456216
+    description: Formula C10H12N5O10P2.
+  - node_id: prot_Q9YBY9
+    node_type: PROTEIN
+    label: LYSZ_AERPE
+    grounding: UniProtKB:Q9YBY9
+  - node_id: prot_A8M8Q8
+    node_type: PROTEIN
+    label: LYSZ_CALMQ
+    grounding: UniProtKB:A8M8Q8
+  - node_id: prot_A0RWW1
+    node_type: PROTEIN
+    label: LYSZ_CENSY
+    grounding: UniProtKB:A0RWW1
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: '[amino-group carrier protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate is a substrate
+      consumed by RHEA:52632 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:52633
+      snippet: '[amino-group carrier protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate + ATP => [amino-group
+        carrier protein]-C-terminal-gamma-(5-phospho-L-glutamyl)-L-glutamate + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:52633 declares side 52632_L as its substrates
+        (rh:substrates); the master reaction RHEA:52632 is undirected. This participant is GENERIC:13311
+        with coefficient 1. Rhea cites PMID:25392000, PMID:23434852, PMID:27566549, PMID:19620981 for
+        this reaction.
+  - subject: sub1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: sub1
+    description: C-terminal-gamma-(L-glutamyl)-L-glutamyl group is the reactive part of [amino-group carrier
+      protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate.
+    evidence:
+    - reference: RHEA:52632
+      snippet: C-terminal-gamma-(L-glutamyl)-L-glutamyl group
+      notes: Rhea compound GENERIC:13311 ([amino-group carrier protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate)
+        declares rh:reactivePart = C-terminal-gamma-(L-glutamyl)-L-glutamyl group (CHEBI:136714).
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: ATP is a substrate consumed by RHEA:52632 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52633
+      snippet: '[amino-group carrier protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate + ATP => [amino-group
+        carrier protein]-C-terminal-gamma-(5-phospho-L-glutamyl)-L-glutamate + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:52633 declares side 52632_L as its substrates
+        (rh:substrates); the master reaction RHEA:52632 is undirected. This participant is CHEBI:30616
+        with coefficient 1. Rhea cites PMID:25392000, PMID:23434852, PMID:27566549, PMID:19620981 for
+        this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: '[amino-group carrier protein]-C-terminal-gamma-(5-phospho-L-glutamyl)-L-glutamate is
+      a product released by RHEA:52632 (stoichiometric coefficient 1).'
+    evidence:
+    - reference: RHEA:52633
+      snippet: '[amino-group carrier protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate + ATP => [amino-group
+        carrier protein]-C-terminal-gamma-(5-phospho-L-glutamyl)-L-glutamate + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:52633 declares side 52632_R as its products
+        (rh:products); the master reaction RHEA:52632 is undirected. This participant is GENERIC:13313
+        with coefficient 1. Rhea cites PMID:25392000, PMID:23434852, PMID:27566549, PMID:19620981 for
+        this reaction.
+  - subject: prd1_rp1
+    predicate: part of
+    predicate_id: BFO:0000050
+    object: prd1
+    description: C-terminal-gamma-(5-phospho-L-glutamyl )-L-glutamate group is the reactive part of [amino-group
+      carrier protein]-C-terminal-gamma-(5-phospho-L-glutamyl)-L-glutamate.
+    evidence:
+    - reference: RHEA:52632
+      snippet: C-terminal-gamma-(5-phospho-L-glutamyl )-L-glutamate group
+      notes: Rhea compound GENERIC:13313 ([amino-group carrier protein]-C-terminal-gamma-(5-phospho-L-glutamyl)-L-glutamate)
+        declares rh:reactivePart = C-terminal-gamma-(5-phospho-L-glutamyl )-L-glutamate group (CHEBI:136717).
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: ADP is a product released by RHEA:52632 (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:52633
+      snippet: '[amino-group carrier protein]-C-terminal-gamma-(L-glutamyl)-L-glutamate + ATP => [amino-group
+        carrier protein]-C-terminal-gamma-(5-phospho-L-glutamyl)-L-glutamate + ADP'
+      notes: Rhea's left-to-right directional reaction RHEA:52633 declares side 52632_R as its products
+        (rh:products); the master reaction RHEA:52632 is undirected. This participant is CHEBI:456216
+        with coefficient 1. Rhea cites PMID:25392000, PMID:23434852, PMID:27566549, PMID:19620981 for
+        this reaction.
+  - subject: prot_Q9YBY9
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSZ_AERPE is an exemplar enzyme with EC 2.7.2.19 activity.
+    evidence:
+    - reference: EC:2.7.2.19
+      snippet: DR   Q9YBY9, LYSZ_AERPE ;  A8M8Q8, LYSZ_CALMQ ;  A0RWW1, LYSZ_CENSY ;
+      notes: ExPASy ENZYME entry EC 2.7.2.19 cross-references UniProtKB:Q9YBY9 (LYSZ_AERPE) as a protein
+        with this activity.
+  - subject: prot_A8M8Q8
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSZ_CALMQ is an exemplar enzyme with EC 2.7.2.19 activity.
+    evidence:
+    - reference: EC:2.7.2.19
+      snippet: DR   Q9YBY9, LYSZ_AERPE ;  A8M8Q8, LYSZ_CALMQ ;  A0RWW1, LYSZ_CENSY ;
+      notes: ExPASy ENZYME entry EC 2.7.2.19 cross-references UniProtKB:A8M8Q8 (LYSZ_CALMQ) as a protein
+        with this activity.
+  - subject: prot_A0RWW1
+    predicate: enables
+    predicate_id: RO:0002327
+    object: activity
+    description: LYSZ_CENSY is an exemplar enzyme with EC 2.7.2.19 activity.
+    evidence:
+    - reference: EC:2.7.2.19
+      snippet: DR   Q9YBY9, LYSZ_AERPE ;  A8M8Q8, LYSZ_CALMQ ;  A0RWW1, LYSZ_CENSY ;
+      notes: ExPASy ENZYME entry EC 2.7.2.19 cross-references UniProtKB:A0RWW1 (LYSZ_CENSY) as a protein
+        with this activity.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (9 evidence-backed edges) from Rhea + ExPASy ENZYME;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0

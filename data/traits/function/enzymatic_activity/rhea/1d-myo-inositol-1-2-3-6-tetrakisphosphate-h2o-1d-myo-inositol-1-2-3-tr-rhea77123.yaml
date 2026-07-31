@@ -6,7 +6,7 @@ definition_source: Rhea
 trait_axis: FUNCTION
 trait_category: FUNC_ENZYMATIC_ACTIVITY
 term_kind: CLASS
-mapping_status: SEEDED
+mapping_status: REVIEWED
 mapped_xrefs:
   - object: EC:3.1.3.62
     mapping_source: rhea2ec
@@ -28,4 +28,113 @@ definitions:
       Catalyses the reaction: 1D-myo-inositol 1,2,3,6-tetrakisphosphate + H2O = 1D-myo-inositol 1,2,3-trisphosphate + phosphate
     source: "Rhea"
     method: SOURCED
+causal_graphs:
+- graph_id: reaction_chemistry
+  title: Reaction chemistry of 1D-myo-inositol 1,2,3,6-tetrakisphosphate + H2O = 1D-myo-inositol 1,2,3-trisphosphate
+    +…
+  description: Substrate-to-product chemistry of RHEA:77123, transcribed from the Rhea RDF release. The
+    master reaction is undirected; the substrate/product assignment is the one Rhea itself makes in its
+    left-to-right directional child RHEA:77124 (rh:substrates → 77123_L, rh:products → 77123_R), and Rhea
+    curates the reverse direction too. 2 substrates, 2 products. Chemically balanced. Participant structure
+    was checked by re-rendering Rhea's own equation string from it.
+  nodes:
+  - node_id: activity
+    label: catalysis of 1D-myo-inositol 1,2,3,6-tetrakisphosphate + H2O = 1D-myo-inositol 1,2,3-tris…
+    node_type: MOLECULAR_FUNCTION
+    grounding: RHEA:77123
+    description: 'KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the enzymatic activity this graph explains.
+      Full equation: 1D-myo-inositol 1,2,3,6-tetrakisphosphate + H2O = 1D-myo-inositol 1,2,3-trisphosphate
+      + phosphate'
+  - node_id: sub1
+    label: 1D-myo-inositol 1,2,3,6-tetrakisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:195534
+    description: Formula C6H8O18P4.
+  - node_id: sub2
+    label: H2O
+    node_type: CHEMICAL
+    grounding: CHEBI:15377
+    description: Formula H2O.
+  - node_id: prd1
+    label: 1D-myo-inositol 1,2,3-trisphosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:195536
+    description: Formula C6H9O15P3.
+  - node_id: prd2
+    label: phosphate
+    node_type: CHEMICAL
+    grounding: CHEBI:43474
+    description: Formula HO4P.
+  - node_id: ec1
+    node_type: MOLECULAR_FUNCTION
+    label: multiple inositol-polyphosphate phosphatase
+    grounding: EC:3.1.3.62
+    description: KB trait record (FUNC_ENZYMATIC_ACTIVITY).
+  edges:
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub1
+    description: 1D-myo-inositol 1,2,3,6-tetrakisphosphate is a substrate consumed by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:77124
+      snippet: 1D-myo-inositol 1,2,3,6-tetrakisphosphate + H2O => 1D-myo-inositol 1,2,3-trisphosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77124 declares side 77123_L as its substrates
+        (rh:substrates); the master reaction RHEA:77123 is undirected. This participant is CHEBI:195534
+        with coefficient 1. Rhea cites PMID:36589890 for this reaction.
+  - subject: activity
+    predicate: has input
+    predicate_id: RO:0002233
+    object: sub2
+    description: H2O is a substrate consumed by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77124
+      snippet: 1D-myo-inositol 1,2,3,6-tetrakisphosphate + H2O => 1D-myo-inositol 1,2,3-trisphosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77124 declares side 77123_L as its substrates
+        (rh:substrates); the master reaction RHEA:77123 is undirected. This participant is CHEBI:15377
+        with coefficient 1. Rhea cites PMID:36589890 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd1
+    description: 1D-myo-inositol 1,2,3-trisphosphate is a product released by this reaction (stoichiometric
+      coefficient 1).
+    evidence:
+    - reference: RHEA:77124
+      snippet: 1D-myo-inositol 1,2,3,6-tetrakisphosphate + H2O => 1D-myo-inositol 1,2,3-trisphosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77124 declares side 77123_R as its products
+        (rh:products); the master reaction RHEA:77123 is undirected. This participant is CHEBI:195536
+        with coefficient 1. Rhea cites PMID:36589890 for this reaction.
+  - subject: activity
+    predicate: has output
+    predicate_id: RO:0002234
+    object: prd2
+    description: phosphate is a product released by this reaction (stoichiometric coefficient 1).
+    evidence:
+    - reference: RHEA:77124
+      snippet: 1D-myo-inositol 1,2,3,6-tetrakisphosphate + H2O => 1D-myo-inositol 1,2,3-trisphosphate
+        + phosphate
+      notes: Rhea's left-to-right directional reaction RHEA:77124 declares side 77123_R as its products
+        (rh:products); the master reaction RHEA:77123 is undirected. This participant is CHEBI:43474 with
+        coefficient 1. Rhea cites PMID:36589890 for this reaction.
+  - subject: activity
+    predicate: is a curated reaction of the broader EC class
+    predicate_id: skos:broadMatch
+    object: ec1
+    description: Rhea assigns this reaction to EC 3.1.3.62; the EC class covers the chemistry, this reaction
+      is one curated instance of it.
+    evidence:
+    - reference: RHEA:77123
+      snippet: <rh:ec rdf:resource="http://purl.uniprot.org/enzyme/3.1.3.62"/>
+      notes: The rh:ec triple on RHEA:77123 in rhea.rdf. EC 3.1.3.62 is itself a record in this KB.
+curation_history:
+- timestamp: '2026-07-30T00:00:00Z'
+  curator: edison-causal-graphs
+  action: Added causal_graphs 'reaction_chemistry' (5 evidence-backed edges) from the Rhea RDF release;
+    SEEDED -> REVIEWED
+  llm_assisted: true
 license: CC-BY 4.0
