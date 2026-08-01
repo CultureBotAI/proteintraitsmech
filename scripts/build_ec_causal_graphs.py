@@ -305,7 +305,9 @@ def main() -> int:
     done = 0
     for f in sorted(ROOT.glob("*.yaml")):
         text = f.read_text(encoding="utf-8")
-        if "causal_graphs:" in text:
+        # Skip on THIS builder's graph_id rather than on any graph being present, so
+        # a record that gained some other graph first is not locked out of its own.
+        if re.search(r"^\s*graph_id:\s*reaction_chemistry\s*$", text, re.M):
             stat["already has a graph"] += 1
             continue
         m = re.search(r"^identifier:\s*EC:(\S+)\s*$", text, re.M)
@@ -336,7 +338,9 @@ def main() -> int:
         out = re.sub(r"^mapping_status:\s*SEEDED\s*$", "mapping_status: REVIEWED",
                      text, count=1, flags=re.M)
         if re.search(r"^license:", out, re.M):
-            out = re.sub(r"^license:", block + hist + "license:", out, count=1, flags=re.M)
+            # lambda, not a replacement string — see the note in the Rhea builder.
+            out = re.sub(r"^license:", lambda _m: block + hist + "license:", out,
+                         count=1, flags=re.M)
         else:
             out = out.rstrip("\n") + "\n" + block + hist
         if args.apply:

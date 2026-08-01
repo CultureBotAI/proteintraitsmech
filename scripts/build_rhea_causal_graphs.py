@@ -118,8 +118,13 @@ def enzyme_entries() -> dict[str, dict]:
         m = re.search(r"^ID   (\S+)", block, re.M)
         if not m:
             continue
-        de = re.search(r"^DE   (.+)", block, re.M)
-        name = (de.group(1).rstrip(".") if de else "")
+        # ExPASy wraps a long enzyme name across several DE lines, so reading only
+        # the first truncates 133 active entries — and not harmlessly: EC:1.3.1.67
+        # would come out as "cis-1,2-dihydroxy-4-methylcyclohexa-3,5-diene-1-
+        # carboxylate", a substrate standing in for the activity, and 1.1.1.170 /
+        # 1.1.1.418 would silently lose the "(decarboxylating)" that tells them apart.
+        de = re.findall(r"^DE   (.+)$", block, re.M)
+        name = " ".join(x.strip() for x in de).rstrip(".")
         if name.startswith(("Deleted", "Transferred")):
             continue
         dr = []
@@ -410,7 +415,10 @@ def main() -> int:
     done = 0
     for f in sorted(ROOT.glob("*.yaml")):
         text = f.read_text(encoding="utf-8")
-        if "causal_graphs:" in text:
+        # Skip on THIS builder's graph_id, not on the presence of any graph at all.
+        # A record that gained a `catalytic_residues_*` graph first would otherwise be
+        # permanently skipped here and never get its reaction chemistry.
+        if re.search(r"^\s*graph_id:\s*reaction_chemistry\s*$", text, re.M):
             stat["already has a graph"] += 1
             continue
         m = re.search(r"^identifier:\s*RHEA:(\d+)\s*$", text, re.M)
@@ -443,7 +451,12 @@ def main() -> int:
         out = re.sub(r"^mapping_status:\s*SEEDED\s*$", "mapping_status: REVIEWED",
                      text, count=1, flags=re.M)
         if re.search(r"^license:", out, re.M):
-            out = re.sub(r"^license:", block + hist + "license:", out, count=1, flags=re.M)
+            # lambda, not a replacement string: a literal template would interpret
+            # any backslash or \g in the spliced YAML. No Rhea/ENZYME release has
+            # one today, which is exactly why this would surface as corruption long
+            # after the change that introduced it.
+            out = re.sub(r"^license:", lambda _m: block + hist + "license:", out,
+                         count=1, flags=re.M)
         else:
             out = out.rstrip("\n") + "\n" + block + hist
         if args.apply:

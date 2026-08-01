@@ -58,6 +58,7 @@ from pathlib import Path
 import yaml
 
 import rhea_rdf
+from build_rhea_causal_graphs import short
 
 REPO = Path(__file__).resolve().parent.parent
 MCSA_RAW = REPO / "data" / "raw" / "mcsa.entries.jsonl"
@@ -70,8 +71,43 @@ TIMESTAMP = "2026-07-30T00:00:00Z"
 GRAPH_ID = "catalytic_residues"
 
 
+_TOP_KEY = re.compile(r"^[A-Za-z_][A-Za-z0-9_]*:")
+
+
+def append_to_section(text: str, key: str, payload: str) -> str:
+    """Append `payload` (a full `key:\\n  - …` YAML block) to the record's existing
+    `key:` section, or insert it whole if the record has no such key.
+
+    Written as a section-aware splice rather than a string replace because the
+    earlier version stripped the parent `key:` line off the payload unconditionally
+    and only put it back on one of three branches — so a record that lacked the key
+    (any freshly seeded Rhea record, which has no `curation_history`) got a bare
+    sequence item spliced under a mapping, i.e. unparseable YAML, and the
+    `out == text` guard did not catch it because the text *had* changed.
+
+    Appending rather than prepending also keeps `curation_history` in chronological
+    order; the previous version inserted new events ahead of older ones.
+    """
+    lines = text.splitlines(keepends=True)
+    start = next((i for i, ln in enumerate(lines) if ln.startswith(f"{key}:")), None)
+    if start is None:
+        # No such section: insert the whole block before `license:` (the record's
+        # last key by convention) or append it at the end.
+        lic = next((i for i, ln in enumerate(lines) if ln.startswith("license:")), None)
+        at = lic if lic is not None else len(lines)
+        return "".join(lines[:at]) + payload + "".join(lines[at:])
+    end = start + 1
+    while end < len(lines) and not _TOP_KEY.match(lines[end]):
+        end += 1
+    items = payload.split("\n", 1)[1]      # drop the duplicate `key:` line
+    return "".join(lines[:end]) + items + "".join(lines[end:])
+
+
 def mcsa_entries() -> dict[str, dict]:
     out = {}
+    if not MCSA_RAW.exists():
+        print(f"missing {MCSA_RAW} — run `just fetch-mcsa`", file=sys.stderr)
+        raise SystemExit(1)
     for line in MCSA_RAW.open(encoding="utf-8"):
         d = json.loads(line)
         out[str(d["mcsa_id"])] = d
@@ -205,8 +241,12 @@ def build(rid: str, rxn: dict, mid: str, join: dict, entry: dict,
 
     nodes = [{
         "node_id": "activity",
-        "label": (rxn["equation"][:89] + "…") if len(rxn["equation"]) > 90
-                 else f"catalysis of {rxn['equation']}"[:90],
+        # Use the same shortener round 16 uses for this node, so the two graphs in a
+        # record label the same RHEA: grounding identically. The earlier ternary was
+        # inverted: a long equation dropped the "catalysis of " prefix entirely (73
+        # records) and a mid-length one was cut at exactly 90 chars mid-word with no
+        # ellipsis (57 records).
+        "label": short(f"catalysis of {rxn['equation']}"),
         "node_type": "MOLECULAR_FUNCTION",
         "grounding": acc,
         "description": ("KB trait record (FUNC_ENZYMATIC_ACTIVITY) — the reaction "
@@ -310,7 +350,11 @@ def main() -> int:
             stat["skipped: M-CSA entry is not a KB record"] += 1
             continue
         text = rpath.read_text(encoding="utf-8")
-        if f"graph_id: {GRAPH_ID}_mcsa{mid}" in text:
+        # Match the whole graph_id, not a prefix: `..._mcsa45` is a substring of
+        # `..._mcsa454`, so a plain `in` test would report a genuinely new entry as
+        # already wired and silently never write it.
+        if re.search(rf"^\s*graph_id:\s*{re.escape(GRAPH_ID)}_mcsa{mid}\s*$",
+                     text, re.M):
             stat["already wired"] += 1
             continue
         graph, why = build(rid, rh.reactions[rid], mid, join, entries[mid], mpath)
@@ -323,9 +367,6 @@ def main() -> int:
 
         block = yaml.safe_dump({"causal_graphs": [graph]}, sort_keys=False,
                                allow_unicode=True, width=100, default_flow_style=False)
-        # Append into the record's existing causal_graphs list rather than adding a
-        # second key: round 16 already wrote `reaction_chemistry` onto every one.
-        block = block.replace("causal_graphs:\n", "", 1)
         hist = yaml.safe_dump({"curation_history": [{
             "timestamp": TIMESTAMP, "curator": "edison-causal-graphs",
             "action": (f"Added causal_graphs '{graph['graph_id']}' ({len(graph['edges'])} "
@@ -333,20 +374,8 @@ def main() -> int:
                        f"set equality"),
             "llm_assisted": True}]}, sort_keys=False, allow_unicode=True, width=100)
 
-        # Round 16 already wrote a `reaction_chemistry` graph and a curation_history
-        # onto every Rhea record, so the normal path is *appending* to two existing
-        # lists. A literal replace is used rather than re.sub with a backreference:
-        # the YAML being spliced in contains backslashes and `\g`-like sequences that
-        # a regex replacement template would try to interpret.
-        hist_items = hist.split("\n", 1)[1]
-        if "\ncuration_history:\n" in text:
-            out = text.replace("\ncuration_history:\n",
-                               "\n" + block + "curation_history:\n" + hist_items, 1)
-        elif re.search(r"^license:", text, re.M):
-            out = re.sub(r"^license:", "@@BLOCK@@license:", text, count=1, flags=re.M)
-            out = out.replace("@@BLOCK@@", block + hist, 1)
-        else:
-            out = text.rstrip("\n") + "\n" + block + hist
+        out = append_to_section(text, "causal_graphs", block)
+        out = append_to_section(out, "curation_history", hist)
         if out == text:
             stat["skipped: could not splice into the record"] += 1
             continue

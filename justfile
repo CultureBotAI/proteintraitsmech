@@ -435,6 +435,16 @@ fetch-ncbifam:
 seed-ncbifam *args:
     python3 scripts/seed_ncbifam.py {{args}}
 
+# ORDER MATTERS: the two round-16 builders must run before the round-17 M-CSA
+# join, which appends a second graph to records they create. Each builder skips on
+# its own graph_id, so a wrong order no longer locks a record out, but it would
+# still leave the reaction chemistry missing until re-run.
+# Build the Rhea/EC reaction-chemistry graphs and the M-CSA residue join, in order
+build-reaction-graphs *args:
+    python3 scripts/build_rhea_causal_graphs.py {{args}}
+    python3 scripts/build_ec_causal_graphs.py {{args}}
+    python3 scripts/build_rhea_mcsa_residue_graphs.py {{args}}
+
 fetch-panther:
     mkdir -p data/raw/panther
     curl -sSLf --max-time 900 -o data/raw/panther/PANTHER19.0_HMM_classifications http://data.pantherdb.org/ftp/hmm_classifications/current_release/PANTHER19.0_HMM_classifications

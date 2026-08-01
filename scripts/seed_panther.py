@@ -112,9 +112,12 @@ def interpro_index() -> dict[str, dict]:
     buf: list[str] = []
     llm = reviewed = False
     if not INTERPRO.exists():
-        print(f"warning: {INTERPRO} missing — every definition will be composed",
-              file=sys.stderr)
-        return out
+        # Hard failure, not a warning. Without it half the corpus silently loses its
+        # curated definition, and because the skip predicate is per-record a later
+        # run with InterPro present would not repair any of it.
+        print(f"missing {INTERPRO} — run `just fetch-interpro` first; refusing to "
+              f"seed with every definition composed", file=sys.stderr)
+        raise SystemExit(1)
     with gzip.open(INTERPRO, "rt", encoding="utf-8", errors="replace") as fh:
         for line in fh:
             m = ent.search(line)
@@ -132,8 +135,13 @@ def interpro_index() -> dict[str, dict]:
             if a:
                 llm = 'is-llm="true"' in a.group(1)
                 reviewed = 'is-llm-reviewed="true"' in a.group(1)
+                # 8 InterPro entries put the open tag, the text and </abstract> on a
+                # single line. Skipping the line whenever it closed threw that text
+                # away and substituted a composed stub — so the guard meant to stop
+                # LLM text being promoted was discarding curator-written text instead.
+                # Capture the inline body before deciding whether the block continues.
                 inabs = "</abstract>" not in line
-                buf = []
+                buf = [] if inabs else [line[a.end():].split("</abstract>", 1)[0]]
                 continue
             if inabs:
                 if "</abstract>" in line:
@@ -270,6 +278,19 @@ def main() -> int:
     print(f"  {len(ipr_idx):,} PANTHER families integrated into InterPro",
           file=sys.stderr)
 
+    # identifier -> current path, so idempotency survives a family being renamed
+    # upstream (the filename embeds the label, the identifier does not).
+    by_identifier: dict[str, Path] = {}
+    if OUT_DIR.exists():
+        for f in OUT_DIR.glob("*.yaml"):
+            with f.open(encoding="utf-8") as fh:
+                for ln in fh:
+                    if ln.startswith("identifier:"):
+                        by_identifier[ln.split(":", 1)[1].strip()] = f
+                        break
+    print(f"  {len(by_identifier):,} PANTHER records already in the corpus",
+          file=sys.stderr)
+
     stat: dict[str, int] = {}
 
     def bump(k, n=1):
@@ -299,7 +320,13 @@ def main() -> int:
 
         ann = parse_annotations(parts)
         path = OUT_DIR / f"{slugify(label)}-{pid.lower()}.yaml"
-        if path.exists() and not args.force:
+        # Skip on the IDENTIFIER, not the filename. The filename embeds the slugified
+        # label, so if a release renames a family the old path no longer exists and a
+        # second file would be written carrying the same `identifier: PANTHER:…`.
+        # The 229 families whose label comes from InterPro are the most exposed,
+        # since they track a second, independently-versioned source.
+        existing = by_identifier.get(f"PANTHER:{pid}")
+        if existing is not None and not args.force:
             bump("skipped: already present")
             continue
 
@@ -313,6 +340,11 @@ def main() -> int:
         if args.apply:
             OUT_DIR.mkdir(parents=True, exist_ok=True)
             path.write_text(text, encoding="utf-8")
+            # A rename leaves the record at a stale path; remove it so the
+            # identifier stays unique in the corpus.
+            if existing is not None and existing != path:
+                existing.unlink()
+                bump("renamed: removed the stale file at the old label's path")
         elif written == 0:
             print(text)
         written += 1
