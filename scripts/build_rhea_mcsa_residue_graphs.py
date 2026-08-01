@@ -4,11 +4,18 @@
   python3 scripts/build_rhea_mcsa_residue_graphs.py --limit 3   # dry run
   python3 scripts/build_rhea_mcsa_residue_graphs.py --apply
 
-After round 16 the corpus has two mechanism subgraphs that never meet. An M-CSA
+After round 16 the corpus has two mechanism subgraphs that rarely meet. An M-CSA
 graph says *these residues do the chemistry* (RESIDUE → STATE step → STATE step);
 a Rhea graph says *these substrates become those products* (MOLECULAR_FUNCTION →
-CHEMICAL). Measured over the M-CSA records: **there is no RESIDUE → CHEMICAL edge
-anywhere in the corpus**, so nothing answers "which residues run this reaction".
+CHEMICAL). Across the 1,001 seeder-generated M-CSA graphs the two halves join only
+at the top, so nothing there answers "which residues run this reaction".
+
+The corpus is **not** free of RESIDUE → CHEMICAL edges, and an earlier version of
+this docstring wrongly claimed it was. There are 1,870: 1,865 residue→metal from
+MetalPDB, and 5 hand-curated in `beta-lactamase-class-a-mcsa2` and
+`beta-lactamase-class-b1-mcsa15` — three pointing at the substrate, two at the water
+of hydrolysis. Those two records do at curation time exactly what this script cannot
+do at scale, and are the worked example to generalise from.
 
 WHAT THIS DOES NOT DO, AND WHY
 ------------------------------
@@ -31,7 +38,7 @@ All 1,003 M-CSA entries carry `reaction.compounds` with a `chebi_id` and a
 the join is checkable: an M-CSA entry matches a Rhea reaction when its reactant set
 **equals** one Rhea side and its product set **equals** the other, as sets of ChEBI
 CURIEs. EC agreement is required first (to bound the candidates) but is never
-sufficient on its own — 285 EC-matched pairs fail the ChEBI check and are dropped.
+sufficient on its own — 289 EC-matched pairs fail the ChEBI check and are dropped.
 
 **47 of the 472 matches are reverse-oriented**: M-CSA's reactants equal Rhea's `_R`
 side. Both sources are right — a Rhea master is undirected and M-CSA curates the

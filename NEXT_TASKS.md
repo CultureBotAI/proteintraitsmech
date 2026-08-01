@@ -105,8 +105,8 @@ cleared._
    separately; do not merge the tiers.
 
 5. **UniProt family/domain source coverage — 6 of 18 resources still absent.** See
-   the dedicated section below. PANTHER is done (PR #89); HAMAP and SFLD are next,
-   being existing `candidate` blocks.
+   the dedicated section below. PANTHER is done (PR #89); SFLD is the next cheap one.
+   HAMAP is licence-blocked (CC BY-NC-ND), not cheap — see the ranking.
 
 6. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; issue NOT complete.**
    Delivered: protein×trait matrix over 10 proteomes, trait↔GO correlation,
@@ -194,7 +194,7 @@ at all.** (Was 6 and 7 — PANTHER was ingested on 2026-07-31, PR #89.)
 | NCBIfam | seeded | 38,394 |
 | PROSITE | seeded (patterns + profiles) | 6,174 |
 | Gene3D | seeded as CATH-Gene3D | 8,151 |
-| DisProt | seeded, but as the IDPO disorder *vocabulary*, not DisProt entries | 36 |
+| DisProt | seeded, but as the IDPO disorder *vocabulary*, not DisProt entries | 35 |
 | IDEAL | "seeded" — exactly one concept (`proteintraitsmech:IDEAL_PROS`) | 1 |
 | HAMAP · SFLD · MobiDB | `candidate`, no seeder | 0 |
 | **PANTHER** | **seeded 2026-07-31 (PR #89), CC-BY 4.0 — families only** | **15,489** |
@@ -230,9 +230,13 @@ covered.
    entries would cross the ~500k tracked-file threshold, and InterPro integrates
    PANTHER at family level only. The 128,012 subfamilies remain available behind
    `seed_panther.py --subfamilies` if that scope call is revisited.
-2. **HAMAP (2,394)** and **SFLD (303)** — already `candidate` blocks in
-   `download.yaml`, so cheapest to promote; both are curated family/superfamily
-   classifications with real definitions.
+2. **SFLD (303)** — an existing `candidate` block, `license: free (UCSF)`, a curated
+   enzyme-superfamily hierarchy. The cheapest real promotion.
+   **HAMAP (2,394) is NOT cheap and should not be ranked with it.** Its block is
+   `license: CC BY-NC-ND 4.0 (SIB) — FLAGGED` with `role: documentation` — the same
+   NoDerivatives caveat as PROSITE. In a CC0 repo that is a licensing decision, not
+   an ingest; treat it like the ELM case (rejected on NonCommercial) until someone
+   rules on it.
 3. **PIRSF (3,285)** and **PRINTS (2,106)** — small, sequence-signature
    classifications → `SEQ_DOMAIN` / `SEQ_FAMILY` per axis-follows-representation.
 4. **SMART (1,322)** and **SUPERFAMILY (2,019)** — lowest urgency: largely reachable

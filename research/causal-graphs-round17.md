@@ -50,11 +50,12 @@ M-CSA records:
 > setting it in bold. A sample cannot support a universal negative. It also missed
 > two records *inside* M-CSA, so even the restricted claim was wrong.
 
-In the **M-CSA-derived graphs this round joins**, residues connect to mechanism
-steps and chemicals connect to the overall activity, and those halves meet only at
-the top — so for the 1,003 M-CSA records specifically, "which residues run this
+In the **seeder-generated M-CSA graphs this round joins**, residues connect to
+mechanism steps and chemicals connect to the overall activity, and those halves meet
+only at the top — so for 1,001 of the 1,003 M-CSA records, "which residues run this
 reaction" had no answer in the graph structure. That is the gap this round closes.
-It is not, as originally written, a corpus-wide absence.
+It is neither a corpus-wide absence, as originally written, nor true of all 1,003:
+`mcsa2` and `mcsa15` were hand-curated and already carry the edge.
 
 ## The premise I wrote into the backlog was wrong
 
