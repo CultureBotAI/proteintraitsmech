@@ -6,8 +6,9 @@ convention:** update an item when work on it starts or ships (mark
 section with enough context to pick it up cold; keep absolute dates. Reconcile
 against merged PRs + `git log` before trusting it.
 
-_Last reconciled: 2026-07-31 (against `git log`, `just audit-graphs` and UniProt's
-database registry; counts below were re-measured, not carried forward)._
+_Last reconciled: 2026-08-01, after an independent fact-check of every number in
+this file and the round 16/17 reports. Several were wrong and are corrected in
+place, each marked CORRECTED with the date._
 
 ---
 
@@ -19,9 +20,9 @@ audit **0 errors**, **368,920/368,920 edges snippet-cited**.
 
 | source | records w/ graph | round | PR |
 |---|--:|--:|---|
-| Rhea | 18,558 | 16 | #89 *(open)* |
+| Rhea | 18,558 | 16 | #89 |
 | ARO / CARD | 7,399 of 7,452 | 14 | #80, #84 |
-| EC | 6,888 of 7,375 | 16 | #89 *(open)* |
+| EC | 6,888 of 7,375 | 16 | #89 |
 | BioLiP | 5,571 | 15 | #86 |
 | M-CSA | 1,003 | 12–13 | #77, #81, #82 |
 | MetalPDB | 228 | 15 | #87 |
@@ -73,16 +74,27 @@ cleared._
    names compounds as jargon rather than by ChEBI. What was written instead is what
    M-CSA does assert: *this residue is causally responsible for this reaction*.
 
-   **The residue→substrate edge is therefore still unwritten and still wanted** —
-   see the follow-ups below. Do not re-attempt it from M-CSA.
+   **The residue→substrate edge is therefore not derivable from M-CSA at scale** —
+   see item 3. Do not re-attempt it from M-CSA's structured fields.
 
-3. **Close the residue→substrate gap from a source that actually states it.**
-   The corpus still has **no `RESIDUE → CHEMICAL` edge**. Candidates, none yet
-   assessed: UniProt `ACT_SITE` comments that name the attacked bond; MACiE / EzCatDB;
-   Rhea's `rh:reactivePart` (used in round 16, but it describes generic
-   `[protein]-…` participants, not catalytic residues). **First step is a source
-   assessment, not a build** — the round-17 lesson is to check that the field exists
-   before writing the task.
+3. **Generalise the residue→substrate edge, which already exists in five places.**
+   **CORRECTED 2026-08-01.** This item previously claimed *"the corpus still has no
+   `RESIDUE → CHEMICAL` edge"*. That was false — a fact-check found **1,870**: 1,865
+   residue→metal edges from MetalPDB (round 15) and **5 hand-curated residue→substrate
+   edges** in two β-lactamase M-CSA records, e.g.
+   `ser70 --[nucleophilic attack on / RO:0002436]--> substrate (CHEBI:35627)` in
+   `data/traits/structure/active_site/mcsa/beta-lactamase-class-a-mcsa2.yaml`.
+   The claim came from generalising a 200-record sample into a universal negative.
+
+   So the work is **generalisation, not invention**, and it starts from a worked
+   example rather than a blank page. Read those two records first — they show the
+   target node/edge shape and the evidence standard. Then find a source that states
+   the target compound per residue at scale: UniProt `ACT_SITE` comments naming the
+   attacked bond, or MACiE / EzCatDB. Rhea's `rh:reactivePart` is *not* a candidate
+   (generic `[protein]-…` participants, not catalytic residues).
+   **First step is a source assessment, not a build** — and the second lesson of
+   round 17 is to check a coverage claim against the whole corpus before ranking a
+   thread on it.
 
 4. **Recover some of the 289 EC-agreeing M-CSA↔Rhea pairs whose ChEBI sets differ.**
    Round 17 dropped them deliberately (38% of EC-agreeing pairs do not share
@@ -92,8 +104,9 @@ cleared._
    `data/raw/chebi/`. Keep set equality as the strict tier and report any looser tier
    separately; do not merge the tiers.
 
-5. **UniProt family/domain source coverage — 7 of 18 resources absent.** See the
-   dedicated section below; ranked ingestion thread, PANTHER first.
+5. **UniProt family/domain source coverage — 6 of 18 resources still absent.** See
+   the dedicated section below. PANTHER is done (PR #89); HAMAP and SFLD are next,
+   being existing `candidate` blocks.
 
 6. **Swiss-Prot trait profiles (issue #7) — phases 1–14 shipped; issue NOT complete.**
    Delivered: protein×trait matrix over 10 proteomes, trait↔GO correlation,
@@ -170,8 +183,8 @@ _Assessed 2026-07-31 against UniProt's own database registry
 (`rest.uniprot.org/database`, category **"Family and domain databases"** — 18
 entries), `download.yaml`, and a corpus-wide identifier census._
 
-**6 of 18 are ingested as first-class trait records; 7 are not in `download.yaml`
-at all.**
+**7 of 18 are ingested as first-class trait records; 6 are not in `download.yaml`
+at all.** (Was 6 and 7 — PANTHER was ingested on 2026-07-31, PR #89.)
 
 | UniProt DB | PTM status | records |
 |---|---|--:|
@@ -181,10 +194,11 @@ at all.**
 | NCBIfam | seeded | 38,394 |
 | PROSITE | seeded (patterns + profiles) | 6,174 |
 | Gene3D | seeded as CATH-Gene3D | 8,151 |
-| DisProt | seeded, but as the IDPO disorder *vocabulary*, not DisProt entries | 37 |
+| DisProt | seeded, but as the IDPO disorder *vocabulary*, not DisProt entries | 36 |
 | IDEAL | "seeded" — exactly one concept (`proteintraitsmech:IDEAL_PROS`) | 1 |
 | HAMAP · SFLD · MobiDB | `candidate`, no seeder | 0 |
-| PANTHER · PIRSF · PRINTS · SMART · SUPERFAMILY · AntiFam · CATH-FunFam | **absent from the manifest** | 0 |
+| **PANTHER** | **seeded 2026-07-31 (PR #89), CC-BY 4.0 — families only** | **15,489** |
+| PIRSF · PRINTS · SMART · SUPERFAMILY · AntiFam · CATH-FunFam | **absent from the manifest** | 0 |
 
 ### Why "InterPro already integrates them" does not close this
 
@@ -211,10 +225,11 @@ covered.
 
 ### Ranked
 
-1. **PANTHER** — 143,695 entries, effectively zero representation (49 signatures
-   reachable). By far the largest hole, and a hierarchical family classification →
-   `FUNC_PROTEIN_FAMILY` / `SEQ_FAMILY`. **Check the licence first** — PANTHER is
-   not obviously CC-BY like most of the corpus. Skill: `ingest-source`.
+1. ~~**PANTHER**~~ **DONE (2026-07-31, PR #89)** — 15,489 families seeded as
+   SEQUENCE / SEQ_FAMILY. Licence confirmed CC-BY 4.0. Families only: all 143,695
+   entries would cross the ~500k tracked-file threshold, and InterPro integrates
+   PANTHER at family level only. The 128,012 subfamilies remain available behind
+   `seed_panther.py --subfamilies` if that scope call is revisited.
 2. **HAMAP (2,394)** and **SFLD (303)** — already `candidate` blocks in
    `download.yaml`, so cheapest to promote; both are curated family/superfamily
    classifications with real definitions.
@@ -298,7 +313,8 @@ were confirmed present on `main` (`git stash` + re-run).
 - **The 5,845 ungrounded causal nodes are the whole warning list** — 4,023 M-CSA
   STATE nodes (reaction intermediates), 1,817 BioLiP fusion-chain residues (BioLiP
   names several accessions for a chimeric chain and does not say which half a residue
-  belongs to), 5 hand-curated intermediates. MONDO/HP/reaction-intermediate grounding
+  belongs to), and 5 hand-curated label-only nodes — 4 reaction intermediates plus one
+  `rrna` node in `ermb-aro3000375.yaml` that is not one. MONDO/HP/reaction-intermediate grounding
   would close the first group; the BioLiP group needs the source to disambiguate.
 - **`just audit-graphs --strict` is now purely a grounding gate.** Snippet and
   `predicate_id` coverage both reached 100% in round 16, so turning `--strict` on in

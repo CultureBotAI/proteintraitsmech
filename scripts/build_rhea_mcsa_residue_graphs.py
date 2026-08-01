@@ -33,7 +33,7 @@ the join is checkable: an M-CSA entry matches a Rhea reaction when its reactant 
 CURIEs. EC agreement is required first (to bound the candidates) but is never
 sufficient on its own — 285 EC-matched pairs fail the ChEBI check and are dropped.
 
-**47 of the 476 matches are reverse-oriented**: M-CSA's reactants equal Rhea's `_R`
+**47 of the 472 matches are reverse-oriented**: M-CSA's reactants equal Rhea's `_R`
 side. Both sources are right — a Rhea master is undirected and M-CSA curates the
 physiological direction — so the orientation is recorded in the evidence notes
 rather than reconciled away.
